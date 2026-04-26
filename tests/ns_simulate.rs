@@ -181,6 +181,68 @@ spans = [
     );
 }
 
+/// Multi-line `Render::Ellipsis` span renders one `…` per covered line
+/// — visually indistinguishable from a single marker (no line numbers
+/// to differentiate them) but costs N× the tokens. The schema doc on
+/// `Render::Ellipsis` calls this single-line-only; the validator
+/// should flag it. Expected: `EllipsisMultiLine` violation, batch
+/// still simulates (quality-only, not render-blocking).
+#[test]
+fn ns_simulate_detects_multi_line_ellipsis() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "ellipsis 5..=8"
+justification = "should fail single-line invariant"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "src/lib.rs", start = 5, end = 8, render = {{ kind = "ellipsis" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert_eq!(report.batches.len(), 1);
+    let violations = &report.batches[0].violations;
+    assert!(
+        violations.iter().any(|v| matches!(
+            v,
+            Violation::EllipsisMultiLine { start, end, .. } if *start == 5 && *end == 8
+        )),
+        "expected EllipsisMultiLine 5..=8, got {violations:?}"
+    );
+}
+
+/// Single-line `Render::Ellipsis` is valid — the validator must not
+/// fire on `start == end`.
+#[test]
+fn ns_simulate_accepts_single_line_ellipsis() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "ellipsis at line 5"
+justification = "single-line ellipsis is valid"
+[batches.content]
+kind = "lines"
+spans = [{{ path = "src/lib.rs", start = 5, end = 5, render = {{ kind = "ellipsis" }} }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    let violations = &report.batches[0].violations;
+    assert!(
+        !violations
+            .iter()
+            .any(|v| matches!(v, Violation::EllipsisMultiLine { .. })),
+        "single-line Ellipsis should not fire EllipsisMultiLine, got {violations:?}"
+    );
+}
+
 /// Mutation #3 — span covers lines beyond the file's line count.
 /// Matches the `schema load should have caught this` panic observed last
 /// session. Expected: `SpanOutOfRange` (not a panic).

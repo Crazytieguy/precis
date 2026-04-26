@@ -68,9 +68,19 @@
 //! and mixed-intersection batches (some on-NS atoms but most spend
 //! off-script).
 //!
-//! - `off_tokens` — `off_ratio × cost`, the absolute waste estimate.
-//! - `off_ratio` — fraction of batch's atoms with no NS counterpart.
-//! - `cost` — total marginal cost of the walker batch.
+//! Off-NS attribution is **per-atom marginal**: each atom carries the
+//! token delta it actually contributed to the batch's marginal cost
+//! (refinement-over-ancestor lines pay the truncated delta;
+//! already-listed FS entries pay 0), captured by driving a parallel
+//! walker tree forward in schedule order. The waste columns sum
+//! exactly the off-NS atoms' marginal contributions — no
+//! ratio-times-cost approximation.
+//!
+//! - `off_tokens` — sum of off-NS atoms' marginal token costs.
+//! - `off_ratio` — `off_tokens / total_marginal_tokens`. Fraction of
+//!   the batch's marginal token spend not paired with any NS atom.
+//! - `cost` — total marginal cost of the walker batch (= sum of all
+//!   atoms' marginal contributions, on- and off-NS).
 //! - `first_t` — walker `cum_tokens` when this batch was scheduled.
 //! - `batch` — descriptor with fixture root stripped.
 //!
@@ -153,7 +163,10 @@ pub fn generate_divergence_report(
 
 // ---- graded atoms ------------------------------------------------------
 
-/// One atom of content with its render-level byte footprint.
+/// One atom of content with the byte footprint used for **credit
+/// accounting only**. This is *not* a render-cost weight — see
+/// `WalkerRow::atom_token_costs` for that.
+///
 /// `bytes` semantics (minimum 1 for any present atom — 0 is reserved for
 /// "walker never rendered this atom"):
 /// - `Line::Full` = source line length.
@@ -267,6 +280,14 @@ struct NsRow {
 
 struct WalkerRow<'a> {
     atoms: Vec<GradedAtom>,
+    /// Per-atom marginal token cost at the moment this batch was scheduled
+    /// — 1:1 with `atoms`. Computed against a parallel `RenderedTree`
+    /// driven forward in scheduling order so each atom's contribution is
+    /// the actual delta the scheduler would have paid (refinement-over-
+    /// ancestor lines pay the truncated delta; already-listed FS entries
+    /// pay 0). Used by `format_walker_waste` to attribute off-NS spend
+    /// in true-marginal terms rather than uniformly across atoms.
+    atom_token_costs: Vec<usize>,
     seen_t: usize,
     batch: &'a ScheduledBatch,
 }
@@ -301,13 +322,34 @@ impl<'a> BuildCtx<'a> {
             });
         }
 
-        let walker_rows = schedule
+        // Parallel walker tree, driven forward in schedule order. Per-atom
+        // marginal costs are read off this tree at scheduling time (so
+        // refinement-over-ancestor lines see the truncated delta and
+        // already-listed FS entries cost 0), then the batch is applied so
+        // later rows see it as ancestor content. Mirrors what
+        // `Scheduler::run_with_report` does for the real tree.
+        let mut walker_tree = RenderedTree::new(fixture_root_buf.clone(), source_cache.clone());
+        let walker_rows: Vec<WalkerRow<'_>> = schedule
             .batches
             .iter()
-            .map(|b| {
+            .enumerate()
+            .map(|(pos, b)| {
                 let atoms = atoms_from_content(&b.content, &source_cache, fixture_root);
+                let batch = Batch {
+                    content: b.content.clone(),
+                    signals: ValueSignals::default(),
+                };
+                let per_atom = walker_tree.marginal_cost_per_atom(&batch);
+                debug_assert_eq!(
+                    per_atom.len(),
+                    atoms.len(),
+                    "marginal_cost_per_atom and atoms_from_content must agree on atom count and order — order invariant"
+                );
+                let atom_token_costs = per_atom.into_iter().map(|c| c.tokens).collect();
+                let _ = walker_tree.apply(&batch, BatchId::new(pos), |_| true);
                 WalkerRow {
                     atoms,
+                    atom_token_costs,
                     seen_t: b.cum_tokens,
                     batch: b,
                 }
@@ -749,6 +791,33 @@ fn nearby_walker_batch_cell(
     }
 }
 
+/// Per-batch off-NS attribution. Returns `(off_ratio, off_tokens)` where
+/// both are weighted by per-atom marginal token cost (not atom count).
+/// `None` for empty batches and for pure-refinement no-ops where every
+/// atom contributed zero marginal cost (an ancestor already rendered
+/// the same content).
+fn off_ns_attribution(
+    atoms: &[GradedAtom],
+    atom_token_costs: &[usize],
+    ns_atom_set: &BTreeSet<Atom>,
+) -> Option<(f64, usize)> {
+    if atoms.is_empty() {
+        return None;
+    }
+    debug_assert_eq!(atoms.len(), atom_token_costs.len());
+    let total_marginal: usize = atom_token_costs.iter().sum();
+    if total_marginal == 0 {
+        return None;
+    }
+    let off_marginal: usize = atom_token_costs
+        .iter()
+        .zip(atoms)
+        .filter(|(_, a)| !ns_atom_set.contains(&a.atom))
+        .map(|(c, _)| *c)
+        .sum();
+    Some((off_marginal as f64 / total_marginal as f64, off_marginal))
+}
+
 fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     let ns_atom_set: BTreeSet<Atom> = ctx
         .ns_rows
@@ -756,11 +825,14 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
         .flat_map(|r| r.atoms.iter().map(|a| a.atom.clone()))
         .collect();
 
-    // For each walker batch: how much of its spend landed on atoms
-    // NS didn't ask for. Pure-waste batches (no NS intersection)
-    // contribute their full cost; mixed batches contribute in
-    // proportion to their off-NS atom share. Sort by off_tokens
-    // descending so the biggest calibration targets are at row 1.
+    // For each walker batch: how much of its marginal token spend landed
+    // on atoms NS didn't ask for. Per-atom marginal costs were captured
+    // alongside `atoms` (1:1) when the parallel walker tree was driven
+    // forward, so a refinement-over-ancestor on-NS line costs only its
+    // delta and an already-listed FS entry costs zero — the off_ratio
+    // reflects true marginal share, not uniform-across-atoms.
+    // Sort by off_tokens descending so the biggest calibration targets
+    // are at row 1.
     struct Row<'a> {
         wr: &'a WalkerRow<'a>,
         descriptor_rel: String,
@@ -772,17 +844,8 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
         .iter()
         .filter(|wr| wr.batch.cost_tokens >= UNMAPPED_COST_THRESHOLD)
         .filter_map(|wr| {
-            if wr.atoms.is_empty() {
-                return None;
-            }
-            let total = wr.atoms.len() as f64;
-            let off = wr
-                .atoms
-                .iter()
-                .filter(|a| !ns_atom_set.contains(&a.atom))
-                .count() as f64;
-            let off_ratio = off / total;
-            let off_tokens = (off_ratio * wr.batch.cost_tokens as f64) as usize;
+            let (off_ratio, off_tokens) =
+                off_ns_attribution(&wr.atoms, &wr.atom_token_costs, &ns_atom_set)?;
             if off_tokens < UNMAPPED_COST_THRESHOLD {
                 return None;
             }
@@ -947,6 +1010,112 @@ fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
 
 #[cfg(test)]
 mod tests {
+    use std::collections::BTreeSet;
+    use std::path::PathBuf;
+
+    use crate::schedule_types::Atom;
+
+    use super::{GradedAtom, off_ns_attribution};
+
+    fn line_atom(line: usize, bytes: usize) -> GradedAtom {
+        GradedAtom {
+            atom: Atom::Line {
+                path: PathBuf::from("src/lib.rs"),
+                line,
+            },
+            bytes,
+        }
+    }
+
+    /// Heterogeneous batch: one Full atom of a long line + four Ellipsis
+    /// atoms of short lines. Atom-count attribution would say off_ratio
+    /// = 4/5 = 0.80 (and off_tokens scaled to ~80% of cost). Marginal
+    /// attribution credits each atom with its real marginal cost: the
+    /// Full line dominates, so the off_ratio is much lower. Concrete
+    /// numbers used here mirror the rendered token weights you'd get
+    /// from `format_line_row` (long-line ≈ 50 tokens, ellipsis ≈ 1
+    /// token).
+    #[test]
+    fn divergence_off_ns_attribution_marginal_weighted() {
+        // Atom 1 (line 1) is on-NS, costs 50 tokens; atoms 2..=5 are
+        // off-NS, each costs 1 token.
+        let atoms = vec![
+            line_atom(1, 50),
+            line_atom(2, 1),
+            line_atom(3, 1),
+            line_atom(4, 1),
+            line_atom(5, 1),
+        ];
+        let atom_token_costs = vec![50usize, 1, 1, 1, 1];
+        let ns_atom_set: BTreeSet<Atom> = [Atom::Line {
+            path: PathBuf::from("src/lib.rs"),
+            line: 1,
+        }]
+        .into_iter()
+        .collect();
+
+        let (off_ratio, off_tokens) =
+            off_ns_attribution(&atoms, &atom_token_costs, &ns_atom_set).expect("non-empty");
+
+        // Off atoms = lines 2..=5, marginal cost 4. Total marginal 54.
+        assert_eq!(off_tokens, 4);
+        assert!(
+            (off_ratio - 4.0 / 54.0).abs() < 1e-9,
+            "off_ratio = {off_ratio}, expected ≈ {}",
+            4.0 / 54.0
+        );
+        // Sanity: atom-count attribution would be 4/5 = 0.80, so the
+        // marginal-weighted ratio is ~10× lower — the Full atom carries
+        // the spend.
+        assert!(off_ratio < 0.5);
+    }
+
+    /// Refinement-over-ancestor case: line 1 is in NS but the walker
+    /// batch refines a previously-rendered line, so its marginal cost
+    /// is tiny. The off-NS atom (line 2) carries most of the marginal
+    /// spend. Without per-atom marginals, the on-NS atom's *fresh*
+    /// cost would dominate the denominator and skew off_ratio toward
+    /// zero — codex round-2 finding. This asserts the fix.
+    #[test]
+    fn divergence_off_ns_attribution_handles_refinement() {
+        // Line 1 (on-NS): refinement contributes only 5 tokens delta.
+        // Line 2 (off-NS): fresh full line contributes 30 tokens.
+        let atoms = vec![line_atom(1, 50), line_atom(2, 30)];
+        let atom_token_costs = vec![5usize, 30];
+        let ns_atom_set: BTreeSet<Atom> = [Atom::Line {
+            path: PathBuf::from("src/lib.rs"),
+            line: 1,
+        }]
+        .into_iter()
+        .collect();
+
+        let (off_ratio, off_tokens) =
+            off_ns_attribution(&atoms, &atom_token_costs, &ns_atom_set).expect("non-empty");
+
+        // Off-NS atom contributed 30 tokens of marginal spend; total 35.
+        assert_eq!(off_tokens, 30);
+        let expected = 30.0 / 35.0;
+        assert!(
+            (off_ratio - expected).abs() < 1e-9,
+            "off_ratio = {off_ratio}, expected ≈ {expected}"
+        );
+        // Most of the batch's marginal spend was off-NS — the rollup
+        // should rank this batch high. A fresh-cost-weighted formula
+        // would have given off_ratio = 30/80 ≈ 0.375; marginal gives
+        // ≈ 0.857.
+        assert!(off_ratio > 0.8);
+    }
+
+    /// All atoms are pure refinements (every cost is zero) — no marginal
+    /// spend means there's nothing to attribute. Returns `None`.
+    #[test]
+    fn divergence_off_ns_attribution_skips_zero_marginal() {
+        let atoms = vec![line_atom(1, 10), line_atom(2, 10)];
+        let atom_token_costs = vec![0usize, 0];
+        let ns_atom_set: BTreeSet<Atom> = BTreeSet::new();
+        assert!(off_ns_attribution(&atoms, &atom_token_costs, &ns_atom_set).is_none());
+    }
+
     use super::pattern_template;
 
     #[test]

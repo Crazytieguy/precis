@@ -77,6 +77,16 @@ pub enum Violation {
         full_tokens: usize,
         truncated_tokens: usize,
     },
+    /// `Render::Ellipsis` span where `start != end`. Renders as one `…`
+    /// per covered line — visually indistinguishable from one `…`
+    /// (Ellipsis lines emit no line number) but costing N× the tokens.
+    /// Almost always an authoring slip; the schema doc on
+    /// `Render::Ellipsis` calls this single-line-only.
+    EllipsisMultiLine {
+        path: PathBuf,
+        start: usize,
+        end: usize,
+    },
     /// Fs group's parent or listed child doesn't exist.
     FsResolveFailed(String),
     /// A span would overwrite a line owned by a non-ancestor batch.
@@ -317,6 +327,13 @@ fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> V
                     line: ln,
                 });
             }
+        }
+        if matches!(span.render, Render::Ellipsis) && span.start != span.end {
+            out.push(Violation::EllipsisMultiLine {
+                path: span.path.clone(),
+                start: span.start,
+                end: span.end,
+            });
         }
         if let Render::Truncated { pattern } = &span.render {
             if !compiled.contains_key(pattern) {

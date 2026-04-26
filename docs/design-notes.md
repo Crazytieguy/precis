@@ -681,12 +681,27 @@ the calibration artifact. Two items previously deferred:
   ties on relative descriptor (was: absolute), so a few sub-tied row
   pairs reordered in baselines — sort key now matches what the
   reader sees.
-- **Token-weight off-NS attribution.** Mixed-waste rows currently
-  estimate off-NS spend as `off_atoms / total_atoms × cost_tokens`
-  (atom-count-proportional). For batches with very uneven per-atom
-  costs (e.g., one atom is a 200-line method body, others are
-  one-line decls) this can misrank calibration targets. Defer until
-  someone observes a misranking that changes a calibration decision.
+- **Marginal per-atom off-NS attribution.** DONE.
+  `format_walker_waste` in `src/divergence.rs` now weights off-NS
+  attribution by per-atom marginal token cost (`off_marginal /
+  total_marginal`) rather than atom count. Per-atom marginals come
+  from a new `RenderedTree::marginal_cost_per_atom` helper invoked
+  once per scheduled batch against a parallel walker tree driven
+  forward in schedule order — so refinement-over-ancestor lines pay
+  the truncated delta and already-listed FS entries pay 0,
+  matching what the scheduler actually paid. `off_tokens` is now
+  the exact off-NS marginal sum (no `× cost` approximation), and
+  `off_ratio = off_marginal / total_marginal`. The earlier draft
+  used `GradedAtom.bytes` (credit-accounting field, wrong
+  dimensions) and a fresh-cost denominator (skews on
+  refinement batches); both flaws were caught in plan-review
+  rounds 1 and 2. Render-side refactor: `marginal_cost` and
+  `marginal_cost_per_atom` share a `visit_atom_costs` visitor so
+  the cost formula has one source of truth and the sum-only
+  scheduler hot path doesn't allocate a per-atom Vec. Sim scores
+  unchanged across all 10 fixtures; walker-waste rows re-rank,
+  most diffs <30 lines/baseline. Plan + 3 plan-review rounds in
+  `ignore/plan-divergence-tooling-tightening.md`.
 
 ### Calibration target surfaced by the rollup
 
@@ -743,14 +758,20 @@ Observed from the first NS-author runs under the revised prompt:
   of the line; if nothing meaningful trails the match, use `Full`).
   Optional stronger version: validator could reject patterns that
   match the whole line.
-- **Multi-line Ellipsis spans** — the otree NS used an `Ellipsis`
-  span covering multiple lines, which renders as a single `…` at the
-  first line and nothing at the others (our render collapses an
-  Ellipsis run into one marker). Should arguably be invalid: `Ellipsis`
-  is conceptually a 1-line marker, multi-line spans suggest the author
-  misunderstood. Fix options: (a) tighten `Render::Ellipsis` doc to
-  clarify it's single-line, (b) validator rejects Ellipsis spans with
-  `start != end`.
+- **Multi-line Ellipsis spans** — DONE.
+  `Violation::EllipsisMultiLine` in `src/ns_simulate.rs` now flags
+  `Render::Ellipsis` spans where `start != end`. Quality-only
+  (not render-blocking — the batch still simulates so successors
+  don't see false-positive `PredecessorMissing`). The earlier
+  premise here was wrong: a multi-line Ellipsis span doesn't drop
+  lines silently; `explode_spans` expands every covered line and
+  `format_line_row` emits one `…` per line. So a 5-line Ellipsis
+  renders as five consecutive `…` markers — visually
+  indistinguishable from one (Ellipsis lines emit no line number)
+  but costing 5× the tokens. Either way it's an authoring slip,
+  and the schema doc on `Render::Ellipsis` already calls it
+  single-line-only — the validator now enforces that. Plan-review
+  round 1 caught the stale premise.
 
 Both are "prompt-adjacent" bugs — agents generally infer type
 semantics from field docs, so tightening `content.rs` type docs is

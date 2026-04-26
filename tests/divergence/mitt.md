@@ -65,7 +65,7 @@ scores: Sim=0.531 Reached=19/43 Early=4 Late=11 Partial=8 Missing=16 Used=4868/1
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 138 | 0.80 | 173 | 202 | package identity in package.json |
-| 137 | 0.65 | 212 | 582 | package entrypoints in package.json |
 | 132 | 1.00 | 132 | 1997 | README.md section #5 |
+| 126 | 0.73 | 173 | 202 | package identity in package.json |
+| 120 | 0.57 | 212 | 582 | package entrypoints in package.json |
 | 80 | 1.00 | 80 | 1455 | README.md section #1 |

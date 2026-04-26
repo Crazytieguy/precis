@@ -78,7 +78,7 @@ scores: Sim=0.393 Reached=18/49 Early=2 Late=14 Partial=8 Missing=23 Used=9956/1
 | 549 | 1.00 | 549 | 8303 | impl method sigs in crates/mdbook-summary/src/lib.rs |
 | 257 | 1.00 | 257 | 1221 | [features] in Cargo.toml |
 | 231 | 1.00 | 231 | 7507 | README headline in guide/src/README.md |
-| 174 | 0.50 | 349 | 676 | [package] in Cargo.toml |
+| 176 | 0.50 | 349 | 676 | [package] in Cargo.toml |
 | 159 | 1.00 | 159 | 891 | headings outline in CONTRIBUTING.md |
 | 152 | 1.00 | 152 | 8797 | guide/src/README.md section #1 |
 | 146 | 1.00 | 146 | 8645 | CONTRIBUTING.md section #1 |
@@ -87,11 +87,10 @@ scores: Sim=0.393 Reached=18/49 Early=2 Late=14 Partial=8 Missing=23 Used=9956/1
 | 131 | 1.00 | 131 | 4033 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |
 | 111 | 1.00 | 111 | 6920 | README headline in guide/src/for_developers/README.md |
 | 108 | 1.00 | 108 | 281 | README.md section #1 |
-| 108 | 0.69 | 156 | 8459 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
+| 106 | 0.68 | 156 | 8459 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
 | 98 | 1.00 | 98 | 1492 | README headline in crates/mdbook-driver/README.md |
-| 96 | 0.67 | 144 | 7670 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
 | 96 | 1.00 | 96 | 2538 | mod/use plumbing in src/main.rs |
-| 88 | 0.73 | 121 | 5583 | impl method sigs in crates/mdbook-renderer/src/lib.rs |
+| 94 | 0.65 | 144 | 7670 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
 | 88 | 1.00 | 88 | 9477 | mod/use plumbing in crates/mdbook-core/src/utils/mod.rs |
 | 84 | 1.00 | 84 | 7754 | pub-item names surface in crates/mdbook-html/src/utils.rs |
 | 81 | 1.00 | 81 | 2658 | headings outline in guide/src/continuous-integration.md |

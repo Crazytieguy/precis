@@ -60,7 +60,7 @@ scores: Sim=0.380 Reached=14/44 Early=0 Late=8 Partial=5 Missing=25 Used=9925/10
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 5 | 2110 | pub-item doc at src/lib.rs:<n> |
+| 4 | 2049 | pub-item doc at src/lib.rs:<n> |
 | 10 | 1767 | README.md section #<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
@@ -73,21 +73,20 @@ scores: Sim=0.380 Reached=14/44 Early=0 Late=8 Partial=5 Missing=25 Used=9925/10
 | 286 | 1.00 | 286 | 3021 | pub-item doc at src/lib.rs:650 |
 | 259 | 1.00 | 259 | 2244 | README.md section #9 |
 | 241 | 1.00 | 241 | 7852 | README.md section #2 |
+| 229 | 0.84 | 274 | 1081 | crate-doc lede in src/lib.rs |
 | 215 | 1.00 | 215 | 7611 | README.md section #4 |
-| 210 | 0.77 | 274 | 1081 | crate-doc lede in src/lib.rs |
 | 205 | 1.00 | 205 | 7396 | README.md section #5 |
 | 200 | 1.00 | 200 | 1778 | README.md section #7 |
 | 199 | 1.00 | 199 | 7191 | README.md section #1 |
 | 192 | 1.00 | 192 | 2436 | pub-item doc at src/lib.rs:415 |
 | 138 | 1.00 | 138 | 4114 | README.md section #3 |
+| 136 | 0.38 | 356 | 1437 | macro_export bodies across src |
 | 124 | 1.00 | 124 | 1561 | README.md section #8 |
 | 120 | 1.00 | 120 | 3903 | README.md section #6 |
-| 114 | 0.32 | 356 | 1437 | macro_export bodies across src |
-| 99 | 0.73 | 135 | 9742 | impl method sigs in tests/drop/mod.rs |
-| 83 | 0.50 | 167 | 331 | [package] in Cargo.toml |
+| 100 | 0.60 | 167 | 331 | [package] in Cargo.toml |
+| 96 | 0.71 | 135 | 9742 | impl method sigs in tests/drop/mod.rs |
+| 75 | 0.43 | 173 | 2609 | mod/use plumbing in src/lib.rs |
 | 67 | 1.00 | 67 | 9513 | [package] in tests/crate/Cargo.toml |
 | 66 | 1.00 | 66 | 397 | README.md section #0 |
 | 63 | 1.00 | 63 | 97 | README headline in README.md |
-| 61 | 0.05 | 1206 | 9058 | pub-item doc at src/lib.rs:390 |
-| 60 | 0.35 | 173 | 2609 | mod/use plumbing in src/lib.rs |
 | 54 | 1.00 | 54 | 9817 | mod/use plumbing in tests/drop/mod.rs |

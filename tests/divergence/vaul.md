@@ -52,18 +52,18 @@ scores: Sim=0.419 Reached=14/33 Early=3 Late=8 Partial=5 Missing=14 Used=9459/10
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 1039 | 1.00 | 1039 | 8555 | export body at src/index.tsx:996 |
-| 384 | 0.75 | 512 | 3398 | export at playwright.config.ts:12 |
+| 407 | 0.79 | 512 | 3398 | export at playwright.config.ts:12 |
 | 327 | 1.00 | 327 | 7016 | export at src/context.ts:37 |
 | 245 | 1.00 | 245 | 6575 | export body at src/use-controllable-state.ts:39 |
-| 227 | 0.64 | 357 | 7516 | package dependencies in package.json |
-| 193 | 0.84 | 230 | 303 | package identity in package.json |
+| 209 | 0.59 | 357 | 7516 | package dependencies in package.json |
+| 189 | 0.82 | 230 | 303 | package identity in package.json |
 | 174 | 1.00 | 174 | 477 | package entrypoints in package.json |
 | 170 | 1.00 | 170 | 4844 | export body at src/use-prevent-scroll.ts:68 |
+| 156 | 0.51 | 305 | 3733 | export body at src/index.tsx:803 |
 | 152 | 1.00 | 152 | 4674 | export body at src/helpers.ts:23 |
 | 147 | 1.00 | 147 | 8826 | export doc at src/use-position-fixed.ts:15 |
 | 135 | 1.00 | 135 | 619 | package scripts in package.json |
 | 134 | 1.00 | 134 | 4411 | export body at src/helpers.ts:42 |
-| 128 | 0.42 | 305 | 3733 | export body at src/index.tsx:803 |
 | 124 | 1.00 | 124 | 8679 | export at src/use-position-fixed.ts:15 |
 | 111 | 1.00 | 111 | 730 | json config tsconfig.json |
 | 111 | 1.00 | 111 | 4522 | json config turbo.json |
@@ -75,4 +75,3 @@ scores: Sim=0.419 Reached=14/33 Early=3 Late=8 Partial=5 Missing=14 Used=9459/10
 | 60 | 1.00 | 60 | 1961 | export body at src/use-prevent-scroll.ts:294 |
 | 58 | 1.00 | 58 | 6101 | export doc at src/use-prevent-scroll.ts:68 |
 | 57 | 1.00 | 57 | 2018 | export body at src/context.ts:69 |
-| 53 | 0.31 | 171 | 3904 | export names surface in src/helpers.ts |

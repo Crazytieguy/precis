@@ -59,27 +59,26 @@ scores: Sim=0.466 Reached=19/39 Early=5 Late=11 Partial=1 Missing=19 Used=9965/1
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 5 | 779 | Readme.md section #<n> |
+| 5 | 864 | Readme.md section #<n> |
 | 3 | 434 | export at src/structs/utilities.ts:<n> |
 | 3 | 344 | Changelog.md section #<n> |
+| 3 | 176 | export at src/structs/refinements.ts:<n> |
 | 2 | 166 | export doc at src/struct.ts:<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
+| 468 | 1.00 | 468 | 6579 | Readme.md section #1 |
 | 434 | 1.00 | 434 | 5447 | headings outline in Changelog.md |
-| 425 | 0.91 | 468 | 6579 | Readme.md section #1 |
 | 324 | 1.00 | 324 | 2569 | package scripts in package.json |
-| 295 | 0.78 | 381 | 708 | package identity in package.json |
-| 255 | 0.85 | 301 | 8662 | package dependencies in package.json |
+| 269 | 0.89 | 301 | 8662 | package dependencies in package.json |
+| 249 | 0.65 | 381 | 708 | package identity in package.json |
+| 193 | 1.00 | 193 | 3705 | Readme.md section #8 |
 | 185 | 1.00 | 185 | 1185 | json config tsconfig.json |
 | 182 | 1.00 | 182 | 8123 | export at src/structs/utilities.ts:44 |
-| 176 | 0.92 | 193 | 3705 | Readme.md section #8 |
 | 150 | 1.00 | 150 | 7715 | export at src/structs/utilities.ts:30 |
-| 142 | 0.65 | 218 | 7092 | export names surface in src/structs/utilities.ts |
 | 136 | 1.00 | 136 | 6874 | Changelog.md section #2 |
-| 121 | 0.32 | 376 | 9294 | export at src/struct.ts:10 |
 | 119 | 1.00 | 119 | 8361 | export body at src/structs/utilities.ts:171 |
 | 119 | 1.00 | 119 | 8242 | export body at src/structs/utilities.ts:80 |
 | 113 | 1.00 | 113 | 7828 | export body at src/structs/utilities.ts:197 |
@@ -90,17 +89,21 @@ scores: Sim=0.466 Reached=19/39 Early=5 Late=11 Partial=1 Missing=19 Used=9965/1
 | 107 | 1.00 | 107 | 5636 | export body at src/structs/refinements.ts:33 |
 | 107 | 1.00 | 107 | 5743 | export body at src/structs/refinements.ts:55 |
 | 102 | 1.00 | 102 | 7342 | export at src/structs/utilities.ts:21 |
+| 98 | 1.00 | 98 | 882 | Readme.md section #7 |
 | 97 | 1.00 | 97 | 8759 | export doc at src/struct.ts:221 |
 | 96 | 1.00 | 96 | 9965 | Changelog.md section #5 |
+| 82 | 0.22 | 376 | 9294 | export at src/struct.ts:10 |
 | 82 | 1.00 | 82 | 3512 | export body at src/structs/refinements.ts:8 |
-| 73 | 0.75 | 98 | 882 | Readme.md section #7 |
-| 73 | 0.32 | 231 | 4180 | export names surface in src/struct.ts |
 | 72 | 1.00 | 72 | 3157 | export body at src/structs/refinements.ts:77 |
 | 71 | 1.00 | 71 | 3085 | export body at src/structs/refinements.ts:93 |
 | 69 | 1.00 | 69 | 4563 | export body at src/struct.ts:157 |
 | 69 | 1.00 | 69 | 9363 | export doc at src/struct.ts:10 |
+| 67 | 0.31 | 218 | 7092 | export names surface in src/structs/utilities.ts |
 | 65 | 1.00 | 65 | 4494 | export body at src/struct.ts:139 |
 | 65 | 1.00 | 65 | 7445 | export body at src/structs/utilities.ts:60 |
+| 62 | 1.00 | 62 | 5529 | export at src/structs/refinements.ts:109 |
+| 57 | 1.00 | 57 | 2913 | export at src/structs/refinements.ts:33 |
+| 57 | 1.00 | 57 | 2970 | export at src/structs/refinements.ts:55 |
 | 55 | 1.00 | 55 | 9757 | Readme.md section #2 |
-| 51 | 0.15 | 339 | 9702 | export body at src/struct.ts:10 |
+| 53 | 0.16 | 339 | 9702 | export body at src/struct.ts:10 |
 | 50 | 1.00 | 50 | 8809 | Readme.md section #3 |

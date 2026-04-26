@@ -65,35 +65,35 @@ scores: Sim=0.434 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9152/1
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 6 | 975 | README.md section #<n> |
-| 4 | 428 | pub item at src/config/colors.rs:<n> |
-| 3 | 281 | docs/changelog.md section #<n> |
+| 6 | 1058 | README.md section #<n> |
+| 4 | 489 | pub item at src/config/colors.rs:<n> |
+| 3 | 326 | docs/changelog.md section #<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 599 | 0.66 | 905 | 8971 | pub item at src/cmd.rs:13 |
-| 553 | 0.96 | 575 | 8066 | README.md section #5 |
-| 364 | 0.86 | 425 | 5321 | impl method sigs in src/config/mod.rs |
+| 626 | 0.69 | 905 | 8971 | pub item at src/cmd.rs:13 |
+| 575 | 1.00 | 575 | 8066 | README.md section #5 |
+| 348 | 0.82 | 425 | 5321 | impl method sigs in src/config/mod.rs |
 | 321 | 1.00 | 321 | 6474 | [dependencies] in Cargo.toml |
-| 246 | 0.77 | 321 | 7278 | headings outline in docs/changelog.md |
 | 188 | 1.00 | 188 | 6957 | mod/use plumbing in src/ui/mod.rs |
-| 171 | 0.92 | 187 | 3206 | README.md section #4 |
-| 147 | 0.50 | 295 | 6769 | pub item at src/config/colors.rs:162 |
-| 129 | 0.50 | 259 | 6083 | pub item at src/config/colors.rs:78 |
-| 128 | 0.89 | 144 | 9136 | docs/changelog.md section #3 |
-| 125 | 0.59 | 213 | 5824 | mod/use plumbing in src/main.rs |
+| 187 | 1.00 | 187 | 3206 | README.md section #4 |
+| 178 | 0.60 | 295 | 6769 | pub item at src/config/colors.rs:162 |
+| 165 | 0.51 | 321 | 7278 | headings outline in docs/changelog.md |
+| 159 | 0.61 | 259 | 6083 | pub item at src/config/colors.rs:78 |
+| 149 | 0.70 | 213 | 5824 | mod/use plumbing in src/main.rs |
+| 144 | 1.00 | 144 | 9136 | docs/changelog.md section #3 |
 | 119 | 1.00 | 119 | 4896 | mod/use plumbing in src/config/mod.rs |
 | 115 | 1.00 | 115 | 4591 | mod/use plumbing in src/parse/mod.rs |
+| 103 | 1.00 | 103 | 7412 | docs/changelog.md section #1 |
+| 96 | 1.00 | 96 | 1045 | README.md section #6 |
+| 93 | 0.61 | 153 | 4476 | pub item at src/config/types.rs:28 |
 | 91 | 1.00 | 91 | 578 | macro_export bodies across src |
-| 90 | 0.88 | 103 | 7412 | docs/changelog.md section #1 |
 | 87 | 1.00 | 87 | 2927 | pub item at src/config/colors.rs:286 |
-| 76 | 0.50 | 153 | 4476 | pub item at src/config/types.rs:28 |
+| 79 | 1.00 | 79 | 7491 | docs/changelog.md section #2 |
+| 74 | 1.00 | 74 | 353 | README.md section #1 |
 | 70 | 1.00 | 70 | 6153 | README.md section #2 |
 | 65 | 1.00 | 65 | 2840 | pub item at src/config/colors.rs:251 |
-| 64 | 0.67 | 96 | 1045 | README.md section #6 |
-| 63 | 0.80 | 79 | 7491 | docs/changelog.md section #2 |
-| 61 | 0.83 | 74 | 353 | README.md section #1 |
 | 58 | 1.00 | 58 | 817 | pub item at src/live_reload.rs:16 |
 | 56 | 1.00 | 56 | 5377 | README.md section #3 |

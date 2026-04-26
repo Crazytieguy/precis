@@ -124,9 +124,34 @@ impl RenderedTree {
 
     /// Marginal cost of applying `batch` against the current state.
     pub fn marginal_cost(&self, batch: &Batch) -> Cost {
+        let mut total = Cost::default();
+        self.visit_atom_costs(batch, |c| total = total + c);
+        total
+    }
+
+    /// Marginal cost broken down per atom — one entry per atom in the
+    /// batch, in `divergence::atoms_from_content` iteration order so
+    /// callers can index 1:1. Atoms that don't contribute (FS entries
+    /// already listed, line refinements no longer than the prior render)
+    /// yield `Cost::default()`. Used by the divergence walker-waste
+    /// accounting to attribute off-NS spend to atoms with their actual
+    /// marginal contribution — bodies and short decls can sit in the
+    /// same batch but differ ~10× in token weight.
+    pub fn marginal_cost_per_atom(&self, batch: &Batch) -> Vec<Cost> {
+        let mut out = Vec::new();
+        self.visit_atom_costs(batch, |c| out.push(c));
+        out
+    }
+
+    /// Internal visitor: invokes `visit(cost)` once per atom in iteration
+    /// order. Single source of truth for the per-atom cost formula —
+    /// `marginal_cost` sums into a scalar without allocating, and
+    /// `marginal_cost_per_atom` collects into a `Vec<Cost>` for callers
+    /// that need per-atom granularity.
+    fn visit_atom_costs<F: FnMut(Cost)>(&self, batch: &Batch, mut visit: F) {
         match &batch.content {
-            BatchContent::Fs { groups } => self.cost_fs_groups(groups),
-            BatchContent::Lines { spans } => self.cost_spans(spans),
+            BatchContent::Fs { groups } => self.visit_fs_atom_costs(groups, &mut visit),
+            BatchContent::Lines { spans } => self.visit_span_atom_costs(spans, &mut visit),
         }
     }
 
@@ -174,8 +199,7 @@ impl RenderedTree {
             .unwrap_or(0)
     }
 
-    fn cost_fs_groups(&self, groups: &[FsGroup]) -> Cost {
-        let mut cost = Cost::default();
+    fn visit_fs_atom_costs<F: FnMut(Cost)>(&self, groups: &[FsGroup], visit: &mut F) {
         for group in groups {
             let FsEntries::Listed(paths) = &group.entries else {
                 debug_assert!(
@@ -185,36 +209,39 @@ impl RenderedTree {
                 );
                 continue;
             };
-            cost = cost + self.cost_one_listing(&group.parent, paths);
-        }
-        cost
-    }
-
-    fn cost_one_listing(&self, parent: &Path, paths: &[PathBuf]) -> Cost {
-        let indent_depth = self.depth_from_root(parent);
-        let already_listed = match self.nodes.get(parent) {
-            Some(TreeNode::Dir { children }) => Some(children),
-            _ => None,
-        };
-        let probed = list_dir(parent);
-        let mut cost = Cost::default();
-        for p in paths {
-            let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
-                continue;
+            let parent = &group.parent;
+            let indent_depth = self.depth_from_root(parent);
+            let already_listed = match self.nodes.get(parent) {
+                Some(TreeNode::Dir { children }) => Some(children),
+                _ => None,
             };
-            if already_listed.is_some_and(|c| c.contains_key(name)) {
-                continue;
+            let probed = list_dir(parent);
+            for p in paths {
+                let Some(name) = p.file_name().and_then(|n| n.to_str()) else {
+                    continue;
+                };
+                let cost = if already_listed.is_some_and(|c| c.contains_key(name)) {
+                    Cost::default()
+                } else {
+                    let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
+                    let row = format_entry_row(name, kind, indent_depth);
+                    Cost {
+                        tokens: tokenizer::count(&row),
+                        bytes: row.len(),
+                    }
+                };
+                visit(cost);
             }
-            let kind = probed.get(name).copied().unwrap_or(EntryKind::File);
-            let row = format_entry_row(name, kind, indent_depth);
-            cost.tokens += tokenizer::count(&row);
-            cost.bytes += row.len();
         }
-        cost
     }
 
-    fn cost_spans(&self, spans: &[Span]) -> Cost {
+    fn visit_span_atom_costs<F: FnMut(Cost)>(&self, spans: &[Span], visit: &mut F) {
         let resolved = explode_spans(spans);
+        // explode_spans yields `(path, line)` in lex order; grouping by
+        // path lets source + indent + existing-content lookups happen
+        // once per path while preserving that order — required so the
+        // visitor's per-atom output indexes 1:1 with
+        // `divergence::atoms_from_content`'s Lines arm.
         let mut by_path: BTreeMap<&Path, Vec<(usize, &Render)>> = BTreeMap::new();
         for (path, line, render) in &resolved {
             by_path
@@ -223,7 +250,6 @@ impl RenderedTree {
                 .push((*line, render));
         }
 
-        let mut cost = Cost::default();
         for (path, entries) in by_path {
             let source = self.source_cache.get(path);
             let src_lines: Vec<&str> = source
@@ -247,19 +273,23 @@ impl RenderedTree {
                 let new_row = format_line_row(line_num, render, source_line, indent_depth);
                 let new_tokens = tokenizer::count(&new_row);
                 let new_bytes = new_row.len();
-                if let Some(existing) = existing
+                let cost = if let Some(existing) = existing
                     && let Some(old) = existing.get(&line_num)
                 {
                     let old_row = format_line_row(line_num, &old.render, source_line, indent_depth);
-                    cost.tokens += new_tokens.saturating_sub(tokenizer::count(&old_row));
-                    cost.bytes += new_bytes.saturating_sub(old_row.len());
+                    Cost {
+                        tokens: new_tokens.saturating_sub(tokenizer::count(&old_row)),
+                        bytes: new_bytes.saturating_sub(old_row.len()),
+                    }
                 } else {
-                    cost.tokens += new_tokens;
-                    cost.bytes += new_bytes;
-                }
+                    Cost {
+                        tokens: new_tokens,
+                        bytes: new_bytes,
+                    }
+                };
+                visit(cost);
             }
         }
-        cost
     }
 
     fn apply_fs_group(&mut self, group: &FsGroup) {

@@ -71,8 +71,8 @@ scores: Sim=0.539 Reached=13/44 Early=2 Late=8 Partial=2 Missing=29 Used=7976/10
 | 422 | 1.00 | 422 | 7885 | pub-item doc at src/lib.rs:1003 |
 | 400 | 1.00 | 400 | 7463 | pub-item doc at src/lib.rs:1158 |
 | 397 | 1.00 | 397 | 7063 | [dependencies] in Cargo.toml |
-| 377 | 0.89 | 425 | 6385 | pub item at src/kv/source.rs:51 |
-| 334 | 0.83 | 401 | 1921 | pub item at src/lib.rs:1249 |
+| 359 | 0.84 | 425 | 6385 | pub item at src/kv/source.rs:51 |
+| 349 | 0.87 | 401 | 1921 | pub item at src/lib.rs:1249 |
 | 319 | 1.00 | 319 | 5310 | README.md section #4 |
 | 267 | 1.00 | 267 | 6652 | pub-item doc at src/lib.rs:1375 |
 | 259 | 1.00 | 259 | 5960 | pub-item doc at src/lib.rs:1529 |
@@ -80,18 +80,17 @@ scores: Sim=0.539 Reached=13/44 Early=2 Late=8 Partial=2 Missing=29 Used=7976/10
 | 213 | 1.00 | 213 | 5523 | pub-item doc at src/lib.rs:1396 |
 | 198 | 1.00 | 198 | 2561 | README.md section #0 |
 | 197 | 1.00 | 197 | 4991 | pub-item doc at src/lib.rs:1200 |
-| 179 | 0.70 | 256 | 3644 | macro_export names across src |
 | 164 | 1.00 | 164 | 4716 | pub-item doc at src/lib.rs:1420 |
-| 138 | 0.75 | 184 | 310 | [package] in Cargo.toml |
+| 156 | 0.61 | 256 | 3644 | macro_export names across src |
+| 128 | 0.70 | 184 | 310 | [package] in Cargo.toml |
 | 126 | 1.00 | 126 | 4436 | pub-item doc at src/lib.rs:1611 |
 | 122 | 1.00 | 122 | 3766 | pub-item doc at src/lib.rs:636 |
 | 100 | 1.00 | 100 | 2734 | pub-item doc at src/lib.rs:475 |
-| 97 | 0.77 | 127 | 4289 | mod/use plumbing in src/lib.rs |
 | 96 | 1.00 | 96 | 5701 | CHANGELOG.md section #4 |
+| 95 | 0.75 | 127 | 4289 | mod/use plumbing in src/lib.rs |
 | 78 | 1.00 | 78 | 4794 | CHANGELOG.md section #3 |
 | 75 | 1.00 | 75 | 653 | README.md section #1 |
 | 73 | 1.00 | 73 | 2634 | pub-item doc at src/lib.rs:1351 |
-| 70 | 0.24 | 300 | 961 | pub-item names surface in src/lib.rs |
 | 67 | 1.00 | 67 | 3175 | macro_export names across src/kv |
 | 63 | 1.00 | 63 | 2323 | pub-item doc at src/lib.rs:1566 |
 | 53 | 1.00 | 53 | 126 | headings outline in README.md |

@@ -66,8 +66,8 @@ scores: Sim=0.267 Reached=20/42 Early=9 Late=10 Partial=5 Missing=17 Used=9026/1
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 8 | 1344 | README.md section #<n> |
-| 3 | 724 | ARCHITECTURE.md section #<n> |
+| 8 | 1428 | README.md section #<n> |
+| 2 | 663 | ARCHITECTURE.md section #<n> |
 | 2 | 118 | export doc at cmdk/src/index.tsx:<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
@@ -77,24 +77,22 @@ scores: Sim=0.267 Reached=20/42 Early=9 Late=10 Partial=5 Missing=17 Used=9026/1
 | 467 | 1.00 | 467 | 4341 | export body at cmdk/src/index.tsx:833 |
 | 400 | 1.00 | 400 | 3439 | export body at cmdk/src/index.tsx:787 |
 | 386 | 1.00 | 386 | 7121 | ARCHITECTURE.md section #0 |
-| 279 | 0.95 | 294 | 9026 | README.md section #5 |
+| 294 | 1.00 | 294 | 9026 | README.md section #5 |
 | 277 | 1.00 | 277 | 6578 | ARCHITECTURE.md section #2 |
 | 253 | 1.00 | 253 | 8732 | README.md section #18 |
 | 242 | 1.00 | 242 | 2267 | json config tsconfig.json |
 | 210 | 1.00 | 210 | 558 | package identity in cmdk/package.json |
 | 205 | 1.00 | 205 | 8203 | README.md section #16 |
+| 179 | 1.00 | 179 | 7998 | README.md section #7 |
 | 179 | 1.00 | 179 | 1701 | export body at cmdk/src/index.tsx:909 |
 | 178 | 1.00 | 178 | 1522 | export body at cmdk/src/index.tsx:882 |
-| 173 | 0.46 | 375 | 5529 | README.md section #20 |
-| 168 | 0.94 | 179 | 7998 | README.md section #7 |
+| 160 | 0.43 | 375 | 5529 | README.md section #20 |
 | 145 | 1.00 | 145 | 703 | package entrypoints in cmdk/package.json |
-| 138 | 0.48 | 290 | 2576 | headings outline in README.md |
-| 104 | 0.93 | 113 | 2780 | README.md section #22 |
-| 101 | 0.54 | 189 | 6301 | package dependencies in cmdk/package.json |
-| 95 | 0.67 | 143 | 2923 | README.md section #21 |
+| 143 | 1.00 | 143 | 2923 | README.md section #21 |
+| 113 | 1.00 | 113 | 2780 | README.md section #22 |
+| 95 | 0.50 | 189 | 6301 | package dependencies in cmdk/package.json |
+| 81 | 1.00 | 81 | 6735 | README.md section #6 |
+| 80 | 0.28 | 290 | 2576 | headings outline in README.md |
 | 78 | 1.00 | 78 | 781 | package scripts in cmdk/package.json |
-| 69 | 0.19 | 369 | 1188 | export names surface in cmdk/src/index.tsx |
-| 67 | 0.83 | 81 | 6735 | README.md section #6 |
 | 66 | 1.00 | 66 | 2025 | export doc at cmdk/src/index.tsx:664 |
-| 61 | 0.14 | 433 | 7554 | ARCHITECTURE.md section #1 |
 | 52 | 1.00 | 52 | 1876 | export doc at cmdk/src/index.tsx:833 |

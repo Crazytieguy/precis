@@ -73,14 +73,13 @@ scores: Sim=0.283 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 |-----------:|----------:|-----:|--------:|:------|
 | 350 | 1.00 | 350 | 5932 | export at src/types/BuildMany.ts:19 |
 | 339 | 1.00 | 339 | 9826 | export body at src/patterns.ts:696 |
-| 338 | 0.94 | 360 | 1392 | package entrypoints in package.json |
+| 336 | 0.93 | 360 | 1392 | package entrypoints in package.json |
 | 312 | 1.00 | 312 | 9487 | export body at src/patterns.ts:246 |
 | 285 | 1.00 | 285 | 9175 | export body at src/patterns.ts:299 |
 | 271 | 1.00 | 271 | 1965 | package scripts in package.json |
 | 235 | 1.00 | 235 | 8644 | export body at src/patterns.ts:187 |
-| 227 | 0.83 | 273 | 384 | package identity in package.json |
 | 217 | 1.00 | 217 | 3935 | README.md section #2 |
-| 195 | 0.30 | 652 | 6584 | export names surface in src/patterns.ts |
+| 217 | 0.79 | 273 | 384 | package identity in package.json |
 | 193 | 1.00 | 193 | 8373 | export body at src/patterns.ts:536 |
 | 154 | 1.00 | 154 | 1032 | json config tsconfig.json |
 | 146 | 1.00 | 146 | 5065 | export at src/types/FindSelected.ts:174 |
@@ -101,10 +100,11 @@ scores: Sim=0.283 Reached=13/45 Early=2 Late=8 Partial=6 Missing=26 Used=9949/10
 | 93 | 1.00 | 93 | 3175 | export at src/types/DistributeUnions.ts:174 |
 | 93 | 1.00 | 93 | 2403 | json config jsr.json |
 | 90 | 1.00 | 90 | 3054 | export names surface in src/types/DistributeUnions.ts |
+| 83 | 0.13 | 652 | 6584 | export names surface in src/patterns.ts |
 | 80 | 1.00 | 80 | 2724 | export names surface in src/types/InvertPattern.ts |
 | 69 | 1.00 | 69 | 4919 | export at src/types/FindSelected.ts:159 |
 | 68 | 1.00 | 68 | 4850 | export at src/types/FindSelected.ts:191 |
-| 66 | 0.43 | 156 | 5221 | export names surface in src/internals/symbols.ts |
+| 64 | 0.41 | 156 | 5221 | export names surface in src/internals/symbols.ts |
 | 63 | 1.00 | 63 | 111 | README headline in README.md |
 | 59 | 1.00 | 59 | 4782 | export at src/types/FindSelected.ts:165 |
 | 55 | 1.00 | 55 | 5560 | export doc at src/types/InvertPattern.ts:106 |

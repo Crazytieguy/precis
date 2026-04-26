@@ -58,43 +58,42 @@ scores: Sim=0.405 Reached=13/38 Early=4 Late=8 Partial=7 Missing=18 Used=9989/10
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 3 | 879 | readme.md section #<n> |
-| 4 | 298 | export at source/types/hooks.ts:<n> |
+| 5 | 1056 | readme.md section #<n> |
+| 4 | 347 | export at source/types/hooks.ts:<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 579 | 0.96 | 603 | 9989 | readme.md section #18 |
-| 352 | 0.88 | 400 | 6200 | package dependencies in package.json |
-| 322 | 0.88 | 366 | 782 | package identity in package.json |
-| 280 | 0.76 | 367 | 8012 | export at source/types/options.ts:312 |
-| 267 | 0.75 | 357 | 5800 | export at source/types/ResponsePromise.ts:6 |
-| 230 | 0.75 | 307 | 3912 | readme.md section #2 |
+| 603 | 1.00 | 603 | 9989 | readme.md section #18 |
+| 371 | 0.93 | 400 | 6200 | package dependencies in package.json |
+| 312 | 0.85 | 366 | 782 | package identity in package.json |
+| 271 | 0.74 | 367 | 8012 | export at source/types/options.ts:312 |
+| 268 | 0.75 | 357 | 5800 | export at source/types/ResponsePromise.ts:6 |
+| 235 | 0.77 | 307 | 3912 | readme.md section #2 |
 | 212 | 1.00 | 212 | 9322 | export body at source/utils/body.ts:90 |
-| 195 | 0.58 | 335 | 2980 | headings outline in readme.md |
 | 191 | 1.00 | 191 | 8279 | export body at source/utils/options.ts:30 |
 | 155 | 1.00 | 155 | 3605 | export body at source/utils/delay.ts:9 |
 | 148 | 0.92 | 161 | 4820 | export body at source/errors/NonError.ts:6 |
 | 140 | 1.00 | 140 | 5443 | export body at source/utils/merge.ts:16 |
+| 131 | 0.39 | 335 | 2980 | headings outline in readme.md |
 | 123 | 1.00 | 123 | 5161 | export body at source/utils/body.ts:119 |
 | 112 | 1.00 | 112 | 416 | json config tsconfig.dist.json |
 | 103 | 1.00 | 103 | 990 | package scripts in package.json |
-| 100 | 0.30 | 331 | 7273 | export names surface in source/types/options.ts |
+| 90 | 1.00 | 90 | 4659 | export at source/types/hooks.ts:48 |
+| 88 | 1.00 | 88 | 4569 | export at source/types/hooks.ts:5 |
+| 86 | 1.00 | 86 | 4481 | export at source/types/hooks.ts:32 |
+| 83 | 1.00 | 83 | 4395 | export at source/types/hooks.ts:20 |
 | 82 | 1.00 | 82 | 255 | json config tsconfig.json |
-| 77 | 0.86 | 90 | 4659 | export at source/types/hooks.ts:48 |
+| 81 | 1.00 | 81 | 3061 | readme.md section #1 |
 | 77 | 1.00 | 77 | 3450 | export body at source/utils/merge.ts:6 |
-| 75 | 0.86 | 88 | 4569 | export at source/types/hooks.ts:5 |
-| 75 | 0.24 | 314 | 6514 | export names surface in source/core/constants.ts |
-| 73 | 0.89 | 83 | 4395 | export at source/types/hooks.ts:20 |
-| 73 | 0.86 | 86 | 4481 | export at source/types/hooks.ts:32 |
-| 73 | 0.62 | 117 | 2553 | export names surface in source/utils/merge.ts |
-| 70 | 0.88 | 81 | 3061 | readme.md section #1 |
+| 71 | 1.00 | 71 | 3160 | readme.md section #21 |
+| 66 | 1.00 | 66 | 3226 | readme.md section #22 |
 | 64 | 1.00 | 64 | 9386 | imports in source/utils/merge.ts |
-| 62 | 0.39 | 161 | 4209 | export names surface in source/types/hooks.ts |
+| 62 | 0.53 | 117 | 2553 | export names surface in source/utils/merge.ts |
+| 59 | 0.77 | 77 | 1387 | export at source/types/retry.ts:3 |
 | 55 | 1.00 | 55 | 8788 | imports in source/types/hooks.ts |
 | 54 | 1.00 | 54 | 5303 | export doc at source/errors/NonError.ts:6 |
-| 53 | 0.70 | 77 | 1387 | export at source/types/retry.ts:3 |
 | 53 | 1.00 | 53 | 9110 | imports in source/utils/type-guards.ts |
 | 52 | 1.00 | 52 | 8999 | imports in source/utils/normalize.ts |
 | 50 | 1.00 | 50 | 8838 | imports in source/types/ky.ts |
