@@ -171,10 +171,12 @@ src/
             16→export const isMatcher = (
             17→  x: unknown
             18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
-            19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-            20→  return pattern && !!pattern[symbols.matcher];
-            21→};
+            …
             32→export const matchPattern = (
+            33→  pattern: any,
+            34→  value: any,
+            35→  select: (key: string, value: unknown) => void
+            36→): boolean => {
             …
             120→export const getSelectionKeys = (pattern: any): string[] => {
             …

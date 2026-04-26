@@ -22,10 +22,8 @@ ARCHITECTURE.md
     …
     92→## Performance
     …
-    94→This is more expensive memory wise, because if there are 2,000 items but the list is filtered to only 2 items, we still allocate memory for 2,000 instances of the Item component. But it's our only option! Thankfully we can still keep the DOM size to 2 items.
     96→## Groups
     …
-    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 LICENSE.md
 README.md
     5→# ⌘K…
@@ -37,59 +35,6 @@ README.md
     13→```
     15→## Use
     …
-    17→```tsx
-    18→import { Command } from 'cmdk'
-    20→const CommandMenu = () => {
-    21→  return (
-    22→    <Command label="Command Menu">
-    23→      <Command.Input />
-    24→      <Command.List>
-    25→        <Command.Empty>No results found.</Command.Empty>
-    27→        <Command.Group heading="Letters">
-    28→          <Command.Item>a</Command.Item>
-    29→          <Command.Item>b</Command.Item>
-    30→          <Command.Separator />
-    31→          <Command.Item>c</Command.Item>
-    32→        </Command.Group>
-    34→        <Command.Item>Apple</Command.Item>
-    35→      </Command.List>
-    36→    </Command>
-    37→  )
-    38→}
-    39→```
-    41→Or in a dialog:
-    43→```tsx
-    44→import { Command } from 'cmdk'
-    46→const CommandMenu = () => {
-    47→  const [open, setOpen] = React.useState(false)
-    49→  // Toggle the menu when ⌘K is pressed
-    50→  React.useEffect(() => {
-    51→    const down = (e) => {
-    52→      if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-    53→        e.preventDefault()
-    54→        setOpen((open) => !open)
-    55→      }
-    56→    }
-    58→    document.addEventListener('keydown', down)
-    59→    return () => document.removeEventListener('keydown', down)
-    60→  }, [])
-    62→  return (
-    63→    <Command.Dialog open={open} onOpenChange={setOpen} label="Global Command Menu">
-    64→      <Command.Input />
-    65→      <Command.List>
-    66→        <Command.Empty>No results found.</Command.Empty>
-    68→        <Command.Group heading="Letters">
-    69→          <Command.Item>a</Command.Item>
-    70→          <Command.Item>b</Command.Item>
-    71→          <Command.Separator />
-    72→          <Command.Item>c</Command.Item>
-    73→        </Command.Group>
-    75→        <Command.Item>Apple</Command.Item>
-    76→      </Command.List>
-    77→    </Command.Dialog>
-    78→  )
-    79→}
-    80→```
     82→## Parts and styling
     …
     84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
@@ -128,21 +73,8 @@ README.md
     …
     426→### Drop in stylesheets
     …
-    428→You can find global stylesheets to drop in as a starting point for styling. See [website/styles/cmdk](website/styles/cmdk) for examples.
     430→## FAQ
     …
-    432→**Accessible?** Yes. Labeling, aria attributes, and DOM ordering tested with Voice Over and Chrome DevTools. [Dialog](#dialog-cmdk-dialog-cmdk-overlay) composes an accessible Dialog implementation.
-    434→**Virtualization?** No. Good performance up to 2,000-3,000 items, though. Read below to bring your own.
-    436→**Filter/sort items manually?** Yes. Pass `shouldFilter={false}` to [Command](#command-cmdk-root). Better memory usage and performance. Bring your own virtualization this way.
-    438→**React 18 safe?** Yes, required. Uses React 18 hooks like `useId` and `useSyncExternalStore`.
-    440→**Unstyled?** Yes, use the listed CSS selectors.
-    442→**Hydration mismatch?** No, likely a bug in your code. Ensure the `open` prop to `Command.Dialog` is `false` on the server.
-    444→**React strict mode safe?** Yes. Open an issue if you notice an issue.
-    446→**Weird/wrong behavior?** Make sure your `Command.Item` has a `key` and unique `value`.
-    448→**Concurrent mode safe?** Maybe, but concurrent mode is not yet real. Uses risky approaches like manual DOM ordering.
-    450→**React server component?** No, it's a client component.
-    452→**Listen for ⌘K automatically?** No, do it yourself to have full control over keybind context.
-    454→**React Native?** No, and no plans to support it. If you build a React Native version, let us know and we'll link your repository here.
     456→## History
     …
     458→Written in 2019 by Paco ([@pacocoursey](https://twitter.com/pacocoursey)) to see if a composable combobox API was possible. Used for the Vercel command menu and autocomplete by Rauno ([@raunofreiberg](https://twitter.com/raunofreiberg)) in 2020. Re-written independently in 2022 with a simpler and more performant approach. Ideas and help from Shu ([@shuding\_](https://twitter.com/shuding_)).
@@ -205,6 +137,86 @@ cmdk/
             155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
             …
         index.tsx
+            169→const Command = React.forwardRef<HTMLDivElement, CommandProps>((props, forwardedRef) => {
+            …
+            659→/**
+            660→ * Command menu item. Becomes active on pointer enter or through keyboard navigation.
+            661→ * Preferably pass a `value`, otherwise the value will be inferred from `children` or
+            662→ * the rendered item's `textContent`.
+            663→ */
+            664→const Item = React.forwardRef<HTMLDivElement, ItemProps>((props, forwardedRef) => {
+            …
+            725→/**
+            726→ * Group command menu items together with a heading.
+            727→ * Grouped items are always shown together.
+            728→ */
+            729→const Group = React.forwardRef<HTMLDivElement, GroupProps>((props, forwardedRef) => {
+            …
+            770→/**
+            771→ * A visual and semantic separator between items or groups.
+            772→ * Visible when the search query is empty or `alwaysRender` is true, hidden otherwise.
+            773→ */
+            774→const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>((props, forwardedRef) => {
+            775→  const { alwaysRender, ...etc } = props
+            776→  const ref = React.useRef<HTMLDivElement>(null)
+            777→  const render = useCmdk((state) => !state.search)
+            779→  if (!alwaysRender && !render) return null
+            780→  return <Primitive.div ref={composeRefs(ref, forwardedRef)} {...etc} cmdk-separator="" role="separator" />
+            783→/**
+            784→ * Command menu input.
+            785→ * All props are forwarded to the underyling `input` element.
+            786→ */
+            787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+            …
+            829→/**
+            830→ * Contains `Item`, `Group`, and `Separator`.
+            831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
+            832→ */
+            833→const List = React.forwardRef<HTMLDivElement, ListProps>((props, forwardedRef) => {
+            …
+            879→/**
+            880→ * Renders the command menu in a Radix Dialog.
+            881→ */
+            882→const Dialog = React.forwardRef<HTMLDivElement, DialogProps>((props, forwardedRef) => {
+            883→  const { open, onOpenChange, overlayClassName, contentClassName, container, ...etc } = props
+            884→  return (
+            885→    <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
+            886→      <RadixDialog.Portal container={container}>
+            887→        <RadixDialog.Overlay cmdk-overlay="" className={overlayClassName} />
+            888→        <RadixDialog.Content aria-label={props.label} cmdk-dialog="" className={contentClassName}>
+            889→          <Command ref={forwardedRef} {...etc} />
+            890→        </RadixDialog.Content>
+            891→      </RadixDialog.Portal>
+            892→    </RadixDialog.Root>
+            893→  )
+            896→/**
+            897→ * Automatically renders when there are no results for the search query.
+            898→ */
+            899→const Empty = React.forwardRef<HTMLDivElement, EmptyProps>((props, forwardedRef) => {
+            900→  const render = useCmdk((state) => state.filtered.count === 0)
+            902→  if (!render) return null
+            903→  return <Primitive.div ref={forwardedRef} {...props} cmdk-empty="" role="presentation" />
+            906→/**
+            907→ * You should conditionally render this with `progress` while loading asynchronous items.
+            908→ */
+            909→const Loading = React.forwardRef<HTMLDivElement, LoadingProps>((props, forwardedRef) => {
+            910→  const { progress, children, label = 'Loading...', ...etc } = props
+            912→  return (
+            913→    <Primitive.div
+            914→      ref={forwardedRef}
+            915→      {...etc}
+            916→      cmdk-loading=""
+            917→      role="progressbar"
+            918→      aria-valuenow={progress}
+            919→      aria-valuemin={0}
+            920→      aria-valuemax={100}
+            921→      aria-label={label}
+            922→    >
+            923→      {SlottableWithNestedChildren(props, (child) => (
+            924→        <div aria-hidden>{child}</div>
+            925→      ))}
+            926→    </Primitive.div>
+            927→  )
             941→export { useCmdk as useCommandState }
             942→export { pkg as Command }
             943→export { defaultFilter }

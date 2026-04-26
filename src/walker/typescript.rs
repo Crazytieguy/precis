@@ -16,15 +16,24 @@
 //! - `ExportDoc { file, start_line }`: JSDoc above that export,
 //!   predecessor = the matching `Export`
 //! - `ExportBody { file, start_line }`: body interior (brace-stripped) of
-//!   a function or class export, predecessor = the matching `Export`.
-//!   Sibling of `ExportDoc` under `Export`. Only emitted when the inner
-//!   decl has a multi-line `statement_block` body. See the v4 plan note in
-//!   `ignore/plan-ts-export-body-v2.md` for what's deferred (lexical-with-
-//!   fn-init, expression arrows, forwardRef-wrapped callbacks).
+//!   a function, class, or `const X = <fn-init>` export, predecessor =
+//!   the matching `Export`. Sibling of `ExportDoc` under `Export`. Only
+//!   emitted when a `statement_block` body is reachable inside the
+//!   declaration (direct function/class body, or via call_expression
+//!   wrappers like `forwardRef(props => {...})`).
+//!
+//! Module-private `const X = <fn-init>` declarations whose name is
+//! re-exported via a top-level `export { X }` / `export { X as Y }`
+//! clause are *synthesized* into the `Export` triple at the const's
+//! own start_line, so callers see the same surface as if `X` had been
+//! written `export const X = …`. Type-only re-exports
+//! (`export type { X }` / `export { type X }`) are excluded — they
+//! don't expose the runtime value.
 //!
 //! `.ts` and `.tsx` are both handled; the grammar is dispatched by
 //! extension. Parse trees are cached in [`WalkCtx`].
 
+use std::collections::HashSet;
 use std::path::Path;
 use std::sync::Arc;
 
@@ -144,7 +153,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
         TsKey::Export { file, start_line } => {
             let (source, tree) = parse_ts(ctx, file)?;
             let kind = classify_export_at(&tree, &source, *start_line)?;
-            let lines = collect_export_lines(&tree, *start_line);
+            let lines = collect_export_lines(&tree, &source, *start_line);
             single_file_lines_batch(file, &source, lines, export_signals(file, kind, ctx))
         }
         TsKey::ExportDoc { file, start_line } => {
@@ -205,9 +214,10 @@ impl ItemKind {
 
 #[derive(Debug, Clone)]
 struct ExportInfo {
-    /// 1-based line of the wrapping `export_statement`. Walker only emits
-    /// items wrapped by `export_statement`; bare top-level declarations
-    /// without an `export` keyword are module-private and ignored.
+    /// 1-based line of either the wrapping `export_statement` (real export)
+    /// or the module-private `lexical_declaration` re-exported by name
+    /// (synthetic export). Synthetics are disambiguated at materialize-
+    /// time by `locate_export_decl` rather than carried as a flag here.
     start_line: usize,
     kind: ItemKind,
     line_span: usize,
@@ -227,26 +237,337 @@ impl ExportInfo {
 /// Top-level exports in a file. Walks `program` children, looking for
 /// `export_statement` nodes and identifying the inner declaration. Re-
 /// exports without an inner declaration (`export { foo } from '…'`) are
-/// skipped — they're plumbing, picked up by `Imports`.
+/// skipped — they're plumbing, picked up by `Imports`. After the real
+/// pass, walks `lexical_declaration` siblings looking for module-private
+/// `const X = <fn-init>` whose name appears in a top-level
+/// `export { X }` value clause; emits a synthesized `ExportInfo` for each
+/// (skipping any that share a start_line with a real `export_statement`,
+/// since `TsKey::Export` keys disambiguate only by start_line and the
+/// scheduler dedupes silently).
 fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
     let root = tree.root_node();
+    let src_lines: Vec<&str> = source.lines().collect();
     let mut cursor = root.walk();
     let mut out = Vec::new();
+    let mut real_lines: HashSet<usize> = HashSet::new();
     for child in root.children(&mut cursor) {
         let Some((kind, decl_node)) = classify_export(child, source) else {
             continue;
         };
         let start_line = child.start_position().row + 1;
-        let end_line = item_end_line(decl_node, source);
-        let body_emit_rows = export_body_rows(decl_node, kind, source).len();
+        real_lines.insert(start_line);
+        let line_span = signature_line_span(child, decl_node, kind, source, start_line);
+        let body_emit_rows = export_body_rows(decl_node, kind, &src_lines).len();
         out.push(ExportInfo {
             start_line,
             kind,
-            line_span: end_line.saturating_sub(start_line) + 1,
+            line_span,
             body_emit_rows,
         });
     }
+
+    let reexports = collect_local_value_reexports(tree, source);
+    if !reexports.is_empty() {
+        let mut cursor = root.walk();
+        for child in root.children(&mut cursor) {
+            if !matches!(child.kind(), "lexical_declaration" | "variable_declaration") {
+                continue;
+            }
+            let start_line = child.start_position().row + 1;
+            if real_lines.contains(&start_line) {
+                continue;
+            }
+            if synthetic_export_name(child, source, &reexports).is_none() {
+                continue;
+            }
+            let kind = ItemKind::Const;
+            let line_span = signature_line_span(child, child, kind, source, start_line);
+            let body_emit_rows = export_body_rows(child, kind, &src_lines).len();
+            out.push(ExportInfo {
+                start_line,
+                kind,
+                line_span,
+                body_emit_rows,
+            });
+        }
+        out.sort_by_key(|e| e.start_line);
+    }
+
     out
+}
+
+/// Number of source lines an `Export` candidate would emit for its
+/// signature. Matches the truncation logic in `collect_export_lines` so
+/// the cost hint stays in line with the actual render.
+fn signature_line_span(
+    wrapper: Node,
+    decl: Node,
+    kind: ItemKind,
+    source: &str,
+    start_line: usize,
+) -> usize {
+    if matches!(kind, ItemKind::Const)
+        && let Some(body) = find_fn_init_body(decl)
+    {
+        let body_start_line = body.start_position().row + 1;
+        return body_start_line.saturating_sub(start_line) + 1;
+    }
+    let end_line = item_end_line(
+        if matches!(kind, ItemKind::NamedReexport) {
+            wrapper
+        } else {
+            decl
+        },
+        source,
+    );
+    end_line.saturating_sub(start_line) + 1
+}
+
+/// Local identifier names that appear in any top-level **value**
+/// re-export clause (`export { X }`, `export { X as Y }`). Excludes
+/// `export type { X }` (statement-level type modifier),
+/// `export { type X }` (per-specifier type modifier), and any clause
+/// with a `from '…'` source (those are plumbing handled by `Imports`).
+fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = HashSet::new();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "export_statement" {
+            continue;
+        }
+        if has_from_source(stmt) {
+            continue;
+        }
+        if has_export_type_keyword(stmt, source) {
+            continue;
+        }
+        let mut sc = stmt.walk();
+        for clause in stmt.children(&mut sc) {
+            if !matches!(clause.kind(), "export_clause" | "namespace_export") {
+                continue;
+            }
+            let mut cc = clause.walk();
+            for spec in clause.children(&mut cc) {
+                if spec.kind() != "export_specifier" {
+                    continue;
+                }
+                if has_inline_type_modifier(spec) {
+                    continue;
+                }
+                if let Some(name_node) = first_identifier_child(spec) {
+                    let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+                    out.insert(name);
+                }
+            }
+        }
+    }
+    out
+}
+
+/// True when `export_statement` carries a statement-level `type`
+/// keyword: `export type { X }` / `export type * as N from '…'` etc.
+fn has_export_type_keyword(stmt: Node, source: &str) -> bool {
+    let mut cursor = stmt.walk();
+    stmt.children(&mut cursor).any(|c| {
+        c.kind() == "type"
+            || (c.kind() == "keyword" && &source[c.start_byte()..c.end_byte()] == "type")
+    })
+}
+
+/// True when `export_specifier` carries an inline `type` modifier:
+/// `export { type X }` / `export { type X as Y }`.
+fn has_inline_type_modifier(spec: Node) -> bool {
+    let mut cursor = spec.walk();
+    spec.children(&mut cursor).any(|c| c.kind() == "type")
+}
+
+fn first_identifier_child(node: Node) -> Option<Node> {
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .find(|c| c.kind() == "identifier")
+}
+
+/// Returns the local declared name when `decl` is a single-binding
+/// `const X = <fn-init>` whose `X` is in `reexport_set`. The fn-init
+/// requirement excludes pure-data consts (objects, primitives) — those
+/// don't have a body interior worth eliding behind a marker, and a
+/// "synthetic export" of a data const would just duplicate the
+/// `NamedReexport` line.
+fn synthetic_export_name(
+    decl: Node,
+    source: &str,
+    reexport_set: &HashSet<String>,
+) -> Option<String> {
+    let mut cursor = decl.walk();
+    let declarators: Vec<Node> = decl
+        .children(&mut cursor)
+        .filter(|c| matches!(c.kind(), "variable_declarator" | "lexical_binding"))
+        .collect();
+    if declarators.len() != 1 {
+        return None;
+    }
+    let dr = declarators[0];
+    let name_node = dr.child_by_field_name("name")?;
+    if name_node.kind() != "identifier" {
+        return None;
+    }
+    let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+    if !reexport_set.contains(&name) {
+        return None;
+    }
+    find_fn_init_body(decl)?;
+    Some(name)
+}
+
+/// Locate the function/class `statement_block` body reachable inside a
+/// `lexical_declaration` / `variable_declaration`'s initializer,
+/// transparently walking through `parenthesized_expression` and
+/// `call_expression` argument lists. Returns `None` for object/array/
+/// primitive initializers, or for fn-init shapes whose body is an
+/// expression (`() => 1`) rather than a block. Used for both the
+/// signature-truncation point in `collect_export_lines` and the body-
+/// interior emit set in `export_body_rows`.
+fn find_fn_init_body(decl: Node) -> Option<Node> {
+    let mut cursor = decl.walk();
+    let declarator = decl
+        .children(&mut cursor)
+        .find(|c| matches!(c.kind(), "variable_declarator" | "lexical_binding"))?;
+    let value = declarator.child_by_field_name("value")?;
+    descend_for_fn_body(value, FN_BODY_DESCEND_DEPTH)
+}
+
+/// Maximum depth `descend_for_fn_body` recurses through call/parenthesis
+/// wrappers. Real-world chains (`memo(forwardRef(props => {...}))`) are
+/// 2–3 deep; the larger bound is just a defensive guard against
+/// pathological nesting blowing the stack.
+const FN_BODY_DESCEND_DEPTH: usize = 6;
+
+fn descend_for_fn_body(node: Node, depth: usize) -> Option<Node> {
+    if depth == 0 {
+        return None;
+    }
+    match node.kind() {
+        "arrow_function"
+        | "function_expression"
+        | "function_declaration"
+        | "generator_function"
+        | "generator_function_declaration" => {
+            let body = node.child_by_field_name("body")?;
+            if body.kind() == "statement_block" {
+                Some(body)
+            } else {
+                None
+            }
+        }
+        "call_expression" => {
+            // Only treat the first non-trivial argument as the wrapped
+            // value. This is the React.forwardRef / memo / observer
+            // shape (`wrapper(callback, ...optional)`); rejecting deeper
+            // arg positions avoids `factory(input, () => {...}, opts)`
+            // being rendered as if the middle callback were the export's
+            // body, which would silently elide the trailing arguments.
+            let args = node.child_by_field_name("arguments")?;
+            let first = args.named_child(0)?;
+            descend_for_fn_body(first, depth - 1)
+        }
+        "parenthesized_expression" => {
+            let inner = node.named_child(0)?;
+            descend_for_fn_body(inner, depth - 1)
+        }
+        _ => None,
+    }
+}
+
+/// Result of resolving a `start_line` to a top-level export-bearing node.
+/// `Real` is the existing `export ...` statement; `Synthetic` is a
+/// module-private `const X = <fn-init>` whose name appears in a value
+/// re-export clause (see `synthetic_export_name`).
+enum LocatedExport<'a> {
+    Real {
+        export_stmt: Node<'a>,
+        decl: Node<'a>,
+        kind: ItemKind,
+    },
+    Synthetic {
+        decl: Node<'a>,
+        kind: ItemKind,
+    },
+}
+
+impl<'a> LocatedExport<'a> {
+    fn kind(&self) -> ItemKind {
+        match self {
+            LocatedExport::Real { kind, .. } | LocatedExport::Synthetic { kind, .. } => *kind,
+        }
+    }
+
+    /// The node a collector should anchor at (start_row, prev_sibling
+    /// for JSDoc) — the wrapping `export_statement` for real exports,
+    /// the lexical_declaration itself for synthetics.
+    fn anchor(&self) -> Node<'a> {
+        match *self {
+            LocatedExport::Real { export_stmt, .. } => export_stmt,
+            LocatedExport::Synthetic { decl, .. } => decl,
+        }
+    }
+
+    /// The inner declaration node — the function/class/lexical_decl
+    /// returned by `classify_export` for real exports, the
+    /// lexical_declaration itself for synthetics.
+    fn decl(&self) -> Node<'a> {
+        match *self {
+            LocatedExport::Real { decl, .. } | LocatedExport::Synthetic { decl, .. } => decl,
+        }
+    }
+}
+
+/// Single source of truth for "what does this `start_line` point to".
+/// First pass returns the `export_statement` at this line if any —
+/// that mirrors `find_export_starts`'s same-line collision filter, so a
+/// `TsKey::Export { start_line }` for a real export wins even when a
+/// module-private `const` lives on the same source line. Second pass
+/// looks for a synthetic candidate. Returns `None` for stale keys
+/// (source edited since the key was issued) so collectors short-circuit
+/// rather than render the wrong content.
+fn locate_export_decl<'a>(
+    tree: &'a Tree,
+    source: &str,
+    start_line: usize,
+) -> Option<LocatedExport<'a>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "export_statement" && child.start_position().row + 1 == start_line {
+            let (kind, decl) = classify_export(child, source)?;
+            return Some(LocatedExport::Real {
+                export_stmt: child,
+                decl,
+                kind,
+            });
+        }
+    }
+
+    let reexports = collect_local_value_reexports(tree, source);
+    if reexports.is_empty() {
+        return None;
+    }
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.start_position().row + 1 != start_line {
+            continue;
+        }
+        if !matches!(child.kind(), "lexical_declaration" | "variable_declaration") {
+            continue;
+        }
+        if synthetic_export_name(child, source, &reexports).is_some() {
+            return Some(LocatedExport::Synthetic {
+                decl: child,
+                kind: ItemKind::Const,
+            });
+        }
+    }
+    None
 }
 
 /// Recognize a top-level export-bearing item. Returns `(ItemKind,
@@ -352,15 +673,7 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
 /// `body_emit_rows` AST walk just to discard the count). All callers
 /// downstream of materialize need only the `ItemKind` for signal weighting.
 fn classify_export_at(tree: &Tree, source: &str, start_line: usize) -> Option<ItemKind> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        return classify_export(child, source).map(|(k, _)| k);
-    }
-    None
+    locate_export_decl(tree, source, start_line).map(|l| l.kind())
 }
 
 fn item_end_line(node: Node, source: &str) -> usize {
@@ -541,24 +854,6 @@ fn is_bare_reexport(node: Node) -> bool {
     first_decl_child(node).is_none() && has_export_clause(node) && has_from_source(node)
 }
 
-/// True if `decl` is a `lexical_declaration` / `variable_declaration` whose
-/// initialiser is a function-, class-, object-, or array-literal worth
-/// hiding behind a body-elision marker.
-fn has_value_expression_body(decl: Node) -> bool {
-    let mut cur = decl.walk();
-    decl.children(&mut cur).any(|c| {
-        matches!(c.kind(), "variable_declarator" | "lexical_binding") && {
-            let mut vc = c.walk();
-            c.children(&mut vc).any(|v| {
-                matches!(
-                    v.kind(),
-                    "function_expression" | "arrow_function" | "class" | "object" | "array"
-                )
-            })
-        }
-    })
-}
-
 fn collect_export_names(tree: &Tree, source: &str) -> FileLines {
     let items = find_export_starts(tree, source);
     let mut full = Vec::new();
@@ -572,84 +867,83 @@ fn collect_export_names(tree: &Tree, source: &str) -> FileLines {
 
 /// Lines for a single export's decl. For interface/type/class/enum, the
 /// whole item. For function, the signature plus a body-elision marker.
-/// For const/let, the assignment line(s) up through the `=`.
-fn collect_export_lines(tree: &Tree, start_line: usize) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        if child.kind() != "export_statement" {
-            return FileLines::new(Vec::new());
-        }
-        let mut full = Vec::new();
-        let mut ellipses = Vec::new();
-        let export_start_row = child.start_position().row;
-        let Some(decl) = first_decl_or_value_child(child) else {
-            // No inner decl/value — must be a local export clause
-            // (`export { foo }` / `export type { Foo }`). Span the
-            // whole statement; it's typically one line.
-            push_rows(&mut full, export_start_row, child.end_position().row);
-            return FileLines::new(dedup_sorted(full));
-        };
-        match decl.kind() {
-            "function_declaration"
-            | "function_signature"
-            | "generator_function_declaration"
-            | "function_expression"
-            | "arrow_function" => {
-                let sig_end = signature_end_row(decl);
-                push_rows(&mut full, export_start_row, sig_end);
-                if decl.child_by_field_name("body").is_some() {
-                    ellipses.push(sig_end + 2);
-                }
+/// For const/let, the assignment line(s) — truncated at the inner
+/// function body's `{` when the initializer is a fn-init (direct
+/// arrow/function or wrapped through `forwardRef(props => {...})` etc.),
+/// otherwise the whole declaration.
+fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+    let Some(located) = locate_export_decl(tree, source, start_line) else {
+        return FileLines::new(Vec::new());
+    };
+    let kind = located.kind();
+    let anchor = located.anchor();
+    let decl = located.decl();
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    let export_start_row = anchor.start_position().row;
+    if matches!(kind, ItemKind::NamedReexport) {
+        // Local export clause (`export { foo }` / `export type { Foo }`).
+        // Span the whole statement; it's typically one line.
+        push_rows(&mut full, export_start_row, anchor.end_position().row);
+        return FileLines::new(dedup_sorted(full));
+    }
+    match decl.kind() {
+        "function_declaration"
+        | "function_signature"
+        | "generator_function_declaration"
+        | "function_expression"
+        | "arrow_function" => {
+            let sig_end = signature_end_row(decl);
+            push_rows(&mut full, export_start_row, sig_end);
+            if decl.child_by_field_name("body").is_some() {
+                ellipses.push(sig_end + 2);
             }
-            "class_declaration" | "abstract_class_declaration" | "class" => {
-                let body = decl.child_by_field_name("body");
-                let header_end = body
-                    .map(|b| b.start_position().row)
-                    .unwrap_or_else(|| decl.end_position().row);
-                push_rows(&mut full, export_start_row, header_end);
-                if let Some(b) = body {
-                    let mut bcur = b.walk();
-                    for member in b.children(&mut bcur) {
-                        if matches!(
-                            member.kind(),
-                            "method_definition"
-                                | "method_signature"
-                                | "abstract_method_signature"
-                                | "public_field_definition"
-                                | "property_signature"
-                        ) {
-                            let m_sig_end = signature_end_row(member);
-                            push_rows(&mut full, member.start_position().row, m_sig_end);
-                            if member.child_by_field_name("body").is_some() {
-                                ellipses.push(m_sig_end + 2);
-                            }
+        }
+        "class_declaration" | "abstract_class_declaration" | "class" => {
+            let body = decl.child_by_field_name("body");
+            let header_end = body
+                .map(|b| b.start_position().row)
+                .unwrap_or_else(|| decl.end_position().row);
+            push_rows(&mut full, export_start_row, header_end);
+            if let Some(b) = body {
+                let mut bcur = b.walk();
+                for member in b.children(&mut bcur) {
+                    if matches!(
+                        member.kind(),
+                        "method_definition"
+                            | "method_signature"
+                            | "abstract_method_signature"
+                            | "public_field_definition"
+                            | "property_signature"
+                    ) {
+                        let m_sig_end = signature_end_row(member);
+                        push_rows(&mut full, member.start_position().row, m_sig_end);
+                        if member.child_by_field_name("body").is_some() {
+                            ellipses.push(m_sig_end + 2);
                         }
                     }
                 }
             }
-            "interface_declaration" | "type_alias_declaration" | "enum_declaration" => {
-                push_rows(&mut full, export_start_row, decl.end_position().row);
-            }
-            "lexical_declaration" | "variable_declaration" => {
-                let end_row = signature_end_row(decl);
-                push_rows(&mut full, export_start_row, end_row);
-                if has_value_expression_body(decl) && end_row < decl.end_position().row {
-                    ellipses.push(end_row + 2);
-                }
-            }
-            _ => {
-                // Default-export expression with nothing structural —
-                // emit the single statement line.
+        }
+        "interface_declaration" | "type_alias_declaration" | "enum_declaration" => {
+            push_rows(&mut full, export_start_row, decl.end_position().row);
+        }
+        "lexical_declaration" | "variable_declaration" => {
+            if let Some(body) = find_fn_init_body(decl) {
+                let body_start_row = body.start_position().row;
+                push_rows(&mut full, export_start_row, body_start_row);
+                ellipses.push(body_start_row + 2);
+            } else {
                 push_rows(&mut full, export_start_row, decl.end_position().row);
             }
         }
-        return FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses));
+        _ => {
+            // Default-export expression with nothing structural —
+            // emit the single statement line.
+            push_rows(&mut full, export_start_row, decl.end_position().row);
+        }
     }
-    FileLines::new(Vec::new())
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
 /// Body interior lines for an export at `start_line`. Brace-strip rule:
@@ -660,19 +954,11 @@ fn collect_export_lines(tree: &Tree, start_line: usize) -> FileLines {
 /// covered by [`export_body_rows`] — others return empty (and the
 /// scheduler propagates as a dead key).
 fn collect_export_body(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        let Some((kind, decl)) = classify_export(child, source) else {
-            return FileLines::new(Vec::new());
-        };
-        let rows = export_body_rows(decl, kind, source);
-        return FileLines::new(rows);
-    }
-    FileLines::new(Vec::new())
+    let Some(located) = locate_export_decl(tree, source, start_line) else {
+        return FileLines::new(Vec::new());
+    };
+    let src_lines: Vec<&str> = source.lines().collect();
+    FileLines::new(export_body_rows(located.decl(), located.kind(), &src_lines))
 }
 
 /// 1-based source rows that the body materializer would emit for an
@@ -681,15 +967,22 @@ fn collect_export_body(tree: &Tree, source: &str, start_line: usize) -> FileLine
 /// empty when there is no `statement_block` body, when the body is
 /// single-line, or when interior is all blank) and to size the
 /// speculative cost hint without re-walking the tree.
-fn export_body_rows(decl: Node, kind: ItemKind, source: &str) -> Vec<usize> {
-    let src_lines: Vec<&str> = source.lines().collect();
+fn export_body_rows(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<usize> {
     let mut out = Vec::new();
     match kind {
         ItemKind::Function => {
-            push_statement_block_interior(&mut out, decl.child_by_field_name("body"), &src_lines);
+            push_statement_block_interior(&mut out, decl.child_by_field_name("body"), src_lines);
         }
         ItemKind::Class => {
-            push_class_method_interiors(&mut out, decl, &src_lines);
+            push_class_method_interiors(&mut out, decl, src_lines);
+        }
+        ItemKind::Const => {
+            // Const fn-init: arrow / function expression direct, or wrapped
+            // through `forwardRef(props => {...})` / `memo(...)`. Pure-data
+            // consts (object/array/primitive) yield no body.
+            if let Some(body) = find_fn_init_body(decl) {
+                push_statement_block_interior(&mut out, Some(body), src_lines);
+            }
         }
         ItemKind::Default => match decl.kind() {
             "function_declaration"
@@ -699,11 +992,17 @@ fn export_body_rows(decl: Node, kind: ItemKind, source: &str) -> Vec<usize> {
                 push_statement_block_interior(
                     &mut out,
                     decl.child_by_field_name("body"),
-                    &src_lines,
+                    src_lines,
                 );
             }
             "class" | "class_declaration" | "abstract_class_declaration" => {
-                push_class_method_interiors(&mut out, decl, &src_lines);
+                push_class_method_interiors(&mut out, decl, src_lines);
+            }
+            "call_expression" | "parenthesized_expression" => {
+                // `export default forwardRef(props => {...})` etc.
+                if let Some(body) = descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH) {
+                    push_statement_block_interior(&mut out, Some(body), src_lines);
+                }
             }
             _ => {}
         },
@@ -761,17 +1060,12 @@ fn collect_export_doc_lines(
     file: &Path,
     start_line: usize,
 ) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        let mut out = Vec::new();
-        collect_jsdoc_above(child, source, &mut out, is_entrypoint_file(file));
-        return FileLines::new(dedup_sorted(out));
-    }
-    FileLines::new(Vec::new())
+    let Some(located) = locate_export_decl(tree, source, start_line) else {
+        return FileLines::new(Vec::new());
+    };
+    let mut out = Vec::new();
+    collect_jsdoc_above(located.anchor(), source, &mut out, is_entrypoint_file(file));
+    FileLines::new(dedup_sorted(out))
 }
 
 fn collect_jsdoc_above(node: Node, source: &str, out: &mut Vec<usize>, skip_module_lede: bool) {
@@ -928,13 +1222,13 @@ export class Foo {
     }
 
     #[test]
-    fn walker_typescript_export_body_lexical_arrow_no_emit_v4() {
-        // v4 deferred: `Export` already emits the whole lexical_declaration
-        // including the body. Adding `ExportBody` here would overlap.
+    fn walker_typescript_export_body_lexical_arrow_emits_interior() {
+        // `export const X = () => {...}` now emits the inner arrow body
+        // through `Const`'s ExportBody arm. Signature truncates at the
+        // body's `{` line.
         let src = "export const X = () => {\n  return 1;\n};\n";
-        let tree = parse(src);
-        let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        let rows = body_emit_rows_for(src);
+        assert_eq!(rows, vec![2]);
     }
 
     #[test]
@@ -943,6 +1237,175 @@ export class Foo {
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
         assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_const_object_no_emit() {
+        // Object-literal initializers are pure data — no body to elide.
+        let src = "export const X = { a: 1, b: 2 };\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports[0].body_emit_rows, 0);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_const_factory_callback_no_emit() {
+        // Codex P1: factory(input, callback, opts) is NOT a wrapper —
+        // descending into the middle callback would hide trailing
+        // arguments behind an ellipsis. `descend_for_fn_body` only
+        // peers at the FIRST argument; trailing-position callbacks
+        // get no body emit, and `Export` renders the whole declaration.
+        let src = "\
+export const cfg = buildConfig(input, () => {
+  return 1;
+}, options);
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(
+            exports[0].body_emit_rows, 0,
+            "trailing-position callback must not be treated as the export body",
+        );
+        // Signature spans the whole declaration (no truncation), since
+        // there's no fn-init body to elide behind. The source is three
+        // lines long ("export const cfg = buildConfig(input, () => {"
+        // / "  return 1;" / "}, options);").
+        let lines = collect_export_lines(&tree, src, 1);
+        assert_eq!(lines.full, vec![1, 2, 3]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_const_memo_two_arg_emits_interior() {
+        // memo(component, areEqual) — callback is the FIRST argument,
+        // so descent applies. The optional `areEqual` second argument
+        // doesn't change the wrapper interpretation.
+        let src = "\
+export const Cmp = memo((props) => {
+  return null;
+}, areEqual);
+";
+        let rows = body_emit_rows_for(src);
+        assert_eq!(rows, vec![2]);
+    }
+
+    #[test]
+    fn walker_typescript_export_body_const_forwardref_emits_interior() {
+        // `forwardRef(props => {...})` — body lives inside the call's
+        // arguments. `find_fn_init_body` must descend through the call
+        // expression to find it.
+        let src = "\
+export const Item = React.forwardRef<HTMLDivElement, ItemProps>(
+  (props, ref) => {
+    const x = 1;
+    return null;
+  },
+);
+";
+        let rows = body_emit_rows_for(src);
+        assert_eq!(rows, vec![3, 4]);
+    }
+
+    #[test]
+    fn walker_typescript_collect_local_value_reexports_excludes_type_only() {
+        let src = "\
+const X = () => { return 1; };
+const Y = () => { return 2; };
+const Z = () => { return 3; };
+const W = () => { return 4; };
+export type { X };
+export { type Y };
+export { Z };
+export { W as Renamed };
+";
+        let tree = parse(src);
+        let names = collect_local_value_reexports(&tree, src);
+        assert!(
+            !names.contains("X"),
+            "type-only stmt-level should be excluded"
+        );
+        assert!(
+            !names.contains("Y"),
+            "inline type modifier should be excluded"
+        );
+        assert!(names.contains("Z"));
+        assert!(names.contains("W"));
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_const_export_via_reexport() {
+        // Module-private `const Item = forwardRef(...)` re-exported by
+        // name. `find_export_starts` should synthesize an Export at the
+        // const's own start_line with body emit rows for the inner body.
+        let src = "\
+const Item = React.forwardRef((props, ref) => {
+  return null;
+});
+export { Item as CommandItem };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        // Two entries: synthetic Const at line 1, NamedReexport at line 4.
+        assert_eq!(exports.len(), 2);
+        let synth = exports.iter().find(|e| e.start_line == 1).unwrap();
+        assert!(matches!(synth.kind, ItemKind::Const));
+        assert!(synth.body_emit_rows > 0);
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_const_only_when_value_reexport() {
+        // `export type { X }` does not synthesize a value Export for X.
+        let src = "\
+const X = () => { return 1; };
+export type { X };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        // Only the export_statement at line 2 (type-only re-export) is
+        // recognized as a real export. No synthetic Const.
+        assert!(exports.iter().all(|e| e.start_line != 1));
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_export_skipped_when_real_export_shares_line() {
+        // Same-line collision: `const X = () => {...}; export { X };`
+        // The synthetic candidate would alias on `(file, start_line)`
+        // with the real export_statement; drop the synthetic, keep the
+        // real NamedReexport.
+        let src = "const X = () => { return 1; }; export { X };\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(exports.len(), 1, "should keep only the real export");
+        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
+    }
+
+    #[test]
+    fn walker_typescript_locate_export_decl_real_wins_on_same_line() {
+        // Materializer-side mirror of the §4c collision filter.
+        let src = "const X = () => { return 1; }; export { X };\n";
+        let tree = parse(src);
+        let located = locate_export_decl(&tree, src, 1).unwrap();
+        // Must be the real NamedReexport, not a synthetic Const.
+        assert!(matches!(located.kind(), ItemKind::NamedReexport));
+        let lines = collect_export_lines(&tree, src, 1);
+        // Real export rendering is the whole single-line clause —
+        // contains line 1 only.
+        assert_eq!(lines.full, vec![1]);
+        let body = collect_export_body(&tree, src, 1);
+        assert!(body.full.is_empty(), "NamedReexport has no body");
+    }
+
+    #[test]
+    fn walker_typescript_synthetic_const_skips_multi_binding() {
+        // `const a = () => {...}, b = () => {...}` — multi-binding form
+        // can't be keyed by start_line cleanly; skip even when names
+        // are reexported.
+        let src = "\
+const a = () => { return 1; }, b = () => { return 2; };
+export { a, b };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert!(exports.iter().all(|e| e.start_line != 1));
     }
 
     #[test]

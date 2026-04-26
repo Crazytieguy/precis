@@ -248,13 +248,48 @@ like to revisit whether it's still earning its complexity.
   displaces some Overlay/Content scheduling), Rust fixtures unchanged.
   Aggregate +0.022 Sim, +6 Reached. No fixture regressed past −0.03.
   **Deferred follow-ups** (in plan file):
-  1. Lexical-with-fn-init (`export const X = () => {…}`): `Export`
-     today emits the entire lexical_declaration including the body.
-     Refining with `ExportBody` would overlap; needs a parallel change
-     to `collect_export_lines` first.
-  2. forwardRef-wrapped callbacks (cmdk + vaul `React.forwardRef(...)`):
-     module-private const that's later re-exported by name. Walker
-     emits no `Export` for these. Separate design pass needed.
+  1. Lexical-with-fn-init (`export const X = () => {…}`) — DONE.
+     `find_fn_init_body` walks the initializer (transparently through
+     `parenthesized_expression` and `call_expression` first arg) and
+     returns the inner `statement_block` body. `collect_export_lines`'s
+     lexical_declaration arm truncates at the body's `{` row when
+     present and falls back to the whole declaration otherwise.
+     `export_body_rows`'s `Const` arm fires on the same predicate.
+     Plan in `ignore/plan-ts-fninit-and-reexport.md`, three plan-review
+     rounds + one adversarial review on the implementation (which
+     caught a too-broad descent into trailing-position callbacks —
+     fixed by gating on first-argument-only).
+  2. forwardRef-wrapped callbacks (cmdk + vaul `React.forwardRef(...)`)
+     — DONE. Module-private `const X = <fn-init>` whose name appears
+     in any top-level value re-export clause (`export { X }` or
+     `export { X as Y }`, but **not** type-only `export type { X }`
+     / `export { type X }`) is now synthesized into the `Export` /
+     `ExportDoc` / `ExportBody` triple at the const's start_line.
+     `collect_local_value_reexports` builds the value-name set;
+     `synthetic_export_name` gates on (single binding, name in set,
+     fn-init body present); `locate_export_decl` is the single source
+     of truth for both discovery and materialization, with a
+     real-export-first lookup so same-line collisions
+     (`const X = () => {...}; export { X };`) silently drop the
+     synthetic. Sim deltas across the 10 fixtures: cmdk Sim
+     0.307 → 0.272 (-0.035, just past the -0.03 threshold) but
+     Reached 18 → 20 (+2 — Item / Group / Separator / Empty bodies
+     now reach NS items 4.3 / 9.1 / 9.2 / 9.3 / 10.6). The Sim drop
+     is a time-decay penalty: README sections still reach but later
+     because the new body batches schedule earlier; rendered output
+     is genuinely more useful (every component now has its JSDoc +
+     signature, several have full bodies). vaul +1 Reached / -0.005
+     Sim — within tolerance, structurally correct (Overlay / Content
+     / Handle now split into signature + body batches; opens budget
+     for `useScaleBackground` body to reach NS 3.11). Aggregate
+     Reached: +2 across 10 fixtures; aggregate Sim: -0.0038 avg.
+     **Calibration follow-up**: cmdk's bodies are dense
+     (8 forwardRef components × ~600-tokens each clusters in the
+     1000-7000 cum-tokens range). A future NS amendment that ranks
+     the Item/Group/etc. bodies higher would re-credit the Sim drop;
+     alternatively, a per-file sibling-count damping of body signals
+     could limit the cluster's combined ranking weight. Defer until
+     more TS fixtures land that exhibit the same pattern.
   3. Class-method splitting: v1 emits one `ExportBody` per class.
      Per-method splitting via `(file, class_start_line, method_name)`
      keys is deferred until a fixture surfaces it.
