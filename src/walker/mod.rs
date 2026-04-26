@@ -56,9 +56,13 @@ pub struct Candidate<K: WalkerKey> {
     /// FS-only value signals. After materialization these are overwritten
     /// with the resolved batch's (usually richer) signals.
     pub signals: ValueSignals,
-    /// Upper-bound estimate of this batch's token cost, from FS properties.
-    /// Cheap bound only — used to compute the upper-bound ratio. The actual
-    /// cost is computed post-materialization.
+    /// **Lower** bound on this batch's post-materialization token cost,
+    /// from FS properties. The scheduler computes the speculative ratio
+    /// as `score(signals) / cost_hint^0.35`; a value/cost ratio is
+    /// monotone-decreasing in cost, so a lower bound on cost yields an
+    /// upper bound on ratio — required for the branch-and-bound prune
+    /// step to stay sound. Cheap bound only; the actual cost is
+    /// computed post-materialization.
     pub cost_hint: usize,
 }
 

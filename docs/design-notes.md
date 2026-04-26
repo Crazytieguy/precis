@@ -264,12 +264,30 @@ like to revisit whether it's still earning its complexity.
   listing entry, "N more files" placeholders, alternate non-tree renderings.
 - **Sub-section markdown splitting** — H2 sections are the unit of
   markdown batching (`MarkdownKey::Section { file, section_index }`).
-  `logical_sections` now also unwraps a single top-level H1 into its H2
+  `logical_sections` unwraps a single top-level H1 into its H2
   children + a synthetic "intro" section #0 (covering H1 heading +
   pre-first-H2 prelude), so `# Title` READMEs (mitt, mdbook, otree)
-  don't collapse into one multi-KB blob. Still deferred: H3 splitting
-  for big H2 sections (anyhow's `## Details`, otree's `docs/actions.md`)
-  and bullet-item splitting for content-style sections.
+  don't collapse into one multi-KB blob.
+  **H3 splitting** — DONE. Content-heavy H2s (≥2 H3 children,
+  ≥600 source bytes, file's outline emitted, non-changelog file
+  class) are subdivided into one Intro (the H2 heading + body
+  before the first H3) plus one H3Child per H3. The walker's
+  internal `SectionRange { kind, parent_index }` carries the
+  classification through both `expand` and `mat_section` so signal
+  selection stays consistent. Intros and Whole ranges keep the
+  parent's full signals; H3Children scale by `H3_CHILD_SIGNAL_SCALE
+  = 0.45` (identical signals over-rank H3s once cost drops to
+  per-H3 size). H3Child cost-hint is 1 (true lower bound on any
+  non-empty rendered batch — required for the scheduler's
+  speculative-bound contract; see `Candidate::cost_hint` doc).
+  Empty H3 ranges (no body beyond heading) and heading-only Intros
+  are filtered to avoid `ratio(value, 0) = INFINITY` no-op
+  batches. Aggregate Sim delta across the 10 fixtures: +0.007
+  (cmdk +0.006, mitt +0.005, otree −0.004, others within
+  ±0.001). All Reached counts preserved. Plan + 3 plan-review
+  rounds in `ignore/plan-h3-splitting.md`. **Still deferred**:
+  bullet-item splitting for content-style sections (anyhow's
+  `## Details`).
 - **Outline-Section ancestor coupling** — `MarkdownKey::HeadingsOutline`
   is the predecessor of every `Section` in the file when emitted.
   Without that edge, both batches would render the same heading rows

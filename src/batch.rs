@@ -133,14 +133,19 @@ pub enum MarkdownKey {
     /// file when emitted (so the section's heading-row overlap is
     /// permitted as ancestor overlap). Priority 1.x.
     HeadingsOutline { file: PathBuf },
-    /// One H2-level section of a markdown file, indexed by its 0-based
-    /// position. For `README.md`, section 0 is the first section after
-    /// the headline (predecessor: `ReadmeHeadline`). For other `.md`
-    /// files (changelogs, doc pages), sections are all H2+ sections.
-    /// When [`MarkdownKey::HeadingsOutline`] is emitted for the same
-    /// file, the outline becomes Section's predecessor (overrides the
-    /// README headline edge / the `None` for non-READMEs).
-    /// Priority 2.x–5.x.
+    /// One scheduling unit of a markdown file's body, indexed by its
+    /// 0-based position in the walker's logical-section list. The
+    /// granularity is variable: a small or single-H3 H2 stays as a
+    /// `Whole` range, while a content-heavy H2 with ≥2 H3 children
+    /// (and the file's outline emitted) is subdivided into one
+    /// `Intro` plus one `H3Child` per H3 — letting the scheduler
+    /// pick relevant sub-sections instead of an all-or-nothing
+    /// commit to the whole H2. The split classification lives in the
+    /// walker (not on this key) — `section_index` is the post-split
+    /// logical index. For `README.md`, section 0 is the first section
+    /// after the headline (predecessor: `ReadmeHeadline`). When
+    /// [`MarkdownKey::HeadingsOutline`] is emitted for the same file
+    /// the outline becomes Section's predecessor. Priority 2.x–5.x.
     Section { file: PathBuf, section_index: usize },
 }
 
@@ -411,6 +416,23 @@ impl Default for ValueSignals {
             follow_up_minimization: 0.0,
             zero_tool_call_understanding: 0.0,
             depth_factor: 1.0,
+        }
+    }
+}
+
+impl ValueSignals {
+    /// Multiply the three 0..1 signals by `factor`, leaving
+    /// `depth_factor` unchanged. Used by walkers that want a coarser
+    /// granularity to rank below their parent batch — e.g. a
+    /// markdown H3 sub-section relative to its H2 parent. The
+    /// `depth_factor` is a path-relative location prior, not part of
+    /// the per-batch magnitude, so it doesn't scale.
+    pub fn scale_value(self, factor: f64) -> Self {
+        Self {
+            catastrophic_omission: self.catastrophic_omission * factor,
+            follow_up_minimization: self.follow_up_minimization * factor,
+            zero_tool_call_understanding: self.zero_tool_call_understanding * factor,
+            depth_factor: self.depth_factor,
         }
     }
 }

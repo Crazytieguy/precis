@@ -35,16 +35,8 @@ README.md
     15→```
     17→### Arch Linux (AUR)
     …
-    19→You can install `otree` from the [AUR](https://aur.archlinux.org/packages/otree) with using an [AUR helper](https://wiki.archlinux.org/title/AUR_helpers).
-    21→```bash
-    22→paru -S otree
-    23→```
     25→### macOS and Linux (Homebrew)
     …
-    27→You can install [`otree`](https://formulae.brew.sh/formula/otree) using [Homebrew](https://brew.sh).
-    29→```bash
-    30→brew install otree
-    31→```
     33→## Usage
     …
     35→Open a JSON/YAML/TOML file in TUI tree viewer:
@@ -85,6 +77,22 @@ src/
         …
     config/
         colors.rs
+            21→pub struct Colors {
+            …
+            78→pub struct DataColors {
+            …
+            162→pub struct TreeColors {
+            …
+            251→pub struct FooterColors {
+            …
+            286→pub struct PopupColors {
+            …
+            324→pub struct FilterColors {
+            325→    #[serde(default = "FilterColors::default_border")]
+            326→    pub border: Color,
+            327→}
+            342→pub struct Color {
+            …
         keys.rs
             54→pub enum Key {
             55→    Char(char),

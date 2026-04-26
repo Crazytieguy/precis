@@ -13,13 +13,17 @@
 //!   `PubItemNames`. For READMEs the headline-covered H1 row is
 //!   skipped so the headline's `Truncated` render survives. Only
 //!   emitted when 2..=`MAX_OUTLINE_HEADINGS` collectable rows exist.
-//! - `Section { file, section_index }` — one H2 section, 0-indexed. For
-//!   READMEs, this is the split replacement of the old monolithic
-//!   "body" batch. For other markdown files (changelogs, doc pages),
-//!   we emit one per top-level section so the file can land
-//!   piece-by-piece. Predecessor (when emitted): outline → headline →
-//!   none, picking the deepest available so all heading-row overlaps
-//!   are ancestor-overlaps.
+//! - `Section { file, section_index }` — one scheduling unit of a
+//!   markdown file's body, 0-indexed. Default granularity is one
+//!   H2-level top-level section per batch; a content-heavy H2 with
+//!   ≥2 H3 children gets subdivided by `logical_sections` into one
+//!   `Intro` (when its body is non-empty) plus one `H3Child` per H3,
+//!   with a global signal scale on the H3 children to keep them
+//!   from over-ranking. Changelog-class files (CHANGELOG /
+//!   CONTRIBUTING / CHANGES) and files whose outline isn't emitted
+//!   are gated out of splitting. Predecessor (when emitted): outline
+//!   → headline → none, picking the deepest available so all
+//!   heading-row overlaps are ancestor-overlaps.
 
 use std::collections::BTreeSet;
 use std::path::Path;
@@ -49,6 +53,27 @@ const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
 const TOKENS_PER_HEADING_ROW: usize = 12;
 
+/// Minimum H2 source-byte length required to subdivide it into per-H3
+/// `SectionRange`s. Below this, the H2 fits in one batch and splitting
+/// just adds scheduling overhead with no waste-reduction payoff.
+const H2_SPLIT_BYTES: usize = 600;
+
+/// Multiplier on the three value signals for `SectionKind::H3Child`
+/// ranges. Compensates for the smaller marginal cost — identical
+/// signals would over-rank H3 children relative to other walker
+/// batches at the parent H2's calibration level.
+const H3_CHILD_SIGNAL_SCALE: f64 = 0.45;
+
+/// Cost-hint for `SectionKind::H3Child` candidates. Must be a *lower*
+/// bound on the post-materialization cost so the scheduler's
+/// speculative ratio stays an upper bound (see
+/// [`super::Candidate::cost_hint`]). H3 child bodies span 30–300
+/// tokens in practice, but the safe lower bound for any non-empty
+/// rendered batch is 1. Empty H3 sections are filtered upstream by
+/// [`has_substantive_body`], so this hint applies only to ranges
+/// that will produce at least one rendered token.
+const H3_CHILD_COST_HINT: usize = 1;
+
 pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
         return Vec::new();
@@ -75,15 +100,15 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let Some((source, tree)) = parse_md(ctx, &file) else {
             continue;
         };
-        let section_count = logical_sections(tree.root_node(), &source).len();
-        if section_count == 0 {
+        let ranges = logical_sections(&file, &tree, &source);
+        if ranges.is_empty() {
             continue;
         }
-        let outline_rows = collectable_outline_rows(&file, &tree, &source);
-        let outline_emits = outline_emits_for(&outline_rows, &source);
 
         let is_readme = is_readme(&file);
         let headline_key = is_readme.then(|| MarkdownKey::ReadmeHeadline { file: file.clone() });
+        let outline_rows = collectable_outline_rows(&file, &tree, &source);
+        let outline_emits = outline_emits_for(&outline_rows, &source);
         let outline_key =
             outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
 
@@ -112,13 +137,18 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             .cloned()
             .map(BatchKey::Markdown);
 
-        for idx in 0..section_count {
-            let signals = if is_readme {
-                readme_section_signals(&file, ctx)
-            } else {
-                heading_slab_signals(&file, idx, ctx)
+        for (idx, range) in ranges.iter().enumerate() {
+            let signals = section_signals(&file, range, ctx);
+            let cost = match range.kind {
+                SectionKind::Whole | SectionKind::Intro => {
+                    if is_readme {
+                        100
+                    } else {
+                        80
+                    }
+                }
+                SectionKind::H3Child => H3_CHILD_COST_HINT,
             };
-            let cost = if is_readme { 100 } else { 80 };
             let mut cand = candidate(
                 MarkdownKey::Section {
                     file: file.clone(),
@@ -224,21 +254,18 @@ fn readme_section_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     }
 }
 
-fn heading_slab_signals(file: &Path, section_index: usize, ctx: &WalkCtx) -> ValueSignals {
-    let is_guide = file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
-        matches!(
-            n.to_ascii_uppercase().as_str(),
-            "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
-        )
-    });
+fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> ValueSignals {
+    let is_guide = is_changelog_class(file);
     // Changelogs are conventionally sorted newest-first, so later
     // sections are ancient release notes of decreasing relevance. Apply
     // an index-based decay only to guide-shape files; for general docs
     // the section order doesn't imply relevance. Floored at 0.35 so a
     // deep section can still fire if budget permits, just not displace
-    // higher-tier content.
+    // higher-tier content. The decay uses `parent_index` (un-split
+    // top-level position) so a future H3-split of a changelog still
+    // inherits its parent H2's decay tier.
     let index_decay = if is_guide {
-        ((section_index as f64 + 1.0).powf(-0.3)).max(0.35)
+        ((parent_index as f64 + 1.0).powf(-0.3)).max(0.35)
     } else {
         1.0
     };
@@ -248,6 +275,33 @@ fn heading_slab_signals(file: &Path, section_index: usize, ctx: &WalkCtx) -> Val
         zero_tool_call_understanding: 0.5 * index_decay,
         depth_factor: signal_factor(file, ctx),
     }
+}
+
+/// Pick the appropriate signals for a `SectionRange`. Both `expand` and
+/// `mat_section` route through this so the two phases stay consistent.
+/// `H3Child` ranges scale the parent's three 0..1 signals — identical
+/// weights would over-rank them on `value / cost^0.35` once the cost
+/// drops to per-H3 size. `Intro` keeps full weight (it carries the H2
+/// heading + topic prelude).
+fn section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> ValueSignals {
+    let parent = if is_readme(file) {
+        readme_section_signals(file, ctx)
+    } else {
+        heading_slab_signals(file, range.parent_index, ctx)
+    };
+    match range.kind {
+        SectionKind::Whole | SectionKind::Intro => parent,
+        SectionKind::H3Child => parent.scale_value(H3_CHILD_SIGNAL_SCALE),
+    }
+}
+
+fn is_changelog_class(file: &Path) -> bool {
+    file.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        matches!(
+            n.to_ascii_uppercase().as_str(),
+            "CHANGELOG.MD" | "CONTRIBUTING.MD" | "CHANGES.MD"
+        )
+    })
 }
 
 // --- parser ---
@@ -361,7 +415,9 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
 
 fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let (source, tree) = parse_md(ctx, file)?;
-    let (start, end) = nth_section_range(&tree, &source, section_index)?;
+    let ranges = logical_sections(file, &tree, &source);
+    let range = ranges.get(section_index)?;
+    let (start, end) = (range.start, range.end);
 
     // For README section 0, exclude lines already covered by
     // `ReadmeHeadline`. Otherwise the two batches overlap on short
@@ -383,11 +439,7 @@ fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<Resol
     }
 
     let lines: Vec<usize> = (effective_start..=end).collect();
-    let signals = if is_readme(file) {
-        readme_section_signals(file, ctx)
-    } else {
-        heading_slab_signals(file, section_index, ctx)
-    };
+    let signals = section_signals(file, range, ctx);
     single_file_lines_batch(file, &source, FileLines::new(lines), signals)
 }
 
@@ -740,22 +792,135 @@ fn compute_heading_truncation(heading: Node, source: &str) -> Option<TruncatedRo
 
 // --- tree-sitter-md helpers ---
 
-fn nth_section_range(tree: &Tree, source: &str, n: usize) -> Option<(usize, usize)> {
-    logical_sections(tree.root_node(), source)
-        .into_iter()
-        .nth(n)
+/// One scheduling unit for a markdown file: 1-based inclusive row range
+/// plus its kind and the index of its parent H2 in the *un-split*
+/// top-level section list. `parent_index` lets `heading_slab_signals`
+/// apply changelog index-decay relative to the parent H2 instead of
+/// the post-split logical-section index.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct SectionRange {
+    start: usize,
+    end: usize,
+    kind: SectionKind,
+    parent_index: usize,
 }
 
-/// Section ranges (1-based start, 1-based end inclusive) for batching.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum SectionKind {
+    /// Whole top-level section (un-split H2 or H1-unwrap synthetic intro).
+    Whole,
+    /// H2 heading + prelude before its first H3 child.
+    Intro,
+    /// One H3 sub-section under a split H2.
+    H3Child,
+}
+
+/// Section ranges for batching. The "un-split top-level list" — one
+/// entry per top-level section (including the synthetic H1-unwrap
+/// intro) — is the basis for `parent_index`. H2s that satisfy the
+/// split rule (≥2 H3 children, ≥`H2_SPLIT_BYTES`, non-changelog file
+/// class, outline emitted) expand to one Intro range (when the H2
+/// body before its first H3 has substantive content) plus one
+/// H3Child range per H3 child. All other top-level entries emit one
+/// `Whole` range.
 ///
-/// Top-level sections by default. Special case: if the doc has exactly
-/// one top-level section *and* it's an H1 (i.e. `# Title` wrapping
-/// everything), descend into its H2 children so the agent gets
-/// per-H2 batches instead of one multi-KB blob; the H1's prelude before
-/// the first H2 becomes a synthesized intro section #0. Without this,
-/// READMEs styled `# Title` (mitt, mdbook, otree) collapse into one
-/// section that rarely fits at the user's budget.
-fn logical_sections(root: Node, source: &str) -> Vec<(usize, usize)> {
+/// Skipping the split when the file's outline isn't emitted preserves
+/// the H2 heading via the `Whole` range — Intro ranges with empty
+/// bodies are elided to avoid `ratio(value, 0) = INFINITY` no-op
+/// batches, so without an outline the H2 heading would otherwise be
+/// lost.
+fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange> {
+    let entries = top_level_entries(tree.root_node(), source);
+    let outline_will_emit = {
+        let rows = collectable_outline_rows(file, tree, source);
+        outline_emits_for(&rows, source)
+    };
+    let split_eligible_file = !is_changelog_class(file);
+
+    let mut out = Vec::with_capacity(entries.len());
+    for (parent_idx, entry) in entries.iter().enumerate() {
+        match entry {
+            TopLevelEntry::SyntheticIntro { start, end } => {
+                out.push(SectionRange {
+                    start: *start,
+                    end: *end,
+                    kind: SectionKind::Whole,
+                    parent_index: parent_idx,
+                });
+            }
+            TopLevelEntry::H2Section { node, start, end } => {
+                let h3s = direct_h3_children(*node);
+                let bytes = node.end_byte() - node.start_byte();
+                let should_split = split_eligible_file
+                    && outline_will_emit
+                    && h3s.len() >= 2
+                    && bytes >= H2_SPLIT_BYTES;
+
+                if should_split {
+                    let first_h3_row = h3s[0].start_position().row + 1;
+                    let intro_start = *start;
+                    let intro_end = first_h3_row.saturating_sub(1);
+                    if intro_end >= intro_start
+                        && has_substantive_body(*node, intro_start, intro_end, source)
+                    {
+                        out.push(SectionRange {
+                            start: intro_start,
+                            end: intro_end,
+                            kind: SectionKind::Intro,
+                            parent_index: parent_idx,
+                        });
+                    }
+                    for h3 in &h3s {
+                        let h3_start = h3.start_position().row + 1;
+                        let h3_end = span_last_row(*h3, source) + 1;
+                        if has_substantive_body(*h3, h3_start, h3_end, source) {
+                            out.push(SectionRange {
+                                start: h3_start,
+                                end: h3_end,
+                                kind: SectionKind::H3Child,
+                                parent_index: parent_idx,
+                            });
+                        }
+                    }
+                } else {
+                    out.push(SectionRange {
+                        start: *start,
+                        end: *end,
+                        kind: SectionKind::Whole,
+                        parent_index: parent_idx,
+                    });
+                }
+            }
+        }
+    }
+    out
+}
+
+/// One entry in the un-split top-level section list. `SyntheticIntro`
+/// is the row range carved out by H1-unwrap to preserve the H1 heading
+/// and the prelude before the first H2 (no tree-sitter node — it's a
+/// virtual section). `H2Section` carries the tree-sitter node so
+/// [`direct_h3_children`] and source-byte length can be derived without
+/// re-walking from the root.
+#[derive(Debug, Clone, Copy)]
+enum TopLevelEntry<'a> {
+    SyntheticIntro {
+        start: usize,
+        end: usize,
+    },
+    H2Section {
+        node: Node<'a>,
+        start: usize,
+        end: usize,
+    },
+}
+
+/// Top-level section list with H1-unwrap. If the doc has exactly one
+/// top-level section and it's an H1, descend into its H2 children and
+/// synthesize an intro range for the H1 heading + pre-first-H2
+/// prelude. Without this, READMEs styled `# Title` (mitt, mdbook,
+/// otree) would collapse into one multi-KB blob.
+fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'a>> {
     let top: Vec<Node> = headed_sections(root).collect();
     if top.len() == 1
         && let Some(heading) = first_heading_child(top[0])
@@ -768,17 +933,63 @@ fn logical_sections(root: Node, source: &str) -> Vec<(usize, usize)> {
             let intro_end = h2s[0].start_position().row; // 1-based row before first H2
             let mut out = Vec::with_capacity(h2s.len() + 1);
             if intro_end >= intro_start {
-                out.push((intro_start, intro_end));
+                out.push(TopLevelEntry::SyntheticIntro {
+                    start: intro_start,
+                    end: intro_end,
+                });
             }
             for h2 in h2s {
-                out.push((h2.start_position().row + 1, span_last_row(h2, source) + 1));
+                out.push(TopLevelEntry::H2Section {
+                    node: h2,
+                    start: h2.start_position().row + 1,
+                    end: span_last_row(h2, source) + 1,
+                });
             }
             return out;
         }
     }
     top.into_iter()
-        .map(|s| (s.start_position().row + 1, span_last_row(s, source) + 1))
+        .map(|s| TopLevelEntry::H2Section {
+            node: s,
+            start: s.start_position().row + 1,
+            end: span_last_row(s, source) + 1,
+        })
         .collect()
+}
+
+/// Direct H3-section children of an H2 section node. Tree-sitter-md
+/// nests sections by heading level, so an H2's H3 children are direct
+/// `section` children whose first heading is level 3.
+fn direct_h3_children<'a>(h2_section: Node<'a>) -> Vec<Node<'a>> {
+    let mut cur = h2_section.walk();
+    h2_section
+        .children(&mut cur)
+        .filter(|c| c.kind() == "section")
+        .filter(|c| first_heading_child(*c).is_some_and(|h| heading_level(h) == 3))
+        .collect()
+}
+
+/// True iff the source-row range `[start, end]` of `section` has any
+/// non-blank rows outside the section's heading. Used to drop an Intro
+/// or H3Child sub-range whose only content is the heading itself —
+/// without that filter, the post-outline marginal cost is 0 and
+/// `ratio(value, 0) = INFINITY` would unconditionally schedule a no-op
+/// batch.
+fn has_substantive_body(section: Node, start: usize, end: usize, source: &str) -> bool {
+    let Some(heading) = first_heading_child(section) else {
+        return false;
+    };
+    let heading_first_row = heading.start_position().row + 1;
+    let heading_last_row = span_last_row(heading, source) + 1;
+    source
+        .lines()
+        .enumerate()
+        .skip(start.saturating_sub(1))
+        .take(end.saturating_sub(start) + 1)
+        .any(|(idx, line)| {
+            let row = idx + 1;
+            !(heading_first_row..=heading_last_row).contains(&row) && !line.trim().is_empty()
+        })
 }
 
 /// 1-based level of an `atx_heading` / `setext_heading` (`# → 1`,
@@ -1159,6 +1370,191 @@ mod tests {
         assert!(
             !outline_emits_for(&rows, &src),
             "byte cap must reject long-heading outlines"
+        );
+    }
+
+    // --- H3-splitting tests (logical_sections) ---
+
+    fn sections(file: &str, source: &str) -> Vec<SectionRange> {
+        let tree = parse(source);
+        logical_sections(&PathBuf::from(file), &tree, source)
+    }
+
+    /// Build a `## Heading\n\n### Sub\n<filler>` shape sized to clear
+    /// `H2_SPLIT_BYTES`. Returns the source string and the row of the
+    /// first `### Sub` heading.
+    fn make_split_h2_source(prefix: &str, h3_count: usize, filler_per_h3: usize) -> String {
+        let mut s = String::from(prefix);
+        for i in 0..h3_count {
+            s.push_str(&format!("\n### Sub {i}\n\n"));
+            for _ in 0..filler_per_h3 {
+                s.push_str(
+                    "Some prose content with substance to it. \
+                            More words to fill out the section body. \
+                            Even more words. Plenty of bytes here.\n",
+                );
+            }
+        }
+        s
+    }
+
+    /// README with one H1 wrapping one H2 with two H3 children, body
+    /// large enough to clear `H2_SPLIT_BYTES`. Should return one
+    /// `Whole` (the H1-unwrap intro) plus two H3Child ranges. The H2
+    /// intro range is dropped (heading-only after the H2).
+    #[test]
+    fn markdown_h2_split_intro_plus_h3_subsections() {
+        let prefix = "# Title\n\nTagline.\n\n## Usage";
+        let src = make_split_h2_source(prefix, 2, 6);
+        let ranges = sections("README.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                SectionKind::Whole,   // H1-unwrap intro
+                SectionKind::H3Child, // ### Sub 0
+                SectionKind::H3Child, // ### Sub 1
+            ],
+            "split H2 must drop the heading-only intro and emit per-H3 ranges; got {ranges:?}",
+        );
+    }
+
+    /// Substantive intro body — H2 heading followed by a real paragraph
+    /// before the first H3 — must keep the Intro range.
+    #[test]
+    fn markdown_h2_intro_kept_when_body_substantive() {
+        let prefix = "# Title\n\nTagline.\n\n## Setup\n\n\
+                      Real prose intro before any subheading.\n\
+                      A second sentence makes it substantive.";
+        let src = make_split_h2_source(prefix, 2, 6);
+        let ranges = sections("README.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                SectionKind::Whole,
+                SectionKind::Intro,
+                SectionKind::H3Child,
+                SectionKind::H3Child,
+            ],
+            "intro with body must be kept; got {ranges:?}",
+        );
+    }
+
+    /// H2 with only one H3 child stays a `Whole`. The split rule
+    /// requires ≥2 H3 children.
+    #[test]
+    fn markdown_h2_no_split_one_h3() {
+        let prefix = "# Title\n\nTagline.\n\n## Usage";
+        let src = make_split_h2_source(prefix, 1, 6);
+        let ranges = sections("README.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(kinds, vec![SectionKind::Whole, SectionKind::Whole]);
+    }
+
+    /// Splittable shape but section bytes < `H2_SPLIT_BYTES` stays one
+    /// `Whole` range.
+    #[test]
+    fn markdown_h2_no_split_under_threshold() {
+        let prefix = "# Title\n\nT.\n\n## Usage";
+        let src = make_split_h2_source(prefix, 2, 0);
+        assert!(
+            src.len() < 600,
+            "test fixture must be under threshold; got {} bytes",
+            src.len()
+        );
+        let ranges = sections("README.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(kinds, vec![SectionKind::Whole, SectionKind::Whole]);
+    }
+
+    /// `CHANGELOG.md` shape with H3 children stays `Whole` — the
+    /// changelog index-decay needs a stable per-H2 mapping.
+    #[test]
+    fn markdown_h2_split_skipped_for_changelog() {
+        let prefix = "## v1.0";
+        let src = make_split_h2_source(prefix, 2, 6);
+        let ranges = sections("CHANGELOG.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![SectionKind::Whole],
+            "changelog must not split; got {ranges:?}",
+        );
+    }
+
+    /// Doc page (non-README, non-changelog) with H3 children does
+    /// split. Gate is changelog-only, not readme-only.
+    #[test]
+    fn markdown_h2_split_non_readme_doc_page() {
+        let prefix = "## Setup\n\nIntro paragraph that is real prose.\n\
+                      A second line so the intro body counts as substantive.";
+        let src = make_split_h2_source(prefix, 2, 6);
+        let ranges = sections("docs/setup.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert_eq!(
+            kinds,
+            vec![
+                SectionKind::Intro,
+                SectionKind::H3Child,
+                SectionKind::H3Child,
+            ],
+            "non-changelog doc page must split; got {ranges:?}",
+        );
+    }
+
+    /// Non-split changelog: every `Whole` range's `parent_index` equals
+    /// its position in the returned list. Regression guard for the
+    /// index-decay contract.
+    #[test]
+    fn markdown_h2_parent_index_consistent_for_changelog() {
+        let mut src = String::new();
+        for v in 0..3 {
+            src.push_str(&format!(
+                "## v{v}.0\n\n### Added\n\nbullet\n\n### Fixed\n\nbullet\n\n"
+            ));
+        }
+        let ranges = sections("CHANGELOG.md", &src);
+        for (i, r) in ranges.iter().enumerate() {
+            assert_eq!(
+                r.parent_index, i,
+                "Whole ranges must have parent_index == position; got {r:?}"
+            );
+            assert_eq!(r.kind, SectionKind::Whole);
+        }
+    }
+
+    /// Outline gated out by row-count cap → no split, even for a
+    /// splittable H2 inside the file. Without the outline carrying
+    /// the H2 heading, dropping the heading-only intro would lose it.
+    #[test]
+    fn markdown_h2_no_split_when_outline_omitted() {
+        // One splittable H2 (with two H3 children + filler), then enough
+        // additional H2 stubs to push past `MAX_OUTLINE_HEADINGS`.
+        let mut src = String::from("# Title\n\nTagline.\n\n");
+        src.push_str(&make_split_h2_source("## Usage", 2, 6));
+        for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
+            src.push_str(&format!("\n## Other {i}\n\nbody.\n"));
+        }
+        // Sanity: outline gate must reject this file.
+        let outline = outline_rows("README.md", &src);
+        assert!(
+            !outline_emits_for(&outline, &src),
+            "outline must be omitted for the test premise to hold"
+        );
+        let ranges = sections("README.md", &src);
+        let usage = ranges
+            .iter()
+            .find(|r| {
+                src.lines()
+                    .nth(r.start.saturating_sub(1))
+                    .is_some_and(|l| l.starts_with("## Usage"))
+            })
+            .expect("Usage section must appear in ranges");
+        assert_eq!(
+            usage.kind,
+            SectionKind::Whole,
+            "outline-omitted files must keep H2s as Whole; got {usage:?}",
         );
     }
 
