@@ -36,6 +36,7 @@ pub mod fs;
 pub mod json;
 pub mod markdown;
 pub mod multi;
+pub mod plaintext;
 pub mod rust;
 pub mod toml;
 pub mod typescript;
@@ -241,6 +242,15 @@ impl FileLines {
         self.ellipses = ellipses;
         self
     }
+}
+
+/// Composed location prior for `ValueSignals::depth_factor`. Folds the
+/// path's depth penalty (`value::depth_factor`) and the non-essential-
+/// directory discount (`WalkCtx::non_essential_factor`) into one
+/// multiplier. Every per-file walker uses the same recipe; lifting the
+/// helper here keeps it from drifting between walkers.
+pub(crate) fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
 }
 
 /// Build a [`ResolvedBatch`] whose content is a set of spans for one file.

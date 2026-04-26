@@ -1,7 +1,7 @@
 fixture = "cmdk"
 budget = 10000
-cumulative_tokens = 9026
-batch_count = 86
+cumulative_tokens = 9149
+batch_count = 87
 
 [[batches]]
 position = 1
@@ -2928,10 +2928,36 @@ kind = "full"
 
 [[batches]]
 position = 82
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore"
+cost_tokens = 123
+cum_tokens = 7942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore"
+start = 10
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 7 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #7"
 cost_tokens = 179
-cum_tokens = 7998
+cum_tokens = 8121
 
 [batches.content]
 kind = "lines"
@@ -2977,11 +3003,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 16 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #16"
 cost_tokens = 205
-cum_tokens = 8203
+cum_tokens = 8326
 
 [batches.content]
 kind = "lines"
@@ -3019,11 +3045,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 8 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #8"
 cost_tokens = 276
-cum_tokens = 8479
+cum_tokens = 8602
 
 [batches.content]
 kind = "lines"
@@ -3085,11 +3111,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 18 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #18"
 cost_tokens = 253
-cum_tokens = 8732
+cum_tokens = 8855
 
 [batches.content]
 kind = "lines"
@@ -3151,11 +3177,11 @@ end = 424
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #5"
 cost_tokens = 294
-cum_tokens = 9026
+cum_tokens = 9149
 
 [batches.content]
 kind = "lines"

@@ -5,7 +5,7 @@
 
 use crate::batch::{BatchKey, ResolvedBatch};
 
-use super::{Candidate, WalkCtx, Walker, fs, json, markdown, rust, toml, typescript};
+use super::{Candidate, WalkCtx, Walker, fs, json, markdown, plaintext, rust, toml, typescript};
 
 #[derive(Default)]
 pub struct MultiWalker;
@@ -25,6 +25,7 @@ impl Walker for MultiWalker {
         out.extend(toml::expand(scheduled, ctx));
         out.extend(typescript::expand(scheduled, ctx));
         out.extend(json::expand(scheduled, ctx));
+        out.extend(plaintext::expand(scheduled, ctx));
         out
     }
 
@@ -36,6 +37,7 @@ impl Walker for MultiWalker {
             BatchKey::Toml(_) => toml::materialize(key, ctx),
             BatchKey::Typescript(_) => typescript::materialize(key, ctx),
             BatchKey::Json(_) => json::materialize(key, ctx),
+            BatchKey::Plaintext(_) => plaintext::materialize(key, ctx),
         }
     }
 }

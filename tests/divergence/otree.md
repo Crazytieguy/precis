@@ -1,4 +1,4 @@
-scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9292/10000
+scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/10000
 
 ## Tier rollup
 
@@ -84,10 +84,11 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9292/1
 | 165 | 0.51 | 321 | 6795 | headings outline in docs/changelog.md |
 | 159 | 0.61 | 259 | 6083 | pub item at src/config/colors.rs:78 |
 | 149 | 0.70 | 213 | 5824 | mod/use plumbing in src/main.rs |
-| 144 | 1.00 | 144 | 9223 | docs/changelog.md section #3 |
+| 144 | 1.00 | 144 | 9325 | docs/changelog.md section #3 |
 | 119 | 1.00 | 119 | 4896 | mod/use plumbing in src/config/mod.rs |
 | 115 | 1.00 | 115 | 4591 | mod/use plumbing in src/parse/mod.rs |
 | 103 | 1.00 | 103 | 7261 | docs/changelog.md section #1 |
+| 102 | 1.00 | 102 | 9181 | plaintext config .gitignore |
 | 96 | 1.00 | 96 | 1988 | README.md section #6 |
 | 93 | 0.61 | 153 | 4476 | pub item at src/config/types.rs:28 |
 | 91 | 1.00 | 91 | 602 | macro_export bodies across src |
@@ -95,7 +96,7 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9292/1
 | 79 | 1.00 | 79 | 7528 | docs/changelog.md section #2 |
 | 74 | 1.00 | 74 | 394 | README.md section #1 |
 | 70 | 1.00 | 70 | 6153 | README.md section #2 |
-| 69 | 1.00 | 69 | 9292 | docs/changelog.md section #9 |
+| 69 | 1.00 | 69 | 9394 | docs/changelog.md section #9 |
 | 65 | 1.00 | 65 | 2840 | pub item at src/config/colors.rs:251 |
 | 58 | 1.00 | 58 | 841 | pub item at src/live_reload.rs:16 |
 | 56 | 1.00 | 56 | 5377 | README.md section #3 |

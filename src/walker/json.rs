@@ -13,10 +13,10 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{BatchKey, FsKey, JsonKey, ResolvedBatch, ValueSignals};
-use crate::value::depth_factor;
 
 use super::{
-    Candidate, FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, single_file_lines_batch,
+    Candidate, FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, signal_factor,
+    single_file_lines_batch,
 };
 
 /// Hard cap on `Whole` JSON config rendering. Above this, we skip the
@@ -246,10 +246,6 @@ fn is_dependencies_key(k: &str) -> bool {
 
 fn candidate(jk: JsonKey, signals: ValueSignals) -> Candidate<BatchKey> {
     Candidate::new(jk.into(), signals)
-}
-
-fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
 }
 
 fn identity_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {

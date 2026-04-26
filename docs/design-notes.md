@@ -476,6 +476,64 @@ is the wrong shape and we need richer per-signal location context.
   abort threshold. Pairs naturally with the `PubItem`-style
   catastrophic rebalance below.
 
+### Plaintext walker — small known-text config + license files — DONE
+
+`src/walker/plaintext.rs` emits `PlaintextKey::Whole` content batches
+for files no other walker covers: `LICENSE` / `LICENSE-MIT` /
+`LICENSE-APACHE` / `LICENSE.txt` / `COPYING` / `NOTICE` / `.gitignore`
+/ `.dockerignore` / `.editorconfig` / `.eslintrc` (extensionless) /
+`.prettierrc` (extensionless) / `.nvmrc` / `.python-version` /
+`.tool-versions`. Filename-classified into four classes (License /
+IgnoreList / EditorConfig / Toolchain) with conservative tuned signal
+presets.
+
+**Critical safety guard**: `.npmrc`, `.netrc`, `.env`, `.pypirc` are
+**not** classified — they commonly contain `_authToken` /
+credentials, and `precis` output is intended for downstream agents/
+logs. Codex adversarial-review caught this before merge; the test
+table includes negative assertions for each. Future additions to the
+whitelist should be auditioned against the same risk.
+
+Two caps protect the budget:
+- `PLAINTEXT_BYTE_GATE = PLAINTEXT_LINE_CAP * 200` checked at
+  `expand` time via `std::fs::metadata` only — keeps the discovery /
+  materialize contract (no per-call `read_source`) intact.
+- `PLAINTEXT_LINE_CAP = 60` and `PLAINTEXT_TOKEN_CAP = 400` checked
+  at `materialize` time. Token cap is enforced against the actual
+  scheduler-computed marginal cost via a throwaway
+  `RenderedTree::new(ctx.root(), ctx.source_cache().clone())` and
+  `marginal_cost(&batch)` — the same code path the scheduler uses,
+  so the cap is the scheduler's view of displacement budget. (Earlier
+  plan iterations used `tokenizer::count(source)` directly; codex
+  round-3 caught that this undercounts by tens of tokens because it
+  ignores the rendered line-number prefix + indent.)
+
+Signals were calibrated by regenerating divergence baselines: the
+first pass (`cat` 0.30–0.45 across classes) scheduled plaintext
+batches eagerly enough to displace one tier-tail batch in
+anyhow/superstruct. A two-step descent landed on `License` 0.05 /
+`IgnoreList` 0.20 / `EditorConfig` 0.25 / `Toolchain` 0.30 — at
+which point no fixture regresses Sim or Reached, mitt's NS 5.10
+(.editorconfig + .gitignore) reaches with 0.89 credit (+1
+Reached), and 5.12 (LICENSE preamble) partials at 0.67. Aggregate
+Sim across the 10 fixtures: 4.178 → 4.178 (flat), aggregate Reached
+162 → 163 (+1 mitt).
+
+Refactor extracted shared `signal_factor(file, ctx)` helper to
+`walker::signal_factor` — both `json::*_signals` and
+`plaintext::class_signals` use it now. The duplicated whole-file
+discovery preamble between `json::expand` and `plaintext::expand`
+(byte gate + cap arithmetic) was left as-is for now; lifting to a
+shared `whole_file_gate` helper would help if a third "whole small
+file" walker lands.
+
+Plan + 3 plan-review rounds + 1 adversarial review (which caught
+the `.npmrc` credential issue) in `ignore/plan-plaintext-walker.md`.
+NS 5.7 (mitt's `.eslintrc` body) is still missing — it sits right
+at the line cap (52 lines) but the rendered batch exceeds the
+400-token cap, so materialize rejects it. Raising the token cap is
+deferred until a fixture surfaces a real win from including it.
+
 ### TOML walker — workspace-aware sub-crate damping — DONE
 
 `WalkCtx::is_workspace_member(file)` returns `true` for sub-crate

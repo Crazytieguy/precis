@@ -1,4 +1,4 @@
-scores: Sim=0.281 Reached=20/42 Early=8 Late=10 Partial=5 Missing=17 Used=9026/10000
+scores: Sim=0.281 Reached=20/42 Early=8 Late=10 Partial=5 Missing=17 Used=9149/10000
 
 ## Tier rollup
 
@@ -28,7 +28,7 @@ scores: Sim=0.281 Reached=20/42 Early=8 Late=10 Partial=5 Missing=17 Used=9026/1
 | 1.7 | 549 | — | — | 0.00 | missing | Website (showcase) layout — themes + components |  |
 | 1.8 | 751 | — | — | 0.00 | missing | Root scripts — how to build/run/test |  |
 | 2.1 | 802 | 2684 | +1882 | 1.00 | late | README — top-level section headings | README.md section #2 (t=6112, 54 atoms) |
-| 2.2 | 949 | 2684 | +1735 | 1.00 | late | README — every Parts heading (with [cmdk-*] selectors) | README.md section #8 (t=8479, 23 atoms) |
+| 2.2 | 949 | 2684 | +1735 | 1.00 | late | README — every Parts heading (with [cmdk-*] selectors) | README.md section #8 (t=8602, 23 atoms) |
 | 2.3 | 1166 | 6112 | +4946 | 0.87 | late | README — basic Use snippet | README.md section #2 (t=6112, 20 atoms) |
 | 3.1 | 1232 | 7554 | +6322 | 1.00 | late | Architecture — Approach paragraph (DOM-as-truth) | ARCHITECTURE.md section #1 (t=7554, 1 atoms) |
 | 4.1 | 1342 | — | — | 0.00 | missing | index.tsx — module imports + 'use client' |  |
@@ -36,7 +36,7 @@ scores: Sim=0.281 Reached=20/42 Early=8 Late=10 Partial=5 Missing=17 Used=9026/1
 | 4.3 | 1718 | 1250 | -468 | 1.00 | aligned+over | index.tsx — every component declaration line | export body at cmdk/src/index.tsx:664 (t=5117, 49 atoms) |
 | 4.4 | 1857 | — | — | 0.00 | missing | index.tsx — data-attribute selectors + SELECT_EVENT |  |
 | 4.5 | 2215 | — | — | 0.00 | missing | index.tsx — internal type system (Context/State/Store) |  |
-| 5.1 | 2516 | 8479 | +5963 | 0.81 | late | README — Item subsection (the most-asked-about part) | README.md section #8 (t=8479, 22 atoms) |
+| 5.1 | 2516 | 8602 | +6086 | 0.81 | late | README — Item subsection (the most-asked-about part) | README.md section #8 (t=8602, 22 atoms) |
 | 5.2 | 2755 | — | — | 0.17 | missing | README — Command (root) value/filter/keywords/loop prose | headings outline in README.md (t=2684, 2 atoms) |
 | 5.3 | 3157 | 6112 | +2955 | 0.84 | late | README — Dialog usage with ⌘K keybind | README.md section #2 (t=6112, 32 atoms) |
 | 5.4 | 3397 | — | — | 0.55 | partial | FAQ — accessibility, virtualization, RSC, etc. | README.md section #20 (t=5529, 6 atoms) |
@@ -77,18 +77,19 @@ scores: Sim=0.281 Reached=20/42 Early=8 Late=10 Partial=5 Missing=17 Used=9026/1
 | 467 | 1.00 | 467 | 4355 | export body at cmdk/src/index.tsx:833 |
 | 400 | 1.00 | 400 | 3453 | export body at cmdk/src/index.tsx:787 |
 | 386 | 1.00 | 386 | 7121 | ARCHITECTURE.md section #0 |
-| 294 | 1.00 | 294 | 9026 | README.md section #5 |
+| 294 | 1.00 | 294 | 9149 | README.md section #5 |
 | 277 | 1.00 | 277 | 6578 | ARCHITECTURE.md section #2 |
-| 253 | 1.00 | 253 | 8732 | README.md section #18 |
+| 253 | 1.00 | 253 | 8855 | README.md section #18 |
 | 242 | 1.00 | 242 | 2329 | json config tsconfig.json |
 | 210 | 1.00 | 210 | 658 | package identity in cmdk/package.json |
-| 205 | 1.00 | 205 | 8203 | README.md section #16 |
-| 179 | 1.00 | 179 | 7998 | README.md section #7 |
+| 205 | 1.00 | 205 | 8326 | README.md section #16 |
+| 179 | 1.00 | 179 | 8121 | README.md section #7 |
 | 179 | 1.00 | 179 | 1921 | export body at cmdk/src/index.tsx:909 |
 | 178 | 1.00 | 178 | 1742 | export body at cmdk/src/index.tsx:882 |
 | 160 | 0.43 | 375 | 5529 | README.md section #20 |
 | 145 | 1.00 | 145 | 803 | package entrypoints in cmdk/package.json |
 | 143 | 1.00 | 143 | 3031 | README.md section #21 |
+| 123 | 1.00 | 123 | 7942 | plaintext config .gitignore |
 | 113 | 1.00 | 113 | 2888 | README.md section #22 |
 | 95 | 0.50 | 189 | 6301 | package dependencies in cmdk/package.json |
 | 81 | 1.00 | 81 | 6735 | README.md section #6 |

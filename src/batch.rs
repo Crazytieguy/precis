@@ -41,6 +41,7 @@ pub enum BatchKey {
     Toml(TomlKey),
     Typescript(TsKey),
     Json(JsonKey),
+    Plaintext(PlaintextKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -77,6 +78,11 @@ impl From<TsKey> for BatchKey {
 impl From<JsonKey> for BatchKey {
     fn from(k: JsonKey) -> Self {
         BatchKey::Json(k)
+    }
+}
+impl From<PlaintextKey> for BatchKey {
+    fn from(k: PlaintextKey) -> Self {
+        BatchKey::Plaintext(k)
     }
 }
 
@@ -229,6 +235,20 @@ pub enum JsonKey {
     Whole { file: PathBuf },
 }
 
+/// Plaintext config / license file batches. One whole-file `Whole`
+/// variant per supported filename (see [`crate::walker::plaintext`] for
+/// the whitelist). These files would otherwise only appear in dir
+/// listings — the plaintext walker emits a content batch capped at a
+/// small line + token budget so render-time displacement of richer
+/// walker batches stays bounded.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum PlaintextKey {
+    /// Whole-file render of a small, known-plaintext config or license
+    /// file. Skipped when the file's line count or rendered token cost
+    /// exceeds the walker's caps.
+    Whole { file: PathBuf },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -275,6 +295,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Toml(k) => k.describe(),
             BatchKey::Typescript(k) => k.describe(),
             BatchKey::Json(k) => k.describe(),
+            BatchKey::Plaintext(k) => k.describe(),
         }
     }
 }
@@ -384,6 +405,14 @@ impl JsonKey {
                 format!("package dependencies in {}", display_path(file))
             }
             JsonKey::Whole { file } => format!("json config {}", display_path(file)),
+        }
+    }
+}
+
+impl PlaintextKey {
+    pub fn describe(&self) -> String {
+        match self {
+            PlaintextKey::Whole { file } => format!("plaintext config {}", display_path(file)),
         }
     }
 }
