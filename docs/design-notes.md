@@ -583,12 +583,40 @@ metadata phase remains open.
 - **Multi-path seed** — the CLI accepts `Vec<PathBuf>` but `render()` uses
   only the first path. Multi-root scheduling (one budget across roots) is
   deferred.
-- **Performance optimizations** — `best_exact` recomputes marginal cost for
-  every batch on every loop iteration. Tokenizer has a thread-local cache
-  of string→tokens that cuts the redundant work, but per-batch cost caching
-  invalidated on paths-touched would cut it further. Defer until a larger
-  fixture surfaces it. Eager materialization (above) increases the size of
-  `entries` over time, magnifying this concern modestly.
+- **Performance optimizations — per-batch marginal-cost cache — DONE.**
+  `Scheduler` now caches `marginal_cost` per `BatchId` (`cost_cache`) and
+  invalidates selectively on `schedule` via a `path_to_batches` reverse
+  index. Relevant paths are derived from `BatchContent` (Lines: span
+  paths; Fs: group parents); cross-variant invalidation is unnecessary
+  because Fs `apply` mutates only `Dir.children` and Lines `apply`
+  mutates only `File.content`. Stale entries in `path_to_batches` are
+  pruned lazily during invalidation (`retain` on each touched path's
+  Vec) so dense per-file fan-out doesn't accumulate dead BatchIds.
+  `best_exact` is now `&mut self` (still private, no API change) so the
+  cache populates without `RefCell` borrow gymnastics — codex round-1
+  caught a `RefCell` panic risk in the original sketch.
+
+  Verification: `tests/scheduler_invariants.rs::scheduler_invariants_fs_overlap_invalidates_cached_cost`
+  uses `PRECIS_VERIFY_COST_CACHE=1` (debug-only env-var that recomputes
+  on every cache hit and `debug_assert_eq!`s) to gate the overlapping-
+  Fs invalidation case deterministically. The env var is opt-in because
+  always-on recompute roughly doubles `cargo t` runtime (37s → 87s)
+  while only catching a class of bug the synthetic test already covers.
+
+  Perf delta: `cargo t --release schedule_order` 15.5s → 10.4s
+  (-33%); mdbook (largest fixture) 5.1s → 2.1s (-60%). Debug
+  `cargo t schedule_order` regresses from 37s → 57s due to hashmap
+  overhead in unoptimized builds — accepted as the cost of correctness
+  bookkeeping; release is the relevant target. Plan + 3 plan-review
+  rounds + 1 adversarial review (no findings) in
+  `ignore/plan-marginal-cost-cache.md`.
+
+- **Lazy materialization frontier** — eager materialization (post the
+  speculative-pool drop) parses every emitted candidate, even ones that
+  never fit. Pathological wide-frontier fixtures could justify a
+  materialization cap; benign on the current 10 fixtures. The cost
+  cache above covers the inner-loop redundancy, but doesn't shrink
+  `entries`. Defer until a real fixture surfaces it.
 
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or

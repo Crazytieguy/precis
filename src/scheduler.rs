@@ -25,7 +25,7 @@
 //! doesn't fit the scheduler stops — no fallback to a smaller batch.
 
 use std::collections::{HashMap, HashSet};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::batch::{Batch, BatchId, WalkerKey};
 use crate::content::BatchContent;
@@ -85,6 +85,18 @@ pub struct Scheduler<W: Walker> {
     /// Keys that failed materialization (`materialize` returned `None`)
     /// and their dependents. Never retried.
     dead: HashSet<W::Key>,
+    /// Cached marginal cost per materialized batch. Populated lazily by
+    /// `best_exact` on cache miss; selectively cleared by `schedule`
+    /// when the just-applied batch mutates render-tree state any other
+    /// batch's marginal cost depends on.
+    cost_cache: HashMap<BatchId, Cost>,
+    /// Reverse index: each path → batches whose marginal cost depends
+    /// on render-tree state at that path. Populated at materialize time
+    /// from the batch's content (Lines: span paths; Fs: group parents).
+    /// Lines and Fs use disjoint cells of the render tree, so a single
+    /// `PathBuf`-keyed index suffices — even on a hypothetical
+    /// file-vs-dir collision the worst case is over-invalidation.
+    path_to_batches: HashMap<PathBuf, Vec<BatchId>>,
 }
 
 impl<W: Walker> Scheduler<W> {
@@ -115,6 +127,8 @@ impl<W: Walker> Scheduler<W> {
             scheduled_log: Vec::new(),
             candidates: HashMap::new(),
             dead: HashSet::new(),
+            cost_cache: HashMap::new(),
+            path_to_batches: HashMap::new(),
         }
     }
 
@@ -245,7 +259,46 @@ impl<W: Walker> Scheduler<W> {
     /// already-computed cost. Returning `Cost` here lets the main loop do
     /// the fit check and (on schedule) apply without recomputing —
     /// `cost_spans` is the hot path per iteration.
-    fn best_exact(&self) -> Option<(BatchId, f64, Cost)> {
+    ///
+    /// Set `PRECIS_VERIFY_COST_CACHE=1` (debug builds only) to recompute
+    /// on every cache hit and `debug_assert_eq!` against the cached
+    /// value, turning any missed-invalidation bug into a deterministic
+    /// panic. Off by default because the recompute roughly 2× the
+    /// debug-test runtime; targeted regression coverage lives in
+    /// `tests/scheduler_invariants.rs::scheduler_invariants_fs_overlap_invalidates_cached_cost`,
+    /// which sets the env var so it always exercises the gate.
+    ///
+    /// `&mut self` because the cache may be populated mid-call. The body
+    /// must mutate only `cost_cache`; no scheduler state transitions
+    /// (`scheduled`/`scheduled_log`/`tree.apply`) belong here.
+    fn best_exact(&mut self) -> Option<(BatchId, f64, Cost)> {
+        // Two passes so we can mutate `cost_cache` without holding a
+        // borrow into `entries`: first compute any missing costs, then
+        // rank using the now-populated cache.
+        let verify_hits = cfg!(debug_assertions) && verify_cost_cache_enabled();
+        for idx in 0..self.entries.len() {
+            let id = BatchId::new(idx);
+            if self.scheduled.contains(&id) {
+                continue;
+            }
+            let entry = &self.entries[idx];
+            if !self.eligible(entry.predecessor.as_ref()) {
+                continue;
+            }
+            if let Some(&cached) = self.cost_cache.get(&id) {
+                if verify_hits {
+                    let fresh = self.tree.marginal_cost(&entry.batch);
+                    debug_assert_eq!(
+                        fresh, cached,
+                        "stale cost_cache entry for batch {id:?} — invalidation logic missed a dependency",
+                    );
+                }
+            } else {
+                let fresh = self.tree.marginal_cost(&entry.batch);
+                self.cost_cache.insert(id, fresh);
+            }
+        }
+
         let mut best: Option<(f64, BatchId, &W::Key, Cost)> = None;
         for (idx, entry) in self.entries.iter().enumerate() {
             let id = BatchId::new(idx);
@@ -255,7 +308,7 @@ impl<W: Walker> Scheduler<W> {
             if !self.eligible(entry.predecessor.as_ref()) {
                 continue;
             }
-            let cost = self.tree.marginal_cost(&entry.batch);
+            let cost = self.cost_cache[&id];
             let value = score(&entry.batch.signals);
             let ratio = score_ratio(value, cost.tokens);
             let better = best
@@ -292,13 +345,17 @@ impl<W: Walker> Scheduler<W> {
             return None;
         };
         let id = BatchId::new(self.entries.len());
+        let batch = Batch {
+            content: resolved.content,
+            signals: resolved.signals,
+        };
+        for path in relevant_paths(&batch.content) {
+            self.path_to_batches.entry(path).or_default().push(id);
+        }
         self.entries.push(BatchEntry {
             key: key.clone(),
             predecessor: candidate.predecessor,
-            batch: Batch {
-                content: resolved.content,
-                signals: resolved.signals,
-            },
+            batch,
         });
         self.key_to_id.insert(key.clone(), id);
         Some(id)
@@ -332,6 +389,23 @@ impl<W: Walker> Scheduler<W> {
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 
+        // Invalidate cached marginal costs for any other materialized
+        // batch whose marginal cost depends on render-tree state at a
+        // path the just-applied batch mutated. Also lazily prune
+        // already-scheduled ids from the dependents list — they never
+        // re-enter `best_exact`, so keeping them inflates the
+        // invalidation loop on hot files like `src/lib.rs`.
+        self.cost_cache.remove(&id);
+        let scheduled = &self.scheduled;
+        for path in relevant_paths(&batch_clone.content) {
+            if let Some(dependents) = self.path_to_batches.get_mut(&path) {
+                dependents.retain(|d| !scheduled.contains(d));
+                for dep in dependents {
+                    self.cost_cache.remove(dep);
+                }
+            }
+        }
+
         // Walker learns about the new scheduled key; emit successors.
         let key = self.entries[id.index()].key.clone();
         let successors = self.walker.expand(&key, &self.ctx);
@@ -359,4 +433,43 @@ impl<W: Walker> Scheduler<W> {
         }
         set
     }
+}
+
+/// `PRECIS_VERIFY_COST_CACHE=1` opt-in for the recompute-on-hit
+/// assertion in `best_exact`. Read once per process — toggling at
+/// runtime isn't supported, but the value of an env var rarely changes
+/// inside a test run anyway.
+fn verify_cost_cache_enabled() -> bool {
+    use std::sync::OnceLock;
+    static FLAG: OnceLock<bool> = OnceLock::new();
+    *FLAG.get_or_init(|| {
+        std::env::var("PRECIS_VERIFY_COST_CACHE")
+            .map(|v| matches!(v.as_str(), "1" | "true"))
+            .unwrap_or(false)
+    })
+}
+
+/// Paths whose render-tree state the marginal cost of `content`
+/// depends on, used as the invalidation key for `Scheduler::cost_cache`.
+///
+/// - `Lines`: each unique span path (Lines marginal cost reads
+///   `nodes[path].content` to compute refinement deltas).
+/// - `Fs`: each unique group parent (Fs marginal cost reads
+///   `nodes[parent].children` to skip already-listed entries).
+///
+/// Cross-variant invalidation is unnecessary: `apply_fs_group` only
+/// mutates `Dir.children` (and inserts empty `File`/`Dir` nodes whose
+/// content is empty — Lines `existing.get(line) == None` either way),
+/// and `apply_spans` only mutates `File.content`. Lines paths and Fs
+/// parents thus invalidate disjoint cells of the render tree even
+/// when sharing a `PathBuf` (which can't happen in practice — file
+/// vs. dir paths differ).
+fn relevant_paths(content: &BatchContent) -> Vec<PathBuf> {
+    let mut paths: Vec<&Path> = match content {
+        BatchContent::Lines { spans } => spans.iter().map(|s| s.path.as_path()).collect(),
+        BatchContent::Fs { groups } => groups.iter().map(|g| g.parent.as_path()).collect(),
+    };
+    paths.sort();
+    paths.dedup();
+    paths.into_iter().map(PathBuf::from).collect()
 }

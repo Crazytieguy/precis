@@ -279,3 +279,103 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
         Scheduler::with_source_cache(stub_dir(), OverlappingWalker, 10_000, None, cache);
     let _ = scheduler.run();
 }
+
+#[test]
+fn scheduler_invariants_fs_overlap_invalidates_cached_cost() {
+    // Two sibling DirListing batches share `/stub` as parent. Listing A
+    // covers [a.rs]; Listing B covers [a.rs, b.rs]. With proper cache
+    // invalidation, B's marginal cost after A schedules drops to just
+    // the b.rs row (a.rs is already listed). Without invalidation, the
+    // recompute-on-hit assertion in `best_exact` panics with "stale
+    // cost_cache entry".
+    //
+    // We enable `PRECIS_VERIFY_COST_CACHE=1` so the assertion fires
+    // even though it's opt-in by default (the verification is too
+    // expensive to run on every test). nextest spawns a fresh process
+    // per test, so the unsafe `set_var` is safe — no other threads
+    // are reading the env at this point.
+    //
+    // A is given a stronger value signal so it schedules first; the
+    // ranking ratio (value / cost^k) plus dedup-on-already-listed gates
+    // the rest of the test naturally.
+    // SAFETY: nextest runs each test in its own single-threaded process.
+    unsafe { std::env::set_var("PRECIS_VERIFY_COST_CACHE", "1") };
+    #[derive(PartialEq, Eq)]
+    enum Which {
+        ListingA,
+        ListingB,
+    }
+    fn key_for(which: &Which) -> BatchKey {
+        match which {
+            // Distinct directory paths so the keys hash differently —
+            // both materializers still emit groups parented at the
+            // shared `/stub` directory, which is what the cache cares
+            // about. Using two separate `DirListing` keys with identical
+            // `dir` fields would collapse them into one entry.
+            Which::ListingA => BatchKey::Fs(FsKey::DirListing {
+                dir: PathBuf::from("/stub-a"),
+            }),
+            Which::ListingB => BatchKey::Fs(FsKey::DirListing {
+                dir: PathBuf::from("/stub-b"),
+            }),
+        }
+    }
+
+    struct OverlapWalker;
+    impl Walker for OverlapWalker {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+            vec![
+                Candidate::new(key_for(&Which::ListingA), sig(0.9)),
+                Candidate::new(key_for(&Which::ListingB), sig(0.4)),
+            ]
+        }
+
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+            Vec::new()
+        }
+
+        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
+            if key == &key_for(&Which::ListingA) {
+                return Some(ResolvedBatch {
+                    content: BatchContent::Fs {
+                        groups: vec![FsGroup {
+                            parent: stub_dir(),
+                            entries: FsEntries::Listed(vec![PathBuf::from("a.rs")]),
+                        }],
+                    },
+                    signals: sig(0.9),
+                });
+            }
+            if key == &key_for(&Which::ListingB) {
+                return Some(ResolvedBatch {
+                    content: BatchContent::Fs {
+                        groups: vec![FsGroup {
+                            parent: stub_dir(),
+                            entries: FsEntries::Listed(vec![
+                                PathBuf::from("a.rs"),
+                                PathBuf::from("b.rs"),
+                            ]),
+                        }],
+                    },
+                    signals: sig(0.4),
+                });
+            }
+            None
+        }
+    }
+
+    let cache = SourceCache::new();
+    let scheduler = Scheduler::with_source_cache(stub_dir(), OverlapWalker, 10_000, None, cache);
+    let tree = scheduler.run();
+    let rendered = tree.render();
+    assert!(
+        rendered.contains("a.rs"),
+        "listing A should have scheduled: {rendered}"
+    );
+    assert!(
+        rendered.contains("b.rs"),
+        "listing B's b.rs should have scheduled (a.rs already listed): {rendered}"
+    );
+}
