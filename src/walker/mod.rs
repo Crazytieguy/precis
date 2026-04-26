@@ -41,11 +41,12 @@ pub mod toml;
 pub mod typescript;
 
 /// A discovered batch that hasn't been materialized yet. Emitted by
-/// `seed` / `expand`. Carries:
-/// - the stable key so other candidates can name it as predecessor,
-/// - [`ValueSignals`] the walker can fill in from FS-only evidence (used
-///   as the speculative upper bound by the scheduler),
-/// - optional cost hint (token upper bound) for the speculative frontier.
+/// `seed` / `expand`. Carries the stable key (so other candidates can
+/// name it as predecessor) and the FS-only [`ValueSignals`] the walker
+/// can fill in cheaply. The candidate pool exists so candidates whose
+/// predecessor isn't yet scheduled can wait — the scheduler eagerly
+/// materializes any candidate whose predecessor is scheduled (or who
+/// has no predecessor) before each scheduling decision.
 ///
 /// Generic over the walker's own key type (see [`Walker::Key`]), so the
 /// scheduler/renderer never names any walker-specific enum.
@@ -56,23 +57,14 @@ pub struct Candidate<K: WalkerKey> {
     /// FS-only value signals. After materialization these are overwritten
     /// with the resolved batch's (usually richer) signals.
     pub signals: ValueSignals,
-    /// **Lower** bound on this batch's post-materialization token cost,
-    /// from FS properties. The scheduler computes the speculative ratio
-    /// as `score(signals) / cost_hint^0.35`; a value/cost ratio is
-    /// monotone-decreasing in cost, so a lower bound on cost yields an
-    /// upper bound on ratio — required for the branch-and-bound prune
-    /// step to stay sound. Cheap bound only; the actual cost is
-    /// computed post-materialization.
-    pub cost_hint: usize,
 }
 
 impl<K: WalkerKey> Candidate<K> {
-    pub fn new(key: K, signals: ValueSignals, cost_hint: usize) -> Self {
+    pub fn new(key: K, signals: ValueSignals) -> Self {
         Self {
             key,
             predecessor: None,
             signals,
-            cost_hint,
         }
     }
 
@@ -100,7 +92,7 @@ pub trait Walker {
     /// Per-run metadata that needs source reads (module visibility,
     /// workspace membership) lives behind `WalkCtx` `OnceCell`s. Outside
     /// those caches, `expand` must not do per-call file I/O — the
-    /// scheduler relies on each speculative candidate being cheap to emit.
+    /// scheduler relies on each pending candidate being cheap to emit.
     fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
 
     /// Read source, parse, and build the concrete batch for `key`. Returns

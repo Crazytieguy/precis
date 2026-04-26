@@ -64,14 +64,12 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(candidate(
                 TsKey::ModuleDocLede { file: file.clone() },
                 module_doc_lede_signals(file, ctx),
-                40,
             ));
         }
 
         out.push(candidate(
             TsKey::Imports { file: file.clone() },
             imports_signals(file, ctx),
-            60,
         ));
 
         let Some((source, tree)) = parse_ts(ctx, file) else {
@@ -85,7 +83,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         out.push(candidate(
             names_key.clone(),
             export_names_signals(file, ctx),
-            exports.len() * 8,
         ));
         for item in &exports {
             let key = TsKey::Export {
@@ -93,12 +90,8 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 start_line: item.start_line,
             };
             out.push(
-                candidate(
-                    key.clone(),
-                    export_signals(file, item.kind, ctx),
-                    item.estimated_cost(),
-                )
-                .with_predecessor(BatchKey::Typescript(names_key.clone())),
+                candidate(key.clone(), export_signals(file, item.kind, ctx))
+                    .with_predecessor(BatchKey::Typescript(names_key.clone())),
             );
             out.push(
                 candidate(
@@ -107,11 +100,10 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                         start_line: item.start_line,
                     },
                     export_doc_signals(file, item.kind, ctx),
-                    60,
                 )
                 .with_predecessor(BatchKey::Typescript(key.clone())),
             );
-            if item.body_emit_rows > 0 {
+            if item.has_emittable_body {
                 out.push(
                     candidate(
                         TsKey::ExportBody {
@@ -119,7 +111,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                             start_line: item.start_line,
                         },
                         export_body_signals(file, item.kind, ctx),
-                        (item.body_emit_rows * 6).max(60),
                     )
                     .with_predecessor(BatchKey::Typescript(key)),
                 );
@@ -173,8 +164,8 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 // --- candidate + signal helpers ---
 
-fn candidate(tk: TsKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
-    Candidate::new(tk.into(), signals, cost_hint)
+fn candidate(tk: TsKey, signals: ValueSignals) -> Candidate<BatchKey> {
+    Candidate::new(tk.into(), signals)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -220,18 +211,9 @@ struct ExportInfo {
     /// time by `locate_export_decl` rather than carried as a flag here.
     start_line: usize,
     kind: ItemKind,
-    line_span: usize,
-    /// Number of *non-blank* source rows the body materializer would emit
-    /// for `ExportBody` if scheduled. 0 means no `ExportBody` candidate
-    /// fires. Computed once at expand-time so the cost hint matches the
-    /// actual emit count after `build_file_spans`'s blank-line filter.
-    body_emit_rows: usize,
-}
-
-impl ExportInfo {
-    fn estimated_cost(&self) -> usize {
-        (self.line_span * 6).max(40)
-    }
+    /// Whether `ExportBody` should fire for this export. `true` iff the
+    /// body materializer would emit at least one non-blank source row.
+    has_emittable_body: bool,
 }
 
 /// Top-level exports in a file. Walks `program` children, looking for
@@ -256,13 +238,11 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
         };
         let start_line = child.start_position().row + 1;
         real_lines.insert(start_line);
-        let line_span = signature_line_span(child, decl_node, kind, source, start_line);
-        let body_emit_rows = export_body_rows(decl_node, kind, &src_lines).len();
+        let has_emittable_body = !export_body_rows(decl_node, kind, &src_lines).is_empty();
         out.push(ExportInfo {
             start_line,
             kind,
-            line_span,
-            body_emit_rows,
+            has_emittable_body,
         });
     }
 
@@ -281,46 +261,17 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
                 continue;
             }
             let kind = ItemKind::Const;
-            let line_span = signature_line_span(child, child, kind, source, start_line);
-            let body_emit_rows = export_body_rows(child, kind, &src_lines).len();
+            let has_emittable_body = !export_body_rows(child, kind, &src_lines).is_empty();
             out.push(ExportInfo {
                 start_line,
                 kind,
-                line_span,
-                body_emit_rows,
+                has_emittable_body,
             });
         }
         out.sort_by_key(|e| e.start_line);
     }
 
     out
-}
-
-/// Number of source lines an `Export` candidate would emit for its
-/// signature. Matches the truncation logic in `collect_export_lines` so
-/// the cost hint stays in line with the actual render.
-fn signature_line_span(
-    wrapper: Node,
-    decl: Node,
-    kind: ItemKind,
-    source: &str,
-    start_line: usize,
-) -> usize {
-    if matches!(kind, ItemKind::Const)
-        && let Some(body) = find_fn_init_body(decl)
-    {
-        let body_start_line = body.start_position().row + 1;
-        return body_start_line.saturating_sub(start_line) + 1;
-    }
-    let end_line = item_end_line(
-        if matches!(kind, ItemKind::NamedReexport) {
-            wrapper
-        } else {
-            decl
-        },
-        source,
-    );
-    end_line.saturating_sub(start_line) + 1
 }
 
 /// Local identifier names that appear in any top-level **value**
@@ -670,16 +621,10 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
 
 /// Materializer-path lookup: classify the export at `start_line` without
 /// re-running `find_export_starts` (which would recompute every export's
-/// `body_emit_rows` AST walk just to discard the count). All callers
-/// downstream of materialize need only the `ItemKind` for signal weighting.
+/// body AST walk just to discard the count). All callers downstream of
+/// materialize need only the `ItemKind` for signal weighting.
 fn classify_export_at(tree: &Tree, source: &str, start_line: usize) -> Option<ItemKind> {
     locate_export_decl(tree, source, start_line).map(|l| l.kind())
-}
-
-fn item_end_line(node: Node, source: &str) -> usize {
-    let text = &source[node.start_byte()..node.end_byte()];
-    let internal = text.trim_end_matches(['\n', '\r']).split('\n').count();
-    node.start_position().row + internal.max(1)
 }
 
 /// Files whose name signals "module entrypoint / public surface".
@@ -963,10 +908,9 @@ fn collect_export_body(tree: &Tree, source: &str, start_line: usize) -> FileLine
 
 /// 1-based source rows that the body materializer would emit for an
 /// export's `(decl, kind)` pair, *after* applying the same blank-line
-/// filter as `build_file_spans`. Used both to gate emission (returns
-/// empty when there is no `statement_block` body, when the body is
-/// single-line, or when interior is all blank) and to size the
-/// speculative cost hint without re-walking the tree.
+/// filter as `build_file_spans`. Used to gate emission (returns empty
+/// when there is no `statement_block` body, when the body is
+/// single-line, or when interior is all blank).
 fn export_body_rows(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<usize> {
     let mut out = Vec::new();
     match kind {
@@ -1013,9 +957,8 @@ fn export_body_rows(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<usize
 
 /// Push the interior rows (1-based) of `body` if it's a multi-line
 /// `statement_block`. Skips blank source lines so the count matches the
-/// post-`build_file_spans` emit count exactly — that's what
-/// `body_emit_rows` is wired to in the cost hint, and a mismatch would
-/// silently inflate the speculative ratio.
+/// post-`build_file_spans` emit count exactly — `has_emittable_body` is
+/// computed from this set's emptiness and the materializer must agree.
 fn push_statement_block_interior(out: &mut Vec<usize>, body: Option<Node>, src_lines: &[&str]) {
     let Some(b) = body else { return };
     if b.kind() != "statement_block" {
@@ -1137,8 +1080,8 @@ mod tests {
         let exports = find_export_starts(&tree, source);
         let item = exports.first().unwrap();
         let FileLines { full, .. } = collect_export_body(&tree, source, item.start_line);
-        // Sanity: helper-precomputed count matches actual emit rows.
-        assert_eq!(item.body_emit_rows, full.len());
+        // Sanity: helper-precomputed flag matches actual emit non-emptiness.
+        assert_eq!(item.has_emittable_body, !full.is_empty());
         full
     }
 
@@ -1164,9 +1107,9 @@ mod tests {
         let src = "export function foo() { return 1; }\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        // body.start_row == body.end_row → empty interior. body_emit_rows
-        // is 0; no candidate fires.
-        assert_eq!(exports[0].body_emit_rows, 0);
+        // body.start_row == body.end_row → empty interior. No body
+        // candidate fires.
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1174,7 +1117,7 @@ mod tests {
         let src = "export function foo() {}\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1202,7 +1145,7 @@ export class Foo {
         let src = "export interface Foo { bar(): void }\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1210,7 +1153,7 @@ export class Foo {
         let src = "export type Foo = { bar: number }\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1218,7 +1161,7 @@ export class Foo {
         let src = "export enum Foo { A, B }\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1236,7 +1179,7 @@ export class Foo {
         let src = "export const X = () => 1;\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1245,7 +1188,7 @@ export class Foo {
         let src = "export const X = { a: 1, b: 2 };\n";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(exports[0].body_emit_rows, 0);
+        assert!(!exports[0].has_emittable_body);
     }
 
     #[test]
@@ -1262,9 +1205,9 @@ export const cfg = buildConfig(input, () => {
 ";
         let tree = parse(src);
         let exports = find_export_starts(&tree, src);
-        assert_eq!(
-            exports[0].body_emit_rows, 0,
-            "trailing-position callback must not be treated as the export body",
+        assert!(
+            !exports[0].has_emittable_body,
+            "trailing-position callback must not be treated as the export body"
         );
         // Signature spans the whole declaration (no truncation), since
         // there's no fn-init body to elide behind. The source is three
@@ -1348,7 +1291,7 @@ export { Item as CommandItem };
         assert_eq!(exports.len(), 2);
         let synth = exports.iter().find(|e| e.start_line == 1).unwrap();
         assert!(matches!(synth.kind, ItemKind::Const));
-        assert!(synth.body_emit_rows > 0);
+        assert!(synth.has_emittable_body);
     }
 
     #[test]
@@ -1425,7 +1368,7 @@ export default class C {
     #[test]
     fn walker_typescript_export_body_skips_blank_interior_rows() {
         // Blank source lines inside the body shouldn't be counted —
-        // build_file_spans filters them out, so body_emit_rows must too.
+        // build_file_spans filters them out, so the emit-rows helper must too.
         let src = "\
 export function foo() {
 

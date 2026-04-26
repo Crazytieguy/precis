@@ -203,15 +203,6 @@ is the wrong shape and we need richer per-signal location context.
 
 ## Deferred (pick up in later sessions)
 
-### Revisit speculative-materialization
-Speculatives are walker-emitted candidates whose cost hasn't been computed
-yet; the scheduler materializes them on demand when their optimistic
-upper-bound ratio exceeds the best exact's actual ratio. Originally
-introduced for branch-and-bound correctness under the "fall back to a
-smaller fitting batch" behavior; now that the scheduler is prefix-monotone
-(no fallback), the speculative pool may be simplifiable. Yoav flagged he'd
-like to revisit whether it's still earning its complexity.
-
 ### Data model
 - **Cost shrink credit** — `cost_lines` uses `saturating_sub` so a refinement
   that makes content shorter never credits tokens back. Conservative wrt
@@ -536,6 +527,56 @@ refactor that moves these caches to an explicit pre-scheduler
 metadata phase remains open.
 
 ### Scheduler / walker
+- **Speculative-materialization branch-and-bound — DROPPED.** The
+  scheduler used to rank pending candidates by an upper-bound
+  `score / cost_hint^k` ratio against `best_exact` and prune
+  speculatives whose bound was below the top exact's true ratio.
+  That was sound only when every walker-supplied `cost_hint` was a
+  true lower bound on post-materialize cost, an unenforced contract
+  multiple walkers were violating for short content (e.g.
+  `MarkdownKey::Section` cost_hint=100 for sections that materialize
+  to ~30 tokens). With prefix-monotone scheduling there's no longer
+  any "skip-and-fall-back" path that branch-and-bound was protecting.
+  The scheduler now drains all currently-eligible pending candidates
+  into the materialized pool each iteration, then picks `best_exact`.
+  `Candidate::cost_hint` is gone; the per-walker `candidate(key,
+  signals, cost_hint)` helpers are now `candidate(key, signals)`.
+  Schedule decisions ride on `best_exact` alone — one source of truth.
+
+  **Sim deltas across the 10 fixtures**: anyhow −0.001, cmdk +0.014,
+  ky +0.002, log −0.036, mdbook +0.016, mitt +0.011, otree −0.013,
+  superstruct +0.007, ts-pattern +0.025, vaul +0.031. Aggregate Sim
+  +0.056 (4.122 → 4.178). Reached aggregate unchanged at 162.
+  Used-budget changes mostly track the Sim direction.
+
+  **log regressed past the planned −0.030 gate (−0.036).** Cause: the
+  new schedule includes more small `kv::*` `PubItem`/`PubItemNames`
+  batches early (their old cost_hints were too high, pruning them),
+  pushing cumulative tokens just above the point where the
+  ~2853-token `macro_export bodies across src` batch could fit. log
+  now stops at Used=7285 (was 9967), losing coverage on NS 2.7
+  (`log! macro shapes`). This is the same prefix-monotone tradeoff
+  documented under "Scheduler early-stop" — when a top-ranked exact
+  is too big it blocks the rest, and that signal is calibration
+  pressure (split the macro-bodies batch, lower its rank, or amend
+  log's NS to weight smaller items higher). Accepted as a tradeoff
+  because (a) the simplification is structurally correct, (b) 9/10
+  fixtures improved or held flat, (c) aggregate Sim is strongly
+  positive, and (d) the regression surfaces a real calibration
+  target that was previously hidden by an invalid cost_hint.
+
+  **Wall time**: `cargo t schedule_order` real time held steady
+  (64.75s → 60.37s). User time grew +26% (122s → 154s) — eager
+  materialization parses files whose batches may never schedule.
+  Parse caches in `WalkCtx` keep the constant factor cheap. Codex
+  adversarial review flagged that on pathological wide frontiers
+  with tiny budgets this could matter; empirically benign on the
+  active fixtures, but a materialization cap or lazy frontier
+  would be the right re-introduction if a future fixture surfaces it.
+
+  Plan + 2 plan-review rounds in
+  `ignore/plan-drop-speculative-pool.md`.
+
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
   Needs a small content-only walker path, probably driven by a real
   content walker rather than a generic "show full file" fallback.
@@ -546,7 +587,8 @@ metadata phase remains open.
   every batch on every loop iteration. Tokenizer has a thread-local cache
   of string→tokens that cuts the redundant work, but per-batch cost caching
   invalidated on paths-touched would cut it further. Defer until a larger
-  fixture surfaces it.
+  fixture surfaces it. Eager materialization (above) increases the size of
+  `entries` over time, magnifying this concern modestly.
 
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or

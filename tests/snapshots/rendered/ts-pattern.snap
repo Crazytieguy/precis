@@ -136,6 +136,10 @@ scripts/
     generate-cts.sh
 src/
     errors.ts
+        1→/**
+        2→ * Error when the given input value does not match any included pattern
+        3→ * and .exhaustive() was specified
+        4→ */
         5→export class NonExhaustiveError extends Error {
         6→  constructor(public input: unknown) {
         7→    let displayedValue;
@@ -158,7 +162,8 @@ src/
             16→export const isMatcher = (
             17→  x: unknown
             18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
-            …
+            19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
+            20→  return pattern && !!pattern[symbols.matcher];
             32→export const matchPattern = (
             33→  pattern: any,
             34→  value: any,
@@ -220,16 +225,7 @@ src/
             189→    >
             190→  : output;
             192→export type ReduceUnionForExclude<
-            193→  tuple extends readonly any[],
-            194→  i,
-            195→  output = never
-            196→> = tuple extends readonly [infer p, ...infer tail]
-            197→  ? ReduceUnionForExclude<
-            198→      tail,
-            199→      i,
-            200→      output | InvertPatternForExcludeInternal<p, i, never>
-            201→    >
-            202→  : output;
+            …
             303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
             304→  ? never
             305→  : InvertPatternForExcludeInternal<p, i>;

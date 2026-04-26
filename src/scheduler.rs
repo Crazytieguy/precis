@@ -1,28 +1,28 @@
-//! Scheduler: greedy value/cost picker with a two-tier frontier.
+//! Scheduler: greedy value/cost picker with a predecessor-gated candidate
+//! pool.
 //!
-//! The scheduler maintains two pools at any time:
+//! At any time the scheduler holds:
 //!
-//! - **Speculative candidates** (`self.candidates`): walker-emitted
-//!   [`Candidate`]s whose content hasn't been read or parsed yet. Ranked by
-//!   `score(signals) / cost_hint` — both of which the walker supplies from
-//!   FS-only evidence and must be OPTIMISTIC (signals high, cost low) so
-//!   the ratio is a correct upper bound on the post-materialization value.
+//! - **Pending candidates** (`self.candidates`): walker-emitted
+//!   [`Candidate`]s waiting for their predecessor (if any) to be
+//!   scheduled. No upper-bound ranking; they're held purely to honor
+//!   predecessor sequencing. Once a candidate's predecessor is scheduled
+//!   (or it has no predecessor) it becomes eligible and is materialized
+//!   before the next scheduling decision.
 //!
-//! - **Exact batches** (`self.entries`): materialized, with resolved
-//!   content + final signals + exact marginal cost against the current
-//!   tree. Ranked by `score(signals) / marginal_cost`.
+//! - **Materialized entries** (`self.entries`): resolved content + final
+//!   signals + exact marginal cost against the current tree. Ranked by
+//!   `score(signals) / marginal_cost^k`.
 //!
 //! Generic over `W: Walker` so the scheduler never names any walker-
 //! specific key variant. `W::Key` is an opaque [`WalkerKey`] as far as
 //! the scheduler is concerned — it needs identity (`Eq`/`Hash`) and
 //! tiebreak order (`Ord`) only.
 //!
-//! The branch-and-bound loop: peek both tops; if exact-top's ratio ≥
-//! speculative-top's upper bound, schedule exact-top (no unmaterialized
-//! candidate can beat it). Otherwise materialize the speculative-top and
-//! let it join the exact pool. Under prefix-monotone scheduling (see
-//! `docs/design-notes.md`), if the top-ratio exact doesn't fit the
-//! scheduler stops — no fallback to a smaller batch.
+//! Each iteration: drain all currently-eligible pending candidates into
+//! the materialized pool, then pick the best exact. Under prefix-monotone
+//! scheduling (see `docs/design-notes.md`), if the top-ranked exact
+//! doesn't fit the scheduler stops — no fallback to a smaller batch.
 
 use std::collections::{HashMap, HashSet};
 use std::path::PathBuf;
@@ -79,7 +79,8 @@ pub struct Scheduler<W: Walker> {
     scheduled: HashSet<BatchId>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
-    /// Speculative candidates (not yet materialized).
+    /// Pending candidates waiting on their predecessor to be scheduled
+    /// (or, with no predecessor, waiting for the next drain pass).
     candidates: HashMap<W::Key, Candidate<W::Key>>,
     /// Keys that failed materialization (`materialize` returned `None`)
     /// and their dependents. Never retried.
@@ -132,41 +133,20 @@ impl<W: Walker> Scheduler<W> {
             self.absorb_candidate(c);
         }
 
-        // Prefix-monotone scheduling: the top-ranked eligible batch (across
-        // both exact and speculative pools) is considered at each step. If
-        // it's speculative, materialize it (no budget cost). If it's an
-        // exact that fits, schedule it. If it's an exact that doesn't fit,
-        // stop — do not fall back to a smaller batch. This makes the
-        // schedule at T_small a true prefix of T_large's schedule (every
-        // decision up to the stopping point at T_small also holds at
-        // T_large, and T_large simply continues past it).
+        // Prefix-monotone scheduling: drain currently-eligible pending
+        // candidates into the materialized pool, then pick the top exact.
+        // If it fits, schedule it; otherwise stop (no fallback to smaller
+        // batches). This makes the schedule at T_small a true prefix of
+        // T_large's schedule.
         loop {
-            let best_exact = self.best_exact();
-            let best_spec = self.best_speculative();
-            match (best_exact, best_spec) {
-                (None, None) => break,
-                (Some((id, _, cost)), None) => {
-                    if self.fits(cost) {
-                        self.schedule(id, cost);
-                    } else {
-                        break;
-                    }
-                }
-                (None, Some((key, _))) => {
-                    let _ = self.materialize(&key);
-                }
-                (Some((id, ex_ratio, cost)), Some((key, spec_bound))) => {
-                    if ex_ratio >= spec_bound {
-                        if self.fits(cost) {
-                            self.schedule(id, cost);
-                        } else {
-                            break;
-                        }
-                    } else {
-                        let _ = self.materialize(&key);
-                    }
-                }
+            self.drain_eligible_candidates();
+            let Some((id, _, cost)) = self.best_exact() else {
+                break;
+            };
+            if !self.fits(cost) {
+                break;
             }
+            self.schedule(id, cost);
         }
 
         if cfg!(debug_assertions) {
@@ -238,24 +218,25 @@ impl<W: Walker> Scheduler<W> {
         pred.is_some_and(|p| self.dead.contains(p))
     }
 
-    // ---- speculative pool ----
+    // ---- candidate pool ----
 
-    fn best_speculative(&self) -> Option<(W::Key, f64)> {
-        let mut best: Option<(f64, &W::Key)> = None;
-        for (key, c) in &self.candidates {
-            if self.predecessor_dead(c.predecessor.as_ref()) {
-                continue;
-            }
-            if !self.eligible(c.predecessor.as_ref()) {
-                continue;
-            }
-            let ratio = upper_bound_ratio(c);
-            let better = best.is_none_or(|(br, bk)| ratio > br || (ratio == br && key < bk));
-            if better {
-                best = Some((ratio, key));
-            }
+    /// Materialize every currently-eligible pending candidate. Eligibility
+    /// = predecessor scheduled (or no predecessor), and predecessor not
+    /// dead. Materialization itself can't make new candidates eligible
+    /// (only `schedule` extends `self.scheduled`), so a single pass over
+    /// the current pool is sufficient.
+    fn drain_eligible_candidates(&mut self) {
+        let eligible: Vec<W::Key> = self
+            .candidates
+            .iter()
+            .filter_map(|(key, c)| {
+                let pred = c.predecessor.as_ref();
+                (!self.predecessor_dead(pred) && self.eligible(pred)).then(|| key.clone())
+            })
+            .collect();
+        for key in eligible {
+            let _ = self.materialize(&key);
         }
-        best.map(|(ratio, k)| (k.clone(), ratio))
     }
 
     // ---- exact pool ----
@@ -378,8 +359,4 @@ impl<W: Walker> Scheduler<W> {
         }
         set
     }
-}
-
-fn upper_bound_ratio<K: WalkerKey>(c: &Candidate<K>) -> f64 {
-    score_ratio(score(&c.signals), c.cost_hint)
 }

@@ -121,9 +121,7 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
 
 fn dir_listing_candidate(dir: PathBuf, ctx: &WalkCtx) -> Candidate<BatchKey> {
     let signals = dir_listing_signals_for_path(&dir, ctx);
-    // Cost hint: small — a listing of ~10 entries is ~30-60 tokens.
-    let cost_hint = 40;
-    Candidate::new(FsKey::DirListing { dir }.into(), signals, cost_hint)
+    Candidate::new(FsKey::DirListing { dir }.into(), signals)
 }
 
 fn dir_listing_signals_for_path(dir: &Path, ctx: &WalkCtx) -> ValueSignals {

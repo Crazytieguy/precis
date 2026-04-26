@@ -20,41 +20,7 @@ expression: rendered
 CHANGELOG.md
     1→# Changelog
 CODE_OF_CONDUCT.md
-    1→# The Rust Code of Conduct
-    3→The Code of Conduct for this repository [can be found online](https://www.rust-lang.org/conduct.html).
 CONTRIBUTING.md
-    1→# Contributing
-    …
-    3→Welcome stranger!
-    5→If you have come here to learn how to contribute to mdBook, we have some tips for you!
-    7→First of all, don't hesitate to ask questions!
-    8→Use the [issue tracker](https://github.com/rust-lang/mdBook/issues), no question is too simple.
-    10→## Issue assignment
-    …
-    19→## Issues to work on
-    …
-    44→## Building mdBook
-    …
-    59→## Code quality
-    …
-    63→### Formatting code with rustfmt
-    …
-    87→### Finding issues with clippy
-    …
-    101→## Change requirements
-    …
-    126→## Tests
-    …
-    153→## Making a pull-request
-    …
-    160→## Browser compatibility and testing
-    …
-    190→### Checking changes in `.js` files
-    …
-    205→## Updating highlight.js
-    …
-    218→## Publishing new releases
-    …
 Cargo.lock
 Cargo.toml
     1→[workspace]
@@ -85,28 +51,6 @@ Cargo.toml
     86→repository.workspace = true
     87→description = "Creates a book from markdown files"
     88→rust-version.workspace = true
-    129→[features]
-    130→default = ["watch", "serve", "search"]
-    131→watch = ["dep:notify", "dep:notify-debouncer-mini", "dep:ignore", "dep:pathdiff", "dep:walkdir"]
-    132→serve = ["dep:futures-util", "dep:tokio", "dep:axum", "dep:tower-http"]
-    133→search = ["mdbook-html/search"]
-    135→[[bin]]
-    136→doc = false
-    137→name = "mdbook"
-    139→[[example]]
-    140→name = "nop-preprocessor"
-    141→test = true
-    143→[[example]]
-    144→name = "remove-emphasis"
-    145→path = "examples/remove-emphasis/test.rs"
-    146→crate-type = ["lib"]
-    147→test = true
-    149→[[test]]
-    150→harness = false
-    151→test = false
-    152→name = "gui"
-    153→path = "tests/gui/runner.rs"
-    154→crate-type = ["bin"]
 LICENSE
 README.md
     1→# mdBook
@@ -123,69 +67,196 @@ ci/
 crates/
     mdbook-compare/
         Cargo.toml
+            9→[dependencies]
         README.md
             1→# mdbook-compare
             3→This is a simple utility to compare the output of two different versions of mdbook.
         src/
+            main.rs
+                1→//! Utility to compare the output of two different versions of mdbook.
+                3→use std::path::Path;
+                4→use std::process::Command;
     mdbook-core/
         Cargo.toml
         README.md
-            1→# mdbook-core
-            7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
-            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
-            11→## License
-            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
     mdbook-driver/
         Cargo.toml
             31→[features]
             32→search = ["mdbook-html/search"]
         README.md
-            1→# mdbook-driver
-            7→This is the high-level Rust library for running [mdBook](https://rust-lang.github.io/mdBook/). New books can be created using [`BookBuilder`](https://docs.rs/mdbook-driver/latest/mdbook_driver/init/struct.BookBuilder.html). The primary type [`MDBook`](https://docs.rs/mdbook-driver/latest/mdbook_driver/struct.MDBook.html) can be used to manage and render books.
-            9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-            11→## License
-            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
     mdbook-html/
         Cargo.toml
             36→[features]
             37→search = ["dep:elasticlunr-rs"]
         README.md
-            1→# mdbook-html
-            7→This is the HTML renderer for [mdBook](https://rust-lang.github.io/mdBook/). This is intended for internal use only. It is automatically included by [`mdbook-driver`](https://crates.io/crates/mdbook-driver) to render books to HTML.
-            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
-            11→## License
-            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         front-end/
         src/
     mdbook-markdown/
         Cargo.toml
         README.md
-            1→# mdbook-markdown
-            7→This is the Markdown support library for [mdBook](https://rust-lang.github.io/mdBook/). Rust crates (such as preprocessors) can use this library to process Markdown in the same way as mdBook.
-            9→> This crate is maintained by the mdBook team for use by the wider ecosystem. This crate follows [semver compatibility](https://doc.rust-lang.org/cargo/reference/semver.html) for its APIs.
-            11→## License
-            13→[Mozilla Public License, version 2.0](https://github.com/rust-lang/mdBook/blob/master/LICENSE)
         src/
+            lib.rs
+                1→//! Markdown processing used in mdBook.
+                2→//!
+                3→//! This crate provides functions for processing Markdown in the same way as
+                4→//! [mdBook](https://rust-lang.github.io/mdBook/). The [`pulldown_cmark`]
+                5→//! crate is used as the underlying parser. This crate re-exports
+                6→//! [`pulldown_cmark`] so that you can access its types.
+                8→use pulldown_cmark::{Options, Parser};
+                11→pub use pulldown_cmark;
+                13→/// Options for parsing markdown.
+                15→pub struct MarkdownOptions {
+                16→    /// Enables smart punctuation.
+                17→    ///
+                18→    /// Converts quotes to curly quotes, `...` to `…`, `--` to en-dash, and
+                19→    /// `---` to em-dash.
+                20→    ///
+                21→    /// This is `true` by default.
+                22→    pub smart_punctuation: bool,
+                23→    /// Enables definition lists.
+                24→    ///
+                25→    /// This is `true` by default.
+                26→    pub definition_lists: bool,
+                27→    /// Enables admonitions.
+                28→    ///
+                29→    /// This is `true` by default.
+                30→    pub admonitions: bool,
+                31→}
+                33→impl Default for MarkdownOptions {
+                34→    fn default() -> MarkdownOptions {
+                …
+                43→/// Creates a new pulldown-cmark parser of the given text.
+                44→pub fn new_cmark_parser<'text>(text: &'text str, options: &MarkdownOptions) -> Parser<'text> {
+                …
     mdbook-preprocessor/
         Cargo.toml
         README.md
-            1→# mdbook-preprocessor
-            7→This is the Rust library to implement a [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
+            lib.rs
+                1→//! Library to assist implementing an mdbook preprocessor.
+                2→//!
+                3→//! This library is used to implement a
+                4→//! [preprocessor](https://rust-lang.github.io/mdBook/for_developers/preprocessors.html)
+                5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+                6→//! for more information on how to implement a preprocessor.
+                30→pub trait Preprocessor {
+                31→    /// Get the `Preprocessor`'s name.
+                32→    fn name(&self) -> &str;
+                34→    /// Run this `Preprocessor`, allowing it to update the book before it is
+                35→    /// given to a renderer.
+                36→    fn run(&self, ctx: &PreprocessorContext, book: Book) -> Result<Book>;
+                38→    /// A hint to `MDBook` whether this preprocessor is compatible with a
+                39→    /// particular renderer.
+                40→    ///
+                41→    /// By default, always returns `true`.
+                42→    fn supports_renderer(&self, _renderer: &str) -> Result<bool> {
+                43→        Ok(true)
+                44→    }
+                45→}
+                47→/// Extra information for a `Preprocessor` to give them more context when
+                48→/// processing a book.
+                51→pub struct PreprocessorContext {
+                52→    /// The location of the book directory on disk.
+                53→    pub root: PathBuf,
+                54→    /// The book configuration (`book.toml`).
+                55→    pub config: Config,
+                56→    /// The `Renderer` this preprocessor is being used with.
+                57→    pub renderer: String,
+                58→    /// The calling `mdbook` version.
+                59→    pub mdbook_version: String,
+                60→    /// Internal mapping of chapter titles.
+                61→    ///
+                62→    /// This is used internally by mdbook to compute custom chapter titles.
+                63→    /// This should not be used outside of mdbook's internals.
+                64→    #[serde(skip)]
+                65→    pub chapter_titles: RefCell<HashMap<PathBuf, String>>,
+                66→}
+                68→impl PreprocessorContext {
+                70→    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
+                …
+                81→/// Parses the input given to a preprocessor.
+                82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
+                …
     mdbook-renderer/
         Cargo.toml
         README.md
             1→# mdbook-renderer
             7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
+            lib.rs
+                1→//! Library to assist implementing an mdbook renderer.
+                2→//!
+                3→//! This library is used to implement a
+                4→//! [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html)
+                5→//! for [mdBook](https://rust-lang.github.io/mdBook/). See the linked chapter
+                6→//! for more information on how to implement a renderer.
+                28→pub trait Renderer {
+                29→    /// The `Renderer`'s name.
+                30→    fn name(&self) -> &str;
+                32→    /// Invoke the `Renderer`, passing in all the necessary information for
+                33→    /// describing a book.
+                34→    fn render(&self, ctx: &RenderContext) -> Result<()>;
+                35→}
+                40→pub struct RenderContext {
+                …
+                63→impl RenderContext {
+                65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
+                66→    where
+                67→        P: Into<PathBuf>,
+                68→        Q: Into<PathBuf>,
+                69→    {
+                …
+                81→    pub fn source_dir(&self) -> PathBuf {
+                …
+                86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
+                …
     mdbook-summary/
         Cargo.toml
         README.md
             1→# mdbook-summary
             7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
+            lib.rs
+                1→//! Summary parser for mdBook.
+                2→//!
+                3→//! This is used to parse the
+                4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
+                5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
+                59→pub fn parse_summary(summary: &str) -> Result<Summary> {
+                …
+                64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
+                67→pub struct Summary {
+                68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
+                69→    pub title: Option<String>,
+                70→    /// Chapters before the main text (e.g. an introduction).
+                71→    pub prefix_chapters: Vec<SummaryItem>,
+                72→    /// The main numbered chapters of the book, broken into one or more possibly named parts.
+                73→    pub numbered_chapters: Vec<SummaryItem>,
+                74→    /// Items which come after the main document (e.g. a conclusion).
+                75→    pub suffix_chapters: Vec<SummaryItem>,
+                76→}
+                84→pub struct Link {
+                85→    /// The name of the chapter.
+                86→    pub name: String,
+                87→    /// The location of the chapter's source file, taking the book's `src`
+                88→    /// directory as the root.
+                89→    pub location: Option<PathBuf>,
+                90→    /// The section number, if this chapter is in the numbered section.
+                91→    pub number: Option<SectionNumber>,
+                92→    /// Any nested items this chapter may contain.
+                93→    pub nested_items: Vec<SummaryItem>,
+                94→}
+                119→/// An item in `SUMMARY.md`.
+                122→pub enum SummaryItem {
+                123→    /// A link to a chapter.
+                124→    Link(Link),
+                125→    /// A separator (`---`).
+                126→    Separator,
+                127→    /// A part title.
+                128→    PartTitle(String),
+                129→}
     xtask/
 eslint.config.mjs
 examples/
@@ -193,106 +264,11 @@ guide/
     book.toml
     guide-helper/
     src/
-        404.md
-        README.md
-        SUMMARY.md
-        cli/
-        continuous-integration.md
-            1→# Running `mdbook` in continuous integration
-            …
-            12→## Installing mdBook
-            …
-            17→### Pre-compiled binaries
-            …
-            39→### Building from source
-            …
-            67→## Running tests
-            …
-            83→## Deploying
-            …
-            100→### 404 handling
-            …
-        for_developers/
-        format/
-        guide/
-        misc/
 package.json
 rustfmt.toml
 src/
     cmd/
-        build.rs
-            8→pub fn make_subcommand() -> Command {
-            …
-            17→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        clean.rs
-            11→pub fn make_subcommand() -> Command {
-            …
-            19→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-            38→pub fn human_readable_bytes(bytes: u64) -> (f32, &'static str) {
-            …
-            46→pub struct Clean {
-            47→    num_files_removed: u64,
-            48→    num_dirs_removed: u64,
-            49→    total_bytes_removed: u64,
-            50→}
-        command_prelude.rs
-            7→pub trait CommandExt: Sized {
-            …
-            62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
-            …
-        init.rs
-            12→pub fn make_subcommand() -> ClapCommand {
-            …
-            32→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        mod.rs
-            1→//! Subcommand modules for the `mdbook` binary.
-            3→pub mod build;
-            4→pub mod clean;
-            5→pub mod command_prelude;
-            6→pub mod init;
-            8→pub mod serve;
-            9→pub mod test;
-            11→pub mod watch;
-        serve.rs
-            23→pub fn make_subcommand() -> Command {
-            …
-            51→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        test.rs
-            9→pub fn make_subcommand() -> Command {
-            …
-            35→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-        watch/
-        watch.rs
-            12→pub fn make_subcommand() -> Command {
-            …
-            21→pub enum WatcherKind {
-            22→    Poll,
-            23→    Native,
-            24→}
-            37→pub fn execute(args: &ArgMatches) -> Result<()> {
-            …
-            62→pub fn rebuild_on_change(
-            63→    kind: WatcherKind,
-            64→    book_dir: &Path,
-            65→    update_config: &dyn Fn(&mut MDBook),
-            66→    post_build: &dyn Fn(),
-            67→) {
-            …
     main.rs
         1→//! The mdbook CLI.
-        5→use anyhow::anyhow;
-        6→use clap::{Arg, ArgMatches, Command};
-        7→use clap_complete::Shell;
-        8→use mdbook_core::utils;
-        9→use std::env;
-        10→use std::ffi::OsStr;
-        11→use std::path::PathBuf;
-        12→use tracing::{error, info};
-        14→mod cmd;
 tests/
 triagebot.toml

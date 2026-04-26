@@ -146,6 +146,7 @@ docs/
         faq.md
             1→# FAQ
             …
+            3→Some common questions you might have when first learning Superstruct.
             5→### How can I allow unknown keys with `object` structs?
             …
             11→### Why not have a built-in `json` struct?
@@ -153,6 +154,7 @@ docs/
         links.md
             1→# Resources
             …
+            3→A few resources that are helpful for building with Superstruct.
             5→## Libraries
             …
     summary.md
@@ -244,6 +246,9 @@ package.json
 rollup.config.js
 src/
     error.ts
+        1→/**
+        2→ * A `StructFailure` represents a single specific failure in validation.
+        3→ */
         5→export type Failure = {
         6→  value: any
         7→  key: any
@@ -281,6 +286,12 @@ src/
             20→): Struct<T, S> {
             …
             38→export function defaulted<T, S>(
+            39→  struct: Struct<T, S>,
+            40→  fallback: any,
+            41→  options: {
+            42→    strict?: boolean
+            43→  } = {}
+            44→): Struct<T, S> {
             …
             79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
             80→  return coerce(struct, string(), (x) => x.trim())
@@ -291,25 +302,10 @@ src/
             11→>(struct: Struct<T, S>): Struct<T, S> {
             …
             33→export function max<T extends number | Date, S extends any>(
-            34→  struct: Struct<T, S>,
-            35→  threshold: T,
-            36→  options: {
-            37→    exclusive?: boolean
-            38→  } = {}
-            39→): Struct<T, S> {
             …
             55→export function min<T extends number | Date, S extends any>(
-            56→  struct: Struct<T, S>,
-            57→  threshold: T,
-            58→  options: {
-            59→    exclusive?: boolean
-            60→  } = {}
-            61→): Struct<T, S> {
             …
             77→export function nonempty<
-            78→  T extends string | any[] | Map<any, any> | Set<any>,
-            79→  S extends any,
-            80→>(struct: Struct<T, S>): Struct<T, S> {
             …
             93→export function pattern<T extends string, S extends any>(
             94→  struct: Struct<T, S>,
@@ -319,6 +315,10 @@ src/
             109→export function size<
             …
             146→export function refine<T, S>(
+            147→  struct: Struct<T, S>,
+            148→  name: string,
+            149→  refiner: Refiner<T>
+            150→): Struct<T, S> {
             …
         types.ts
         utilities.ts

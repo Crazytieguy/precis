@@ -40,17 +40,14 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         out.push(candidate(
             TomlKey::Identity { file: file.clone() },
             identity_signals(&file, ctx),
-            60,
         ));
         out.push(candidate(
             TomlKey::Features { file: file.clone() },
             features_signals(&file, ctx),
-            40,
         ));
         out.push(candidate(
             TomlKey::Dependencies { file: file.clone() },
             dependencies_signals(&file, ctx),
-            80,
         ));
     }
     out
@@ -114,8 +111,8 @@ fn mat_sections(
 
 // --- candidate helpers ---
 
-fn candidate(tk: TomlKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
-    Candidate::new(tk.into(), signals, cost_hint)
+fn candidate(tk: TomlKey, signals: ValueSignals) -> Candidate<BatchKey> {
+    Candidate::new(tk.into(), signals)
 }
 
 fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {

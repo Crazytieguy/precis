@@ -1,7 +1,7 @@
 fixture = "superstruct"
 budget = 10000
-cumulative_tokens = 9965
-batch_count = 133
+cumulative_tokens = 9933
+batch_count = 146
 
 [[batches]]
 position = 1
@@ -19,10 +19,24 @@ entries = [".editorconfig", ".eslintrc", ".gitbook.yaml", ".github", ".gitignore
 
 [[batches]]
 position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode'"
+cost_tokens = 4
+cum_tokens = 69
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode"
+entries = ["settings.json"]
+
+[[batches]]
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
 cost_tokens = 26
-cum_tokens = 91
+cum_tokens = 95
 
 [batches.content]
 kind = "lines"
@@ -44,11 +58,149 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 3
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.github'"
+cost_tokens = 8
+cum_tokens = 103
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github"
+entries = ["dependabot.yml", "workflows"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows'"
+cost_tokens = 4
+cum_tokens = 107
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows"
+entries = ["ci.yml"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/src'"
+cost_tokens = 19
+cum_tokens = 126
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src"
+entries = ["error.ts", "index.ts", "struct.ts", "structs", "utils.ts"]
+
+[[batches]]
+position = 7
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+cost_tokens = 25
+cum_tokens = 151
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs'"
+cost_tokens = 21
+cum_tokens = 172
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs"
+entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
+
+[[batches]]
+position = 9
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
+cost_tokens = 26
+cum_tokens = 198
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources'"
+cost_tokens = 8
+cum_tokens = 206
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources"
+entries = ["faq.md", "links.md"]
+
+[[batches]]
+position = 11
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
 cost_tokens = 54
-cum_tokens = 145
+cum_tokens = 260
 
 [batches.content]
 kind = "lines"
@@ -150,99 +302,51 @@ end = 232
 kind = "ellipsis"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.github'"
-cost_tokens = 8
-cum_tokens = 153
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github"
-entries = ["dependabot.yml", "workflows"]
-
-[[batches]]
-position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode'"
-cost_tokens = 4
-cum_tokens = 157
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode"
-entries = ["settings.json"]
-
-[[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs'"
-cost_tokens = 21
-cum_tokens = 178
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs"
-entries = ["guides", "images", "readme.md", "reference", "resources", "summary.md"]
-
-[[batches]]
-position = 7
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md" })'
-descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
-cost_tokens = 26
-cum_tokens = 204
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #10"
+cost_tokens = 16
+cum_tokens = 276
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 231
+end = 231
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/readme.md"
-start = 9
-end = 9
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 233
+end = 233
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/src'"
-cost_tokens = 19
-cum_tokens = 223
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src"
-entries = ["error.ts", "index.ts", "struct.ts", "structs", "utils.ts"]
-
-[[batches]]
-position = 9
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts" })'
-descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-cost_tokens = 25
-cum_tokens = 248
+position = 13
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+cost_tokens = 18
+cum_tokens = 294
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
 start = 5
 end = 5
 
@@ -250,35 +354,41 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 25
-end = 25
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+start = 2
+end = 2
 
 [batches.content.spans.render]
-kind = "full"
+kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
 start = 6
 end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 26
-end = 26
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs'"
+cost_tokens = 18
+cum_tokens = 312
 
-[batches.content.spans.render]
-kind = "ellipsis"
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs"
+entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
 
 [[batches]]
-position = 10
+position = 15
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 5 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:5"
 cost_tokens = 79
-cum_tokens = 327
+cum_tokens = 391
 
 [batches.content]
 kind = "lines"
@@ -292,11 +402,45 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 11
+position = 16
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 25 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:25"
+cost_tokens = 91
+cum_tokens = 482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 25
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json" })'
 descriptor = "package identity in /Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
 cost_tokens = 381
-cum_tokens = 708
+cum_tokens = 863
 
 [batches.content]
 kind = "lines"
@@ -326,11 +470,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 12
+position = 18
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json" })'
 descriptor = "package entrypoints in /Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
 cost_tokens = 76
-cum_tokens = 784
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -344,11 +488,25 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 13
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images'"
+cost_tokens = 29
+cum_tokens = 968
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images"
+entries = ["banner.png", "demo-screenshot.png", "docs-screenshot.png", "icon.png", "logo.png", "logo.sketch"]
+
+[[batches]]
+position = 20
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 7 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #7"
 cost_tokens = 98
-cum_tokens = 882
+cum_tokens = 1066
 
 [batches.content]
 kind = "lines"
@@ -386,135 +544,165 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 14
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 25 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:25"
-cost_tokens = 91
-cum_tokens = 973
+position = 21
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+cost_tokens = 56
+cum_tokens = 1122
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 25
-end = 32
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 35
-end = 35
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 38
+end = 38
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 36
-end = 36
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 80
+end = 80
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 15
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
-cost_tokens = 27
-cum_tokens = 1000
+position = 22
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 79 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:79"
+cost_tokens = 0
+cum_tokens = 1122
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
-start = 1
-end = 3
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 79
+end = 79
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 16
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
-cost_tokens = 185
-cum_tokens = 1185
+position = 23
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 79 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:79"
+cost_tokens = 17
+cum_tokens = 1139
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
-start = 1
-end = 17
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 80
+end = 80
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 17
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 10 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #10"
-cost_tokens = 16
-cum_tokens = 1201
+position = 24
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 16 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:16"
+cost_tokens = 47
+cum_tokens = 1186
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 231
-end = 231
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 16
+end = 20
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 233
-end = 233
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 25
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 38 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:38"
+cost_tokens = 57
+cum_tokens = 1243
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 38
+end = 44
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows'"
-cost_tokens = 4
-cum_tokens = 1205
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 45
+end = 45
 
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.github/workflows"
-entries = ["ci.yml"]
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images'"
-cost_tokens = 29
-cum_tokens = 1234
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/images"
-entries = ["banner.png", "demo-screenshot.png", "docs-screenshot.png", "icon.png", "logo.png", "logo.sketch"]
-
-[[batches]]
-position = 20
+position = 26
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference'"
 cost_tokens = 31
-cum_tokens = 1265
+cum_tokens = 1274
 
 [batches.content]
 kind = "fs"
@@ -524,17 +712,17 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference"
 entries = ["coercions.md", "core.md", "errors.md", "refinements.md", "types.md", "typescript.md", "utilities.md"]
 
 [[batches]]
-position = 21
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
-cost_tokens = 45
-cum_tokens = 1310
+position = 27
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+cost_tokens = 39
+cum_tokens = 1313
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
 start = 1
 end = 1
 
@@ -542,7 +730,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
 start = 5
 end = 5
 
@@ -550,23 +738,23 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
-start = 21
-end = 21
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
-start = 29
-end = 29
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 25
+end = 25
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
 start = 2
 end = 2
 
@@ -574,7 +762,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
 start = 6
 end = 6
 
@@ -582,27 +770,27 @@ end = 6
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
-start = 22
-end = 22
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 8
+end = 8
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
-start = 30
-end = 30
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 26
+end = 26
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 28
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
 cost_tokens = 40
-cum_tokens = 1350
+cum_tokens = 1353
 
 [batches.content]
 kind = "lines"
@@ -672,17 +860,17 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 23
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
-cost_tokens = 39
-cum_tokens = 1389
+position = 29
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+cost_tokens = 45
+cum_tokens = 1398
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
 start = 1
 end = 1
 
@@ -690,7 +878,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
 start = 5
 end = 5
 
@@ -698,23 +886,23 @@ end = 5
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 21
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
-start = 25
-end = 25
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 29
+end = 29
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
 start = 2
 end = 2
 
@@ -722,7 +910,7 @@ end = 2
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
 start = 6
 end = 6
 
@@ -730,83 +918,45 @@ end = 6
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
-start = 8
-end = 8
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 22
+end = 22
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
-start = 26
-end = 26
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 30
+end = 30
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources'"
-cost_tokens = 8
-cum_tokens = 1397
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources"
-entries = ["faq.md", "links.md"]
-
-[[batches]]
-position = 25
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
-cost_tokens = 18
-cum_tokens = 1415
+position = 30
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
+cost_tokens = 27
+cum_tokens = 1425
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
 start = 1
-end = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 31
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md"
 cost_tokens = 46
-cum_tokens = 1461
+cum_tokens = 1471
 
 [batches.content]
 kind = "lines"
@@ -860,109 +1010,47 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs'"
-cost_tokens = 18
-cum_tokens = 1479
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs"
-entries = ["coercions.ts", "refinements.ts", "types.ts", "utilities.ts"]
-
-[[batches]]
-position = 28
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts" })'
-descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-cost_tokens = 56
-cum_tokens = 1535
+position = 32
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
+cost_tokens = 185
+cum_tokens = 1656
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 17
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
+start = 1
 end = 17
 
 [batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
 
 [[batches]]
-position = 29
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 79 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:79"
-cost_tokens = 0
-cum_tokens = 1535
+position = 33
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 5 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:5"
+cost_tokens = 28
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 79
-end = 79
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 30
+position = 34
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/index.ts" })'
 descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/index.ts"
 cost_tokens = 79
-cum_tokens = 1614
+cum_tokens = 1763
 
 [batches.content]
 kind = "lines"
@@ -976,549 +1064,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 31
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 16 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:16"
-cost_tokens = 47
-cum_tokens = 1661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 32
-key = 'Markdown(SummaryWhole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md" })'
-descriptor = "mdBook SUMMARY at /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-cost_tokens = 287
-cum_tokens = 1948
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 5
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 14
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
-start = 24
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 79 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:79"
-cost_tokens = 17
-cum_tokens = 1965
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides'"
-cost_tokens = 51
-cum_tokens = 2016
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides"
-entries = ["01-getting-started.md", "02-validating-data.md", "03-coercing-data.md", "04-refining-validation.md", "05-handling-errors.md", "06-using-typescript.md"]
-
-[[batches]]
 position = 35
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-cost_tokens = 33
-cum_tokens = 2049
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-cost_tokens = 34
-cum_tokens = 2083
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 37
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-cost_tokens = 34
-cum_tokens = 2117
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 38
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-cost_tokens = 32
-cum_tokens = 2149
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 39
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-cost_tokens = 44
-cum_tokens = 2193
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 40
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-cost_tokens = 52
-cum_tokens = 2245
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 114
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 157
-end = 157
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
-start = 158
-end = 158
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 41
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json" })'
-descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
-cost_tokens = 324
-cum_tokens = 2569
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
-start = 38
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/core.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/core.md"
 cost_tokens = 59
-cum_tokens = 2628
+cum_tokens = 1822
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +1170,593 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
+position = 36
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/core.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/core.md section #0"
+cost_tokens = 0
+cum_tokens = 1822
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/core.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md section #0"
+cost_tokens = 16
+cum_tokens = 1838
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/faq.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md section #0"
+cost_tokens = 16
+cum_tokens = 1854
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/resources/links.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(SummaryWhole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md" })'
+descriptor = "mdBook SUMMARY at /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+cost_tokens = 287
+cum_tokens = 2141
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 5
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 14
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/summary.md"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides'"
+cost_tokens = 51
+cum_tokens = 2192
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides"
+entries = ["01-getting-started.md", "02-validating-data.md", "03-coercing-data.md", "04-refining-validation.md", "05-handling-errors.md", "06-using-typescript.md"]
+
+[[batches]]
+position = 41
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+cost_tokens = 32
+cum_tokens = 2224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/05-handling-errors.md"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+cost_tokens = 33
+cum_tokens = 2257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
 position = 43
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md section #0"
+cost_tokens = 0
+cum_tokens = 2257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/01-getting-started.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+cost_tokens = 34
+cum_tokens = 2291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/03-coercing-data.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+cost_tokens = 34
+cum_tokens = 2325
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/04-refining-validation.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 46
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+cost_tokens = 44
+cum_tokens = 2369
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/06-using-typescript.md"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+cost_tokens = 52
+cum_tokens = 2421
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
+cost_tokens = 324
+cum_tokens = 2745
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
+start = 38
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
 cost_tokens = 99
-cum_tokens = 2727
+cum_tokens = 2844
 
 [batches.content]
 kind = "lines"
@@ -1742,37 +1874,11 @@ end = 147
 kind = "ellipsis"
 
 [[batches]]
-position = 44
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 77 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:77"
-cost_tokens = 48
-cum_tokens = 2775
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 77
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
+position = 50
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 93 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:93"
 cost_tokens = 33
-cum_tokens = 2808
+cum_tokens = 2877
 
 [batches.content]
 kind = "lines"
@@ -1794,89 +1900,11 @@ end = 97
 kind = "ellipsis"
 
 [[batches]]
-position = 46
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 8 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:8"
-cost_tokens = 48
-cum_tokens = 2856
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:33"
-cost_tokens = 57
-cum_tokens = 2913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 33
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:55"
-cost_tokens = 57
-cum_tokens = 2970
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 55
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 49
+position = 51
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 146 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:146"
 cost_tokens = 44
-cum_tokens = 3014
+cum_tokens = 2921
 
 [batches.content]
 kind = "lines"
@@ -1898,11 +1926,141 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 52
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 8 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:8"
+cost_tokens = 48
+cum_tokens = 2969
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 53
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 77 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:77"
+cost_tokens = 48
+cum_tokens = 3017
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 77
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:33"
+cost_tokens = 57
+cum_tokens = 3074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 33
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:55"
+cost_tokens = 57
+cum_tokens = 3131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 55
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 109 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:109"
+cost_tokens = 62
+cum_tokens = 3193
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 109
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 93 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:93"
 cost_tokens = 71
-cum_tokens = 3085
+cum_tokens = 3264
 
 [batches.content]
 kind = "lines"
@@ -1916,11 +2074,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 51
+position = 58
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 77 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:77"
 cost_tokens = 72
-cum_tokens = 3157
+cum_tokens = 3336
 
 [batches.content]
 kind = "lines"
@@ -1934,11 +2092,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 52
+position = 59
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 25 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:25"
 cost_tokens = 163
-cum_tokens = 3320
+cum_tokens = 3499
 
 [batches.content]
 kind = "lines"
@@ -1952,245 +2110,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json"
-cost_tokens = 110
-cum_tokens = 3430
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 8 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:8"
-cost_tokens = 82
-cum_tokens = 3512
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 12
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 8 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #8"
-cost_tokens = 193
-cum_tokens = 3705
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 189
-end = 189
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 193
-end = 201
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 203
-end = 203
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 16 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:16"
-cost_tokens = 83
-cum_tokens = 3788
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 21
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-cost_tokens = 82
-cum_tokens = 3870
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
+position = 60
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md"
 cost_tokens = 79
-cum_tokens = 3949
+cum_tokens = 3578
 
 [batches.content]
 kind = "lines"
@@ -2324,11 +2248,361 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 61
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+cost_tokens = 82
+cum_tokens = 3660
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/refinements.md"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 62
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts"
+cost_tokens = 34
+cum_tokens = 3694
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json"
+cost_tokens = 110
+cum_tokens = 3804
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/jsr.json"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 93 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:93"
+cost_tokens = 24
+cum_tokens = 3828
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 89
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 8 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:8"
+cost_tokens = 82
+cum_tokens = 3910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 12
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #8"
+cost_tokens = 193
+cum_tokens = 4103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 193
+end = 201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 16 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:16"
+cost_tokens = 83
+cum_tokens = 4186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
+start = 21
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md section #0"
+cost_tokens = 24
+cum_tokens = 4210
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/typescript.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:33"
+cost_tokens = 26
+cum_tokens = 4236
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 29
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:55"
+cost_tokens = 26
+cum_tokens = 4262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 51
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+cost_tokens = 38
+cum_tokens = 4300
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
 cost_tokens = 231
-cum_tokens = 4180
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -2534,137 +2808,11 @@ end = 260
 kind = "ellipsis"
 
 [[batches]]
-position = 60
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 221 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:221"
-cost_tokens = 32
-cum_tokens = 4212
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 221
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 231 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:231"
-cost_tokens = 0
-cum_tokens = 4212
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 62
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 237 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:237"
-cost_tokens = 0
-cum_tokens = 4212
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 237
-end = 237
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 243 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:243"
-cost_tokens = 39
-cum_tokens = 4251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 243
-end = 247
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 253 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:253"
-cost_tokens = 0
-cum_tokens = 4251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 253
-end = 253
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 259 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:259"
-cost_tokens = 0
-cum_tokens = 4251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 259
-end = 259
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 266 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:266"
-cost_tokens = 0
-cum_tokens = 4251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 266
-end = 266
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
+position = 73
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 175 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:175"
 cost_tokens = 0
-cum_tokens = 4251
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
@@ -2686,37 +2834,155 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 68
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 123 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:123"
-cost_tokens = 40
-cum_tokens = 4291
+position = 74
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 231 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:231"
+cost_tokens = 0
+cum_tokens = 4531
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 123
-end = 127
+start = 231
+end = 231
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 75
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 237 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:237"
+cost_tokens = 0
+cum_tokens = 4531
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 128
-end = 128
+start = 237
+end = 237
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
 
 [[batches]]
-position = 69
+position = 76
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 253 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:253"
+cost_tokens = 0
+cum_tokens = 4531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 259 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:259"
+cost_tokens = 0
+cum_tokens = 4531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 259
+end = 259
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 266 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:266"
+cost_tokens = 0
+cum_tokens = 4531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 221 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:221"
+cost_tokens = 32
+cum_tokens = 4563
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 221
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 243 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:243"
+cost_tokens = 39
+cum_tokens = 4602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 243
+end = 247
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 175 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:175"
+cost_tokens = 22
+cum_tokens = 4624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 176
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 139 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:139"
 cost_tokens = 37
-cum_tokens = 4328
+cum_tokens = 4661
 
 [batches.content]
 kind = "lines"
@@ -2738,11 +3004,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 83
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 157 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:157"
 cost_tokens = 37
-cum_tokens = 4365
+cum_tokens = 4698
 
 [batches.content]
 kind = "lines"
@@ -2764,11 +3030,37 @@ end = 162
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 84
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 123 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:123"
+cost_tokens = 40
+cum_tokens = 4738
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 123
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 85
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 123 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:123"
 cost_tokens = 42
-cum_tokens = 4407
+cum_tokens = 4780
 
 [batches.content]
 kind = "lines"
@@ -2790,81 +3082,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 72
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 175 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:175"
-cost_tokens = 22
-cum_tokens = 4429
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 176
-end = 177
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 139 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:139"
-cost_tokens = 65
-cum_tokens = 4494
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 146
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 157 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:157"
-cost_tokens = 69
-cum_tokens = 4563
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 162
-end = 162
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 164
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
+position = 86
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 185 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:185"
 cost_tokens = 83
-cum_tokens = 4646
+cum_tokens = 4863
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +3108,261 @@ end = 194
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 87
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 139 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:139"
+cost_tokens = 65
+cum_tokens = 4928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 146
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 157 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:157"
+cost_tokens = 69
+cum_tokens = 4997
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 164
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 243 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:243"
+cost_tokens = 25
+cum_tokens = 5022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 239
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 175 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:175"
+cost_tokens = 23
+cum_tokens = 5045
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 171
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 259 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:259"
+cost_tokens = 27
+cum_tokens = 5072
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 255
+end = 257
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 231 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:231"
+cost_tokens = 29
+cum_tokens = 5101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 227
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 237 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:237"
+cost_tokens = 29
+cum_tokens = 5130
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 233
+end = 235
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 253 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:253"
+cost_tokens = 30
+cum_tokens = 5160
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 249
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 123 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:123"
+cost_tokens = 28
+cum_tokens = 5188
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 119
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 139 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:139"
+cost_tokens = 29
+cum_tokens = 5217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 135
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 157 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:157"
+cost_tokens = 30
+cum_tokens = 5247
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 153
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 266 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:266"
+cost_tokens = 41
+cum_tokens = 5288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 261
+end = 264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 185 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:185"
+cost_tokens = 46
+cum_tokens = 5334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 180
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 185 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:185"
 cost_tokens = 158
-cum_tokens = 4804
+cum_tokens = 5492
 
 [batches.content]
 kind = "lines"
@@ -2920,137 +3392,187 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 77
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 5 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:5"
-cost_tokens = 28
-cum_tokens = 4832
+position = 101
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md section #0"
+cost_tokens = 27
+cum_tokens = 5519
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md"
 start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/utilities.md"
+start = 3
 end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 78
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 231 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:231"
+position = 102
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 8 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:8"
 cost_tokens = 29
-cum_tokens = 4861
+cum_tokens = 5548
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 227
-end = 229
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 4
+end = 6
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 79
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 237 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:237"
+position = 103
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 77 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:77"
 cost_tokens = 29
-cum_tokens = 4890
+cum_tokens = 5577
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 73
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
+cost_tokens = 376
+cum_tokens = 5953
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 233
-end = 235
+start = 10
+end = 20
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 80
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 243 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:243"
-cost_tokens = 25
-cum_tokens = 4915
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 239
-end = 241
+start = 22
+end = 29
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 81
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 253 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:253"
-cost_tokens = 30
-cum_tokens = 4945
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 249
-end = 251
+start = 67
+end = 67
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 82
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 259 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:259"
-cost_tokens = 27
-cum_tokens = 4972
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 255
-end = 257
+start = 75
+end = 75
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 83
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 266 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:266"
-cost_tokens = 41
-cum_tokens = 5013
-
-[batches.content]
-kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 261
-end = 264
+start = 83
+end = 83
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 107
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 84
+position = 105
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
 cost_tokens = 434
-cum_tokens = 5447
+cum_tokens = 6387
 
 [batches.content]
 kind = "lines"
@@ -3376,11 +3898,11 @@ end = 519
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 106
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #0"
 cost_tokens = 20
-cum_tokens = 5467
+cum_tokens = 6407
 
 [batches.content]
 kind = "lines"
@@ -3402,73 +3924,37 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 86
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 109 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:109"
-cost_tokens = 62
-cum_tokens = 5529
+position = 107
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 19 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #19"
+cost_tokens = 8
+cum_tokens = 6415
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 109
-end = 112
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
+start = 518
+end = 518
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 87
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:33"
-cost_tokens = 107
-cum_tokens = 5636
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 40
-end = 48
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
+start = 520
+end = 520
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 88
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:55"
-cost_tokens = 107
-cum_tokens = 5743
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
-start = 62
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
+position = 108
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #3"
 cost_tokens = 36
-cum_tokens = 5779
+cum_tokens = 6451
 
 [batches.content]
 kind = "lines"
@@ -3490,101 +3976,65 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 90
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 123 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:123"
-cost_tokens = 28
-cum_tokens = 5807
+position = 109
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:33"
+cost_tokens = 107
+cum_tokens = 6558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 40
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:55"
+cost_tokens = 107
+cum_tokens = 6665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 62
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
+cost_tokens = 69
+cum_tokens = 6734
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 119
-end = 121
+start = 4
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 91
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 139 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:139"
-cost_tokens = 29
-cum_tokens = 5836
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 135
-end = 137
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 157 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:157"
-cost_tokens = 30
-cum_tokens = 5866
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 153
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 93
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 175 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:175"
-cost_tokens = 23
-cum_tokens = 5889
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 171
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 185 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:185"
-cost_tokens = 46
-cum_tokens = 5935
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 180
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
+position = 112
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 146 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:146"
 cost_tokens = 119
-cum_tokens = 6054
+cum_tokens = 6853
 
 [batches.content]
 kind = "lines"
@@ -3606,37 +4056,81 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 96
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 38 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts:38"
-cost_tokens = 57
-cum_tokens = 6111
+position = 113
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md section #0"
+cost_tokens = 34
+cum_tokens = 6887
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 38
-end = 44
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 1
+end = 1
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts"
-start = 45
-end = 45
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 3
+end = 3
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
 
 [[batches]]
-position = 97
+position = 114
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md section #0"
+cost_tokens = 35
+cum_tokens = 6922
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+cost_tokens = 30
+cum_tokens = 6952
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #1"
 cost_tokens = 468
-cum_tokens = 6579
+cum_tokens = 7420
 
 [batches.content]
 kind = "lines"
@@ -3730,47 +4224,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 98
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts" })'
-descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-cost_tokens = 38
-cum_tokens = 6617
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts" })'
-descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts"
-cost_tokens = 34
-cum_tokens = 6651
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/utils.ts"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
+position = 117
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 4 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #4"
 cost_tokens = 43
-cum_tokens = 6694
+cum_tokens = 7463
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +4242,45 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 101
+position = 118
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md section #2"
+cost_tokens = 42
+cum_tokens = 7505
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 23
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #5"
 cost_tokens = 44
-cum_tokens = 6738
+cum_tokens = 7549
 
 [batches.content]
 kind = "lines"
@@ -3802,11 +4294,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 102
+position = 120
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #2"
 cost_tokens = 136
-cum_tokens = 6874
+cum_tokens = 7685
 
 [batches.content]
 kind = "lines"
@@ -3844,11 +4336,93 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 103
+position = 121
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
+cost_tokens = 339
+cum_tokens = 8024
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 30
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 39
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 44
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 53
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
 cost_tokens = 218
-cum_tokens = 7092
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4062,11 +4636,11 @@ end = 248
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 123
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 60 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:60"
 cost_tokens = 0
-cum_tokens = 7092
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4088,11 +4662,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 124
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 71 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:71"
 cost_tokens = 0
-cum_tokens = 7092
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4114,239 +4688,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 106
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 247 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:247"
-cost_tokens = 0
-cum_tokens = 7092
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 247
-end = 247
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 248
-end = 248
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 107
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 17 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:17"
-cost_tokens = 45
-cum_tokens = 7137
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 71 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:71"
-cost_tokens = 17
-cum_tokens = 7154
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 247 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:247"
-cost_tokens = 49
-cum_tokens = 7203
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 248
-end = 250
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 252
-end = 252
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 197 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:197"
-cost_tokens = 37
-cum_tokens = 7240
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 197
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 200
-end = 200
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 111
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 21 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:21"
-cost_tokens = 102
-cum_tokens = 7342
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 21
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 80 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:80"
-cost_tokens = 38
-cum_tokens = 7380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 80
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 113
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 60 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:60"
-cost_tokens = 65
-cum_tokens = 7445
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 61
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 171 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:171"
-cost_tokens = 44
-cum_tokens = 7489
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 171
-end = 174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 115
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 221 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:221"
-cost_tokens = 43
-cum_tokens = 7532
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 221
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 116
+position = 125
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 140 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:140"
 cost_tokens = 0
-cum_tokens = 7532
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4368,11 +4714,55 @@ end = 141
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 126
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 247 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:247"
+cost_tokens = 0
+cum_tokens = 8242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 247
+end = 247
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 71 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:71"
+cost_tokens = 17
+cum_tokens = 8259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 106 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:106"
 cost_tokens = 33
-cum_tokens = 7565
+cum_tokens = 8292
 
 [batches.content]
 kind = "lines"
@@ -4394,11 +4784,213 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 129
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 197 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:197"
+cost_tokens = 37
+cum_tokens = 8329
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 197
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 130
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 80 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:80"
+cost_tokens = 38
+cum_tokens = 8367
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 80
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 131
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 221 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:221"
+cost_tokens = 43
+cum_tokens = 8410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 221
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 171 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:171"
+cost_tokens = 44
+cum_tokens = 8454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 171
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 17 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:17"
+cost_tokens = 45
+cum_tokens = 8499
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 247 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:247"
+cost_tokens = 49
+cum_tokens = 8548
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 248
+end = 250
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 21 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:21"
+cost_tokens = 102
+cum_tokens = 8650
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 21
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 60 })'
+descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:60"
+cost_tokens = 65
+cum_tokens = 8715
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 61
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 71 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:71"
+cost_tokens = 26
+cum_tokens = 8741
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 67
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 30 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:30"
 cost_tokens = 150
-cum_tokens = 7715
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +5004,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 119
+position = 139
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 197 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:197"
 cost_tokens = 113
-cum_tokens = 7828
+cum_tokens = 9004
 
 [batches.content]
 kind = "lines"
@@ -4454,11 +5046,11 @@ end = 211
 kind = "full"
 
 [[batches]]
-position = 120
+position = 140
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 221 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:221"
 cost_tokens = 113
-cum_tokens = 7941
+cum_tokens = 9117
 
 [batches.content]
 kind = "lines"
@@ -4496,11 +5088,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 121
+position = 141
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 44 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:44"
 cost_tokens = 182
-cum_tokens = 8123
+cum_tokens = 9299
 
 [batches.content]
 kind = "lines"
@@ -4514,11 +5106,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 122
+position = 142
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 80 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:80"
 cost_tokens = 119
-cum_tokens = 8242
+cum_tokens = 9418
 
 [batches.content]
 kind = "lines"
@@ -4532,11 +5124,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 123
+position = 143
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 171 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:171"
 cost_tokens = 119
-cum_tokens = 8361
+cum_tokens = 9537
 
 [batches.content]
 kind = "lines"
@@ -4566,11 +5158,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 124
+position = 144
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/package.json" })'
 descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/superstruct/package.json"
 cost_tokens = 301
-cum_tokens = 8662
+cum_tokens = 9838
 
 [batches.content]
 kind = "lines"
@@ -4584,363 +5176,37 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 125
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 221 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:221"
-cost_tokens = 97
-cum_tokens = 8759
+position = 145
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts", start_line: 247 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts:247"
+cost_tokens = 47
+cum_tokens = 9885
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 213
-end = 219
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/utilities.ts"
+start = 241
+end = 245
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 126
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 3 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #3"
-cost_tokens = 50
-cum_tokens = 8809
+position = 146
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 109 })'
+descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts:109"
+cost_tokens = 48
+cum_tokens = 9933
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 171
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts", start_line: 25 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts:25"
-cost_tokens = 109
-cum_tokens = 8918
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/error.ts"
-start = 16
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
-descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
-cost_tokens = 376
-cum_tokens = 9294
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 10
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 22
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 107
-end = 114
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 129
-key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
-descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
-cost_tokens = 69
-cum_tokens = 9363
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 4
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts", start_line: 10 })'
-descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts:10"
-cost_tokens = 339
-cum_tokens = 9702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 30
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 39
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 44
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 53
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/struct.ts"
-start = 115
-end = 115
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md", section_index: 2 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md section #2"
-cost_tokens = 55
-cum_tokens = 9757
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Readme.md"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 4 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #4"
-cost_tokens = 112
-cum_tokens = 9869
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md", section_index: 5 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md section #5"
-cost_tokens = 96
-cum_tokens = 9965
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/Changelog.md"
-start = 65
-end = 65
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
+start = 105
+end = 107
 
 [batches.content.spans.render]
 kind = "full"

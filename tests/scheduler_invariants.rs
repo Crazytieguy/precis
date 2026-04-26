@@ -65,7 +65,7 @@ fn scheduler_invariants_override_via_predecessor_chain() {
         type Key = BatchKey;
 
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9), 40)]
+            vec![Candidate::new(listing_key(), sig(0.9))]
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
@@ -74,14 +74,13 @@ fn scheduler_invariants_override_via_predecessor_chain() {
                     start_line: 1,
                 });
                 vec![
-                    Candidate::new(decls.clone(), sig(0.5), 50),
+                    Candidate::new(decls.clone(), sig(0.5)),
                     Candidate::new(
                         BatchKey::Rust(RustKey::PubItemDocLede {
                             file: stub_file("synthetic.rs"),
                             start_line: 1,
                         }),
                         sig(0.3),
-                        50,
                     )
                     .with_predecessor(decls),
                 ]
@@ -159,7 +158,7 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
         type Key = BatchKey;
 
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9), 40)]
+            vec![Candidate::new(listing_key(), sig(0.9))]
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
@@ -169,7 +168,6 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
                         start_line: 1,
                     }),
                     sig(0.5),
-                    50,
                 )]
             } else {
                 Vec::new()
@@ -227,7 +225,7 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
         type Key = BatchKey;
 
         fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9), 40)]
+            vec![Candidate::new(listing_key(), sig(0.9))]
         }
         fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
@@ -239,14 +237,12 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
                             start_line: 1,
                         }),
                         sig(0.5),
-                        20,
                     ),
                     Candidate::new(
                         BatchKey::Rust(RustKey::MethodSigs {
                             file: stub_file("f.rs"),
                         }),
                         sig(0.5),
-                        20,
                     ),
                 ]
             } else {

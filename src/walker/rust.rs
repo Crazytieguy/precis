@@ -58,28 +58,21 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let ep = is_entrypoint_file(file);
         if ep {
             let lede = RustKey::CrateDocLede { file: file.clone() };
-            out.push(candidate(
-                lede.clone(),
-                crate_doc_lede_signals(file, ctx),
-                40,
-            ));
+            out.push(candidate(lede.clone(), crate_doc_lede_signals(file, ctx)));
             out.push(
                 candidate(
                     RustKey::CrateDocBody { file: file.clone() },
                     crate_doc_body_signals(file, ctx),
-                    200,
                 )
                 .with_predecessor(BatchKey::Rust(lede)),
             );
             out.push(candidate(
                 RustKey::ModUse { file: file.clone() },
                 mod_use_signals(file, ctx),
-                60,
             ));
             out.push(candidate(
                 RustKey::MethodSigs { file: file.clone() },
                 method_sigs_signals(file, ctx),
-                60,
             ));
         }
 
@@ -105,7 +98,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         out.push(candidate(
             names_key.clone(),
             pub_item_names_signals(file, ctx),
-            items.len() * 8,
         ));
         for item in &items {
             let key = RustKey::PubItem {
@@ -116,7 +108,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 candidate(
                     key.clone(),
                     pub_item_signals(file, item.kind, item.surface, ctx),
-                    item.estimated_cost(),
                 )
                 .with_predecessor(BatchKey::Rust(names_key.clone())),
             );
@@ -139,7 +130,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                     candidate(
                         lede_key.clone(),
                         pub_item_doc_lede_signals(file, item.kind, item.surface, ctx),
-                        DOC_SECTION_COST_HINT,
                     )
                     .with_predecessor(item_key.clone()),
                 );
@@ -154,7 +144,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                     candidate(
                         body_key,
                         pub_item_doc_body_signals(file, item.kind, item.surface, ctx),
-                        DOC_SECTION_COST_HINT,
                     )
                     .with_predecessor(lede_emitted.unwrap_or(item_key)),
                 );
@@ -169,7 +158,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     out.push(candidate(
         macro_names.clone(),
         macro_names_signals(dir_depth),
-        20,
     ));
     out.push(
         candidate(
@@ -177,7 +165,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                 src_dir: dir.clone(),
             },
             macro_bodies_signals(dir_depth),
-            60,
         )
         .with_predecessor(BatchKey::Rust(macro_names)),
     );
@@ -267,8 +254,8 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 // --- candidate + signal helpers ---
 
-fn candidate(rk: RustKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
-    Candidate::new(rk.into(), signals, cost_hint)
+fn candidate(rk: RustKey, signals: ValueSignals) -> Candidate<BatchKey> {
+    Candidate::new(rk.into(), signals)
 }
 
 /// Kind of a top-level pub item, used to weight its batch. Traits are the
@@ -304,15 +291,6 @@ struct PubItemInfo {
     start_line: usize,
     kind: ItemKind,
     surface: ApiSurface,
-    /// Rough upper bound of the rendered cost of just this item's decl —
-    /// lines × avg 6 tokens, with a floor of 40 for a one-liner decl.
-    line_span: usize,
-}
-
-impl PubItemInfo {
-    fn estimated_cost(&self) -> usize {
-        (self.line_span * 6).max(40)
-    }
 }
 
 /// Whether a syntactically-public item is part of the external crate API.
@@ -382,7 +360,6 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
             continue;
         };
         let start_line = child.start_position().row + 1;
-        let end_line = item_end_line(child, source);
         out.push(PubItemInfo {
             start_line,
             kind,
@@ -390,7 +367,6 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
                 visibility,
                 doc_hidden: has_doc_hidden(child, source),
             },
-            line_span: end_line.saturating_sub(start_line) + 1,
         });
     }
     out
@@ -400,12 +376,6 @@ fn find_item_at(tree: &Tree, source: &str, start_line: usize) -> Option<PubItemI
     find_pub_item_starts(tree, source)
         .into_iter()
         .find(|i| i.start_line == start_line)
-}
-
-fn item_end_line(node: Node, source: &str) -> usize {
-    let text = &source[node.start_byte()..node.end_byte()];
-    let internal = text.trim_end_matches(['\n', '\r']).split('\n').count();
-    node.start_position().row + internal.max(1)
 }
 
 /// Files whose filename signals "crate entrypoint / main module surface".
@@ -534,15 +504,6 @@ fn pub_item_doc_body_signals(
         depth_factor: file_depth_factor(file, ctx),
     }
 }
-
-/// Cost-hint for `PubItemDocLede` and `PubItemDocBody` candidates. The
-/// hint is required to be a strict lower bound on the
-/// post-materialization cost (so the speculative ratio stays an upper
-/// bound — see [`super::Candidate::cost_hint`]). 1 is the safe floor
-/// for any non-empty rendered batch; the same value is used for the
-/// markdown sub-section keys for the same reason. Empty doc sections
-/// are filtered at expand time by [`classify_pub_item_doc`].
-const DOC_SECTION_COST_HINT: usize = 1;
 
 /// Combine a per-item local `ApiSurface` with the file's effective
 /// crate-visibility from `module_visibility`. `doc_hidden` passes through.

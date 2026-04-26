@@ -61,8 +61,6 @@ const MAX_OUTLINE_HEADINGS: usize = 30;
 /// 1500 chars ≈ 400 tokens, comfortably small at any reasonable budget.
 const MAX_OUTLINE_HEADING_BYTES: usize = 1500;
 
-const TOKENS_PER_HEADING_ROW: usize = 12;
-
 /// Minimum H2 source-byte length required to subdivide it into per-H3
 /// or per-bullet `SectionRange`s. Below this, the H2 fits in one
 /// batch and splitting just adds scheduling overhead with no
@@ -75,16 +73,6 @@ const H2_SPLIT_BYTES: usize = 600;
 /// relative to other walker batches at the parent H2's calibration
 /// level.
 const SUB_SECTION_SIGNAL_SCALE: f64 = 0.45;
-
-/// Cost-hint for sub-section candidates (`SectionKind::H3Child` and
-/// `SectionKind::BulletItem`). Must be a *lower* bound on the
-/// post-materialization cost so the scheduler's speculative ratio
-/// stays an upper bound (see [`super::Candidate::cost_hint`]). Real
-/// sub-section bodies span 30–300 tokens, but the safe lower bound
-/// for any non-empty rendered batch is 1. Empty H3 sections are
-/// filtered by [`has_substantive_body`] and empty list items by
-/// [`has_substantive_list_item`].
-const SUB_SECTION_COST_HINT: usize = 1;
 
 /// Bullet-list-split predicate parameters.
 ///
@@ -121,7 +109,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(candidate(
                 MarkdownKey::SummaryWhole { file: file.clone() },
                 summary_signals(&file, ctx),
-                200,
             ));
             continue;
         }
@@ -142,18 +129,10 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
 
         if let Some(h) = &headline_key {
-            out.push(candidate(
-                h.clone(),
-                readme_headline_signals(&file, ctx),
-                60,
-            ));
+            out.push(candidate(h.clone(), readme_headline_signals(&file, ctx)));
         }
         if let Some(o) = &outline_key {
-            let mut cand = candidate(
-                o.clone(),
-                headings_outline_signals(&file, ctx),
-                (outline_rows.len() * TOKENS_PER_HEADING_ROW).max(30),
-            );
+            let mut cand = candidate(o.clone(), headings_outline_signals(&file, ctx));
             if let Some(h) = &headline_key {
                 cand = cand.with_predecessor(BatchKey::Markdown(h.clone()));
             }
@@ -168,23 +147,12 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
 
         for (idx, range) in ranges.iter().enumerate() {
             let signals = section_signals(&file, range, ctx);
-            let cost = match range.kind {
-                SectionKind::Whole | SectionKind::Intro => {
-                    if is_readme {
-                        100
-                    } else {
-                        80
-                    }
-                }
-                SectionKind::H3Child | SectionKind::BulletItem => SUB_SECTION_COST_HINT,
-            };
             let mut cand = candidate(
                 MarkdownKey::Section {
                     file: file.clone(),
                     section_index: idx,
                 },
                 signals,
-                cost,
             );
             if let Some(p) = section_predecessor.clone() {
                 cand = cand.with_predecessor(p);
@@ -232,8 +200,8 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
 
 // --- candidate helpers ---
 
-fn candidate(mk: MarkdownKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
-    Candidate::new(mk.into(), signals, cost_hint)
+fn candidate(mk: MarkdownKey, signals: ValueSignals) -> Candidate<BatchKey> {
+    Candidate::new(mk.into(), signals)
 }
 
 // --- signals ---

@@ -82,6 +82,13 @@ readme.md
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
     …
+    35→```sh
+    36→npm install ky
+    37→```
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
     …
     85→## API
@@ -127,8 +134,10 @@ readme.md
     …
     1339→## Browser support
     …
+    1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
     …
+    1345→Node.js 18 and later.
     1347→## Related
     …
     1352→## Maintainers
@@ -162,6 +171,7 @@ source/
             10→	constructor(value: unknown) {
             …
         TimeoutError.ts
+            1→import type {KyRequest} from '../types/request.js';
             3→export class TimeoutError extends Error {
             4→	public request: KyRequest;
             6→	constructor(request: Request) {
@@ -179,6 +189,7 @@ source/
         …
     types/
         ResponsePromise.ts
+            4→import {type KyResponse} from './response.js';
             6→export type ResponsePromise<T = unknown> = {
             …
         common.ts
@@ -203,6 +214,7 @@ source/
             2→	json: <J = T >() => Promise<J>;
             3→} & Response;
         retry.ts
+            1→import type {HttpMethod} from './options.js';
             3→export type ShouldRetryState = {
             4→	/**
             5→	The error that caused the request to fail.
@@ -224,6 +236,7 @@ source/
             119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
             …
         delay.ts
+            3→import {type InternalOptions} from '../types/options.js';
             5→export type DelayOptions = {
             6→	signal?: InternalOptions['signal'];
             7→};
@@ -235,20 +248,6 @@ source/
         is.ts
             2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
         merge.ts
-            6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
-            …
-            16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
-            …
-            38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
-            39→	{
-            40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
-            41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
-            42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
-            43→		beforeError: newHookValue(original, incoming, 'beforeError'),
-            44→	}
-            45→);
-            86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
-            …
         normalize.ts
             5→export const normalizeRequestMethod = (input: string): string =>
             6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
@@ -263,6 +262,7 @@ source/
             30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
             …
         timeout.ts
+            1→import {TimeoutError} from '../errors/TimeoutError.js';
             3→export type TimeoutOptions = {
             4→	timeout: number;
             5→	fetch: typeof fetch;

@@ -8,6 +8,9 @@ expression: rendered
 .gitignore
 CHANGELOG.md
     1→# Change Log
+    3→## [Unreleased]
+    5→## [0.4.29] - 2025-12-02
+    17→## [0.4.28] - 2025-09-02
 Cargo.toml
     1→[package]
     3→name = "log"
@@ -31,15 +34,6 @@ README.md
     1→log
     2→===
     4→A Rust library providing a lightweight logging *facade*.
-    6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
-    7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
-    8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
-    9→![License](https://img.shields.io/crates/l/log.svg)
-    11→* [`log` documentation](https://docs.rs/log)
-    13→A logging facade provides a single logging API that abstracts over the actual
-    14→logging implementation. Libraries can use the logging API provided by this
-    15→crate, and the consumer of those libraries can choose the logging
-    16→implementation that is most suitable for its use case.
     19→## Minimum supported `rustc`
     …
     21→`1.68.0+`
@@ -59,8 +53,17 @@ src/
     kv/
         error.rs
             5→pub struct Error {
-            …
+            6→    inner: Inner,
+            7→}
         key.rs
+            7→pub trait ToKey {
+            8→    /// Perform the conversion.
+            9→    fn to_key(&self) -> Key<'_>;
+            10→}
+            37→pub struct Key<'k> {
+            38→    // NOTE: This may become `Cow<'k, str>`
+            39→    key: &'k str,
+            40→}
         mod.rs
             1→//! Structured logging.
             2→//!
@@ -73,7 +76,32 @@ src/
             9→//! ```
             10→//!
         source.rs
+            51→pub trait Source {
+            …
+            235→pub trait VisitSource<'kvs> {
+            236→    /// Visit a key-value pair.
+            237→    fn visit_pair(&mut self, key: Key<'kvs>, value: Value<'kvs>) -> Result<(), Error>;
+            238→}
         value.rs
+            11→pub trait ToValue {
+            12→    /// Perform the conversion.
+            13→    fn to_value(&self) -> Value<'_>;
+            14→}
+            119→pub struct Value<'v> {
+            120→    inner: inner::Inner<'v>,
+            121→}
+            462→pub trait VisitValue<'v> {
+            …
+            1129→macro_rules! as_debug {
+            …
+            1139→macro_rules! as_display {
+            …
+            1149→macro_rules! as_error {
+            …
+            1159→macro_rules! as_serde {
+            …
+            1169→macro_rules! as_sval {
+            …
     lib.rs
         11→//! A lightweight logging facade.
         12→//!
@@ -91,12 +119,6 @@ src/
         24→//! though that default may be overridden. Logger implementations typically use
         25→//! the target to filter requests based on some user configuration.
         26→//!
-        467→/// An enum representing the available verbosity levels of the logger.
-        468→///
-        469→/// Typical usage includes: checking if a certain `Level` is enabled with
-        470→/// [`log_enabled!`](macro.log_enabled.html), specifying the `Level` of
-        471→/// [`log!`](macro.log.html), and comparing a `Level` directly to a
-        472→/// [`LevelFilter`](enum.LevelFilter.html).
         475→pub enum Level {
         476→    /// The "error" level.
         477→    ///
@@ -147,12 +169,6 @@ src/
         848→    #[cfg(feature = "kv")]
         849→    key_values: KeyValues<'a>,
         850→}
-        963→/// Builder for [`Record`](struct.Record.html).
-        964→///
-        965→/// Typically should only be used by log library creators or for testing and "shim loggers".
-        966→/// The `RecordBuilder` can set the different parameters of `Record` object, and returns
-        967→/// the created object when `build` is called.
-        968→///
         1003→pub struct RecordBuilder<'a> {
         1004→    record: Record<'a>,
         1005→}
@@ -196,11 +212,6 @@ src/
         1278→    /// It can be called manually on shut-down to ensure any in-flight records are flushed.
         1279→    fn flush(&self);
         1280→}
-        1344→/// Sets the global maximum log level.
-        1345→///
-        1346→/// Generally, this should only be called by the active logging implementation.
-        1347→///
-        1348→/// Note that `Trace` is the maximum level, because it provides the maximum amount of detail in the emitted logs.
         1351→pub fn set_max_level(level: LevelFilter) {
         …
         1375→pub unsafe fn set_max_level_racy(level: LevelFilter) {

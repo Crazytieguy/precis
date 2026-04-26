@@ -50,26 +50,21 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             // ranking, so the chain doesn't displace anything in the
             // normal multi-line case.
             let identity = JsonKey::Identity { file: file.clone() };
-            out.push(candidate(
-                identity.clone(),
-                identity_signals(&file, ctx),
-                40,
-            ));
+            out.push(candidate(identity.clone(), identity_signals(&file, ctx)));
             let entry = JsonKey::Entry { file: file.clone() };
             out.push(
-                candidate(entry.clone(), entry_signals(&file, ctx), 40)
+                candidate(entry.clone(), entry_signals(&file, ctx))
                     .with_predecessor(BatchKey::Json(identity)),
             );
             let scripts = JsonKey::Scripts { file: file.clone() };
             out.push(
-                candidate(scripts.clone(), scripts_signals(&file, ctx), 80)
+                candidate(scripts.clone(), scripts_signals(&file, ctx))
                     .with_predecessor(BatchKey::Json(entry)),
             );
             out.push(
                 candidate(
                     JsonKey::Dependencies { file: file.clone() },
                     dependencies_signals(&file, ctx),
-                    100,
                 )
                 .with_predecessor(BatchKey::Json(scripts)),
             );
@@ -92,7 +87,6 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(candidate(
                 JsonKey::Whole { file: file.clone() },
                 whole_signals(&file, name, ctx),
-                line_count.min(WHOLE_LINE_CAP) * 6,
             ));
         }
     }
@@ -250,8 +244,8 @@ fn is_dependencies_key(k: &str) -> bool {
 
 // --- signals ---
 
-fn candidate(jk: JsonKey, signals: ValueSignals, cost_hint: usize) -> Candidate<BatchKey> {
-    Candidate::new(jk.into(), signals, cost_hint)
+fn candidate(jk: JsonKey, signals: ValueSignals) -> Candidate<BatchKey> {
+    Candidate::new(jk.into(), signals)
 }
 
 fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
