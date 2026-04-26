@@ -23,6 +23,18 @@ Cargo.toml
     14→[features]
     15→default = ["std"]
     16→std = []
+    18→[dependencies]
+    19→# On compilers older than 1.65, features=["backtrace"] may be used to enable
+    20→# backtraces via the `backtrace` crate. This feature has no effect on 1.65+
+    21→# besides bringing in an unused dependency, as `std::backtrace` is always
+    22→# preferred.
+    23→backtrace = { version = "0.3.51", optional = true }
+    25→[dev-dependencies]
+    26→futures = { version = "0.3", default-features = false }
+    27→rustversion = "1.0.6"
+    28→syn = { version = "2.0", features = ["full"] }
+    29→thiserror = "2"
+    30→trybuild = { version = "1.0.108", features = ["diff"] }
 LICENSE-APACHE
 LICENSE-MIT
 README.md
@@ -87,25 +99,15 @@ src/
         …
     chain.rs
         11→pub(crate) struct Chain<'a> {
-        12→    state: ChainState<'a>,
-        13→}
+        …
         16→pub(crate) enum ChainState<'a> {
-        17→    Linked {
-        18→        next: Option<&'a (dyn StdError + 'static)>,
-        19→    },
-        20→    #[cfg(any(feature = "std", not(anyhow_no_core_error)))]
-        21→    Buffered {
-        22→        rest: vec::IntoIter<&'a (dyn StdError + 'static)>,
-        23→    },
-        24→}
+        …
     context.rs
     ensure.rs
         10→pub trait BothDebug {
-        11→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-        12→}
+        …
         25→pub trait NotBothDebug {
-        26→    fn __dispatch_ensure(self, msg: &'static str) -> Error;
-        27→}
+        …
         105→macro_rules! __parse_ensure {
         …
         886→macro_rules! __fancy_ensure {
@@ -114,42 +116,23 @@ src/
         …
     error.rs
         934→pub(crate) struct ErrorImpl<E = ()> {
-        935→    vtable: &'static ErrorVTable,
-        936→    backtrace: Option<Backtrace>,
-        937→    // NOTE: Don't use directly. Use only through vtable. Erased type may have
-        938→    // different alignment.
-        939→    _object: E,
-        940→}
+        …
         952→pub(crate) struct ContextError<C, E> {
-        953→    pub context: C,
-        954→    pub error: E,
-        955→}
+        …
     fmt.rs
     kind.rs
         55→pub struct Adhoc;
         …
         58→pub trait AdhocKind: Sized {
-        59→    #[inline]
-        60→    fn anyhow_kind(&self) -> Adhoc {
-        61→        Adhoc
-        62→    }
-        63→}
+        …
         77→pub struct Trait;
         …
         80→pub trait TraitKind: Sized {
-        81→    #[inline]
-        82→    fn anyhow_kind(&self) -> Trait {
-        83→        Trait
-        84→    }
-        85→}
+        …
         100→pub struct Boxed;
         …
         104→pub trait BoxedKind: Sized {
-        105→    #[inline]
-        106→    fn anyhow_kind(&self) -> Boxed {
-        107→        Boxed
-        108→    }
-        109→}
+        …
     lib.rs
         1→//! [![github]](https://github.com/dtolnay/anyhow)&ensp;[![crates-io]](https://crates.io/crates/anyhow)&ensp;[![docs-rs]](https://docs.rs/anyhow)
         2→//!
@@ -167,6 +150,25 @@ src/
         390→pub struct Error {
         391→    inner: Own<ErrorImpl>,
         392→}
+        394→/// Iterator of a chain of source errors.
+        395→///
+        396→/// This type is the iterator returned by [`Error::chain`].
+        397→///
+        398→/// # Example
+        399→///
+        400→/// ```
+        401→/// use anyhow::Error;
+        402→/// use std::io;
+        403→///
+        404→/// pub fn underlying_io_error_kind(error: &Error) -> Option<io::ErrorKind> {
+        405→///     for cause in error.chain() {
+        406→///         if let Some(io_error) = cause.downcast_ref::<io::Error>() {
+        407→///             return Some(io_error.kind());
+        408→///         }
+        409→///     }
+        410→///     None
+        411→/// }
+        412→/// ```
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}

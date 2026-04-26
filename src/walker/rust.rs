@@ -112,7 +112,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             out.push(
                 candidate(
                     key.clone(),
-                    pub_item_signals(file, item.kind, ctx),
+                    pub_item_signals(file, item.kind, item.surface, ctx),
                     item.estimated_cost(),
                 )
                 .with_predecessor(BatchKey::Rust(names_key.clone())),
@@ -123,7 +123,7 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
                         file: file.clone(),
                         start_line: item.start_line,
                     },
-                    pub_item_doc_signals(file, item.kind, ctx),
+                    pub_item_doc_signals(file, item.kind, item.surface, ctx),
                     60,
                 )
                 .with_predecessor(BatchKey::Rust(key)),
@@ -184,7 +184,12 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
             let (source, tree) = parse_rust(ctx, file)?;
             let item = find_item_at(&tree, &source, *start_line)?;
             let lines = collect_pub_item(&tree, &source, *start_line);
-            single_file_lines_batch(file, &source, lines, pub_item_signals(file, item.kind, ctx))
+            single_file_lines_batch(
+                file,
+                &source,
+                lines,
+                pub_item_signals(file, item.kind, item.surface, ctx),
+            )
         }
         RustKey::PubItemDoc { file, start_line } => {
             let (source, tree) = parse_rust(ctx, file)?;
@@ -194,7 +199,7 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
                 file,
                 &source,
                 lines,
-                pub_item_doc_signals(file, item.kind, ctx),
+                pub_item_doc_signals(file, item.kind, item.surface, ctx),
             )
         }
         RustKey::MethodSigs { file } => mat_per_file(
@@ -256,6 +261,7 @@ impl ItemKind {
 struct PubItemInfo {
     start_line: usize,
     kind: ItemKind,
+    surface: ApiSurface,
     /// Rough upper bound of the rendered cost of just this item's decl —
     /// lines × avg 6 tokens, with a floor of 40 for a one-liner decl.
     line_span: usize,
@@ -264,6 +270,44 @@ struct PubItemInfo {
 impl PubItemInfo {
     fn estimated_cost(&self) -> usize {
         (self.line_span * 6).max(40)
+    }
+}
+
+/// Whether a syntactically-public item is part of the external crate API.
+/// `Public` (plain `pub`) competes for the budget at full weight;
+/// `Restricted` (`pub(crate)` / `pub(super)` / `pub(self)` / `pub(in ...)`)
+/// is compiler-visible inside the crate but not the external surface.
+/// `doc_hidden` is orthogonal — public items can still be opted out of
+/// rustdoc with `#[doc(hidden)]`. Together they produce a non-API factor
+/// applied uniformly across the value channels in `pub_item_signals` /
+/// `pub_item_doc_signals`.
+#[derive(Debug, Clone, Copy)]
+struct ApiSurface {
+    visibility: Visibility,
+    doc_hidden: bool,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Visibility {
+    Public,
+    Restricted,
+}
+
+impl ApiSurface {
+    /// Multiplier applied to all three value channels for non-API items.
+    /// Calibrated against the divergence Sim metric across the 10
+    /// fixtures: 0.4 per axis (visibility, doc_hidden) demotes
+    /// non-API items meaningfully without dropping load-bearing
+    /// internal types out of the schedule entirely. 0.16 stacks for
+    /// items that are *both* restricted and `#[doc(hidden)]` (the
+    /// most clearly internal class).
+    fn factor(self) -> f64 {
+        let v = match self.visibility {
+            Visibility::Public => 1.0,
+            Visibility::Restricted => 0.4,
+        };
+        let h = if self.doc_hidden { 0.4 } else { 1.0 };
+        v * h
     }
 }
 
@@ -289,9 +333,9 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
         if child.kind() == "macro_definition" && has_macro_export(child, source) {
             continue; // Handled by MacroNames/MacroBodies.
         }
-        if !is_public(child) {
+        let Some(visibility) = item_visibility(child, source) else {
             continue;
-        }
+        };
         let Some(kind) = item_kind_of(child) else {
             continue;
         };
@@ -300,6 +344,10 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
         out.push(PubItemInfo {
             start_line,
             kind,
+            surface: ApiSurface {
+                visibility,
+                doc_hidden: has_doc_hidden(child, source),
+            },
             line_span: end_line.saturating_sub(start_line) + 1,
         });
     }
@@ -387,22 +435,34 @@ fn pub_item_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
     }
 }
 
-fn pub_item_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+fn pub_item_signals(
+    file: &Path,
+    kind: ItemKind,
+    surface: ApiSurface,
+    ctx: &WalkCtx,
+) -> ValueSignals {
     let k = kind.kind_weight();
+    let s = surface.factor();
     ValueSignals {
-        catastrophic_omission: (0.70 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.85 * k).min(1.0),
-        zero_tool_call_understanding: 0.65,
+        catastrophic_omission: (0.70 * k * s * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.85 * k * s).min(1.0),
+        zero_tool_call_understanding: 0.65 * s,
         depth_factor: file_depth_factor(file, ctx),
     }
 }
 
-fn pub_item_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+fn pub_item_doc_signals(
+    file: &Path,
+    kind: ItemKind,
+    surface: ApiSurface,
+    ctx: &WalkCtx,
+) -> ValueSignals {
     let k = kind.kind_weight();
+    let s = surface.factor();
     ValueSignals {
-        catastrophic_omission: (0.20 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.6 * k).min(1.0),
-        zero_tool_call_understanding: 0.8,
+        catastrophic_omission: (0.20 * k * s * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.6 * k * s).min(1.0),
+        zero_tool_call_understanding: 0.8 * s,
         depth_factor: file_depth_factor(file, ctx),
     }
 }
@@ -595,7 +655,7 @@ fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
         if child.start_position().row + 1 != start_line {
             continue;
         }
-        if !is_public(child) {
+        if item_visibility(child, source).is_none() {
             return FileLines::new(Vec::new());
         }
         let mut full = Vec::new();
@@ -710,19 +770,45 @@ fn is_underscore_private(node: Node, source: &str) -> bool {
 
 // --- AST predicates ---
 
-fn is_public(node: Node) -> bool {
+/// Classify the visibility of a top-level item. `None` for items without
+/// any `visibility_modifier` (i.e. private — these aren't `PubItem`
+/// candidates). Plain `pub` → `Public`; any restricted form
+/// (`pub(crate)` / `pub(super)` / `pub(self)` / `pub(in path)`) →
+/// `Restricted`. Classification is by the trimmed text of the modifier
+/// node, so future grammar additions to the restricted forms degrade
+/// gracefully (anything that isn't exactly `pub` is treated as
+/// restricted).
+fn item_visibility(node: Node, source: &str) -> Option<Visibility> {
     let mut cursor = node.walk();
-    node.children(&mut cursor)
-        .any(|c| c.kind() == "visibility_modifier")
+    let modifier = node
+        .children(&mut cursor)
+        .find(|c| c.kind() == "visibility_modifier")?;
+    let text = source[modifier.start_byte()..modifier.end_byte()].trim();
+    Some(if text == "pub" {
+        Visibility::Public
+    } else {
+        Visibility::Restricted
+    })
 }
 
-fn has_macro_export(node: Node, source: &str) -> bool {
+/// Walk the outer attributes attached to `node` (preceding siblings,
+/// skipping comments) and return `true` if any of them satisfies `pred`.
+/// `pred` receives the inner `attribute` node — the structured payload —
+/// not the wrapping `attribute_item`. Stops at the first non-attr/
+/// non-comment sibling.
+fn any_outer_attribute<F>(node: Node, pred: F) -> bool
+where
+    F: Fn(Node) -> bool,
+{
     let mut cur = node.prev_sibling();
     while let Some(prev) = cur {
         match prev.kind() {
             "attribute_item" => {
-                let text = &source[prev.start_byte()..prev.end_byte()];
-                if text.contains("macro_export") {
+                let mut acur = prev.walk();
+                if prev
+                    .children(&mut acur)
+                    .any(|c| c.kind() == "attribute" && pred(c))
+                {
                     return true;
                 }
                 cur = prev.prev_sibling();
@@ -732,6 +818,53 @@ fn has_macro_export(node: Node, source: &str) -> bool {
         }
     }
     false
+}
+
+/// Check whether `#[doc(hidden)]` is attached as a *direct* outer
+/// attribute on `node`. Conditional forms like
+/// `#[cfg_attr(..., doc(hidden))]` don't count — the outer attribute's
+/// path there is `cfg_attr`, not `doc`. Treats conditionally-hidden
+/// items as on-surface.
+fn has_doc_hidden(node: Node, source: &str) -> bool {
+    any_outer_attribute(node, |attr| is_doc_hidden_attribute(attr, source))
+}
+
+/// Match an `attribute` node whose path is `doc` and whose token-tree is
+/// exactly `(hidden)`. Uses the structured AST instead of substring
+/// matching so `cfg_attr(..., doc(hidden))` (whose outer path is
+/// `cfg_attr`) doesn't false-fire.
+fn is_doc_hidden_attribute(attr: Node, source: &str) -> bool {
+    let mut cur = attr.walk();
+    let mut children = attr.children(&mut cur);
+    let path = children.next();
+    let payload = children.next();
+    let (Some(path), Some(payload)) = (path, payload) else {
+        return false;
+    };
+    if path.kind() != "identifier" || &source[path.start_byte()..path.end_byte()] != "doc" {
+        return false;
+    }
+    if payload.kind() != "token_tree" {
+        return false;
+    }
+    let mut pcur = payload.walk();
+    let idents: Vec<Node> = payload
+        .children(&mut pcur)
+        .filter(|c| c.kind() == "identifier")
+        .collect();
+    matches!(
+        idents.as_slice(),
+        [only] if &source[only.start_byte()..only.end_byte()] == "hidden"
+    )
+}
+
+fn has_macro_export(node: Node, source: &str) -> bool {
+    any_outer_attribute(node, |attr| {
+        let mut cur = attr.walk();
+        attr.children(&mut cur).any(|c| {
+            c.kind() == "identifier" && &source[c.start_byte()..c.end_byte()] == "macro_export"
+        })
+    })
 }
 
 fn is_module_doc_comment(node: Node, source: &str) -> bool {
@@ -755,5 +888,121 @@ fn collect_outer_docs_above(node: Node, source: &str, out: &mut Vec<usize>) {
             "attribute_item" => cur = prev.prev_sibling(),
             _ => break,
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use tree_sitter::Parser;
+
+    fn parse(src: &str) -> Tree {
+        let mut p = Parser::new();
+        p.set_language(&tree_sitter_rust::LANGUAGE.into()).unwrap();
+        p.parse(src, None).unwrap()
+    }
+
+    fn surfaces(src: &str) -> Vec<(String, ApiSurface)> {
+        let tree = parse(src);
+        let mut out = Vec::new();
+        let mut cursor = tree.root_node().walk();
+        for child in tree.root_node().children(&mut cursor) {
+            let Some(visibility) = item_visibility(child, src) else {
+                continue;
+            };
+            let surface = ApiSurface {
+                visibility,
+                doc_hidden: has_doc_hidden(child, src),
+            };
+            let head = src[child.start_byte()..child.end_byte()]
+                .lines()
+                .next()
+                .unwrap_or("")
+                .to_string();
+            out.push((head, surface));
+        }
+        out
+    }
+
+    #[test]
+    fn rust_visibility_classifies_pub_crate_super_self_in() {
+        let src = r#"
+pub struct A;
+pub(crate) struct B;
+pub(super) struct C;
+pub(self) struct D;
+pub(in crate::x) struct E;
+struct F;
+"#;
+        let s = surfaces(src);
+        let by_head: std::collections::HashMap<_, _> = s
+            .iter()
+            .map(|(h, surf)| (h.clone(), surf.visibility))
+            .collect();
+        assert_eq!(by_head["pub struct A;"], Visibility::Public);
+        assert_eq!(by_head["pub(crate) struct B;"], Visibility::Restricted);
+        assert_eq!(by_head["pub(super) struct C;"], Visibility::Restricted);
+        assert_eq!(by_head["pub(self) struct D;"], Visibility::Restricted);
+        assert_eq!(
+            by_head["pub(in crate::x) struct E;"],
+            Visibility::Restricted
+        );
+        // Private items have no visibility_modifier and are filtered out.
+        assert!(!by_head.contains_key("struct F;"));
+    }
+
+    #[test]
+    fn rust_doc_hidden_attaches_only_to_direct_doc_attribute() {
+        let src = r#"
+#[doc(hidden)]
+pub struct A;
+
+#[cfg_attr(feature = "f", doc(hidden))]
+pub struct B;
+
+#[doc = "regular doc"]
+pub struct C;
+
+#[doc(hidden)]
+#[allow(dead_code)]
+pub struct D;
+"#;
+        let surfaces = surfaces(src);
+        let by_head: std::collections::HashMap<_, _> = surfaces
+            .iter()
+            .map(|(h, surf)| (h.clone(), surf.doc_hidden))
+            .collect();
+        // Direct #[doc(hidden)] fires.
+        assert!(by_head["pub struct A;"]);
+        // cfg_attr-wrapped doc(hidden) doesn't fire (outer attr is cfg_attr).
+        assert!(!by_head["pub struct B;"]);
+        // #[doc = "..."] doesn't fire.
+        assert!(!by_head["pub struct C;"]);
+        // doc(hidden) stacked with another attribute still fires.
+        assert!(by_head["pub struct D;"]);
+    }
+
+    #[test]
+    fn rust_api_surface_factor_composes_visibility_and_doc_hidden() {
+        let pub_visible = ApiSurface {
+            visibility: Visibility::Public,
+            doc_hidden: false,
+        };
+        let pub_hidden = ApiSurface {
+            visibility: Visibility::Public,
+            doc_hidden: true,
+        };
+        let crate_visible = ApiSurface {
+            visibility: Visibility::Restricted,
+            doc_hidden: false,
+        };
+        let crate_hidden = ApiSurface {
+            visibility: Visibility::Restricted,
+            doc_hidden: true,
+        };
+        assert_eq!(pub_visible.factor(), 1.0);
+        assert!((pub_hidden.factor() - 0.4).abs() < 1e-9);
+        assert!((crate_visible.factor() - 0.4).abs() < 1e-9);
+        assert!((crate_hidden.factor() - 0.16).abs() < 1e-9);
     }
 }

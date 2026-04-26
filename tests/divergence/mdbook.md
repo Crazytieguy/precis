@@ -1,4 +1,4 @@
-scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9997/10000
+scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9995/10000
 
 ## Tier rollup
 
@@ -31,12 +31,12 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9997/1
 | 2.6 | 1428 | 6113 | +4685 | 1.00 | late | mdbook-renderer crate lede | crate-doc lede in crates/mdbook-renderer/src/lib.rs (t=6113, 6 atoms) |
 | 2.7 | 1496 | — | — | 0.75 | partial | mdbook-html crate lib + module map | mod/use plumbing in crates/mdbook-html/src/lib.rs (t=4784, 5 atoms) |
 | 2.8 | 1555 | — | — | 0.50 | partial | mdbook-driver source layout |  |
-| 2.9 | 1591 | 9944 | +8353 | 1.00 | late | mdbook-core source layout |  |
+| 2.9 | 1591 | 9926 | +8335 | 1.00 | late | mdbook-core source layout |  |
 | 2.10 | 1701 | — | — | 0.19 | missing | mdbook-html source layout |  |
 | 3.1 | 1960 | — | — | 0.50 | partial | Book / BookItem struct shapes | pub item at crates/mdbook-core/src/book.rs:119 (t=4241, 8 atoms) |
 | 3.2 | 2164 | — | — | 0.06 | missing | Chapter struct fields | pub-item names surface in crates/mdbook-core/src/book.rs (t=4138, 2 atoms) |
 | 3.3 | 2246 | — | — | 0.00 | missing | Book impl method names |  |
-| 3.4 | 2625 | — | — | 0.38 | missing | MDBook struct + public method names | pub item at crates/mdbook-driver/src/mdbook.rs:29 (t=9763, 12 atoms) |
+| 3.4 | 2625 | — | — | 0.38 | missing | MDBook struct + public method names | pub item at crates/mdbook-driver/src/mdbook.rs:29 (t=9745, 12 atoms) |
 | 3.5 | 3208 | 5909 | +2701 | 0.87 | late | Preprocessor trait + PreprocessorContext | pub item at crates/mdbook-preprocessor/src/lib.rs:51 (t=5751, 16 atoms) |
 | 3.6 | 3742 | 6629 | +2887 | 0.90 | late | Renderer trait + RenderContext | pub item at crates/mdbook-renderer/src/lib.rs:40 (t=6524, 22 atoms) |
 | 3.7 | 4011 | — | — | 0.00 | missing | Config struct (top-level book.toml shape) |  |
@@ -74,18 +74,18 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9997/1
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 549 | 1.00 | 549 | 9012 | impl method sigs in crates/mdbook-summary/src/lib.rs |
+| 549 | 1.00 | 549 | 8994 | impl method sigs in crates/mdbook-summary/src/lib.rs |
 | 257 | 1.00 | 257 | 1221 | [features] in Cargo.toml |
 | 231 | 1.00 | 231 | 8158 | README headline in guide/src/README.md |
 | 174 | 0.50 | 349 | 676 | [package] in Cargo.toml |
 | 159 | 1.00 | 159 | 891 | headings outline in CONTRIBUTING.md |
-| 152 | 1.00 | 152 | 9466 | guide/src/README.md section #1 |
-| 146 | 1.00 | 146 | 9314 | CONTRIBUTING.md section #1 |
+| 152 | 1.00 | 152 | 9448 | guide/src/README.md section #1 |
+| 146 | 1.00 | 146 | 9296 | CONTRIBUTING.md section #1 |
 | 137 | 1.00 | 137 | 7312 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |
 | 131 | 1.00 | 131 | 4684 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |
 | 111 | 1.00 | 111 | 7571 | README headline in guide/src/for_developers/README.md |
 | 108 | 1.00 | 108 | 281 | README.md section #1 |
-| 108 | 0.69 | 156 | 9168 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
+| 108 | 0.69 | 156 | 9150 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
 | 98 | 1.00 | 98 | 1728 | README headline in crates/mdbook-driver/README.md |
 | 96 | 0.67 | 144 | 8361 | mod/use plumbing in crates/mdbook-renderer/src/lib.rs |
 | 96 | 1.00 | 96 | 3189 | mod/use plumbing in src/main.rs |
@@ -99,9 +99,9 @@ scores: Sim=0.375 Reached=17/49 Early=1 Late=13 Partial=8 Missing=24 Used=9997/1
 | 81 | 1.00 | 81 | 2470 | [package] in crates/mdbook-summary/Cargo.toml |
 | 81 | 1.00 | 81 | 3309 | headings outline in guide/src/continuous-integration.md |
 | 80 | 1.00 | 80 | 1824 | [package] in crates/mdbook-html/Cargo.toml |
-| 79 | 1.00 | 79 | 9622 | headings outline in guide/src/guide/creating.md |
-| 77 | 1.00 | 77 | 9840 | guide/src/for_developers/README.md section #0 |
-| 77 | 1.00 | 77 | 9543 | headings outline in guide/src/for_developers/backends.md |
+| 79 | 1.00 | 79 | 9604 | headings outline in guide/src/guide/creating.md |
+| 77 | 1.00 | 77 | 9822 | guide/src/for_developers/README.md section #0 |
+| 77 | 1.00 | 77 | 9525 | headings outline in guide/src/for_developers/backends.md |
 | 73 | 1.00 | 73 | 964 | CONTRIBUTING.md section #0 |
 | 71 | 1.00 | 71 | 2995 | pub-item names surface in src/cmd/clean.rs |
 | 68 | 1.00 | 68 | 1892 | README headline in crates/mdbook-html/README.md |

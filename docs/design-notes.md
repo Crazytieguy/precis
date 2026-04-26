@@ -422,21 +422,39 @@ like to revisit whether it's still earning its complexity.
   pairs with an eventual NS-author update that ranks `PubItemNames`-style
   location hints as first-class, so the calibration target is clearer.
 - **API-surface signal (`pub(crate)` / `pub(super)` / `#[doc(hidden)]`)**
-  — these visibility levels and attribute mark items that are
-  compiler-visible inside the crate but aren't part of the external API
-  surface. An experiment added `is_api_surface` to `PubItemInfo` (cheap
-  AST predicates) and applied a 0.3× multiplier to PubItem/PubItemDoc
-  bodies for non-API items. Effect was ambiguous given reviewer noise:
-  the main concrete win was a ~12-divergence improvement on anyhow_1500
-  (ChainState / ErrorImpl / ContextError `pub(crate)` bodies correctly
-  demoted to signature-only); other fixtures shifted in both directions
-  within what looked like review-run variance. Structurally sound —
-  those items genuinely shouldn't compete with public-API bodies — but
-  the cascade effects muddied the measurement. Worth retrying with a
-  deterministic metric, and ideally with a richer cross-file
-  mod-visibility analysis (private `mod x;` in lib.rs makes all `pub`
-  items inside `x.rs` effectively pub(crate), which the current local
-  check misses entirely).
+  — DONE for the local-syntactic case. `Visibility { Public, Restricted }`
+  + `doc_hidden: bool` carried on `PubItemInfo`; `ApiSurface::factor()`
+  composes a uniform multiplier (0.4 per axis, stacking to 0.16) applied
+  to all three signal channels in `pub_item_signals` /
+  `pub_item_doc_signals`. Visibility is classified by trimmed text of
+  the `visibility_modifier` node (covers `pub(self)` /
+  `pub(in path::to)` without enumerating each form).
+  `#[doc(hidden)]` is matched on the *direct* attribute path via
+  structured AST traversal (`identifier` "doc" + `token_tree` containing
+  the single `identifier` "hidden"); `cfg_attr(..., doc(hidden))` does
+  not fire because its outer path is `cfg_attr`. Sim deltas across the
+  10 fixtures: anyhow +0.012 (`pub(crate)` ChainState / ErrorImpl /
+  ContextError correctly demoted; `#[doc(hidden)] pub trait
+  AdhocKind/TraitKind/BoxedKind` in `kind.rs` collapse to header+`…`
+  freeing budget for `Chain` rustdoc and Cargo `[dev-dependencies]`).
+  Other Rust fixtures unchanged or within ±0.001 (mdbook drops 3 zero-
+  cost PubItem batches). TS/JS fixtures unchanged (predicate doesn't
+  fire). Aggregate Sim +0.0012 — modest but the change is structurally
+  correct. Small gain because only anyhow has heavy `pub(crate)` use
+  inside the budget-reachable depth; more gain arrives if a
+  cross-file mod-visibility analysis lands (see deferred follow-up
+  below).
+  **Refactor follow-up**: extracted `any_outer_attribute(node, pred)`
+  helper used by both `has_doc_hidden` and `has_macro_export` (was
+  duplicated prev-sibling traversal). Structured `attribute` matching
+  replaces text-substring parsing (drops `matches_doc_hidden`).
+  **Deferred follow-up — cross-file mod-visibility**: private
+  `mod x;` in lib.rs makes all `pub` items inside `x.rs` effectively
+  pub(crate). Local syntactic check misses this entirely. True fix
+  requires a project-wide module visibility map (walk lib.rs/main.rs
+  for top-level `mod` items, classify them as public/restricted,
+  propagate to per-file PubItem signals). Defer until a fixture
+  surfaces it as a clear miss.
 
 ### Divergence report — deferred refinements
 
