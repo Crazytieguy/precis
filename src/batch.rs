@@ -130,8 +130,13 @@ pub enum RustKey {
     /// `#[macro_export] macro_rules!` names across `src_dir` (cross-file
     /// example). Priority 1.x.
     MacroNames { src_dir: PathBuf },
-    /// Full `macro_rules!` bodies. Predecessor: `MacroNames`. Priority 2.x.
-    MacroBodies { src_dir: PathBuf },
+    /// Full body of one `#[macro_export] macro_rules!` definition.
+    /// Per-macro splitting (vs. the previous cross-file `MacroBodies`
+    /// aggregate) lets the scheduler rank user-facing macros above
+    /// dispatch helpers and keeps a single oversized body from blocking
+    /// the prefix-monotone schedule. Predecessor: `MacroNames` for the
+    /// enclosing `src_dir`. Priority 2.x.
+    MacroBody { file: PathBuf, start_line: usize },
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -337,8 +342,8 @@ impl RustKey {
             RustKey::MacroNames { src_dir } => {
                 format!("macro_export names across {}", display_path(src_dir))
             }
-            RustKey::MacroBodies { src_dir } => {
-                format!("macro_export bodies across {}", display_path(src_dir))
+            RustKey::MacroBody { file, start_line } => {
+                format!("macro_export body at {}:{}", display_path(file), start_line)
             }
         }
     }

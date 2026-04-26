@@ -124,6 +124,14 @@ pub struct WalkCtx {
     /// Memoizes `is_workspace_member` lookups so the canonicalize syscall
     /// runs once per file rather than once per signal computation.
     workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
+    /// Lazy per-dir set of `#[macro_export]` macro names, keyed by the
+    /// directory the Rust walker scoped its `MacroNames` batch to.
+    /// Populated on first read by `rust::collect_exported_macro_names_in_dir`
+    /// — needed both at `expand` time (one call per dir) and at every
+    /// `RustKey::MacroBody` `materialize` (which would otherwise re-walk
+    /// every sibling `.rs` file's parse tree per macro). Stored behind an
+    /// `Arc` so callers consume the set without cloning.
+    rust_exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
 }
 
 impl WalkCtx {
@@ -139,6 +147,7 @@ impl WalkCtx {
             rust_module_visibility: OnceCell::new(),
             cargo_workspace_members: OnceCell::new(),
             workspace_member_lookup: RefCell::new(HashMap::new()),
+            rust_exported_macros_per_dir: RefCell::new(HashMap::new()),
         }
     }
 
@@ -196,6 +205,21 @@ impl WalkCtx {
         init: impl FnOnce() -> HashMap<PathBuf, rust::Visibility>,
     ) -> &HashMap<PathBuf, rust::Visibility> {
         self.rust_module_visibility.get_or_init(init)
+    }
+
+    pub(in crate::walker) fn rust_exported_macros_in_dir(
+        &self,
+        dir: &Path,
+        init: impl FnOnce() -> HashSet<String>,
+    ) -> Arc<HashSet<String>> {
+        if let Some(arc) = self.rust_exported_macros_per_dir.borrow().get(dir) {
+            return arc.clone();
+        }
+        let arc = Arc::new(init());
+        self.rust_exported_macros_per_dir
+            .borrow_mut()
+            .insert(dir.to_path_buf(), arc.clone());
+        arc
     }
 
     /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as

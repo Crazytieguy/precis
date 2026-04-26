@@ -92,7 +92,15 @@ src/
             326→    pub border: Color,
             327→}
             342→pub struct Color {
-            …
+            343→    pub fg: Option<String>,
+            344→    pub bg: Option<String>,
+            346→    #[serde(default = "Config::disable")]
+            347→    pub bold: bool,
+            348→    #[serde(default = "Config::disable")]
+            349→    pub italic: bool,
+            351→    #[serde(skip)]
+            352→    pub style: Style,
+            353→}
         keys.rs
             54→pub enum Key {
             55→    Char(char),
@@ -198,13 +206,7 @@ src/
             …
     debug.rs
         8→macro_rules! debug {
-        9→    ($($arg:tt)*) => {
-        10→        if let Err(_) = $crate::debug::write_logs(format!($($arg)*)) {
-        11→            // FIXME: How to handle err when writing logs failed?
-        12→            // We cannot write error to stderr since it is used for TUI.
-        13→        }
-        14→    };
-        15→}
+        …
         19→pub fn set_file(file: String) {
         …
         23→pub fn write_logs(mut msg: String) -> Result<()> {

@@ -1,4 +1,4 @@
-scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/10000
+scores: Sim=0.423 Reached=18/50 Early=8 Late=5 Partial=12 Missing=20 Used=9394/10000
 
 ## Tier rollup
 
@@ -20,12 +20,12 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/1
 | 1.4 | 156 | 5824 | +5668 | 1.00 | late | main.rs module declarations | mod/use plumbing in src/main.rs (t=5824, 9 atoms) |
 | 1.5 | 185 | 320 | +135 | 1.00 | late | README section headings | README.md section #5 (t=8103, 27 atoms) |
 | 1.6 | 329 | 255 | -74 | 0.92 | aligned | Cargo package metadata | [package] in Cargo.toml (t=255, 11 atoms) |
-| 2.1 | 391 | 3548 | +3157 | 1.00 | late | ContentType variants — locations only | pub item at src/parse/mod.rs:18 (t=3548, 13 atoms) |
-| 2.2 | 534 | — | — | 0.60 | partial | ContentType enum context | pub item at src/parse/mod.rs:18 (t=3548, 14 atoms) |
-| 2.3 | 653 | 3851 | +3198 | 1.00 | late | Parser trait method signatures | pub item at src/parse/mod.rs:36 (t=3851, 23 atoms) |
-| 2.4 | 836 | — | — | 0.16 | missing | ContentType::new_parser dispatch | impl method sigs in src/parse/mod.rs (t=3298, 3 atoms) |
-| 2.5 | 931 | — | — | 0.70 | partial | Tree struct fields | pub item at src/tree.rs:14 (t=1620, 7 atoms) |
-| 2.6 | 1144 | — | — | 0.76 | partial | ItemValue + FieldType | pub item at src/tree.rs:42 (t=783, 8 atoms) |
+| 2.1 | 391 | 3457 | +3066 | 1.00 | late | ContentType variants — locations only | pub item at src/parse/mod.rs:18 (t=3457, 13 atoms) |
+| 2.2 | 534 | — | — | 0.60 | partial | ContentType enum context | pub item at src/parse/mod.rs:18 (t=3457, 14 atoms) |
+| 2.3 | 653 | 3760 | +3107 | 1.00 | late | Parser trait method signatures | pub item at src/parse/mod.rs:36 (t=3760, 23 atoms) |
+| 2.4 | 836 | — | — | 0.16 | missing | ContentType::new_parser dispatch | impl method sigs in src/parse/mod.rs (t=3207, 3 atoms) |
+| 2.5 | 931 | — | — | 0.70 | partial | Tree struct fields | pub item at src/tree.rs:14 (t=1529, 7 atoms) |
+| 2.6 | 1144 | — | — | 0.76 | partial | ItemValue + FieldType | pub item at src/tree.rs:42 (t=692, 8 atoms) |
 | 2.7 | 1215 | — | — | 0.00 | missing | Tree public fn signatures |  |
 | 2.8 | 1432 | — | — | 0.00 | missing | main.rs run() — config + flag dispatch |  |
 | 2.9 | 1755 | — | — | 0.00 | missing | main.rs run() — content type + data read |  |
@@ -33,26 +33,26 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/1
 | 2.11 | 2171 | — | — | 0.00 | missing | main.rs run() — size check, Tree, App, ui::start |  |
 | 3.2 | 2495 | — | — | 0.72 | partial | App struct fields | pub item at src/ui/app.rs:53 (t=5611, 23 atoms) |
 | 3.3 | 2739 | — | — | 0.28 | missing | ElementInFocus + Refresh + ShowResult | pub item at src/ui/app.rs:53 (t=5611, 23 atoms) |
-| 3.4 | 3020 | — | — | 0.04 | missing | ui::start event loop | pub-item names surface in src/ui/mod.rs (t=2041, 2 atoms) |
+| 3.4 | 3020 | — | — | 0.04 | missing | ui::start event loop | pub-item names surface in src/ui/mod.rs (t=1950, 2 atoms) |
 | 3.5 | 3205 | — | — | 0.00 | missing | App method names |  |
 | 3.6 | 3560 | — | — | 0.36 | missing | TreeOverview struct + impl method names | pub item at src/ui/tree_overview.rs:19 (t=4323, 12 atoms) |
 | 3.7 | 3838 | — | — | 0.00 | missing | TreeOverview::on_key action dispatch |  |
 | 3.8 | 4084 | — | — | 0.46 | missing | DataBlock struct + method names | pub item at src/ui/data_block.rs:16 (t=4180, 12 atoms) |
-| 3.9 | 4359 | — | — | 0.67 | partial | Filter widget surface | pub-item names surface in src/ui/filter.rs (t=2425, 8 atoms) |
-| 3.10 | 4672 | — | — | 0.75 | partial | Footer / Header / Popup surfaces | pub item at src/ui/header.rs:11 (t=2382, 6 atoms) |
-| 4.1 | 4715 | 3249 | -1466 | 1.00 | early | parse/ module layout |  |
-| 4.2 | 4844 | — | — | 0.71 | partial | SyntaxToken enum | pub item at src/parse/syntax.rs:11 (t=4067, 12 atoms) |
+| 3.9 | 4359 | — | — | 0.67 | partial | Filter widget surface | pub-item names surface in src/ui/filter.rs (t=2334, 8 atoms) |
+| 3.10 | 4672 | — | — | 0.75 | partial | Footer / Header / Popup surfaces | pub item at src/ui/header.rs:11 (t=2291, 6 atoms) |
+| 4.1 | 4715 | 3158 | -1557 | 1.00 | early | parse/ module layout |  |
+| 4.2 | 4844 | — | — | 0.71 | partial | SyntaxToken enum | pub item at src/parse/syntax.rs:11 (t=3976, 12 atoms) |
 | 4.3 | 5287 | — | — | 0.00 | missing | Per-parser Parser impl headers |  |
-| 4.4 | 5491 | 3851 | -1640 | 0.89 | aligned | Parser::parse_root default body | pub item at src/parse/mod.rs:36 (t=3851, 17 atoms) |
-| 4.5 | 5796 | — | — | 0.10 | missing | AnyParser auto-detect parse_root | pub item at src/parse/any.rs:9 (t=3387, 3 atoms) |
-| 4.6 | 5872 | 3974 | -1898 | 0.86 | early | syntax helper signatures | pub-item names surface in src/parse/syntax.rs (t=3952, 5 atoms) |
-| 5.1 | 5888 | 919 | -4969 | 1.00 | early | config/ module layout |  |
-| 5.2 | 6234 | — | — | 0.69 | partial | Config struct field names | pub item at src/config/mod.rs:17 (t=1892, 24 atoms) |
+| 4.4 | 5491 | 3760 | -1731 | 0.89 | early | Parser::parse_root default body | pub item at src/parse/mod.rs:36 (t=3760, 17 atoms) |
+| 4.5 | 5796 | — | — | 0.10 | missing | AnyParser auto-detect parse_root | pub item at src/parse/any.rs:9 (t=3296, 3 atoms) |
+| 4.6 | 5872 | 3883 | -1989 | 0.86 | early | syntax helper signatures | pub-item names surface in src/parse/syntax.rs (t=3861, 5 atoms) |
+| 5.1 | 5888 | 828 | -5060 | 1.00 | early | config/ module layout |  |
+| 5.2 | 6234 | — | — | 0.69 | partial | Config struct field names | pub item at src/config/mod.rs:17 (t=1801, 24 atoms) |
 | 5.3 | 6578 | — | — | 0.00 | missing | Action enum variants |  |
 | 5.4 | 6976 | — | — | 0.00 | missing | Default key bindings |  |
-| 5.5 | 7174 | 2671 | -4503 | 0.80 | early | Key enum + KeyAction | pub item at src/config/keys.rs:54 (t=2671, 16 atoms) |
-| 5.6 | 7644 | — | — | 0.76 | partial | Per-branch struct fields (Tree / Layout / Filter / Data) | pub-item names surface in src/config/mod.rs (t=1020, 16 atoms) |
-| 5.7 | 7894 | — | — | 0.72 | partial | Editor + Header + Footer struct fields | pub-item names surface in src/config/mod.rs (t=1020, 10 atoms) |
+| 5.5 | 7174 | 2580 | -4594 | 0.80 | early | Key enum + KeyAction | pub item at src/config/keys.rs:54 (t=2580, 16 atoms) |
+| 5.6 | 7644 | — | — | 0.76 | partial | Per-branch struct fields (Tree / Layout / Filter / Data) | pub-item names surface in src/config/mod.rs (t=929, 16 atoms) |
+| 5.7 | 7894 | — | — | 0.72 | partial | Editor + Header + Footer struct fields | pub-item names surface in src/config/mod.rs (t=929, 10 atoms) |
 | 5.8 | 8331 | — | — | 0.08 | missing | Config::load + Config::parse | impl method sigs in src/config/mod.rs (t=5321, 6 atoms) |
 | 5.9 | 8613 | — | — | 0.04 | missing | Config::get_path resolution | impl method sigs in src/config/mod.rs (t=5321, 2 atoms) |
 | 5.10 | 8986 | — | — | 0.70 | partial | Color struct + Colors namespaces | pub item at src/config/colors.rs:162 (t=7158, 24 atoms) |
@@ -79,7 +79,7 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/1
 | 348 | 0.82 | 425 | 5321 | impl method sigs in src/config/mod.rs |
 | 321 | 1.00 | 321 | 6474 | [dependencies] in Cargo.toml |
 | 188 | 1.00 | 188 | 7449 | mod/use plumbing in src/ui/mod.rs |
-| 187 | 1.00 | 187 | 3206 | README.md section #4 |
+| 187 | 1.00 | 187 | 3115 | README.md section #4 |
 | 178 | 0.60 | 295 | 7158 | pub item at src/config/colors.rs:162 |
 | 165 | 0.51 | 321 | 6795 | headings outline in docs/changelog.md |
 | 159 | 0.61 | 259 | 6083 | pub item at src/config/colors.rs:78 |
@@ -89,14 +89,14 @@ scores: Sim=0.421 Reached=18/50 Early=7 Late=5 Partial=12 Missing=20 Used=9394/1
 | 115 | 1.00 | 115 | 4591 | mod/use plumbing in src/parse/mod.rs |
 | 103 | 1.00 | 103 | 7261 | docs/changelog.md section #1 |
 | 102 | 1.00 | 102 | 9181 | plaintext config .gitignore |
-| 96 | 1.00 | 96 | 1988 | README.md section #6 |
+| 96 | 1.00 | 96 | 1897 | README.md section #6 |
 | 93 | 0.61 | 153 | 4476 | pub item at src/config/types.rs:28 |
-| 91 | 1.00 | 91 | 602 | macro_export bodies across src |
-| 87 | 1.00 | 87 | 2927 | pub item at src/config/colors.rs:286 |
+| 91 | 1.00 | 91 | 4067 | macro_export body at src/debug.rs:8 |
+| 87 | 1.00 | 87 | 2836 | pub item at src/config/colors.rs:286 |
 | 79 | 1.00 | 79 | 7528 | docs/changelog.md section #2 |
 | 74 | 1.00 | 74 | 394 | README.md section #1 |
 | 70 | 1.00 | 70 | 6153 | README.md section #2 |
 | 69 | 1.00 | 69 | 9394 | docs/changelog.md section #9 |
-| 65 | 1.00 | 65 | 2840 | pub item at src/config/colors.rs:251 |
-| 58 | 1.00 | 58 | 841 | pub item at src/live_reload.rs:16 |
+| 65 | 1.00 | 65 | 2749 | pub item at src/config/colors.rs:251 |
+| 58 | 1.00 | 58 | 750 | pub item at src/live_reload.rs:16 |
 | 56 | 1.00 | 56 | 5377 | README.md section #3 |

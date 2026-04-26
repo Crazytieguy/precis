@@ -635,6 +635,65 @@ metadata phase remains open.
   Plan + 2 plan-review rounds in
   `ignore/plan-drop-speculative-pool.md`.
 
+- **MacroBodies → per-macro `MacroBody` split — DONE.** The old
+  cross-file `RustKey::MacroBodies { src_dir }` aggregate was
+  replaced by per-macro `RustKey::MacroBody { file, start_line }`
+  candidates — one per `#[macro_export] macro_rules!`. Solves the
+  prefix-monotone block on log noted above (was Used=7305; now
+  Used=9888 with NS 2.7 `log! macro shapes` recovered as a 0.93
+  late atom).
+
+  Three demotion axes mirror `ApiSurface::factor`'s shape:
+  - `__`-prefixed name → 0.4 axis
+  - `#[doc(hidden)]` outer attribute → 0.4 axis
+  - **wrapper-detection** axis → 0.6 axis. The wrapper test:
+    body invokes `$crate::<name>!` for some `<name>` in the
+    same `src_dir`'s `#[macro_export]` set AND `<name>` is not
+    `__`-prefixed. The `__`-target exclusion is load-bearing —
+    without it `log!` (which dispatches to `$crate::__log!`)
+    would itself be classified as a wrapper. Codex plan-review
+    rounds 2 + 3 caught two false starts: arm count doesn't
+    separate `log!` from `error!` in log (both 4 arms), and
+    matching against any exported sibling makes `log!` itself
+    look like a wrapper.
+
+  Without the wrapper axis, smaller wrapper bodies (`error!`,
+  `warn!`, `info!`, `debug!`, `trace!` — all ~410 tokens each)
+  out-ratio the larger root dispatcher (`log!` at ~610 tokens)
+  on cost concavity alone; the root never fits at the budget
+  tail.
+
+  Sim deltas across the 10 fixtures: anyhow −0.005 (Reached 14
+  → 14, baseline shifts as `bail!` body now schedules at the
+  cost of pub(crate) ErrorImpl/ContextError stubs — both off-NS
+  trades). log Sim 0.500 → 0.500 (flat) but Reached **13 → 15**
+  (+2: NS 2.7 log! macro shapes recovers, NS 4.7 VisitValue
+  trait method index now reaches), Used **7305 → 9888**
+  (+2583, prefix-monotone block resolved). otree +0.002, mdbook
+  flat. TS/JS/JSON/TOML fixtures unchanged (predicate doesn't
+  fire on non-Rust files). Plan + 3 plan-review rounds in
+  `ignore/plan-macro-body-per-macro-split.md`.
+
+  **Calibration risk noted in plan-review:** `__log` is doubly
+  internal (`__-prefixed` AND `#[doc(hidden)]`), stacking to
+  axis = 0.16. Despite that floor, log's NS 3.7 `__log
+  internal-macro body` still doesn't reach within the 10k
+  budget — but the displaced batches are higher-tier
+  (kv::Value-related items), so the trade is structurally
+  correct. Pivoting to `max(underscore, doc_hidden)` (single
+  0.4 floor) would lift `__log` but at the cost of adjacent
+  `__`-only or `#[doc(hidden)]`-only items leapfrogging
+  user-facing code; defer until measurement says otherwise.
+
+  **Implementation note:** macro discovery lives in the
+  cross-file step of `expand`, *not* inside the per-file
+  pub-item loop. The latter has an `if items.is_empty() {
+  continue; }` early exit on `find_pub_item_starts`, which
+  skips `macro_definition` nodes — putting macro discovery
+  inside that loop would silently drop macro-only files like
+  `tests/fixtures/log/src/macros.rs`. Codex plan-review
+  round 3 caught this as a P1.
+
 - **File-as-seed** — currently rejected with a clear error in `lib.rs`.
   Needs a small content-only walker path, probably driven by a real
   content walker rather than a generic "show full file" fallback.

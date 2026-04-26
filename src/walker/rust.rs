@@ -22,12 +22,15 @@
 //!
 //! Cross-file keys (scoped by source directory):
 //! - `MacroNames { src_dir }`: exported macro name list
-//! - `MacroBodies { src_dir }`: full bodies (predecessor: `MacroNames`)
+//!
+//! Per-macro keys (one per `#[macro_export] macro_rules!`):
+//! - `MacroBody { file, start_line }`: full body of one exported macro
+//!   (predecessor: `MacroNames` for the enclosing src_dir)
 //!
 //! Parse trees are cached in [`WalkCtx`]; the same file parsed once powers
 //! every Rust batch that touches it.
 
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -151,7 +154,11 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         }
     }
 
-    // Cross-file macro batches, scoped to `dir` (non-recursive).
+    // Cross-file macro batches, scoped to `dir` (non-recursive). Discovery
+    // intentionally lives outside the per-file pub-item loop above —
+    // `find_pub_item_starts` skips `macro_definition` nodes, and the loop's
+    // early `continue` on empty pub items would silently skip macro-only
+    // files like `tests/fixtures/log/src/macros.rs`.
     let macro_names = RustKey::MacroNames {
         src_dir: dir.clone(),
     };
@@ -159,15 +166,25 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         macro_names.clone(),
         macro_names_signals(dir_depth),
     ));
-    out.push(
-        candidate(
-            RustKey::MacroBodies {
-                src_dir: dir.clone(),
-            },
-            macro_bodies_signals(dir_depth),
-        )
-        .with_predecessor(BatchKey::Rust(macro_names)),
-    );
+    let macro_names_key = BatchKey::Rust(macro_names);
+    let exported_names = ctx.rust_exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
+    for file in &rust_files {
+        let Some((source, tree)) = parse_rust(ctx, file) else {
+            continue;
+        };
+        for info in find_macro_starts(&tree, &source, &exported_names) {
+            out.push(
+                candidate(
+                    RustKey::MacroBody {
+                        file: file.clone(),
+                        start_line: info.start_line,
+                    },
+                    macro_body_signals(file, &info, ctx),
+                )
+                .with_predecessor(macro_names_key.clone()),
+            );
+        }
+    }
 
     out
 }
@@ -243,12 +260,19 @@ pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
             macro_names_signals(ctx.depth_from_root(src_dir)),
             ctx,
         ),
-        RustKey::MacroBodies { src_dir } => mat_cross_file(
-            src_dir,
-            collect_macro_bodies,
-            macro_bodies_signals(ctx.depth_from_root(src_dir)),
-            ctx,
-        ),
+        RustKey::MacroBody { file, start_line } => {
+            // The wrapper-vs-root classification needs the set of every
+            // `#[macro_export]` macro in the same `src_dir`, so resolve
+            // it from the file's parent. Parse trees are cached on
+            // `WalkCtx`, so the per-dir sweep is cheap.
+            let dir = file.parent()?;
+            let exported_names =
+                ctx.rust_exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
+            let (source, tree) = parse_rust(ctx, file)?;
+            let info = find_macro_at(&tree, &source, *start_line, &exported_names)?;
+            let lines = collect_macro_body_at(&tree, &source, *start_line);
+            single_file_lines_batch(file, &source, lines, macro_body_signals(file, &info, ctx))
+        }
     }
 }
 
@@ -351,7 +375,7 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
     let mut out = Vec::new();
     for child in root.children(&mut cursor) {
         if child.kind() == "macro_definition" && has_macro_export(child, source) {
-            continue; // Handled by MacroNames/MacroBodies.
+            continue; // Handled by MacroNames + per-macro MacroBody.
         }
         let Some(visibility) = item_visibility(child, source) else {
             continue;
@@ -543,15 +567,34 @@ fn macro_names_signals(depth: usize) -> ValueSignals {
     }
 }
 
-fn macro_bodies_signals(depth: usize) -> ValueSignals {
-    // For macro-heavy crates (anyhow, log), the `#[macro_export]` bodies
-    // are the crate's public API — on par with `PubItem`. Predecessor
-    // edge to MacroNames orders them.
+/// Per-macro signals. Three demotion axes stack multiplicatively:
+///
+/// - `__`-prefixed name → 0.4 axis (`pub(crate)` analog)
+/// - `#[doc(hidden)]` outer attribute → 0.4 axis (mirrors
+///   [`ApiSurface::factor`])
+/// - wrapper macro (body invokes another `#[macro_export]` sibling
+///   via `$crate::<name>!`) → 0.6 axis. The wrapper axis is what
+///   makes `log!` (root) outrank `error!`/`warn!`/etc. (which all
+///   delegate to `$crate::log!`); without it, smaller wrapper
+///   bodies win on cost concavity alone and the larger root never
+///   fits at the budget tail.
+///
+/// A doubly-internal macro (`__-prefixed` + `#[doc(hidden)]`) lands
+/// at axis = 0.16 — the same floor `ApiSurface::factor` produces for
+/// a `pub(crate) #[doc(hidden)]` PubItem. The previous aggregate
+/// collector excluded `__-prefixed` macros entirely; per-macro
+/// emission keeps them visible at low priority so the scheduler
+/// decides on budget.
+fn macro_body_signals(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> ValueSignals {
+    let underscore = if info.underscore_private { 0.4 } else { 1.0 };
+    let doc_hidden = if info.doc_hidden { 0.4 } else { 1.0 };
+    let wrapper = if info.is_wrapper { 0.6 } else { 1.0 };
+    let axis = underscore * doc_hidden * wrapper;
     ValueSignals {
-        catastrophic_omission: 0.9,
-        follow_up_minimization: 0.9,
-        zero_tool_call_understanding: 0.6,
-        depth_factor: depth_factor(depth),
+        catastrophic_omission: (0.50 * axis * entrypoint_boost(file)).min(1.0),
+        follow_up_minimization: (0.70 * axis).min(1.0),
+        zero_tool_call_understanding: 0.55 * axis,
+        depth_factor: file_depth_factor(file, ctx),
     }
 }
 
@@ -1029,34 +1072,134 @@ fn collect_macro_name_lines(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(out).with_ellipses(ellipses)
 }
 
-fn collect_macro_bodies(tree: &Tree, source: &str) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
+/// Per-macro orientation gathered at `expand` time so each `MacroBody`
+/// candidate carries the inputs `macro_body_signals` needs without re-
+/// parsing the file. Mirrors the [`PubItemInfo`] / [`ApiSurface`] split.
+///
+/// `is_wrapper` is the "this macro just delegates to another exported
+/// macro" classification: if the body invokes `$crate::<name>!` for some
+/// `<name>` that is itself `#[macro_export]`'d in the same `src_dir`,
+/// the macro is a thin re-export-style wrapper (e.g. log's `error!`,
+/// `warn!`, `info!`, etc. all dispatch into `log!`). Wrappers carry a
+/// strict refinement of root-dispatcher signals — same demotion shape
+/// `pub_item_doc_body` uses against `pub_item`. Without this axis,
+/// `error!` (smaller body) out-ratios `log!` (larger root-dispatcher
+/// body) on cost concavity alone.
+#[derive(Debug, Clone, Copy)]
+struct MacroInfo {
+    start_line: usize,
+    underscore_private: bool,
+    doc_hidden: bool,
+    is_wrapper: bool,
+}
+
+fn find_macro_starts(
+    tree: &Tree,
+    source: &str,
+    exported_names: &HashSet<String>,
+) -> Vec<MacroInfo> {
     let mut out = Vec::new();
-    for child in root.children(&mut cursor) {
-        if child.kind() == "macro_definition"
-            && has_macro_export(child, source)
-            && !is_underscore_private(child, source)
-        {
-            extend_span(&mut out, child, source);
-        }
+    for_each_exported_macro(tree, source, |node, name| {
+        out.push(MacroInfo {
+            start_line: node.start_position().row + 1,
+            underscore_private: name.starts_with("__"),
+            doc_hidden: has_doc_hidden(node, source),
+            is_wrapper: macro_body_is_wrapper(node, Some(name), source, exported_names),
+        });
+    });
+    out
+}
+
+fn find_macro_at(
+    tree: &Tree,
+    source: &str,
+    start_line: usize,
+    exported_names: &HashSet<String>,
+) -> Option<MacroInfo> {
+    find_macro_starts(tree, source, exported_names)
+        .into_iter()
+        .find(|m| m.start_line == start_line)
+}
+
+/// Read the `name` child (or fall back to first `identifier`) of a
+/// `macro_definition` node and return its text.
+fn macro_definition_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    if let Some(name) = node.child_by_field_name("name") {
+        return Some(&source[name.start_byte()..name.end_byte()]);
     }
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .find(|c| c.kind() == "identifier")
+        .map(|c| &source[c.start_byte()..c.end_byte()])
+}
+
+/// True when the macro's body invokes `$crate::<other>!` for some
+/// public-facing sibling `#[macro_export]` macro in the same `src_dir`,
+/// where `<other>` is not the macro itself, not `__`-prefixed, and is
+/// in `exported_names`.
+///
+/// Self-exclusion guards a self-recursive exported macro from
+/// classifying itself as its own wrapper.
+///
+/// `__`-target exclusion is load-bearing: a root dispatcher like `log!`
+/// invokes `$crate::__log!` (an internal helper), and without the
+/// exclusion `log!` would itself be classified as a wrapper. The
+/// wrapper axis demotes `error!`/`warn!`/etc. (which delegate to
+/// `log!`, the public API) below the root they wrap; targeting an
+/// internal helper is not the same kind of delegation.
+fn macro_body_is_wrapper(
+    node: Node,
+    self_name: Option<&str>,
+    source: &str,
+    exported_names: &HashSet<String>,
+) -> bool {
+    let body = &source[node.start_byte()..node.end_byte()];
+    exported_names
+        .iter()
+        .filter(|name| !name.starts_with("__") && Some(name.as_str()) != self_name)
+        .any(|name| body.contains(&format!("$crate::{name}!")))
+}
+
+fn compute_exported_macros(dir: &Path, ctx: &WalkCtx) -> HashSet<String> {
+    let mut out = HashSet::new();
+    for file in files_with_extension(dir, "rs") {
+        let Some((source, tree)) = parse_rust(ctx, &file) else {
+            continue;
+        };
+        for_each_exported_macro(&tree, &source, |_, name| {
+            out.insert(name.to_string());
+        });
+    }
+    out
+}
+
+fn collect_macro_body_at(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+    let mut out = Vec::new();
+    for_each_exported_macro(tree, source, |node, _| {
+        if node.start_position().row + 1 == start_line {
+            extend_span(&mut out, node, source);
+        }
+    });
     FileLines::new(dedup_sorted(out))
 }
 
-/// `__` prefix by convention marks an internal dispatcher macro.
-fn is_underscore_private(node: Node, source: &str) -> bool {
-    if let Some(name) = node.child_by_field_name("name") {
-        let text = &source[name.start_byte()..name.end_byte()];
-        return text.starts_with("__");
-    }
-    let mut cursor = node.walk();
-    node.children(&mut cursor).any(|c| {
-        c.kind() == "identifier" && {
-            let text = &source[c.start_byte()..c.end_byte()];
-            text.starts_with("__")
+/// Walk every `#[macro_export] macro_rules!` definition at the file's
+/// top level and call `f(node, name)`. Single source of truth for the
+/// "exported macro definition" predicate that several helpers share.
+fn for_each_exported_macro<F>(tree: &Tree, source: &str, mut f: F)
+where
+    F: FnMut(Node, &str),
+{
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "macro_definition"
+            && has_macro_export(child, source)
+            && let Some(name) = macro_definition_name(child, source)
+        {
+            f(child, name);
         }
-    })
+    }
 }
 
 // --- Cross-file module visibility ---
@@ -2412,5 +2555,52 @@ pub fn anchor() {}
         let body = collect_doc_section_lines(src, DocSection::Body);
         assert!(!lede.is_empty(), "lede should cover the doc: {lede:?}");
         assert!(body.is_empty(), "body should be empty: {body:?}");
+    }
+
+    #[test]
+    fn rust_macro_self_recursive_export_is_not_classified_as_wrapper() {
+        // A `#[macro_export] macro_rules! foo` whose body invokes
+        // `$crate::foo!` recursively is the root macro, not a thin
+        // delegate. Codex adversarial review flagged self-recursion as
+        // a false-positive wrapper case before merge.
+        let src = "#[macro_export]\nmacro_rules! foo {\n    () => { };\n    ($($t:tt)+) => { $crate::foo!() };\n}\n";
+        let tree = parse(src);
+        let names: HashSet<String> = ["foo".to_string()].into_iter().collect();
+        let infos = find_macro_starts(&tree, src, &names);
+        assert_eq!(infos.len(), 1);
+        assert!(
+            !infos[0].is_wrapper,
+            "self-recursive macro must not be a wrapper",
+        );
+    }
+
+    #[test]
+    fn rust_macro_wrapper_classification_excludes_underscore_targets() {
+        // `log!` body invokes `$crate::__log!` — `__log` is exported
+        // but `__`-prefixed, which is excluded from the wrapper
+        // predicate. So `log!` is not a wrapper of `__log`.
+        let src = "#[macro_export]\nmacro_rules! __log {\n    () => { };\n}\n#[macro_export]\nmacro_rules! log {\n    () => { $crate::__log!() };\n}\n#[macro_export]\nmacro_rules! error {\n    () => { $crate::log!() };\n}\n";
+        let tree = parse(src);
+        let names: HashSet<String> = ["__log", "log", "error"]
+            .iter()
+            .map(|s| s.to_string())
+            .collect();
+        let infos = find_macro_starts(&tree, src, &names);
+        let by_line: HashMap<_, _> = infos.iter().map(|i| (i.start_line, i)).collect();
+        // __log: no body call to anything → not wrapper
+        // log: body calls $crate::__log! (excluded) → not wrapper
+        // error: body calls $crate::log! (non-__) → wrapper
+        let log_line = src
+            .lines()
+            .position(|l| l.contains("macro_rules! log"))
+            .unwrap()
+            + 1;
+        let error_line = src
+            .lines()
+            .position(|l| l.contains("macro_rules! error"))
+            .unwrap()
+            + 1;
+        assert!(!by_line[&log_line].is_wrapper, "log! must be a root");
+        assert!(by_line[&error_line].is_wrapper, "error! must be a wrapper");
     }
 }
