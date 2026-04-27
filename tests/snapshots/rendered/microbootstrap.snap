@@ -1,0 +1,271 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    workflows/
+        release_docs.yml
+        workflow.yml
+.gitignore
+    1→*.pyc
+    2→*~
+    3→__pycache__/*
+    4→*.swp
+    5→*.sqlite3
+    6→*.map
+    7→.vscode
+    8→.idea
+    9→.DS_Store
+    10→.env
+    11→.mypy_cache
+    12→.pytest_cache
+    13→.ruff_cache
+    14→.coverage
+    15→htmlcov/
+    16→coverage.xml
+    17→pytest.xml
+    18→dist/
+    19→.python-version
+    20→.venv
+    21→uv.lock
+Justfile
+README.md
+    55→## Table of Contents
+    57→- [Installation](#installation)
+    58→- [Quickstart](#quickstart)
+    59→- [Settings](#settings)
+    60→- [Service settings](#service-settings)
+    61→- [Instruments](#instruments)
+    62→  - [Sentry](#sentry)
+    63→  - [Prometheus](#prometheus)
+    64→  - [Opentelemetry](#opentelemetry)
+    65→  - [Logging](#logging)
+    66→  - [CORS](#cors)
+    67→  - [Swagger](#swagger)
+    68→  - [Health checks](#health-checks)
+    69→- [Configuration](#configuration)
+    70→  - [Instruments configuration](#instruments-configuration)
+    71→  - [Application configuration](#application-configuration)
+    72→- [Advanced](#advanced)
+    74→## Installation
+    …
+    76→Also, you can specify extras during installation for concrete framework:
+    78→- `fastapi`
+    79→- `litestar`
+    80→- `faststream` (ASGI app)
+    82→Also we have `granian` extra that is requires for `create_granian_server`.
+    84→For uv:
+    86→```bash
+    87→uv add "microbootstrap[fastapi]"
+    88→```
+    90→For poetry:
+    92→```bash
+    93→poetry add microbootstrap -E fastapi
+    94→```
+    96→For pip:
+    98→```bash
+    99→pip install "microbootstrap[fastapi]"
+    100→```
+    102→## Quickstart
+    …
+    104→To configure your application, you can use the settings object.
+    106→```python
+    107→from microbootstrap import LitestarSettings
+    110→class YourSettings(LitestarSettings):
+    111→    # General settings
+    112→    service_debug: bool = False
+    113→    service_name: str = "my-awesome-service"
+    115→    # Sentry settings
+    116→    sentry_dsn: str = "your-sentry-dsn"
+    118→    # Prometheus settings
+    119→    prometheus_metrics_path: str = "/my-path"
+    121→    # Opentelemetry settings
+    122→    opentelemetry_container_name: str = "your-container"
+    123→    opentelemetry_endpoint: str = "/opentelemetry-endpoint"
+    127→settings = YourSettings()
+    128→```
+    130→Next, use the `Bootstrapper` object to create an application based on your settings.
+    132→```python
+    133→import litestar
+    134→from microbootstrap.bootstrappers.litestar import LitestarBootstrapper
+    136→application: litestar.Litestar = LitestarBootstrapper(settings).bootstrap()
+    137→```
+    139→This approach will provide you with an application that has all the essential instruments already set up for you.
+    141→### FastAPI
+    …
+    143→```python
+    144→import fastapi
+    146→from microbootstrap import FastApiSettings
+    147→from microbootstrap.bootstrappers.fastapi import FastApiBootstrapper
+    150→class YourSettings(FastApiSettings):
+    151→    # General settings
+    152→    service_debug: bool = False
+    153→    service_name: str = "my-awesome-service"
+    155→    # Sentry settings
+    156→    sentry_dsn: str = "your-sentry-dsn"
+    158→    # Prometheus settings
+    159→    prometheus_metrics_path: str = "/my-path"
+    161→    # Opentelemetry settings
+    162→    opentelemetry_container_name: str = "your-container"
+    163→    opentelemetry_endpoint: str = "/opentelemetry-endpoint"
+    166→settings = YourSettings()
+    168→application: fastapi.FastAPI = FastApiBootstrapper(settings).bootstrap()
+    169→```
+    171→### FastStream
+    …
+    201→## Settings
+    …
+    203→The settings object is the core of microbootstrap.
+    205→All framework-related settings inherit from the `BaseServiceSettings` object. `BaseServiceSettings` defines parameters for the service and various instruments.
+    207→However, the number of parameters is <b>not confined</b> to those defined in `BaseServiceSettings`. You can add as many as you need.
+    209→These parameters can be sourced from your environment. By default, no prefix is added to these parameters.
+    211→Example:
+    213→```python
+    214→class YourSettings(BaseServiceSettings):
+    215→    service_debug: bool = True
+    216→    service_name: str = "micro-service"
+    218→    your_awesome_parameter: str = "really awesome"
+    220→    ... # Other settings here
+    221→```
+    223→To source `your_awesome_parameter` from the environment, set the environment variable named `YOUR_AWESOME_PARAMETER`.
+    225→If you prefer to use a prefix when sourcing parameters, set the `ENVIRONMENT_PREFIX` environment variable in advance.
+    227→Example:
+    229→```bash
+    230→$ export ENVIRONMENT_PREFIX=YOUR_PREFIX_
+    231→```
+    233→Then the settings object will attempt to source the variable named `YOUR_PREFIX_YOUR_AWESOME_PARAMETER`.
+    235→## Service settings
+    …
+    237→Each settings object for every framework includes service parameters that can be utilized by various instruments.
+    239→You can configure them manually, or set the corresponding environment variables and let <b>microbootstrap</b> to source them automatically.
+    241→```python
+    242→from microbootstrap.settings import BaseServiceSettings
+    245→class ServiceSettings(BaseServiceSettings):
+    246→    service_debug: bool = True
+    247→    service_environment: str | None = None
+    248→    service_name: str = "micro-service"
+    249→    service_description: str = "Micro service description"
+    250→    service_version: str = "1.0.0"
+    252→    ... # Other settings here
+    254→```
+    256→## Instruments
+    …
+    258→At present, the following instruments are supported for bootstrapping:
+    260→- `sentry`
+    261→- `prometheus`
+    262→- `opentelemetry`
+    263→- `pyroscope`
+    264→- `logging`
+    265→- `cors`
+    266→- `swagger`
+    268→Let's clarify the process required to bootstrap these instruments.
+    270→### [Sentry](https://sentry.io/)
+    …
+    312→### [Prometheus](https://prometheus.io/)
+    …
+    394→### [OpenTelemetry](https://opentelemetry.io/)
+    …
+    451→### [Pyroscope](https://pyroscope.io)
+    …
+    453→To integrate Pyroscope, specify the `pyroscope_endpoint`.
+    455→- The `opentelemetry_service_name` will be used as the application name.
+    456→- `service_namespace` tag will be added with `opentelemetry_namespace` value.
+    457→- You can also set `pyroscope_sample_rate`, `pyroscope_auth_token`, `pyroscope_tags` and `pyroscope_additional_params` — params that will be passed to `pyroscope.configure`.
+    459→When both Pyroscope and OpenTelemetry are enabled, profile span IDs will be included in traces using [`pyroscope-otel`](https://github.com/grafana/otel-profiling-python) for correlation.
+    461→Note that Pyroscope integration is not supported on Windows.
+    463→### Logging
+    …
+    498→### CORS
+    …
+    524→### Swagger
+    …
+    563→### Health checks
+    …
+    586→## Configuration
+    …
+    588→While settings provide a convenient mechanism, it's not always feasible to store everything within them.
+    590→There may be cases where you need to configure a tool directly. Here's how it can be done.
+    592→### Instruments configuration
+    …
+    639→### Application configuration
+    …
+    662→> ### Important
+    663→>
+    …
+    710→### Using microbootstrap without a framework
+    …
+    746→## Advanced
+    …
+examples/
+    fastapi_app.py
+    faststream_app.py
+    litestar_app.py
+logo.svg
+microbootstrap/
+    __init__.py
+    bootstrappers/
+        __init__.py
+        base.py
+        fastapi.py
+        faststream.py
+        litestar.py
+    config/
+        __init__.py
+        fastapi.py
+        faststream.py
+        litestar.py
+    console_writer.py
+    exceptions.py
+    granian_server.py
+    helpers.py
+    instruments/
+        __init__.py
+        base.py
+        cors_instrument.py
+        health_checks_instrument.py
+        instrument_box.py
+        logging_instrument.py
+        opentelemetry_instrument.py
+        prometheus_instrument.py
+        pyroscope_instrument.py
+        sentry_instrument.py
+        swagger_instrument.py
+    instruments_setupper.py
+    middlewares/
+        __init__.py
+        fastapi.py
+        litestar.py
+    py.typed
+    settings.py
+package-lock.json
+package.json
+    2→  "name": "microbootstrap-docs",
+    3→  "version": "1.0.0",
+    4→  "description": "Vuepress documentation for microbootstrap package",
+    5→  "license": "MIT",
+    6→  "type": "module",
+    7→  "scripts": {
+    8→    "docs:build": "vuepress build docs",
+    9→    "docs:clean-dev": "vuepress dev docs --clean-cache",
+    10→    "docs:dev": "vuepress dev docs",
+    11→    "docs:update-package": "npx vp-update"
+    12→  },
+    13→  "devDependencies": {
+    14→    "@vuepress/bundler-vite": "^2.0.0-rc.7",
+    15→    "@vuepress/theme-default": "^2.0.0-rc.11",
+    16→    "vue": "^3.4.0",
+    17→    "vuepress": "^2.0.0-rc.7"
+    18→  },
+    19→  "dependencies": {
+    20→    "vuepress-theme-hope": "^2.0.0-rc.52"
+    21→  }
+pyproject.toml
+tests/
+    __init__.py
+    bootstrappers/
+    conftest.py
+    instruments/
+    test_granian_server.py
+    test_helpers.py
+    test_instruments_setupper.py
+    test_settings.py

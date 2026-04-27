@@ -82,6 +82,9 @@ per_fixture_tests!(typeguard);
 per_fixture_tests!(bareiron);
 per_fixture_tests!(htmy);
 per_fixture_tests!(mcphost);
+per_fixture_tests!(krep);
+per_fixture_tests!(microbootstrap);
+per_fixture_tests!(semver);
 
 // ---- paths -------------------------------------------------------------
 

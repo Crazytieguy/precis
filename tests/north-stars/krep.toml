@@ -1,0 +1,575 @@
+fixture = "krep"
+revision_pin = "ae96fbd2"
+summary = """
+krep is a single-binary C CLI that searches text files/directories for
+patterns very fast. It picks among multiple search algorithms (Boyer-
+Moore-Horspool, KMP, memchr, Aho-Corasick for multi-pattern, POSIX
+regex) and switches in SIMD acceleration (SSE4.2 / AVX2 / AVX-512 /
+NEON) when the host supports it. The repo is essentially flat: two C
+source files (`krep.c` ~5300 lines, `aho_corasick.c` ~470 lines), two
+headers, a `Makefile`, a README, and a `test/` directory with C unit
+suites and a `krep` vs `ripgrep` benchmark script.
+
+Likely agent queries: how the CLI is invoked and which flags exist,
+what algorithm gets picked for a given pattern, where individual
+algorithms live, the public `search_*` / `match_result_*` API, the
+threading model, recursive-search filtering (skip lists, gitignore),
+how SIMD is gated, and how the test/build harness is structured. The
+ranking front-loads the README, the `krep.h` public surface, the
+`select_search_algorithm` dispatcher, the option parser, then fills
+in algorithm locations and structural bodies, with build/CI scaffolding
+later.
+"""
+
+# ---------------------------------------------------------------------
+# Tier 1 — Crate identity, top-level layout, README/CLI lede
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level FS listing"
+justification = """
+The whole project's surface in one cheap batch — flat layout, two C
+sources, two headers, a Makefile, README, LICENSE, .github/, test/.
+Mitigates catastrophic-omission for the entire repo: an agent
+otherwise can't tell if there are any other source files or
+subdirectories.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README title and tagline"
+justification = """
+First two lines say what krep is and the version line. Smallest
+possible orientation cue.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+    { path = "README.md", start = 6, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Usage line shapes"
+justification = """
+The seven invocation forms — covers PATTERN positional, `-e`, `-f`,
+`-s STRING`, stdin redirection, pipes, and `-f -` for stdin patterns.
+Single most common query: "how do I run krep?".
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 86, end = 94, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README scope disclaimer"
+justification = """
+Important framing: krep is *not* a grep/ripgrep replacement. Sets
+expectations for many design questions (why some flag isn't there).
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 8, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "Command-line options reference (search/scope flags)"
+justification = """
+First half of the flag enumeration: input/output/match flags
+(-i/-c/-o/-e/-f/-m/-E/-F). Anchors all "is flag X supported?"
+queries.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 134, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Command-line options reference (recursive/threading/UI flags)"
+justification = """
+Second half of the flag enumeration: -r/--gitignore/--algo/-t/-s/-w
+plus output mode (--color/--no-simd/-v/-h). Pairs with 1.5; both
+together prevent catastrophic-omission across the flag set.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 143, end = 153, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "README key-features bullets (algorithms + SIMD + I/O)"
+justification = """
+First chunk of features: algorithms, algorithm selection, SIMD,
+mmap, multi-threaded search, regex, multi-pattern. Tells agent
+what's implemented and which features map to which subsystem.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 19, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README key-features bullets (recursive/UX/limits)"
+justification = """
+Second chunk: recursive, gitignore, stdin patterns, color, UI,
+specialized short-pattern algorithms, match limiting. Companion
+to 1.7 — together cover the full feature set.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 28, end = 34, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 2 — Public API surface in krep.h
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "krep.h header banner + includes"
+justification = """
+First lines of the canonical header: tells agent it's the public API
+file and what system headers it leans on (regex, pthread,
+stdatomic). Cheap and structurally informative.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 1, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "match_position_t and match_result_t"
+justification = """
+The result vocabulary: every search fn fills one of these. Pairs
+with the `match_result_*` API later.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 47, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "search_func_t function pointer typedef"
+justification = """
+The shape every algorithm conforms to. Crucial for the dispatch
+story: `select_search_algorithm` returns one of these, threads
+invoke them through this pointer.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 96, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "search_params_t struct (the central state)"
+justification = """
+Every search function takes a `search_params_t *`. Showing all
+fields with their inline comments answers "what knobs exist, what
+mode flags toggle which behavior, where do regex/AC trie hook in".
+This is the highest-value semantic batch in the file.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 62, end = 94, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Helper API + select_search_algorithm + get_algorithm_name"
+justification = """
+The four helpers that bridge `search_params` to a concrete algorithm
+fn: case-insensitive memcmp, BM bad-char table prep, the dispatcher,
+and the human-readable name lookup.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 230, end = 234, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Internal search-algorithm declarations — names + ISA gates"
+justification = """
+All scalar algorithm names and the SIMD ISA-gate macros that decide
+which simd_*_search compiles in (SSE4_2/AVX2/AVX512F+BW/ARM_NEON).
+Catastrophic-omission hedge: showing some implies the rest don't
+exist. Names truncated at `(` since the four-arg signature is the
+same fixed shape (already shown in 2.3).
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 205, end = 206, render = { kind = "full" } },
+    { path = "krep.h", start = 207, end = 211, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.h", start = 213, end = 215, render = { kind = "full" } },
+    { path = "krep.h", start = 216, end = 216, render = { kind = "full" } },
+    { path = "krep.h", start = 218, end = 218, render = { kind = "full" } },
+    { path = "krep.h", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.h", start = 220, end = 220, render = { kind = "full" } },
+    { path = "krep.h", start = 222, end = 222, render = { kind = "full" } },
+    { path = "krep.h", start = 223, end = 223, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.h", start = 224, end = 224, render = { kind = "full" } },
+    { path = "krep.h", start = 226, end = 226, render = { kind = "full" } },
+    { path = "krep.h", start = 227, end = 227, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.h", start = 228, end = 228, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Public API: search_file / search_string / search_directory_recursive"
+justification = """
+Three public entry points with full doc comments and signatures. Tells
+the agent which fn to call from `main` for each mode and what return
+codes mean (0/1/2 for match/no-match/error). High zero-follow-up value.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 151, end = 181, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "match_result_* lifecycle + print_matching_items"
+justification = """
+Init/add/free/merge for `match_result_t`, plus the printing entry
+point. Covers the result-management API that surrounds search.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 182, end = 203, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Recursive-search skip lists (directories)"
+justification = """
+The `skip_directories` table is a static array — agents asking
+"why isn't krep descending into node_modules?" land here directly.
+Show the full body so all entries are visible.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 236, end = 244, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Recursive-search skip lists (file extensions)"
+justification = """
+Companion to 2.9: every binary/non-text extension krep skips.
+Catastrophic-omission risk if shown partially.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 246, end = 266, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 3 — Algorithm dispatch + how the pieces wire up
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "select_search_algorithm signature"
+justification = """
+The pivot point of the algorithm story. Body comes in 3.2/3.3.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1771, end = 1771, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "select_search_algorithm body — regex/AC/override branches"
+predecessor = "3.1"
+justification = """
+First half of the dispatch ladder: regex → multi-pattern AC →
+--algo override. Then sets up SIMD eligibility based on
+SIMD_MAX_PATTERN_LEN. Pairs with 3.3 below.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1772, end = 1801, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "select_search_algorithm body — single-pattern dispatch tail"
+predecessor = "3.1"
+justification = """
+The pattern-length thresholds and SIMD-vs-scalar fallback for single
+literal patterns: memchr for length 1, memchr_short / SIMD for 2-3,
+SIMD by ISA for 4+, then KMP-vs-BM scalar fallback. Together with
+3.2 covers every algorithm-selection path.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1802, end = 1870, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "get_algorithm_name body — algorithm enumeration"
+justification = """
+Maps every search_func_t to its label, including SIMD-conditional
+ones. Doubles as a catastrophic-omission hedge: every algorithm krep
+implements is named here.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1964, end = 1996, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Search algorithm signatures in krep.c — locations"
+justification = """
+Function-name pointer for each scalar+SIMD algorithm body, truncated
+at `(` so the agent can jump to the right line without a wide grep.
+Companion to the header declarations (2.6) — those say what exists,
+these point to bodies in krep.c.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1260, end = 1260, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1389, end = 1389, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1628, end = 1628, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3891, end = 3891, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4371, end = 4371, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4506, end = 4506, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4702, end = 4702, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4877, end = 4877, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 5108, end = 5108, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 4 — main() entry, getopt configuration
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "main() signature"
+justification = """
+Anchors "where does the program start". Body in 4.2 / 4.3.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 3451, end = 3451, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "main() — long_options table + getopt_long invocation"
+predecessor = "4.1"
+justification = """
+The complete long-option table (--color, --no-simd, --help,
+--version, --fixed-strings, --regexp, --max-count, --gitignore,
+--algo) plus the short-option string `+e:f:icm:oEFrt:s:vhw`. With
+this, the agent can answer any "is flag X supported?" or
+"what's the long form of -X?" question without reading further.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 3475, end = 3494, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Param finalization — count/track-positions wiring"
+predecessor = "4.1"
+justification = """
+The flag-to-mode translation that decides if positions are tracked.
+Frequent source of confusion ("why does -c not give me match
+positions?"); show the assignments verbatim.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 3810, end = 3814, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 5 — Aho-Corasick + thread pool + recursive helpers
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "aho_corasick.h — public AC API"
+justification = """
+The whole AC header is tiny and self-contained — build, free,
+search, plus the "root has outputs" probe used for empty-pattern
+edge cases. Catastrophic-omission-cheap: include it whole.
+"""
+content = { kind = "lines", spans = [
+    { path = "aho_corasick.h", start = 1, end = 41, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "ac_node_t + ac_trie struct definitions"
+justification = """
+Internal AC node layout (256-way children, fail link, output
+indices) plus the trie wrapper. Only place these are defined; the
+header keeps them opaque.
+"""
+content = { kind = "lines", spans = [
+    { path = "aho_corasick.c", start = 17, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "thread_pool_t + task_t structures"
+justification = """
+The threading vocabulary: task linked-list, mutex/cond pair, atomic
+shutdown. Pairs with thread_pool_init / submit / wait_all / destroy
+declared just below.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 124, end = 149, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "thread_data_t — what each chunk task carries"
+justification = """
+Per-thread chunk descriptor including pre-selected search_algo and
+local result. Explains how multithreaded search divides work and
+collects per-chunk results.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 103, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Whole-word match inline helpers"
+justification = """
+`is_word_char` + `is_whole_word_match` are referenced from every
+algorithm body when -w is set. Tiny and self-contained, worth
+inlining into the snapshot.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.h", start = 297, end = 319, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "krep.c — key constants (chunk size / version / paths)"
+justification = """
+The size thresholds and version string that govern krep's runtime
+behavior: MIN_CHUNK_SIZE, LARGE_FILE_THRESHOLD, single-thread cutoff,
+VERSION. Answers "what file size triggers multithreading?" and
+"what version is this?" zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 76, end = 89, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "krep.c — SIMD intrinsic include gating"
+justification = """
+The KREP_USE_AVX512 / KREP_USE_AVX2 / KREP_USE_SSE42 / KREP_USE_NEON
+macros that decide which SIMD code path compiles in. Pairs with the
+Makefile arch detection (7.3) — Makefile sets `-mavx2` etc. and
+these macros react.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 46, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "search_chunk_thread — what each worker actually does"
+justification = """
+~40 lines, self-contained. Allocates local result, calls the
+selected search_func_t on its chunk, stores the count. The single
+clearest window into the threading model.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 1919, end = 1959, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 6 — Function-name location batches for big files
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "krep.c top-level function names — locations"
+justification = """
+Truncated signatures at first line of every top-level fn in krep.c
+(match_result_*, line/word helpers, every search algorithm,
+search_chunk_thread, search_string, search_file, gitignore_*,
+search_directory_recursive, main, thread_pool_*). Catastrophic-
+omission hedge for the file's API. Truncated at the open paren so
+each is one short line.
+"""
+content = { kind = "lines", spans = [
+    { path = "krep.c", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 175, end = 175, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 244, end = 244, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 256, end = 256, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 363, end = 363, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 401, end = 401, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 461, end = 461, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1125, end = 1125, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1137, end = 1137, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1198, end = 1198, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1213, end = 1213, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1873, end = 1873, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 1999, end = 1999, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 2274, end = 2274, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3163, end = 3163, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3180, end = 3180, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3240, end = 3240, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3272, end = 3272, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3297, end = 3297, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3310, end = 3310, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 3442, end = 3442, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4046, end = 4046, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4104, end = 4104, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4209, end = 4209, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4313, end = 4313, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "krep.c", start = 4332, end = 4332, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "aho_corasick.c function names — locations"
+justification = """
+Every fn in aho_corasick.c so the agent knows the trie's shape
+without a wide grep. Use Full for the short signatures since
+truncation saves nothing there.
+"""
+content = { kind = "lines", spans = [
+    { path = "aho_corasick.c", start = 34, end = 34, render = { kind = "full" } },
+    { path = "aho_corasick.c", start = 55, end = 55, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aho_corasick.c", start = 86, end = 86, render = { kind = "full" } },
+    { path = "aho_corasick.c", start = 111, end = 111, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aho_corasick.c", start = 274, end = 274, render = { kind = "full" } },
+    { path = "aho_corasick.c", start = 287, end = 287, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "aho_corasick.c", start = 299, end = 299, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------
+# Tier 7 — Build/CI scaffolding
+# ---------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "test/ FS listing"
+justification = """
+Tests aren't a single conftest — there are four C suites plus a
+header, a compat shim, and a benchmark script. Show them all so the
+agent can pick the right one.
+"""
+content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+
+[[batches]]
+id = "7.2"
+descriptor = "Makefile — sources and main build target"
+justification = """
+TARGET = krep, SRCS list, the canonical link recipe. Most useful
+slice for "how is the binary built?".
+"""
+content = { kind = "lines", spans = [
+    { path = "Makefile", start = 51, end = 72, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "Makefile — arch/SIMD flag detection"
+justification = """
+The ARCH-conditional SIMD flag selection (AVX-512 / AVX2 / SSE4.2 /
+NEON) the Makefile passes to the C compiler. Pairs with the
+KREP_USE_* macros in krep.c (5.7) so an agent can correlate
+compile-time flags to runtime behavior.
+"""
+content = { kind = "lines", spans = [
+    { path = "Makefile", start = 19, end = 22, render = { kind = "full" } }, { path = "Makefile", start = 32, end = 49, render = { kind = "full" } },
+] }

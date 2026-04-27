@@ -1,0 +1,333 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.commitlintrc.js
+.eslintrc.js
+.eslintrc.local.js
+.github/
+    CODEOWNERS
+    ISSUE_TEMPLATE/
+        bug.yml
+        config.yml
+    actions/
+        create-check/
+            action.yml
+        install-latest-npm/
+            action.yml
+    dependabot.yml
+    matchers/
+        tap.json
+            1→{
+            2→  "//@npmcli/template-oss": "This file is automatically added by @npmcli/template-oss. Do not edit.",
+            3→  "problemMatcher": [
+            4→    {
+            5→      "owner": "tap",
+            6→      "pattern": [
+            7→        {
+            8→          "regexp": "^\\s*not ok \\d+ - (.*)",
+            9→          "message": 1
+            10→        },
+            11→        {
+            12→          "regexp": "^\\s*---"
+            13→        },
+            14→        {
+            15→          "regexp": "^\\s*at:"
+            16→        },
+            17→        {
+            18→          "regexp": "^\\s*line:\\s*(\\d+)",
+            19→          "line": 1
+            20→        },
+            21→        {
+            22→          "regexp": "^\\s*column:\\s*(\\d+)",
+            23→          "column": 1
+            24→        },
+            25→        {
+            26→          "regexp": "^\\s*file:\\s*(.*)",
+            27→          "file": 1
+            28→        }
+            29→      ]
+            30→    }
+            31→  ]
+            32→}
+    settings.yml
+    workflows/
+        audit.yml
+        ci-release.yml
+        ci.yml
+        codeql-analysis.yml
+        post-dependabot.yml
+        pull-request.yml
+        release-integration.yml
+        release.yml
+.gitignore
+.npmrc
+.release-please-manifest.json
+    1→{
+    2→  ".": "7.7.4"
+    3→}
+CHANGELOG.md
+    1→# Changelog
+    30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
+    31→### Bug Fixes
+    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
+    218→## 7.3.0
+    220→* Add `subset(r1, r2)` method to determine if `r1` range is entirely
+    221→  contained by `r2` range.
+    239→## 7.1.2
+    241→* Remove fancy lazy-loading logic, as it was causing problems for webpack
+    242→  users.
+    244→## 7.1.0
+    246→* Add `require('semver/preload')` to load the entire module without using
+    247→  lazy getter methods.
+    255→## 6.3.0
+    257→* Expose the token enum on the exports
+    264→## 6.1.3
+    266→* Handle X-ranges properly in includePrerelease mode
+    268→## 6.1.2
+    270→* Do not throw when testing invalid version strings
+    272→## 6.1.1
+    274→* Add options support for semver.coerce()
+    275→* Handle undefined version passed to Range.test
+    277→## 6.1.0
+    279→* Add semver.compareBuild function
+    280→* Support `*` in semver.intersects
+    290→## 5.7
+    292→* Add `minVersion` method
+    301→## 5.5
+    303→* Add version coercion capabilities
+    305→## 5.4
+    307→* Add intersection checking
+    309→## 5.3
+    311→* Add `minSatisfying` method
+    313→## 5.2
+    315→* Add `prerelease(v)` that returns prerelease components
+    317→## 5.1
+    319→* Add Backus-Naur for ranges
+    320→* Remove excessively cute inspection methods
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+    3→# Contributing
+    …
+    5→## Code of Conduct
+    …
+    7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
+    9→## Reporting Bugs
+    …
+    11→Before submitting a new bug report please search for an existing or similar report.
+    13→Use one of our existing issue templates if you believe you've come across a unique problem.
+    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
+    17→## Pull Request Conventions
+    …
+    19→### Commits
+    …
+    30→### Test Coverage
+    …
+    36→### Linting
+    …
+    42→## What _not_ to contribute?
+    …
+    44→### Dependencies
+    …
+    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
+    48→### Tools/Automation
+    …
+    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
+LICENSE
+README.md
+    1→semver(1) -- The semantic versioner for npm
+    2→===========================================
+    4→## Install
+    …
+    6→```bash
+    7→npm install semver
+    8→````
+    10→## Usage
+    …
+    139→## Versions
+    …
+    141→A "version" is described by the `v2.0.0` specification found at
+    142→<https://semver.org/>.
+    144→A leading `"="` or `"v"` character is stripped off and ignored.
+    145→Support for stripping a leading "v" is kept for compatibility with `v1.0.0` of the SemVer
+    146→specification but should not be used anymore.
+    148→## Ranges
+    …
+    184→### Prerelease Tags
+    …
+    279→### Advanced Range Syntax
+    …
+    384→### Range Grammar
+    …
+    408→## Functions
+    …
+    453→### Comparison
+    …
+    478→### Sorting
+    …
+    485→### Comparators
+    …
+    487→* `intersects(comparator)`: Return true if the comparators intersect
+    489→### Ranges
+    …
+    531→### Coercion
+    …
+    558→### Clean
+    …
+    576→## Constants
+    …
+    578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
+    580→### `RELEASE_TYPES`
+    …
+    600→### `SEMVER_SPEC_VERSION`
+    …
+    602→2.0.0
+    604→```
+    605→const semver = require('semver');
+    607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
+    608→```
+    610→## Exported Modules
+    …
+SECURITY.md
+benchmarks/
+bin/
+    semver.js
+classes/
+    comparator.js
+    index.js
+    range.js
+    semver.js
+functions/
+    clean.js
+    cmp.js
+    coerce.js
+    compare-build.js
+    compare-loose.js
+    compare.js
+    diff.js
+    eq.js
+    gt.js
+    gte.js
+    inc.js
+    lt.js
+    lte.js
+    major.js
+    minor.js
+    neq.js
+    parse.js
+    patch.js
+    prerelease.js
+    rcompare.js
+    rsort.js
+    satisfies.js
+    sort.js
+    valid.js
+index.js
+internal/
+    constants.js
+    debug.js
+    identifiers.js
+    lrucache.js
+    parse-options.js
+    re.js
+map.js
+package.json
+    2→  "name": "semver",
+    3→  "version": "7.7.4",
+    4→  "description": "The semantic version parser used by npm.",
+    5→  "main": "index.js",
+    6→  "scripts": {
+    7→    "test": "tap",
+    8→    "snap": "tap",
+    9→    "lint": "npm run eslint",
+    10→    "postlint": "template-oss-check",
+    11→    "lintfix": "npm run eslint -- --fix",
+    12→    "posttest": "npm run lint",
+    13→    "template-oss-apply": "template-oss-apply --force",
+    14→    "eslint": "eslint \"**/*.{js,cjs,ts,mjs,jsx,tsx}\""
+    15→  },
+    16→  "devDependencies": {
+    17→    "@npmcli/eslint-config": "^6.0.0",
+    18→    "@npmcli/template-oss": "4.29.0",
+    19→    "benchmark": "^2.1.4",
+    20→    "tap": "^16.0.0"
+    21→  },
+    22→  "license": "ISC",
+    23→  "repository": {
+    24→    "type": "git",
+    25→    "url": "git+https://github.com/npm/node-semver.git"
+    26→  },
+    27→  "bin": {
+    28→    "semver": "bin/semver.js"
+    29→  },
+    30→  "files": [
+    31→    "bin/",
+    32→    "lib/",
+    33→    "classes/",
+    34→    "functions/",
+    35→    "internal/",
+    36→    "ranges/",
+    37→    "index.js",
+    38→    "preload.js",
+    39→    "range.bnf"
+    40→  ],
+    49→  "engines": {
+    50→    "node": ">=10"
+    51→  },
+    52→  "author": "GitHub Inc.",
+preload.js
+range.bnf
+ranges/
+    gtr.js
+    intersects.js
+    ltr.js
+    max-satisfying.js
+    min-satisfying.js
+    min-version.js
+    outside.js
+    simplify.js
+    subset.js
+    to-comparators.js
+    valid.js
+release-please-config.json
+    1→{
+    2→  "group-pull-request-title-pattern": "chore: release ${version}",
+    3→  "pull-request-title-pattern": "chore: release${component} ${version}",
+    4→  "changelog-sections": [
+    5→    {
+    6→      "type": "feat",
+    7→      "section": "Features",
+    8→      "hidden": false
+    9→    },
+    10→    {
+    11→      "type": "fix",
+    12→      "section": "Bug Fixes",
+    13→      "hidden": false
+    14→    },
+    15→    {
+    16→      "type": "docs",
+    17→      "section": "Documentation",
+    18→      "hidden": false
+    19→    },
+    20→    {
+    21→      "type": "deps",
+    22→      "section": "Dependencies",
+    23→      "hidden": false
+    24→    },
+    25→    {
+    26→      "type": "chore",
+    27→      "section": "Chores",
+    28→      "hidden": true
+    29→    }
+    30→  ],
+    31→  "packages": {
+    32→    ".": {
+    33→      "package-name": ""
+    34→    }
+    35→  },
+    36→  "prerelease-type": "pre.0"
+    37→}
+tap-snapshots/
+    test/
+        bin/
+test/

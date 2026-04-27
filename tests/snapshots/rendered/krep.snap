@@ -1,0 +1,219 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    FUNDING.yml
+    dependabot.yml
+    workflows/
+        ci.yml
+        release.yml
+.gitignore
+    1→.vscode/settings.json
+    2→subtitles2016-sample.en
+    3→subtitles2016-sample.en.gz
+LICENSE
+Makefile
+README.md
+    1→# k(r)ep - A high-performance string search utility
+    6→`krep` is an optimized string search utility designed for maximum throughput and efficiency when processing large files and directories. It is built with performance in mind, offering multiple search algorithms and SIMD acceleration when available.
+    8→> **Note:**  
+    9→> Krep is not intended to be a full replacement or direct competitor to feature-rich tools like `grep` or `ripgrep`. Instead, it aims to be a minimal, efficient, and pragmatic tool focused on speed and simplicity.
+    10→>
+    11→> Krep provides the essential features needed for fast searching, without the extensive options and complexity of more comprehensive search utilities. Its design philosophy is to deliver the fastest possible search for the most common use cases, with a clean and minimal interface.
+    13→## The Story Behind the Name
+    …
+    15→The name "krep" has an interesting origin. It is inspired by the Icelandic word "kreppan," which means "to grasp quickly" or "to catch firmly." I came across this word while researching efficient techniques for pattern recognition.
+    17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
+    19→## Key Features
+    …
+    21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
+    22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
+    23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
+    24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
+    25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
+    26→- **Regex support**: POSIX Extended Regular Expression searching
+    27→- **Multiple pattern search**: Efficiently search for multiple patterns simultaneously using Aho-Corasick
+    28→- **Recursive directory search**: Skip binary files and common non-code directories
+    29→- **Gitignore support**: Respect `.gitignore` files during recursive search with `--gitignore`
+    30→- **Stdin pattern input**: Read patterns from stdin with `-f -` for seamless pipeline integration
+    31→- **Colored output**: Highlights matches for better readability
+    32→- **UI/UX refresh (v2.2)**: New terminal color palette, clearer `-o` line index styling, and a redesigned help screen
+    33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
+    34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
+    36→## What's New in v2.2.0
+    …
+    38→- Refined terminal-first UI with a cleaner, more legible color theme
+    39→- Better visual hierarchy in `-o` mode (filename, line index, match highlight)
+    40→- Improved `--help` layout with grouped sections and clearer scanning
+    42→## Installation
+    …
+    44→### Using Homebrew (macOS)
+    …
+    46→If you are on macOS and have Homebrew installed, you can install `krep` easily:
+    48→```bash
+    49→brew install krep
+    50→```
+    52→### Building from Source
+    …
+    54→```bash
+    55→# Clone the repository
+    56→git clone https://github.com/davidesantangelo/krep.git
+    57→cd krep
+    59→# Build and install
+    60→make
+    61→sudo make install
+    63→# uninstall
+    64→sudo make uninstall
+    65→```
+    67→The binary will be installed to `/usr/local/bin/krep` by default.
+    69→### Requirements
+    …
+    71→- GCC or compatible C compiler
+    72→- POSIX-compliant system (Linux, macOS, BSD)
+    73→- pthread support
+    75→### Build Options
+    …
+    77→Override default optimization settings in the Makefile:
+    79→```bash
+    80→# Disable architecture-specific optimizations
+    81→make ENABLE_ARCH_DETECTION=0
+    82→```
+    84→## Usage
+    …
+    86→```bash
+    87→krep [OPTIONS] PATTERN [FILE | DIRECTORY]
+    88→krep [OPTIONS] -e PATTERN [FILE | DIRECTORY]
+    89→krep [OPTIONS] -f FILE [FILE | DIRECTORY]
+    90→krep [OPTIONS] -s PATTERN STRING_TO_SEARCH
+    91→krep [OPTIONS] PATTERN < FILE
+    92→cat FILE | krep [OPTIONS] PATTERN
+    93→echo 'pattern' | krep -f - [FILE | DIRECTORY]
+    94→```
+    96→## Usage Examples
+    …
+    98→Search for a fixed string in a file:
+    100→```bash
+    101→krep -F "value: 100%" config.ini
+    102→```
+    104→Search recursively:
+    106→```bash
+    107→krep -r "function" ./project
+    108→```
+    110→Search recursively respecting `.gitignore`:
+    112→```bash
+    113→krep -r --gitignore "TODO" ./project
+    114→```
+    116→Read patterns from stdin (pipe-friendly):
+    118→```bash
+    119→echo 'pattern' | krep -f - target.txt
+    120→```
+    122→Whole word search (matches only complete words):
+    124→```bash
+    125→krep -w 'cat' samples/text.en
+    126→```
+    128→Use with piped input:
+    130→```bash
+    131→cat krep.c | krep 'c'
+    132→```
+    134→## Command Line Options
+    …
+    136→- `-i, --ignore-case` Case-insensitive search
+    137→- `-c, --count` Count matching lines only
+    138→- `-o, --only-matching` Print only the matched parts of lines
+    139→- `-e PATTERN, --pattern=PATTERN` Specify pattern(s). Can be used multiple times.
+    140→- `-f FILE, --file=FILE` Read patterns from FILE, one per line. Use `-` for stdin.
+    141→- `-m NUM, --max-count=NUM` Stop searching each file after finding NUM matching lines.
+    142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
+    143→- `-F, --fixed-strings` Interpret pattern as fixed string(s) (default unless -E is used)
+    144→- `-r, --recursive` Recursively search directories
+    145→- `--gitignore` Respect `.gitignore` files during recursive search
+    146→- `--algo=ALGO` Force search algorithm: `auto` (default), `bm` (Boyer-Moore), `kmp` (KMP)
+    147→- `-t NUM, --threads=NUM` Use NUM threads for file search (default: auto)
+    148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
+    149→- `-w, --word-regexp` Match only whole words
+    150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
+    151→- `--no-simd` Explicitly disable SIMD acceleration
+    152→- `-v, --version` Show version information
+    153→- `-h, --help` Show help message
+    155→## Performance Benchmarks
+    …
+    157→Benchmarks are run with the official dataset:
+    159→```bash
+    160→curl -LO 'https://burntsushi.net/stuff/subtitles2016-sample.en.gz'
+    161→gzip -dk subtitles2016-sample.en.gz
+    162→```
+    164→You can reproduce the `krep` vs `ripgrep` comparison with:
+    166→```bash
+    167→make bench-rg
+    168→# optional: RUNS=7 bash test/benchmark_krep_vs_rg.sh Sherlock
+    169→```
+    171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
+    …
+    173→| Pattern | krep avg real (s) | ripgrep avg real (s) | Speedup |
+    174→| --- | ---: | ---: | ---: |
+    175→| `the` | 0.175714 | 0.330000 | 1.88x |
+    176→| `Sherlock` | 0.041429 | 0.080000 | 1.93x |
+    178→_Measured on macOS ARM64 with `test/benchmark_krep_vs_rg.sh`. Results vary by CPU, storage and cache state._
+    180→## How Krep Works
+    …
+    182→Krep achieves its high performance through several key techniques:
+    184→### 1. Smart Algorithm Selection
+    …
+    186→Krep automatically selects the optimal search algorithm based on the pattern and available hardware:
+    188→- **Boyer-Moore-Horspool** for most literal string searches
+    189→- **Knuth-Morris-Pratt (KMP)** for very short patterns and repetitive patterns
+    190→- **memchr optimization** for single-character patterns
+    191→- **SIMD Acceleration** (SSE4.2, AVX2, or NEON) for compatible hardware
+    192→- **Regex Engine** for regular expression patterns
+    193→- **Aho-Corasick** for efficient multiple pattern matching (auto-selected with multiple `-e` patterns)
+    195→Use `--algo=bm` or `--algo=kmp` to override the automatic selection for single-pattern literal searches.
+    197→### 2. Multi-threading Architecture
+    …
+    199→Krep utilizes parallel processing to dramatically speed up searches:
+    201→- Automatically detects available CPU cores
+    202→- Divides large files into chunks for parallel processing
+    203→- Implements thread pooling for maximum efficiency
+    204→- Optimized thread count selection based on file size
+    205→- Careful boundary handling to ensure no matches are missed
+    207→### 3. Memory-Mapped I/O
+    …
+    209→Instead of traditional read operations:
+    211→- Memory maps files for direct access by the CPU
+    212→- Significantly reduces I/O overhead
+    213→- Enables CPU cache optimization
+    214→- Progressive prefetching for larger files
+    216→### 4. Optimized Data Structures
+    …
+    218→- Zero-copy architecture where possible
+    219→- Efficient match position tracking
+    220→- Lock-free aggregation of results
+    222→### 5. Skipping Non-Relevant Content
+    …
+    224→When using recursive search (`-r`), Krep automatically:
+    226→- Skips common binary file types
+    227→- Ignores version control directories (`.git`, `.svn`)
+    228→- Bypasses dependency directories (`node_modules`, `venv`)
+    229→- Detects binary content to avoid searching non-text files
+    231→## Contributing
+    …
+    233→Contributions are welcome! Please feel free to submit a Pull Request.
+    235→## Author
+    …
+    237→- **Davide Santangelo** - [GitHub](https://github.com/davidesantangelo)
+    239→## License
+    …
+    241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
+    243→Copyright © 2025 Davide Santangelo
+aho_corasick.c
+aho_corasick.h
+krep.c
+krep.h
+test/
+    benchmark_krep_vs_rg.sh
+    test_compat.h
+    test_directory.c
+    test_krep.c
+    test_krep.h
+    test_multiple_patterns.c
+    test_regex.c
