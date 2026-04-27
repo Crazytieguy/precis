@@ -1,0 +1,434 @@
+fixture = "xxhash"
+budget = 10000
+cumulative_tokens = 1314
+batch_count = 15
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash'"
+cost_tokens = 83
+cum_tokens = 83
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash"
+entries = [".github", "LICENSE.txt", "README.md", "bench_test.go", "dynamic", "go.mod", "go.sum", "testall.sh", "xxhash.go", "xxhash_amd64.s", "xxhash_arm64.s", "xxhash_asm.go", "xxhash_other.go", "xxhash_safe.go", "xxhash_test.go", "xxhash_unsafe.go", "xxhash_unsafe_test.go", "xxhashbench", "xxhsum"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash/.github'"
+cost_tokens = 3
+cum_tokens = 86
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash/.github/workflows'"
+cost_tokens = 4
+cum_tokens = 90
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash/.github/workflows"
+entries = ["test.yml"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum'"
+cost_tokens = 11
+cum_tokens = 101
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum"
+entries = [".gitignore", "xxhsum.go"]
+
+[[batches]]
+position = 5
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+cost_tokens = 62
+cum_tokens = 163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+cost_tokens = 31
+cum_tokens = 194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic'"
+cost_tokens = 14
+cum_tokens = 208
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic"
+entries = [".gitignore", "dynamic_test.go", "plugin.go"]
+
+[[batches]]
+position = 8
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhashbench" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhashbench'"
+cost_tokens = 15
+cum_tokens = 223
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhashbench"
+entries = ["go.mod", "go.sum", "xxhashbench_test.go"]
+
+[[batches]]
+position = 9
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md section #0"
+cost_tokens = 222
+cum_tokens = 445
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 12
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 21
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 27
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic/.gitignore"
+cost_tokens = 8
+cum_tokens = 453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/dynamic/.gitignore"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum/.gitignore"
+cost_tokens = 9
+cum_tokens = 462
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/xxhsum/.gitignore"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md section #1"
+cost_tokens = 123
+cum_tokens = 585
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 35
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 39
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md section #3"
+cost_tokens = 144
+cum_tokens = 729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 68
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md section #2"
+cost_tokens = 293
+cum_tokens = 1022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 50
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 58
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/README.md"
+start = 61
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+cost_tokens = 292
+cum_tokens = 1314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+start = 5
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xxhash/LICENSE.txt"
+start = 16
+end = 22
+
+[batches.content.spans.render]
+kind = "full"

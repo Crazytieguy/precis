@@ -71,6 +71,9 @@ per_fixture_tests!(superstruct);
 per_fixture_tests!(enclosed);
 per_fixture_tests!(toasty);
 per_fixture_tests!(d2ts);
+per_fixture_tests!(sds);
+per_fixture_tests!(tomli);
+per_fixture_tests!(xxhash);
 
 // ---- paths -------------------------------------------------------------
 

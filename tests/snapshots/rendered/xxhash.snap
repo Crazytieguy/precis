@@ -1,0 +1,109 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    workflows/
+        test.yml
+LICENSE.txt
+    1→Copyright (c) 2016 Caleb Spare
+    3→MIT License
+    5→Permission is hereby granted, free of charge, to any person obtaining
+    6→a copy of this software and associated documentation files (the
+    7→"Software"), to deal in the Software without restriction, including
+    8→without limitation the rights to use, copy, modify, merge, publish,
+    9→distribute, sublicense, and/or sell copies of the Software, and to
+    10→permit persons to whom the Software is furnished to do so, subject to
+    11→the following conditions:
+    13→The above copyright notice and this permission notice shall be
+    14→included in all copies or substantial portions of the Software.
+    16→THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+    17→EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    18→MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+    19→NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+    20→LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+    21→OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+    22→WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+README.md
+    1→# xxhash
+    6→xxhash is a Go implementation of the 64-bit [xxHash] algorithm, XXH64. This is a
+    7→high-quality hashing algorithm that is much faster than anything in the Go
+    8→standard library.
+    10→This package provides a straightforward API:
+    12→```
+    13→func Sum64(b []byte) uint64
+    14→func Sum64String(s string) uint64
+    15→type Digest struct{ ... }
+    16→    func New() *Digest
+    17→```
+    19→The `Digest` type implements hash.Hash64. Its key methods are:
+    21→```
+    22→func (*Digest) Write([]byte) (int, error)
+    23→func (*Digest) WriteString(string) (int, error)
+    24→func (*Digest) Sum64() uint64
+    25→```
+    27→The package is written with optimized pure Go and also contains even faster
+    28→assembly implementations for amd64 and arm64. If desired, the `purego` build tag
+    29→opts into using the Go code even on those architectures.
+    31→[xxHash]: https://xxhash.com/
+    33→## Compatibility
+    …
+    35→This package is in a module and the latest code is in version 2 of the module.
+    36→You need a version of Go with at least "minimal module compatibility" to use
+    37→github.com/cespare/xxhash/v2:
+    39→* 1.9.7+ for Go 1.9
+    40→* 1.10.3+ for Go 1.10
+    41→* Go 1.11 or later
+    43→I recommend using the latest release of Go.
+    45→## Benchmarks
+    …
+    47→Here are some quick benchmarks comparing the pure-Go and assembly
+    48→implementations of Sum64.
+    50→| input size | purego    | asm       |
+    51→| ---------- | --------- | --------- |
+    52→| 4 B        |  1.3 GB/s |  1.2 GB/s |
+    53→| 16 B       |  2.9 GB/s |  3.5 GB/s |
+    54→| 100 B      |  6.9 GB/s |  8.1 GB/s |
+    55→| 4 KB       | 11.7 GB/s | 16.7 GB/s |
+    56→| 10 MB      | 12.0 GB/s | 17.3 GB/s |
+    58→These numbers were generated on Ubuntu 20.04 with an Intel Xeon Platinum 8252C
+    59→CPU using the following commands under Go 1.19.2:
+    61→```
+    62→benchstat <(go test -tags purego -benchtime 500ms -count 15 -bench 'Sum64$')
+    63→benchstat <(go test -benchtime 500ms -count 15 -bench 'Sum64$')
+    64→```
+    66→## Projects using this package
+    …
+    68→- [InfluxDB](https://github.com/influxdata/influxdb)
+    69→- [Prometheus](https://github.com/prometheus/prometheus)
+    70→- [VictoriaMetrics](https://github.com/VictoriaMetrics/VictoriaMetrics)
+    71→- [FreeCache](https://github.com/coocood/freecache)
+    72→- [FastCache](https://github.com/VictoriaMetrics/fastcache)
+    73→- [Ristretto](https://github.com/dgraph-io/ristretto)
+    74→- [Badger](https://github.com/dgraph-io/badger)
+bench_test.go
+dynamic/
+    .gitignore
+        1→/plugin.so
+    dynamic_test.go
+    plugin.go
+go.mod
+go.sum
+testall.sh
+xxhash.go
+xxhash_amd64.s
+xxhash_arm64.s
+xxhash_asm.go
+xxhash_other.go
+xxhash_safe.go
+xxhash_test.go
+xxhash_unsafe.go
+xxhash_unsafe_test.go
+xxhashbench/
+    go.mod
+    go.sum
+    xxhashbench_test.go
+xxhsum/
+    .gitignore
+        1→/xxhsum
+    xxhsum.go

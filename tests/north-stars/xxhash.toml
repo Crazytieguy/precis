@@ -1,0 +1,640 @@
+fixture = "xxhash"
+revision_pin = "ab37246c"
+summary = """
+cespare/xxhash is a small, focused Go library implementing the 64-bit
+XXH64 hash algorithm. The public surface is tiny — `Sum64`, `Sum64String`,
+and a `Digest` value (`hash.Hash64` impl) constructed via `New` /
+`NewWithSeed` — but the file layout is dominated by a build-tag matrix
+that swaps between hand-written amd64/arm64 assembly, a pure-Go
+fallback, and unsafe vs. appengine-safe string helpers. Two side
+modules sit alongside: `xxhsum/` (a tiny CLI mimicking the C xxhsum
+tool) and `xxhashbench/` (cross-library benchmarks vs. murmur3, OneOfOne
+xxhash, CRC-32, FNV).
+
+The query distribution this ranking serves: 'how do I hash a string?'
+(public API), 'why are there so many xxhash_*.go files?' (build-tag
+selection / GOARCH dispatch), 'what does the assembly do?' (round /
+mergeRound macros), 'is the marshaled state stable across versions?'
+(magic/marshaledSize), 'why the unsafe string conversion?' (inlining
+notes), and 'how do I run all the test variants?' (testall.sh, CI
+matrix). Catastrophic-omission hedges focus on enumerating every public
+function (across the four .go files that contribute to the surface) and
+every Digest method, so the agent never has to guess whether something
+exists.
+"""
+
+# ============================================================
+# Tier 1 — Top-level orientation: what is this repo, what files exist.
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Fixture top-level listing"
+justification = """
+Single cheapest highest-value batch: the names of every top-level entry
+make the build-tag matrix (xxhash_amd64.s / xxhash_arm64.s / xxhash_asm.go
+/ xxhash_other.go / xxhash_safe.go / xxhash_unsafe.go) and the side
+modules (dynamic/, xxhsum/, xxhashbench/) immediately legible. Without
+this, an agent reading any single .go file cannot tell which siblings
+exist or how this repo is organized.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README — title and one-sentence positioning"
+justification = """
+Lines 1, 6-8: the package name and the single sentence that says what
+this is ('Go implementation of the 64-bit xxHash algorithm, XXH64...
+much faster than anything in the Go standard library'). Smallest
+possible orientation — fits into very tight budgets.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 6, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Package doc + module path"
+justification = """
+The package comment on xxhash.go:1-3 names the algorithm and links the
+spec; go.mod gives the canonical import path (github.com/cespare/xxhash/v2)
+and the minimum Go version. Two tiny anchors that together resolve
+'where does this live in the module graph?'.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 1, end = 3, render = { kind = "full" } },
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README — public API code-fence sketch"
+justification = """
+Lines 10-25 are the README's headline API summary: the four free
+functions / type names a reader sees at pkg.go.dev, plus 'The Digest
+type implements hash.Hash64. Its key methods are: Write, WriteString,
+Sum64.' Highest value-per-token semantic snapshot before any source
+code is shown.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 10, end = 25, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README — purego/asm note"
+justification = """
+Lines 27-31: 'optimized pure Go and also contains even faster assembly
+implementations for amd64 and arm64. If desired, the purego build tag
+opts into using the Go code even on those architectures.' This is the
+single sentence that frames every xxhash_*.go file in the repo.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 27, end = 31, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Public API surface: every exported symbol, in signature form.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Digest struct + zero-value caveat"
+justification = """
+The Digest type is the heart of the streaming API. Fields v1..v4/total/
+mem/n are referenced by every method, the marshaling format, and the
+assembly. The doc comment also records the load-bearing 'zero-valued
+Digest is not ready to receive writes' contract.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 25, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Constructors — New and NewWithSeed"
+justification = """
+The two ways to make a Digest. Tiny bodies — including them is cheaper
+than truncating, and 'does the constructor take a seed?' is one of the
+most common questions a first-time user asks.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 39, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Reset / ResetWithSeed — full bodies"
+justification = """
+The state-mixing formula (v1 = seed + prime1 + prime2, v2 = seed +
+prime2, v3 = seed, v4 = seed - prime1) is exactly the kind of obscure
+detail a downstream user might need to reproduce externally. Tight,
+self-contained body.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 51, end = 66, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Remaining Digest methods — Size, BlockSize, Write, Sum, Sum64 signatures"
+justification = """
+Every other public method on *Digest, as one-line signature anchors.
+With 2.1-2.3 this completes the public-method enumeration so an agent
+can answer 'does Digest have a method for X?' without reading any file.
+Bodies of Write and Sum64 are deferred to a later tier.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 68, end = 69, render = { kind = "full" } },
+  { path = "xxhash.go", start = 71, end = 72, render = { kind = "full" } },
+  { path = "xxhash.go", start = 74, end = 75, render = { kind = "full" } },
+  { path = "xxhash.go", start = 112, end = 113, render = { kind = "full" } },
+  { path = "xxhash.go", start = 128, end = 129, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Sum64 / writeBlocks signatures (asm build)"
+justification = """
+The default-build entry point Sum64 is *not* in xxhash.go — it lives in
+xxhash_asm.go (or xxhash_other.go on non-asm targets). Showing the
+signature plus its build tag makes 'where is Sum64 defined?' a one-hop
+lookup and hedges against the agent guessing it must be in xxhash.go.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash_asm.go", start = 1, end = 2, render = { kind = "full" } },
+  { path = "xxhash_asm.go", start = 9, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Sum64String / WriteString signatures (unsafe build)"
+justification = """
+The string-input fast paths live in xxhash_unsafe.go behind the
+!appengine build tag, with safe equivalents in xxhash_safe.go. Showing
+both signatures + tags makes the duplication legible without yet
+diving into the unsafe pointer trickery.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash_unsafe.go", start = 1, end = 2, render = { kind = "full" } },
+  { path = "xxhash_unsafe.go", start = 36, end = 38, render = { kind = "full" } },
+  { path = "xxhash_unsafe.go", start = 43, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "MarshalBinary / UnmarshalBinary signatures + magic constants"
+justification = """
+encoding.BinaryMarshaler / Unmarshaler is a non-obvious capability the
+type advertises, and the magic prefix 'xxh\\x06' plus marshaledSize
+formula are *the* answer to 'is the persisted hash state versioned?
+what's its on-the-wire size?'. Cheap, high-leverage detail.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 170, end = 173, render = { kind = "full" } },
+  { path = "xxhash.go", start = 175, end = 176, render = { kind = "full" } },
+  { path = "xxhash.go", start = 189, end = 190, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 3 — Side modules + test catalog: what auxiliary code exists.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Sub-directory listings (.github, dynamic, xxhsum, xxhashbench)"
+justification = """
+The repo has four sub-directories. Listing their immediate contents
+together is the cheapest hedge against catastrophic omission: an agent
+that saw only the top-level listing might assume xxhsum/ contains many
+files when it's just one .go file, or that xxhashbench/ ships with
+sources rather than only a test. Combined cost is small because each
+directory has 1-3 entries.
+"""
+predecessor = "1.1"
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = "dynamic", entries = "all" },
+  { parent = "xxhsum", entries = "all" },
+  { parent = "xxhashbench", entries = "all" },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "All test/benchmark function names across the repo"
+justification = """
+Locations batch: every Test* and Benchmark* function in the fixture, by
+file, as one-line signature anchors. Resolves 'is there a test for
+binary marshaling?' / 'what's measured by the benchmarks?' in zero
+follow-ups, and prevents the agent from inferring a missing test class
+exists. Single tier because the test catalog is small (~16 names).
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_test.go", start = 97, end = 97, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_test.go", start = 114, end = 114, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_test.go", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_test.go", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_unsafe_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhash_unsafe_test.go", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "bench_test.go", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "bench_test.go", start = 34, end = 34, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "bench_test.go", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "bench_test.go", start = 63, end = 63, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "dynamic/dynamic_test.go", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "dynamic/dynamic_test.go", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "dynamic/plugin.go", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "dynamic/plugin.go", start = 26, end = 26, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "xxhashbench/xxhashbench_test.go", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "testall.sh — full body"
+justification = """
+Five lines of shell — the canonical answer to 'how do I run the tests
+across all build tag combinations?' (purego on/off, GOARCH=arm64 via
+qemu). Including verbatim is cheaper than describing.
+"""
+content = { kind = "lines", spans = [
+  { path = "testall.sh", start = 1, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "xxhsum CLI — main + usage"
+justification = """
+xxhsum/xxhsum.go is the only example program in the repo. The main
+function and the usage string answer 'how is this library used from a
+command line?' and demonstrate the streaming idiom (io.Copy into a
+*Digest, then Sum64). Fits in a small batch.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhsum/xxhsum.go", start = 1, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "CI matrix — what configurations are tested"
+justification = """
+.github/workflows/test.yml encodes the supported configuration grid:
+Go 1.21/1.22, Linux/macOS/Windows on default arch, and 386/arm/arm64
+under qemu. Plus 'go test -tags purego ./...'. This is the closest
+thing the repo has to a 'supported platforms' doc.
+"""
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/test.yml", start = 1, end = 30, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Algorithm internals: constants, mixers, and helper functions
+# that the Sum64/Digest implementations are built from.
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Prime constants + primes array"
+justification = """
+The five XXH64 primes (decimal literals) and the contiguous 'primes'
+array referenced by name from the assembly via ·primes+N(SB). Showing
+both forms together explains why the same constants exist twice and is
+the answer to 'where do these magic numbers come from?'. Tight,
+self-contained, referenced from every other file in the package.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 11, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "round + mergeRound — the core mixer"
+justification = """
+Two ~5-line functions that *are* the inner loop of XXH64. Every other
+implementation (pure-Go Sum64, the assembly, the Write streaming path)
+is built on these. Including the bodies makes 'what does an xxhash
+round look like?' a zero-follow-up answer.
+"""
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 222, end = 234, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "rol* one-line helpers (locations)"
+justification = """
+Eight tiny functions named rol1, rol7, rol11, rol12, rol18, rol23,
+rol27, rol31 — each a one-liner wrapping bits.RotateLeft64 with the
+xxhash-specific rotate amount. Showing the full block (signatures +
+rotate amounts together fit in one line each) prevents the agent from
+guessing whether rolN exists for an arbitrary N.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 236, end = 243, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Little-endian / append / consume byte helpers"
+justification = """
+u64, u32, appendUint64, consumeUint64 — the four tiny endianness
+helpers that link the package to encoding/binary. Useful when an agent
+asks 'how does the marshaling format encode integers?' or 'does this
+respect host byte order?' (it doesn't — always little-endian).
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 208, end = 220, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Write — streaming entry body"
+justification = """
+The 35-line Write body shows the complete streaming algorithm: buffer
+partial blocks in d.mem, dispatch full 32-byte chunks to writeBlocks
+(asm- or Go-implemented), and stash the trailing partial block. This
+is the single most-asked-about chunk of code after Sum64 itself.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 74, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Digest.Sum64 — finalize body"
+justification = """
+The full finalization path: combine v1..v4 with rol+mergeRound when
+total >= 32, mix in the trailing bytes 8/4/1 at a time, then the avalanche
+(h ^= h>>33; h *= prime2; ...). This is the canonical XXH64 finalize
+and is referenced by Sum, MarshalBinary's caller chain, and tests.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 128, end = 168, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "Digest.Sum — append big-endian bytes"
+justification = """
+12 lines that show how the *byte* representation of the hash is laid
+out: big-endian, MSB first. Useful when interop with another xxhash
+implementation requires matching this exact byte order (which is
+opposite the little-endian convention used internally).
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 112, end = 126, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "MarshalBinary body — wire format"
+justification = """
+The exact wire format: magic prefix, then v1/v2/v3/v4/total each as 8
+little-endian bytes, then the 32-byte mem buffer (with d.n bytes of
+'live' data). This is the precise spec for 'can I checkpoint a Digest
+across processes?'.
+"""
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 175, end = 187, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.9"
+descriptor = "UnmarshalBinary body — validation + parse"
+justification = """
+Companion to 4.8: validate the magic and total length, then read back
+v1/v2/v3/v4/total and the mem buffer. Notable for recomputing d.n from
+total mod 32 rather than persisting it. Key when debugging a 'hash
+state identifier'/'hash state size' error returned to the user.
+"""
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "xxhash.go", start = 189, end = 206, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.10"
+descriptor = "Pure-Go Sum64 body (xxhash_other.go)"
+justification = """
+The non-asm fallback path. Important for two reasons: (a) it's the
+reference implementation for what the assembly should compute, and (b)
+the comment '// A simpler version would be ... but this is faster,
+particularly for small inputs' explains why a one-shot Sum64 isn't just
+implemented via New+Write+Sum64.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "xxhash_other.go", start = 7, end = 62, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.11"
+descriptor = "Pure-Go writeBlocks body"
+justification = """
+Companion to 4.10 — the streaming path's hot loop in pure Go. Tiny
+(~13 lines) and a useful reference when reading the much denser
+assembly versions.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "xxhash_other.go", start = 64, end = 76, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.12"
+descriptor = "xxhash_safe.go full body — the appengine fallback"
+justification = """
+16 lines total: the trivial Sum64String / WriteString implementations
+that just allocate and forward, used when the appengine build tag
+forbids unsafe. Cheap, full-file inclusion answers 'what changes when
+I build with -tags appengine?' in zero follow-ups.
+"""
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "xxhash_safe.go", start = 1, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.13"
+descriptor = "Unsafe string conversion — inlining commentary + sliceHeader"
+justification = """
+The why-we-do-this-the-weird-way comment block (xxhash_unsafe.go:14-35)
+plus the sliceHeader struct it references. Answers 'why not the
+standard reflect.SliceHeader trick?' (the inliner cost-model issue) —
+the kind of context that's never in the API docs but always asked
+during code review.
+"""
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "xxhash_unsafe.go", start = 14, end = 35, render = { kind = "full" } },
+  { path = "xxhash_unsafe.go", start = 53, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.14"
+descriptor = "Unsafe Sum64String / WriteString bodies"
+justification = """
+The actual unsafe casts: *(*[]byte)(unsafe.Pointer(&sliceHeader{...}))
+in Sum64String and inside Digest.WriteString. Plus the comment in
+WriteString explaining why the return tuple is 'fixed' rather than
+forwarded from d.Write — '6 in the inliner's cost model'.
+"""
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "xxhash_unsafe.go", start = 39, end = 42, render = { kind = "full" } },
+  { path = "xxhash_unsafe.go", start = 46, end = 51, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 5 — Test vectors, comparison benchmarks, README perf, and
+# the amd64 assembly (the largest implementation file in the repo).
+# Cuts here favor breadth: README perf + conformance vectors first,
+# then the amd64 asm in macros / Sum64-body slices, then writeBlocks.
+# arm64 bodies are demoted to tier 6 since they're 'more of the same'
+# once amd64 is in hand.
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "README — Benchmarks section (perf table)"
+justification = """
+README lines 45-64: the published throughput numbers (1.3 GB/s up to
+17.3 GB/s) for purego vs asm at five input sizes, plus the benchstat
+commands used to produce them. Highest value-per-token in this tier
+for users choosing between this and another hash library.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 45, end = 64, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "TestAll — known-answer test vectors"
+justification = """
+The (input, seed, want) table in TestAll is the de-facto conformance
+suite for this XXH64 implementation. Including the table verbatim makes
+'what hash does the empty string produce with seed 0?' a zero-follow-up
+question (0xef46db3751d8e999) and gives interop testers something
+concrete to match.
+"""
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "xxhash_test.go", start = 12, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "bench_test.go — input-size grid + benchmark shape"
+justification = """
+The in-package benchmarks: a {4B, 16B, 100B, 4KB, 10MB} size grid
+applied across BenchmarkSum64, BenchmarkSum64String, BenchmarkDigestBytes,
+BenchmarkDigestString. Useful when a user asks 'what input sizes does
+the README perf table actually correspond to?' (it's this).
+"""
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "bench_test.go", start = 1, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "xxhashbench — structure of the cross-library benchmark"
+justification = """
+The benchmarks []struct shows which competitors are measured: cespare
+xxhash, OneOfOne xxhash, murmur3, CRC-32, FNV-1a, each in 'direct vs
+digest' and 'bytes vs string' variants. Plus the input-size grid
+(5B/100B/4KB/10MB). Answers 'how does this library compare to X?' and
+'is benchmark Y included?'.
+"""
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "xxhashbench/xxhashbench_test.go", start = 1, end = 17, render = { kind = "full" } },
+  { path = "xxhashbench/xxhashbench_test.go", start = 20, end = 26, render = { kind = "full" } },
+  { path = "xxhashbench/xxhashbench_test.go", start = 108, end = 118, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "amd64 asm — register defs and macros"
+justification = """
+The first 58 lines of xxhash_amd64.s: build tags, the #define register
+aliases (h, p, n, v1..v4, prime1/2/4), and the round / round0 /
+mergeRound / blockLoop macros. These are the vocabulary the rest of the
+file uses; reading the function bodies without them is hostile.
+"""
+content = { kind = "lines", spans = [
+  { path = "xxhash_amd64.s", start = 1, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "amd64 asm — Sum64 prologue, state setup, and main block loop"
+justification = """
+First half of TEXT ·Sum64: load primes, set up p/n/end pointers,
+initialize v1..v4, run the blockLoop() macro, then combine the four
+accumulators with rotated adds and four mergeRound calls. Counterpart
+to lines 17-33 of xxhash_other.go.
+"""
+predecessor = "5.5"
+content = { kind = "lines", spans = [
+  { path = "xxhash_amd64.s", start = 60, end = 106, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "amd64 asm — tail handlers (loop8 / try4 / try1) + finalize"
+justification = """
+Second half of Sum64: the noBlocks short-input branch, the 8-byte tail
+loop, the optional 4-byte chunk, the 1-byte loop, and the avalanche
+finalize that ends with MOVQ h, ret+24(FP). Where someone debugging a
+small-input mismatch will land.
+"""
+predecessor = "5.5"
+content = { kind = "lines", spans = [
+  { path = "xxhash_amd64.s", start = 108, end = 174, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "amd64 asm — writeBlocks body"
+justification = """
+Streaming entry's hot loop in amd64 asm: load v1..v4 from the *Digest
+pointer, run blockLoop(), write them back, return number of bytes
+consumed. Notably assumes 'always called with at least one block',
+which is an invariant Write maintains.
+"""
+predecessor = "5.5"
+content = { kind = "lines", spans = [
+  { path = "xxhash_amd64.s", start = 176, end = 209, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 6 — Demoted refinements that improve coverage but aren't worth
+# spending the last percent of budget on. Cumulative is already near
+# the cap entering this tier; envelope-bounded batches are tiny here,
+# so each item must justify its few hundred bytes.
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "README — Compatibility (supported Go versions)"
+justification = """
+README lines 33-43: the explicit list of supported Go versions
+(1.9.7+, 1.10.3+, 1.11+) and the 'minimal module compatibility' note.
+Useful for users hitting an old-Go build error; cheap refinement of 1.5
+(which only quoted the asm/purego framing).
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 33, end = 43, render = { kind = "full" } },
+] }

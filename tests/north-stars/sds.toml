@@ -1,0 +1,501 @@
+fixture = "sds"
+revision_pin = "5347739b"
+summary = """
+antirez/sds — Simple Dynamic Strings, the small C dynamic-string library
+extracted from Redis. ~10 files, ~2.6k LOC, drop-in to a C99 project by
+copying sds.c + sds.h + sdsalloc.h.
+
+Mental model the snapshot is built around:
+- The user holds an `sds`, which is just `char *` pointing past a packed
+  header. Five header sizes (sdshdr5/8/16/32/64) trade header bytes for
+  max length; the type-tag is the byte at `s[-1]`.
+- Most mutating fns may reallocate, so they return a (possibly new)
+  pointer the caller MUST reassign — the cardinal usage rule.
+- Append-style growth doubles up to SDS_MAX_PREALLOC (1 MB).
+- A small zero-copy idiom (sdsMakeRoomFor + sdsIncrLen) lets callers
+  read directly into the tail.
+
+Query distribution served:
+- "How does the dynamic header work / why 5 sizes" — design.
+- "Which fn for X" / "what does fn Y do" — API navigation.
+- "How do I embed sds / swap the allocator" — integration.
+- "What's the contract for fn Z's return value" — usage correctness.
+- "Where is feature W implemented" — code navigation.
+
+Note: the README's `SDS internals` section diagrams the *v1* layout
+(single sdshdr struct with len/free/buf); the actual code is v2 with
+five packed types. Snapshot deliberately surfaces both so the agent
+notices the discrepancy rather than trusting the prose blindly.
+"""
+
+# ============================================================
+# Tier 1 — Orientation: what is this repo, what files exist.
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo file listing"
+justification = """
+Tiny dir, ~10 files, all at the root. Listing every entry up front gives
+the agent the complete catalog (avoids catastrophic-omission inference
+about hidden subdirs / extra source files) and lets it map subsequent
+batches to filenames by sight.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README title"
+justification = """
+Just the title line. Tiny anchor — names the project. Subsequent
+batches build out the lede.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README v2 lede — first paragraph (binary-compat warning)"
+justification = """
+First paragraph of the v2 rewrite note: NOT binary-compatible with v1
+but ~99% API compatible. Most important fact for "is this code I can
+drop into an existing project".
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 4, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README v2 lede — perf note + sdscatfmt headline"
+justification = """
+Continuation of 1.3: v2 may be slower but uses less memory due to
+dynamic header sizing, and adds sdscatfmt as a faster sdscatprintf
+alternative. Together with 1.3 this is the full "what changed in v2".
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 9,  end = 16, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Public API surface and core design types.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "sds typedef — sds IS char*"
+justification = """
+The `typedef char *sds;` line on its own. Single most important line
+in the lib — sds *is* a char pointer, with metadata before it. Cheap
+anchor before the bigger header / API batches.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 43, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "SDS_MAX_PREALLOC + SDS_NOINIT constants"
+justification = """
+The two top-level header constants: SDS_MAX_PREALLOC caps allocation
+overshoot at 1 MB; SDS_NOINIT is a sentinel string used as `init` to
+sdsnewlen to leave the buffer uninitialized. Cheap to land first.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 36, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "SDS_TYPE_* tag constants + SDS_HDR macros"
+justification = """
+The 5 type tags (SDS_TYPE_5/8/16/32/64), MASK and BITS for unpacking the
+flags byte at s[-1], and the SDS_HDR / SDS_HDR_VAR macros that recover
+the header struct by pointer arithmetic. The full unpacking machinery
+that every other type-dispatch site uses.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 76, end = 85, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Cardinal usage rule — must reassign return value"
+justification = """
+README's "Disadvantage #1" — the most important pitfall to internalize
+before writing any sds code. `s = sdscat(s, ...)` is mandatory because
+the call may have realloc'd. Forgetting this is the canonical sds bug.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 77, end = 87, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Public fn declarations — high-level API (creation/length/free/concat/copy)"
+justification = """
+Names + full one-liner signatures for the most-used core API:
+sdsnewlen/sdsnew/sdsempty/sdsdup/sdsfree, sdsgrowzero,
+sdscatlen/sdscat/sdscatsds, sdscpylen/sdscpy. Catastrophic-omission
+hedge for the constructor + concat + copy families.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 218, end = 228, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Public fn declarations — printf family (sdscatvprintf/printf/fmt)"
+justification = """
+The three printf-shaped fns plus the GNUC format-attribute scaffolding
+between them. sdscatfmt is the headline performance one (4.3 has the
+spec); the other two delegate to libc.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 230, end = 238, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Public fn declarations — utility fns (trim/range/cmp/split/case/repr/join)"
+justification = """
+Mid-level utility surface: sdstrim, sdsrange, sdsupdatelen, sdsclear,
+sdscmp, sdssplitlen + sdsfreesplitres, sdstolower / sdstoupper,
+sdsfromlonglong, sdscatrepr, sdssplitargs, sdsmapchars, sdsjoin /
+sdsjoinsds. Catastrophic-omission hedge for the broad utility surface.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 239, end = 253, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Public fn declarations — low-level + allocator-export API"
+justification = """
+The "Low level functions" header comment plus sdsMakeRoomFor,
+sdsIncrLen, sdsRemoveFreeSpace, sdsAllocSize, sdsAllocPtr — the
+escape-hatch fns used for things like the zero-copy idiom. Followed by
+the sds_malloc/realloc/free wrapper API for cross-allocator interop.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 255, end = 268, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Five packed sdshdr structs"
+justification = """
+The five header layouts (sdshdr5/8/16/32/64) are the heart of v2's
+"dynamic sized header" trick. Showing them in full (with the
+`__attribute__ ((__packed__))` and len/alloc/flags fields) explains
+*why* there's a switch on type everywhere. sdshdr5 is special — length
+packed into the flags byte, no `alloc` field.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 45, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Canonical Hello World"
+justification = """
+The simplest sds program (sdsnew/printf/sdsfree) plus the "important
+things to notice" bullets. Most "how do I use this for a basic case"
+queries answered without follow-up.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 119, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Embedding + allocator-swap instructions"
+justification = """
+"Embedding SDS into your project" lists the exact 3 files to copy
+(sds.c, sds.h, sdsalloc.h); "Using a different allocator" tells you
+how. Integration query answered at zero follow-up cost.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 882, end = 909, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "sdsalloc.h — full file"
+justification = """
+3-macro file mapping s_malloc/s_realloc/s_free → libc. Tiny and
+load-bearing for the "swap allocator" workflow. Predecessor: 2.11
+(the README instructions); this is the file those instructions
+reference.
+"""
+predecessor = "2.11"
+content = { kind = "lines", spans = [
+    { path = "sdsalloc.h", start = 33, end = 42, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 3 — Design/contract concepts.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Error handling — NULL on OOM"
+justification = """
+Tiny but load-bearing: every fn returning sds* may return NULL on OOM,
+and that is "basically the only check you need to perform". Affects
+every code review involving an sds call site.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 686, end = 695, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "README section TOC — first half (intro through copying)"
+justification = """
+First half of the README's H1+H2 heading map for navigability.
+Catastrophic-omission hedge for README structure. Title at line 1
+already in 1.2; not repeated.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 18,  end = 18,  render = { kind = "full" } },
+    { path = "README.md", start = 55,  end = 55,  render = { kind = "full" } },
+    { path = "README.md", start = 143, end = 143, render = { kind = "full" } },
+    { path = "README.md", start = 195, end = 195, render = { kind = "full" } },
+    { path = "README.md", start = 224, end = 224, render = { kind = "full" } },
+    { path = "README.md", start = 243, end = 243, render = { kind = "full" } },
+    { path = "README.md", start = 310, end = 310, render = { kind = "full" } },
+    { path = "README.md", start = 350, end = 350, render = { kind = "full" } },
+    { path = "README.md", start = 370, end = 370, render = { kind = "full" } },
+    { path = "README.md", start = 464, end = 464, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "README section TOC — second half (quoting through credits)"
+justification = """
+Second half of the heading map: from "Quoting strings" through
+"Credits and license", including the SDS-internals headings. Pair
+with 3.2 to cover all 26 README sections. Heading 686 ("Error
+handling") is in 3.1; not repeated.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 509, end = 509, render = { kind = "full" } },
+    { path = "README.md", start = 563, end = 563, render = { kind = "full" } },
+    { path = "README.md", start = 622, end = 622, render = { kind = "full" } },
+    { path = "README.md", start = 658, end = 658, render = { kind = "full" } },
+    { path = "README.md", start = 696, end = 696, render = { kind = "full" } },
+    { path = "README.md", start = 761, end = 761, render = { kind = "full" } },
+    { path = "README.md", start = 796, end = 796, render = { kind = "full" } },
+    { path = "README.md", start = 820, end = 820, render = { kind = "full" } },
+    { path = "README.md", start = 851, end = 851, render = { kind = "full" } },
+    { path = "README.md", start = 860, end = 860, render = { kind = "full" } },
+    { path = "README.md", start = 911, end = 911, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "How SDS strings work — design narrative + ASCII diagram"
+justification = """
+README's "How SDS strings work" body: binary prefix + null term +
+interop with C string fns, plus the canonical
++--- Header --- buf --- Null term ---+ ASCII diagram. Conceptual core.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 19, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Preallocation + SDS_MAX_PREALLOC growth strategy"
+justification = """
+The doubling-up-to-1MB growth policy that drives sdsMakeRoomFor.
+Critical for anyone reasoning about memory usage / sizing strategies.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 734, end = 759, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Zero-copy append idiom"
+justification = """
+The "Zero copy append from syscalls" pattern. Idiomatic use of
+sdsMakeRoomFor + sdsIncrLen is non-obvious from the function names
+alone. Used heavily in Redis networking. Heading line 860 is in 3.3.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 861, end = 880, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "sdsReqType + sdsHdrSize — internal dispatch helpers"
+justification = """
+sdsReqType picks the smallest header type that fits a given length
+(thresholds 1<<5 / 1<<8 / 1<<16 / 1<<32 mirror the SDS_TYPE_* tags);
+sdsHdrSize returns sizeof for each header. The engine that makes the
+rest of the type-dispatch code work.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 44, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "sds.h inline accessors — sdslen + sdsavail"
+justification = """
+The two most-called accessors and the canonical illustration of the
+type-dispatch pattern (`switch(flags & SDS_TYPE_MASK)`) that recurs
+throughout sds.c. Full bodies because they're `static inline` — the
+source IS the implementation.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.h", start = 87, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "Outdated v1 internals diagram in README"
+justification = """
+README "SDS internals" section opens with `struct sdshdr { int len;
+int free; char buf[]; };` — that is the V1 layout, not what's in the
+v2 code. Surfacing the discrepancy explicitly so the agent doesn't
+trust this prose. Pair with 2.9 (the real five structs). Heading line
+696 is in 3.3; this batch starts at 698.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 698, end = 732, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Headline implementation: the highest-leverage fn
+#   bodies + the most-used README sections.
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "sdsMakeRoomFor body — growth/realloc engine"
+justification = """
+The central reallocation primitive — every append goes through it.
+Body shows: avail-cache short-circuit, doubling vs +1MB growth (the
+SDS_MAX_PREALLOC branch), header-type promotion path (realloc
+same-type vs malloc-and-copy when header size changes), the "never
+type 5 for growable strings" rule. Highest-leverage fn body in the lib.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 198, end = 248, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "sdsnewlen body — canonical allocator (no doc-comment)"
+justification = """
+The foundation of every other constructor. Body shows the type
+selection, header init dispatch, the SDS_NOINIT branch, and the
+"type 5 -> type 8 if len==0" carve-out. Doc-comment omitted to save
+tokens — README "Creating SDS strings" walkthrough (3.2 heading map →
+file read) covers the prose; the body itself is what's load-bearing.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 89, end = 145, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "sdscatfmt — fast subset of printf, format spec list"
+justification = """
+sds's headline perf optimisation over sdscatprintf. README lede calls
+it out; the doc-comment documents the supported specifiers
+(%s %S %i %I %u %U %%) and the *incompatibility* with libc printf —
+critical to know before reaching for it.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 600, end = 615, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Constructor family + sdsfree (short bodies)"
+justification = """
+sdsempty/sdsnew/sdsdup/sdsfree — tiny one-liners forwarding to
+sdsnewlen/sdsHdrSize. Shows that sdsfree must back up by the header
+size before calling s_free, and that NULL is a no-op.
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 147, end = 168, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "README — Concatenating strings + sdsgrowzero"
+justification = """
+Concatenation is the most common sds operation. README walkthrough
+covers sdscatlen/sdscat/sdscatsds/sdsgrowzero with worked examples.
+Heading line 243 is in 3.2; starts at 245.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 245, end = 308, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 5 — Implementation depth.
+#   Ordered by utility-per-token; later batches assume the
+#   reader already has tiers 1-4 and is digging deeper.
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Append/copy primitive bodies (sdscatlen/cat/catsds/cpylen/cpy)"
+justification = """
+Small idiomatic bodies: sdscat = sdscatlen + strlen, sdscatsds =
+sdscatlen + sdslen, and sdscpylen reuses the existing buffer when
+alloc is big enough (the perf rationale called out in README "String
+copying").
+"""
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 393, end = 442, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "sdsIncrLen body — zero-copy idiom's other half (no doc-comment)"
+justification = """
+sdsIncrLen has the most assertions in the codebase (one per type tag
+bounds-checking incr) and is half of the zero-copy idiom from 3.6.
+The doc-comment is omitted because it duplicates the README snippet
+already in 3.6; only the body is included here.
+Predecessor: 3.6 (the README idiom snippet).
+"""
+predecessor = "3.6"
+content = { kind = "lines", spans = [
+    { path = "sds.c", start = 334, end = 373, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "testhelp.h — minimal test framework macros"
+justification = """
+Whole-file (apart from license header): test_cond and test_report
+macros used by sdsTest(). Worth surfacing because anyone writing a
+new sds test will reach for this and the calling convention is not
+self-evident from the macro name.
+"""
+content = { kind = "lines", spans = [
+    { path = "testhelp.h", start = 39, end = 57, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "Makefile + Changelog"
+justification = """
+Makefile: how to build sds-test (cc -DSDS_TEST_MAIN sds.c -o sds-test).
+Changelog: two-entry version history that succinctly states what v2
+changed. Together they answer "how do I run the tests" and "is this
+the version I think it is".
+"""
+content = { kind = "lines", spans = [
+    { path = "Makefile",  start = 1, end = 8,  render = { kind = "full" } },
+    { path = "Changelog", start = 1, end = 12, render = { kind = "full" } },
+] }
