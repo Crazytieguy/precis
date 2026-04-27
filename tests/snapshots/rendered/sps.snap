@@ -1,0 +1,301 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    dependabot.yml
+    workflows/
+        rust.yml
+.gitignore
+CONTRIBUTING.md
+Cargo.lock
+Cargo.toml
+    1→[workspace]
+    2→resolver = "3"
+    3→members = [
+    4→    "sps",          # was "sps-cli"
+    5→    "sps-common",
+    6→    "sps-core",
+    7→    "sps-net",
+    8→]
+LICENSE.md
+NOTICE.md
+    1→## Homebrew
+    …
+    3→### Sources
+    …
+    6→### License
+    …
+README.md
+    1→# sps
+    3→> [!WARNING]
+    4→> I will scrap this project in favor of sps v2 some time in the future (when v2 is built and ready which might take a while). The reason is that I am planning to
+    5→> implement my own packaging system, my own version of atomic installs / updated complete with automatic snapshots and full, down to single package rollbacks +
+    6→> automatic cve checks and some other stuffs. After a lot of thinking and looking at Homebrew's architecture I've come to the conclusion that I do not like it (burn
+    7→> me for it ;). Defining my own build system will allow for a more performant and maintainable system in the long run. (Just a bit anxious about how to host packages
+    8→> / do all the repo stuff. Like really anxious but I'll figure it out)
+    9→>
+    10→> Another reason is that I made some choices on internal architecture in the beginning that I have come to see as suboptimal but can not easily refactor so this will
+    11→> allow me to go for the better option right from the get go (go for rx/tx for status propagation from the start, build the core fully async etc.)
+    12→>
+    13→> I have just made the repo for sps2 public. There is no repositories yet and core systems still do not work and need debugging. However it passes ci and the
+    14→> architecture is largely in place. I will have to create a automatic upstream tracking system, automatic builds and create build scripts for the most important
+    15→> tools too still + bootstrap the repositories.
+    16→>
+    17→> Never done that so if anyone has experience with that stuff help is appreciated. 
+    18→>
+    19→> For repo architecture I will probably go for a classic unix style repo format with cloudflare r2 and automatic replication to multiple regions. Well that is quite
+    20→> far out. Still it is coming along well, just built my first package with it. Found some small issues with install right after and am working on those now.
+    21→>
+    22→> https://github.com/alexykn/sps2 Take a look if you want!
+    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
+rustfmt.toml
+sps/
+    Cargo.toml
+    src/
+        cli/
+        cli.rs
+            35→pub struct CliArgs {
+            36→    #[arg(short, long, action = ArgAction::Count, global = true)]
+            37→    pub verbose: u8,
+            39→    #[command(subcommand)]
+            40→    pub command: Command,
+            41→}
+            44→pub enum Command {
+            45→    Init(InitArgs),
+            46→    Search(Search),
+            47→    List(List),
+            48→    Info(Info),
+            49→    Update(Update),
+            50→    Install(InstallArgs),
+            51→    Uninstall(Uninstall),
+            52→    Reinstall(ReinstallArgs),
+            53→    Upgrade(UpgradeArgs),
+            54→}
+        main.rs
+        pipeline/
+            downloader.rs
+                21→pub(crate) struct DownloadCoordinator {
+                …
+            planner.rs
+            runner.rs
+        pipeline.rs
+sps-common/
+    Cargo.toml
+    src/
+        cache.rs
+            14→/// Cache struct to manage cache operations
+            15→pub struct Cache {
+            16→    cache_dir: PathBuf,
+            17→    _config: Config, // Keep a reference to config if needed for other paths or future use
+            18→}
+        config.rs
+            15→pub struct Config {
+            16→    pub sps_root: PathBuf, // Public for direct construction in main for init if needed
+            17→    pub api_base_url: String,
+            18→    pub artifact_domain: Option<String>,
+            19→    pub docker_registry_token: Option<String>,
+            20→    pub docker_registry_basic_auth: Option<String>,
+            21→    pub github_api_token: Option<String>,
+            22→}
+            199→pub fn load_config() -> Result<Config> {
+            …
+        dependency/
+            definition.rs
+                31→pub struct Dependency {
+                32→    pub name: String,
+                33→    #[serde(default)]
+                34→    pub tags: DependencyTag,
+                35→}
+                53→pub trait DependencyExt {
+                54→    fn filter_by_tags(&self, include: DependencyTag, exclude: DependencyTag) -> Vec<&Dependency>;
+                55→    fn runtime(&self) -> Vec<&Dependency>;
+                56→    fn build_time(&self) -> Vec<&Dependency>;
+                57→}
+            mod.rs
+            requirement.rs
+                7→pub enum Requirement {
+                8→    MacOS(String),
+                9→    Xcode(String),
+                10→    Other(String),
+                11→}
+            resolver.rs
+        error.rs
+            6→pub enum SpsError {
+            …
+            119→pub type Result<T> = std::result::Result<T, SpsError>;
+        formulary.rs
+            12→pub struct Formulary {
+            13→    cache: Cache,
+            14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
+            15→}
+        keg.rs
+            11→/// Represents information about an installed package (Keg).
+            13→pub struct InstalledKeg {
+            14→    pub name: String,
+            15→    pub version_str: String,
+            16→    pub path: PathBuf,
+            17→}
+            19→/// Manages querying installed packages in the Cellar.
+            21→pub struct KegRegistry {
+            22→    config: Config,
+            23→}
+        lib.rs
+        model/
+        pipeline.rs
+sps-core/
+    Cargo.toml
+    src/
+        build/
+        check/
+            installed.rs
+            mod.rs
+                1→pub mod installed;
+                2→pub mod update;
+                4→pub use installed::{InstalledPackageInfo, PackageType};
+                5→pub use update::UpdateInfo;
+            update.rs
+                23→pub struct UpdateInfo {
+                24→    pub name: String,
+                25→    pub installed_version: String,
+                26→    pub available_version: String,
+                27→    pub pkg_type: PackageType,
+                28→    pub target_definition: InstallTargetIdentifier,
+                29→}
+                89→pub async fn check_for_updates(
+                90→    installed_packages: &[InstalledPackageInfo],
+                91→    cache: &Cache,
+                92→    config: &Config,
+                93→) -> Result<Vec<UpdateInfo>> {
+                …
+        install/
+            bottle/
+            cask/
+                artifacts/
+                dmg.rs
+                helpers.rs
+                mod.rs
+                    25→pub struct CaskInstallManifest {
+                    26→    pub manifest_format_version: String,
+                    27→    pub token: String,
+                    28→    pub version: String,
+                    29→    pub installed_at: u64,
+                    30→    pub artifacts: Vec<InstalledArtifact>,
+                    31→    pub primary_app_file_name: Option<String>,
+                    32→    pub is_installed: bool,              // New flag for soft uninstall
+                    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
+                    34→}
+                    36→/// Returns the path to the cask's version directory in the private store.
+                    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
+                    …
+                    42→/// Returns the path to the cask's token directory in the private store.
+                    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
+                    …
+                    47→/// Returns the path to the main app bundle for a cask in the private store.
+                    48→/// This assumes the primary app bundle is named as specified in the cask's artifacts.
+                    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
+                    …
+                    73→pub async fn download_cask(cask: &Cask, cache: &Cache) -> Result<PathBuf> {
+                    …
+                    77→pub async fn download_cask_with_progress(
+                    78→    cask: &Cask,
+                    79→    cache: &Cache,
+                    80→    progress_callback: Option<ProgressCallback>,
+                    81→) -> Result<PathBuf> {
+                    …
+                    232→pub fn install_cask(
+                    233→    cask: &Cask,
+                    234→    download_path: &Path,
+                    235→    config: &Config,
+                    236→    job_action: &JobAction,
+                    237→) -> Result<()> {
+                    …
+                    580→pub fn write_receipt(
+                    581→    cask: &Cask,
+                    582→    cask_version_install_path: &Path,
+                    583→    artifacts: Vec<String>,
+                    584→) -> Result<()> {
+                    …
+                    612→pub fn write_cask_manifest(
+                    613→    cask: &Cask,
+                    614→    cask_version_install_path: &Path,
+                    615→    artifacts: Vec<InstalledArtifact>,
+                    616→) -> Result<()> {
+                    …
+                    683→/// Recursively cleans up empty parent directories in the private cask store.
+                    684→/// Starts from the given path and walks up, removing empty directories until a non-empty or root is
+                    685→/// found.
+                    686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
+                    …
+            devtools.rs
+            extract.rs
+            mod.rs
+                17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
+                …
+        lib.rs
+            4→pub mod build;
+            5→pub mod check;
+            6→pub mod install;
+            7→pub mod pipeline;
+            8→pub mod uninstall;
+            9→pub mod upgrade; // New
+            11→pub mod utils; // New
+            19→pub use uninstall::UninstallOptions; // New
+        pipeline/
+            engine.rs
+                16→pub fn start_worker_pool_manager(
+                …
+            mod.rs
+                1→pub mod engine;
+                2→pub mod worker;
+            worker.rs
+                21→pub(super) fn execute_sync_job(
+                …
+        uninstall/
+            cask.rs
+                41→pub fn uninstall_cask_artifacts(info: &InstalledPackageInfo, config: &Config) -> Result<()> {
+                …
+                134→pub async fn zap_cask_artifacts(
+                135→    info: &InstalledPackageInfo,
+                136→    cask_def: &Cask,
+                137→    config: &Config,
+                138→) -> Result<()> {
+                …
+            common.rs
+            formula.rs
+                10→pub fn uninstall_formula_artifacts(
+                …
+            mod.rs
+        upgrade/
+            bottle.rs
+                20→pub async fn upgrade_bottle_formula(
+                …
+            cask.rs
+                15→pub async fn upgrade_cask_package(
+                …
+            mod.rs
+            source.rs
+                19→pub async fn upgrade_source_formula(
+                …
+        utils/
+            applescript.rs
+                75→pub fn quit_app_gracefully(app_path: &Path) -> Result<()> {
+                …
+            mod.rs
+                2→pub mod applescript;
+                4→pub mod xattr;
+            xattr.rs
+sps-net/
+    Cargo.toml
+    src/
+        api.rs
+        http.rs
+        lib.rs
+        oci.rs
+        validation.rs
+            67→pub fn verify_checksum(path: &Path, expected: &str) -> Result<()> {
+            …
+            93→pub fn verify_content_type(path: &Path, expected_ext: &str) -> Result<()> {
+            …
+            121→pub fn validate_url(url_str: &str) -> Result<()> {
+            …

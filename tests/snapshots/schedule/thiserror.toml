@@ -1,0 +1,3766 @@
+fixture = "thiserror"
+budget = 10000
+cumulative_tokens = 9993
+batch_count = 127
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror'"
+cost_tokens = 38
+cum_tokens = 38
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror"
+entries = [".github", ".gitignore", "Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "README.md", "build", "build.rs", "impl", "rust-toolchain.toml", "src", "tests"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+cost_tokens = 43
+cum_tokens = 81
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/.github'"
+cost_tokens = 8
+cum_tokens = 89
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github"
+entries = ["FUNDING.yml", "workflows"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/.github/workflows'"
+cost_tokens = 4
+cum_tokens = 93
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/.github/workflows"
+entries = ["ci.yml"]
+
+[[batches]]
+position = 5
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+cost_tokens = 29
+cum_tokens = 122
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/impl'"
+cost_tokens = 19
+cum_tokens = 141
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl"
+entries = ["Cargo.toml", "LICENSE-APACHE", "LICENSE-MIT", "src"]
+
+[[batches]]
+position = 7
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #0"
+cost_tokens = 64
+cum_tokens = 205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+cost_tokens = 183
+cum_tokens = 388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/src'"
+cost_tokens = 25
+cum_tokens = 413
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src"
+entries = ["aserror.rs", "display.rs", "lib.rs", "private.rs", "provide.rs", "var.rs"]
+
+[[batches]]
+position = 10
+key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+descriptor = "crate-doc lede in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+cost_tokens = 267
+cum_tokens = 680
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 1
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+cost_tokens = 161
+cum_tokens = 841
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 17
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+descriptor = "mod/use plumbing in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+cost_tokens = 46
+cum_tokens = 887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 281
+end = 282
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 284
+end = 285
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml" })'
+descriptor = "[dependencies] in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+cost_tokens = 49
+cum_tokens = 936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #1"
+cost_tokens = 183
+cum_tokens = 1119
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 26
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml" })'
+descriptor = "[dependencies] in /Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+cost_tokens = 107
+cum_tokens = 1226
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/Cargo.toml"
+start = 33
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/thiserror/.gitignore"
+cost_tokens = 15
+cum_tokens = 1241
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/.gitignore"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src'"
+cost_tokens = 47
+cum_tokens = 1288
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src"
+entries = ["ast.rs", "attr.rs", "expand.rs", "fallback.rs", "fmt.rs", "generics.rs", "lib.rs", "prop.rs", "scan_expr.rs", "unraw.rs", "valid.rs"]
+
+[[batches]]
+position = 18
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+cost_tokens = 19
+cum_tokens = 1307
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs", start_line: 40 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs:40"
+cost_tokens = 0
+cum_tokens = 1307
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 20
+key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs" })'
+descriptor = "impl method sigs in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+cost_tokens = 35
+cum_tokens = 1342
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 48
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+cost_tokens = 21
+cum_tokens = 1363
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs", start_line: 192 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs:192"
+cost_tokens = 0
+cum_tokens = 1363
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/scan_expr.rs"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 23
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+cost_tokens = 26
+cum_tokens = 1389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs", start_line: 12 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs:12"
+cost_tokens = 0
+cum_tokens = 1389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs", start_line: 82 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs:82"
+cost_tokens = 23
+cum_tokens = 1412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/unraw.rs"
+start = 82
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+cost_tokens = 27
+cum_tokens = 1439
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 27
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs", start_line: 8 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs:8"
+cost_tokens = 16
+cum_tokens = 1455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+cost_tokens = 28
+cum_tokens = 1483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs", start_line: 7 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs:7"
+cost_tokens = 0
+cum_tokens = 1483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/fallback.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 30
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs", start_line: 48 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs:48"
+cost_tokens = 39
+cum_tokens = 1522
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/generics.rs"
+start = 48
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+cost_tokens = 42
+cum_tokens = 1564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 12 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs:12"
+cost_tokens = 0
+cum_tokens = 1564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 33
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs", start_line: 505 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs:505"
+cost_tokens = 0
+cum_tokens = 1564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/expand.rs"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 34
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+cost_tokens = 76
+cum_tokens = 1640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 10 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:10"
+cost_tokens = 26
+cum_tokens = 1666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 10
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 45 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:45"
+cost_tokens = 50
+cum_tokens = 1716
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 45
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 15 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:15"
+cost_tokens = 53
+cum_tokens = 1769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 15
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 29 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:29"
+cost_tokens = 53
+cum_tokens = 1822
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 29
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 22 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:22"
+cost_tokens = 54
+cum_tokens = 1876
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 22
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs", start_line: 36 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs:36"
+cost_tokens = 65
+cum_tokens = 1941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/ast.rs"
+start = 36
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+cost_tokens = 110
+cum_tokens = 2051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 69 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:69"
+cost_tokens = 0
+cum_tokens = 2051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 43
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 33 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:33"
+cost_tokens = 25
+cum_tokens = 2076
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 39 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:39"
+cost_tokens = 25
+cum_tokens = 2101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 39
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 45 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:45"
+cost_tokens = 25
+cum_tokens = 2126
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 45
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 51 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:51"
+cost_tokens = 26
+cum_tokens = 2152
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 51
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 57 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:57"
+cost_tokens = 71
+cum_tokens = 2223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 57
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 11 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:11"
+cost_tokens = 88
+cum_tokens = 2311
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 11
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs", start_line: 21 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs:21"
+cost_tokens = 106
+cum_tokens = 2417
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/attr.rs"
+start = 21
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs" })'
+descriptor = "mod/use plumbing in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+cost_tokens = 128
+cum_tokens = 2545
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 23
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/src/lib.rs"
+start = 34
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #3"
+cost_tokens = 28
+cum_tokens = 2573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 51
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 12 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #12"
+cost_tokens = 272
+cum_tokens = 2845
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 213
+end = 217
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 225
+end = 228
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 232
+end = 236
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs"
+cost_tokens = 22
+cum_tokens = 2867
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 54
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs", start_line: 3 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs:3"
+cost_tokens = 0
+cum_tokens = 2867
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/var.rs"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+cost_tokens = 26
+cum_tokens = 2893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs", start_line: 19 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs:19"
+cost_tokens = 0
+cum_tokens = 2893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+cost_tokens = 27
+cum_tokens = 2920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 58
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs", start_line: 46 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs:46"
+cost_tokens = 0
+cum_tokens = 2920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+cost_tokens = 28
+cum_tokens = 2948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs", start_line: 45 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs:45"
+cost_tokens = 0
+cum_tokens = 2948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #11"
+cost_tokens = 52
+cum_tokens = 3000
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 204
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #2"
+cost_tokens = 74
+cum_tokens = 3074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 46
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml" })'
+descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+cost_tokens = 122
+cum_tokens = 3196
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/impl/Cargo.toml"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 9 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #9"
+cost_tokens = 127
+cum_tokens = 3323
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 155
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 158
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #7"
+cost_tokens = 160
+cum_tokens = 3483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 123
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 128
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 131
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #5"
+cost_tokens = 170
+cum_tokens = 3653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 89
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 92
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 96
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #8"
+cost_tokens = 193
+cum_tokens = 3846
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 138
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 145
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #6"
+cost_tokens = 222
+cum_tokens = 4068
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 104
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 108
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 114
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Rust(CrateDocBody { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs" })'
+descriptor = "crate-doc body in /Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+cost_tokens = 2481
+cum_tokens = 6549
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 18
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 66
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 90
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 118
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 129
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 145
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 157
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 166
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 174
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 184
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 192
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 199
+end = 206
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 208
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 218
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 221
+end = 221
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 223
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 236
+end = 247
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/lib.rs"
+start = 251
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs", start_line: 5 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs:5"
+cost_tokens = 23
+cum_tokens = 6572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/aserror.rs"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #10"
+cost_tokens = 344
+cum_tokens = 6916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 169
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 173
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 178
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 183
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 187
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 193
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 197
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs", start_line: 4 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs:4"
+cost_tokens = 28
+cum_tokens = 6944
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/provide.rs"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md section #4"
+cost_tokens = 476
+cum_tokens = 7420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 54
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 60
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 65
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 68
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/README.md"
+start = 79
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs", start_line: 6 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs:6"
+cost_tokens = 66
+cum_tokens = 7486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/src/display.rs"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/tests'"
+cost_tokens = 72
+cum_tokens = 7558
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests"
+entries = ["compiletest.rs", "no-std", "test_backtrace.rs", "test_display.rs", "test_error.rs", "test_expr.rs", "test_from.rs", "test_generics.rs", "test_lints.rs", "test_option.rs", "test_path.rs", "test_source.rs", "test_transparent.rs", "ui"]
+
+[[batches]]
+position = 76
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+cost_tokens = 22
+cum_tokens = 7580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs", start_line: 8 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs:8"
+cost_tokens = 0
+cum_tokens = 7580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs", start_line: 13 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs:13"
+cost_tokens = 19
+cum_tokens = 7599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_backtrace.rs"
+start = 13
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+cost_tokens = 23
+cum_tokens = 7622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 80
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+cost_tokens = 23
+cum_tokens = 7645
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 81
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs", start_line: 29 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs:29"
+cost_tokens = 24
+cum_tokens = 7669
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 29
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std'"
+cost_tokens = 9
+cum_tokens = 7678
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std"
+entries = ["Cargo.toml", "test.rs"]
+
+[[batches]]
+position = 83
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+cost_tokens = 35
+cum_tokens = 7713
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 7 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs:7"
+cost_tokens = 14
+cum_tokens = 7727
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 21 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs:21"
+cost_tokens = 29
+cum_tokens = 7756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 21
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs", start_line: 13 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs:13"
+cost_tokens = 31
+cum_tokens = 7787
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_source.rs"
+start = 13
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs", start_line: 35 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs:35"
+cost_tokens = 57
+cum_tokens = 7844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_path.rs"
+start = 35
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+cost_tokens = 21
+cum_tokens = 7865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 89
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs", start_line: 13 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs:13"
+cost_tokens = 14
+cum_tokens = 7879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 13
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs", start_line: 6 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs:6"
+cost_tokens = 28
+cum_tokens = 7907
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/test.rs"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs", start_line: 41 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs:41"
+cost_tokens = 124
+cum_tokens = 8031
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 41
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+cost_tokens = 95
+cum_tokens = 8126
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 93
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 22 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:22"
+cost_tokens = 0
+cum_tokens = 8126
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 26 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:26"
+cost_tokens = 0
+cum_tokens = 8126
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 8 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:8"
+cost_tokens = 22
+cum_tokens = 8148
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 15 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:15"
+cost_tokens = 24
+cum_tokens = 8172
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 15
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 48 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:48"
+cost_tokens = 31
+cum_tokens = 8203
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 48
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 30 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:30"
+cost_tokens = 35
+cum_tokens = 8238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 30
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs", start_line: 39 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs:39"
+cost_tokens = 37
+cum_tokens = 8275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_from.rs"
+start = 39
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml" })'
+descriptor = "[dependencies] in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml"
+cost_tokens = 26
+cum_tokens = 8301
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+cost_tokens = 169
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 7 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:7"
+cost_tokens = 0
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 10 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:10"
+cost_tokens = 0
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 12 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:12"
+cost_tokens = 0
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 21 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:21"
+cost_tokens = 0
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 162 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:162"
+cost_tokens = 0
+cum_tokens = 8470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 132 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:132"
+cost_tokens = 13
+cum_tokens = 8483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 132
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 115 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:115"
+cost_tokens = 21
+cum_tokens = 8504
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 115
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 40 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:40"
+cost_tokens = 23
+cum_tokens = 8527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 40
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 144 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:144"
+cost_tokens = 24
+cum_tokens = 8551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 144
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 55 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:55"
+cost_tokens = 31
+cum_tokens = 8582
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 55
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 175 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:175"
+cost_tokens = 51
+cum_tokens = 8633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 175
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs", start_line: 74 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs:74"
+cost_tokens = 78
+cum_tokens = 8711
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_generics.rs"
+start = 74
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs", start_line: 11 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs:11"
+cost_tokens = 295
+cum_tokens = 9006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 11
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 19
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 22
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/test_expr.rs"
+start = 31
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml" })'
+descriptor = "[package] in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml"
+cost_tokens = 69
+cum_tokens = 9075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/no-std/Cargo.toml"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/LICENSE-MIT" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/thiserror/LICENSE-MIT"
+cost_tokens = 300
+cum_tokens = 9375
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/LICENSE-MIT"
+start = 1
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/LICENSE-MIT"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/LICENSE-MIT"
+start = 15
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui'"
+cost_tokens = 528
+cum_tokens = 9903
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui"
+entries = ["bad-field-attr.rs", "bad-field-attr.stderr", "concat-display.rs", "concat-display.stderr", "display-underscore.rs", "display-underscore.stderr", "duplicate-enum-source.rs", "duplicate-enum-source.stderr", "duplicate-fmt.rs", "duplicate-fmt.stderr", "duplicate-struct-source.rs", "duplicate-struct-source.stderr", "duplicate-transparent.rs", "duplicate-transparent.stderr", "expression-fallback.rs", "expression-fallback.stderr", "fallback-impl-with-display.rs", "fallback-impl-with-display.stderr", "from-backtrace-backtrace.rs", "from-backtrace-backtrace.stderr", "from-not-source.rs", "from-not-source.stderr", "invalid-input-impl-anyway.rs", "invalid-input-impl-anyway.stderr", "lifetime.rs", "lifetime.stderr", "missing-display.rs", "missing-display.stderr", "missing-fmt.rs", "missing-fmt.stderr", "no-display.rs", "no-display.stderr", "numbered-positional-tuple.rs", "numbered-positional-tuple.stderr", "raw-identifier.rs", "raw-identifier.stderr", "same-from-type.rs", "same-from-type.stderr", "source-enum-not-error.rs", "source-enum-not-error.stderr", "source-enum-unnamed-field-not-error.rs", "source-enum-unnamed-field-not-error.stderr", "source-struct-not-error.rs", "source-struct-not-error.stderr", "source-struct-unnamed-field-not-error.rs", "source-struct-unnamed-field-not-error.stderr", "struct-with-fmt.rs", "struct-with-fmt.stderr", "transparent-display.rs", "transparent-display.stderr", "transparent-enum-many.rs", "transparent-enum-many.stderr", "transparent-enum-not-error.rs", "transparent-enum-not-error.stderr", "transparent-enum-source.rs", "transparent-enum-source.stderr", "transparent-enum-unnamed-field-not-error.rs", "transparent-enum-unnamed-field-not-error.stderr", "transparent-struct-many.rs", "transparent-struct-many.stderr", "transparent-struct-not-error.rs", "transparent-struct-not-error.stderr", "transparent-struct-source.rs", "transparent-struct-source.stderr", "transparent-struct-unnamed-field-not-error.rs", "transparent-struct-unnamed-field-not-error.stderr", "unconditional-recursion.rs", "unconditional-recursion.stderr", "unexpected-field-fmt.rs", "unexpected-field-fmt.stderr", "unexpected-struct-source.rs", "unexpected-struct-source.stderr", "union.rs", "union.stderr"]
+
+[[batches]]
+position = 118
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs"
+cost_tokens = 10
+cum_tokens = 9913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 119
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs", start_line: 5 })'
+descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs:5"
+cost_tokens = 0
+cum_tokens = 9913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/display-underscore.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs"
+cost_tokens = 10
+cum_tokens = 9923
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-backtrace-backtrace.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 121
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs"
+cost_tokens = 10
+cum_tokens = 9933
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/from-not-source.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 122
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs"
+cost_tokens = 10
+cum_tokens = 9943
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/missing-fmt.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs"
+cost_tokens = 10
+cum_tokens = 9953
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/raw-identifier.rs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs"
+cost_tokens = 10
+cum_tokens = 9963
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/same-from-type.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs"
+cost_tokens = 10
+cum_tokens = 9973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-many.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs"
+cost_tokens = 10
+cum_tokens = 9983
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-not-error.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs" })'
+descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs"
+cost_tokens = 10
+cum_tokens = 9993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/thiserror/tests/ui/transparent-enum-source.rs"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"

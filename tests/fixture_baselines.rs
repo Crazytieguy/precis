@@ -58,14 +58,17 @@ macro_rules! per_fixture_tests {
 
 per_fixture_tests!(log);
 per_fixture_tests!(anyhow);
+per_fixture_tests!(thiserror);
 per_fixture_tests!(mdbook);
 per_fixture_tests!(otree);
+per_fixture_tests!(sps);
 per_fixture_tests!(mitt);
 per_fixture_tests!(ts_pattern, "ts-pattern");
 per_fixture_tests!(cmdk);
 per_fixture_tests!(vaul);
 per_fixture_tests!(ky);
 per_fixture_tests!(superstruct);
+per_fixture_tests!(enclosed);
 
 // ---- paths -------------------------------------------------------------
 

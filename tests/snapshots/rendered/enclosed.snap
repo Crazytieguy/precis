@@ -1,0 +1,308 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.dockerignore
+.github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+        bug-report.yml
+        config.yml
+        feature-request.yml
+    enclosed-mockup.png
+    icon-dark.png
+    icon-light.png
+    workflows/
+.gitignore
+.nvmrc
+    1→22
+CONTRIBUTING.md
+    1→# Contributing to Enclosed
+    …
+    3→First off, thanks for taking the time to contribute to Enclosed! We welcome contributions of all types and encourage you to help make this project better for everyone.
+    5→## Code of Conduct
+    …
+    7→This project adheres to the [Contributor Covenant](https://www.contributor-covenant.org/). By participating, you are expected to uphold this code. Please report unacceptable behavior to <corentinth@proton.me>
+    9→## How Can I Contribute?
+    …
+    11→### Reporting Issues
+    …
+    15→### Submitting Pull Requests
+    …
+    29→### Branching
+    …
+    34→### Commit Guidelines
+    …
+    38→## i18n
+    …
+    42→### Updating an Existing Language
+    …
+    46→## Development Setup
+    …
+    48→### Local Environment Setup
+    …
+    81→### Testing
+    …
+    99→## Writing Documentation
+    …
+    119→## Coding Style
+    …
+    125→## Issue Labels
+    …
+    129→## License
+    …
+Dockerfile
+Dockerfile.rootless
+LICENSE
+README.md
+    26→## Introduction
+    28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
+docker-compose.yml
+package.json
+    2→  "name": "@enclosed/root",
+    3→  "version": "1.16.0",
+    4→  "description": "Send private and secure note",
+    5→  "packageManager": "pnpm@9.15.0",
+    6→  "license": "Apache-2.0",
+    7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+    8→  "repository": {
+    9→    "type": "git",
+    10→    "url": "https://github.com/CorentinTh/enclosed"
+    11→  },
+    12→  "engines": {
+    13→    "node": ">=22.0.0"
+    14→  },
+    15→  "scripts": {
+    16→    "release": "bumpp --commit --tag --push --recursive",
+    17→    "docker:build": "docker build -t enclosed .",
+    18→    "docker:run": "docker run -d -p 8788:8787 enclosed"
+    19→  },
+    20→  "keywords": [
+    21→    "note",
+    22→    "secure",
+    23→    "private",
+    24→    "end-to-end",
+    25→    "encryption",
+    26→    "password",
+    27→    "manager",
+    28→    "expiration"
+    29→  ],
+    30→  "devDependencies": {
+    31→    "bumpp": "^9.5.2"
+    32→  }
+packages/
+    app-client/
+    app-server/
+        eslint.config.js
+        package.json
+            2→  "name": "@enclosed/app-server",
+            3→  "type": "module",
+            4→  "version": "1.16.0",
+            6→  "description": "Enclosed backend server",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "license": "Apache-2.0",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/CorentinTh/enclosed"
+            12→  },
+        src/
+        tsconfig.json
+        wrangler.toml
+    cli/
+        README.md
+            1→# Enclosed CLI
+            3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+        bin/
+            enclosed.mjs
+        build.config.ts
+            3→export default defineBuildConfig({
+            4→  entries: [
+            5→    'src/cli',
+            6→  ],
+            7→  clean: true,
+            8→  rollup: {
+            9→    emitCJS: true,
+            10→  },
+            11→});
+        eslint.config.js
+        package.json
+            2→  "name": "@enclosed/cli",
+            3→  "type": "module",
+            4→  "version": "1.16.0",
+            6→  "description": "Enclosed cli to create secure notes.",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "license": "Apache-2.0",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/CorentinTh/enclosed"
+            12→  },
+            13→  "main": "./dist/cli.cjs",
+            14→  "module": "./dist/cli.mjs",
+            15→  "bin": {
+            16→    "enclosed": "./bin/enclosed.mjs"
+            17→  },
+            18→  "files": [
+            19→    "dist"
+            20→  ],
+        src/
+        tsconfig.json
+    crypto/
+        README.md
+            1→# Enclosed crypto library
+            3→This package contains the natives crypto primitives used by the [Enclosed lib and project](https://enclosed.cc). It is a standalone package built to provide compatibility between different environments by exposing the same API for node:crypto and web SubtleCrypto.
+            5→## Installation
+            …
+            18→## License
+            …
+            20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+            22→## Credits and Acknowledgements
+            …
+            24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+        build.config.ts
+            3→export default defineBuildConfig({
+            4→  entries: [
+            5→    'src/index.node',
+            6→    'src/index.web',
+            7→  ],
+            8→  clean: true,
+            9→  declaration: true,
+            10→  sourcemap: true,
+            11→  rollup: {
+            12→    emitCJS: true,
+            13→  },
+            14→});
+        eslint.config.js
+        package.json
+            2→  "name": "@enclosed/crypto",
+            3→  "type": "module",
+            4→  "version": "1.16.0",
+            6→  "description": "Enclosed cross-env crypto primitives",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "license": "Apache-2.0",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/CorentinTh/enclosed"
+            12→  },
+        src/
+        tsconfig.json
+    deploy-cloudflare/
+        .nvmrc
+        _routes.json
+        build.sh
+        package.json
+            2→  "name": "@enclosed/deploy-cloudflare",
+            3→  "version": "1.16.0",
+            4→  "description": "Deploy scripts for Cloudflare Pages",
+            5→  "packageManager": "pnpm@9.15.0",
+            6→  "license": "Apache-2.0",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "repository": {
+            9→    "type": "git",
+            10→    "url": "https://github.com/CorentinTh/enclosed"
+            11→  },
+            12→  "scripts": {
+            13→    "build": "./build.sh"
+            14→  }
+        wrangler.toml
+    docs/
+        .vitepress/
+            config.ts
+                11→export default defineConfig({
+                …
+            plausible.ts
+                8→export { getPlausibleScripts };
+                …
+            theme/
+                custom.css
+                icons.ts
+                    5→export { githubIcon, xIcon };
+                index.js
+        eslint.config.js
+        package.json
+            2→  "name": "@enclosed/docs",
+            3→  "type": "module",
+            4→  "version": "1.16.0",
+            6→  "description": "Documentation website for Enclosed.",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "license": "Apache-2.0",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/CorentinTh/enclosed"
+            12→  },
+            13→  "keywords": [],
+            14→  "main": "index.js",
+        src/
+    lib/
+        README.md
+            1→### Enclosed lib
+            3→This package contains the core functionalities of [Enclosed](https://enclosed.cc/), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+            5→## Installation
+            …
+            18→## Usage
+            …
+            33→## License
+            …
+            35→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
+            37→## Credits and Acknowledgements
+            …
+            39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
+        build.config.ts
+            3→export default defineBuildConfig({
+            4→  entries: [
+            5→    'src/index',
+            6→  ],
+            7→  clean: true,
+            8→  declaration: true,
+            9→  sourcemap: true,
+            10→  rollup: {
+            11→    emitCJS: true,
+            12→  },
+            13→});
+        eslint.config.js
+        package.json
+            2→  "name": "@enclosed/lib",
+            3→  "type": "module",
+            4→  "version": "1.16.0",
+            6→  "description": "Enclosed lib to create secure notes.",
+            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
+            8→  "license": "Apache-2.0",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/CorentinTh/enclosed"
+            12→  },
+        src/
+            api/
+            crypto/
+            files/
+                files.models.ts
+            index.ts
+                10→export {
+                11→  createNote,
+                12→  createNoteUrl,
+                13→  createNoteUrlHashFragment,
+                14→  decryptNote,
+                15→  encryptionAlgorithms,
+                16→  encryptNote,
+                17→  fetchNote,
+                18→  filesToNoteAssets,
+                19→  fileToNoteAsset,
+                20→  isApiClientErrorWithCode,
+                21→  isApiClientErrorWithStatusCode,
+                22→  noteAssetsToFiles,
+                23→  noteAssetToFile,
+                24→  parseNoteUrl,
+                25→  parseNoteUrlHashFragment,
+                26→  serializationFormats,
+                27→  storeNote,
+                28→};
+            notes/
+        tsconfig.json
+pnpm-lock.yaml
+pnpm-workspace.yaml
+renovate.json
+    1→{
+    2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    3→  "extends": [
+    4→    "config:recommended"
+    5→  ]
+    6→}
