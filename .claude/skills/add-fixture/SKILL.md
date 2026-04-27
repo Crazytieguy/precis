@@ -23,7 +23,7 @@ review the north star first"), pause at step 3; otherwise proceed.
 - `tests/fixtures/<name>/` exists → skip step 1's clone.
 - `tests/north-stars/<name>.toml` exists → skip steps 2–3.
 - `<name>` is already in `per_fixture_tests!(...)` in
-  `tests/schedule_order.rs` → skip step 4.
+  `tests/fixture_baselines.rs` → skip step 4.
 - Baselines regenerate via `UPDATE_BASELINES=1 cargo t` — idempotent by
   construction.
 
@@ -67,11 +67,12 @@ path. Otherwise: continue.
 
 ## 4. Register in the test macro
 
-Edit `tests/schedule_order.rs` — add a `per_fixture_tests!(<name>);`
-line alongside the existing fixtures. This generates three test fns per
-fixture (`schedule_order_snapshot_<name>`, `_divergence_<name>`,
-`_rendered_<name>`). The `ns_pins_match_fixture_pins` test picks up the
-new NS automatically.
+Edit `tests/fixture_baselines.rs` — add a `per_fixture_tests!(<name>);`
+line alongside the existing fixtures. This generates one
+`fixture_baselines_<name>` test that checks the schedule TOML,
+divergence report (when an NS exists), and rendered snapshot in one
+walker pass. The `ns_pins_match_fixture_pins` test picks up the new NS
+automatically.
 
 ## 5. Generate baselines
 

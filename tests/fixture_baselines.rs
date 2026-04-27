@@ -28,8 +28,8 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use precis::{
-    divergence::generate_divergence_report, ns_loader::load_ns_checked, render as render_precis,
-    render_schedule,
+    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked,
+    render as render_precis, render_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -49,16 +49,8 @@ macro_rules! per_fixture_tests {
     ($fixture:ident, $name:expr) => {
         paste::paste! {
             #[test]
-            fn [<schedule_order_snapshot_ $fixture>]() {
-                check_schedule_snapshot($name);
-            }
-            #[test]
-            fn [<schedule_order_divergence_ $fixture>]() {
-                check_divergence_report($name);
-            }
-            #[test]
-            fn [<schedule_order_rendered_ $fixture>]() {
-                check_rendered_snapshot($name);
+            fn [<fixture_baselines_ $fixture>]() {
+                check_fixture_baselines($name);
             }
         }
     };
@@ -116,13 +108,20 @@ fn require_fixture(fixture: &str) -> PathBuf {
     p
 }
 
-// ---- schedule TOML -----------------------------------------------------
+// ---- per-fixture baselines ---------------------------------------------
 
-fn check_schedule_snapshot(fixture: &str) {
+fn check_fixture_baselines(fixture: &str) {
     let fixture_dir = require_fixture(fixture);
+
     let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
-    let serialized = toml::to_string(&schedule)
+    check_schedule_toml(fixture, &schedule);
+    check_divergence(fixture, &fixture_dir, &schedule);
+    check_rendered(fixture, &fixture_dir);
+}
+
+fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
+    let serialized = toml::to_string(schedule)
         .unwrap_or_else(|e| panic!("serializing schedule({fixture}): {e}"));
     compare_or_update(
         "schedule TOML",
@@ -131,19 +130,14 @@ fn check_schedule_snapshot(fixture: &str) {
     );
 }
 
-// ---- divergence report -------------------------------------------------
-
-fn check_divergence_report(fixture: &str) {
-    let fixture_dir = require_fixture(fixture);
+fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
     let ns_toml = ns_path(fixture);
     if !ns_toml.exists() {
-        return; // no NS for this fixture yet
+        return;
     }
-    let ns = load_ns_checked(&ns_toml, &fixture_dir)
+    let ns = load_ns_checked(&ns_toml, fixture_dir)
         .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
-    let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
-        .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
-    let report = generate_divergence_report(&ns, &schedule, &fixture_dir)
+    let report = generate_divergence_report(&ns, schedule, fixture_dir)
         .unwrap_or_else(|e| panic!("generate_divergence_report({fixture}): {e}"));
 
     if let Some(first_line) = report.lines().next() {
@@ -157,11 +151,8 @@ fn check_divergence_report(fixture: &str) {
     );
 }
 
-// ---- rendered snapshot -------------------------------------------------
-
-fn check_rendered_snapshot(fixture: &str) {
-    let fixture_dir = require_fixture(fixture);
-    let rendered = render_precis(&[&fixture_dir], RENDERED_BUDGET, None)
+fn check_rendered(fixture: &str, fixture_dir: &Path) {
+    let rendered = render_precis(&[fixture_dir], RENDERED_BUDGET, None)
         .unwrap_or_else(|e| panic!("render({fixture}): {e}"));
     if update_baselines() {
         unsafe {
