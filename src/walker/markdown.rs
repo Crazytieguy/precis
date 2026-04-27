@@ -53,8 +53,7 @@ use super::{
 /// Upper bound on collectable heading rows before `HeadingsOutline`
 /// suppresses itself. The outline is the predecessor of every section,
 /// so an oversize outline that fails to fit near the budget tail would
-/// block the whole file. See `docs/design-notes.md` "Sub-section
-/// markdown splitting" for the deferred decoupling.
+/// block the whole file.
 const MAX_OUTLINE_HEADINGS: usize = 30;
 
 /// Upper bound (in source bytes) on the outline's heading content. The
