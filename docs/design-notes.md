@@ -97,7 +97,7 @@ Two related conventions worth resisting drift on:
 
 ## Value/cost ranking — open lever on NS divergence
 
-The single biggest open lever on NS divergence. Per-tier rollup across
+**High priority.** The single biggest open lever on NS divergence. Per-tier rollup across
 fixtures shows a consistent pattern: walker reaches tier 1 reliably
 (avg credit ~0.70–0.99), tier 2 mostly (~0.32–0.91), then drops sharply
 at tier 3+ (~0.10–0.30). Two sub-symptoms that *seem* distinct but are
