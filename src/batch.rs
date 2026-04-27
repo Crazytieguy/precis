@@ -511,8 +511,8 @@ impl WalkerKey for BatchKey {
             BatchKey::Go(k) => k.concavity_exponent(),
             BatchKey::Json(k) => k.concavity_exponent(),
             BatchKey::Python(k) => k.concavity_exponent(),
+            BatchKey::Rust(k) => k.concavity_exponent(),
             BatchKey::Fs(_)
-            | BatchKey::Rust(_)
             | BatchKey::Toml(_)
             | BatchKey::Typescript(_)
             | BatchKey::Plaintext(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
@@ -536,6 +536,20 @@ impl FsKey {
 }
 
 impl RustKey {
+    /// `PubItemDocBody` carries a steeper `0.45`: rustdoc prose after
+    /// the first `# Heading` grows token cost without proportional
+    /// structural value, so at the default it out-ranks cheaper
+    /// anchors (`PubItemNames`, `ModUse`, sibling `PubItem`s).
+    /// `CrateDocBody` stays at the default — its bullets are where
+    /// fixture NSes credit the crate-orientation prose. Matches the
+    /// `MarkdownKey::Section` precedent of demoting prose bodies only.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            RustKey::PubItemDocBody { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
     pub fn describe(&self) -> String {
         match self {
             RustKey::CrateDocLede { file } => format!("crate-doc lede in {}", display_path(file)),
