@@ -50,7 +50,9 @@ pub(crate) enum Class {
     /// .editorconfig / .eslintrc / .prettierrc (extensionless).
     /// Formatting + lint conventions; affects code edits.
     EditorConfig,
-    /// .nvmrc / .python-version / .tool-versions. Toolchain pinning.
+    /// .nvmrc / .python-version / .tool-versions / pnpm-workspace.yaml.
+    /// Toolchain or workspace-topology pinning — orientation files for
+    /// "what does this project assume about its environment / shape".
     /// `.npmrc` is intentionally absent (auth-token risk — see module
     /// doc).
     Toolchain,
@@ -86,7 +88,9 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     match name {
         ".gitignore" | ".dockerignore" => Some(Class::IgnoreList),
         ".editorconfig" | ".eslintrc" | ".prettierrc" => Some(Class::EditorConfig),
-        ".nvmrc" | ".python-version" | ".tool-versions" => Some(Class::Toolchain),
+        ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
+            Some(Class::Toolchain)
+        }
         _ => None,
     }
 }
@@ -174,6 +178,7 @@ mod tests {
             (".nvmrc", Some(Class::Toolchain)),
             (".python-version", Some(Class::Toolchain)),
             (".tool-versions", Some(Class::Toolchain)),
+            ("pnpm-workspace.yaml", Some(Class::Toolchain)),
             // Owned by other walkers.
             ("LICENSE.md", None),
             (".eslintrc.json", None),

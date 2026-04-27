@@ -47,6 +47,13 @@ Readme.md
     63→```sh
     64→npm install commander
     65→```
+    956→## Custom event listeners
+    958→You can execute custom actions by listening to `command` and `option` events.
+    960→```js
+    961→program.on('option:verbose', function () {
+    962→  process.env.VERBOSE = this.opts().verbose;
+    963→});
+    964→```
 Readme_zh-CN.md
     59→## 安装
     61→```sh
@@ -145,25 +152,6 @@ lib/
     suggestSimilar.js
 package-lock.json
 package-support.json
-    1→{
-    2→  "versions": [
-    3→    {
-    4→      "version": "*",
-    5→      "target": {
-    6→        "node": "supported"
-    7→      },
-    8→      "response": {
-    9→        "type": "time-permitting"
-    10→      },
-    11→      "backing": {
-    12→        "donations": [
-    13→          "https://github.com/sponsors/abetomo",
-    14→          "https://github.com/sponsors/shadowspawn"
-    15→        ]
-    16→      }
-    17→    }
-    18→  ]
-    19→}
 package.json
     2→  "name": "commander",
     3→  "version": "14.0.3",
@@ -246,46 +234,87 @@ package.json
     80→  },
 tests/
 tsconfig.js.json
-    1→{
-    2→  /* 
-    3→    Simple override including just JavaScript files.
-    4→    Used by npm run-script typecheck:js
-    5→  */
-    6→  /* Visit https://aka.ms/tsconfig to read more about tsconfig configuration. */
-    7→  "extends": "./tsconfig.json",
-    8→  "include": [
-    9→    /* All JavaScript targets from tsconfig.json include. */
-    10→    "*.js",
-    11→    ".prettierrc.js" /* missed by above pattern */,
-    12→    "*.mjs",
-    13→    "lib/**/*.js",
-    14→  ],
-    15→}
 tsconfig.json
 tsconfig.ts.json
-    1→{
-    2→  /* 
-    3→    Override to include just TypeScript files and use stricter settings than we do with JavaScript.
-    4→    Used by:
-    5→    - npm run-script typecheck:ts
-    6→  */
-    7→  /* Visit https://aka.ms/tsconfig to read more about tsconfig configuration. */
-    8→  "extends": "./tsconfig.json",
-    9→  "compilerOptions": {
-    10→    /* Full strict is fine for the TypeScript files, so turn back on the checks we turned off for mixed-use. */
-    11→    "noImplicitAny": true,
-    12→    "strictNullChecks": true,
-    13→    "useUnknownInCatchVariables": true,
-    14→  },
-    15→  "include": [
-    16→    /* All TypeScript targets from tsconfig.json include. */
-    17→    "**/*.ts",
-    18→    "**/*.mts",
-    19→  ],
-    20→}
 typings/
     esm.d.mts
     index.d.ts
+        16→export class CommanderError extends Error {
+        17→  code: string;
+        18→  exitCode: number;
+        19→  message: string;
+        20→  nestedError?: string;
+        28→  constructor(exitCode: number, code: string, message: string);
+        31→export class InvalidArgumentError extends CommanderError {
+        …
+        36→  constructor(message: string);
+        38→export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
+        …
+        40→export interface ErrorOptions {
+        41→  // optional parameter for error()
+        42→  /** an id string representing the error */
+        43→  code?: string;
+        44→  /** suggested exit code which could be used with process.exit */
+        45→  exitCode?: number;
+        46→}
+        48→export class Argument {
+        …
+        95→export class Option {
+        …
+        210→export class Help {
+        …
+        340→export type HelpConfiguration = Partial<Help>;
+        …
+        342→export interface ParseOptions {
+        343→  from: 'node' | 'electron' | 'user';
+        344→}
+        345→export interface HelpContext {
+        346→  // optional parameter for .help() and .outputHelp()
+        347→  error: boolean;
+        348→}
+        349→export interface AddHelpTextContext {
+        350→  // passed to text function used with .addHelpText()
+        351→  error: boolean;
+        352→  command: Command;
+        353→}
+        354→export interface OutputConfiguration {
+        355→  writeOut?(str: string): void;
+        356→  writeErr?(str: string): void;
+        357→  outputError?(str: string, write: (str: string) => void): void;
+        359→  getOutHelpWidth?(): number;
+        360→  getErrHelpWidth?(): number;
+        362→  getOutHasColors?(): boolean;
+        363→  getErrHasColors?(): boolean;
+        364→  stripColor?(str: string): string;
+        365→}
+        367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
+        368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
+        …
+        370→export type OptionValueSource =
+        371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
+        372→  | undefined;
+        374→export type OptionValues = Record<string, any>;
+        …
+        376→export class Command {
+        …
+        1094→export interface CommandOptions {
+        1095→  hidden?: boolean;
+        1096→  isDefault?: boolean;
+        1097→  /** @deprecated since v7, replaced by hidden */
+        1098→  noHelp?: boolean;
+        1099→}
+        1100→export interface ExecutableCommandOptions extends CommandOptions {
+        1101→  executableFile?: string;
+        1102→}
+        1104→export interface ParseOptionsResult {
+        1105→  operands: string[];
+        1106→  unknown: string[];
+        1107→}
+        1109→export function createCommand(name?: string): Command;
+        1110→export function createOption(flags: string, description?: string): Option;
+        1111→export function createArgument(name: string, description?: string): Argument;
+        …
+        1113→export const program: Command;
     index.test-d.ts
         1→import * as commander from './index';
         2→import { expectType } from 'tsd';

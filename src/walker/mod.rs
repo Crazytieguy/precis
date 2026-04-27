@@ -101,6 +101,9 @@ pub struct WalkCtx {
     /// Per-run state owned by `walker::rust` — module visibility,
     /// workspace membership, exported-macro names per dir.
     rust_state: rust::RustState,
+    /// Per-run state owned by `walker::json` — npm/yarn/pnpm
+    /// workspace-member resolution.
+    json_state: json::JsonState,
 }
 
 impl WalkCtx {
@@ -114,6 +117,7 @@ impl WalkCtx {
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
             rust_state: rust::RustState::new(),
+            json_state: json::JsonState::default(),
         }
     }
 
@@ -178,6 +182,16 @@ impl WalkCtx {
     /// Cargo concept and the cache should die with the run.
     pub fn is_workspace_member(&self, file: &Path) -> bool {
         self.rust_state.is_workspace_member(file, &self.root)
+    }
+
+    /// `true` iff `file` is a `package.json` declared as a member of the
+    /// seed-root JS/TS workspace (npm/yarn `workspaces` field or
+    /// `pnpm-workspace.yaml` `packages:` list). Mirrors
+    /// [`Self::is_workspace_member`] for the JSON walker, which uses it to
+    /// damp `Identity` on nested package manifests where most metadata
+    /// is inherited from / orchestrated by the workspace root.
+    pub fn is_js_workspace_member(&self, file: &Path) -> bool {
+        self.json_state.is_workspace_member(file, &self.root)
     }
 }
 

@@ -69,8 +69,8 @@ scores: Sim=0.296 Reached=7/40 Early=5 Late=1 Partial=0 Missing=33 Used=1524/100
 | 302 | 1.00 | 302 | 1524 | plaintext config LICENSE |
 | 140 | 1.00 | 140 | 1202 | CLAUDE.md section #4 |
 | 101 | 1.00 | 101 | 312 | headings outline in CLAUDE.md |
-| 99 | 1.00 | 99 | 916 | CLAUDE.md section #2 |
-| 97 | 1.00 | 97 | 658 | json config .claude/settings.json |
-| 87 | 1.00 | 87 | 817 | CLAUDE.md section #3 |
-| 72 | 1.00 | 72 | 730 | CLAUDE.md section #6 |
+| 99 | 1.00 | 99 | 819 | CLAUDE.md section #2 |
+| 97 | 1.00 | 97 | 962 | json config .claude/settings.json |
+| 87 | 1.00 | 87 | 720 | CLAUDE.md section #3 |
+| 72 | 1.00 | 72 | 633 | CLAUDE.md section #6 |
 | 66 | 1.00 | 66 | 1051 | CLAUDE.md section #5 |

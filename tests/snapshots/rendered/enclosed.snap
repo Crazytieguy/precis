@@ -56,6 +56,9 @@ LICENSE
 README.md
     26→## Introduction
     28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
+    30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
+    32→A live instance is available at [enclosed.cc](https://enclosed.cc).
+    34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
     36→## Features
     …
     52→## Self host
@@ -70,6 +73,7 @@ README.md
     …
     93→## CLI
     …
+    95→The Enclosed CLI allows you to create notes from the terminal. You can install it globally using npm, yarn, or pnpm.
     97→### Installation
     …
     110→### Create a note
@@ -84,6 +88,7 @@ README.md
     …
     155→## License
     …
+    157→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
     159→## Credits and Acknowledgements
     …
     168→### Stack
@@ -94,6 +99,7 @@ README.md
     …
     194→## Contact Information
     …
+    196→Please use the issue tracker on GitHub for any questions or feedback.
 docker-compose.yml
 package.json
     2→  "name": "@enclosed/root",
@@ -132,17 +138,38 @@ packages/
     app-server/
         eslint.config.js
         package.json
-            2→  "name": "@enclosed/app-server",
-            3→  "type": "module",
-            4→  "version": "1.16.0",
-            6→  "description": "Enclosed backend server",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "license": "Apache-2.0",
-            9→  "repository": {
-            10→    "type": "git",
-            11→    "url": "https://github.com/CorentinTh/enclosed"
-            12→  },
         src/
+            index.cloudflare.ts
+                8→export default app;
+            index.node.ts
+            modules/
+                app/
+                notes/
+                shared/
+                    errors/
+                        errors.test.ts
+                        errors.ts
+                            4→export { createError, createErrorFactory, isCustomError };
+                            …
+                    logger/
+                    utils/
+                        random.ts
+                            3→export { generateId };
+                            …
+                    validation/
+                        validation.test.ts
+                        validation.ts
+                storage/
+                    factories/
+                    storage.models.ts
+                        3→export { defineBindableStorageFactory, defineStorage };
+                        …
+                    storage.types.ts
+                tasks/
+            reset.d.ts
+            scripts/
+                clear-outdated-cloudflare-kv-keys.script.ts
+                generate-config-table.script.ts
         tsconfig.json
         wrangler.toml
     cli/
@@ -152,6 +179,7 @@ packages/
         bin/
             enclosed.mjs
         build.config.ts
+            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
             4→  entries: [
             5→    'src/cli',
@@ -163,25 +191,48 @@ packages/
             11→});
         eslint.config.js
         package.json
-            2→  "name": "@enclosed/cli",
-            3→  "type": "module",
-            4→  "version": "1.16.0",
-            6→  "description": "Enclosed cli to create secure notes.",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "license": "Apache-2.0",
-            9→  "repository": {
-            10→    "type": "git",
-            11→    "url": "https://github.com/CorentinTh/enclosed"
-            12→  },
-            13→  "main": "./dist/cli.cjs",
-            14→  "module": "./dist/cli.mjs",
-            15→  "bin": {
-            16→    "enclosed": "./bin/enclosed.mjs"
-            17→  },
-            18→  "files": [
-            19→    "dist"
-            20→  ],
         src/
+            cli.ts
+            config/
+                config.command.ts
+                    8→export const configCommand = defineCommand({
+                    …
+                config.constants.ts
+                    3→export const configDefinition = {
+                    …
+                config.models.ts
+                    5→export { createConfigBindings, deleteConfig, getConfig, resetConfig, setConfig };
+                    …
+                config.usecases.ts
+                    3→export const {
+                    4→  get: getInstanceUrl,
+                    5→  set: setInstanceUrl,
+                    6→} = createConfigBindings({ key: 'instance-url' });
+            create-note/
+                create-note.command.ts
+                    13→export const createNoteCommand = defineCommand({
+                    …
+                create-note.usecases.test.ts
+                create-note.usecases.ts
+                    3→export async function getNoteContent({
+                    …
+            files/
+                files.services.test.ts
+                files.services.ts
+            shared/
+                cli.models.ts
+                    3→export { readFromStdin };
+                    …
+                http.models.ts
+                    3→export { looksLikeRateLimitError };
+                    …
+            view-note/
+                view-note.command.ts
+                    7→export const viewNoteCommand = defineCommand({
+                    …
+                view-note.models.ts
+                    3→export { promptForPassword };
+                    …
         tsconfig.json
     crypto/
         README.md
@@ -193,7 +244,9 @@ packages/
             …
             22→## Credits and Acknowledgements
             …
+            24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
+            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
             4→  entries: [
             5→    'src/index.node',
@@ -208,36 +261,36 @@ packages/
             14→});
         eslint.config.js
         package.json
-            2→  "name": "@enclosed/crypto",
-            3→  "type": "module",
-            4→  "version": "1.16.0",
-            6→  "description": "Enclosed cross-env crypto primitives",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "license": "Apache-2.0",
-            9→  "repository": {
-            10→    "type": "git",
-            11→    "url": "https://github.com/CorentinTh/enclosed"
-            12→  },
         src/
+            api-definition.ts
+                4→export { createEnclosedCryptoApi };
+                …
+            encryption-algorithms/
+            index.node.ts
+                8→export const {
+                …
+            index.test.ts
+            index.web.ts
+                8→export const {
+                …
+            node/
+                crypto.node.usecases.test.ts
+                crypto.node.usecases.ts
+                    5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
+                    …
+                encryption-algorithms/
+            web/
+                crypto.web.usecases.test.ts
+                crypto.web.usecases.ts
+                    1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
+                    …
+                encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
         _routes.json
         build.sh
         package.json
-            2→  "name": "@enclosed/deploy-cloudflare",
-            3→  "version": "1.16.0",
-            4→  "description": "Deploy scripts for Cloudflare Pages",
-            5→  "packageManager": "pnpm@9.15.0",
-            6→  "license": "Apache-2.0",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "repository": {
-            9→    "type": "git",
-            10→    "url": "https://github.com/CorentinTh/enclosed"
-            11→  },
-            12→  "scripts": {
-            13→    "build": "./build.sh"
-            14→  }
         wrangler.toml
     docs/
         .vitepress/
@@ -254,19 +307,47 @@ packages/
                 index.js
         eslint.config.js
         package.json
-            2→  "name": "@enclosed/docs",
-            3→  "type": "module",
-            4→  "version": "1.16.0",
-            6→  "description": "Documentation website for Enclosed.",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "license": "Apache-2.0",
-            9→  "repository": {
-            10→    "type": "git",
-            11→    "url": "https://github.com/CorentinTh/enclosed"
-            12→  },
-            13→  "keywords": [],
-            14→  "main": "index.js",
         src/
+            components/
+                credential-inputs.vue
+                toggle.vue
+            data/
+                configuration.data.ts
+                    55→export default {
+                    56→  watch: ['../../../app-server/src/modules/app/config/config.ts'],
+                    57→  async load() {
+                    58→    return md.render(mdTable);
+                    59→  },
+                    60→};
+                i18n.data.ts
+                    59→export default {
+                    60→  watch: ['../../../app-client/src/locales/*'],
+                    61→  async load() {
+                    62→    return {
+                    63→      localeConfigs,
+                    64→      table: md.render(mdTable),
+                    65→    };
+                    66→  },
+                    67→};
+            how-it-works.md
+            index.md
+                5→# Enclosed
+                …
+                11→## Key Features
+                …
+                27→## Why Enclosed?
+                …
+                33→## Get Started
+                …
+            integrations/
+                cli.md
+                npm-package.md
+                versioning.md
+            public/
+            resources/
+                brand-kit.md
+                i18n.md
+            self-hosting/
     lib/
         README.md
             1→### Enclosed lib
@@ -280,6 +361,7 @@ packages/
             37→## Credits and Acknowledgements
             …
         build.config.ts
+            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
             4→  entries: [
             5→    'src/index',
@@ -293,21 +375,17 @@ packages/
             13→});
         eslint.config.js
         package.json
-            2→  "name": "@enclosed/lib",
-            3→  "type": "module",
-            4→  "version": "1.16.0",
-            6→  "description": "Enclosed lib to create secure notes.",
-            7→  "author": "Corentin Thomasset <corentinth@proton.me> (https://corentin.tech)",
-            8→  "license": "Apache-2.0",
-            9→  "repository": {
-            10→    "type": "git",
-            11→    "url": "https://github.com/CorentinTh/enclosed"
-            12→  },
         src/
             api/
+                api.client.ts
+                api.constants.ts
+                api.models.test.ts
+                api.models.ts
             crypto/
             files/
                 files.models.ts
+                    4→export { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile };
+                    …
             index.ts
                 10→export {
                 11→  createNote,
@@ -333,9 +411,3 @@ packages/
 pnpm-lock.yaml
 pnpm-workspace.yaml
 renovate.json
-    1→{
-    2→  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    3→  "extends": [
-    4→    "config:recommended"
-    5→  ]
-    6→}

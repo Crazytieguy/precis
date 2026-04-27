@@ -22,7 +22,7 @@ scores: Sim=0.342 Reached=5/50 Early=3 Late=2 Partial=0 Missing=45 Used=9085/100
 | 1.6 | 410 | 1028 | +618 | 1.00 | late | Bootstrappers + instruments subdir contents |  |
 | 1.7 | 610 | — | — | 0.00 | missing | Public API re-exports (__all__) |  |
 | 1.8 | 795 | — | — | 0.00 | missing | README — canonical Litestar quickstart snippet |  |
-| 1.9 | 1027 | 418 | -609 | 0.89 | early | README table-of-contents (H2/H3 outline) | README headline in README.md (t=418, 17 atoms) |
+| 1.9 | 1027 | 335 | -692 | 0.89 | early | README table-of-contents (H2/H3 outline) | README headline in README.md (t=335, 17 atoms) |
 | 2.1 | 1093 | — | — | 0.00 | missing | Instrument ABC — class declaration |  |
 | 2.2 | 1126 | — | — | 0.00 | missing | BaseInstrumentConfig (pydantic base) |  |
 | 2.3 | 1201 | — | — | 0.00 | missing | Instrument ABC — abstract methods (signatures) |  |
@@ -97,5 +97,5 @@ scores: Sim=0.342 Reached=5/50 Early=3 Late=2 Partial=0 Missing=45 Used=9085/100
 | 159 | 1.00 | 159 | 2234 | plaintext config .gitignore |
 | 136 | 1.00 | 136 | 958 | package dependencies in package.json |
 | 93 | 1.00 | 93 | 1121 | README.md section #7 |
-| 83 | 1.00 | 83 | 196 | package scripts in package.json |
+| 83 | 1.00 | 83 | 418 | package scripts in package.json |
 | 68 | 1.00 | 68 | 104 | package identity in package.json |

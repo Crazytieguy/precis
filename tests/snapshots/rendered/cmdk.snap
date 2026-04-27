@@ -24,6 +24,7 @@ ARCHITECTURE.md
     …
     96→## Groups
     …
+    98→Item mount informs both the root and the parent group, which keeps track of items within it. Each group informs the root.
 LICENSE.md
 README.md
     5→# ⌘K…
@@ -79,42 +80,6 @@ README.md
     …
 cmdk/
     package.json
-        2→  "name": "cmdk",
-        3→  "version": "1.1.1",
-        4→  "license": "MIT",
-        5→  "main": "./dist/index.js",
-        6→  "module": "./dist/index.mjs",
-        7→  "types": "./dist/index.d.ts",
-        8→  "files": [
-        9→    "dist"
-        10→  ],
-        11→  "exports": {
-        12→    ".": {
-        13→      "types": "./dist/index.d.ts",
-        14→      "import": "./dist/index.mjs",
-        15→      "require": "./dist/index.js"
-        16→    }
-        17→  },
-        18→  "scripts": {
-        19→    "prepublishOnly": "cp ../README.md . && pnpm build",
-        20→    "postpublish": "rm README.md",
-        21→    "build": "tsup src",
-        22→    "dev": "tsup src --watch"
-        23→  },
-        37→  "sideEffects": false,
-        38→  "repository": {
-        39→    "type": "git",
-        40→    "url": "git+https://github.com/pacocoursey/cmdk.git",
-        41→    "directory": "cmdk"
-        42→  },
-        43→  "bugs": {
-        44→    "url": "https://github.com/pacocoursey/cmdk/issues"
-        45→  },
-        46→  "homepage": "https://github.com/pacocoursey/cmdk#readme",
-        47→  "author": {
-        48→    "name": "Paco",
-        49→    "url": "https://github.com/pacocoursey"
-        50→  }
     src/
         command-score.ts
             155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
@@ -150,7 +115,42 @@ cmdk/
             785→ * All props are forwarded to the underyling `input` element.
             786→ */
             787→const Input = React.forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-            …
+            788→  const { onValueChange, ...etc } = props
+            789→  const isControlled = props.value != null
+            790→  const store = useStore()
+            791→  const search = useCmdk((state) => state.search)
+            792→  const selectedItemId = useCmdk((state) => state.selectedItemId)
+            793→  const context = useCommand()
+            795→  React.useEffect(() => {
+            796→    if (props.value != null) {
+            797→      store.setState('search', props.value)
+            798→    }
+            799→  }, [props.value])
+            801→  return (
+            802→    <Primitive.input
+            803→      ref={forwardedRef}
+            804→      {...etc}
+            805→      cmdk-input=""
+            806→      autoComplete="off"
+            807→      autoCorrect="off"
+            808→      spellCheck={false}
+            809→      aria-autocomplete="list"
+            810→      role="combobox"
+            811→      aria-expanded={true}
+            812→      aria-controls={context.listId}
+            813→      aria-labelledby={context.labelId}
+            814→      aria-activedescendant={selectedItemId}
+            815→      id={context.inputId}
+            816→      type="text"
+            817→      value={isControlled ? props.value : search}
+            818→      onChange={(e) => {
+            819→        if (!isControlled) {
+            820→          store.setState('search', e.target.value)
+            821→        }
+            823→        onValueChange?.(e.target.value)
+            824→      }}
+            825→    />
+            826→  )
             829→/**
             830→ * Contains `Item`, `Group`, and `Separator`.
             831→ * Use the `--cmdk-list-height` CSS variable to animate height based on the number of results.
@@ -252,25 +252,10 @@ playwright.config.ts
     27→export default config
 pnpm-lock.yaml
 pnpm-workspace.yaml
+    1→packages:
+    2→  - 'website'
+    3→  - 'test'
+    4→  - 'cmdk'
 test/
 tsconfig.json
-    1→{
-    2→  "compilerOptions": {
-    3→    "target": "es2018",
-    4→    "lib": ["dom", "dom.iterable", "esnext"],
-    5→    "allowJs": true,
-    6→    "skipLibCheck": true,
-    7→    "strict": false,
-    8→    "forceConsistentCasingInFileNames": true,
-    9→    "esModuleInterop": true,
-    10→    "module": "esnext",
-    11→    "moduleResolution": "node",
-    12→    "resolveJsonModule": true,
-    13→    "isolatedModules": true,
-    14→    "jsx": "react",
-    15→    "noEmit": true
-    16→  },
-    17→  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-    18→  "exclude": ["node_modules", "build", "dist", ".next"]
-    19→}
 website/

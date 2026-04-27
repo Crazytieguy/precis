@@ -1,7 +1,7 @@
 fixture = "htmy"
 budget = 10000
-cumulative_tokens = 9689
-batch_count = 97
+cumulative_tokens = 9668
+batch_count = 96
 
 [[batches]]
 position = 1
@@ -3935,24 +3935,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
 start = 13
 end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json"
-cost_tokens = 21
-cum_tokens = 9689
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json"
-start = 1
-end = 3
 
 [batches.content.spans.render]
 kind = "full"

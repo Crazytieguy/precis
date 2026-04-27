@@ -10,9 +10,6 @@ expression: rendered
 .prettierrc.js
 .vscode/
     settings.json
-        1→{
-        2→  "typescript.tsdk": "node_modules/typescript/lib"
-        3→}
 FUNDING.yml
 LICENSE.md
 README.md
@@ -20,32 +17,6 @@ package.json
     2→  "name": "vaul",
     3→  "version": "1.1.2",
     4→  "description": "Drawer component for React.",
-    5→  "main": "./dist/index.js",
-    6→  "module": "./dist/index.mjs",
-    7→  "types": "./dist/index.d.ts",
-    8→  "files": [
-    9→    "dist",
-    10→    "style.css"
-    11→  ],
-    12→  "exports": {
-    13→    "import": {
-    14→      "types": "./dist/index.d.mts",
-    15→      "default": "./dist/index.mjs"
-    16→    },
-    17→    "require": {
-    18→      "types": "./dist/index.d.ts",
-    19→      "default": "./dist/index.js"
-    20→    }
-    21→  },
-    22→  "scripts": {
-    23→    "type-check": "tsc --noEmit",
-    24→    "build": "pnpm type-check && bunchee && pnpm copy-assets",
-    25→    "copy-assets": "cp -r ./src/style.css ./style.css",
-    26→    "dev": "bunchee --watch",
-    27→    "dev:test": "turbo run dev --filter=test...",
-    28→    "format": "prettier --write .",
-    29→    "test": "playwright test"
-    30→  },
     31→  "keywords": [
     32→    "react",
     33→    "drawer",
@@ -68,6 +39,9 @@ playwright.config.ts
     …
 pnpm-lock.yaml
 pnpm-workspace.yaml
+    1→packages:
+    2→  - '.'
+    3→  - 'test'
 src/
     browser.ts
         1→export function isMobileFirefox(): boolean | undefined {
@@ -94,6 +68,23 @@ src/
         34→export function testPlatform(re: RegExp): boolean | undefined {
         35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
     constants.ts
+        1→export const TRANSITIONS = {
+        2→  DURATION: 0.5,
+        3→  EASE: [0.32, 0.72, 0, 1],
+        4→};
+        6→export const VELOCITY_THRESHOLD = 0.4;
+        …
+        8→export const CLOSE_THRESHOLD = 0.25;
+        …
+        10→export const SCROLL_LOCK_TIMEOUT = 100;
+        …
+        12→export const BORDER_RADIUS = 8;
+        …
+        14→export const NESTED_DISPLACEMENT = 16;
+        …
+        16→export const WINDOW_TOP_OFFSET = 26;
+        …
+        18→export const DRAG_CLASS = 'vaul-dragging';
     context.ts
         37→export const DrawerContext = React.createContext<DrawerContextValue>({
         …
@@ -180,7 +171,31 @@ src/
         999→) {
         …
         1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-        …
+        1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
+        1101→  if (!onNestedDrag) {
+        1102→    throw new Error('Drawer.NestedRoot must be placed in another drawer');
+        1103→  }
+        1105→  return (
+        1106→    <Root
+        1107→      nested
+        1108→      open={nestedIsOpen}
+        1109→      onClose={() => {
+        1110→        onNestedOpenChange(false);
+        1111→      }}
+        1112→      onDrag={(e, p) => {
+        1113→        onNestedDrag(e, p);
+        1114→        onDrag?.(e, p);
+        1115→      }}
+        1116→      onOpenChange={(o) => {
+        1117→        if (o) {
+        1118→          onNestedOpenChange(o);
+        1119→        }
+        1120→        onOpenChange?.(o);
+        1121→      }}
+        1122→      onRelease={onNestedRelease}
+        1123→      {...rest}
+        1124→    />
+        1125→  );
         1130→export function Portal(props: PortalProps) {
         1131→  const context = useDrawerContext();
         1132→  const { container = context.container, ...portalProps } = props;
@@ -259,15 +274,4 @@ src/
         …
 test/
 tsconfig.json
-    1→{
-    2→  "compilerOptions": {
-    3→    "jsx": "react",
-    4→    "target": "es2018",
-    5→    "moduleResolution": "node",
-    6→    "esModuleInterop": true,
-    7→    "lib": ["es2015", "dom"],
-    8→    "strict": true
-    9→  },
-    10→  "include": ["src"],
-    11→}
 turbo.json

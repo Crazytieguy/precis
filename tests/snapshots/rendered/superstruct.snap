@@ -14,9 +14,6 @@ expression: rendered
 .prettierrc
 .vscode/
     settings.json
-        1→{
-        2→  "typescript.tsdk": "node_modules/typescript/lib"
-        3→}
 Changelog.md
 License.md
 Readme.md
@@ -139,6 +136,22 @@ docs/
             25→### `Infer`
             …
         utilities.md
+            1→# Utilities
+            …
+            5→### `assign`
+            …
+            20→### `deprecated`
+            …
+            38→### `dynamic`
+            …
+            51→### `lazy`
+            …
+            64→### `omit`
+            …
+            78→### `partial`
+            …
+            97→### `pick`
+            …
     resources/
         faq.md
             1→# FAQ
@@ -193,22 +206,6 @@ package.json
     15→  "publishConfig": {
     16→    "registry": "https://registry.npmjs.org"
     17→  },
-    38→  "scripts": {
-    39→    "build": "rm -rf ./{dist} && rollup --config ./rollup.config.js",
-    40→    "clean": "rm -rf ./{dist,node_modules}",
-    41→    "fix": "npm run fix:eslint && npm run fix:prettier",
-    42→    "fix:eslint": "npm run lint:eslint --fix",
-    43→    "fix:prettier": "prettier '**/*.{js,json,ts}' --write",
-    44→    "lint": "npm run lint:eslint && npm run lint:prettier",
-    45→    "lint:eslint": "eslint '{src,test}/*.{js,ts}'",
-    46→    "lint:prettier": "prettier '**/*.{js,json,ts}' --check",
-    47→    "release": "npm run build && npm run lint && np",
-    48→    "test": "npm run build && npm run test:types && npm run test:vitest",
-    49→    "test:types": "tsc --noEmit && tsc --project ./test/tsconfig.json --noEmit",
-    50→    "test:vitest": "vitest run",
-    51→    "test:watch": "vitest",
-    52→    "watch": "npm run build -- --watch"
-    53→  },
     54→  "keywords": [
     55→    "api",
     56→    "array",
@@ -265,7 +262,18 @@ src/
         31→  branch!: Array<any>
         32→  failures: () => Array<Failure>;
         35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-        …
+        36→    let cached: Array<Failure> | undefined
+        37→    const { message, explanation, ...rest } = failure
+        38→    const { path } = failure
+        39→    const msg =
+        40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+        41→    super(explanation ?? msg)
+        42→    if (explanation != null) this.cause = msg
+        43→    Object.assign(this, rest)
+        44→    this.name = this.constructor.name
+        45→    this.failures = () => {
+        46→      return (cached ??= [failure, ...failures()])
+        47→    }
     index.ts
         1→export * from './error.js'
         2→export * from './struct.js'
@@ -307,18 +315,37 @@ src/
             39→): Struct<T, S> {
             …
             55→export function min<T extends number | Date, S extends any>(
+            56→  struct: Struct<T, S>,
+            57→  threshold: T,
+            58→  options: {
+            59→    exclusive?: boolean
+            60→  } = {}
+            61→): Struct<T, S> {
             …
             77→export function nonempty<
             78→  T extends string | any[] | Map<any, any> | Set<any>,
             79→  S extends any,
             80→>(struct: Struct<T, S>): Struct<T, S> {
-            …
+            81→  return refine(struct, 'nonempty', (value) => {
+            82→    const size = getSize(value)
+            83→    return (
+            84→      size > 0 || `Expected a nonempty ${struct.type} but received an empty one`
+            85→    )
+            86→  })
             93→export function pattern<T extends string, S extends any>(
             94→  struct: Struct<T, S>,
             95→  regexp: RegExp
             96→): Struct<T, S> {
-            …
+            97→  return refine(struct, 'pattern', (value) => {
+            98→    return (
+            99→      regexp.test(value) ||
+            100→      `Expected a ${struct.type} matching \`/${regexp.source}/\` but received "${value}"`
+            101→    )
+            102→  })
             109→export function size<
+            110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
+            111→  S extends any,
+            112→>(struct: Struct<T, S>, min: number, max: number = min): Struct<T, S> {
             …
             146→export function refine<T, S>(
             147→  struct: Struct<T, S>,
@@ -331,20 +358,3 @@ src/
     utils.ts
 test/
 tsconfig.json
-    1→{
-    2→  "include": ["./src/**/*.ts"],
-    3→  "compilerOptions": {
-    4→    "allowSyntheticDefaultImports": true,
-    5→    "declaration": true,
-    6→    "declarationMap": true,
-    7→    "esModuleInterop": true,
-    8→    "lib": ["esnext"],
-    9→    "module": "esnext",
-    10→    "moduleResolution": "node",
-    11→    "outDir": "./dist",
-    12→    "sourceMap": true,
-    13→    "strict": true,
-    14→    "suppressImplicitAnyIndexErrors": true,
-    15→    "target": "es2020"
-    16→  }
-    17→}

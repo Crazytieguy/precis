@@ -65,28 +65,10 @@ entries = ["release_docs.yml", "workflow.yml"]
 
 [[batches]]
 position = 5
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json" })'
-descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json"
-cost_tokens = 83
-cum_tokens = 196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json"
-start = 7
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 6
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md"
 cost_tokens = 222
-cum_tokens = 418
+cum_tokens = 335
 
 [batches.content]
 kind = "lines"
@@ -103,6 +85,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md"
 start = 57
 end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json"
+cost_tokens = 83
+cum_tokens = 418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json"
+start = 7
+end = 12
 
 [batches.content.spans.render]
 kind = "full"

@@ -1,7 +1,7 @@
 fixture = "tomli"
 budget = 10000
-cumulative_tokens = 9990
-batch_count = 137
+cumulative_tokens = 9899
+batch_count = 130
 
 [[batches]]
 position = 1
@@ -2291,10 +2291,24 @@ entries = ["toml-test"]
 
 [[batches]]
 position = 70
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test'"
+cost_tokens = 6
+cum_tokens = 6373
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test"
+entries = ["LICENSE", "valid"]
+
+[[batches]]
+position = 71
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/no-newlines.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/no-newlines.json"
 cost_tokens = 5
-cum_tokens = 6372
+cum_tokens = 6378
 
 [batches.content]
 kind = "lines"
@@ -2306,20 +2320,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 71
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test'"
-cost_tokens = 6
-cum_tokens = 6378
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test"
-entries = ["LICENSE", "valid"]
 
 [[batches]]
 position = 72
@@ -2365,10 +2365,24 @@ entries = ["empty-inline-table.json", "empty-inline-table.toml", "multiline-inli
 
 [[batches]]
 position = 75
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str'"
+cost_tokens = 28
+cum_tokens = 6480
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str"
+entries = ["ends-in-whitespace-escape.json", "ends-in-whitespace-escape.toml", "replacements.json", "replacements.toml"]
+
+[[batches]]
+position = 76
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/inline-table/empty-inline-table.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/inline-table/empty-inline-table.json"
 cost_tokens = 10
-cum_tokens = 6462
+cum_tokens = 6490
 
 [batches.content]
 kind = "lines"
@@ -2382,133 +2396,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str'"
-cost_tokens = 28
-cum_tokens = 6490
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str"
-entries = ["ends-in-whitespace-escape.json", "ends-in-whitespace-escape.toml", "replacements.json", "replacements.toml"]
-
-[[batches]]
 position = 77
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json"
-cost_tokens = 35
-cum_tokens = 6525
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json"
-cost_tokens = 25
-cum_tokens = 6550
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json"
-cost_tokens = 44
-cum_tokens = 6594
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json"
-cost_tokens = 56
-cum_tokens = 6650
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json"
-cost_tokens = 59
-cum_tokens = 6709
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json"
-cost_tokens = 61
-cum_tokens = 6770
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/LICENSE" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/tomli/LICENSE"
 cost_tokens = 293
-cum_tokens = 7063
+cum_tokens = 6783
 
 [batches.content]
 kind = "lines"
@@ -2554,11 +2446,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 84
+position = 78
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid'"
 cost_tokens = 154
-cum_tokens = 7217
+cum_tokens = 6937
 
 [batches.content]
 kind = "fs"
@@ -2568,11 +2460,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid"
 entries = ["_external", "array", "array-missing-comma.toml", "array-of-tables", "basic-str-ends-in-escape.toml", "boolean", "dates-and-times", "dotted-keys", "inline-table", "inline-table-missing-comma.toml", "invalid-comment-char.toml", "invalid-escaped-unicode.toml", "invalid-hex.toml", "keys-and-vals", "literal-str", "missing-closing-double-square-bracket.toml", "missing-closing-square-bracket.toml", "multiline-basic-str", "multiline-literal-str", "non-scalar-escaped.toml", "table", "unclosed-multiline-string.toml", "unclosed-string.toml"]
 
 [[batches]]
-position = 85
+position = 79
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external'"
 cost_tokens = 5
-cum_tokens = 7222
+cum_tokens = 6942
 
 [batches.content]
 kind = "fs"
@@ -2582,11 +2474,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_e
 entries = ["toml-test"]
 
 [[batches]]
-position = 86
+position = 80
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/dates-and-times" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/dates-and-times'"
 cost_tokens = 6
-cum_tokens = 7228
+cum_tokens = 6948
 
 [batches.content]
 kind = "fs"
@@ -2596,11 +2488,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/da
 entries = ["invalid-day.toml"]
 
 [[batches]]
-position = 87
+position = 81
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/literal-str" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/literal-str'"
 cost_tokens = 6
-cum_tokens = 7234
+cum_tokens = 6954
 
 [batches.content]
 kind = "fs"
@@ -2610,11 +2502,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/li
 entries = ["unclosed.toml"]
 
 [[batches]]
-position = 88
+position = 82
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test'"
 cost_tokens = 6
-cum_tokens = 7240
+cum_tokens = 6960
 
 [batches.content]
 kind = "fs"
@@ -2624,11 +2516,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_e
 entries = ["LICENSE", "invalid"]
 
 [[batches]]
-position = 89
+position = 83
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/multiline-literal-str" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/multiline-literal-str'"
 cost_tokens = 15
-cum_tokens = 7255
+cum_tokens = 6975
 
 [batches.content]
 kind = "fs"
@@ -2638,11 +2530,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/mu
 entries = ["file-ends-after-opening.toml", "unclosed.toml"]
 
 [[batches]]
-position = 90
+position = 84
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/array-of-tables" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/array-of-tables'"
 cost_tokens = 18
-cum_tokens = 7273
+cum_tokens = 6993
 
 [batches.content]
 kind = "fs"
@@ -2652,11 +2544,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/ar
 entries = ["overwrite-array-in-parent.toml", "overwrite-bool-with-aot.toml"]
 
 [[batches]]
-position = 91
+position = 85
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/boolean" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/boolean'"
 cost_tokens = 18
-cum_tokens = 7291
+cum_tokens = 7011
 
 [batches.content]
 kind = "fs"
@@ -2666,11 +2558,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/bo
 entries = ["invalid-false-casing.toml", "invalid-true-casing.toml"]
 
 [[batches]]
-position = 92
+position = 86
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/table" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/table'"
 cost_tokens = 21
-cum_tokens = 7312
+cum_tokens = 7032
 
 [batches.content]
 kind = "fs"
@@ -2680,11 +2572,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/ta
 entries = ["eof-after-opening.toml", "redefine-1.toml", "redefine-2.toml"]
 
 [[batches]]
-position = 93
+position = 87
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/array" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/array'"
 cost_tokens = 23
-cum_tokens = 7335
+cum_tokens = 7055
 
 [batches.content]
 kind = "fs"
@@ -2694,11 +2586,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/ar
 entries = ["file-end-after-val.toml", "unclosed-after-item.toml", "unclosed-empty.toml"]
 
 [[batches]]
-position = 94
+position = 88
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/dotted-keys" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/dotted-keys'"
 cost_tokens = 33
-cum_tokens = 7368
+cum_tokens = 7088
 
 [batches.content]
 kind = "fs"
@@ -2708,11 +2600,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/do
 entries = ["access-non-table.toml", "extend-defined-aot.toml", "extend-defined-table-with-subtable.toml", "extend-defined-table.toml"]
 
 [[batches]]
-position = 95
+position = 89
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/keys-and-vals" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/keys-and-vals'"
 cost_tokens = 40
-cum_tokens = 7408
+cum_tokens = 7128
 
 [batches.content]
 kind = "fs"
@@ -2722,11 +2614,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/ke
 entries = ["ends-early-table-def.toml", "ends-early.toml", "no-value.toml", "only-ws-after-dot.toml", "overwrite-with-deep-table.toml"]
 
 [[batches]]
-position = 96
+position = 90
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/multiline-basic-str" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/multiline-basic-str'"
 cost_tokens = 42
-cum_tokens = 7450
+cum_tokens = 7170
 
 [batches.content]
 kind = "fs"
@@ -2736,11 +2628,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/mu
 entries = ["carriage-return.toml", "escape-only.toml", "file-ends-after-opening.toml", "last-line-escape.toml", "unclosed-ends-in-whitespace-escape.toml"]
 
 [[batches]]
-position = 97
+position = 91
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/inline-table" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/inline-table'"
 cost_tokens = 89
-cum_tokens = 7539
+cum_tokens = 7259
 
 [batches.content]
 kind = "fs"
@@ -2750,11 +2642,189 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/in
 entries = ["define-twice-in-subtable.toml", "define-twice.toml", "file-end-after-key-val.toml", "mutate.toml", "override-val-in-table.toml", "override-val-with-array.toml", "override-val-with-table.toml", "overwrite-implicitly.toml", "overwrite-value-in-inner-array.toml", "overwrite-value-in-inner-table.toml", "unclosed-empty.toml"]
 
 [[batches]]
+position = 92
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json"
+cost_tokens = 25
+cum_tokens = 7284
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/ends-in-whitespace-escape.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json"
+cost_tokens = 35
+cum_tokens = 7319
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/apostrophes-in-literal-string.json"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid'"
+cost_tokens = 56
+cum_tokens = 7375
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid"
+entries = ["array", "bool", "control", "datetime", "encoding", "float", "inline-table", "integer", "key", "local-date", "local-datetime", "local-time", "spec-1.1.0", "string", "table"]
+
+[[batches]]
+position = 95
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time'"
+cost_tokens = 51
+cum_tokens = 7426
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time"
+entries = ["hour-over.toml", "minute-over.toml", "second-over.toml", "time-no-leads-01.toml", "time-no-leads-02.toml", "trailing-dot.toml", "trailing-dotdot.toml"]
+
+[[batches]]
+position = 96
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json"
+cost_tokens = 44
+cum_tokens = 7470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/boolean.json"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0'"
+cost_tokens = 68
+cum_tokens = 7538
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0"
+entries = ["common-16-0.toml", "common-19-0.toml", "common-2.toml", "common-46-0.toml", "common-46-1.toml", "common-49-0.toml", "common-5.toml", "common-50-0.toml"]
+
+[[batches]]
 position = 98
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json"
+cost_tokens = 56
+cum_tokens = 7594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/trailing-comma.json"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json"
+cost_tokens = 59
+cum_tokens = 7653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/five-quotes.json"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json"
+cost_tokens = 61
+cum_tokens = 7714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/hex-char.json"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date'"
+cost_tokens = 86
+cum_tokens = 7800
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date"
+entries = ["day-1digit.toml", "feb-29.toml", "feb-30.toml", "mday-over.toml", "mday-under.toml", "month-over.toml", "month-under.toml", "no-leads-with-milli.toml", "no-leads.toml", "trailing-t.toml", "y10k.toml", "year-3digits.toml"]
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime'"
+cost_tokens = 96
+cum_tokens = 7896
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime"
+entries = ["feb-29.toml", "feb-30.toml", "hour-over.toml", "mday-over.toml", "mday-under.toml", "minute-over.toml", "month-over.toml", "month-under.toml", "no-leads-with-milli.toml", "no-leads.toml", "no-t.toml", "second-over.toml", "time-no-leads.toml", "y10k.toml"]
+
+[[batches]]
+position = 103
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/dates-and-times/localtime.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/dates-and-times/localtime.json"
 cost_tokens = 57
-cum_tokens = 7596
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2838,25 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 99
+position = 104
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool'"
+cost_tokens = 116
+cum_tokens = 8069
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool"
+entries = ["almost-false-with-extra.toml", "almost-false.toml", "almost-true-with-extra.toml", "almost-true.toml", "capitalized-false.toml", "capitalized-true.toml", "just-f.toml", "just-t.toml", "mixed-case-false.toml", "mixed-case-true.toml", "mixed-case.toml", "starting-same-false.toml", "starting-same-true.toml", "wrong-case-false.toml", "wrong-case-true.toml"]
+
+[[batches]]
+position = 105
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/open-parent-table.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/open-parent-table.json"
 cost_tokens = 62
-cum_tokens = 7658
+cum_tokens = 8131
 
 [batches.content]
 kind = "lines"
@@ -2786,149 +2870,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 100
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid'"
-cost_tokens = 56
-cum_tokens = 7714
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid"
-entries = ["array", "bool", "control", "datetime", "encoding", "float", "inline-table", "integer", "key", "local-date", "local-datetime", "local-time", "spec-1.1.0", "string", "table"]
-
-[[batches]]
-position = 101
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time'"
-cost_tokens = 51
-cum_tokens = 7765
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-time"
-entries = ["hour-over.toml", "minute-over.toml", "second-over.toml", "time-no-leads-01.toml", "time-no-leads-02.toml", "trailing-dot.toml", "trailing-dotdot.toml"]
-
-[[batches]]
-position = 102
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json"
-cost_tokens = 86
-cum_tokens = 7851
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json"
-cost_tokens = 102
-cum_tokens = 7953
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json"
-start = 1
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/dates-and-times/datetimes.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/dates-and-times/datetimes.json"
-cost_tokens = 107
-cum_tokens = 8060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/dates-and-times/datetimes.json"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0'"
-cost_tokens = 68
-cum_tokens = 8128
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/spec-1.1.0"
-entries = ["common-16-0.toml", "common-19-0.toml", "common-2.toml", "common-46-0.toml", "common-46-1.toml", "common-49-0.toml", "common-5.toml", "common-50-0.toml"]
-
-[[batches]]
 position = 106
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date'"
-cost_tokens = 86
-cum_tokens = 8214
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-date"
-entries = ["day-1digit.toml", "feb-29.toml", "feb-30.toml", "mday-over.toml", "mday-under.toml", "month-over.toml", "month-under.toml", "no-leads-with-milli.toml", "no-leads.toml", "trailing-t.toml", "y10k.toml", "year-3digits.toml"]
-
-[[batches]]
-position = 107
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime'"
-cost_tokens = 96
-cum_tokens = 8310
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/local-datetime"
-entries = ["feb-29.toml", "feb-30.toml", "hour-over.toml", "mday-over.toml", "mday-under.toml", "minute-over.toml", "month-over.toml", "month-under.toml", "no-leads-with-milli.toml", "no-leads.toml", "no-t.toml", "second-over.toml", "time-no-leads.toml", "y10k.toml"]
-
-[[batches]]
-position = 108
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool'"
-cost_tokens = 116
-cum_tokens = 8426
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/bool"
-entries = ["almost-false-with-extra.toml", "almost-false.toml", "almost-true-with-extra.toml", "almost-true.toml", "capitalized-false.toml", "capitalized-true.toml", "just-f.toml", "just-t.toml", "mixed-case-false.toml", "mixed-case-true.toml", "mixed-case.toml", "starting-same-false.toml", "starting-same-true.toml", "wrong-case-false.toml", "wrong-case-true.toml"]
-
-[[batches]]
-position = 109
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/encoding" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/encoding'"
 cost_tokens = 134
-cum_tokens = 8560
+cum_tokens = 8265
 
 [batches.content]
 kind = "fs"
@@ -2938,11 +2884,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_e
 entries = ["bad-codepoint.toml", "bad-utf8-at-end.toml", "bad-utf8-in-array.toml", "bad-utf8-in-comment.toml", "bad-utf8-in-multiline-literal.toml", "bad-utf8-in-multiline.toml", "bad-utf8-in-string-literal.toml", "bad-utf8-in-string.toml", "bom-not-at-start-01.toml", "bom-not-at-start-02.toml", "ideographic-space.toml", "utf16-bom.toml", "utf16-comment.toml", "utf16-key.toml"]
 
 [[batches]]
-position = 110
+position = 107
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid'"
 cost_tokens = 230
-cum_tokens = 8790
+cum_tokens = 8495
 
 [batches.content]
 kind = "fs"
@@ -2952,11 +2898,25 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_ext
 entries = ["array", "bool", "comment", "datetime", "empty-crlf.json", "empty-crlf.toml", "empty-lf.json", "empty-lf.toml", "empty-nothing.json", "empty-nothing.toml", "empty-space.json", "empty-space.toml", "empty-tab.json", "empty-tab.toml", "example.json", "example.toml", "float", "implicit-and-explicit-after.json", "implicit-and-explicit-after.toml", "implicit-and-explicit-before.json", "implicit-and-explicit-before.toml", "implicit-groups.json", "implicit-groups.toml", "inline-table", "integer", "key", "multibyte.json", "multibyte.toml", "newline-crlf.json", "newline-crlf.toml", "newline-lf.json", "newline-lf.toml", "spec-1.1.0", "spec-example-1-compact.json", "spec-example-1-compact.toml", "spec-example-1.json", "spec-example-1.toml", "string", "table"]
 
 [[batches]]
-position = 111
+position = 108
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool'"
+cost_tokens = 9
+cum_tokens = 8504
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool"
+entries = ["bool.json", "bool.toml"]
+
+[[batches]]
+position = 109
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-crlf.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-crlf.json"
 cost_tokens = 5
-cum_tokens = 8795
+cum_tokens = 8509
 
 [batches.content]
 kind = "lines"
@@ -2970,11 +2930,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 112
+position = 110
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-lf.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-lf.json"
 cost_tokens = 5
-cum_tokens = 8800
+cum_tokens = 8514
 
 [batches.content]
 kind = "lines"
@@ -2988,11 +2948,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 113
+position = 111
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-nothing.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-nothing.json"
 cost_tokens = 5
-cum_tokens = 8805
+cum_tokens = 8519
 
 [batches.content]
 kind = "lines"
@@ -3006,11 +2966,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 114
+position = 112
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-space.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-space.json"
 cost_tokens = 5
-cum_tokens = 8810
+cum_tokens = 8524
 
 [batches.content]
 kind = "lines"
@@ -3024,11 +2984,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 115
+position = 113
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-tab.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/empty-tab.json"
 cost_tokens = 5
-cum_tokens = 8815
+cum_tokens = 8529
 
 [batches.content]
 kind = "lines"
@@ -3042,25 +3002,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 116
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool'"
-cost_tokens = 9
-cum_tokens = 8824
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool"
-entries = ["bool.json", "bool.toml"]
-
-[[batches]]
-position = 117
+position = 114
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer'"
 cost_tokens = 58
-cum_tokens = 8882
+cum_tokens = 8587
 
 [batches.content]
 kind = "fs"
@@ -3070,47 +3016,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_ext
 entries = ["float64-max.json", "float64-max.toml", "integer.json", "integer.toml", "literals.json", "literals.toml", "long.json", "long.toml", "underscore.json", "underscore.toml", "zero.json", "zero.toml"]
 
 [[batches]]
-position = 118
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json"
-cost_tokens = 51
-cum_tokens = 8933
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json"
-cost_tokens = 52
-cum_tokens = 8985
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
+position = 115
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float'"
 cost_tokens = 71
-cum_tokens = 9056
+cum_tokens = 8658
 
 [batches.content]
 kind = "fs"
@@ -3120,29 +3030,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_ext
 entries = ["exponent.json", "exponent.toml", "float.json", "float.toml", "inf-and-nan.json", "inf-and-nan.toml", "long.json", "long.toml", "max-int.json", "max-int.toml", "underscore.json", "underscore.toml", "zero.json", "zero.toml"]
 
 [[batches]]
-position = 121
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool/bool.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool/bool.json"
-cost_tokens = 50
-cum_tokens = 9106
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/bool/bool.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
+position = 116
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment'"
 cost_tokens = 87
-cum_tokens = 9193
+cum_tokens = 8745
 
 [batches.content]
 kind = "fs"
@@ -3152,11 +3044,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_ext
 entries = ["after-literal-no-ws.json", "after-literal-no-ws.toml", "at-eof.json", "at-eof.toml", "at-eof2.json", "at-eof2.toml", "everywhere.json", "everywhere.toml", "noeol.json", "noeol.toml", "nonascii.json", "nonascii.toml", "tricky.json", "tricky.toml"]
 
 [[batches]]
-position = 123
+position = 117
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/noeol.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/noeol.json"
 cost_tokens = 5
-cum_tokens = 9198
+cum_tokens = 8750
 
 [batches.content]
 kind = "lines"
@@ -3170,11 +3062,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 124
+position = 118
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/nonascii.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/nonascii.json"
 cost_tokens = 5
-cum_tokens = 9203
+cum_tokens = 8755
 
 [batches.content]
 kind = "lines"
@@ -3188,11 +3080,25 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 125
+position = 119
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime'"
+cost_tokens = 106
+cum_tokens = 8861
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime"
+entries = ["datetime.json", "datetime.toml", "edge.json", "edge.toml", "invalid-date-in-string.json", "invalid-date-in-string.toml", "leap-year.json", "leap-year.toml", "local-date.json", "local-date.toml", "local-time.json", "local-time.toml", "local.json", "local.toml", "milliseconds.json", "milliseconds.toml", "no-seconds.json", "no-seconds.toml", "timezone.json", "timezone.toml"]
+
+[[batches]]
+position = 120
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/at-eof.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/at-eof.json"
 cost_tokens = 30
-cum_tokens = 9233
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -3206,11 +3112,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 126
+position = 121
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/at-eof2.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/comment/at-eof2.json"
 cost_tokens = 30
-cum_tokens = 9263
+cum_tokens = 8921
 
 [batches.content]
 kind = "lines"
@@ -3224,97 +3130,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 127
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/underscore.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/underscore.json"
-cost_tokens = 54
-cum_tokens = 9317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/underscore.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-groups.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-groups.json"
-cost_tokens = 75
-cum_tokens = 9392
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-groups.json"
-start = 1
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/max-int.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/max-int.json"
-cost_tokens = 62
-cum_tokens = 9454
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/max-int.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/float64-max.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/float64-max.json"
-cost_tokens = 62
-cum_tokens = 9516
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/float64-max.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 131
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime'"
-cost_tokens = 106
-cum_tokens = 9622
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime"
-entries = ["datetime.json", "datetime.toml", "edge.json", "edge.toml", "invalid-date-in-string.json", "invalid-date-in-string.toml", "leap-year.json", "leap-year.toml", "local-date.json", "local-date.toml", "local-time.json", "local-time.toml", "local.json", "local.toml", "milliseconds.json", "milliseconds.toml", "no-seconds.json", "no-seconds.toml", "timezone.json", "timezone.toml"]
-
-[[batches]]
-position = 132
+position = 122
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/invalid-date-in-string.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/invalid-date-in-string.json"
 cost_tokens = 36
-cum_tokens = 9658
+cum_tokens = 8957
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3148,25 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 133
+position = 123
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/inline-table" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/inline-table'"
+cost_tokens = 172
+cum_tokens = 9129
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/inline-table"
+entries = ["bad-key-syntax.toml", "double-comma.toml", "duplicate-key-01.toml", "duplicate-key-02.toml", "duplicate-key-03.toml", "duplicate-key-04.toml", "empty-01.toml", "empty-02.toml", "empty-03.toml", "no-close-01.toml", "no-close-02.toml", "no-comma-01.toml", "no-comma-02.toml", "overwrite-01.toml", "overwrite-02.toml", "overwrite-03.toml", "overwrite-04.toml", "overwrite-05.toml", "overwrite-06.toml", "overwrite-07.toml", "overwrite-08.toml", "overwrite-09.toml", "overwrite-10.toml"]
+
+[[batches]]
+position = 124
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/local-date.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/local-date.json"
 cost_tokens = 38
-cum_tokens = 9696
+cum_tokens = 9167
 
 [batches.content]
 kind = "lines"
@@ -3346,17 +3180,35 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 134
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/local-time.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/local-time.json"
-cost_tokens = 64
-cum_tokens = 9760
+position = 125
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json"
+cost_tokens = 86
+cum_tokens = 9253
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/datetime/local-time.json"
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/multiline-basic-str/replacements.json"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json"
+cost_tokens = 51
+cum_tokens = 9304
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-lf.json"
 start = 1
 end = 4
 
@@ -3364,17 +3216,17 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 135
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/long.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/long.json"
-cost_tokens = 67
-cum_tokens = 9827
+position = 127
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json"
+cost_tokens = 52
+cum_tokens = 9356
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/float/long.json"
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/newline-crlf.json"
 start = 1
 end = 4
 
@@ -3382,37 +3234,47 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 136
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/long.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/long.json"
-cost_tokens = 68
-cum_tokens = 9895
+position = 128
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/array" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/array'"
+cost_tokens = 216
+cum_tokens = 9572
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/integer/long.json"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/array"
+entries = ["double-comma-01.toml", "double-comma-02.toml", "extend-defined-aot.toml", "extending-table.toml", "missing-separator-01.toml", "missing-separator-02.toml", "no-close-01.toml", "no-close-02.toml", "no-close-03.toml", "no-close-04.toml", "no-close-05.toml", "no-close-06.toml", "no-close-07.toml", "no-close-08.toml", "no-close-table-01.toml", "no-close-table-02.toml", "no-comma-01.toml", "no-comma-02.toml", "no-comma-03.toml", "only-comma-01.toml", "only-comma-02.toml", "tables-01.toml", "tables-02.toml", "text-after-array-entries.toml", "text-before-array-separator.toml", "text-in-array.toml"]
 
 [[batches]]
-position = 137
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json"
-cost_tokens = 95
-cum_tokens = 9990
+position = 129
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/control" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/control'"
+cost_tokens = 225
+cum_tokens = 9797
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/invalid/_external/toml-test/invalid/control"
+entries = ["bare-cr.toml", "bare-formfeed.toml", "bare-null.toml", "bare-vertical-tab.toml", "comment-cr.toml", "comment-del.toml", "comment-ff.toml", "comment-lf.toml", "comment-null.toml", "comment-us.toml", "multi-cr.toml", "multi-del.toml", "multi-lf.toml", "multi-null.toml", "multi-us.toml", "only-ff.toml", "only-null.toml", "only-vt.toml", "rawmulti-cr.toml", "rawmulti-del.toml", "rawmulti-lf.toml", "rawmulti-null.toml", "rawmulti-us.toml", "rawstring-cr.toml", "rawstring-del.toml", "rawstring-lf.toml", "rawstring-null.toml", "rawstring-us.toml", "string-bs.toml", "string-cr.toml", "string-del.toml", "string-lf.toml", "string-null.toml", "string-us.toml"]
+
+[[batches]]
+position = 130
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json"
+cost_tokens = 102
+cum_tokens = 9899
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json"
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data/valid/array/array-subtables.json"
 start = 1
-end = 10
+end = 11
 
 [batches.content.spans.render]
 kind = "full"

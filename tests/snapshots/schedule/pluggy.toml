@@ -461,36 +461,10 @@ kind = "full"
 
 [[batches]]
 position = 19
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json" })'
-descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
-cost_tokens = 97
-cum_tokens = 658
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
-start = 8
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 6 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #6"
 cost_tokens = 72
-cum_tokens = 730
+cum_tokens = 633
 
 [batches.content]
 kind = "lines"
@@ -504,11 +478,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #3"
 cost_tokens = 87
-cum_tokens = 817
+cum_tokens = 720
 
 [batches.content]
 kind = "lines"
@@ -530,11 +504,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #2"
 cost_tokens = 99
-cum_tokens = 916
+cum_tokens = 819
 
 [batches.content]
 kind = "lines"
@@ -572,11 +546,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream/.gitignore" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/pluggy/downstream/.gitignore"
 cost_tokens = 46
-cum_tokens = 962
+cum_tokens = 865
 
 [batches.content]
 kind = "lines"
@@ -585,6 +559,32 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream/.gitignore"
 start = 1
 end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
+cost_tokens = 97
+cum_tokens = 962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
+start = 8
+end = 11
 
 [batches.content.spans.render]
 kind = "full"

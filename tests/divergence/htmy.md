@@ -1,4 +1,4 @@
-scores: Sim=0.328 Reached=5/40 Early=1 Late=3 Partial=2 Missing=33 Used=9689/10000
+scores: Sim=0.328 Reached=5/40 Early=1 Late=3 Partial=2 Missing=33 Used=9668/10000
 
 ## Tier rollup
 

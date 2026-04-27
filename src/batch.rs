@@ -426,11 +426,11 @@ impl WalkerKey for BatchKey {
             BatchKey::Markdown(k) => k.concavity_exponent(),
             BatchKey::C(k) => k.concavity_exponent(),
             BatchKey::Go(k) => k.concavity_exponent(),
+            BatchKey::Json(k) => k.concavity_exponent(),
             BatchKey::Fs(_)
             | BatchKey::Rust(_)
             | BatchKey::Toml(_)
             | BatchKey::Typescript(_)
-            | BatchKey::Json(_)
             | BatchKey::Plaintext(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -545,6 +545,22 @@ impl TomlKey {
 }
 
 impl JsonKey {
+    /// `Whole` carries a steeper concavity than the default for the same
+    /// reason Markdown non-leading sections do: a verbatim 200-line
+    /// `tsconfig.json` (or any non-package JSON config) has token cost
+    /// that grows without proportional structural value. 0.45 matches the
+    /// `MarkdownKey::Section` non-zero-index, `GoKey::Decl`, and
+    /// `CKey::Decl` precedent — calibrated against the d2ts (5 nested
+    /// configs) and cmdk (242-token tsconfig) divergence reports. The
+    /// other JsonKey variants stay at the default — the package.json
+    /// section batches are short and structural.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            JsonKey::Whole { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
     pub fn describe(&self) -> String {
         match self {
             JsonKey::Identity { file } => format!("package identity in {}", display_path(file)),

@@ -1,4 +1,4 @@
-scores: Sim=0.403 Reached=10/40 Early=3 Late=4 Partial=4 Missing=26 Used=9990/10000
+scores: Sim=0.403 Reached=10/40 Early=3 Late=4 Partial=4 Missing=26 Used=9899/10000
 
 ## Tier rollup
 
@@ -28,7 +28,7 @@ scores: Sim=0.403 Reached=10/40 Early=3 Late=4 Partial=4 Missing=26 Used=9990/10
 | 2.8 | 2100 | 4038 | +1938 | 0.85 | late | README usage: parse a TOML string | README.md section #3 (t=4038, 16 atoms) |
 | 2.9 | 2392 | 2989 | +597 | 0.81 | aligned | README usage: parse a file + handle errors | README.md section #5 (t=2822, 10 atoms) |
 | 3.1 | 2491 | — | — | 0.00 | missing | load body |  |
-| 3.2 | 2746 | 7217 | +4471 | 1.00 | late | tests/data/{valid,invalid}/ top listing |  |
+| 3.2 | 2746 | 6937 | +4191 | 1.00 | late | tests/data/{valid,invalid}/ top listing |  |
 | 3.3 | 2972 | — | — | 0.00 | missing | tests/* test method names |  |
 | 3.4 | 3320 | — | — | 0.00 | missing | loads body — prelude + skip / dispatch comments |  |
 | 3.5 | 3755 | — | — | 0.00 | missing | loads body — rule dispatch + statement terminator |  |
@@ -67,62 +67,55 @@ scores: Sim=0.403 Reached=10/40 Early=3 Late=4 Partial=4 Missing=26 Used=9990/10
 |-----------:|----------:|-----:|--------:|:------|
 | 357 | 1.00 | 357 | 6261 | tomllib.md section #2 |
 | 301 | 1.00 | 301 | 5770 | README.md section #13 |
-| 293 | 1.00 | 293 | 7063 | plaintext config LICENSE |
-| 230 | 1.00 | 230 | 8790 | listing of 'tests/data/valid/_external/toml-test/valid' |
+| 293 | 1.00 | 293 | 6783 | plaintext config LICENSE |
+| 230 | 1.00 | 230 | 8495 | listing of 'tests/data/valid/_external/toml-test/valid' |
+| 225 | 1.00 | 225 | 9797 | listing of 'tests/data/invalid/_external/toml-test/invalid/control' |
+| 216 | 1.00 | 216 | 9572 | listing of 'tests/data/invalid/_external/toml-test/invalid/array' |
 | 203 | 1.00 | 203 | 4291 | CHANGELOG.md section #9 |
 | 189 | 0.50 | 379 | 626 | headings outline in README.md |
 | 185 | 1.00 | 185 | 4764 | README.md section #8 |
 | 181 | 1.00 | 181 | 4945 | README.md section #14 |
+| 172 | 1.00 | 172 | 9129 | listing of 'tests/data/invalid/_external/toml-test/invalid/inline-table' |
 | 164 | 1.00 | 164 | 3486 | CHANGELOG.md section #7 |
 | 162 | 1.00 | 162 | 1295 | tomllib.md section #0 |
-| 134 | 1.00 | 134 | 8560 | listing of 'tests/data/invalid/_external/toml-test/invalid/encoding' |
+| 134 | 1.00 | 134 | 8265 | listing of 'tests/data/invalid/_external/toml-test/invalid/encoding' |
 | 130 | 1.00 | 130 | 3616 | CHANGELOG.md section #11 |
 | 127 | 1.00 | 127 | 3286 | CHANGELOG.md section #10 |
 | 125 | 1.00 | 125 | 2508 | CHANGELOG.md section #6 |
-| 116 | 1.00 | 116 | 8426 | listing of 'tests/data/invalid/_external/toml-test/invalid/bool' |
+| 116 | 1.00 | 116 | 8069 | listing of 'tests/data/invalid/_external/toml-test/invalid/bool' |
 | 112 | 1.00 | 112 | 3159 | README.md section #9 |
-| 107 | 1.00 | 107 | 8060 | json config tests/data/valid/dates-and-times/datetimes.json |
-| 106 | 1.00 | 106 | 9622 | listing of 'tests/data/valid/_external/toml-test/valid/datetime' |
-| 102 | 1.00 | 102 | 7953 | json config tests/data/valid/array/array-subtables.json |
+| 106 | 1.00 | 106 | 8861 | listing of 'tests/data/valid/_external/toml-test/valid/datetime' |
+| 102 | 1.00 | 102 | 9899 | json config tests/data/valid/array/array-subtables.json |
 | 99 | 1.00 | 99 | 3884 | CHANGELOG.md section #19 |
-| 96 | 1.00 | 96 | 8310 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-datetime' |
-| 95 | 1.00 | 95 | 9990 | json config tests/data/valid/_external/toml-test/valid/implicit-and-explicit-after.json |
+| 96 | 1.00 | 96 | 7896 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-datetime' |
 | 94 | 1.00 | 94 | 4579 | tomllib.md section #1 |
 | 92 | 1.00 | 92 | 3708 | CHANGELOG.md section #20 |
-| 89 | 1.00 | 89 | 7539 | listing of 'tests/data/invalid/inline-table' |
+| 89 | 1.00 | 89 | 7259 | listing of 'tests/data/invalid/inline-table' |
 | 87 | 1.00 | 87 | 5904 | benchmark/README.md section #1 |
-| 87 | 1.00 | 87 | 9193 | listing of 'tests/data/valid/_external/toml-test/valid/comment' |
-| 86 | 1.00 | 86 | 7851 | json config tests/data/valid/multiline-basic-str/replacements.json |
-| 86 | 1.00 | 86 | 8214 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-date' |
+| 87 | 1.00 | 87 | 8745 | listing of 'tests/data/valid/_external/toml-test/valid/comment' |
+| 86 | 1.00 | 86 | 9253 | json config tests/data/valid/multiline-basic-str/replacements.json |
+| 86 | 1.00 | 86 | 7800 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-date' |
 | 80 | 1.00 | 80 | 2718 | CHANGELOG.md section #15 |
 | 77 | 1.00 | 77 | 3785 | CHANGELOG.md section #27 |
 | 75 | 1.00 | 75 | 1085 | README.md section #12 |
-| 75 | 1.00 | 75 | 9392 | json config tests/data/valid/_external/toml-test/valid/implicit-groups.json |
 | 72 | 1.00 | 72 | 2334 | README.md section #10 |
-| 71 | 1.00 | 71 | 9056 | listing of 'tests/data/valid/_external/toml-test/valid/float' |
-| 68 | 1.00 | 68 | 9895 | json config tests/data/valid/_external/toml-test/valid/integer/long.json |
-| 68 | 1.00 | 68 | 8128 | listing of 'tests/data/invalid/_external/toml-test/invalid/spec-1.1.0' |
+| 71 | 1.00 | 71 | 8658 | listing of 'tests/data/valid/_external/toml-test/valid/float' |
+| 68 | 1.00 | 68 | 7538 | listing of 'tests/data/invalid/_external/toml-test/invalid/spec-1.1.0' |
 | 67 | 1.00 | 67 | 2216 | CHANGELOG.md section #12 |
-| 67 | 1.00 | 67 | 9827 | json config tests/data/valid/_external/toml-test/valid/float/long.json |
-| 64 | 1.00 | 64 | 9760 | json config tests/data/valid/_external/toml-test/valid/datetime/local-time.json |
-| 62 | 1.00 | 62 | 9454 | json config tests/data/valid/_external/toml-test/valid/float/max-int.json |
-| 62 | 1.00 | 62 | 9516 | json config tests/data/valid/_external/toml-test/valid/integer/float64-max.json |
-| 62 | 1.00 | 62 | 7658 | json config tests/data/valid/array/open-parent-table.json |
-| 61 | 1.00 | 61 | 6770 | json config tests/data/valid/hex-char.json |
+| 62 | 1.00 | 62 | 8131 | json config tests/data/valid/array/open-parent-table.json |
+| 61 | 1.00 | 61 | 7714 | json config tests/data/valid/hex-char.json |
 | 59 | 1.00 | 59 | 1445 | CHANGELOG.md section #3 |
-| 59 | 1.00 | 59 | 6709 | json config tests/data/valid/five-quotes.json |
+| 59 | 1.00 | 59 | 7653 | json config tests/data/valid/five-quotes.json |
 | 58 | 1.00 | 58 | 3047 | CHANGELOG.md section #30 |
-| 58 | 1.00 | 58 | 8882 | listing of 'tests/data/valid/_external/toml-test/valid/integer' |
-| 57 | 1.00 | 57 | 7596 | json config tests/data/valid/dates-and-times/localtime.json |
+| 58 | 1.00 | 58 | 8587 | listing of 'tests/data/valid/_external/toml-test/valid/integer' |
+| 57 | 1.00 | 57 | 7953 | json config tests/data/valid/dates-and-times/localtime.json |
 | 56 | 1.00 | 56 | 1386 | CHANGELOG.md section #2 |
 | 56 | 1.00 | 56 | 2878 | CHANGELOG.md section #28 |
-| 56 | 1.00 | 56 | 6650 | json config tests/data/valid/trailing-comma.json |
-| 56 | 1.00 | 56 | 7714 | listing of 'tests/data/invalid/_external/toml-test/invalid' |
+| 56 | 1.00 | 56 | 7594 | json config tests/data/valid/trailing-comma.json |
+| 56 | 1.00 | 56 | 7375 | listing of 'tests/data/invalid/_external/toml-test/invalid' |
 | 55 | 1.00 | 55 | 2638 | CHANGELOG.md section #25 |
 | 55 | 1.00 | 55 | 221 | headings outline in tomllib.md |
-| 54 | 1.00 | 54 | 9317 | json config tests/data/valid/_external/toml-test/valid/integer/underscore.json |
-| 52 | 1.00 | 52 | 8985 | json config tests/data/valid/_external/toml-test/valid/newline-crlf.json |
-| 51 | 1.00 | 51 | 8933 | json config tests/data/valid/_external/toml-test/valid/newline-lf.json |
-| 51 | 1.00 | 51 | 7765 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-time' |
+| 52 | 1.00 | 52 | 9356 | json config tests/data/valid/_external/toml-test/valid/newline-crlf.json |
+| 51 | 1.00 | 51 | 9304 | json config tests/data/valid/_external/toml-test/valid/newline-lf.json |
+| 51 | 1.00 | 51 | 7426 | listing of 'tests/data/invalid/_external/toml-test/invalid/local-time' |
 | 50 | 1.00 | 50 | 4088 | headings outline in benchmark/README.md |
-| 50 | 1.00 | 50 | 9106 | json config tests/data/valid/_external/toml-test/valid/bool/bool.json |

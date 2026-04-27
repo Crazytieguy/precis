@@ -246,7 +246,13 @@ source/
             16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
             …
             38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
-            …
+            39→	{
+            40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
+            41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
+            42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
+            43→		beforeError: newHookValue(original, incoming, 'beforeError'),
+            44→	}
+            45→);
             86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
             …
         normalize.ts
@@ -293,18 +299,6 @@ source/
             7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 test/
 tsconfig.dist.json
-    1→{
-    2→	"extends": "./tsconfig",
-    3→	"compilerOptions": {
-    4→		"sourceMap": true,
-    5→		"inlineSources": true,
-    6→		"rootDir": "./source",
-    7→		"outDir": "./distribution"
-    8→	},
-    9→	"include": [
-    10→		"source"
-    11→	]
-    12→}
 tsconfig.json
     1→{
     2→	"extends": "@sindresorhus/tsconfig",
