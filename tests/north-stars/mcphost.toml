@@ -1,0 +1,681 @@
+fixture = "mcphost"
+revision_pin = "191dcea1"
+summary = """
+mcphost is a Go CLI that hosts an LLM and connects it to tools via the
+Model Context Protocol (MCP). It speaks to four model providers
+(Anthropic / OpenAI / Google / Ollama, plus Azure / Vertex variants),
+loads MCP "servers" of three kinds — `local` (stdio subprocess),
+`remote` (streamable HTTP / SSE), and `builtin` (in-process: fs, bash,
+todo, fetch, http) — and drives an agent loop that streams responses
+and dispatches tool calls. On top of that core sit a script subcommand
+(YAML frontmatter + ${var:-default} substitution), an OAuth /
+API-key auth subcommand for Anthropic, a hooks system
+(PreToolUse / PostToolUse / UserPromptSubmit / Stop with sh-c
+commands), session save/load, a UsageTracker for token costs, a
+Bubble Tea CLI with slash commands and tool-approval prompts, and a
+public Go SDK that wraps the same agent.
+
+The ranking front-loads: what the project *is* (README lede + module
+path); the **shape of an MCP server config** (the type that's the load-
+bearing concept across the README, configs, scripts, and the agent);
+the CLI entry points and full flag list; the four config schemas
+(server / hooks / session / theme); and the builtin tool inventory.
+Mid-tiers cover the agent loop and streaming, provider creation,
+the connection pool, and the hooks executor + schemas. Late tiers add
+auth/OAuth, session persistence, environment-variable substitution,
+the SDK, and UI rendering.
+"""
+
+# =============================================================================
+# Tier 1 — identity: what is this project, what's its layout, what's its CLI?
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level fixture listing"
+justification = """
+First glimpse of layout: a Go module rooted at `main.go`, the CLI under
+`cmd/`, the bulk of the implementation under `internal/`, a public Go
+`sdk/`, plus `examples/`, `contribute/`, and release config. Top-of-
+tree presence tells the agent where things live before any source is
+shown.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README lede"
+justification = """
+The crate concept in one sentence: 'CLI host application that enables
+LLMs to interact with external tools through the Model Context
+Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and
+Ollama models.' Cheapest possible answer to 'what is this?'.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "internal/ + cmd/ subtree listings"
+justification = """
+The internal package layout (agent, auth, builtin, config, hooks,
+models with provider subdirs, session, tokens, tools, ui) plus the CLI
+surface under `cmd/` (root, script, auth, hooks). Names alone tell the
+agent which package owns which concern. Critical catastrophic-omission
+hedge for routing follow-up reads — listing only some directories
+would imply the rest don't exist.
+"""
+content = { kind = "fs", groups = [
+  { parent = "internal", entries = "all" },
+  { parent = "cmd", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "go.mod — module declaration"
+justification = """
+Module path (`github.com/mark3labs/mcphost`) and Go toolchain version.
+Tiny but load-bearing: every internal import the agent will see
+(`github.com/mark3labs/mcphost/internal/...`) is grounded in this path.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "main.go — package + imports + version literal"
+justification = """
+Imports identify the entry-point dependencies: `charmbracelet/fang`
+and the local `cmd` package. The `var version = \"dev\"` line is the
+ldflag injection target referenced in `.goreleaser.yaml`. Predecessor
+to the rest of `main` (1.6 below).
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 1, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "main.go — version-flag short-circuit + fang.Execute"
+justification = """
+The body of `main`: a manual scan of `os.Args` for `--version` / `-v`
+that prints and exits, then `fang.Execute` on the cobra root command
+returned by `cmd.GetRootCommand(version)`. Together with 1.5 this is
+the full 26-line file.
+"""
+predecessor = "1.5"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 13, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "README — supported features list"
+justification = """
+The 'Features' bullets enumerate the project's capabilities at a high
+level: interactive + non-interactive modes, script mode, multiple
+concurrent MCP servers, tool filtering, dynamic tool discovery, OAuth
+for Anthropic, hooks system, env-var substitution, builtin servers
+(fs / bash / todo / http). Read top-down, this is a table-of-contents
+for the rest of the implementation.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 60, end = 76, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "README — host/client/server architecture model"
+justification = """
+The MCP host/client/server vocabulary the agent will see referenced in
+the rest of the codebase, plus the canonical list of supported
+providers (Anthropic / OpenAI / Gemini / Ollama / OpenAI-compatible).
+Pairs with 1.7 — features tell what works, this tells how the pieces
+relate.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 41, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "go.mod — direct deps (CLI / config / MCP / LLM core)"
+justification = """
+First half of the direct-require block: `cobra` + `viper` for
+CLI/config, `mark3labs/mcp-go` and `mark3labs/mcp-filesystem-server`
+for MCP, `cloudwego/eino` plus its ext provider components
+(claude / openai / ollama) for the LLM abstraction. The remaining
+direct deps (charmbracelet UI, gjson, yaml, term, genai for Gemini)
+appear in 1.10.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 7, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "go.mod — direct deps (UI / Gemini / misc)"
+justification = """
+Second half of the direct-require block: `getkin/kin-openapi` for
+JSON-schema handling, `bytedance/sonic` for fast JSON,
+`charmbracelet/fang` + `lipgloss` for CLI styling, `tidwall/gjson` (used
+by the http builtin's `fetch_filtered_json`), `golang.org/x/term`,
+`google.golang.org/genai` (Gemini), and `gopkg.in/yaml.v3`.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 22, end = 27, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 2 — load-bearing schemas + the CLI surface
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "MCPServerConfig — struct definition (the central config type)"
+justification = """
+The single most important type in the codebase. Drives the README's
+'Simplified Configuration Schema' (local / remote / builtin), the
+script-mode YAML frontmatter, the connection pool, the agent's tool
+loader, the SDK, and config validation. Reading these 16 lines tells
+the agent the field names — `Type`, `Command`, `Environment`, `URL`,
+`Name`, `Options`, `AllowedTools`, `ExcludedTools`, plus the legacy
+`Transport`, `Args`, `Env`, `Headers` — *and* that legacy and new
+formats coexist on one struct.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 14, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "MCPServerConfig.GetTransportType — type→transport mapping"
+justification = """
+The decision rule that maps simplified config types to the four
+transport strings the rest of the code dispatches on:
+`local`→`stdio`, `remote`→`streamable`, `builtin`→`inprocess`, plus
+legacy fallbacks (explicit `Transport`, then inferred from
+`Command`/`URL`). Precise location for any 'how is X transport
+chosen?' question.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 185, end = 213, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "rootCmd — Use / Short / Long with examples"
+justification = """
+The cobra root command's user-facing description and the canonical
+invocation examples (interactive, non-interactive, session
+management, script mode). Pairs `mcphost -m provider:model` and
+`mcphost -p \"...\"` patterns with the implementation behind them.
+"""
+content = { kind = "lines", spans = [
+  { path = "cmd/root.go", start = 92, end = 126, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Config — top-level config struct (fields)"
+justification = """
+The umbrella type that ties together MCP servers, model settings,
+generation parameters, theme, and TLS. Read alongside 2.1, this tells
+the agent which keys appear in `~/.mcphost.yml` / script frontmatter.
+The `MaxSteps`, `Temperature`, `TopP`, `TopK`, `StopSequences`,
+`Stream`, `ApproveToolRun`, etc. fields show what's tunable.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 153, end = 180, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Builtin server registry — names + factory dispatch"
+justification = """
+The five `register*Server` calls in `NewRegistry` enumerate the
+built-in server names: `fs` (filesystem), `bash`, `todo`, `fetch`,
+`http`. Pairs with 2.6 (README catalogue) — listing some without
+others would imply the missing ones don't exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/builtin/registry.go", start = 42, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "README — Builtin servers catalogue"
+justification = """
+The authoritative list of in-process tool servers and their tool
+inventory: `fs` (filesystem with `allowed_directories`), `bash` (no
+config), `todo` (in-memory list), `http` (`fetch` /
+`fetch_summarize` / `fetch_extract` / `fetch_filtered_json`).
+Catastrophic-omission hedge: listing some without others would imply
+the missing ones don't exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 322, end = 360, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "rootCmd flags — enumerated (locations only)"
+justification = """
+A name-only enumeration of every persistent flag the binary accepts
+— one per line, truncated to the flag name. The agent learns *which*
+flags exist (`--config`, `--model`, `--prompt`, `--quiet`,
+`--no-exit`, `--max-steps`, `--stream`, `--compact`, `--no-hooks`,
+`--approve-tool-run`, `--save-session`/`--load-session`/`--session`,
+`--provider-url`/`--provider-api-key`, `--tls-skip-verify`,
+`--max-tokens`, `--temperature`, `--top-p`, `--top-k`,
+`--stop-sequences`, `--num-gpu-layers`, `--main-gpu`) and where to
+read defaults + descriptions. The README "Flags" section (batch 5.x)
+gives the human-readable version.
+"""
+content = { kind = "lines", spans = [
+  { path = "cmd/root.go", start = 283, end = 283, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 285, end = 285, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 288, end = 288, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 291, end = 291, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 293, end = 293, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 295, end = 295, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 297, end = 297, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 299, end = 299, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 301, end = 301, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 303, end = 303, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 305, end = 305, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 307, end = 307, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 311, end = 311, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 313, end = 313, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 315, end = 315, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 318, end = 318, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 319, end = 319, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 320, end = 320, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 323, end = 323, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 324, end = 324, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 325, end = 325, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 326, end = 326, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 327, end = 327, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 330, end = 330, render = { kind = "truncated", pattern = "[^,]+" } },
+  { path = "cmd/root.go", start = 332, end = 332, render = { kind = "truncated", pattern = "[^,]+" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Subcommand cobra Use/Short — auth / hooks / script (locations)"
+justification = """
+Just the `Use:` line of every cobra `*Cmd` var across the four cmd/
+files: `mcphost auth {login,logout,status}`, `mcphost hooks
+{list,validate,init}`, and `mcphost script <script-file>`. Tells the
+agent the entire subcommand inventory in one batch and points to
+exact files for follow-up. Long descriptions live in the source for
+deeper reads.
+"""
+content = { kind = "lines", spans = [
+  { path = "cmd/auth.go", start = 18, end = 19, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 38, end = 39, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 59, end = 60, render = { kind = "full" } },
+  { path = "cmd/auth.go", start = 79, end = 80, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 17, end = 19, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 26, end = 27, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 58, end = 59, render = { kind = "full" } },
+  { path = "cmd/hooks.go", start = 80, end = 81, render = { kind = "full" } },
+  { path = "cmd/script.go", start = 29, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Agent — type + GenerateWithLoopAndStreaming signature"
+justification = """
+The orchestration type and the master tool-loop entry. Together they
+tell the agent: an `Agent` wraps a `MCPToolManager` + a
+`model.ToolCallingChatModel` + a `maxSteps` + a `systemPrompt`, and
+the loop accepts seven callbacks (tool call, tool execution, tool
+result, response, tool-call content, streaming chunks, tool
+approval) plus a `messages` slice and returns a
+`GenerateWithLoopResult` with a final response and the full
+conversation. Maps every later 'how do I plug into the loop?'
+question to a concrete signature.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/agent/agent.go", start = 65, end = 76, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 125, end = 130, render = { kind = "full" } },
+  { path = "internal/agent/agent.go", start = 144, end = 146, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "MCPServerConfig.Validate — per-transport requirements"
+justification = """
+The validation rules for each transport: stdio needs `Command`,
+sse/streamable need `URL`, `inprocess` (builtin) needs `Name`, and
+`AllowedTools` is mutually exclusive with `ExcludedTools`. Read with
+2.2, this fully specifies what makes a config valid.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/config/config.go", start = 218, end = 244, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 3 — agent runtime: tool loop, tool manager, connection pool
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Agent loop — outer for + LLM call + tool-call branch arm"
+justification = """
+The skeletal control flow of `GenerateWithLoopAndStreaming`: the
+optional-`maxSteps` `for` loop, ctx cancellation check, the
+`generateWithCancellationAndStreaming` call, and the entry into the
+tool-call branch. Body details (tool dispatch + InvokableRun) sit
+inline at agent.go:200–280 once the agent reads on.
+"""
+predecessor = "2.9"
+content = { kind = "lines", spans = [
+  { path = "internal/agent/agent.go", start = 181, end = 200, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "MCPToolManager — type"
+justification = """
+The per-host tool manager: a connection pool plus a map of prefixed
+tool names to their `(serverName, originalName, serverConfig)`
+mapping. Together with 3.3 this tells the agent how MCP tools become
+addressable to the LLM.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/tools/mcp.go", start = 22, end = 50, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "MCPToolManager.LoadTools + tool prefixing rule"
+justification = """
+LoadTools iterates `config.MCPServers`, calls `loadServerTools` for
+each, and records a partial-failure warning per server. The
+prefixing rule (`<serverName>__<toolName>`) is at mcp.go:245 — the
+key fact for understanding tool names the LLM sees.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/tools/mcp.go", start = 149, end = 167, render = { kind = "full" } },
+  { path = "internal/tools/mcp.go", start = 244, end = 246, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Connection pool — type + DefaultConnectionPoolConfig"
+justification = """
+`MCPConnectionPool` holds a map of `MCPConnection`s keyed by server
+name. Default config: 5 min max-idle, 3 retries, 30s health-check
+interval, 3 max errors before unhealthy, 2s reconnect delay. Sets
+the lifetime expectations for tool connections.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/tools/connection_pool.go", start = 20, end = 26, render = { kind = "full" } },
+  { path = "internal/tools/connection_pool.go", start = 32, end = 40, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Connection pool — createMCPClient transport switch"
+justification = """
+The four-arm switch by transport that builds an MCP client: stdio
+(subprocess), sse, streamable (StreamableHTTP), or inprocess
+(builtin server wrapped via `client.NewInProcessClient`). Together
+with 2.2 this completes the type→transport→client chain.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/tools/connection_pool.go", start = 261, end = 277, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Streaming aggregator — StreamWithCallback signature + provider note"
+justification = """
+The signature plus the provider-behavior comment block: Anthropic
+streams text first then tool calls incrementally; OpenAI streams tool
+calls first or alone; tool calls are deferred until EOF for
+completeness. Body at streaming.go:19–147 has the merge logic.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/agent/streaming.go", start = 11, end = 27, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 4 — providers, hooks, auth, sessions (orthogonal subsystems)
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "CreateProvider — provider switch"
+justification = """
+The 6-arm switch on `provider` (anthropic / openai / google / ollama
+/ azure / google-vertex-anthropic) inside CreateProvider after model
+parsing + alias resolution + registry validation. Each arm calls a
+provider-specific factory (createAnthropicProvider at :296,
+createOpenAIProvider :419, createGoogleProvider :482,
+createOllamaProviderWithResult :723, createAzureOpenAIProvider :247,
+createVertexAnthropicProvider :358).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/models/providers.go", start = 193, end = 229, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "HookEvent constants + RequiresMatcher rule"
+justification = """
+The four event names — `PreToolUse`, `PostToolUse`,
+`UserPromptSubmit`, `Stop` — that hooks fire on. PreToolUse and
+PostToolUse take a tool-name `Matcher` (regex); other events apply
+globally. Sets the vocabulary for everything in internal/hooks/ and
+the `hooks init` example config.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hooks/events.go", start = 7, end = 19, render = { kind = "full" } },
+  { path = "internal/hooks/events.go", start = 33, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Hook input/output JSON schemas"
+justification = """
+The JSON shape every hook receives over stdin (`CommonInput` +
+per-event extras like `ToolName`/`ToolInput`/`ToolResponse`/`Prompt`/
+`Response`/`StopReason`) and the `HookOutput` JSON it can emit on
+stdout to control behavior (`Continue`, `StopReason`,
+`SuppressOutput`, `Decision` "approve"/"block"/"", `Reason`). Exit
+code 2 from a hook also blocks (executor.go:219).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hooks/schemas.go", start = 10, end = 18, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 23, end = 27, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 32, end = 37, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 50, end = 56, render = { kind = "full" } },
+  { path = "internal/hooks/schemas.go", start = 62, end = 68, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Hook config — HookConfig / HookMatcher / HookEntry"
+justification = """
+`HookConfig` is `map[HookEvent][]HookMatcher`; each matcher pairs a
+regex pattern with one or more `HookEntry{Type,Command,Timeout}`.
+Default timeout 60s, cap 600s (validator.go:128). Hook config files
+are merged from $XDG_CONFIG_HOME/mcphost/hooks.{json,yml} and
+.mcphost/hooks.{json,yml} (see config.go:46).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hooks/config.go", start = 14, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Hook executor — ExecuteHooks signature"
+justification = """
+The runtime entry: matches event → matchers (by tool-name regex for
+PreToolUse/PostToolUse) → runs hooks in parallel via `sh -c
+<command>` with the input JSON on stdin, then merges outputs.
+Validator at internal/hooks/validator.go:75 sanitizes commands.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hooks/executor.go", start = 73, end = 78, render = { kind = "full" } },
+  { path = "internal/hooks/executor.go", start = 138, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Auth — AnthropicCredentials Type field"
+justification = """
+The two-value `Type` field on stored credentials — `"oauth"` or
+`"api_key"` — that the `auth status` command branches on and that
+`GetAnthropicAPIKey` (credentials.go:247) inspects. Resolution order:
+flag → stored creds → `ANTHROPIC_API_KEY` env (file: oauth.go for the
+OAuth flow + RefreshToken).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/auth/credentials.go", start = 22, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "OAuth client — Anthropic endpoints"
+justification = """
+Hardcoded OAuth config: public client_id, authorize URL
+`claude.ai/oauth/authorize`, token URL
+`console.anthropic.com/v1/oauth/token`, scopes
+`org:create_api_key user:profile user:inference`. PKCE generation at
+oauth.go:57; ExchangeCode at :107; RefreshToken at :133.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/auth/oauth.go", start = 40, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "Session.Message + Builtin tool inventory (locations)"
+justification = """
+Two cheap catastrophic-omission hedges packed together:
+(a) the `Message` shape used by `--save-session` (role / content /
+optional ToolCalls / ToolCallID — full Session at session.go:18–73);
+(b) one-line locations of every builtin tool registration —
+`run_shell_cmd`, `todowrite`, `todoread`, `fetch` (fetch builtin),
+`fetch`/`fetch_summarize`/`fetch_extract`/`fetch_filtered_json` (http
+builtin; latter three model-gated at http.go:67).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/session/session.go", start = 48, end = 50, render = { kind = "full" } },
+  { path = "internal/builtin/bash.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "internal/builtin/todo.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "internal/builtin/todo.go", start = 78, end = 78, render = { kind = "full" } },
+  { path = "internal/builtin/fetch.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 43, end = 43, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 68, end = 68, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 80, end = 80, render = { kind = "full" } },
+  { path = "internal/builtin/http.go", start = 93, end = 93, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 5 — script mode, SDK, env substitution, UI surface
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Script mode — frontmatter format example"
+justification = """
+The README's script-format snippet: a shebang `#!/usr/bin/env -S
+mcphost script`, YAML frontmatter between `---` delimiters with
+`mcpServers` and an inline `prompt:`, optionally with the prompt body
+after the closing `---`. This is the user-facing model that
+parseScriptFile (cmd/script.go:255) implements.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 519, end = 547, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "Env-var + script-args substitution patterns"
+justification = """
+The two regexp patterns that drive variable substitution:
+`${env://VAR}` / `${env://VAR:-default}` for env vars and `${VAR}` /
+`${VAR:-default}` for script args. Env subst runs first; script args
+follow. The `--args:VAR value` parser lives at cmd/script.go:148
+(`parseCustomVariables`).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/config/substitution.go", start = 11, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "SDK — Options struct + entry signatures"
+justification = """
+The public Go SDK surface: `sdk.Options` (Model, SystemPrompt,
+ConfigFile, MaxSteps, Streaming, Quiet) and the four core entry
+points — `New(ctx, *Options)`, `Prompt(ctx, message)`,
+`PromptWithCallbacks(ctx, message, onToolCall, onToolResult,
+onStreaming)`, plus `LoadSession`/`SaveSession`/`ClearSession`/
+`Close`. The SDK reuses `cmd.InitConfig` so it inherits CLI defaults.
+"""
+content = { kind = "lines", spans = [
+  { path = "sdk/mcphost.go", start = 28, end = 35, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 130, end = 130, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 163, end = 169, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 207, end = 207, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 218, end = 218, render = { kind = "full" } },
+  { path = "sdk/mcphost.go", start = 237, end = 237, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "UI CLI — slash command names (locations)"
+justification = """
+Name-only locations of every slash command the TUI accepts. Routed by
+`CLI.HandleSlashCommand` at ui/cli.go:406; `SlashCommands` registry
+at ui/commands.go:16. Catastrophic-omission hedge for the interactive
+command surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/ui/commands.go", start = 19, end = 19, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "internal/ui/commands.go", start = 56, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "InitConfig — config search order"
+justification = """
+The order mcphost searches for config files: `--config` flag wins;
+otherwise tries `.mcphost.{yml,json}` then `.mcp.{yml,json}` in cwd
+then $HOME (with env-var substitution). Env-var prefix `MCPHOST_*` is
+auto-bound. Hooks are loaded last unless `--no-hooks`.
+"""
+content = { kind = "lines", spans = [
+  { path = "cmd/root.go", start = 165, end = 175, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "Anthropic alias resolution map"
+justification = """
+The hardcoded alias map in `resolveModelAlias` mapping
+`claude-opus-latest` / `claude-sonnet-latest` /
+`claude-3-5-{haiku,sonnet}-latest` etc. to dated model IDs. Applied
+only for the `anthropic` provider before validation
+(providers.go:163). Other model data comes from the static registry
+generated by go:generate (see internal/models/generate_models.go).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/models/providers.go", start = 42, end = 52, render = { kind = "full" } },
+] }

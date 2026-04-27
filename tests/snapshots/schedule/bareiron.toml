@@ -1,0 +1,402 @@
+fixture = "bareiron"
+budget = 10000
+cumulative_tokens = 1816
+batch_count = 15
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron'"
+cost_tokens = 29
+cum_tokens = 29
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron"
+entries = [".github", ".gitignore", "LICENSE", "README.md", "build.sh", "build_registries.js", "extract_registries.sh", "include", "src"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+cost_tokens = 24
+cum_tokens = 53
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron/.github'"
+cost_tokens = 7
+cum_tokens = 60
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github"
+entries = ["ISSUE_TEMPLATE", "workflows"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/workflows'"
+cost_tokens = 4
+cum_tokens = 64
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/workflows"
+entries = ["build.yml"]
+
+[[batches]]
+position = 5
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+cost_tokens = 51
+cum_tokens = 115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/ISSUE_TEMPLATE" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/ISSUE_TEMPLATE'"
+cost_tokens = 16
+cum_tokens = 131
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron/.github/ISSUE_TEMPLATE"
+entries = ["bug_report.md", "feature_request.md", "optimization-idea.md"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron/include" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron/include'"
+cost_tokens = 38
+cum_tokens = 169
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron/include"
+entries = ["crafting.h", "globals.h", "packets.h", "procedures.h", "serialize.h", "structures.h", "tools.h", "varnum.h", "worldgen.h"]
+
+[[batches]]
+position = 8
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #0"
+cost_tokens = 127
+cum_tokens = 296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/bareiron/src'"
+cost_tokens = 48
+cum_tokens = 344
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src"
+entries = ["CMakeLists.txt", "crafting.c", "globals.c", "main.c", "packets.c", "procedures.c", "serialize.c", "structures.c", "tools.c", "varnum.c", "worldgen.c"]
+
+[[batches]]
+position = 10
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #1"
+cost_tokens = 114
+cum_tokens = 458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/bareiron/.gitignore"
+cost_tokens = 58
+cum_tokens = 516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/.gitignore"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #5"
+cost_tokens = 198
+cum_tokens = 714
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 48
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #4"
+cost_tokens = 260
+cum_tokens = 974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #3"
+cost_tokens = 314
+cum_tokens = 1288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 35
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md section #2"
+cost_tokens = 528
+cum_tokens = 1816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md"
+start = 20
+end = 26
+
+[batches.content.spans.render]
+kind = "full"

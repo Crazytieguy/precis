@@ -1,0 +1,339 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    workflows/
+        ci.yml
+        release.yml
+.gitignore
+    1→.aider*
+    2→.env
+    3→aidocs/
+    4→.mcp.json
+    5→*.log
+    6→mcphost
+    7→.idea
+    8→test/
+    9→build/
+    10→dist/
+    11→contribute/output/
+    12→CONTEXT.md
+.goreleaser.yaml
+AGENTS.md
+    2→# OpenSpec Instructions
+    …
+    4→These instructions are for AI assistants working in this project.
+    6→Always open `@/openspec/AGENTS.md` when the request:
+    7→- Mentions planning or proposals (words like proposal, spec, change, plan)
+    8→- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
+    9→- Sounds ambiguous and you need the authoritative spec before coding
+    11→Use `@/openspec/AGENTS.md` to learn:
+    12→- How to create and apply change proposals
+    13→- Spec format and conventions
+    14→- Project structure and guidelines
+    16→Keep this managed block so 'openspec update' can refresh the instructions.
+    18→<!-- OPENSPEC:END -->
+    20→# MCPHost Agent Guidelines
+    …
+    22→## Build/Test Commands
+    …
+    29→## Code Style
+    …
+    38→## Architecture
+    …
+LICENSE
+README.md
+    1→# MCPHost 🤖
+    3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
+    5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+    7→## Table of Contents
+    9→- [Overview](#overview-)
+    10→- [Features](#features-)
+    11→- [Requirements](#requirements-)
+    12→- [Environment Setup](#environment-setup-)
+    13→- [Installation](#installation-)
+    14→- [SDK Usage](#sdk-usage-)
+    15→- [Configuration](#configuration-)
+    16→  - [MCP Servers](#mcp-servers)
+    17→  - [Environment Variable Substitution](#environment-variable-substitution)
+    18→  - [Simplified Configuration Schema](#simplified-configuration-schema)
+    19→  - [Tool Filtering](#tool-filtering)
+    20→  - [Legacy Configuration Support](#legacy-configuration-support)
+    21→  - [Transport Types](#transport-types)
+    22→  - [System Prompt](#system-prompt)
+    23→- [Usage](#usage-)
+    24→  - [Interactive Mode](#interactive-mode-default)
+    25→  - [Script Mode](#script-mode)
+    26→  - [Hooks System](#hooks-system)
+    27→  - [Non-Interactive Mode](#non-interactive-mode)
+    28→  - [Model Generation Parameters](#model-generation-parameters)
+    29→  - [Available Models](#available-models)
+    30→  - [Examples](#examples)
+    31→  - [Flags](#flags)
+    32→  - [Authentication Subcommands](#authentication-subcommands)
+    33→  - [Configuration File Support](#configuration-file-support)
+    34→  - [Interactive Commands](#interactive-commands)
+    35→- [Automation & Scripting](#automation--scripting-)
+    36→- [MCP Server Compatibility](#mcp-server-compatibility-)
+    37→- [Contributing](#contributing-)
+    38→- [License](#license-)
+    39→- [Acknowledgments](#acknowledgments-)
+    41→## Overview 🌟
+    43→MCPHost acts as a host in the MCP client-server architecture, where:
+    44→- **Hosts** (like MCPHost) are LLM applications that manage connections and interactions
+    45→- **Clients** maintain 1:1 connections with MCP servers
+    46→- **Servers** provide context, tools, and capabilities to the LLMs
+    48→This architecture allows language models to:
+    49→- Access external tools and data sources 🛠️
+    50→- Maintain consistent context across interactions 🔄
+    51→- Execute commands and retrieve information safely 🔒
+    53→Currently supports:
+    54→- Anthropic Claude models (Claude 3.5 Sonnet, Claude 3.5 Haiku, etc.)
+    55→- OpenAI models (GPT-4, GPT-4 Turbo, GPT-3.5, etc.)
+    56→- Google Gemini models (Gemini 2.0 Flash, Gemini 1.5 Pro, etc.)
+    57→- Any Ollama-compatible model with function calling support
+    58→- Any OpenAI-compatible API endpoint
+    60→## Features ✨
+    62→- Interactive conversations with multiple AI models
+    63→- **Non-interactive mode** for scripting and automation
+    64→- **Script mode** for executable YAML-based automation scripts
+    65→- Support for multiple concurrent MCP servers
+    66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
+    67→- Dynamic tool discovery and integration
+    68→- Tool calling capabilities across all supported models
+    69→- Configurable MCP server locations and arguments
+    70→- Consistent command interface across model types
+    71→- Configurable message history window for context management
+    72→- **OAuth authentication** support for Anthropic (alternative to API keys)
+    73→- **Hooks system** for custom integrations and security policies
+    74→- **Environment variable substitution** in configs and scripts
+    75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
+    77→## Requirements 📋
+    79→- Go 1.23 or later
+    80→- For OpenAI/Anthropic: API key for the respective provider
+    81→- For Ollama: Local Ollama installation with desired models
+    82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
+    83→- One or more MCP-compatible tool servers
+    124→## Installation 📦
+    126→```bash
+    127→go install github.com/mark3labs/mcphost@latest
+    128→```
+    967→## MCP Server Compatibility 🔌
+    969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
+    971→## Contributing 🤝
+    973→Contributions are welcome! Feel free to:
+    974→- Submit bug reports or feature requests through issues
+    975→- Create pull requests for improvements
+    976→- Share your custom MCP servers
+    977→- Improve documentation
+    979→Please ensure your contributions follow good coding practices and include appropriate tests.
+    981→## License 📄
+    983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+    985→## Acknowledgments 🙏
+    987→- Thanks to the Anthropic team for Claude and the MCP specification
+    988→- Thanks to the Ollama team for their local LLM runtime
+    989→- Thanks to all contributors who have helped improve this tool
+cmd/
+    auth.go
+    hooks.go
+    root.go
+    script.go
+    script_deepseek_test.go
+    script_integration_test.go
+    script_test.go
+contribute/
+    boost.sh
+    build.sh
+    conf/
+        demo.json
+            1→{
+            2→    "mcpServers": {
+            3→        "filesystem": {
+            4→            "command": "npx",
+            5→            "args": [
+            6→                "-y",
+            7→                "@modelcontextprotocol/server-filesystem",
+            8→                "./"
+            9→            ]
+            10→        },
+            11→        "weather": {
+            12→            "command": "uv",
+            13→            "args": [
+            14→                "--directory",
+            15→                "/Users/bytedance/code/MCP/my_host/weather",
+            16→                "run",
+            17→                "weather.py"
+            18→            ]
+            19→        }
+            20→    }
+            21→}
+        demo.yml
+    contribute.md
+        1→# Contribute README
+        2→Thanks for your contribution, you can follow these step to run this repo and debug it.
+        3→## Run demo
+        …
+        30→## Contribute your code
+        31→just write your code and push it.
+examples/
+    hooks/
+    scripts/
+go.mod
+go.sum
+internal/
+    agent/
+        agent.go
+        factory.go
+        streaming.go
+    auth/
+        browser.go
+        credentials.go
+        credentials_test.go
+        oauth.go
+    builtin/
+        bash.go
+        bash_test.go
+        fetch.go
+        fetch_test.go
+        http.go
+        http_test.go
+        registry.go
+        todo.go
+        todo_test.go
+    config/
+        case_fix_test.go
+        config.go
+        config_test.go
+        environment_flow_test.go
+        integration_test.go
+        merger.go
+        substitution.go
+        substitution_test.go
+        viper_test.go
+    hooks/
+        config.go
+        config_test.go
+        events.go
+        executor.go
+        executor_test.go
+        schemas.go
+        testdata/
+            invalid-hooks.yml
+            valid-hooks.yml
+        validator.go
+        validator_test.go
+    models/
+        anthropic/
+            anthropic.go
+        gemini/
+            gemini.go
+        generate_models.go
+        models_data.go
+        openai/
+            openai.go
+        providers.go
+        providers_test.go
+        registry.go
+    session/
+        manager.go
+        session.go
+    tokens/
+        anthropic.go
+        counter.go
+        init.go
+    tools/
+        buffered_logger.go
+        connection_pool.go
+        debug_logger.go
+        mcp.go
+        mcp_test.go
+    ui/
+        block_renderer.go
+        callbacks.go
+        cli.go
+        commands.go
+        compact_renderer.go
+        debug_logger.go
+        enhanced_styles.go
+        factory.go
+        fuzzy.go
+        messages.go
+        progress/
+            ollama.go
+        slash_command_input.go
+        spinner.go
+        styles.go
+        tool_approval_input.go
+        usage_tracker.go
+        usage_tracker_render_test.go
+        usage_tracker_test.go
+main.go
+sdk/
+    README.md
+        1→# MCPHost SDK
+        3→The MCPHost SDK allows you to use MCPHost programmatically from Go applications without spawning OS processes.
+        5→## Installation
+        …
+        7→```bash
+        8→go get github.com/mark3labs/mcphost
+        9→```
+        11→## Basic Usage
+        …
+        13→```go
+        14→package main
+        16→import (
+        17→    "context"
+        18→    "fmt"
+        19→    "log"
+        21→    "github.com/mark3labs/mcphost/sdk"
+        22→)
+        24→func main() {
+        25→    ctx := context.Background()
+        27→    // Create MCPHost instance with default configuration
+        28→    host, err := sdk.New(ctx, nil)
+        29→    if err != nil {
+        30→        log.Fatal(err)
+        31→    }
+        32→    defer host.Close()
+        34→    // Send a prompt
+        35→    response, err := host.Prompt(ctx, "What is 2+2?")
+        36→    if err != nil {
+        37→        log.Fatal(err)
+        38→    }
+        40→    fmt.Println(response)
+        41→}
+        42→```
+        44→## Configuration
+        …
+        52→### Options
+        …
+        67→## Advanced Usage
+        …
+        69→### With Tool Callbacks
+        …
+        93→### Session Management
+        …
+        115→## API Reference
+        …
+        117→### Types
+        …
+        124→### Methods
+        …
+        136→## Environment Variables
+        …
+        138→All CLI environment variables work with the SDK:
+        140→- `MCPHOST_MODEL` - Override model
+        141→- `ANTHROPIC_API_KEY` - Anthropic API key
+        142→- `OPENAI_API_KEY` - OpenAI API key
+        143→- `GEMINI_API_KEY` - Google API key
+        144→- etc.
+        146→## License
+        …
+        148→Same as MCPHost CLI
+    examples/
+        basic/
+        scripting/
+    mcphost.go
+    mcphost_test.go
+    types.go

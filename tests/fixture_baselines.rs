@@ -79,6 +79,9 @@ per_fixture_tests!(pluggy);
 per_fixture_tests!(commander);
 per_fixture_tests!(tock);
 per_fixture_tests!(typeguard);
+per_fixture_tests!(bareiron);
+per_fixture_tests!(htmy);
+per_fixture_tests!(mcphost);
 
 // ---- paths -------------------------------------------------------------
 

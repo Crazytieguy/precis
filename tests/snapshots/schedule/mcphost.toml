@@ -1,0 +1,2518 @@
+fixture = "mcphost"
+budget = 10000
+cumulative_tokens = 9550
+batch_count = 67
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost'"
+cost_tokens = 40
+cum_tokens = 40
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost"
+entries = [".github", ".gitignore", ".goreleaser.yaml", "AGENTS.md", "LICENSE", "README.md", "cmd", "contribute", "examples", "go.mod", "go.sum", "internal", "main.go", "sdk"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/.github'"
+cost_tokens = 3
+cum_tokens = 43
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 3
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+cost_tokens = 56
+cum_tokens = 99
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #0"
+cost_tokens = 24
+cum_tokens = 123
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute'"
+cost_tokens = 15
+cum_tokens = 138
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute"
+entries = ["boost.sh", "build.sh", "conf", "contribute.md"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/.github/workflows'"
+cost_tokens = 8
+cum_tokens = 146
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/.github/workflows"
+entries = ["ci.yml", "release.yml"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf'"
+cost_tokens = 8
+cum_tokens = 154
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf"
+entries = ["demo.json", "demo.yml"]
+
+[[batches]]
+position = 8
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+cost_tokens = 53
+cum_tokens = 207
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk'"
+cost_tokens = 24
+cum_tokens = 231
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk"
+entries = ["README.md", "examples", "mcphost.go", "mcphost_test.go", "types.go"]
+
+[[batches]]
+position = 10
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+cost_tokens = 33
+cum_tokens = 264
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+cost_tokens = 33
+cum_tokens = 297
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal'"
+cost_tokens = 30
+cum_tokens = 327
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal"
+entries = ["agent", "auth", "builtin", "config", "hooks", "models", "session", "tokens", "tools", "ui"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/session" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/session'"
+cost_tokens = 8
+cum_tokens = 335
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/session"
+entries = ["manager.go", "session.go"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/agent" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/agent'"
+cost_tokens = 12
+cum_tokens = 347
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/agent"
+entries = ["agent.go", "factory.go", "streaming.go"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tokens" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tokens'"
+cost_tokens = 13
+cum_tokens = 360
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tokens"
+entries = ["anthropic.go", "counter.go", "init.go"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/auth" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/auth'"
+cost_tokens = 17
+cum_tokens = 377
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/auth"
+entries = ["browser.go", "credentials.go", "credentials_test.go", "oauth.go"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/cmd" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/cmd'"
+cost_tokens = 36
+cum_tokens = 413
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/cmd"
+entries = ["auth.go", "hooks.go", "root.go", "script.go", "script_deepseek_test.go", "script_integration_test.go", "script_test.go"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tools" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tools'"
+cost_tokens = 26
+cum_tokens = 439
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/tools"
+entries = ["buffered_logger.go", "connection_pool.go", "debug_logger.go", "mcp.go", "mcp_test.go"]
+
+[[batches]]
+position = 19
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md section #2"
+cost_tokens = 10
+cum_tokens = 449
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md section #0"
+cost_tokens = 20
+cum_tokens = 469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models'"
+cost_tokens = 35
+cum_tokens = 504
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models"
+entries = ["anthropic", "gemini", "generate_models.go", "models_data.go", "openai", "providers.go", "providers_test.go", "registry.go"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/anthropic" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/anthropic'"
+cost_tokens = 5
+cum_tokens = 509
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/anthropic"
+entries = ["anthropic.go"]
+
+[[batches]]
+position = 23
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/gemini" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/gemini'"
+cost_tokens = 5
+cum_tokens = 514
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/gemini"
+entries = ["gemini.go"]
+
+[[batches]]
+position = 24
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/openai" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/openai'"
+cost_tokens = 5
+cum_tokens = 519
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/models/openai"
+entries = ["openai.go"]
+
+[[batches]]
+position = 25
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks'"
+cost_tokens = 39
+cum_tokens = 558
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks"
+entries = ["config.go", "config_test.go", "events.go", "executor.go", "executor_test.go", "schemas.go", "testdata", "validator.go", "validator_test.go"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks/testdata" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks/testdata'"
+cost_tokens = 10
+cum_tokens = 568
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/hooks/testdata"
+entries = ["invalid-hooks.yml", "valid-hooks.yml"]
+
+[[batches]]
+position = 27
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/builtin" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/builtin'"
+cost_tokens = 40
+cum_tokens = 608
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/builtin"
+entries = ["bash.go", "bash_test.go", "fetch.go", "fetch_test.go", "http.go", "http_test.go", "registry.go", "todo.go", "todo_test.go"]
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 13 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #13"
+cost_tokens = 33
+cum_tokens = 641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 981
+end = 981
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 983
+end = 983
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #6"
+cost_tokens = 41
+cum_tokens = 682
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 126
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/config" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/config'"
+cost_tokens = 45
+cum_tokens = 727
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/config"
+entries = ["case_fix_test.go", "config.go", "config_test.go", "environment_flow_test.go", "integration_test.go", "merger.go", "substitution.go", "substitution_test.go", "viper_test.go"]
+
+[[batches]]
+position = 31
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+cost_tokens = 116
+cum_tokens = 843
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 9 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #9"
+cost_tokens = 10
+cum_tokens = 853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #1"
+cost_tokens = 30
+cum_tokens = 883
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #11"
+cost_tokens = 51
+cum_tokens = 934
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 967
+end = 967
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 969
+end = 969
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui'"
+cost_tokens = 86
+cum_tokens = 1020
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui"
+entries = ["block_renderer.go", "callbacks.go", "cli.go", "commands.go", "compact_renderer.go", "debug_logger.go", "enhanced_styles.go", "factory.go", "fuzzy.go", "messages.go", "progress", "slash_command_input.go", "spinner.go", "styles.go", "tool_approval_input.go", "usage_tracker.go", "usage_tracker_render_test.go", "usage_tracker_test.go"]
+
+[[batches]]
+position = 36
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui/progress" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui/progress'"
+cost_tokens = 5
+cum_tokens = 1025
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/internal/ui/progress"
+entries = ["ollama.go"]
+
+[[batches]]
+position = 37
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 14 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #14"
+cost_tokens = 63
+cum_tokens = 1088
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 985
+end = 985
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 987
+end = 989
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #4"
+cost_tokens = 98
+cum_tokens = 1186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 79
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md section #0"
+cost_tokens = 175
+cum_tokens = 1361
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 11
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 12 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #12"
+cost_tokens = 84
+cum_tokens = 1445
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 971
+end = 971
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 973
+end = 977
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 979
+end = 979
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #8"
+cost_tokens = 88
+cum_tokens = 1533
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 140
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/mcphost/.gitignore"
+cost_tokens = 87
+cum_tokens = 1620
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/.gitignore"
+start = 1
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/examples'"
+cost_tokens = 6
+cum_tokens = 1626
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples"
+entries = ["hooks", "scripts"]
+
+[[batches]]
+position = 44
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #3"
+cost_tokens = 222
+cum_tokens = 1848
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 62
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #2"
+cost_tokens = 259
+cum_tokens = 2107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 43
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 48
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 53
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf/demo.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf/demo.json"
+cost_tokens = 180
+cum_tokens = 2287
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/conf/demo.json"
+start = 1
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #1"
+cost_tokens = 470
+cum_tokens = 2757
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 9
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #2"
+cost_tokens = 225
+cum_tokens = 2982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 16
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 21
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 27
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 34
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 40
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples'"
+cost_tokens = 6
+cum_tokens = 2988
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples"
+entries = ["basic", "scripting"]
+
+[[batches]]
+position = 50
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #3"
+cost_tokens = 231
+cum_tokens = 3219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 46
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 56
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/basic" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/basic'"
+cost_tokens = 4
+cum_tokens = 3223
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/basic"
+entries = ["main.go"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/scripting" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/scripting'"
+cost_tokens = 4
+cum_tokens = 3227
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/examples/scripting"
+entries = ["main.go"]
+
+[[batches]]
+position = 53
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #7"
+cost_tokens = 388
+cum_tokens = 3615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 136
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 139
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 145
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 148
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 155
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 161
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 167
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #5"
+cost_tokens = 460
+cum_tokens = 4075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 87
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 95
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 108
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 113
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 117
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md section #1"
+cost_tokens = 274
+cum_tokens = 4349
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 22
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 29
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/AGENTS.md"
+start = 38
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #6"
+cost_tokens = 53
+cum_tokens = 4402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 119
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/hooks" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/hooks'"
+cost_tokens = 17
+cum_tokens = 4419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/hooks"
+entries = ["bash-validator.py", "mcp-monitor.py", "prompt-logger.sh"]
+
+[[batches]]
+position = 58
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md section #1"
+cost_tokens = 243
+cum_tokens = 4662
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 3
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 14
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 19
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/contribute/contribute.md"
+start = 25
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #10"
+cost_tokens = 832
+cum_tokens = 5494
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 892
+end = 892
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 894
+end = 894
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 896
+end = 896
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 898
+end = 902
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 904
+end = 909
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 911
+end = 915
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 917
+end = 920
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 922
+end = 925
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 927
+end = 929
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 931
+end = 936
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 938
+end = 947
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 949
+end = 954
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 956
+end = 961
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 963
+end = 965
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts'"
+cost_tokens = 33
+cum_tokens = 5527
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts"
+entries = ["README.md", "default-values-demo.sh", "env-substitution-script.sh", "example-script.sh", "simple-script.sh", "tls-test-script.sh"]
+
+[[batches]]
+position = 61
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+cost_tokens = 29
+cum_tokens = 5556
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #5"
+cost_tokens = 142
+cum_tokens = 5698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 97
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 101
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 105
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 108
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 111
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #7"
+cost_tokens = 151
+cum_tokens = 5849
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 126
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md section #4"
+cost_tokens = 211
+cum_tokens = 6060
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/sdk/README.md"
+start = 73
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+cost_tokens = 89
+cum_tokens = 6149
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md section #5"
+cost_tokens = 25
+cum_tokens = 6174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/examples/scripts/README.md"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md section #8"
+cost_tokens = 3376
+cum_tokens = 9550
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 178
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 183
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 191
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 197
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 207
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 211
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 217
+end = 219
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 221
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 229
+end = 262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 264
+end = 269
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 271
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 289
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 296
+end = 315
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 317
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 322
+end = 331
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 333
+end = 333
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 335
+end = 359
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 365
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 368
+end = 383
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 385
+end = 385
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 387
+end = 387
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 389
+end = 389
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 391
+end = 404
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 406
+end = 416
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 418
+end = 434
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 436
+end = 447
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 449
+end = 449
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 451
+end = 455
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 457
+end = 460
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 462
+end = 462
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 464
+end = 464
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 466
+end = 469
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 471
+end = 474
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 476
+end = 478
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mcphost/README.md"
+start = 480
+end = 485
+
+[batches.content.spans.render]
+kind = "full"

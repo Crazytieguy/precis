@@ -1,0 +1,271 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.coderabbit.yaml
+.github/
+    funding.yml
+    workflows/
+        build-docs.yml
+        linters.yml
+        publish.yml
+        tests.yml
+.gitignore
+LICENSE
+README.md
+    10→# `htmy`
+    12→**Async**, **pure-Python** server-side rendering engine.
+    14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+    16→## Key features
+    …
+    18→- **Async**-first, to let you make the best use of modern async tools.
+    19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
+    20→- Sync and async **function components** with **decorator syntax**.
+    21→- All baseline **HTML** tags built-in.
+    22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
+    23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
+    24→- **Markdown** support with tools for customization.
+    25→- Async, JSON based **internationalization**.
+    26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
+    27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
+    28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
+    29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
+    30→- **Compatible** with any other templating library through wrappers.
+    31→- **Fully-typed**.
+    33→## Testimonials
+    …
+    47→## Support
+    …
+    49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
+    51→## Installation
+    …
+    53→The package is available on PyPI and can be installed with:
+    55→```console
+    56→$ pip install htmy
+    57→```
+    59→The package has the following optional dependencies:
+    61→- `lxml` _(recommended)_: When installed, it is prioritized over `xml.etree.ElementTree` and provides more secure, faster, and more flexible HTML and XML processing. It is used, for example, for Markdown processing. Install with: `pip install "htmy[lxml]"`.
+    63→## Concepts
+    …
+    65→The entire library -- from the rendering engine itself to the built-in components -- is built around a few simple protocols and a handful of simple utility classes. This means that you can easily customize, extend, or replace basically everything in the library. Yes, even the rendering engine. The remaining parts will keep working as expected.
+    67→Also, the library doesn't rely on advanced Python features such as metaclasses or descriptors. There are also no complex base classes and the like. Even a junior engineer could understand, develop, and debug an application that's built with `htmy`.
+    69→### Components
+    …
+    167→### Built-in components
+    …
+    179→### Rendering
+    …
+    211→### Context
+    …
+    279→### Formatter
+    …
+    291→### Error boundary
+    …
+    299→### Sync or async?
+    …
+    307→## XSS prevention
+    …
+    309→`htmy` does XML/HTML escaping by default. This means user input is normally sanitized and rendered safely.
+    311→There are a couple of notable exceptions to this, where components by design allow XML/HTML inputs and assume they are safe:
+    313→- `Snippet`: The primary use-case is to efficiently render XML/HTML templates, filling in placeholders with dynamic content. In this case you must ensure that the input template itself is safe!
+    314→- `MD`: This component builds on `Snippet` to support markdown inputs and performs automatic markdown to HTML conversion. You must ensure the input text is safe!
+    316→## AI assistance
+    …
+    318→The library is registered at [Context7](https://context7.com/volfpeter).
+    320→To get good AI assistance, all you need to do is register the Context7 MCP server in your coding tool and tell the agent to use it.
+    322→Because of the similarity with native HTML, JSX, and React, you can expect good results, both for vibe coding or inline completion.
+    324→## Compatibility and performance
+    …
+    326→By design, `htmy` is compatible with any other Python templating library, for example Jinja, through wrappers. A wrapper is simply a custom `htmy` component that internally offloads rendering to another templating framework. This makes it possible to easily combine `htmy` with other libraries, to gradually adopt it, and even to enjoy the benefits of multiple frameworks.
+    328→Performance strongly depends on how you use `htmy`. The `Snippet` component for example makes it possible to reach almost Python string formatting performance, while rendering large, deep component trees is noticeably slower than Jinja for example. Wrapping another templating library for certain use-cases, or pre-rendering components and later using `Snippet` to fill in the dynamic content can be beneficial for performance.
+    330→## Framework integrations
+    …
+    332→FastAPI:
+    334→- [holm](https://github.com/volfpeter/holm): Web development framework that brings the Next.js developer experience to Python, built on FastAPI, htmy, and FastHX.
+    335→- [FastHX](https://github.com/volfpeter/fasthx): Declarative server-side rendering utility for FastAPI with built-in HTMX support.
+    337→## External examples
+    …
+    339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
+    341→## Why
+    …
+    353→## Dependencies
+    …
+    355→The library aims to minimze its dependencies. Currently the following dependencies are required:
+    357→- `anyio`: for async file operations and networking.
+    358→- `async-lru`: for async caching.
+    359→- `markdown`: for markdown parsing.
+    361→## Development
+    …
+    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+    365→The documentation is built with `zensical` and `mkdocstrings`.
+    367→## Contributing
+    …
+    377→## License - MIT
+    …
+    379→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
+docs/
+    api/
+        core.md
+            1→# ::: htmy.core
+            3→    options:
+            4→        show_root_heading: true
+        etree.md
+            1→# ::: htmy.etree
+            3→    options:
+            4→        show_root_heading: true
+        function_component.md
+            1→# ::: htmy.function_component
+            3→    options:
+            4→        show_root_heading: true
+        html.md
+            1→# ::: htmy.html
+            3→    options:
+            4→        show_root_heading: true
+        i18n.md
+            1→# ::: htmy.i18n
+            3→    options:
+            4→        show_root_heading: true
+        md.md
+            1→# ::: htmy.md.core
+            …
+            3→    options:
+            4→        show_root_heading: true
+            6→# ::: htmy.md.typing
+            …
+            8→    options:
+            9→        show_root_heading: true
+        renderer/
+            baseline.md
+                1→# ::: htmy.renderer.baseline
+                3→    options:
+                4→        show_root_heading: true
+            default.md
+                1→# ::: htmy.renderer.default
+                3→    options:
+                4→        show_root_heading: true
+            typing.md
+                1→# ::: htmy.renderer.typing
+                3→    options:
+                4→        show_root_heading: true
+        snippet.md
+            1→# ::: htmy.snippet
+            3→    options:
+            4→        show_root_heading: true
+        typing.md
+            1→# ::: htmy.typing
+            3→    options:
+            4→        show_root_heading: true
+        utils.md
+            1→# ::: htmy.utils
+            3→    options:
+            4→        show_root_heading: true
+    components-guide.md
+        1→# Components guide
+        …
+        3→## What is a component?
+        …
+        142→## What is a component factory?
+        …
+        184→## When to use components, when to use component factories?
+        …
+        186→There is no hard rule, but hopefully the previous sections gave you enough guidance to make an informed decision in every case. In general, if a component factory is enough, then it's often the better choice, but if you feel safer using only components, then that's just as good.
+    examples/
+    function-components.md
+        1→# Function components
+        …
+        3→The default and most flexible way to define an `htmy` component is to add a sync or async `htmy(self, context: Context) -> Component` method to a class, often to enhance a pre-existing business object with `htmy` rendering capabilities.
+        5→However, in many cases, especially when you're not enhancing an existing class, this ends up being very verbose and requires a lot of boilerplate: you need to define a class, add the necessary properties, and finally implement the `htmy()` method. This is especially impractical when the component has no properties.
+        7→Function components address these issues by allowing you to fully skip class creation and define the component simply as a function (well, or method, as we'll see later). This removes the need for any boilerplate, while also making the code more concise and easier to read.
+        9→## Function component types
+        …
+        26→## Creating function components
+        …
+        41→## Examples
+        …
+        80→### Functions
+        …
+        150→### Methods
+        …
+    index.md
+        10→# `htmy`
+        …
+        12→**Async**, **pure-Python** server-side rendering engine.
+        14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
+        16→## Key features
+        …
+        33→## Testimonials
+        …
+        47→## Support
+        …
+        49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
+        51→## Installation
+        …
+        63→## Concepts
+        …
+        69→### Components
+        …
+        167→### Built-in components
+        …
+        179→### Rendering
+        …
+        211→### Context
+        …
+        279→### Formatter
+        …
+        291→### Error boundary
+        …
+        299→### Sync or async?
+        …
+        307→## XSS prevention
+        …
+        316→## AI assistance
+        …
+        324→## Compatibility and performance
+        …
+        330→## Framework integrations
+        …
+        337→## Why
+        …
+        349→## Dependencies
+        …
+        351→The library aims to minimze its dependencies. Currently the following dependencies are required:
+        353→- `anyio`: for async file operations and networking.
+        354→- `async-lru`: for async caching.
+        355→- `markdown`: for markdown parsing.
+        357→## Development
+        …
+        359→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+        361→The documentation is built with `zensical` and `mkdocstrings`.
+        363→## Contributing
+        …
+        373→## License - MIT
+        …
+        375→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
+examples/
+htmy/
+    __init__.py
+    core.py
+    error_boundary.py
+    etree.py
+    function_component.py
+    html.py
+    i18n.py
+    io.py
+    md/
+        __init__.py
+        core.py
+        typing.py
+    py.typed
+    renderer/
+        __init__.py
+        baseline.py
+        context.py
+        default.py
+        typing.py
+    snippet.py
+    tag.py
+    typing.py
+    utils.py
+mkdocs.yaml
+pyproject.toml
+tests/

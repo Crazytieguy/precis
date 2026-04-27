@@ -1,0 +1,1539 @@
+fixture = "htmy"
+revision_pin = "4694fb86"
+summary = """
+htmy is an async, pure-Python server-side HTML/XML rendering engine.
+The library is built on a small protocol — any object with a sync or
+async `htmy(context: Context) -> Component` method is a component —
+and ships a rich set of built-in helpers around it: a `Renderer` (and
+a streaming/baseline alternative), all baseline HTML tags, function-
+component decorators, `Snippet`/`Slots` for native HTML/XML templates,
+`md.MD` for markdown, `I18n` for JSON-based translations,
+`ErrorBoundary` for graceful failure, an `ETreeConverter` for XML →
+components, and a `Formatter` that turns Python kwargs into HTML
+attributes (snake_case → kebab-case, etc.).
+
+Likely sessions: building components and pages with htmy or with
+fasthx + FastAPI; integrating snippet/markdown/i18n; debugging
+rendering / context propagation / formatting edge cases; subclassing
+or replacing the renderer or the formatter; understanding the public
+type vocabulary; writing tests against the three renderer flavours.
+The ranking front-loads the "what is the public surface and how do I
+use it" picture (concept lede + public exports + tag inventory),
+then pivots to per-feature mechanics, then to implementation bodies
+and tests."""
+
+# ============================================================
+# Tier 1 — orientation: what is this repo, what does it ship.
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level repo listing"
+justification = """
+First impression: package layout. Cheapest possible signal of where
+everything lives — `htmy/` package, `tests/`, `examples/`, `docs/`,
+plus `pyproject.toml`, `README.md`, `mkdocs.yaml`."""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "Project name + description (pyproject lede)"
+justification = """
+Single-line elevator pitch ("Async, pure-Python server-side rendering
+engine") plus the package name. Tiny but sets the frame for
+everything else."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "README H1 + tagline"
+justification = """
+The H1 + the async/pure-Python tagline. Smallest semantic anchor
+for "what is htmy?"."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 10
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "Public exports — renderer + decorator"
+justification = """
+The names an agent reaches for first when wiring up a page:
+`Renderer`, `StreamingRenderer`, `RendererType`, `component` (the
+decorator) and `ErrorBoundary`. Tiny early batch so any small budget
+already knows the right symbols to import."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 12
+end = 16
+render = { kind = "full" }
+
+[[batches]]
+id = "1.5"
+descriptor = "Project version"
+justification = """
+Cheap to land early so questions about `__version__` are zero-
+follow-up."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 1
+end = 1
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "README key features (top half)"
+justification = """
+Async-first, React-like context, function components with decorator
+syntax, baseline HTML tags built-in, async streaming, native HTML/XML
+with slot rendering. The headline capabilities; useful for "does
+htmy support X?" questions even at small budgets."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 16
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "Public exports — core utility classes"
+justification = """
+`ContextAware`, `Formatter`, `Fragment`, `SafeStr`, `SkipProperty`,
+`Text`, `WithContext`, `XBool`, `xml_format_string` — the small
+utility-class layer of the library, all from `core.py`."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 3
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "1.8"
+descriptor = "README key features (bottom half)"
+justification = """
+Markdown support, JSON i18n, ErrorBoundary, unopinionated/customizable,
+snake_case → kebab-case property conversion, compatibility wrappers,
+fully-typed. Completes the feature inventory."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 24
+end = 31
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "Public exports — Snippet/Tag"
+justification = """
+`Snippet`, `Slots`, `Tag`, `TagWithProps`, `wildcard_tag` re-exports —
+the slot/template and custom-tag layer of the public API."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 17
+end = 21
+render = { kind = "full" }
+
+[[batches]]
+id = "1.10"
+descriptor = "Public exports — typing aliases"
+justification = """
+The `typing` aliases re-exported as public names: `AsyncComponent`,
+`AsyncContextProvider`, `Component`, `ComponentSequence`,
+`ComponentType`, `Context`, `ContextKey`, `ContextProvider`,
+`ContextValue`, `HTMYComponentType`, `MutableContext`, `Properties`,
+`PropertyValue`, `StrictComponentType`, `SyncComponent`,
+`SyncContextProvider`. The full type vocabulary of the public API."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 22
+end = 37
+render = { kind = "full" }
+
+[[batches]]
+id = "1.11"
+descriptor = "Public exports — utility helpers + HTMY alias"
+justification = """
+The `as_component_sequence` / `as_component_type` /
+`is_component_sequence` / `is_component_type` /
+`is_htmy_component_type` / `join` / `join_components` re-exports,
+the `join_classes = join` synonym, and the deprecated `HTMY =
+Renderer` alias. Closes the `__init__` enumeration."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/__init__.py"
+start = 38
+end = 49
+render = { kind = "full" }
+
+[[batches]]
+id = "1.12"
+descriptor = "htmy/ package directory listing"
+justification = """
+Names every module under `htmy/` — core, html, snippet, tag, typing,
+utils, error_boundary, etree, function_component, i18n, io, plus
+the `md/` and `renderer/` subpackages. Catastrophic-omission hedge
+for any later batch that picks into a specific file."""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "htmy"
+entries = "all"
+[[batches.content.groups]]
+parent = "htmy/md"
+entries = "all"
+[[batches.content.groups]]
+parent = "htmy/renderer"
+entries = "all"
+
+[[batches]]
+id = "1.13"
+descriptor = "docs/ + tests/ + examples/ directory listings"
+justification = """
+Reveals that examples/ ships four runnable demos (i18n, markdown
+essentials, markdown customization, snippet+slots+fastapi), tests/
+has a renderer subdirectory plus per-feature test modules, and
+docs/ has guides plus an api/ directory mirroring the package."""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/examples"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/api"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/api/renderer"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/renderer"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/data"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/data/locale/en/page"
+entries = "all"
+[[batches.content.groups]]
+parent = "tests/data/locale/hu/page"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples/internationalization"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples/internationalization/locale/en/page"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples/markdown_essentials"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples/markdown_customization"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples/snippet-slots-fastapi"
+entries = "all"
+
+# ============================================================
+# Tier 2 — the central protocol + the public class signatures.
+# What an agent needs in order to call any of the named symbols
+# without first opening the source file.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Component protocol heart (SyncComponent / AsyncComponent)"
+justification = """
+The single most important piece of the library: the protocol that
+defines what a component *is*. `def htmy(self, context, /) -> Component`
+in both sync and async flavours. The H1 of every "how do I make a
+component?" question."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/typing.py"
+start = 37
+end = 53
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "Component / ComponentType / ComponentSequence type aliases"
+justification = """
+The aliases that complete the component vocabulary: a component is
+a `HTMYComponentType | str | None`, a sequence is a list/tuple of
+those, and `Component` is either. With 2.1 this is enough to
+type-annotate any component-shaped argument."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/typing.py"
+start = 54
+end = 67
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "Context / Properties / PropertyValue type aliases"
+justification = """
+The other half of the typing vocabulary — `Context` is a
+`Mapping[Any, Any]`, `MutableContext` is the mutable variant,
+`Properties` is the kwargs-shaped attribute mapping, and
+`PropertyValue` is `Any | None`. Cheap to land alongside the
+component protocol."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/typing.py"
+start = 1
+end = 33
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "Context provider protocols"
+justification = """
+`SyncContextProvider.htmy_context()` and `AsyncContextProvider.htmy_context()`
+plus the `ContextProvider` union — what a class needs to extend the
+context for its subtree. Pairs with 2.1: components implement
+`htmy()`, providers implement `htmy_context()`."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/typing.py"
+start = 70
+end = 95
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "RendererType + StreamingRendererType protocols"
+justification = """
+The protocol shape every renderer satisfies: `render(component, context=None) -> str`
+and the streaming variant's `stream() -> AsyncIterator[str]`. With
+the `is_renderer` / `is_streaming_renderer` type guards. Useful when
+swapping in a custom renderer or writing a function that takes a
+renderer."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/renderer/typing.py"
+start = 1
+end = 60
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "Default renderer wiring (renderer/__init__.py)"
+justification = """
+Tells the agent that `htmy.Renderer` is the linked-list `default`
+renderer and `htmy.StreamingRenderer` is the recursive `baseline`
+renderer (also exported as `BaselineRenderer`). Resolves the "which
+renderer am I using?" ambiguity in zero follow-ups."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/renderer/__init__.py"
+start = 1
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "Renderer.__init__ + render signatures"
+justification = """
+The default renderer's surface: `Renderer(default_context=None, *, string_formatter=xml_format_string)`
+and `async render(component, context=None) -> str`. With this an
+agent can construct a renderer and call it with no follow-up."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/renderer/default.py"
+start = 228
+end = 234
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/renderer/default.py"
+start = 238
+end = 243
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/renderer/default.py"
+start = 256
+end = 256
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "BaselineRenderer (streaming) signatures"
+justification = """
+`BaselineRenderer(default_context=None, *, string_formatter=xml_format_string)`,
+`render`, and `stream`. The streaming renderer's full public surface."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/renderer/baseline.py"
+start = 18
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/renderer/baseline.py"
+start = 30
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/renderer/baseline.py"
+start = 48
+end = 48
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/renderer/baseline.py"
+start = 67
+end = 67
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "Tag / TagWithProps / wildcard_tag signatures"
+justification = """
+`Tag(name, child_separator='\\n')`, `TagWithProps(name)`, and
+`wildcard_tag(*children, htmy_name, htmy_child_separator=None, **props)`
+— the three building blocks of the html.py tag inventory and the
+right entry points for "I want a custom tag". Each Tag instance is
+called like `tag(*children, **props)` to build a component."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/tag.py"
+start = 56
+end = 70
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/tag.py"
+start = 73
+end = 81
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/tag.py"
+start = 84
+end = 100
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "Fragment / WithContext signatures"
+justification = """
+`Fragment(*children)` — the component-sequence wrapper an agent
+reaches for to return multiple children from one `htmy()`.
+`WithContext(*children, context: Context)` — the static context-
+provider component."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 19
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 38
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "ContextAware base class — public methods"
+justification = """
+`in_context(*children)`, `to_context()`, and the `from_context(context, default=None)`
+classmethod. The standard base class for context-keyed singletons
+(I18n, Formatter, MarkdownParser all inherit from it). Drives the
+`X.from_context(context)` pattern that's used throughout the docs."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 64
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 108
+end = 113
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 115
+end = 116
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 127
+end = 130
+render = { kind = "full" }
+
+[[batches]]
+id = "2.12"
+descriptor = "@component decorator — props+context (function/method)"
+justification = """
+The `@component` / `@component.function` decorator overloads (the
+sync/async, props+context flavour) plus the `@component.method`
+overloads for instance methods. The two most common decorators in
+the library, signature-only."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 71
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 80
+end = 89
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 234
+end = 247
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 362
+end = 367
+render = { kind = "full" }
+
+[[batches]]
+id = "2.13"
+descriptor = "@component decorator — context-only (function/method)"
+justification = """
+The `@component.context_only` (function) and
+`@component.context_only_method` overloads for components that take
+only a `context` argument with no `props`. Mirrors 2.12 for the
+"no-props" branch documented in `docs/function-components.md`."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 184
+end = 197
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/function_component.py"
+start = 305
+end = 318
+render = { kind = "full" }
+
+[[batches]]
+id = "2.14"
+descriptor = "Snippet / Slots class signatures"
+justification = """
+`Snippet(path_or_text, text_resolver=None, *, text_processor=None)`
+plus `Slots(slot_mapping, *, slot_re=Slots.slot_re.default, not_found=None)`
+and the predefined `slot_re.square_bracket` / `slot_re.parentheses`
+patterns. The full signature for native HTML/XML templating."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 27
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 49
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 58
+end = 58
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 66
+end = 66
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 78
+end = 78
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 83
+end = 89
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 110
+end = 110
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 158
+end = 158
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 218
+end = 224
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 241
+end = 241
+render = { kind = "full" }
+
+[[batches]]
+id = "2.15"
+descriptor = "MD / MarkdownParser class signatures"
+justification = """
+`md.MD(path_or_text, text_resolver=None, *, converter=None, renderer=None, text_processor=None)`
+— the markdown component, a `Snippet` subclass. `MarkdownParser`'s
+`default()`, `__init__(md=None)` and `parse(text)` define the
+plug-in seam for swapping the markdown parser."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 20
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 33
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 81
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/md/core.py"
+start = 103
+end = 111
+render = { kind = "full" }
+
+[[batches]]
+id = "2.16"
+descriptor = "I18n class signature"
+justification = """
+`I18n(path, fallback=None)` plus the two `get(dotted_path, key, **kwargs)`
+overloads — single entry point for JSON-based async translation
+lookup. Plus the `I18nError` / `I18nKeyError` / `I18nValueError`
+exception hierarchy."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/i18n.py"
+start = 11
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/i18n.py"
+start = 15
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/i18n.py"
+start = 34
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/i18n.py"
+start = 45
+end = 51
+render = { kind = "full" }
+
+[[batches]]
+id = "2.17"
+descriptor = "ErrorBoundary class signature"
+justification = """
+`ErrorBoundary(*children, fallback=None, errors=None)` — the only
+public surface for catching errors in a component subtree. The
+`errors` kwarg restricts the accepted exception types."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/error_boundary.py"
+start = 15
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/error_boundary.py"
+start = 25
+end = 30
+render = { kind = "full" }
+
+[[batches]]
+id = "2.18"
+descriptor = "ETreeConverter class signature"
+justification = """
+`etree.ETreeConverter(rules)` plus `convert(element)` and
+`convert_element(element)` — the XML-string-to-component utility
+that powers the `MD` `converter` argument and any custom-tag-
+in-markdown workflow."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/etree.py"
+start = 23
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/etree.py"
+start = 46
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/etree.py"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/etree.py"
+start = 63
+end = 63
+render = { kind = "full" }
+
+[[batches]]
+id = "2.19"
+descriptor = "Formatter class signature"
+justification = """
+`Formatter(*, default_formatter=str, name_formatter=None)` plus the
+public `add(key, formatter)`, `format(name, value)`, `format_name`,
+`format_value` methods — the seam for customizing attribute name
+and value rendering."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 201
+end = 202
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 222
+end = 227
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 241
+end = 241
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 246
+end = 246
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 259
+end = 259
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 268
+end = 268
+render = { kind = "full" }
+
+[[batches]]
+id = "2.20"
+descriptor = "SafeStr / Text / XBool / SkipProperty + xml_format_string"
+justification = """
+`SafeStr` (skip XML escaping), `Text` (load directly, don't read
+file), `XBool.true / XBool.false` for boolean HTML attributes,
+`SkipProperty` to drop a property entirely, and the
+`xml_format_string` helper. The small but pervasive utility layer."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 146
+end = 154
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 157
+end = 160
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 163
+end = 172
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 175
+end = 193
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/core.py"
+start = 196
+end = 198
+render = { kind = "full" }
+
+[[batches]]
+id = "2.21"
+descriptor = "Utility helpers — public function signatures"
+justification = """
+`is_htmy_component_type(comp)`, `is_component_type(comp)`,
+`is_component_sequence(comp)`, `as_component_sequence(comp)`,
+`as_component_type(comp)`, `join_components(components, separator, pad=False)`,
+`join(*items, separator=' ')` — the runtime-check + sequence
+helpers re-exported at top level."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 12
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 62
+end = 62
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 67
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/utils.py"
+start = 73
+end = 73
+render = { kind = "full" }
+
+# ============================================================
+# Tier 3 — feature-level breadth: tag inventory, key docs
+# sections, pipeline-shaped semantics. Closes catastrophic-
+# omission gaps from tier 2 and adds zero-follow-up answers
+# for the most common usage questions.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "html.py — top of file (DOCTYPE + first tags + Link)"
+justification = """
+Anchors the agent in `html.py`: the `DOCTYPE.html` constant
+(`<!DOCTYPE html>`), the first canonical `Tag` definitions
+(`html`, `head`, `body`, `base`, `title`, `link`), and the
+`Link.css(href)` factory. Establishes the "Tag('name')" idiom
+that is repeated for every other tag below."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 13
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 34
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 48
+end = 48
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 63
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 71
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 79
+end = 100
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "html.py — block + form tag inventory (locations)"
+justification = """
+Catastrophic-omission hedge: every `<tagname> = Tag(...)` /
+`TagWithProps(...)` line for the structural / form / inline tags
+between `<script>` and `<textarea>`, name-only via Truncated.
+Lets an agent answer "is `<details>` exported?" without re-reading
+the file. The full tag list spans many lines but each line emits
+just `name = ` plus an ellipsis."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 103
+end = 103
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 113
+end = 113
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 123
+end = 123
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 130
+end = 130
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 137
+end = 137
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 144
+end = 144
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 151
+end = 151
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 158
+end = 158
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 165
+end = 165
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 172
+end = 172
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 179
+end = 179
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 186
+end = 186
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 193
+end = 193
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 200
+end = 200
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 207
+end = 207
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 214
+end = 214
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 221
+end = 221
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 228
+end = 228
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 235
+end = 235
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 242
+end = 242
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 249
+end = 249
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 256
+end = 256
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 263
+end = 263
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 270
+end = 270
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 277
+end = 277
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 284
+end = 284
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 291
+end = 291
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 298
+end = 298
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 305
+end = 305
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 312
+end = 312
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 319
+end = 319
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 326
+end = 326
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 333
+end = 333
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 340
+end = 340
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 347
+end = 347
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 354
+end = 354
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 361
+end = 361
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 368
+end = 368
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 375
+end = 375
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 382
+end = 382
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 389
+end = 389
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+
+[[batches]]
+id = "3.3"
+descriptor = "html.py — inline + table + heading tag inventory (locations)"
+justification = """
+Catastrophic-omission completion of the tag inventory: the rest of
+the `name = Tag(...)` / `TagWithProps(...)` lines from `<a>` through
+`<slot>`, including all headings (`h1`–`h6`), table tags
+(`table`/`thead`/`tr`/`td`/`th`/...), media (`audio`/`video`/`canvas`),
+and inline phrasing tags. Now an agent can answer "is `<picture>`
+exported? Is `<map>`?" zero-follow-up."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 396
+end = 396
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 403
+end = 403
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 410
+end = 410
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 417
+end = 417
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 424
+end = 424
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 431
+end = 431
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 438
+end = 438
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 445
+end = 445
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 452
+end = 452
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 459
+end = 459
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 466
+end = 466
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 473
+end = 473
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 480
+end = 480
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 487
+end = 487
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 494
+end = 494
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 501
+end = 501
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 508
+end = 508
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 515
+end = 515
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 522
+end = 522
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 529
+end = 529
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 536
+end = 536
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 543
+end = 543
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 550
+end = 550
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 557
+end = 557
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 564
+end = 564
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 571
+end = 571
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 578
+end = 578
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 585
+end = 585
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 592
+end = 592
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 599
+end = 599
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 606
+end = 606
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 613
+end = 613
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 620
+end = 620
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 627
+end = 627
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 634
+end = 634
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 641
+end = 641
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 648
+end = 648
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 655
+end = 655
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 662
+end = 662
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 669
+end = 669
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 676
+end = 676
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 683
+end = 683
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 690
+end = 690
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 697
+end = 697
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 704
+end = 704
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 711
+end = 711
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 718
+end = 718
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 725
+end = 725
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 732
+end = 732
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 739
+end = 739
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 746
+end = 746
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 753
+end = 753
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 760
+end = 760
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 767
+end = 767
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 774
+end = 774
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 781
+end = 781
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 788
+end = 788
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 795
+end = 795
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 802
+end = 802
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 809
+end = 809
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 816
+end = 816
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 823
+end = 823
+render = { kind = "truncated", pattern = '^[^=]+ =' }
+[[batches.content.spans]]
+path = "htmy/html.py"
+start = 831
+end = 846
+render = { kind = "full" }
+
+# ============================================================
+# Tier 4 — semantic depth: pipeline-shaped docstrings, key
+# README sections, and the renderer test fixtures (which
+# define how all three renderer flavours are exercised).
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Snippet docstring — the 4-step pipeline + warning"
+justification = """
+Tells the agent what `Snippet` actually does: load text → text
+processor → text resolver (e.g. `Slots`) → wrap as `SafeStr`. Plus
+the XSS warning. Single highest-value docstring in the library for
+zero-follow-up "how does Snippet work" answers."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "htmy/snippet.py"
+start = 159
+end = 187
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "README — default attribute-formatting rules"
+justification = """
+The default `Formatter` rules: snake_case → kebab-case unless the
+name starts/ends with `_` (so `data_theme` → `data-theme` and
+`class_` / `_class` both → `class`), `bool` → `"true"`/`"false"`,
+`XBool.true` → empty / `XBool.false` → skipped, `date`/`datetime`
+→ ISO, complex values JSON-serialized. High-density debugging
+content."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 281
+end = 289
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "tests/conftest.py — renderer fixtures"
+justification = """
+Defines the shared `default_renderer` (Renderer), `baseline_renderer`
+(BaselineRenderer), and `streaming_renderer` (StreamingRenderer)
+session fixtures used across the renderer test suite. Anchors any
+"how do tests pick a renderer?" question and shows how to construct
+all three flavours."""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tests/conftest.py"
+start = 1
+end = 18
+render = { kind = "full" }

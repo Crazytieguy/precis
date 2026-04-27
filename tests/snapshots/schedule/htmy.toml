@@ -1,0 +1,3958 @@
+fixture = "htmy"
+budget = 10000
+cumulative_tokens = 9689
+batch_count = 97
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy'"
+cost_tokens = 33
+cum_tokens = 33
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy"
+entries = [".coderabbit.yaml", ".github", ".gitignore", "LICENSE", "README.md", "docs", "examples", "htmy", "mkdocs.yaml", "pyproject.toml", "tests"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+cost_tokens = 26
+cum_tokens = 59
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/.github'"
+cost_tokens = 7
+cum_tokens = 66
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/.github"
+entries = ["funding.yml", "workflows"]
+
+[[batches]]
+position = 4
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/docs'"
+cost_tokens = 20
+cum_tokens = 86
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs"
+entries = ["api", "components-guide.md", "examples", "function-components.md", "index.md"]
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/.github/workflows'"
+cost_tokens = 19
+cum_tokens = 105
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/.github/workflows"
+entries = ["build-docs.yml", "linters.yml", "publish.yml", "tests.yml"]
+
+[[batches]]
+position = 6
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+cost_tokens = 53
+cum_tokens = 158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md section #0"
+cost_tokens = 0
+cum_tokens = 158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+cost_tokens = 59
+cum_tokens = 217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/htmy'"
+cost_tokens = 65
+cum_tokens = 282
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy"
+entries = ["__init__.py", "core.py", "error_boundary.py", "etree.py", "function_component.py", "html.py", "i18n.py", "io.py", "md", "py.typed", "renderer", "snippet.py", "tag.py", "typing.py", "utils.py"]
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md'"
+cost_tokens = 14
+cum_tokens = 296
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md"
+entries = ["__init__.py", "core.py", "typing.py"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer'"
+cost_tokens = 22
+cum_tokens = 318
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer"
+entries = ["__init__.py", "baseline.py", "context.py", "default.py", "typing.py"]
+
+[[batches]]
+position = 12
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+cost_tokens = 214
+cum_tokens = 532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 353
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 377
+end = 377
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 331
+end = 331
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 354
+end = 354
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 362
+end = 362
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 368
+end = 368
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 378
+end = 378
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #0"
+cost_tokens = 32
+cum_tokens = 564
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 22 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #22"
+cost_tokens = 30
+cum_tokens = 594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 377
+end = 377
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 379
+end = 379
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api'"
+cost_tokens = 42
+cum_tokens = 636
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api"
+entries = ["core.md", "etree.md", "function_component.md", "html.md", "i18n.md", "md.md", "renderer", "snippet.md", "typing.md", "utils.md"]
+
+[[batches]]
+position = 16
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+cost_tokens = 27
+cum_tokens = 663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer'"
+cost_tokens = 12
+cum_tokens = 675
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer"
+entries = ["baseline.md", "default.md", "typing.md"]
+
+[[batches]]
+position = 18
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md section #0"
+cost_tokens = 18
+cum_tokens = 693
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 17 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #17"
+cost_tokens = 43
+cum_tokens = 736
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 339
+end = 339
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #3"
+cost_tokens = 69
+cum_tokens = 805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 20 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #20"
+cost_tokens = 49
+cum_tokens = 854
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 365
+end = 365
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/core.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/core.md section #0"
+cost_tokens = 28
+cum_tokens = 882
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/core.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/core.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/html.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/html.md section #0"
+cost_tokens = 28
+cum_tokens = 910
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/html.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/html.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/utils.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/utils.md section #0"
+cost_tokens = 28
+cum_tokens = 938
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/utils.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/utils.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/etree.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/etree.md section #0"
+cost_tokens = 29
+cum_tokens = 967
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/etree.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/etree.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/function_component.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/function_component.md section #0"
+cost_tokens = 29
+cum_tokens = 996
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/function_component.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/function_component.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/snippet.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/snippet.md section #0"
+cost_tokens = 29
+cum_tokens = 1025
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/snippet.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/snippet.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/typing.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/typing.md section #0"
+cost_tokens = 29
+cum_tokens = 1054
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/typing.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/typing.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/i18n.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/i18n.md section #0"
+cost_tokens = 30
+cum_tokens = 1084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/i18n.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/i18n.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+cost_tokens = 215
+cum_tokens = 1299
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 357
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 317
+end = 317
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 331
+end = 331
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 364
+end = 364
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #0"
+cost_tokens = 49
+cum_tokens = 1348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 19 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #19"
+cost_tokens = 62
+cum_tokens = 1410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 353
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 355
+end = 355
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 357
+end = 359
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md section #1"
+cost_tokens = 18
+cum_tokens = 1428
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 21 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #21"
+cost_tokens = 30
+cum_tokens = 1458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 375
+end = 375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 14 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #14"
+cost_tokens = 88
+cum_tokens = 1546
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 320
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/default.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/default.md section #0"
+cost_tokens = 29
+cum_tokens = 1575
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/default.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/default.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/baseline.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/baseline.md section #0"
+cost_tokens = 30
+cum_tokens = 1605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/baseline.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/baseline.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/typing.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/typing.md section #0"
+cost_tokens = 30
+cum_tokens = 1635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/typing.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/typing.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 16 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #16"
+cost_tokens = 89
+cum_tokens = 1724
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 332
+end = 332
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 334
+end = 335
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #4"
+cost_tokens = 118
+cum_tokens = 1842
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 55
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #5"
+cost_tokens = 120
+cum_tokens = 1962
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 13 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #13"
+cost_tokens = 134
+cum_tokens = 2096
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 311
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 313
+end = 314
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 19 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #19"
+cost_tokens = 49
+cum_tokens = 2145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 357
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 359
+end = 359
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 361
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #1"
+cost_tokens = 283
+cum_tokens = 2428
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 18
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md section #0"
+cost_tokens = 182
+cum_tokens = 2610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 15 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #15"
+cost_tokens = 165
+cum_tokens = 2775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 326
+end = 326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 328
+end = 328
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md section #3"
+cost_tokens = 60
+cum_tokens = 2835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 18 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #18"
+cost_tokens = 62
+cum_tokens = 2897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 351
+end = 351
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 353
+end = 355
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #3"
+cost_tokens = 69
+cum_tokens = 2966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #2"
+cost_tokens = 307
+cum_tokens = 3273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 21 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #21"
+cost_tokens = 185
+cum_tokens = 3458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 371
+end = 375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 14 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #14"
+cost_tokens = 88
+cum_tokens = 3546
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 320
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 16 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #16"
+cost_tokens = 89
+cum_tokens = 3635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 330
+end = 330
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 332
+end = 332
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 334
+end = 335
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #4"
+cost_tokens = 118
+cum_tokens = 3753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 55
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #5"
+cost_tokens = 120
+cum_tokens = 3873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 13 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #13"
+cost_tokens = 134
+cum_tokens = 4007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 311
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 313
+end = 314
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples'"
+cost_tokens = 22
+cum_tokens = 4029
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples"
+entries = ["internationalization", "markdown_customization", "markdown_essentials", "snippet-slots-fastapi"]
+
+[[batches]]
+position = 58
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 15 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #15"
+cost_tokens = 165
+cum_tokens = 4194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 326
+end = 326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 328
+end = 328
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 20 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #20"
+cost_tokens = 185
+cum_tokens = 4379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 365
+end = 365
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 367
+end = 371
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization'"
+cost_tokens = 13
+cum_tokens = 4392
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization"
+entries = ["__init__.py", "app.py", "locale"]
+
+[[batches]]
+position = 61
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale'"
+cost_tokens = 3
+cum_tokens = 4395
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale"
+entries = ["en"]
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en'"
+cost_tokens = 3
+cum_tokens = 4398
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en"
+entries = ["page"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization'"
+cost_tokens = 14
+cum_tokens = 4412
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization"
+entries = ["__init__.py", "app.py", "post.md"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials'"
+cost_tokens = 14
+cum_tokens = 4426
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials"
+entries = ["__init__.py", "app.py", "post.md"]
+
+[[batches]]
+position = 65
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 18 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #18"
+cost_tokens = 547
+cum_tokens = 4973
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 345
+end = 345
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 347
+end = 347
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 351
+end = 351
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/snippet-slots-fastapi" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/snippet-slots-fastapi'"
+cost_tokens = 16
+cum_tokens = 4989
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/snippet-slots-fastapi"
+entries = ["app.py", "centered.html", "layout.html", "requirements.txt"]
+
+[[batches]]
+position = 67
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en/page" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en/page'"
+cost_tokens = 4
+cum_tokens = 4993
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization/locale/en/page"
+entries = ["hello.json"]
+
+[[batches]]
+position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #11"
+cost_tokens = 138
+cum_tokens = 5131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #1"
+cost_tokens = 283
+cum_tokens = 5414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 18
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 12 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #12"
+cost_tokens = 158
+cum_tokens = 5572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 301
+end = 301
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 303
+end = 303
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #2"
+cost_tokens = 307
+cum_tokens = 5879
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md section #2"
+cost_tokens = 314
+cum_tokens = 6193
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 32
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md section #1"
+cost_tokens = 321
+cum_tokens = 6514
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 21
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests'"
+cost_tokens = 57
+cum_tokens = 6571
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests"
+entries = ["__init__.py", "conftest.py", "data", "renderer", "test_formatter.py", "test_function_component.py", "test_i18n.py", "test_main_components.py", "test_md.py", "test_snippet.py", "utils.py"]
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data'"
+cost_tokens = 15
+cum_tokens = 6586
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data"
+entries = ["blog-post.md", "hello-world-snippet.html", "locale"]
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale'"
+cost_tokens = 6
+cum_tokens = 6592
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale"
+entries = ["en", "hu"]
+
+[[batches]]
+position = 77
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en'"
+cost_tokens = 3
+cum_tokens = 6595
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en"
+entries = ["page"]
+
+[[batches]]
+position = 78
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu'"
+cost_tokens = 3
+cum_tokens = 6598
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu"
+entries = ["page"]
+
+[[batches]]
+position = 79
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu/page" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu/page'"
+cost_tokens = 4
+cum_tokens = 6602
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/hu/page"
+entries = ["welcome.json"]
+
+[[batches]]
+position = 80
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+cost_tokens = 38
+cum_tokens = 6640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization/post.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 81
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+cost_tokens = 38
+cum_tokens = 6678
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+cost_tokens = 38
+cum_tokens = 6716
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/renderer" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/renderer'"
+cost_tokens = 28
+cum_tokens = 6744
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/renderer"
+entries = ["test_default_renderer.py", "test_renderer_comparison.py", "test_renderer_in_context.py", "test_streaming_renderers.py"]
+
+[[batches]]
+position = 84
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md section #3"
+cost_tokens = 345
+cum_tokens = 7089
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 45
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 52
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 56
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 60
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 67
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md"
+start = 71
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples'"
+cost_tokens = 34
+cum_tokens = 7123
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples"
+entries = ["fastapi-htmx-tailwind-daisyui.md", "index.md", "internationalization.md", "markdown.md", "snippet-slots-fastapi.md"]
+
+[[batches]]
+position = 86
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+cost_tokens = 41
+cum_tokens = 7164
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples/markdown.md"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page'"
+cost_tokens = 8
+cum_tokens = 7172
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page"
+entries = ["overview.json", "welcome.json"]
+
+[[batches]]
+position = 88
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #7"
+cost_tokens = 243
+cum_tokens = 7415
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 171
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #8"
+cost_tokens = 296
+cum_tokens = 7711
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 187
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 192
+end = 201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 203
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 207
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 17 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #17"
+cost_tokens = 547
+cum_tokens = 8258
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 339
+end = 339
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 345
+end = 345
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 347
+end = 347
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md section #10"
+cost_tokens = 343
+cum_tokens = 8601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md"
+start = 285
+end = 289
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md section #2"
+cost_tokens = 655
+cum_tokens = 9256
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 146
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 151
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 155
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 173
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #11"
+cost_tokens = 138
+cum_tokens = 9394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 12 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md section #12"
+cost_tokens = 158
+cum_tokens = 9552
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 301
+end = 301
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 303
+end = 303
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md section #0"
+cost_tokens = 58
+cum_tokens = 9610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials/post.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md section #0"
+cost_tokens = 58
+cum_tokens = 9668
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/blog-post.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json"
+cost_tokens = 21
+cum_tokens = 9689
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/data/locale/en/page/overview.json"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"

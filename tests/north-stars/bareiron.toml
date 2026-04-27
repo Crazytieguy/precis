@@ -1,0 +1,993 @@
+fixture = "bareiron"
+revision_pin = "ddb071c3"
+summary = """
+bareiron is a minimalist Minecraft 1.21.8 (protocol 772) server written in
+plain C, optimized for memory-restricted embedded systems (especially
+ESP32) where memory > performance > features. It speaks the vanilla
+Minecraft Java protocol over a single non-blocking accept-loop in main.c,
+dispatching each packet through a big switch on (packet_id, state). The
+codebase has three pillars:
+
+  * `src/packets.c` + `include/packets.h` — every cs_/sc_ network packet
+    handler (serverbound parsers, clientbound serializers).
+  * `src/procedures.c` + `include/procedures.h` — game logic: player
+    state, mining + placement, mob AI, chests, fluid flow, server tick.
+  * `src/worldgen.c` + `include/worldgen.h` — deterministic terrain
+    generation from `world_seed`: biomes, heights, ores, trees.
+
+Supporting modules: `src/crafting.c` (crafting + smelting recipes),
+`src/serialize.c` (optional `world.bin` persistence), `src/structures.c`
+(tree placement), `src/tools.c` (recv/send + endian + RNG), `src/varnum.c`
+(VarInt). `include/globals.h` is the central config header. The
+`registries.h` / `registries.c` are generated from a vanilla server jar
+via `extract_registries.sh` + `build_registries.js` and are gitignored.
+
+Plausible queries: how does packet X get handled, where is config Y, how
+is terrain at coordinate Z computed, what happens on player join /
+mining / placement, where are recipes defined, how is data persisted to
+disk, how do chests work (the README warns about memory hacks).
+"""
+
+# ============================================================
+# Tier 1 — Crate identity
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level fixture tree"
+justification = """
+Single cheapest catastrophic-omission hedge: tells the agent every
+top-level file/dir present so they don't assume e.g. there's no build
+system, no GitHub workflows, no JS tooling. The src/include split is the
+single most load-bearing structural fact about this codebase.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "README title + tagline"
+justification = """
+Two-line lede that pins down what this project actually is: a Minecraft
+server, but minimalist and aimed at embedded systems. Frames every
+otherwise-puzzling design decision the agent will encounter.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 2
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "README — Minecraft + protocol versions"
+justification = """
+The exact target version (1.21.8 / protocol 772). Many "is feature X
+supported?" questions resolve directly from this — the protocol and
+client are pinned, no compatibility layer.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 6
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "README — project priorities"
+justification = """
+The single sentence that explains *why* the code looks the way it does:
+priorities are memory > performance > features, and vanilla compliance
+is explicitly not a goal. This is a frequent zero-follow-up answer to
+'why doesn't bareiron do X like vanilla Minecraft?'.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 4
+end = 4
+render = { kind = "full" }
+
+# ============================================================
+# Tier 2 — Source/include structure
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "src/ listing"
+justification = """
+Catastrophic-omission hedge for the .c files. With this the agent knows
+every implementation file by name (main, packets, procedures, worldgen,
+crafting, serialize, structures, tools, varnum, globals — and that
+CMakeLists.txt exists for ESP-IDF). Any 'where is X implemented' question
+becomes a one-hop file read.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "include/ listing"
+justification = """
+Same hedge for the public/internal header files. Also a quick semantic
+hint: every module has a one-to-one .h ⇄ .c partner (packets.h ⇄
+packets.c, etc.), and the headers are where signatures live.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "include"
+entries = "all"
+
+# ============================================================
+# Tier 3 — High-value compact semantic anchors
+# ============================================================
+# Small, cheap batches that frame the project semantically: the
+# connection state machine, the canonical config knobs, the README's
+# Configuration section. These come before the bigger header listings
+# because they're cheaper per-token of value and let the envelope grow.
+
+[[batches]]
+id = "3.1"
+descriptor = "Connection state-machine constants (STATE_*)"
+justification = """
+Six constants that name every state a client connection can be in.
+Without these, every cs_/sc_ packet handler in main.c looks magical
+('what's STATE_PLAY?'). Tiny — six lines — and unlocks reading the
+handlePacket switch and setClientState/getClientState flow.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 165
+end = 170
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Tools — mod_abs / div_floor inline helpers"
+justification = """
+Two-liners used heavily in chunk-coordinate math throughout worldgen.c
+and main.c (`div_floor(x, CHUNK_SIZE)`). Cheap and unlocks reading any
+coordinate-conversion code without grepping.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 8
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS"
+justification = """
+Three of the central capacity / connection knobs with their #define
+comments. Pins down the player cap (16) and the corollary that
+MAX_MOBS = MAX_PLAYERS, plus the listening port (25565). GAMEMODE /
+VIEW_DISTANCE / TIME_BETWEEN_TICKS are split out into the larger
+config-block batch later in this tier (3.x — full early-globals.h block).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 18
+end = 26
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "structures.h + crafting.h — full (tiny)"
+justification = """
+Two minimal headers. structures.h declares the lone placeTreeStructure
+entry; crafting.h declares getCraftingOutput + getSmeltingOutput.
+Catastrophic-omission hedge: agent now sees these modules' complete
+public surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/structures.h"
+start = 1
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/crafting.h"
+start = 1
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "varnum.h — full"
+justification = """
+Whole VarInt API plus SEGMENT_BITS / CONTINUE_BIT / VARNUM_ERROR
+constants. VarInt is *the* basic unit of length-prefixing in the
+Minecraft protocol — every readVarInt call across the codebase routes
+back here. 14 lines.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/varnum.h"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "README — Configuration intro paragraph"
+justification = """
+Three sentences telling the agent *where* the configuration lives:
+include/globals.h for most options, src/globals.c for MOTD / starting
+time. Resolves a huge fraction of 'how do I configure X' queries with
+zero follow-up and pins the search to the right file.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 31
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "serialize.h — full (disk-sync API + #ifdef shape)"
+justification = """
+Reveals the SYNC_WORLD_TO_DISK guard wrapping the entire serializer API
+and the no-op `#define` fallbacks when persistence is off. Load-bearing
+for understanding why callers in procedures.c can call writeBlock-
+ChangesToDisk unconditionally. 21 lines.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/serialize.h"
+start = 1
+end = 21
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "packets.h — serverbound (cs_) function names"
+justification = """
+Catastrophic-omission hedge: every C->S handler the server understands.
+Listing only some implies the others don't exist, which would mislead
+'does bareiron handle packet X' queries. Truncated to drop parameter
+lists; full sigs are promoted later if needed (most cs_ params are just
+client_fd anyway).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 4
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 5
+end = 25
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.9"
+descriptor = "packets.h — clientbound (sc_) function names, part 1"
+justification = """
+First half of the S->C handlers (status / login / config / play setup
+through chunk data and keepalive). Truncated to names. Together with
+3.10 catastrophic-omission hedges the entire clientbound surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 28
+end = 46
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.10"
+descriptor = "packets.h — clientbound (sc_) function names, part 2"
+justification = """
+Second half of the S->C handlers (entity spawn/teleport/animation,
+damage, health, respawn, chat, registries). Completes the
+catastrophic-omission hedge for clientbound packets.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/packets.h"
+start = 47
+end = 63
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.11"
+descriptor = "procedures.h — game-logic function names, part 1"
+justification = """
+First half: client state mgmt, player data lifecycle, slot conversion,
+block-change CRUD, mining-related helpers. Names alone resolve most
+'where does X happen' questions to a one-hop grep into procedures.c.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 8
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 10
+end = 12
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 14
+end = 22
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 24
+end = 25
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 27
+end = 28
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 30
+end = 31
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 33
+end = 39
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.12"
+descriptor = "procedures.h — game-logic function names, part 2"
+justification = """
+Second half: mining/use-item entry points, fluid update, mob lifecycle
+(spawn / interact / hurt), server tick, chest broadcast, EntityData
+serialization helpers. Completes the procedures-module surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 41
+end = 44
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 46
+end = 46
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 48
+end = 51
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 53
+end = 53
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 55
+end = 55
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/procedures.h"
+start = 57
+end = 58
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "3.13"
+descriptor = "worldgen.h — full"
+justification = """
+Whole file. Both data structs (ChunkAnchor, ChunkFeature) verbatim and
+the public terrain function decls (getChunkHash, getChunkBiome,
+getHeightAt, getBlockAt, buildChunkSection). Anyone asking 'what's the
+world generation algorithm' or 'how does a coordinate become a block'
+starts here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/worldgen.h"
+start = 1
+end = 30
+render = { kind = "full" }
+
+[[batches]]
+id = "3.14"
+descriptor = "tools.h — I/O + RNG function names (rest)"
+justification = """
+The big remaining chunk of tools.h: recv_all / send_all / discard_all
+(socket I/O), writeByte..writeDouble / readByte..readDouble (typed
+network primitives), readLengthPrefixedData / readString[N], fast_rand /
+splitmix64, get_program_time. Truncated names — every other source file
+calls these and the names alone disambiguate 'where do I read a uint16
+from a socket?' (readUint16, in tools).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 15
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 16
+end = 18
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 20
+end = 25
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 27
+end = 34
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 36
+end = 38
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 40
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 41
+end = 41
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "include/tools.h"
+start = 43
+end = 47
+render = { kind = "full" }
+
+# ============================================================
+# Tier 4 — Data structures + main loop shape + config bodies
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "BlockChange struct + extern arrays (block_changes/player_data/mob_data)"
+justification = """
+The four-field BlockChange struct (short x, short z, uint8_t y, uint8_t
+block — note y is uint8 capping world height at 256!) and the three
+extern fixed-size arrays that hold *all* mutable state of the server.
+Critical for understanding how the world is stored: terrain is generated
+on-demand from world_seed; persistent deltas live in block_changes[]
+with a sentinel block==0xFF marking 'unused'.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 191
+end = 196
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 268
+end = 274
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "PlayerData struct — full"
+justification = """
+The single biggest data structure in the codebase, packed (#pragma pack)
+and ~40 lines. Inventory layout (41 slots: hotbar 0-8, main 9-35,
+armor 36-39, offhand 40), 9-slot crafting buffer, position, visited
+chunks, a multipurpose flagval_16 / flagval_8 pair driven by `flags`,
+and the bit-flag legend right in the comments. The flags byte is
+referenced in dozens of places across procedures.c / packets.c / main.c
+— having it here zero-follows-up most player-state questions.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 198
+end = 238
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "MobData struct — full (data-byte bitfield comment)"
+justification = """
+Compact 5-byte mob struct packed across (type, x, y, z, data). The
+comments document the ingenious overloading: when health (lower 5 bits
+of data) is 0 the mob is dead and y is reused as a deallocation
+countdown timer, the middle bit tracks sheep-sheared, upper 2 bits hold
+panic timer. Anyone touching mob_data needs this.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 240
+end = 251
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "EntityData / EntityDataValue (entity metadata serialization)"
+justification = """
+Small union+struct used to serialize the Set-Entity-Metadata packet
+payload (writeEntityData / sizeEntityData in procedures.c). Two type
+codes: 0 (byte) and 21 (pose). Tiny but needed to trace any sc_set-
+EntityMetadata callsite.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 255
+end = 266
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "globals.h — runtime extern declarations"
+justification = """
+Every shared mutable variable: recv_count + recv_buffer (the global
+input buffer), world_seed / rng_seed (RNG state), world_time /
+server_ticks (clock), motd / motd_len, optional brand, client_count.
+Catastrophic-omission hedge: with this and 4.1 the agent has seen *all*
+extern globals defined in globals.c.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 172
+end = 189
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "src/globals.c — runtime defaults + literal MOTD/brand"
+justification = """
+The actual definitions paired with each extern in 4.5 plus seed
+initializers (world_seed = INITIAL_WORLD_SEED, rng_seed =
+INITIAL_RNG_SEED), the literal MOTD ('A bareiron server') and brand
+('bareiron'). The README pointed agents here for MOTD / starting
+time of day.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/globals.c"
+start = 31
+end = 56
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "globals.h — feature toggle #defines + their comments"
+justification = """
+The README explicitly tells users to flip these toggles for performance
+or stability: BROADCAST_ALL_MOVEMENT, SCALE_MOVEMENT_UPDATES_TO_PLAYER_-
+COUNT, DO_FLUID_FLOW, ALLOW_CHESTS, ENABLE_PLAYER_FLIGHT, ENABLE_PICKUP-
+ANIMATION, ENABLE_CACTUS_DAMAGE, plus the DEV_LOG_* flags and
+DEV_ENABLE_BEEF_DUMPS. Long-comment block — included verbatim because the
+comments are the actual user-facing documentation for each toggle.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 113
+end = 163
+render = { kind = "full" }
+
+[[batches]]
+id = "4.8"
+descriptor = "globals.h — tickrate / RNG seeds / world-gen knobs"
+justification = """
+TIME_BETWEEN_TICKS, TICKS_PER_SECOND, INITIAL_WORLD_SEED, INITIAL_RNG_-
+SEED, CHUNK_SIZE, TERRAIN_BASE_HEIGHT, CAVE_BASE_DEPTH, BIOME_SIZE,
+BIOME_RADIUS, VISITED_HISTORY, MAX_BLOCK_CHANGES — the numeric knobs
+that drive the world-gen + tick loop. CHUNK_SIZE is documented as
+'must be power of 2'; MAX_BLOCK_CHANGES (20000) is *the* memory
+ceiling on player-made changes.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 37
+end = 76
+render = { kind = "full" }
+
+[[batches]]
+id = "4.9"
+descriptor = "globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate)"
+justification = """
+The block at lines 77-111 covers disk persistence (SYNC_WORLD_TO_DISK
+default-on for non-ESP, default-off for ESP), DISK_SYNC_INTERVAL,
+DISK_SYNC_BLOCKS_ON_INTERVAL, NETWORK_TIMEOUT_TIME, MAX_RECV_BUF_LEN
+(256), and SEND_BRAND. The comments here are the *only* place the
+default for SYNC_WORLD_TO_DISK is documented.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 77
+end = 111
+render = { kind = "full" }
+
+[[batches]]
+id = "4.10"
+descriptor = "globals.h — preamble + ESP_PLATFORM gating"
+justification = """
+The top of globals.h: include guards, the #ifdef ESP_PLATFORM stub for
+WIFI_SSID/WIFI_PASS/task_yield (with a no-op task_yield() macro on
+non-ESP), and the true/false defines. Explains why almost every other
+file has `task_yield()` calls that compile to nothing on PC.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "include/globals.h"
+start = 1
+end = 16
+render = { kind = "full" }
+
+[[batches]]
+id = "4.11"
+descriptor = "README — Configuration 'important options' bullets"
+justification = """
+The author's own runtime-tuning guidance: which toggles to flip when
+movement is choppy, when chests/water cause crashes, when chunk gen
+is slow. Pure semantic context that no source file conveys — this is
+*the* primer for any 'how do I tune bareiron for X workload' query.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 33
+end = 37
+render = { kind = "full" }
+
+[[batches]]
+id = "4.12"
+descriptor = "README — Compilation section"
+justification = """
+The whole compilation/build matrix: Linux gcc + ./build.sh, Windows
+MSYS2 variants, ESP-IDF / PlatformIO. Critical for any 'how do I build
+this' question and for understanding why the codebase has so many
+#ifdef _WIN32 / ESP_PLATFORM branches.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 17
+end = 26
+render = { kind = "full" }
+
+[[batches]]
+id = "4.13"
+descriptor = "main.c — handlePacket signature + author's design comment"
+justification = """
+The 25-line author comment above handlePacket calls out the 'mess'
+explicitly: packet handlers used to do error checking, were gutted for
+speed/space, the maintainer is planning a refactor. Pure semantic
+context that no other doc captures. Span ends at line 73 (the switch
+keyword) so the per-case index batch (4.15) can list the case labels
+without a non-ancestor overlap.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.c"
+start = 43
+end = 73
+render = { kind = "full" }
+
+[[batches]]
+id = "4.14"
+descriptor = "main() — startup signature + seed/state initialization"
+justification = """
+Top of main(): WSAStartup on Windows, splitmix64 seed-hashing for
+world_seed and rng_seed, block_changes init to 0xFF (sentinel for
+'unallocated'), initSerializer call, clients[] / client_states / player_-
+data fd init to -1. The first thing the agent reads to understand
+'how does the server start up'.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.c"
+start = 499
+end = 533
+render = { kind = "full" }
+
+[[batches]]
+id = "4.15"
+descriptor = "main.c — handlePacket switch case index (truncated)"
+justification = """
+Catastrophic-omission hedge over the *set* of packet IDs the server
+recognises. Truncated to just the `case 0xNN:` lines so the agent sees
+every ID handled (0x00, 0x01, 0x02, 0x03, 0x07, 0x08, 0x0B, 0x0C, 0x11,
+0x12, 0x19, 0x1B, 0x1D-0x20, 0x28-0x2B, 0x34, 0x3C, 0x3F, 0x40, default)
+without paying for the bodies. Without this, the agent could mistake
+'no handler' for 'never seen the packet'.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/main.c"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 100
+end = 100
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 113
+end = 113
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 165
+end = 165
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 173
+end = 173
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 177
+end = 177
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 181
+end = 181
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 184
+end = 184
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 188
+end = 188
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 192
+end = 192
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 199
+end = 199
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 203
+end = 206
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 431
+end = 431
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 435
+end = 435
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 439
+end = 439
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 443
+end = 443
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 447
+end = 447
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 451
+end = 451
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 455
+end = 455
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+[[batches.content.spans]]
+path = "src/main.c"
+start = 459
+end = 459
+render = { kind = "truncated", pattern = "case 0x[0-9A-F]+" }
+
+
+# ============================================================
+# Tier 5 — Concrete bodies of central / short functions
+# ============================================================
+# Each lands a concrete 'how does X work' answer with minimal follow-up.
+# Sized to fit within the remaining budget (cap is 10k tokens).
+
+[[batches]]
+id = "5.1"
+descriptor = "getBlockAt body — block_changes overlay + terrain fallback"
+justification = """
+y<0 returns bedrock; otherwise scan block_changes for a matching coord;
+fall through to deterministic terrain via getTerrainAt(x, y, z, anchor).
+This is the single most-called function in worldgen — every cs_useItemOn
+/ cs_playerAction / mob-AI step routes through it.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/worldgen.c"
+start = 374
+end = 392
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "getBlockChange body — linear scan with chest skip"
+justification = """
+Linear scan of block_changes[] for a (x,y,z) match, with the
+ALLOW_CHESTS branch that skips i+=14 past chest item-data entries (each
+chest occupies 15 contiguous slots — see makeBlockChange). Without
+this, the agent can't tell why naive 'find this block' code skips slots.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/procedures.c"
+start = 478
+end = 492
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "getChunkBiome body — biome from world_seed bit pattern"
+justification = """
+The clever 'no extra hash needed' trick: 32-bit world_seed is treated
+as a 4×4 biome matrix (2 bits per biome), looked up by (biome_x &
+3, biome_z & 4) — only 4 non-beach biome types possible because of this.
+Beaches are computed from a circular distance check, giving each biome
+an 'island' shape. Frames the entire biome generation algorithm.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/worldgen.c"
+start = 24
+end = 49
+render = { kind = "full" }
+
+[[batches]]
+id = "5.4"
+descriptor = "handlePlayerJoin body — chat + spawn entity broadcast"
+justification = """
+Composes '<name> joined the game' in recv_buffer (the codebase's idiom
+for avoiding malloc), broadcasts via sc_systemChat, then sends
+sc_playerInfoUpdateAddPlayer + sc_spawnEntityPlayer to every connected
+client. Clears the 'client loading' flag (0x20) and the fallback timer.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/procedures.c"
+start = 177
+end = 197
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "handleServerTick — world_time + per-player tick header"
+justification = """
+The first 13 lines: world_time advance modulo 24000 (one Minecraft day),
+server_ticks++, the per-player loop entry, the 'client loading 3-second
+fallback → handlePlayerJoin' branch. Frames every other thing the tick
+handler does (attack cooldown, eating, lava/cactus damage, healing —
+all in handleServerTick afterward).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/procedures.c"
+start = 1623
+end = 1640
+render = { kind = "full" }
+
+[[batches]]
+id = "5.6"
+descriptor = "sc_blockUpdate body — concrete sc_ packet wire format example"
+justification = """
+A single representative sc_ packet (7 lines): VarInt length, packet ID
+0x08, the BE 64-bit position-pack `((x & 0x3FFFFFF) << 38) | ((z &
+0x3FFFFFF) << 12) | (y & 0xFFF)`, and the block VarInt looked up through
+block_palette[]. Shows the canonical 'how a clientbound packet gets
+serialized' pattern that every other sc_ function repeats.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/packets.c"
+start = 470
+end = 477
+render = { kind = "full" }
+
+[[batches]]
+id = "5.7"
+descriptor = "placeTreeStructure intro — replaceable-helper + trunk"
+justification = """
+setBlockIfReplaceable (only overwrites a replaceable block or oak_leaves)
+plus the tree-trunk placement: random height 4-6, dirt under base,
+oak_log column. The two leaf layers afterward (lines 31-53) follow the
+same pattern and can be read in source if needed.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/structures.c"
+start = 9
+end = 28
+render = { kind = "full" }
