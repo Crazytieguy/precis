@@ -54,13 +54,10 @@ pub mod typescript;
 #[derive(Debug, Clone)]
 pub struct Candidate<K: WalkerKey> {
     pub key: K,
-    /// Optional predecessor edge. A candidate stays in the pending pool
-    /// until its predecessor is scheduled, and any line overlap with an
-    /// earlier-scheduled batch is permitted only along the predecessor
-    /// chain (the renderer treats transitive predecessors as ancestors;
-    /// non-ancestor overlap is a debug-assert in the scheduler's apply
-    /// path). Mirrors [`NsBatch::predecessor`](crate::north_star::NsBatch)
-    /// — same edge, same semantics, just walker-side.
+    /// Optional predecessor edge — same as
+    /// [`NsBatch::predecessor`](crate::north_star::NsBatch): candidate
+    /// stays pending until predecessor is scheduled, and line overlap
+    /// with earlier batches must follow the chain.
     pub predecessor: Option<K>,
     /// FS-only value signals. After materialization these are overwritten
     /// with the resolved batch's (usually richer) signals.
