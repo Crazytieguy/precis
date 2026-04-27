@@ -207,7 +207,7 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
 // ---- invariants --------------------------------------------------------
 
 #[test]
-fn schedule_order_ns_pins_match_fixture_pins() {
+fn fixture_baselines_ns_pins_match_fixture_pins() {
     let ns_dir = manifest_dir().join("tests/north-stars");
     let Ok(read_dir) = fs::read_dir(&ns_dir) else {
         return;
