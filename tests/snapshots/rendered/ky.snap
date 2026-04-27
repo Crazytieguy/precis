@@ -82,6 +82,13 @@ readme.md
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
     …
+    35→```sh
+    36→npm install ky
+    37→```
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
     …
     85→## API
@@ -209,15 +216,7 @@ source/
         retry.ts
             1→import type {HttpMethod} from './options.js';
             3→export type ShouldRetryState = {
-            4→	/**
-            5→	The error that caused the request to fail.
-            6→	*/
-            7→	error: Error;
-            9→	/**
-            10→	The number of retries attempted. Starts at 1 for the first retry.
-            11→	*/
-            12→	retryCount: number;
-            13→};
+            …
             15→export type RetryOptions = {
             …
     utils/

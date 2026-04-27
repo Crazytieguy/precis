@@ -34,6 +34,7 @@ docs/
         …
         122→## New features
         …
+        124→Here is the list of all new features which have been added in TS-Pattern v4.
         126→### Arrays and unary tuples
         …
         157→### Optional object properties
@@ -140,12 +141,33 @@ src/
             36→): boolean => {
             …
             120→export const getSelectionKeys = (pattern: any): string[] => {
-            …
+            121→  if (isObject(pattern)) {
+            122→    if (isMatcher(pattern)) {
+            123→      return pattern[symbols.matcher]().getSelectionKeys?.() ?? [];
+            124→    }
+            125→    if (Array.isArray(pattern)) return flatMap(pattern, getSelectionKeys);
+            126→    return flatMap(Object.values(pattern), getSelectionKeys);
+            127→  }
+            128→  return [];
             132→export const flatMap = <a, b>(
             133→  xs: readonly a[],
             134→  f: (v: a) => readonly b[]
             135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
         symbols.ts
+            16→export const matcher = Symbol.for('@ts-pattern/matcher');
+            17→export type matcher = typeof matcher;
+            …
+            19→export const unset = Symbol.for('@ts-pattern/unset');
+            20→export type unset = typeof unset;
+            …
+            22→export const isVariadic = Symbol.for('@ts-pattern/isVariadic');
+            23→export type isVariadic = typeof isVariadic;
+            …
+            26→export const anonymousSelectKey = '@ts-pattern/anonymous-select-key';
+            27→export type anonymousSelectKey = typeof anonymousSelectKey;
+            …
+            29→export const override = Symbol.for('@ts-pattern/override');
+            30→export type override = typeof override;
     is-matching.ts
         32→export function isMatching<const p extends Pattern<unknown>>(
         33→  pattern: p
@@ -191,42 +213,13 @@ src/
             42→  ? any
             43→  : BuildMany<a, Distribute<FindUnionsMany<a, p>>>;
             46→export type FindUnionsMany<
-            47→  a,
-            48→  p,
-            49→  path extends PropertyKey[] = []
-            50→> = UnionToTuple<
-            51→  (
-            52→    p extends any
-            53→      ? IsMatching<a, p> extends true
-            54→        ? FindUnions<a, p, path>
-            55→        : []
-            56→      : never
-            57→  ) extends readonly (infer T)[]
-            58→    ? T
-            59→    : never
-            60→>;
+            …
             80→export type FindUnions<
             …
             174→export type ArrayToVariadicUnion<input, excluded> = MaybeAddReadonly<
-            175→  | (input extends readonly [any, ...any] | readonly [...any, any] ? never : [])
-            176→  | (excluded extends readonly [...any, any]
-            177→      ? [...Extract<input, readonly any[]>, ValueOf<input>]
-            178→      : [ValueOf<input>, ...Extract<input, readonly any[]>]),
-            179→  IsReadonlyArray<input>
-            180→>;
+            …
             183→export type Distribute<unions extends readonly any[]> =
-            184→  unions extends readonly [
-            185→    { cases: infer cases; path: infer path },
-            186→    ...infer tail
-            187→  ]
-            188→    ? cases extends { value: infer value; subUnions: infer subUnions }
-            189→      ? [
-            190→          [value, path],
-            191→          ...Distribute<Extract<subUnions, readonly any[]>>,
-            192→          ...Distribute<tail>
-            193→        ]
-            194→      : never
-            195→    : [];
+            …
         ExtractPreciseValue.ts
             13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
             …
@@ -243,44 +236,35 @@ src/
             96→export type FindSelectionUnion<
             …
             159→export type SeveralAnonymousSelectError<
-            …
+            160→  a = 'You can only use a single anonymous selection (with `select()`) in your pattern. If you need to select multiple values, give them names with `select(<name>)` instead'
+            161→> = {
+            162→  __error: never;
+            163→} & a;
             165→export type MixedNamedAndAnonymousSelectError<
-            …
+            166→  a = 'Mixing named selections (`select("name")`) and anonymous selections (`select()`) is forbiden. Please, only use named selections.'
+            167→> = {
+            168→  __error: never;
+            169→} & a;
             174→export type SelectionToArgs<selections extends SelectionsRecord> =
             …
             185→export type Selections<i, p> = FindSelectionUnion<i, p> extends infer u
-            …
+            186→  ? [u] extends [never]
+            187→    ? i
+            188→    : SelectionToArgs<Extract<MergeUnion<u>, SelectionsRecord>>
+            189→  : i;
             191→export type FindSelected<i, p> =
-            …
+            192→  // This happens if the provided pattern didn't extend Pattern<i>,
+            193→  // Because the type checker falls back on the general `Pattern<i>` type
+            194→  // in this case.
+            195→  Equal<p, Pattern<i>> extends true ? i : Selections<i, p>;
         InvertPattern.ts
             106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
             107→  ? never
             108→  : InvertPatternInternal<p, input>;
             180→export type ReduceIntersectionForExclude<
-            181→  tuple extends readonly any[],
-            182→  i,
-            183→  output = unknown
-            184→> = tuple extends readonly [infer p, ...infer tail]
-            185→  ? ReduceIntersectionForExclude<
-            186→      tail,
-            187→      i,
-            188→      output & InvertPatternForExcludeInternal<p, i, unknown>
-            189→    >
-            190→  : output;
+            …
             192→export type ReduceUnionForExclude<
-            193→  tuple extends readonly any[],
-            194→  i,
-            195→  output = never
-            196→> = tuple extends readonly [infer p, ...infer tail]
-            197→  ? ReduceUnionForExclude<
-            198→      tail,
-            199→      i,
-            200→      output | InvertPatternForExcludeInternal<p, i, never>
-            201→    >
-            202→  : output;
-            300→/**
-            301→ * ### InvertPatternForExclude
-            302→ */
+            …
             303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
             304→  ? never
             305→  : InvertPatternForExcludeInternal<p, i>;

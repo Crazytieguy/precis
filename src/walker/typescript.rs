@@ -85,6 +85,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if exports.is_empty() {
             continue;
         }
+        let per_export_factor = type_machinery_factor(file, &exports);
         let names_key = TsKey::ExportNames { file: file.clone() };
         if let Some(content) =
             single_file_lines_content(file, &source, collect_export_names(&tree, &source))
@@ -111,7 +112,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: export_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: export_value(file, item.kind, ctx),
+                    value: export_value(file, item.kind, ctx) * per_export_factor,
                 });
             }
             let export_predecessor = BatchKey::Typescript(export_key);
@@ -128,7 +129,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     .into(),
                     predecessor: Some(export_predecessor.clone()),
                     content,
-                    value: export_doc_value(file, item.kind, ctx),
+                    value: export_doc_value(file, item.kind, ctx) * per_export_factor,
                 });
             }
             if item.has_emittable_body
@@ -146,7 +147,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     .into(),
                     predecessor: Some(export_predecessor),
                     content,
-                    value: export_body_value(file, item.kind, ctx),
+                    value: export_body_value(file, item.kind, ctx) * per_export_factor,
                 });
             }
         }
@@ -201,6 +202,14 @@ struct ExportInfo {
     /// Whether `ExportBody` should fire for this export. `true` iff the
     /// body materializer would emit at least one non-blank source row.
     has_emittable_body: bool,
+    /// True when this export carries no runtime value: `Interface` /
+    /// `TypeAlias`, or a `NamedReexport` whose `export_statement` has
+    /// the statement-level `type` keyword (`export type { Foo }`). Used
+    /// by `type_machinery_factor` to flag whole files as type-machinery
+    /// internals — the per-export `Export` / `ExportDoc` value is
+    /// damped on those files. `Enum` is *not* type-only (TS enums emit
+    /// runtime objects).
+    is_type_only: bool,
 }
 
 /// Top-level exports in a file. Walks `program` children, looking for
@@ -226,10 +235,12 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
         let start_line = child.start_position().row + 1;
         real_lines.insert(start_line);
         let has_emittable_body = !export_body_rows(decl_node, kind, &src_lines).is_empty();
+        let is_type_only = is_export_type_only(kind, child, source);
         out.push(ExportInfo {
             start_line,
             kind,
             has_emittable_body,
+            is_type_only,
         });
     }
 
@@ -253,6 +264,7 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
                 start_line,
                 kind,
                 has_emittable_body,
+                is_type_only: false,
             });
         }
         out.sort_by_key(|e| e.start_line);
@@ -260,6 +272,71 @@ fn find_export_starts(tree: &Tree, source: &str) -> Vec<ExportInfo> {
 
     out
 }
+
+/// True when this export carries no runtime value. `NamedReexport` is
+/// type-only iff the wrapping `export_statement` carries the
+/// statement-level `type` keyword (`export type { Foo }`); inline
+/// `export { type Foo, valueY }` is conservatively runtime since per-
+/// specifier mixing would misclassify. `export declare ...` (ambient)
+/// is type-only — the declaration names a runtime value provided by
+/// some other environment, but the .ts file itself emits no code.
+/// `Enum` without `declare` is runtime (TS enums emit a runtime
+/// object).
+fn is_export_type_only(kind: ItemKind, stmt: Node, source: &str) -> bool {
+    if has_ambient_declaration(stmt) {
+        return true;
+    }
+    match kind {
+        ItemKind::Interface | ItemKind::TypeAlias => true,
+        ItemKind::NamedReexport => has_export_type_keyword(stmt, source),
+        ItemKind::Class
+        | ItemKind::Function
+        | ItemKind::Const
+        | ItemKind::Default
+        | ItemKind::Enum => false,
+    }
+}
+
+/// True when this `export_statement` wraps an `ambient_declaration` —
+/// `export declare function` / `export declare class` / `export declare
+/// const`, etc. tree-sitter-typescript surfaces this wrapper between
+/// `export_statement` and the inner decl node.
+fn has_ambient_declaration(stmt: Node) -> bool {
+    let mut cursor = stmt.walk();
+    stmt.children(&mut cursor)
+        .any(|c| c.kind() == "ambient_declaration")
+}
+
+/// True for TypeScript declaration files (`.d.ts` / `.d.tsx`). All
+/// exports in these files are implicitly ambient — the file emits no
+/// runtime code, so per-export batches are deprioritized like other
+/// type-machinery files.
+fn is_declaration_file(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n.ends_with(".d.ts") || n.ends_with(".d.tsx"))
+}
+
+/// `TYPE_MACHINERY_FILE_FACTOR` when this file emits no runtime code,
+/// else `1.0`. Two paths qualify: a declaration file (`.d.ts`) — every
+/// export is implicitly ambient — or a regular `.ts` file whose every
+/// top-level export is type-only (interface / type alias / `export
+/// type { ... }` / `export declare ...`). Per-export `Export` /
+/// `ExportDoc` / `ExportBody` batches multiply this in so the
+/// schedule prefers runtime-bearing files at the same V/C.
+/// `ExportNames` is intentionally outside this discount — NS authors
+/// of type-heavy public APIs (e.g., `ky`) expect the names surface
+/// even when individual lines aren't load-bearing.
+fn type_machinery_factor(file: &Path, exports: &[ExportInfo]) -> f64 {
+    if is_declaration_file(file) || (!exports.is_empty() && exports.iter().all(|e| e.is_type_only))
+    {
+        TYPE_MACHINERY_FILE_FACTOR
+    } else {
+        1.0
+    }
+}
+
+const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.7;
 
 /// Local identifier names that appear in any top-level **value**
 /// re-export clause (`export { X }`, `export { X as Y }`). Excludes
@@ -1316,5 +1393,140 @@ export function foo() {
         let rows = body_emit_rows_for(src);
         // Lines 2 and 4 are blank; only 3 and 5 are emitted.
         assert_eq!(rows, vec![3, 5]);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_pure_type_aliases() {
+        // All exports are `type` aliases → file is type-machinery.
+        let src = "\
+export type A = number;
+export type B = string;
+export interface C { x: number }
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert!(exports.iter().all(|e| e.is_type_only));
+        assert_eq!(
+            type_machinery_factor(Path::new("foo.ts"), &exports),
+            TYPE_MACHINERY_FILE_FACTOR
+        );
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_excludes_enum() {
+        // TS `enum` emits a runtime object — not type-only. A file with
+        // any enum is not type-machinery even if every other export is
+        // a type alias.
+        let src = "\
+export type A = number;
+export enum E { X, Y }
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_excludes_runtime_export() {
+        // A single runtime export disqualifies the file.
+        let src = "\
+export type A = number;
+export type B = string;
+export const x = 1;
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_export_type_clause() {
+        // `export type { Foo }` is a NamedReexport with the statement-level
+        // `type` keyword — counts as type-only.
+        let src = "\
+type A = number;
+export type { A };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert!(exports.iter().all(|e| e.is_type_only));
+        assert_eq!(
+            type_machinery_factor(Path::new("foo.ts"), &exports),
+            TYPE_MACHINERY_FILE_FACTOR
+        );
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_value_reexport_not_type_only() {
+        // Bare `export { X }` (value re-export) is conservatively non-
+        // type-only even when X happens to alias a type.
+        let src = "\
+const X = () => 1;
+export { X };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        // The synthetic Const at line 1 plus the NamedReexport at line 2.
+        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_inline_type_modifier_not_type_only() {
+        // Inline `export { type Foo }` (per-specifier modifier) is not
+        // statement-level — conservatively classified as runtime so a
+        // mixed `export { type Foo, valueY }` doesn't get penalized.
+        let src = "\
+type A = number;
+const v = 1;
+export { type A, v };
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_empty_file_not_type_only() {
+        // A file with zero exports is not type-machinery (the multiplier
+        // would have nothing to apply to anyway).
+        let src = "import { foo } from './bar';\n";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert!(exports.is_empty());
+        assert_eq!(type_machinery_factor(Path::new("foo.ts"), &exports), 1.0);
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_dts_file_always_type_only() {
+        // A `.d.ts` file emits no runtime — even runtime-shaped exports
+        // (`export class`, `export const`) are implicitly ambient. Path
+        // alone qualifies the file regardless of export kinds.
+        let src = "\
+export class C { foo(): void; }
+export const x: number;
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert_eq!(
+            type_machinery_factor(Path::new("typings/index.d.ts"), &exports),
+            TYPE_MACHINERY_FILE_FACTOR
+        );
+    }
+
+    #[test]
+    fn walker_typescript_type_machinery_export_declare_is_type_only() {
+        // `export declare ...` in a regular `.ts` file is ambient — the
+        // .ts file emits no runtime for the declaration.
+        let src = "\
+export declare function foo(): void;
+export declare const x: number;
+";
+        let tree = parse(src);
+        let exports = find_export_starts(&tree, src);
+        assert!(exports.iter().all(|e| e.is_type_only));
+        assert_eq!(
+            type_machinery_factor(Path::new("foo.ts"), &exports),
+            TYPE_MACHINERY_FILE_FACTOR
+        );
     }
 }
