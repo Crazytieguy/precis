@@ -35,6 +35,12 @@ insta = "1.47.2"
 paste = "1"
 tempfile = "3"
 
+[profile.dev]
+opt-level = 1
+
+[profile.dev.package."*"]
+opt-level = 3
+
 # The profile that 'dist' will build with
 [profile.dist]
 inherits = "release"
