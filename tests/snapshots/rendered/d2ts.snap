@@ -25,18 +25,6 @@ README.md
     34→A D2TS pipeline is also fully type safe, inferring the types at each step of the pipeline, and supports auto-complete in your IDE.
     36→## Table of Contents
     …
-    38→- [Key Features](#key-features)
-    39→- [Quick Start](#quick-start)
-    40→- [Examples](#examples)
-    41→- [API](#api)
-    42→  - [D2 Graph Construction](#d2-graph-construction)
-    43→  - [Input Streams](#input-streams)
-    44→  - [Versions and Frontiers](#versions-and-frontiers)
-    45→  - [MultiSet as a changeset](#multiset-as-a-changeset)
-    46→  - [Operators](#operators)
-    47→  - [Using SQLite Backend](#using-sqlite-backend)
-    48→- [Implementation Details](#implementation-details)
-    49→- [References](#references)
     51→## Key Features
     …
     73→## Quick Start
@@ -49,13 +37,6 @@ README.md
     …
     185→## Examples
     …
-    187→There are a number of examples in the [./examples](./examples) directory, covering:
-    189→- [Basic usage](./examples/basic.ts) (map and filter)
-    190→- ["Fruit processed"](./examples/fruit-processed.ts) (reduce and consolidate)
-    191→- [Joins between two streams](./examples/join.ts)
-    192→- [Iterative computations](./examples/iterate.ts)
-    193→- [Modeling "includes" using joins](./examples/includes.ts)
-    194→- [ElectricSQL example](./examples/electric/) (using D2TS with ElectricSQL)
     196→## API
     …
     198→### D2 graph construction
@@ -74,10 +55,6 @@ README.md
     …
     699→## References
     …
-    701→- [Differential Dataflow](https://github.com/MaterializeInc/differential)
-    702→- [Differential Dataflow from Scratch](https://materialize.com/blog/differential-from-scratch/)
-    703→- [Python Implementation](https://github.com/ruchirK/python-differential)
-    704→- [DBSP](https://arxiv.org/abs/2203.16684) (very similar to Differential Dataflow)
 RELEASING.md
     1→# Release Process
     …
@@ -90,10 +67,6 @@ RELEASING.md
     …
     38→## Manual release
     …
-    40→If you need to do a manual release:
-    42→1. Run `pnpm changeset version` to update versions and changelogs
-    43→2. Run `pnpm build` to build all packages
-    44→3. Run `pnpm changeset publish` to publish to npm 
 eslint.base.mjs
 examples/
 package.json
@@ -119,6 +92,33 @@ packages/
             5→The API is almost identical to D2TS, but without the need to specify a version when sending data, or to send a frontier to mark the end of a version.
         eslint.config.mjs
         package.json
+            2→  "name": "@electric-sql/d2mini",
+            3→  "version": "0.1.8",
+            4→  "license": "Apache-2.0",
+            5→  "description": "D2Mini is a minimal implementation of Differential Dataflow for performing in-memory incremental view maintenance.",
+            6→  "author": "Electric DB Limited",
+            7→  "homepage": "https://github.com/electric-sql/d2ts",
+            8→  "repository": {
+            9→    "type": "git",
+            10→    "url": "https://github.com/electric-sql/d2ts.git",
+            11→    "directory": "packages/d2mini"
+            12→  },
+            13→  "keywords": [
+            14→    "differential dataflow",
+            15→    "differential",
+            16→    "dataflow",
+            17→    "stream processing",
+            18→    "sync"
+            19→  ],
+            20→  "type": "module",
+            21→  "main": "dist/index.js",
+            22→  "types": "dist/index.d.ts",
+            23→  "exports": {
+            24→    ".": {
+            25→      "types": "./dist/index.d.ts",
+            26→      "default": "./dist/index.js"
+            27→    }
+            28→  },
         src/
         tests/
         tsconfig.json
@@ -136,10 +136,28 @@ packages/
             3→**This is an experimental package**
             5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
             7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
-            140→## Planned Features
-            142→Future versions may support additional SQL features and optimizations.
         eslint.config.mjs
         package.json
+            2→  "name": "@electric-sql/d2ql",
+            3→  "private": true,
+            4→  "version": "0.1.0",
+            5→  "license": "Apache-2.0",
+            6→  "description": "D2QL is a query language for D2TS.",
+            7→  "author": "Electric DB Limited",
+            8→  "homepage": "https://github.com/electric-sql/d2ts",
+            9→  "repository": {
+            10→    "type": "git",
+            11→    "url": "https://github.com/electric-sql/d2ts.git",
+            12→    "directory": "packages/d2ts"
+            13→  },
+            14→  "keywords": [
+            15→    "differential dataflow",
+            16→    "differential",
+            17→    "dataflow",
+            18→    "stream processing",
+            19→    "sync"
+            20→  ],
+            21→  "type": "module",
         src/
         tests/
         tsconfig.json

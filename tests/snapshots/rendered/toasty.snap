@@ -53,21 +53,12 @@ README.md
     …
     91→## Application data model vs. database schema
     …
-    93→Toasty decouples the application datamodel from the database's schema. By
-    94→default, a toasty application schema will map 1-1 with a database schema.
-    95→However, additional annotations may be specified to customize how the
-    96→application data model maps to the database schema.
     98→## Current status and roadmap
     …
     111→## License
     …
-    113→This project is licensed under the [MIT license].
-    115→[MIT license]: LICENSE
     117→### Contribution
     …
-    119→Unless you explicitly state otherwise, any contribution intentionally submitted
-    120→for inclusion in Toasty by you, shall be licensed as MIT, without any additional
-    121→terms or conditions.
 benches/
 compose.yaml
 crates/
@@ -335,6 +326,24 @@ crates/
         tests/
 docs/
     ARCHITECTURE.md
+        1→# Toasty Architecture Overview
+        …
+        3→## Project Structure
+        …
+        7→## Crates
+        …
+        9→### 1. toasty
+        …
+        26→### 2. toasty-core
+        …
+        39→### 3. toasty-codegen
+        …
+        54→### 4. toasty-driver-*
+        …
+        63→### 5. toasty-sql
+        …
+        74→## Further Reading
+        …
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context

@@ -100,13 +100,10 @@ Two related conventions worth resisting drift on:
 **High priority.** The single biggest open lever on NS divergence. Per-tier rollup across
 fixtures shows a consistent pattern: walker reaches tier 1 reliably
 (avg credit ~0.70–0.99), tier 2 mostly (~0.32–0.91), then drops sharply
-at tier 3+ (~0.10–0.30). Two sub-symptoms that *seem* distinct but are
-plausibly the same problem:
+at tier 3+. The cost concavity is now per-key via
+`WalkerKey::concavity_exponent` (default `0.35`) — the hook is in place
+for further calibration. Open sub-symptoms:
 
-- **Cost-side concavity**: `value::ratio` is `value / cost^0.35` for
-  every batch. May want per-category shapes (hard cap on `CrateDocLede`
-  size, gentler concavity on test-as-spec batches), or a different
-  functional form entirely.
 - **Sibling-count devaluation**: when a file emits many per-item
   batches (a config module with 20 `pub struct` children), each one's
   individual value/cost ratio beats the value/cost of a single
@@ -119,9 +116,18 @@ plausibly the same problem:
   files (otree's `src/config/colors.rs` with 7 color sub-structs)
   look structurally identical. `is_entrypoint_file` doesn't reliably
   distinguish them; a working version needs a signal that does.
+- **Prefix-stop tail effects on calibration tweaks**: any change that
+  shifts a big batch's rank can leave it stuck near the budget tail
+  where it no longer fits. The scheduler's prefix-monotone stop then
+  truncates the schedule, dropping `Used/budget` even when Sim
+  improves. Saw this on the per-key concavity bump: cmdk dropped from
+  Used=9484/10K to 7302/10K. At typical user budgets (3–4K) this is
+  invisible (the prefix is identical), but anyone running at large
+  budgets sees thinner output. Mitigation lever exists if needed —
+  walker-side filter on absolute-cost — but it's a separate change.
 
-Explicit experimentation territory — different formulas, per-category
-shapes, richer sibling/density signals, NS-author updates that rank
+Explicit experimentation territory — different exponents per key,
+richer sibling/density signals, NS-author updates that rank
 `PubItemNames`-style location hints as first-class. Calibration drives
 divergence; expect to iterate against the metric across the fixture
 set rather than land it on the first try.

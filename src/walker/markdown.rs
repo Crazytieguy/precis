@@ -263,7 +263,7 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
 }
 
 /// Per-section value. `H3Child` and `BulletItem` ranges scale the parent's
-/// value — identical weights would over-rank them on `value / cost^0.35`
+/// value — identical weights would over-rank them on the value/cost ratio
 /// once the cost drops to per-sub-section size. `Intro` keeps full weight
 /// (it carries the H2 heading + topic prelude).
 fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {

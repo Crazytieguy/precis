@@ -28,11 +28,6 @@ README.md
     5→A command line tool to view objects (JSON/YAML/TOML/XML) in TUI tree widget.
     7→## Install
     …
-    9→Download binary files from [release page](https://github.com/fioncat/otree/releases).
-    11→You can also build it from source (require `cargo` installed):
-    13→```bash
-    14→cargo install --git https://github.com/fioncat/otree
-    15→```
     17→### Arch Linux (AUR)
     …
     25→### macOS and Linux (Homebrew)
@@ -43,8 +38,6 @@ README.md
     …
     82→## Thanks
     …
-    84→I created this tool to better view those super deep YAML files of Kubernetes while [jnv](https://github.com/ynqa/jnv) only supports JSON.
-    86→This is based on the amazing TUI framework [ratatui](https://github.com/ratatui-org/ratatui) and its tree widget [tui-tree-widget](https://github.com/EdJoPaTo/tui-rs-tree-widget.git).
 assets/
     screenshot.png
 build.rs
@@ -227,6 +220,36 @@ src/
         25→}
     main.rs
     parse/
+        any.rs
+            9→pub struct AnyParser {
+            10→    inner: RefCell<Option<Box<dyn Parser>>>,
+            11→}
+        hcl.rs
+            8→pub struct HclParser {}
+            …
+        json.rs
+        jsonl.rs
+            7→pub struct JsonlParser;
+            …
+        mod.rs
+            18→pub enum ContentType {
+            …
+            36→pub trait Parser {
+            …
+            66→impl ContentType {
+            67→    pub fn new_parser(self) -> Box<dyn Parser> {
+            …
+        syntax.rs
+        test_cases/
+        toml.rs
+            9→pub struct TomlParser {}
+            …
+        xml.rs
+            12→pub struct XmlParser {}
+            …
+        yaml.rs
+            8→pub struct YamlParser {}
+            …
     tree.rs
         14→pub struct Tree {
         15→    pub parser: Rc<Box<dyn Parser>>,

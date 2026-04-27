@@ -289,6 +289,15 @@ pub trait WalkerKey:
     /// Shown in schedule snapshots + divergence reports so diffs read
     /// as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
     fn describe(&self) -> String;
+
+    /// Per-key cost concavity exponent for the scheduling ratio
+    /// (`value / cost^exponent`). Defaults to
+    /// [`crate::value::DEFAULT_CONCAVITY_EXPONENT`]; raise on prose-shaped
+    /// batches (doc bodies, README sections) whose token count grows
+    /// without proportional structural value.
+    fn concavity_exponent(&self) -> f64 {
+        crate::value::DEFAULT_CONCAVITY_EXPONENT
+    }
 }
 
 impl WalkerKey for BatchKey {
@@ -301,6 +310,18 @@ impl WalkerKey for BatchKey {
             BatchKey::Typescript(k) => k.describe(),
             BatchKey::Json(k) => k.describe(),
             BatchKey::Plaintext(k) => k.describe(),
+        }
+    }
+
+    fn concavity_exponent(&self) -> f64 {
+        match self {
+            BatchKey::Markdown(k) => k.concavity_exponent(),
+            BatchKey::Fs(_)
+            | BatchKey::Rust(_)
+            | BatchKey::Toml(_)
+            | BatchKey::Typescript(_)
+            | BatchKey::Json(_)
+            | BatchKey::Plaintext(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 }
@@ -365,6 +386,19 @@ impl MarkdownKey {
                 file,
                 section_index,
             } => format!("{} section #{section_index}", display_path(file)),
+        }
+    }
+
+    /// Sections at index ≥1 get a steeper `0.45` so prose body grows more
+    /// expensive than structural anchors of the same value. Index 0 keeps
+    /// the default — many READMEs lead with their canonical claim there.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            MarkdownKey::Section {
+                section_index: 0, ..
+            } => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+            MarkdownKey::Section { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
 }

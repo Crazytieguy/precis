@@ -9,8 +9,6 @@ expression: rendered
 CHANGELOG.md
     1→# Change Log
     3→## [Unreleased]
-    5→## [0.4.29] - 2025-12-02
-    17→## [0.4.28] - 2025-09-02
 Cargo.toml
     1→[package]
     3→name = "log"
@@ -34,10 +32,17 @@ README.md
     1→log
     2→===
     4→A Rust library providing a lightweight logging *facade*.
+    6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
+    7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
+    8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
+    9→![License](https://img.shields.io/crates/l/log.svg)
+    11→* [`log` documentation](https://docs.rs/log)
+    13→A logging facade provides a single logging API that abstracts over the actual
+    14→logging implementation. Libraries can use the logging API provided by this
+    15→crate, and the consumer of those libraries can choose the logging
+    16→implementation that is most suitable for its use case.
     19→## Minimum supported `rustc`
     …
-    21→`1.68.0+`
-    23→This version is explicitly tested in CI and may be bumped in any release as needed. Maintaining compatibility with older compilers is a priority though, so the bar for bumping the minimum supported version is set very high. Any changes to the supported minimum version will be called out in the release notes.
     25→## Usage
     …
     27→### In libraries
@@ -52,6 +57,7 @@ src/
     __private_api.rs
     kv/
         error.rs
+            3→/// An error encountered while working with structured data.
             5→pub struct Error {
             6→    inner: Inner,
             7→}

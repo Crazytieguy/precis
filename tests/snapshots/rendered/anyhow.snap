@@ -1,6 +1,5 @@
 ---
 source: tests/fixture_baselines.rs
-assertion_line: 177
 expression: rendered
 ---
 .github/
@@ -55,18 +54,6 @@ README.md
     …
     126→## No-std support
     …
-    128→In no_std mode, almost all of the same API is available and works the same way.
-    129→To depend on Anyhow in no_std mode, disable our default enabled "std" feature in
-    130→Cargo.toml. A global allocator is required.
-    132→```toml
-    133→[dependencies]
-    134→anyhow = { version = "1.0", default-features = false }
-    135→```
-    137→With versions of Rust older than 1.81, no_std mode may require an additional
-    138→`.map_err(Error::msg)` when working with a non-Anyhow error type inside a
-    139→function that returns Anyhow's error type, as the trait that `?`-based error
-    140→conversions are defined by is only available in std in those old versions.
-    142→<br>
     144→## Comparison to failure
     …
     146→The `anyhow::Error` type works something like `failure::Error`, but unlike
@@ -77,23 +64,6 @@ README.md
     153→<br>
     155→## Comparison to thiserror
     …
-    157→Use Anyhow if you don't care what error type your functions return, you just
-    158→want it to be easy. This is common in application code. Use [thiserror] if you
-    159→are a library that wants to design your own dedicated error type(s) so that on
-    160→failures the caller gets exactly the information that you choose.
-    162→[thiserror]: https://github.com/dtolnay/thiserror
-    164→<br>
-    166→#### License
-    168→<sup>
-    169→Licensed under either of <a href="LICENSE-APACHE">Apache License, Version
-    170→2.0</a> or <a href="LICENSE-MIT">MIT license</a> at your option.
-    171→</sup>
-    173→<br>
-    175→<sub>
-    176→Unless you explicitly state otherwise, any contribution intentionally submitted
-    177→for inclusion in this crate by you, as defined in the Apache-2.0 license, shall
-    178→be dual licensed as above, without any additional terms or conditions.
-    179→</sub>
 build.rs
 rust-toolchain.toml
 src/
@@ -119,6 +89,12 @@ src/
         912→macro_rules! __fallback_ensure {
         …
     error.rs
+        934→pub(crate) struct ErrorImpl<E = ()> {
+        …
+        952→pub(crate) struct ContextError<C, E> {
+        953→    pub context: C,
+        954→    pub error: E,
+        955→}
     fmt.rs
     kind.rs
     lib.rs
@@ -176,6 +152,24 @@ src/
         415→pub struct Chain<'a> {
         416→    state: crate::chain::ChainState<'a>,
         417→}
+        419→/// `Result<T, Error>`
+        420→///
+        421→/// This is a reasonable return type to use throughout your application but also
+        422→/// for `fn main`; if you do, failures will be printed along with any
+        423→/// [context][Context] and a backtrace if one was captured.
+        424→///
+        425→/// `anyhow::Result` may be used with one *or* two type parameters.
+        426→///
+        427→/// ```rust
+        428→/// use anyhow::Result;
+        429→///
+        431→/// fn demo1() -> Result<T> {...}
+        432→///            // ^ equivalent to std::result::Result<T, anyhow::Error>
+        433→///
+        434→/// fn demo2() -> Result<T, OtherError> {...}
+        435→///            // ^ equivalent to std::result::Result<T, OtherError>
+        437→/// ```
+        438→///
         468→pub type Result<T, E = Error> = core::result::Result<T, E>;
         …
         470→/// Provides the `context` method for `Result`.
@@ -197,6 +191,24 @@ src/
         626→        C: Display + Send + Sync + 'static,
         627→        F: FnOnce() -> C;
         628→}
+        630→/// Equivalent to `Ok::<_, anyhow::Error>(value)`.
+        631→///
+        632→/// This simplifies creation of an `anyhow::Result` in places where type
+        633→/// inference cannot deduce the `E` type of the result &mdash; without needing
+        634→/// to write `Ok::<_, anyhow::Error>(value)`.
+        635→///
+        636→/// One might think that `anyhow::Result::Ok(value)` would work in such cases
+        637→/// but it does not.
+        638→///
+        639→/// ```console
+        640→/// error[E0282]: type annotations needed for `std::result::Result<i32, E>`
+        641→///   --> src/main.rs:11:13
+        642→///    |
+        643→/// 11 |     let _ = anyhow::Result::Ok(1);
+        644→///    |         -   ^^^^^^^^^^^^^^^^^^ cannot infer type for type parameter `E` declared on the enum `Result`
+        645→///    |         |
+        646→///    |         consider giving this pattern the explicit type `std::result::Result<i32, E>`, where the type parameter `E` is specified
+        647→/// ```
         650→pub fn Ok<T>(value: T) -> Result<T> {
         …
         656→pub mod __private {

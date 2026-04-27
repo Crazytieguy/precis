@@ -96,17 +96,31 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     1.0
 }
 
-/// Convert a value and a marginal token cost into the scheduling ratio.
-/// Sublinear in cost via `cost^0.35`: the ontology's principle that "value
-/// is sublinear in batch size" plus the empirical observation that `sqrt`
-/// alone is too aggressive on cost — a 1500-token `lib.rs` PubDecls batch
-/// holding the full crate API gets beaten by two dozen 80-token batches
-/// with similar per-token ratio, but losing that one coherent batch is a
-/// catastrophic-omission outcome. The gentler exponent keeps big anchor
-/// batches competitive.
+/// Default cost-side concavity exponent for the scheduling ratio. The
+/// ontology's principle is "value is sublinear in batch size"; `sqrt`
+/// alone is too aggressive on cost — a 1500-token `lib.rs` PubDecls
+/// batch holding the full crate API gets beaten by two dozen 80-token
+/// batches with similar per-token ratio, but losing that one coherent
+/// batch is a catastrophic-omission outcome. The gentler default keeps
+/// big anchor batches competitive. Per-key overrides on
+/// [`crate::batch::WalkerKey::concavity_exponent`] raise this for
+/// prose-shaped batches whose token count grows without proportional
+/// structural value.
+pub const DEFAULT_CONCAVITY_EXPONENT: f64 = 0.35;
+
+/// Convert a value and a marginal token cost into the scheduling ratio
+/// at the default concavity exponent. Thin wrapper over
+/// [`ratio_with_exponent`] for callers that don't need a per-key exponent.
 pub fn ratio(value: f64, cost_tokens: usize) -> f64 {
+    ratio_with_exponent(value, cost_tokens, DEFAULT_CONCAVITY_EXPONENT)
+}
+
+/// Like [`ratio`] but with caller-supplied concavity exponent. The
+/// scheduler calls this with `entry.key.concavity_exponent()` so prose-
+/// shaped batches see a steeper cost penalty than structural ones.
+pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -> f64 {
     if cost_tokens == 0 {
         return f64::INFINITY;
     }
-    value / (cost_tokens as f64).powf(0.35)
+    value / (cost_tokens as f64).powf(cost_exponent)
 }

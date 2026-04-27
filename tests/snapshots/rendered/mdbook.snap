@@ -58,11 +58,6 @@ README.md
     9→Check out the **[User Guide]** for a list of features and installation and usage information.
     10→The User Guide also serves as a demonstration to showcase what a book looks like.
     12→If you are interested in contributing to the development of mdBook, check out the [Contribution Guide].
-    14→## License
-    16→All the code in this repository is released under the ***Mozilla Public License v2.0***, for more information take a look at the [LICENSE] file.
-    18→[User Guide]: https://rust-lang.github.io/mdBook/
-    19→[contribution guide]: https://github.com/rust-lang/mdBook/blob/master/CONTRIBUTING.md
-    20→[LICENSE]: https://github.com/rust-lang/mdBook/blob/master/LICENSE
 ci/
 crates/
     mdbook-compare/
@@ -182,6 +177,8 @@ crates/
     mdbook-renderer/
         Cargo.toml
         README.md
+            1→# mdbook-renderer
+            7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Library to assist implementing an mdbook renderer.
@@ -213,6 +210,8 @@ crates/
     mdbook-summary/
         Cargo.toml
         README.md
+            1→# mdbook-summary
+            7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Summary parser for mdBook.

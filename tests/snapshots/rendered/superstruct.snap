@@ -28,9 +28,6 @@ Readme.md
     …
     181→### Demo
     …
-    183→Try out the [live demo on CodeSandbox](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js) to get an idea for how the API works, or to quickly verify your use case:
-    185→[![Demo screenshot.](./docs/images/demo-screenshot.png)](https://codesandbox.io/s/bold-water-s2cr8d?file=/index.js)
-    187→<br/>
     189→### Examples
     …
     205→### Documentation
@@ -302,10 +299,19 @@ src/
             11→>(struct: Struct<T, S>): Struct<T, S> {
             …
             33→export function max<T extends number | Date, S extends any>(
+            34→  struct: Struct<T, S>,
+            35→  threshold: T,
+            36→  options: {
+            37→    exclusive?: boolean
+            38→  } = {}
+            39→): Struct<T, S> {
             …
             55→export function min<T extends number | Date, S extends any>(
             …
             77→export function nonempty<
+            78→  T extends string | any[] | Map<any, any> | Set<any>,
+            79→  S extends any,
+            80→>(struct: Struct<T, S>): Struct<T, S> {
             …
             93→export function pattern<T extends string, S extends any>(
             94→  struct: Struct<T, S>,

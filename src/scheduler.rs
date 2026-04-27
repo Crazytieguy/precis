@@ -17,10 +17,10 @@
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
-use crate::batch::{Batch, BatchId};
+use crate::batch::{Batch, BatchId, WalkerKey};
 use crate::content::BatchContent;
 use crate::render::{Cost, RenderedTree, SourceCache};
-use crate::value::ratio as score_ratio;
+use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
 
 /// A single scheduled batch, captured in order for downstream consumers
@@ -258,7 +258,7 @@ impl<W: Walker> Scheduler<W> {
                 continue;
             }
             let cost = self.cost_cache[&id];
-            let ratio = score_ratio(entry.value, cost.tokens);
+            let ratio = score_ratio(entry.value, cost.tokens, entry.key.concavity_exponent());
             let better = best
                 .as_ref()
                 .is_none_or(|(br, _, bk, _)| ratio > *br || (ratio == *br && &entry.key < bk));
