@@ -1,0 +1,166 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.claude/
+    settings.json
+        1→{
+        2→  "permissions": {
+        3→    "allow": [
+        4→      "Bash(uv run pytest:*)",
+        5→      "Bash(uv run mypy:*)",
+        6→      "Bash(uv run pre-commit:*)"
+        8→    ],
+        9→    "deny": []
+        10→  }
+        11→}
+.coveragerc
+.github/
+    FUNDING.yml
+    dependabot.yml
+    workflows/
+        main.yml
+.gitignore
+.pre-commit-config.yaml
+.readthedocs.yml
+AGENTS.md
+    1→# AGENTS.md
+    3→See @CLAUDE.md for AI coding agent instructions.
+CHANGELOG.rst
+CLAUDE.md
+    1→# CLAUDE.md
+    …
+    3→This file provides guidance to AI coding agents when working with code in this repository.
+    5→## Project Overview
+    …
+    7→Pluggy is a minimalist production-ready plugin system that serves as the core framework for pytest, datasette and devpi.
+    8→It provides hook specification and implementation mechanisms through a plugin manager system.
+    10→## Development Commands
+    …
+    12→All commands use `uv run` for consistent environments.
+    14→### Testing
+    15→- `uv run pytest` - Run all tests (prefer running all tests for quick feedback)
+    16→- `uv run pytest testing/benchmark.py` - Run benchmark tests
+    18→### Code Quality
+    19→- `uv run pre-commit run -a` - Run all pre-commit hooks (linting, formatting, type checking)
+    20→- Always reread files modified by pre-commit
+    22→## Development Process
+    …
+    24→- Always read `src/pluggy/*.py` to get a full picture
+    25→- Consider backward compatibility
+    26→- Always run all tests: `uv run pytest`
+    27→- Always run pre-commit before committing: `uv run pre-commit run -a`
+    28→- Prefer running full pre-commit over individual tools (ruff/mypy)
+    32→## Core Architecture
+    …
+    34→### Main Components
+    …
+    36→- **PluginManager** (`src/pluggy/_manager.py`): Central registry that manages plugins and coordinates hook calls
+    37→- **HookCaller** (`src/pluggy/_hooks.py`): Executes hook implementations with proper argument binding
+    38→- **HookImpl/HookSpec** (`src/pluggy/_hooks.py`): Represent hook implementations and specifications
+    39→- **Result** (`src/pluggy/_result.py`): Handles hook call results and exception propagation
+    40→- **Multicall** (`src/pluggy/_callers.py`): Core execution engine for calling multiple hook implementations
+    42→### Package Structure
+    43→- `src/pluggy/` - Main package source
+    44→- `testing/` - Test suite using pytest
+    45→- `docs/` - Sphinx documentation and examples
+    46→- `changelog/` - Towncrier fragments for changelog generation
+    48→## Configuration Files
+    49→- `pyproject.toml` - Project metadata, build system, tool configuration (ruff, mypy, setuptools-scm)
+    50→- `tox.ini` - Multi-environment testing configuration
+    51→- `.pre-commit-config.yaml` - Code quality automation (ruff, mypy, flake8, etc.)
+LICENSE
+    1→The MIT License (MIT)
+    3→Copyright (c) 2015 holger krekel (rather uses bitbucket/hpk42)
+    5→Permission is hereby granted, free of charge, to any person obtaining a copy
+    6→of this software and associated documentation files (the "Software"), to deal
+    7→in the Software without restriction, including without limitation the rights
+    8→to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    9→copies of the Software, and to permit persons to whom the Software is
+    10→furnished to do so, subject to the following conditions:
+    12→The above copyright notice and this permission notice shall be included in all
+    13→copies or substantial portions of the Software.
+    15→THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    16→IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    17→FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    18→AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    19→LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    20→OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    21→SOFTWARE.
+MANIFEST.in
+README.rst
+RELEASING.rst
+SECURITY.md
+    1→# Security
+    3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
+TIDELIFT.rst
+changelog/
+    590.trivial.rst
+    README.rst
+    _template.rst
+codecov.yml
+docs/
+    _static/
+        img/
+            plug.png
+    api_reference.rst
+    changelog.rst
+    conf.py
+    examples/
+        eggsample/
+            eggsample/
+                __init__.py
+                hookspecs.py
+                host.py
+                lib.py
+            setup.py
+        eggsample-spam/
+            eggsample_spam.py
+            setup.py
+        toy-example.py
+    index.rst
+    requirements.txt
+downstream/
+    .gitignore
+        1→/conda/
+        2→/datasette/
+        3→/devpi/
+        4→/hatch/
+        5→/pytest/
+        6→/tox/
+    README.md
+    conda.sh
+    datasette.sh
+    devpi.sh
+    hatch.sh
+    pytest.sh
+    python-lsp-server.sh
+    tox.sh
+pyproject.toml
+scripts/
+    release.py
+    towncrier-draft-to-file.py
+src/
+    pluggy/
+        __init__.py
+        _callers.py
+        _hooks.py
+        _manager.py
+        _result.py
+        _tracing.py
+        _warnings.py
+        py.typed
+testing/
+    benchmark.py
+    conftest.py
+    test_details.py
+    test_helpers.py
+    test_hookcaller.py
+    test_invocations.py
+    test_multicall.py
+    test_pluginmanager.py
+    test_result.py
+    test_tracer.py
+    test_warnings.py
+tox.ini
+uv.lock

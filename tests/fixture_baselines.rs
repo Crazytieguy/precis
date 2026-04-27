@@ -74,6 +74,8 @@ per_fixture_tests!(d2ts);
 per_fixture_tests!(sds);
 per_fixture_tests!(tomli);
 per_fixture_tests!(xxhash);
+per_fixture_tests!(go_multierror, "go-multierror");
+per_fixture_tests!(pluggy);
 
 // ---- paths -------------------------------------------------------------
 

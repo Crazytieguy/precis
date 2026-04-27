@@ -1,0 +1,694 @@
+fixture = "go-multierror"
+revision_pin = "edef97ed"
+summary = """
+Tiny Go library (~300 LOC across 8 source files) that aggregates a list
+of `error` values as a single `error`. The package is named
+`multierror`; the central type is `Error` (a struct with `Errors`
++ `ErrorFormat` fields). The primary entry point is `Append`, with
+helpers `Flatten`, `Prefix`, `Group` (concurrent), and a default
+formatter `ListFormatFunc`. The library implements stdlib
+`errors.Is/As/Unwrap` semantics through an internal `chain` type and
+also satisfies `sort.Interface` on `*Error`.
+
+The README opens with a deprecation-style notice: as of Go 1.20,
+stdlib `errors.Join` covers basic aggregation; this package remains
+relevant for custom formatting, the `Group` pattern, and the
+`Append`/`Flatten`/`Prefix` helpers. A substantial migration guide is
+the first thing in the README.
+
+Likely query distribution:
+- "How do I accumulate errors?" → `Append` semantics, nil handling,
+  flattening behaviour.
+- "How does this play with stdlib `errors.Is/As/Unwrap`?" → quirky:
+  `*Error.Unwrap` returns a `chain` slice and walks one-at-a-time,
+  *not* the Go 1.20 `Unwrap() []error` shape.
+- "How do I customise the format?" → `ErrorFormat` field +
+  `ListFormatFunc` default.
+- "How do I collect errors from goroutines?" → `Group`.
+- "Should I still use this?" → README lede.
+- Smaller-tail queries: `Prefix`, `Flatten`, `sort.Interface` impl,
+  `ErrorOrNil`, `WrappedErrors`/errwrap compat, MPL-2.0 licence,
+  CI shape, supported Go versions.
+
+Ranking strategy: top-level FS + identity first; then breadth across
+the public API surface (every public fn name in every file) so the
+agent can pinpoint follow-ups; then signatures-with-doc-comments;
+then the README's usage and migration sections; then key bodies
+(`Append`, `Unwrap`/`chain`, `Group.Go`, `Flatten`, `Prefix`,
+`ListFormatFunc`); then test inventory and remaining bodies.
+"""
+
+# =============================================================================
+# Tier 1: Identity + top-level shape.
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level fs listing"
+justification = """
+Every navigation question starts here. Cheap, anchors the agent's
+mental model: ~8 .go files (each named after a concept) + matching
+_test.go pairs + README/CHANGELOG/LICENSE/Makefile + .github/. The
+file naming scheme (one file per public concept) is itself a
+load-bearing fact.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README lede + deprecation note"
+justification = """
+The very first non-badge content in the README is the Go 1.20
+`errors.Join` recommendation. This is the single most load-bearing
+sentence for a "should I use this?" query and frames every
+subsequent design discussion. Single contiguous span, very cheap.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 10, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Error struct definition"
+justification = """
+The single type the whole library revolves around: two public fields,
+`Errors []error` and `ErrorFormat ErrorFormatFunc`. Knowing the
+shape unlocks most follow-ups (you can construct, inspect, customise
+without further reads). Tiny.
+"""
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 11, end = 16, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 2: Breadth — every public function/method name across the package.
+# Cheapest catastrophic-omission mitigation: ensures the agent knows
+# *what exists*, even if not yet how each works.
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Package + import declarations across all .go files"
+justification = """
+Confirms single-package layout (`package multierror`) across every
+source file and reveals the dependency surface (only stdlib:
+`errors`, `fmt`, `strings`, `sync`). One line per file's package
+declaration; helps the agent rule out hidden internal packages.
+Cheap and rules out a class of "is there sub-packaging?" questions.
+"""
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "append.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "flatten.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "format.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "group.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "prefix.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "sort.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "All public function/method first-lines (multierror.go)"
+justification = """
+Catastrophic-omission mitigation for the central file: every method
+on `*Error` and every method on the internal `chain` type, name-only
+(truncated at the opening paren). Tells the agent the full method
+surface — `Error`, `ErrorOrNil`, `GoString`, `WrappedErrors`,
+`Unwrap` for `*Error`; `Error`, `Unwrap`, `As`, `Is` for `chain` —
+without committing budget to bodies yet.
+"""
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 18, end = 18, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 99, end = 99, render = { kind = "full" } },
+  { path = "multierror.go", start = 102, end = 102, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 108, end = 108, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror.go", start = 122, end = 122, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Public function names across single-fn files"
+justification = """
+Names of `Append`, `Flatten` (+ unexported `flatten`), `Prefix`,
+`ListFormatFunc` (+ `ErrorFormatFunc` type alias line), and the
+three `sort.Interface` methods on `Error`. Plus `Group` struct
+header line and its two methods. This is the rest of the public API
+surface in one cheap batch — together with 2.2 the agent can see
+*everything* the package exposes.
+"""
+content = { kind = "lines", spans = [
+  { path = "append.go", start = 14, end = 14, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "flatten.go", start = 8, end = 8, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "flatten.go", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "prefix.go", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "format.go", start = 11, end = 13, render = { kind = "full" } },
+  { path = "format.go", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "group.go", start = 9, end = 14, render = { kind = "full" } },
+  { path = "group.go", start = 20, end = 20, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "group.go", start = 36, end = 36, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "sort.go", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "sort.go", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "sort.go", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "README H2 headings"
+justification = """
+Three section headings (`Migrating to errors.Join`, `Installation
+and Docs`, `Usage`). Tiny but reveals doc structure and lets the
+agent jump to a specific section in one follow-up read.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 12, end = 12, render = { kind = "full" } },
+  { path = "README.md", start = 104, end = 104, render = { kind = "full" } },
+  { path = "README.md", start = 129, end = 129, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 3: Signatures + their preceding doc comments.
+# Each public function gets its full doc comment + signature line so
+# the agent can answer most questions with no follow-up. Ordered by
+# query-frequency: Append (most common), then Unwrap/chain (most subtle),
+# then Group, then Flatten/Prefix, then formatting and sort.
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Append doc comment + signature"
+justification = """
+The single most-used entry point. Doc comment spells out behaviour
+on every input shape (nil, *Error, plain error) and explicitly notes
+nested `multierror.Error` flattening + nil-skipping. Many "how do I
+use this?" queries are resolved entirely here.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "append.go", start = 6, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Error.Unwrap doc + signature"
+justification = """
+The `Unwrap` semantics are this library's most surprising aspect for
+a stdlib-`errors`-aware caller: returns a private `chain` slice that
+walks one-at-a-time via repeated `Unwrap`, *not* the Go 1.20
+`Unwrap() []error` shape. Doc explicitly calls out the shallow-copy
+and ordering guarantees. (`chain`'s own explainer comment lands in
+3.8.)
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 60, end = 71, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "Group struct + Go/Wait signatures with doc comments"
+justification = """
+The concurrent-collection pattern. Struct fields show internal
+locking (`sync.Mutex` + `sync.WaitGroup` + `*Error`). Doc comments
+on `Go` and `Wait` describe the contract: `Go` runs in goroutine,
+appends on error; `Wait` blocks until all goroutines have returned.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "group.go", start = 16, end = 20, render = { kind = "full" } },
+  { path = "group.go", start = 34, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Flatten + Prefix doc + signatures"
+justification = """
+Two helpers grouped together. `Flatten` recursively merges nested
+`*Error` into a flat list; `Prefix` annotates each contained error
+with a string prefix (and falls back to wrapping for non-multi
+errors). Doc comments explain non-`*Error` passthrough semantics
+in both.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "flatten.go", start = 6, end = 8, render = { kind = "full" } },
+  { path = "prefix.go", start = 10, end = 16, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "ErrorFormatFunc + ListFormatFunc docs"
+justification = """
+Formatting hook + default formatter doc. Answers "how do I customise
+the message?". `ListFormatFunc`
+defaults to e.g. `2 errors occurred:\\n\\t* foo\\n\\t* bar\\n\\n`.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "format.go", start = 11, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Error.Error + WrappedErrors + GoString docs"
+justification = """
+Round out the `*Error` method surface. `Error` shows that the
+default formatter is `ListFormatFunc` (with override hook).
+`WrappedErrors` is the errwrap.Wrapper compat method with a
+nil-safety note absent from the bare `Errors` field. `GoString`
+provides `%#v` output.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 18, end = 18, render = { kind = "full" } },
+  { path = "multierror.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "multierror.go", start = 46, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "sort.Interface methods on Error"
+justification = """
+Three short methods: `Len`, `Swap`, `Less` (sorts by `Error()`
+string). Tells the agent `*Error` is directly `sort.Sort`-able
+without a wrapper.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "sort.go", start = 6, end = 7, render = { kind = "full" } },
+  { path = "sort.go", start = 15, end = 16, render = { kind = "full" } },
+  { path = "sort.go", start = 20, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "chain type explainer comment + decl"
+justification = """
+The `chain` type backs `*Error.Unwrap`'s return value: an
+unexported `[]error` with a paragraph-long explainer comment about
+why `Unwrap` doesn't simply return the wrapped error and a
+"non-empty precondition" note. Pulled out as its own batch so 3.2
+fits the growth envelope; conceptually a continuation of 3.2.
+"""
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 88, end = 99, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 4: README content — usage + migration sections that resolve
+# common queries without further file reads.
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "README usage section overview lines"
+justification = """
+The Usage section is structured as nine bold sub-headers, each
+followed by a short Go snippet. Pulling just the bold headers lets
+the agent see what's covered (Building, Customizing, Accessing,
+Extracting, Checking exact, Returning-only-on-errors) and grep for
+the specific snippet they need.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 131, end = 134, render = { kind = "full" } },
+  { path = "README.md", start = 154, end = 154, render = { kind = "full" } },
+  { path = "README.md", start = 171, end = 172, render = { kind = "full" } },
+  { path = "README.md", start = 188, end = 188, render = { kind = "full" } },
+  { path = "README.md", start = 204, end = 204, render = { kind = "full" } },
+  { path = "README.md", start = 218, end = 218, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "README Append usage example"
+justification = """
+The canonical `Append`-in-a-loop pattern: `var result error;
+result = multierror.Append(result, err)`. This is the answer to the
+single most common usage question.
+"""
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 134, end = 152, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "README errors.Is / errors.As / Unwrap stdlib-compat snippets"
+justification = """
+Three short snippets covering interop with stdlib `errors` package:
+type-asserting to `*multierror.Error`, `errors.As`, `errors.Is`.
+Together with 3.2 the agent has both the API contract and the
+recommended call shape.
+"""
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 173, end = 216, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "README ErrorFormat + ErrorOrNil examples"
+justification = """
+Custom formatter assignment + `ErrorOrNil` finaliser pattern. Both
+short, both directly answer high-frequency questions.
+"""
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 154, end = 169, render = { kind = "full" } },
+  { path = "README.md", start = 218, end = 231, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "README intro paragraph (unwrap + Go-version notes)"
+justification = """
+Two short prose blocks: "what is this?" framing + the Go 1.13
+requirement note (with the explicit `errors.Unwrap` / `errors.Join`
+contrast). Useful general context for any non-task-specific query.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 90, end = 102, render = { kind = "full" } },
+  { path = "README.md", start = 111, end = 119, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "README migration to errors.Join — basic + Group sections"
+justification = """
+Migration guide is the first content in the README and explicitly
+shows the stdlib equivalent for both basic aggregation and the
+`Group` pattern (mutex + `errors.Join`). High-value for "should I
+migrate?" / "how do I migrate?" queries.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 14, end = 34, render = { kind = "full" } },
+  { path = "README.md", start = 54, end = 86, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 5: Bodies of the most-touched functions. Predecessor edges
+# point back to their signature batches in tier 3 so adjacent slices
+# remain coherent.
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Append body"
+justification = """
+The full type-switch logic: nil-typed-`*Error` init, per-element
+flatten of nested `*Error`, plain-error append, and the recursive
+fallback for non-`*Error` `err` arg. This body has subtle
+nil-handling that the doc alone doesn't fully convey.
+"""
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+  { path = "append.go", start = 15, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "Error.Unwrap body + chain methods"
+justification = """
+Implementation of all the stdlib-errors interop: `Unwrap` returns
+nil / single error / `chain` slice; `chain.Error/Unwrap/As/Is` show
+the head-of-list semantics. Subtle and worth seeing in full.
+"""
+predecessor = "3.2"
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 72, end = 86, render = { kind = "full" } },
+  { path = "multierror.go", start = 101, end = 124, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "Group.Go and Group.Wait bodies"
+justification = """
+Concurrent collection internals: `Go` calls `Append` under a mutex
+inside a goroutine deferred via `WaitGroup.Done`; `Wait` blocks then
+returns under the same mutex. Important for understanding race
+guarantees.
+"""
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+  { path = "group.go", start = 21, end = 32, render = { kind = "full" } },
+  { path = "group.go", start = 37, end = 41, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "Flatten body (Flatten + flatten recursion)"
+justification = """
+Whole file's logic minus header/comments: dispatcher + recursive
+walker that promotes leaf errors into `flatErr.Errors`.
+"""
+predecessor = "3.4"
+content = { kind = "lines", spans = [
+  { path = "flatten.go", start = 9, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Prefix body"
+justification = """
+Type-switch: for `*Error`, prefix each contained error via
+`fmt.Errorf("%s %s", prefix, e)` (note: not `%w`-wrapping); for
+plain errors, returns a single new error. The non-wrapping detail
+is easy to miss without reading the body.
+"""
+predecessor = "3.4"
+content = { kind = "lines", spans = [
+  { path = "prefix.go", start = 17, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "ListFormatFunc body"
+justification = """
+The default formatter logic: special-case for one error vs. N
+errors, joining bullets with tab/newline. Determines the canonical
+human-readable format every multierror produces by default.
+"""
+predecessor = "3.5"
+content = { kind = "lines", spans = [
+  { path = "format.go", start = 18, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "Error.Error / ErrorOrNil / WrappedErrors / GoString bodies"
+justification = """
+Round out `*Error` by showing the formatter-dispatch in `Error`
+(default = `ListFormatFunc`), `ErrorOrNil`'s nil-and-empty checks,
+`WrappedErrors`'s nil guard, and `GoString`'s deref-`%#v` trick.
+"""
+predecessor = "3.6"
+content = { kind = "lines", spans = [
+  { path = "multierror.go", start = 19, end = 25, render = { kind = "full" } },
+  { path = "multierror.go", start = 32, end = 40, render = { kind = "full" } },
+  { path = "multierror.go", start = 43, end = 44, render = { kind = "full" } },
+  { path = "multierror.go", start = 54, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.8"
+descriptor = "sort.Interface bodies"
+justification = """
+The three short bodies: `Len` is nil-safe; `Swap` is index-swap on
+the slice; `Less` compares by `.Error()` string. Useful for the
+"how do I order multierror's contents?" query.
+"""
+predecessor = "3.7"
+content = { kind = "lines", spans = [
+  { path = "sort.go", start = 8, end = 13, render = { kind = "full" } },
+  { path = "sort.go", start = 17, end = 18, render = { kind = "full" } },
+  { path = "sort.go", start = 23, end = 23, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 6: Tests and remaining context.
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "Test function name inventory across all _test.go files"
+justification = """
+Catastrophic-omission mitigation for tests: every `Test*` fn name,
+truncated. Tells the agent which behaviours have coverage —
+including the precisely-named subtests in `multierror_test.go`
+(`TestErrorUnwrap`, `TestErrorIs`, `TestErrorAs`) and the
+typed-nil edge cases in `append_test.go`. Lets the agent target a
+single test for follow-up read.
+"""
+content = { kind = "lines", spans = [
+  { path = "multierror_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 17, end = 17, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 118, end = 118, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "multierror_test.go", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 45, end = 45, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 53, end = 53, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 71, end = 71, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "append_test.go", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "flatten_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "flatten_test.go", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "format_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "format_test.go", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "group_test.go", start = 12, end = 12, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "prefix_test.go", start = 11, end = 11, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "prefix_test.go", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "prefix_test.go", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "sort_test.go", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "sort_test.go", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "Format expected-output strings from tests"
+justification = """
+The literal expected-output strings in `format_test.go` and
+`multierror_test.go` document the exact byte-level format produced
+by `ListFormatFunc` for 1 vs N errors — useful when a downstream
+parser or test snapshot needs to match.
+"""
+content = { kind = "lines", spans = [
+  { path = "format_test.go", start = 12, end = 16, render = { kind = "full" } },
+  { path = "format_test.go", start = 28, end = 32, render = { kind = "full" } },
+  { path = "multierror_test.go", start = 34, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "TestErrorUnwrap — chain semantics in action"
+justification = """
+The chain-walking idiom: drive `errors.Unwrap` in a loop, expect
+each successive `errors.Is(current, err.Errors[i])` to hold, then
+nil. Plus subtests for the no-errors and nil-multierror cases. This
+is the executable spec for the most subtle method in the library.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "multierror_test.go", start = 82, end = 116, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "TestAppend bodies — Append edge cases"
+justification = """
+Six short tests that pin down `Append`'s nil-handling matrix:
+typed-nil `*Error`, untyped-nil `error`, nil-`*Error` arg, nested
+`*Error` flattening, plain-error first arg. The most-exercised
+behaviour matrix in the package.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "append_test.go", start = 12, end = 85, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "TestFlatten + TestGroup bodies"
+justification = """
+`TestFlatten` shows nested `*Error` collapse with the expected
+3-error formatted output. `TestGroup` exercises the goroutine
+collection across nil/non-nil cases. Two of the more illustrative
+behaviour tests.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "flatten_test.go", start = 14, end = 42, render = { kind = "full" } },
+  { path = "flatten_test.go", start = 44, end = 49, render = { kind = "full" } },
+  { path = "group_test.go", start = 13, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "TestErrorIs + TestErrorAs bodies"
+justification = """
+Subtests for `errors.Is` / `errors.As` interop including the
+`fmt.Errorf("%w", ...)` wrap-through case. Together with 6.3
+documents the full stdlib-errors interop story.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "multierror_test.go", start = 118, end = 211, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "Remaining test bodies (sort + prefix)"
+justification = """
+The two smallest behaviour test files in full: sort `Single`/
+`Multiple` and prefix's three edge cases (`Error`, `NilError`,
+`NonError`). The basic-coverage tests in `multierror_test.go`
+(`TestError_Impl`, `TestErrorError_custom/default`,
+`TestErrorErrorOrNil`, `TestErrorWrappedErrors`) are deliberately
+not pulled in here — they're covered by 6.1's name inventory and
+by the body batches in tier 5.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+  { path = "sort_test.go", start = 14, end = 31, render = { kind = "full" } },
+  { path = "sort_test.go", start = 33, end = 55, render = { kind = "full" } },
+  { path = "prefix_test.go", start = 12, end = 21, render = { kind = "full" } },
+  { path = "prefix_test.go", start = 23, end = 29, render = { kind = "full" } },
+  { path = "prefix_test.go", start = 31, end = 39, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = ".github/ listing + workflow file structure"
+justification = """
+Reveals CI shape (two workflows: `go-multierror.yml` for fmt/lint/
+linux+windows tests across Go 1.13/oldstable/stable, and
+`actionlint.yml`), plus the dependabot config and PR template. Lets
+the agent answer "where's CI?" / "what versions are tested?"
+without exploring.
+"""
+content = { kind = "lines", spans = [
+  { path = ".github/workflows/go-multierror.yml", start = 1, end = 9, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 42, end = 51, render = { kind = "full" } },
+  { path = ".github/workflows/go-multierror.yml", start = 88, end = 97, render = { kind = "full" } },
+  { path = ".github/workflows/actionlint.yml", start = 1, end = 9, render = { kind = "full" } },
+  { path = ".github/dependabot.yml", start = 1, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.9"
+descriptor = "Makefile targets"
+justification = """
+The two phony targets: `test` and `testrace`, plus their `go list |
+xargs go test` shape. Answers "how do I run the tests?" without
+needing a separate read.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 1, end = 18, render = { kind = "full" } },
+  { path = "Makefile", start = 31, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.10"
+descriptor = "Boilerplate metadata"
+justification = """
+Small misc: `.go-version` (1.13 minimum), CHANGELOG (empty
+unreleased skeleton), CODEOWNERS (`@hashicorp/team-ip-compliance`),
+LICENSE first line (MPL-2.0 + IBM copyright). Each is a one-shot
+answer to a plausible meta-question.
+"""
+content = { kind = "lines", spans = [
+  { path = ".go-version", start = 1, end = 1, render = { kind = "full" } },
+  { path = "CHANGELOG.md", start = 1, end = 8, render = { kind = "full" } },
+  { path = "CODEOWNERS", start = 5, end = 5, render = { kind = "full" } },
+  { path = "LICENSE", start = 1, end = 3, render = { kind = "full" } },
+] }
