@@ -7,33 +7,10 @@ expression: rendered
         ci.yml
         release.yml
 .gitignore
-    1→.aider*
-    2→.env
-    3→aidocs/
-    4→.mcp.json
-    5→*.log
-    6→mcphost
-    7→.idea
-    8→test/
-    9→build/
-    10→dist/
-    11→contribute/output/
-    12→CONTEXT.md
 .goreleaser.yaml
 AGENTS.md
     2→# OpenSpec Instructions
     …
-    4→These instructions are for AI assistants working in this project.
-    6→Always open `@/openspec/AGENTS.md` when the request:
-    7→- Mentions planning or proposals (words like proposal, spec, change, plan)
-    8→- Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work
-    9→- Sounds ambiguous and you need the authoritative spec before coding
-    11→Use `@/openspec/AGENTS.md` to learn:
-    12→- How to create and apply change proposals
-    13→- Spec format and conventions
-    14→- Project structure and guidelines
-    16→Keep this managed block so 'openspec update' can refresh the instructions.
-    18→<!-- OPENSPEC:END -->
     20→# MCPHost Agent Guidelines
     …
     22→## Build/Test Commands
@@ -47,96 +24,27 @@ README.md
     1→# MCPHost 🤖
     3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
     5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
-    7→## Table of Contents
-    9→- [Overview](#overview-)
-    10→- [Features](#features-)
-    11→- [Requirements](#requirements-)
-    12→- [Environment Setup](#environment-setup-)
-    13→- [Installation](#installation-)
-    14→- [SDK Usage](#sdk-usage-)
-    15→- [Configuration](#configuration-)
-    16→  - [MCP Servers](#mcp-servers)
-    17→  - [Environment Variable Substitution](#environment-variable-substitution)
-    18→  - [Simplified Configuration Schema](#simplified-configuration-schema)
-    19→  - [Tool Filtering](#tool-filtering)
-    20→  - [Legacy Configuration Support](#legacy-configuration-support)
-    21→  - [Transport Types](#transport-types)
-    22→  - [System Prompt](#system-prompt)
-    23→- [Usage](#usage-)
-    24→  - [Interactive Mode](#interactive-mode-default)
-    25→  - [Script Mode](#script-mode)
-    26→  - [Hooks System](#hooks-system)
-    27→  - [Non-Interactive Mode](#non-interactive-mode)
-    28→  - [Model Generation Parameters](#model-generation-parameters)
-    29→  - [Available Models](#available-models)
-    30→  - [Examples](#examples)
-    31→  - [Flags](#flags)
-    32→  - [Authentication Subcommands](#authentication-subcommands)
-    33→  - [Configuration File Support](#configuration-file-support)
-    34→  - [Interactive Commands](#interactive-commands)
-    35→- [Automation & Scripting](#automation--scripting-)
-    36→- [MCP Server Compatibility](#mcp-server-compatibility-)
-    37→- [Contributing](#contributing-)
-    38→- [License](#license-)
-    39→- [Acknowledgments](#acknowledgments-)
-    41→## Overview 🌟
-    43→MCPHost acts as a host in the MCP client-server architecture, where:
-    44→- **Hosts** (like MCPHost) are LLM applications that manage connections and interactions
-    45→- **Clients** maintain 1:1 connections with MCP servers
-    46→- **Servers** provide context, tools, and capabilities to the LLMs
-    48→This architecture allows language models to:
-    49→- Access external tools and data sources 🛠️
-    50→- Maintain consistent context across interactions 🔄
-    51→- Execute commands and retrieve information safely 🔒
-    53→Currently supports:
-    54→- Anthropic Claude models (Claude 3.5 Sonnet, Claude 3.5 Haiku, etc.)
-    55→- OpenAI models (GPT-4, GPT-4 Turbo, GPT-3.5, etc.)
-    56→- Google Gemini models (Gemini 2.0 Flash, Gemini 1.5 Pro, etc.)
-    57→- Any Ollama-compatible model with function calling support
-    58→- Any OpenAI-compatible API endpoint
-    60→## Features ✨
-    62→- Interactive conversations with multiple AI models
-    63→- **Non-interactive mode** for scripting and automation
-    64→- **Script mode** for executable YAML-based automation scripts
-    65→- Support for multiple concurrent MCP servers
-    66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
-    67→- Dynamic tool discovery and integration
-    68→- Tool calling capabilities across all supported models
-    69→- Configurable MCP server locations and arguments
-    70→- Consistent command interface across model types
-    71→- Configurable message history window for context management
-    72→- **OAuth authentication** support for Anthropic (alternative to API keys)
-    73→- **Hooks system** for custom integrations and security policies
-    74→- **Environment variable substitution** in configs and scripts
-    75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
-    77→## Requirements 📋
-    79→- Go 1.23 or later
-    80→- For OpenAI/Anthropic: API key for the respective provider
-    81→- For Ollama: Local Ollama installation with desired models
-    82→- For Google/Gemini: Google API key (see https://aistudio.google.com/app/apikey)
-    83→- One or more MCP-compatible tool servers
     124→## Installation 📦
     126→```bash
     127→go install github.com/mark3labs/mcphost@latest
     128→```
     967→## MCP Server Compatibility 🔌
     969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
-    971→## Contributing 🤝
-    973→Contributions are welcome! Feel free to:
-    974→- Submit bug reports or feature requests through issues
-    975→- Create pull requests for improvements
-    976→- Share your custom MCP servers
-    977→- Improve documentation
-    979→Please ensure your contributions follow good coding practices and include appropriate tests.
     981→## License 📄
     983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-    985→## Acknowledgments 🙏
-    987→- Thanks to the Anthropic team for Claude and the MCP specification
-    988→- Thanks to the Ollama team for their local LLM runtime
-    989→- Thanks to all contributors who have helped improve this tool
 cmd/
     auth.go
     hooks.go
+        16→var hooksCmd = &cobra.Command{
+        …
+        25→var hooksListCmd = &cobra.Command{
+        …
+        57→var hooksValidateCmd = &cobra.Command{
+        …
+        79→var hooksInitCmd = &cobra.Command{
+        …
+        176→func init() {
+        …
     root.go
     script.go
     script_deepseek_test.go
@@ -147,27 +55,6 @@ contribute/
     build.sh
     conf/
         demo.json
-            1→{
-            2→    "mcpServers": {
-            3→        "filesystem": {
-            4→            "command": "npx",
-            5→            "args": [
-            6→                "-y",
-            7→                "@modelcontextprotocol/server-filesystem",
-            8→                "./"
-            9→            ]
-            10→        },
-            11→        "weather": {
-            12→            "command": "uv",
-            13→            "args": [
-            14→                "--directory",
-            15→                "/Users/bytedance/code/MCP/my_host/weather",
-            16→                "run",
-            17→                "weather.py"
-            18→            ]
-            19→        }
-            20→    }
-            21→}
         demo.yml
     contribute.md
         1→# Contribute README
@@ -177,17 +64,60 @@ contribute/
         30→## Contribute your code
         31→just write your code and push it.
 examples/
-    hooks/
-    scripts/
 go.mod
+    1→module github.com/mark3labs/mcphost
+    3→go 1.24.0
+    5→toolchain go1.24.5
+    7→require (
+    8→	github.com/JohannesKaufmann/html-to-markdown v1.6.0
+    9→	github.com/PuerkitoBio/goquery v1.10.3
+    10→	github.com/bytedance/sonic v1.15.0
+    11→	github.com/charmbracelet/fang v0.4.0
+    12→	github.com/charmbracelet/lipgloss v1.1.1-0.20250404203927-76690c660834
+    13→	github.com/cloudwego/eino v0.7.13
+    14→	github.com/cloudwego/eino-ext/components/model/claude v0.1.12
+    15→	github.com/cloudwego/eino-ext/components/model/ollama v0.1.8
+    16→	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250903035842-96774a3ec845
+    17→	github.com/eino-contrib/jsonschema v1.0.3
+    18→	github.com/getkin/kin-openapi v0.131.0
+    19→	github.com/mark3labs/mcp-filesystem-server v0.11.1
+    20→	github.com/mark3labs/mcp-go v0.44.0-beta.2
+    21→	github.com/spf13/cobra v1.10.1
+    22→	github.com/spf13/viper v1.20.1
+    23→	github.com/tidwall/gjson v1.18.0
+    24→	golang.org/x/term v0.37.0
+    25→	google.golang.org/genai v1.22.0
+    26→	gopkg.in/yaml.v3 v3.0.1
+    27→)
+    29→require (
+    141→)
+    143→require (
+    145→	github.com/charmbracelet/bubbles v0.21.0
+    146→	github.com/charmbracelet/bubbletea v1.3.10
+    147→	github.com/charmbracelet/glamour v0.10.0
+    165→)
 go.sum
 internal/
     agent/
         agent.go
         factory.go
+            15→type SpinnerFunc func(message string, fn func() error) error
+            …
+            19→type AgentCreationOptions struct {
+            …
+            43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
+            …
+            76→func ParseModelName(modelString string) (provider, model string) {
+            …
         streaming.go
+            19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
+            …
     auth/
         browser.go
+            14→func OpenBrowser(url string) error {
+            …
+            34→func TryOpenBrowser(url string) {
+            …
         credentials.go
         credentials_test.go
         oauth.go
@@ -208,6 +138,12 @@ internal/
         environment_flow_test.go
         integration_test.go
         merger.go
+            13→func MergeConfigs(baseConfig *Config, scriptConfig *Config) *Config {
+            …
+            28→func LoadAndValidateConfig() (*Config, error) {
+            …
+            48→func fixEnvironmentCase(config *Config) {
+            …
         substitution.go
         substitution_test.go
         viper_test.go
@@ -215,9 +151,31 @@ internal/
         config.go
         config_test.go
         events.go
+            1→package hooks
         executor.go
         executor_test.go
         schemas.go
+            10→type CommonInput struct {
+            …
+            23→type PreToolUseInput struct {
+            24→	CommonInput
+            25→	ToolName  string          `json:"tool_name"`
+            26→	ToolInput json.RawMessage `json:"tool_input"`
+            27→}
+            32→type PostToolUseInput struct {
+            33→	CommonInput
+            34→	ToolName     string          `json:"tool_name"`
+            35→	ToolInput    json.RawMessage `json:"tool_input"`
+            36→	ToolResponse json.RawMessage `json:"tool_response"`
+            37→}
+            42→type UserPromptSubmitInput struct {
+            43→	CommonInput
+            44→	Prompt string `json:"prompt"`
+            45→}
+            50→type StopInput struct {
+            …
+            62→type HookOutput struct {
+            …
         testdata/
             invalid-hooks.yml
             valid-hooks.yml
@@ -229,7 +187,59 @@ internal/
         gemini/
             gemini.go
         generate_models.go
+            18→type ModelInfo struct {
+            …
+            37→type Cost struct {
+            …
+            48→// Limit represents the context and output limits for a model.
+            49→// Used during code generation to parse token limit data from models.dev.
+            50→type Limit struct {
+            51→	// Context is the maximum number of input tokens
+            52→	Context int `json:"context"`
+            53→	// Output is the maximum number of output tokens
+            54→	Output int `json:"output"`
+            55→}
+            60→type ProviderInfo struct {
+            …
+            73→const codeTemplate = `// Code generated by go generate; DO NOT EDIT.
+            …
+            156→func main() {
+            …
         models_data.go
+            4→package models
+            6→// ModelInfo represents information about a specific model
+            7→type ModelInfo struct {
+            8→	ID          string
+            9→	Name        string
+            10→	Attachment  bool
+            11→	Reasoning   bool
+            12→	Temperature bool
+            13→	Cost        Cost
+            14→	Limit       Limit
+            15→}
+            17→// Cost represents the pricing information for a model
+            18→type Cost struct {
+            19→	Input      float64
+            20→	Output     float64
+            21→	CacheRead  *float64
+            22→	CacheWrite *float64
+            23→}
+            25→// Limit represents the context and output limits for a model
+            26→type Limit struct {
+            27→	Context int
+            28→	Output  int
+            29→}
+            31→// ProviderInfo represents information about a model provider
+            32→type ProviderInfo struct {
+            33→	ID     string
+            34→	Env    []string
+            35→	NPM    string
+            36→	Name   string
+            37→	Models map[string]ModelInfo
+            38→}
+            40→// GetModelsData returns the static models data from models.dev
+            41→func GetModelsData() map[string]ProviderInfo {
+            …
         openai/
             openai.go
         providers.go
@@ -240,35 +250,49 @@ internal/
         session.go
     tokens/
         anthropic.go
+            16→package tokens
         counter.go
+            1→package tokens
+            21→func EstimateTokens(text string) int {
+            …
         init.go
+            1→package tokens
+            21→func InitializeTokenCounters() {
+            22→	// Future provider-specific counters can be registered here
+            50→func InitializeTokenCountersWithKeys() {
+            51→	// Future provider-specific counters can be registered here
     tools/
         buffered_logger.go
         connection_pool.go
         debug_logger.go
+            1→package tools
+            7→type DebugLogger interface {
+            …
+            19→type SimpleDebugLogger struct {
+            20→	enabled bool
+            21→}
+            27→func NewSimpleDebugLogger(enabled bool) *SimpleDebugLogger {
+            28→	return &SimpleDebugLogger{enabled: enabled}
+            35→func (l *SimpleDebugLogger) LogDebug(message string) {
+            …
+            43→func (l *SimpleDebugLogger) IsDebugEnabled() bool {
+            44→	return l.enabled
         mcp.go
         mcp_test.go
     ui/
-        block_renderer.go
-        callbacks.go
-        cli.go
-        commands.go
-        compact_renderer.go
-        debug_logger.go
-        enhanced_styles.go
-        factory.go
-        fuzzy.go
-        messages.go
-        progress/
-            ollama.go
-        slash_command_input.go
-        spinner.go
-        styles.go
-        tool_approval_input.go
-        usage_tracker.go
-        usage_tracker_render_test.go
-        usage_tracker_test.go
 main.go
+    1→package main
+    3→import (
+    4→	"context"
+    5→	"fmt"
+    6→	"os"
+    8→	"github.com/charmbracelet/fang"
+    9→	"github.com/mark3labs/mcphost/cmd"
+    10→)
+    12→var version = "dev"
+    …
+    14→func main() {
+    …
 sdk/
     README.md
         1→# MCPHost SDK
@@ -280,30 +304,6 @@ sdk/
         9→```
         11→## Basic Usage
         …
-        13→```go
-        14→package main
-        16→import (
-        17→    "context"
-        18→    "fmt"
-        19→    "log"
-        21→    "github.com/mark3labs/mcphost/sdk"
-        22→)
-        24→func main() {
-        25→    ctx := context.Background()
-        27→    // Create MCPHost instance with default configuration
-        28→    host, err := sdk.New(ctx, nil)
-        29→    if err != nil {
-        30→        log.Fatal(err)
-        31→    }
-        32→    defer host.Close()
-        34→    // Send a prompt
-        35→    response, err := host.Prompt(ctx, "What is 2+2?")
-        36→    if err != nil {
-        37→        log.Fatal(err)
-        38→    }
-        40→    fmt.Println(response)
-        41→}
-        42→```
         44→## Configuration
         …
         52→### Options
@@ -322,18 +322,26 @@ sdk/
         …
         136→## Environment Variables
         …
-        138→All CLI environment variables work with the SDK:
-        140→- `MCPHOST_MODEL` - Override model
-        141→- `ANTHROPIC_API_KEY` - Anthropic API key
-        142→- `OPENAI_API_KEY` - OpenAI API key
-        143→- `GEMINI_API_KEY` - Google API key
-        144→- etc.
         146→## License
         …
         148→Same as MCPHost CLI
     examples/
-        basic/
-        scripting/
     mcphost.go
     mcphost_test.go
     types.go
+        8→// Message is an alias for session.Message providing SDK users with access
+        9→// to message structures for conversation history and tool interactions.
+        10→type Message = session.Message
+        …
+        12→// ToolCall is an alias for session.ToolCall representing a tool invocation
+        13→// with its name, arguments, and result within a conversation.
+        14→type ToolCall = session.ToolCall
+        …
+        16→// ConvertToSchemaMessage converts an SDK message to the underlying schema message
+        17→// format used by the agent for LLM interactions.
+        18→func ConvertToSchemaMessage(msg *Message) *schema.Message {
+        19→	return msg.ConvertToSchemaMessage()
+        22→// ConvertFromSchemaMessage converts a schema message from the agent to an SDK
+        23→// message format for use in the SDK API.
+        24→func ConvertFromSchemaMessage(msg *schema.Message) Message {
+        25→	return session.ConvertFromSchemaMessage(msg)

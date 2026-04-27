@@ -23,6 +23,7 @@ use crate::render::SourceCache;
 
 pub mod c;
 pub mod fs;
+pub mod go;
 pub mod json;
 pub mod markdown;
 pub mod plaintext;
@@ -76,6 +77,7 @@ impl Walker for FsWalker {
         out.extend(json::expand_in_dir(dir, ctx));
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(c::expand_in_dir(dir, ctx));
+        out.extend(go::expand_in_dir(dir, ctx));
         out
     }
 }

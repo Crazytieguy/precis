@@ -43,6 +43,7 @@ pub enum BatchKey {
     Json(JsonKey),
     Plaintext(PlaintextKey),
     C(CKey),
+    Go(GoKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -89,6 +90,11 @@ impl From<PlaintextKey> for BatchKey {
 impl From<CKey> for BatchKey {
     fn from(k: CKey) -> Self {
         BatchKey::C(k)
+    }
+}
+impl From<GoKey> for BatchKey {
+    fn from(k: GoKey) -> Self {
+        BatchKey::Go(k)
     }
 }
 
@@ -298,6 +304,62 @@ pub enum CKey {
     DeclDoc { file: PathBuf, start_line: usize },
 }
 
+/// Go batches. Mirrors the C walker shape — per-file orientation
+/// batches (package + imports, decl-name surface) plus per-decl item
+/// batches with optional doc / body refinement.
+///
+/// Visibility: emits **all** top-level declarations, exported and
+/// unexported. NS authors regularly anchor on intentionally-unexported
+/// types (`go-multierror`'s `chain`, `tock`'s `repository` /
+/// `twInterval`). A `visibility_factor` discount ranks exported names
+/// above unexported ones rather than hard-filtering.
+///
+/// Grouped declarations (`type ( … )`, `var ( … )`, `const ( … )`)
+/// are emitted as **one** batch covering the whole block — splitting
+/// per-spec would lose iota / inherited-type / shared-comment
+/// semantics, which is critical for Go's enum-via-iota idiom.
+///
+/// `*_test.go` files surface a separate [`GoKey::TestNames`] batch
+/// listing `Test*` / `Benchmark*` / `Example*` first lines only —
+/// `go test`'s lookup contract — while skipping per-decl bodies. The
+/// 0.2 multiplier from [`crate::value::non_essential_factor`] keeps the
+/// test surface deprioritized vs. ordinary source.
+///
+/// `go.mod` (and `go.work`) get a single whole-file batch
+/// ([`GoKey::GoMod`]); NS authors split the file into logical sections
+/// by line range, but the walker needs only to make the file
+/// reachable in one schedule slot.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum GoKey {
+    /// Package clause + import block at the top of a `.go` file.
+    /// Plumbing batch. Priority 2.x.
+    PackageImports { file: PathBuf },
+    /// Surface listing of every top-level declaration's first line —
+    /// funcs, methods, types, vars, consts. Catastrophic-omission
+    /// hedge. Visibility-blind — lists everything in the file
+    /// regardless of export status. Priority 1.x.
+    DeclNames { file: PathBuf },
+    /// One top-level declaration. For function / method definitions,
+    /// the signature with a body marker. For type / var / const, the
+    /// whole declaration including grouped specs. Keyed by start line.
+    /// Priority 1.x–4.x.
+    Decl { file: PathBuf, start_line: usize },
+    /// Body interior of a function or method definition. Predecessor:
+    /// matching [`GoKey::Decl`] at the same `start_line`. Priority 2.x–3.x.
+    DeclBody { file: PathBuf, start_line: usize },
+    /// Run of `//` (or `/* */`) comments immediately above a decl, with
+    /// no blank-line gap. Predecessor: matching [`GoKey::Decl`].
+    /// Priority 3.x.
+    DeclDoc { file: PathBuf, start_line: usize },
+    /// Surface listing of every `Test*` / `Benchmark*` / `Example*`
+    /// function's first line in a `_test.go` file. Skipped for
+    /// non-test files. Priority 3.x–5.x.
+    TestNames { file: PathBuf },
+    /// Whole-file render of a `go.mod` (or `go.work`) file. Capped
+    /// at a small line count; larger module files are skipped. Priority 1.x.
+    GoMod { file: PathBuf },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -355,6 +417,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Json(k) => k.describe(),
             BatchKey::Plaintext(k) => k.describe(),
             BatchKey::C(k) => k.describe(),
+            BatchKey::Go(k) => k.describe(),
         }
     }
 
@@ -362,6 +425,7 @@ impl WalkerKey for BatchKey {
         match self {
             BatchKey::Markdown(k) => k.concavity_exponent(),
             BatchKey::C(k) => k.concavity_exponent(),
+            BatchKey::Go(k) => k.concavity_exponent(),
             BatchKey::Fs(_)
             | BatchKey::Rust(_)
             | BatchKey::Toml(_)
@@ -498,6 +562,45 @@ impl PlaintextKey {
     pub fn describe(&self) -> String {
         match self {
             PlaintextKey::Whole { file } => format!("plaintext config {}", display_path(file)),
+        }
+    }
+}
+
+impl GoKey {
+    /// `Decl` and `DeclBody` carry a steeper concavity than the default
+    /// for the same reason as the C walker — Go top-level decls (a single
+    /// type-spec line, a function signature, a `var Foo = expr`) are
+    /// short, source files emit dozens of them, and the default 0.35
+    /// exponent runs them up the rank against larger anchors. 0.45
+    /// matches the C walker's calibrated value.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            GoKey::Decl { .. } | GoKey::DeclBody { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    pub fn describe(&self) -> String {
+        match self {
+            GoKey::PackageImports { file } => {
+                format!("go package + imports in {}", display_path(file))
+            }
+            GoKey::DeclNames { file } => {
+                format!("go decl names surface in {}", display_path(file))
+            }
+            GoKey::Decl { file, start_line } => {
+                format!("go decl at {}:{}", display_path(file), start_line)
+            }
+            GoKey::DeclBody { file, start_line } => {
+                format!("go decl body at {}:{}", display_path(file), start_line)
+            }
+            GoKey::DeclDoc { file, start_line } => {
+                format!("go decl doc at {}:{}", display_path(file), start_line)
+            }
+            GoKey::TestNames { file } => {
+                format!("go test names surface in {}", display_path(file))
+            }
+            GoKey::GoMod { file } => format!("go module file {}", display_path(file)),
         }
     }
 }
