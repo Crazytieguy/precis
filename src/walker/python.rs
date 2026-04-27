@@ -774,7 +774,24 @@ fn is_python_entrypoint(file: &Path) -> bool {
 }
 
 fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.35, 0.55, 0.30, python_depth_factor(file, ctx))
+    // `__init__.py` carries the package's public surface (`from .X
+    // import Y as Y` re-exports + `__all__` + `__version__`) — both
+    // catastrophic-omission and follow-up axes are pinned high so a
+    // hundreds-of-tokens import block still beats individual per-decl
+    // batches in cost^0.35-penalised ratio. `__main__.py` is not boosted
+    // (its imports are plumbing for a CLI body, not a re-export
+    // anchor); the depth pin in `python_depth_factor` already keeps it
+    // visible at small budgets.
+    let (cat, fu) = if is_init_py(file) {
+        (0.70, 1.0)
+    } else {
+        (0.35, 0.55)
+    };
+    mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
+}
+
+fn is_init_py(file: &Path) -> bool {
+    file.file_name().and_then(|n| n.to_str()) == Some("__init__.py")
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {

@@ -1,4 +1,4 @@
-scores: Sim=0.428 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9964/10000
+scores: Sim=0.431 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9988/10000
 
 ## Tier rollup
 
@@ -15,12 +15,12 @@ scores: Sim=0.428 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9964/1
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 87 | — | — | 0.67 | partial | README title + tagline | README headline in README.md (t=149, 2 atoms) |
-| 1.3 | 166 | — | — | 0.75 | partial | Public API: __init__ __all__ + version | python imports in src/tomli/__init__.py (t=567, 3 atoms) |
+| 1.3 | 166 | — | — | 0.75 | partial | Public API: __init__ __all__ + version | python imports in src/tomli/__init__.py (t=379, 3 atoms) |
 | 1.4 | 192 | 305 | +113 | 1.00 | late | src/tomli/ module listing |  |
 | 1.5 | 279 | 5134 | +4855 | 0.80 | late | loads / load signatures + docstrings | python decl body at src/tomli/_parser.py:137 (t=6733, 8 atoms) |
 | 1.6 | 403 | 5711 | +5308 | 0.90 | late | TOMLDecodeError class + docstring | python decl doc at src/tomli/_parser.py:76 (t=5711, 8 atoms) |
 | 2.1 | 433 | 9307 | +8874 | 1.00 | late | tests/ directory listing |  |
-| 2.2 | 491 | — | — | 0.67 | partial | _types.py — full | python decl names surface in src/tomli/_types.py (t=337, 3 atoms) |
+| 2.2 | 491 | — | — | 0.67 | partial | _types.py — full | python decl names surface in src/tomli/_types.py (t=411, 3 atoms) |
 | 2.3 | 697 | 6159 | +5462 | 0.88 | late | _parser.py: state-class headers + Flags constants | python method sigs in src/tomli/_parser.py (t=6055, 22 atoms) |
 | 2.4 | 844 | 1986 | +1142 | 1.00 | late | _re.py: regex constants + match-helper locations | python decl at src/tomli/_re.py:26 (t=4225, 19 atoms) |
 | 2.5 | 1160 | 2642 | +1482 | 0.88 | late | README intro paragraph | README.md section #1 (t=2642, 14 atoms) |
@@ -37,9 +37,9 @@ scores: Sim=0.428 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9964/1
 | 3.8 | 4897 | — | — | 0.00 | missing | parse_value — datetime/number/special-float tail |  |
 | 3.9 | 5138 | 6897 | +1759 | 0.84 | late | Flags — __init__, add_pending, finalize_pending, unset_all | python method sigs in src/tomli/_parser.py (t=6055, 8 atoms) |
 | 3.10 | 5527 | — | — | 0.08 | missing | Flags — set + is_ (the actual lookup) | python method sigs in src/tomli/_parser.py (t=6055, 4 atoms) |
-| 3.11 | 5894 | 9731 | +3837 | 0.94 | late | NestedDict body — table-tree builder | python method body at src/tomli/_parser.py:283 (t=9731, 10 atoms) |
+| 3.11 | 5894 | 9755 | +3861 | 0.94 | late | NestedDict body — table-tree builder | python method body at src/tomli/_parser.py:283 (t=9755, 10 atoms) |
 | 3.12 | 6145 | — | — | 0.12 | missing | README usage: Decimal floats | headings outline in README.md (t=946, 2 atoms) |
-| 4.1 | 6395 | 9964 | +3569 | 0.83 | late | create_dict_rule body — [table] header | python decl body at src/tomli/_parser.py:370 (t=9964, 15 atoms) |
+| 4.1 | 6395 | 9988 | +3593 | 0.83 | late | create_dict_rule body — [table] header | python decl body at src/tomli/_parser.py:370 (t=9988, 15 atoms) |
 | 4.2 | 6679 | — | — | 0.05 | missing | create_list_rule body — [[arr]] header | python decl names surface in src/tomli/_parser.py (t=5096, 2 atoms) |
 | 4.3 | 7159 | — | — | 0.06 | missing | key_value_rule body | python decl at src/tomli/_parser.py:413 (t=5197, 2 atoms) |
 | 4.4 | 7480 | — | — | 0.10 | missing | parse_inline_table — head + first key/value insert | python decl at src/tomli/_parser.py:528 (t=5379, 2 atoms) |
@@ -69,14 +69,14 @@ scores: Sim=0.428 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9964/1
 | 189 | 0.50 | 379 | 946 | headings outline in README.md |
 | 184 | 1.00 | 184 | 8420 | python decl body at src/tomli/_parser.py:463 |
 | 165 | 1.00 | 165 | 7996 | python decl body at src/tomli/_parser.py:481 |
-| 164 | 1.00 | 164 | 9477 | CHANGELOG.md section #7 |
+| 164 | 1.00 | 164 | 9501 | CHANGELOG.md section #7 |
 | 162 | 1.00 | 162 | 1800 | tomllib.md section #0 |
 | 161 | 1.00 | 161 | 3566 | python decl at src/tomli/_re.py:46 |
 | 158 | 1.00 | 158 | 6544 | python decl at src/tomli/_parser.py:57 |
 | 150 | 1.00 | 150 | 7423 | python decl body at src/tomli/_parser.py:447 |
 | 150 | 1.00 | 150 | 3259 | python imports in src/tomli/_parser.py |
 | 148 | 1.00 | 148 | 7273 | python decl body at src/tomli/_parser.py:599 |
-| 130 | 1.00 | 130 | 9607 | CHANGELOG.md section #11 |
+| 130 | 1.00 | 130 | 9631 | CHANGELOG.md section #11 |
 | 127 | 1.00 | 127 | 9277 | CHANGELOG.md section #10 |
 | 125 | 1.00 | 125 | 7548 | CHANGELOG.md section #6 |
 | 122 | 1.00 | 122 | 7019 | python decl body at src/tomli/_parser.py:764 |
@@ -96,7 +96,7 @@ scores: Sim=0.428 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9964/1
 | 72 | 1.00 | 72 | 2989 | python decl body at src/tomli/_re.py:98 |
 | 70 | 1.00 | 70 | 1563 | python imports in profiler/profiler_script.py |
 | 67 | 1.00 | 67 | 3819 | CHANGELOG.md section #12 |
-| 60 | 1.00 | 60 | 397 | python decl names surface in fuzzer/fuzz.py |
+| 60 | 1.00 | 60 | 471 | python decl names surface in fuzzer/fuzz.py |
 | 59 | 1.00 | 59 | 2271 | CHANGELOG.md section #3 |
 | 58 | 1.00 | 58 | 8589 | CHANGELOG.md section #30 |
 | 57 | 1.00 | 57 | 2156 | python decl body at fuzzer/fuzz.py:53 |

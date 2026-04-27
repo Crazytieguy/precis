@@ -977,10 +977,36 @@ kind = "full"
 
 [[batches]]
 position = 41
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
+cost_tokens = 414
+cum_tokens = 1077
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
+start = 4
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 26 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:26"
 cost_tokens = 30
-cum_tokens = 693
+cum_tokens = 1107
 
 [batches.content]
 kind = "lines"
@@ -994,11 +1020,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py", start_line: 37 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py:37"
 cost_tokens = 57
-cum_tokens = 750
+cum_tokens = 1164
 
 [batches.content]
 kind = "lines"
@@ -1028,11 +1054,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py"
 cost_tokens = 78
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1102,11 +1128,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 15 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:15"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1146,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:16"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1138,11 +1164,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 18 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:18"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1156,11 +1182,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 19 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:19"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1200,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 22 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:22"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1218,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 26 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:26"
 cost_tokens = 0
-cum_tokens = 828
+cum_tokens = 1242
 
 [batches.content]
 kind = "lines"
@@ -1210,11 +1236,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 30 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:30"
 cost_tokens = 32
-cum_tokens = 860
+cum_tokens = 1274
 
 [batches.content]
 kind = "lines"
@@ -1228,11 +1254,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 26 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:26"
 cost_tokens = 14
-cum_tokens = 874
+cum_tokens = 1288
 
 [batches.content]
 kind = "lines"
@@ -1246,11 +1272,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py", start_line: 22 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py:22"
 cost_tokens = 20
-cum_tokens = 894
+cum_tokens = 1308
 
 [batches.content]
 kind = "lines"
@@ -1264,11 +1290,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 5 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:5"
 cost_tokens = 42
-cum_tokens = 936
+cum_tokens = 1350
 
 [batches.content]
 kind = "lines"
@@ -1282,11 +1308,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py"
 cost_tokens = 105
-cum_tokens = 1041
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -1396,11 +1422,11 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 19 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:19"
 cost_tokens = 0
-cum_tokens = 1041
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -1414,11 +1440,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 32 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:32"
 cost_tokens = 0
-cum_tokens = 1041
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -1432,11 +1458,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 56 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:56"
 cost_tokens = 0
-cum_tokens = 1041
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -1450,11 +1476,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 146 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:146"
 cost_tokens = 0
-cum_tokens = 1041
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -1468,11 +1494,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 36 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:36"
 cost_tokens = 32
-cum_tokens = 1073
+cum_tokens = 1487
 
 [batches.content]
 kind = "lines"
@@ -1486,11 +1512,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 60
+position = 61
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 32 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:32"
 cost_tokens = 20
-cum_tokens = 1093
+cum_tokens = 1507
 
 [batches.content]
 kind = "lines"
@@ -1504,11 +1530,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 146 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:146"
 cost_tokens = 21
-cum_tokens = 1114
+cum_tokens = 1528
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1548,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py"
 cost_tokens = 37
-cum_tokens = 1151
+cum_tokens = 1565
 
 [batches.content]
 kind = "lines"
@@ -1556,11 +1582,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py"
 cost_tokens = 113
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1670,11 +1696,11 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 65
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 40 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:40"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1688,11 +1714,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 41 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:41"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1706,11 +1732,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 51 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:51"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1724,11 +1750,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 55 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:55"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1742,11 +1768,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 109 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:109"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1760,11 +1786,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 156 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:156"
 cost_tokens = 0
-cum_tokens = 1264
+cum_tokens = 1678
 
 [batches.content]
 kind = "lines"
@@ -1778,11 +1804,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 51 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:51"
 cost_tokens = 18
-cum_tokens = 1282
+cum_tokens = 1696
 
 [batches.content]
 kind = "lines"
@@ -1796,11 +1822,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 156 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:156"
 cost_tokens = 29
-cum_tokens = 1311
+cum_tokens = 1725
 
 [batches.content]
 kind = "lines"
@@ -1814,11 +1840,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 183 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:183"
 cost_tokens = 47
-cum_tokens = 1358
+cum_tokens = 1772
 
 [batches.content]
 kind = "lines"
@@ -1832,11 +1858,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
 cost_tokens = 227
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1906,11 +1932,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 12 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:12"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1924,11 +1950,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 13 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:13"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1942,11 +1968,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 14 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:14"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1960,11 +1986,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 15 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:15"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1978,11 +2004,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:16"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +2022,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 17 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:17"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2014,11 +2040,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 19 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:19"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2032,11 +2058,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 20 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:20"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2050,11 +2076,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 21 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:21"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +2094,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 23 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:23"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +2112,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 25 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:25"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2130,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 26 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:26"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2148,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 27 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:27"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2166,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 33 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:33"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2158,11 +2184,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 35 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:35"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2176,11 +2202,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 36 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:36"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2220,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 38 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:38"
 cost_tokens = 0
-cum_tokens = 1585
+cum_tokens = 1999
 
 [batches.content]
 kind = "lines"
@@ -2212,11 +2238,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 6 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:6"
 cost_tokens = 46
-cum_tokens = 1631
+cum_tokens = 2045
 
 [batches.content]
 kind = "lines"
@@ -2230,11 +2256,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py", start_line: 28 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py:28"
 cost_tokens = 60
-cum_tokens = 1691
+cum_tokens = 2105
 
 [batches.content]
 kind = "lines"
@@ -2248,11 +2274,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py"
 cost_tokens = 129
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2378,11 +2404,11 @@ end = 173
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 66 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:66"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2396,11 +2422,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 104 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:104"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2414,11 +2440,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 96
+position = 97
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 127 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:127"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2432,11 +2458,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 142 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:142"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2450,11 +2476,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 154 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:154"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2468,11 +2494,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 162 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:162"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2486,11 +2512,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 180 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:180"
 cost_tokens = 0
-cum_tokens = 1820
+cum_tokens = 2234
 
 [batches.content]
 kind = "lines"
@@ -2504,11 +2530,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 172 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:172"
 cost_tokens = 6
-cum_tokens = 1826
+cum_tokens = 2240
 
 [batches.content]
 kind = "lines"
@@ -2522,11 +2548,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 172 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:172"
 cost_tokens = 10
-cum_tokens = 1836
+cum_tokens = 2250
 
 [batches.content]
 kind = "lines"
@@ -2540,11 +2566,11 @@ end = 174
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py" })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py"
 cost_tokens = 16
-cum_tokens = 1852
+cum_tokens = 2266
 
 [batches.content]
 kind = "lines"
@@ -2566,11 +2592,11 @@ end = 177
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 176 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:176"
 cost_tokens = 0
-cum_tokens = 1852
+cum_tokens = 2266
 
 [batches.content]
 kind = "lines"
@@ -2584,11 +2610,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 176 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:176"
 cost_tokens = 7
-cum_tokens = 1859
+cum_tokens = 2273
 
 [batches.content]
 kind = "lines"
@@ -2602,11 +2628,11 @@ end = 177
 kind = "full"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py" })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py"
 cost_tokens = 87
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2692,11 +2718,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 15 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:15"
 cost_tokens = 0
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2710,11 +2736,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 22 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:22"
 cost_tokens = 0
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2728,11 +2754,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 31 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:31"
 cost_tokens = 0
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2746,11 +2772,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 35 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:35"
 cost_tokens = 0
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2764,11 +2790,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 38 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:38"
 cost_tokens = 0
-cum_tokens = 1946
+cum_tokens = 2360
 
 [batches.content]
 kind = "lines"
@@ -2782,11 +2808,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 15 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:15"
 cost_tokens = 9
-cum_tokens = 1955
+cum_tokens = 2369
 
 [batches.content]
 kind = "lines"
@@ -2800,11 +2826,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 22 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:22"
 cost_tokens = 9
-cum_tokens = 1964
+cum_tokens = 2378
 
 [batches.content]
 kind = "lines"
@@ -2818,11 +2844,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 35 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:35"
 cost_tokens = 9
-cum_tokens = 1973
+cum_tokens = 2387
 
 [batches.content]
 kind = "lines"
@@ -2836,11 +2862,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 45 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:45"
 cost_tokens = 31
-cum_tokens = 2004
+cum_tokens = 2418
 
 [batches.content]
 kind = "lines"
@@ -2854,11 +2880,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 45 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:45"
 cost_tokens = 13
-cum_tokens = 2017
+cum_tokens = 2431
 
 [batches.content]
 kind = "lines"
@@ -2872,11 +2898,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py"
 cost_tokens = 146
-cum_tokens = 2163
+cum_tokens = 2577
 
 [batches.content]
 kind = "lines"
@@ -3034,11 +3060,11 @@ end = 292
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 24 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:24"
 cost_tokens = 0
-cum_tokens = 2163
+cum_tokens = 2577
 
 [batches.content]
 kind = "lines"
@@ -3052,11 +3078,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 25 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:25"
 cost_tokens = 0
-cum_tokens = 2163
+cum_tokens = 2577
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3096,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 291 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:291"
 cost_tokens = 0
-cum_tokens = 2163
+cum_tokens = 2577
 
 [batches.content]
 kind = "lines"
@@ -3088,11 +3114,11 @@ end = 291
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 118 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:118"
 cost_tokens = 44
-cum_tokens = 2207
+cum_tokens = 2621
 
 [batches.content]
 kind = "lines"
@@ -3106,11 +3132,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 149 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:149"
 cost_tokens = 45
-cum_tokens = 2252
+cum_tokens = 2666
 
 [batches.content]
 kind = "lines"
@@ -3124,11 +3150,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 291 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:291"
 cost_tokens = 19
-cum_tokens = 2271
+cum_tokens = 2685
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +3168,11 @@ end = 299
 kind = "full"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 185 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:185"
 cost_tokens = 46
-cum_tokens = 2317
+cum_tokens = 2731
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +3186,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 125
+position = 126
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 216 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:216"
 cost_tokens = 46
-cum_tokens = 2363
+cum_tokens = 2777
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3204,11 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 126
+position = 127
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 245 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:245"
 cost_tokens = 47
-cum_tokens = 2410
+cum_tokens = 2824
 
 [batches.content]
 kind = "lines"
@@ -3196,11 +3222,11 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 127
+position = 128
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 39 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:39"
 cost_tokens = 80
-cum_tokens = 2490
+cum_tokens = 2904
 
 [batches.content]
 kind = "lines"
@@ -3214,11 +3240,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 128
+position = 129
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 39 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:39"
 cost_tokens = 9
-cum_tokens = 2499
+cum_tokens = 2913
 
 [batches.content]
 kind = "lines"
@@ -3232,11 +3258,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 129
+position = 130
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 28 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:28"
 cost_tokens = 81
-cum_tokens = 2580
+cum_tokens = 2994
 
 [batches.content]
 kind = "lines"
@@ -3250,11 +3276,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 28 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:28"
 cost_tokens = 9
-cum_tokens = 2589
+cum_tokens = 3003
 
 [batches.content]
 kind = "lines"
@@ -3268,11 +3294,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py", start_line: 62 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py:62"
 cost_tokens = 84
-cum_tokens = 2673
+cum_tokens = 3087
 
 [batches.content]
 kind = "lines"
@@ -3286,11 +3312,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py" })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py"
 cost_tokens = 153
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3432,11 +3458,11 @@ end = 489
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 67 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:67"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3450,11 +3476,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 68 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:68"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3468,11 +3494,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 285 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:285"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3486,11 +3512,11 @@ end = 285
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:313"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3504,11 +3530,11 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 338 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:338"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3522,11 +3548,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 488 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:488"
 cost_tokens = 0
-cum_tokens = 2826
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3540,11 +3566,11 @@ end = 488
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 117 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:117"
 cost_tokens = 6
-cum_tokens = 2832
+cum_tokens = 3246
 
 [batches.content]
 kind = "lines"
@@ -3558,11 +3584,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:313"
 cost_tokens = 15
-cum_tokens = 2847
+cum_tokens = 3261
 
 [batches.content]
 kind = "lines"
@@ -3576,11 +3602,11 @@ end = 314
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 84 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:84"
 cost_tokens = 24
-cum_tokens = 2871
+cum_tokens = 3285
 
 [batches.content]
 kind = "lines"
@@ -3594,11 +3620,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 313 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:313"
 cost_tokens = 26
-cum_tokens = 2897
+cum_tokens = 3311
 
 [batches.content]
 kind = "lines"
@@ -3612,11 +3638,11 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 88 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:88"
 cost_tokens = 26
-cum_tokens = 2923
+cum_tokens = 3337
 
 [batches.content]
 kind = "lines"
@@ -3630,11 +3656,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 92 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:92"
 cost_tokens = 28
-cum_tokens = 2951
+cum_tokens = 3365
 
 [batches.content]
 kind = "lines"
@@ -3648,11 +3674,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 96 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:96"
 cost_tokens = 28
-cum_tokens = 2979
+cum_tokens = 3393
 
 [batches.content]
 kind = "lines"
@@ -3666,11 +3692,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 136 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:136"
 cost_tokens = 85
-cum_tokens = 3064
+cum_tokens = 3478
 
 [batches.content]
 kind = "lines"
@@ -3684,11 +3710,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 136 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:136"
 cost_tokens = 21
-cum_tokens = 3085
+cum_tokens = 3499
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3728,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 291 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:291"
 cost_tokens = 56
-cum_tokens = 3141
+cum_tokens = 3555
 
 [batches.content]
 kind = "lines"
@@ -3736,11 +3762,11 @@ end = 298
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 127 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:127"
 cost_tokens = 61
-cum_tokens = 3202
+cum_tokens = 3616
 
 [batches.content]
 kind = "lines"
@@ -3770,11 +3796,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/SECURITY.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/SECURITY.md section #2"
 cost_tokens = 38
-cum_tokens = 3240
+cum_tokens = 3654
 
 [batches.content]
 kind = "lines"
@@ -3796,11 +3822,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 104 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:104"
 cost_tokens = 69
-cum_tokens = 3309
+cum_tokens = 3723
 
 [batches.content]
 kind = "lines"
@@ -3830,11 +3856,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py", start_line: 150 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_decorators.py:150"
 cost_tokens = 102
-cum_tokens = 3411
+cum_tokens = 3825
 
 [batches.content]
 kind = "lines"
@@ -3848,11 +3874,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 338 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:338"
 cost_tokens = 112
-cum_tokens = 3523
+cum_tokens = 3937
 
 [batches.content]
 kind = "lines"
@@ -3866,11 +3892,11 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py", start_line: 37 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py:37"
 cost_tokens = 69
-cum_tokens = 3592
+cum_tokens = 4006
 
 [batches.content]
 kind = "lines"
@@ -3884,11 +3910,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 31 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:31"
 cost_tokens = 25
-cum_tokens = 3617
+cum_tokens = 4031
 
 [batches.content]
 kind = "lines"
@@ -3902,11 +3928,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py" })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py"
 cost_tokens = 149
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4056,11 +4082,11 @@ end = 176
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 120 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:120"
 cost_tokens = 0
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4100,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 138 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:138"
 cost_tokens = 0
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4118,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 161 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:161"
 cost_tokens = 0
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4110,11 +4136,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 164 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:164"
 cost_tokens = 0
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4128,11 +4154,11 @@ end = 164
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 175 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:175"
 cost_tokens = 0
-cum_tokens = 3766
+cum_tokens = 4180
 
 [batches.content]
 kind = "lines"
@@ -4146,11 +4172,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 164 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:164"
 cost_tokens = 5
-cum_tokens = 3771
+cum_tokens = 4185
 
 [batches.content]
 kind = "lines"
@@ -4164,11 +4190,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 175 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:175"
 cost_tokens = 10
-cum_tokens = 3781
+cum_tokens = 4195
 
 [batches.content]
 kind = "lines"
@@ -4182,11 +4208,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 161 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:161"
 cost_tokens = 9
-cum_tokens = 3790
+cum_tokens = 4204
 
 [batches.content]
 kind = "lines"
@@ -4200,11 +4226,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 99 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:99"
 cost_tokens = 27
-cum_tokens = 3817
+cum_tokens = 4231
 
 [batches.content]
 kind = "lines"
@@ -4218,11 +4244,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 167 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:167"
 cost_tokens = 50
-cum_tokens = 3867
+cum_tokens = 4281
 
 [batches.content]
 kind = "lines"
@@ -4236,11 +4262,11 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 167 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:167"
 cost_tokens = 9
-cum_tokens = 3876
+cum_tokens = 4290
 
 [batches.content]
 kind = "lines"
@@ -4254,11 +4280,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 124 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:124"
 cost_tokens = 54
-cum_tokens = 3930
+cum_tokens = 4344
 
 [batches.content]
 kind = "lines"
@@ -4272,11 +4298,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 120 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:120"
 cost_tokens = 24
-cum_tokens = 3954
+cum_tokens = 4368
 
 [batches.content]
 kind = "lines"
@@ -4290,11 +4316,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 109 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:109"
 cost_tokens = 99
-cum_tokens = 4053
+cum_tokens = 4467
 
 [batches.content]
 kind = "lines"
@@ -4324,11 +4350,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_suppression.py"
 cost_tokens = 76
-cum_tokens = 4129
+cum_tokens = 4543
 
 [batches.content]
 kind = "lines"
@@ -4350,11 +4376,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py", start_line: 14 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py:14"
 cost_tokens = 103
-cum_tokens = 4232
+cum_tokens = 4646
 
 [batches.content]
 kind = "lines"
@@ -4384,11 +4410,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 56 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:56"
 cost_tokens = 78
-cum_tokens = 4310
+cum_tokens = 4724
 
 [batches.content]
 kind = "lines"
@@ -4402,11 +4428,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py", start_line: 50 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_functions.py:50"
 cost_tokens = 123
-cum_tokens = 4433
+cum_tokens = 4847
 
 [batches.content]
 kind = "lines"
@@ -4420,11 +4446,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_config.py"
 cost_tokens = 82
-cum_tokens = 4515
+cum_tokens = 4929
 
 [batches.content]
 kind = "lines"
@@ -4454,11 +4480,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 176
+position = 177
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py", start_line: 154 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_utils.py:154"
 cost_tokens = 56
-cum_tokens = 4571
+cum_tokens = 4985
 
 [batches.content]
 kind = "lines"
@@ -4472,11 +4498,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py", start_line: 138 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py:138"
 cost_tokens = 64
-cum_tokens = 4635
+cum_tokens = 5049
 
 [batches.content]
 kind = "lines"
@@ -4501,32 +4527,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_importhook.py"
 start = 145
 end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
-cost_tokens = 414
-cum_tokens = 5049
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
-start = 4
-end = 26
 
 [batches.content.spans.render]
 kind = "full"

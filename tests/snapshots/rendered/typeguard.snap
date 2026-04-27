@@ -75,6 +75,31 @@ pyproject.toml
 src/
     typeguard/
         __init__.py
+            1→import os
+            2→from typing import Any
+            4→from ._checkers import TypeCheckerCallable as TypeCheckerCallable
+            5→from ._checkers import TypeCheckLookupCallback as TypeCheckLookupCallback
+            6→from ._checkers import check_type_internal as check_type_internal
+            7→from ._checkers import checker_lookup_functions as checker_lookup_functions
+            8→from ._checkers import load_plugins as load_plugins
+            9→from ._config import CollectionCheckStrategy as CollectionCheckStrategy
+            10→from ._config import ForwardRefPolicy as ForwardRefPolicy
+            11→from ._config import TypeCheckConfiguration as TypeCheckConfiguration
+            12→from ._decorators import typechecked as typechecked
+            13→from ._decorators import typeguard_ignore as typeguard_ignore
+            14→from ._exceptions import InstrumentationWarning as InstrumentationWarning
+            15→from ._exceptions import TypeCheckError as TypeCheckError
+            16→from ._exceptions import TypeCheckWarning as TypeCheckWarning
+            17→from ._exceptions import TypeHintWarning as TypeHintWarning
+            18→from ._functions import TypeCheckFailCallback as TypeCheckFailCallback
+            19→from ._functions import check_type as check_type
+            20→from ._functions import warn_on_error as warn_on_error
+            21→from ._importhook import ImportHookManager as ImportHookManager
+            22→from ._importhook import TypeguardFinder as TypeguardFinder
+            23→from ._importhook import install_import_hook as install_import_hook
+            24→from ._memo import TypeCheckMemo as TypeCheckMemo
+            25→from ._suppression import suppress_type_checks as suppress_type_checks
+            26→from ._utils import Unset as Unset
             34→config: TypeCheckConfiguration
             37→def __getattr__(name: str) -> Any:
             38→    if name == "config":
@@ -97,12 +122,6 @@ src/
             …
             62→@dataclass
             63→class TypeCheckConfiguration:
-            98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
-            99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
-            100→    collection_check_strategy: CollectionCheckStrategy = (
-            101→        CollectionCheckStrategy.FIRST_ITEM
-            102→    )
-            103→    debug_instrumentation: bool = False
             106→global_config = TypeCheckConfiguration()
         _decorators.py
             19→T_CallableOrType = TypeVar("T_CallableOrType", bound=Callable[..., Any])
@@ -156,7 +175,6 @@ src/
             33→    forward_ref_policy: ForwardRefPolicy = ...,
             34→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
             35→    collection_check_strategy: CollectionCheckStrategy = ...,
-            36→) -> T: ...
             39→@overload
             40→def check_type(
             41→    value: object,
@@ -248,38 +266,6 @@ src/
             31→    func: Callable[P, T] | None = None,
             32→) -> Callable[P, T] | ContextManager[None]:
         _transformer.py
-            67→PreliminaryNameTypePair: typing.TypeAlias = tuple[Constant, "expr | None"]
-            68→NameTypePair: typing.TypeAlias = tuple[Constant, expr]
-            70→generator_names = (
-            84→anytype_names = (
-            85→    "typing.Any",
-            86→    "typing_extensions.Any",
-            87→)
-            88→literal_names = (
-            89→    "typing.Literal",
-            90→    "typing_extensions.Literal",
-            91→)
-            92→annotated_names = (
-            93→    "typing.Annotated",
-            94→    "typing_extensions.Annotated",
-            95→)
-            96→ignore_decorators = (
-            97→    "typing.no_type_check",
-            98→    "typeguard.typeguard_ignore",
-            99→)
-            100→aug_assign_functions = {
-            117→@dataclass
-            118→class TransformMemo:
-            285→class NameCollector(NodeVisitor):
-            …
-            313→class GeneratorDetector(NodeVisitor):
-            314→    """Detects if a function node is a generator function."""
-            316→    contains_yields: bool = False
-            317→    in_root_function: bool = False
-            338→class AnnotationTransformer(NodeTransformer):
-            …
-            488→class TypeguardTransformer(NodeTransformer):
-            …
         _utils.py
             66→def get_type_name(type_: Any) -> str:
             …
