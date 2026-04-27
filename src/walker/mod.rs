@@ -21,6 +21,7 @@ use crate::batch::{Batch, BatchKey, FsKey, WalkerKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::render::SourceCache;
 
+pub mod c;
 pub mod fs;
 pub mod json;
 pub mod markdown;
@@ -74,6 +75,7 @@ impl Walker for FsWalker {
         out.extend(typescript::expand_in_dir(dir, ctx));
         out.extend(json::expand_in_dir(dir, ctx));
         out.extend(plaintext::expand_in_dir(dir, ctx));
+        out.extend(c::expand_in_dir(dir, ctx));
         out
     }
 }

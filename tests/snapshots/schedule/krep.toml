@@ -1,7 +1,7 @@
 fixture = "krep"
 budget = 10000
-cumulative_tokens = 3265
-batch_count = 29
+cumulative_tokens = 9912
+batch_count = 219
 
 [[batches]]
 position = 1
@@ -73,10 +73,544 @@ entries = ["ci.yml", "release.yml"]
 
 [[batches]]
 position = 5
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
+descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+cost_tokens = 45
+cum_tokens = 163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 1
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 6
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
+descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+cost_tokens = 49
+cum_tokens = 212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
+descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+cost_tokens = 182
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 19
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 14 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:14"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 15 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:15"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 19 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:19"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 20 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:20"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 23 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:23"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 26 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:26"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 27 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:27"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 30 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:30"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 33 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:33"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 36 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:36"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 39 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:39"
+cost_tokens = 0
+cum_tokens = 394
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 23 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:23"
+cost_tokens = 12
+cum_tokens = 406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 26 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:26"
+cost_tokens = 16
+cum_tokens = 422
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 14 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:14"
+cost_tokens = 18
+cum_tokens = 440
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 33 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:33"
+cost_tokens = 14
+cum_tokens = 454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 39 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:39"
+cost_tokens = 14
+cum_tokens = 468
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 30 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:30"
+cost_tokens = 17
+cum_tokens = 485
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 36 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:36"
+cost_tokens = 22
+cum_tokens = 507
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 19 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:19"
+cost_tokens = 37
+cum_tokens = 544
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
+descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+cost_tokens = 41
+cum_tokens = 585
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/krep/README.md"
 cost_tokens = 279
-cum_tokens = 397
+cum_tokens = 864
 
 [batches.content]
 kind = "lines"
@@ -434,11 +968,11 @@ end = 240
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 29
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 12 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #12"
 cost_tokens = 15
-cum_tokens = 412
+cum_tokens = 879
 
 [batches.content]
 kind = "lines"
@@ -460,11 +994,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 7
+position = 30
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 18 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #18"
 cost_tokens = 18
-cum_tokens = 430
+cum_tokens = 897
 
 [batches.content]
 kind = "lines"
@@ -486,11 +1020,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 8
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #0"
 cost_tokens = 117
-cum_tokens = 547
+cum_tokens = 1014
 
 [batches.content]
 kind = "lines"
@@ -504,11 +1038,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 9
+position = 32
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 19 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #19"
 cost_tokens = 26
-cum_tokens = 573
+cum_tokens = 1040
 
 [batches.content]
 kind = "lines"
@@ -530,11 +1064,11 @@ end = 237
 kind = "full"
 
 [[batches]]
-position = 10
+position = 33
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 20 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #20"
 cost_tokens = 36
-cum_tokens = 609
+cum_tokens = 1076
 
 [batches.content]
 kind = "lines"
@@ -564,11 +1098,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 11
+position = 34
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #3"
 cost_tokens = 61
-cum_tokens = 670
+cum_tokens = 1137
 
 [batches.content]
 kind = "lines"
@@ -590,11 +1124,433 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 12
+position = 35
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
+descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+cost_tokens = 175
+cum_tokens = 1312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 274
+end = 274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 287
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 293
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 293 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:293"
+cost_tokens = 0
+cum_tokens = 1312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 294 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:294"
+cost_tokens = 0
+cum_tokens = 1312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 296 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:296"
+cost_tokens = 0
+cum_tokens = 1312
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 296
+end = 296
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 111 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:111"
+cost_tokens = 5
+cum_tokens = 1317
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 111
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+cost_tokens = 5
+cum_tokens = 1322
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 274
+end = 275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+cost_tokens = 5
+cum_tokens = 1327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 287
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 111 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:111"
+cost_tokens = 14
+cum_tokens = 1341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+cost_tokens = 14
+cum_tokens = 1355
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 273
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 296 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:296"
+cost_tokens = 14
+cum_tokens = 1369
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+cost_tokens = 22
+cum_tokens = 1391
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 286
+end = 286
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 293 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:293"
+cost_tokens = 21
+cum_tokens = 1412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 292
+end = 292
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 299 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:299"
+cost_tokens = 37
+cum_tokens = 1449
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 299
+end = 303
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 299 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:299"
+cost_tokens = 15
+cum_tokens = 1464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 26 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:26"
+cost_tokens = 61
+cum_tokens = 1525
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 26
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #1"
 cost_tokens = 114
-cum_tokens = 784
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -624,11 +1580,47 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 13
+position = 51
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+cost_tokens = 26
+cum_tokens = 1665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
+descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+cost_tokens = 114
+cum_tokens = 1779
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 10
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/krep/.gitignore" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/krep/.gitignore"
 cost_tokens = 35
-cum_tokens = 819
+cum_tokens = 1814
 
 [batches.content]
 kind = "lines"
@@ -642,11 +1634,1753 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 14
+position = 54
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
+descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+cost_tokens = 1025
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 22
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 34
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 42
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 146
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 183
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 207
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 231
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 312
+end = 312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 201
+end = 201
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 299
+end = 299
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 313
+end = 313
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 19 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:19"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 22 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:22"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 23 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:23"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 34 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:34"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 35 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:35"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 36 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:36"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 37 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:37"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 38 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:38"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 39 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:39"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 42 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:42"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 43 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:43"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 44 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:44"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 45 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:45"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 146 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:146"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 147 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:147"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 148 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:148"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 149 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:149"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 161 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:161"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 170 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:170"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 180 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:180"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 183 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:183"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 184 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:184"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 185 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:185"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 186 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:186"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 200 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:200"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 203 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:203"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 207 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:207"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 208 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:208"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 209 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:209"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 210 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:210"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 211 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:211"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 231 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:231"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 232 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:232"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 233 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:233"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 234 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:234"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 234
+end = 234
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 278 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:278"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 288 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:288"
+cost_tokens = 0
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+cost_tokens = 5
+cum_tokens = 2844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 298
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 93
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+cost_tokens = 5
+cum_tokens = 2849
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 312
+end = 313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 314
+end = 314
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 203 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:203"
+cost_tokens = 9
+cum_tokens = 2858
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 98 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:98"
+cost_tokens = 30
+cum_tokens = 2888
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 98
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 231 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:231"
+cost_tokens = 10
+cum_tokens = 2898
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 146 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:146"
+cost_tokens = 11
+cum_tokens = 2909
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 183 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:183"
+cost_tokens = 12
+cum_tokens = 2921
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 22 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:22"
+cost_tokens = 16
+cum_tokens = 2937
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 42 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:42"
+cost_tokens = 11
+cum_tokens = 2948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 49 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:49"
+cost_tokens = 49
+cum_tokens = 2997
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 49
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 49 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:49"
+cost_tokens = 25
+cum_tokens = 3022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 19 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:19"
+cost_tokens = 14
+cum_tokens = 3036
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+cost_tokens = 17
+cum_tokens = 3053
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 34 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:34"
+cost_tokens = 20
+cum_tokens = 3073
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 32
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 125 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:125"
+cost_tokens = 59
+cum_tokens = 3132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 125
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 125 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:125"
+cost_tokens = 11
+cum_tokens = 3143
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 98 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:98"
+cost_tokens = 39
+cum_tokens = 3182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 96
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 55 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:55"
+cost_tokens = 79
+cum_tokens = 3261
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 55
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+cost_tokens = 68
+cum_tokens = 3329
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 292
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 132 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:132"
+cost_tokens = 170
+cum_tokens = 3499
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 132
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 170 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:170"
+cost_tokens = 92
+cum_tokens = 3591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 163
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 278 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:278"
+cost_tokens = 97
+cum_tokens = 3688
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 270
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+cost_tokens = 107
+cum_tokens = 3795
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 303
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 180 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:180"
+cost_tokens = 98
+cum_tokens = 3893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 172
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+cost_tokens = 61
+cum_tokens = 3954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 314
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 288 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:288"
+cost_tokens = 104
+cum_tokens = 4058
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 280
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 161 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:161"
+cost_tokens = 116
+cum_tokens = 4174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 153
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 104 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:104"
+cost_tokens = 244
+cum_tokens = 4418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 104
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 112
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 116
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 119
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 104 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:104"
+cost_tokens = 12
+cum_tokens = 4430
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 200 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:200"
+cost_tokens = 171
+cum_tokens = 4601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 188
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 65 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:65"
+cost_tokens = 347
+cum_tokens = 4948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 65
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 71
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 76
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 85
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 91
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 65 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:65"
+cost_tokens = 13
+cum_tokens = 4961
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 17 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:17"
+cost_tokens = 111
+cum_tokens = 5072
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 17
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 8 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #8"
 cost_tokens = 129
-cum_tokens = 948
+cum_tokens = 5201
 
 [batches.content]
 kind = "lines"
@@ -668,11 +3402,115 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 15
+position = 126
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
+descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+cost_tokens = 74
+cum_tokens = 5275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
+descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+cost_tokens = 77
+cum_tokens = 5352
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
+descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+cost_tokens = 114
+cum_tokens = 5466
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 7
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+cost_tokens = 63
+cum_tokens = 5529
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 276
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 279
+end = 280
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+start = 282
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 6 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #6"
 cost_tokens = 37
-cum_tokens = 985
+cum_tokens = 5566
 
 [batches.content]
 kind = "lines"
@@ -694,11 +3532,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 16
+position = 131
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 16 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #16"
 cost_tokens = 32
-cum_tokens = 1017
+cum_tokens = 5598
 
 [batches.content]
 kind = "lines"
@@ -720,11 +3558,2091 @@ end = 220
 kind = "full"
 
 [[batches]]
-position = 17
+position = 132
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
+descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+cost_tokens = 929
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 77
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 87
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 93
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 401
+end = 401
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 461
+end = 461
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1125
+end = 1125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1137
+end = 1137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1198
+end = 1198
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1213
+end = 1213
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1259
+end = 1259
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1389
+end = 1389
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1628
+end = 1628
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1771
+end = 1771
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1919
+end = 1919
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1964
+end = 1964
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1999
+end = 1999
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2274
+end = 2274
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3146
+end = 3146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3154
+end = 3154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3442
+end = 3442
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3891
+end = 3891
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4104
+end = 4104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4209
+end = 4209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4313
+end = 4313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4332
+end = 4332
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4371
+end = 4371
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 245
+end = 245
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 364
+end = 364
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 402
+end = 402
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 462
+end = 462
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1126
+end = 1126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1138
+end = 1138
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1199
+end = 1199
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1214
+end = 1214
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1260
+end = 1260
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1390
+end = 1390
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1629
+end = 1629
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1772
+end = 1772
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1920
+end = 1920
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1965
+end = 1965
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2000
+end = 2000
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2275
+end = 2275
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3147
+end = 3147
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3155
+end = 3155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3443
+end = 3443
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3892
+end = 3892
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4105
+end = 4105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4210
+end = 4210
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4314
+end = 4314
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4333
+end = 4333
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4372
+end = 4372
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 77 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:77"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 78 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:78"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 79 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:79"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 80 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:80"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 81 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:81"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 82 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:82"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 83 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:83"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 87 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:87"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 88 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:88"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 89 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:89"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 90 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:90"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 93 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:93"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 94 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:94"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 95 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:95"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 96 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:96"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 97 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:97"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 125 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:125"
+cost_tokens = 0
+cum_tokens = 6527
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 139 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:139"
+cost_tokens = 5
+cum_tokens = 6532
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 139
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 151
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 175 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:175"
+cost_tokens = 5
+cum_tokens = 6537
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 175
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+cost_tokens = 5
+cum_tokens = 6542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 244
+end = 245
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 246
+end = 246
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 256 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:256"
+cost_tokens = 5
+cum_tokens = 6547
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 256
+end = 257
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 258
+end = 258
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 363 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:363"
+cost_tokens = 5
+cum_tokens = 6552
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 363
+end = 364
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 365
+end = 365
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+cost_tokens = 5
+cum_tokens = 6557
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 401
+end = 402
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 403
+end = 403
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 156
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 461 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:461"
+cost_tokens = 5
+cum_tokens = 6562
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 461
+end = 462
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 463
+end = 463
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+cost_tokens = 6
+cum_tokens = 6568
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1125
+end = 1126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1127
+end = 1127
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1137 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1137"
+cost_tokens = 6
+cum_tokens = 6574
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1137
+end = 1138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1139
+end = 1139
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 159
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+cost_tokens = 6
+cum_tokens = 6580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1198
+end = 1199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1200
+end = 1200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1213 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1213"
+cost_tokens = 6
+cum_tokens = 6586
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1213
+end = 1214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1215
+end = 1215
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1771 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1771"
+cost_tokens = 6
+cum_tokens = 6592
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1771
+end = 1772
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1773
+end = 1773
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 162
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1919 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1919"
+cost_tokens = 6
+cum_tokens = 6598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1919
+end = 1920
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1921
+end = 1921
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1964 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1964"
+cost_tokens = 6
+cum_tokens = 6604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1964
+end = 1965
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1966
+end = 1966
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1999 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1999"
+cost_tokens = 6
+cum_tokens = 6610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1999
+end = 2000
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2001
+end = 2001
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 2274 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:2274"
+cost_tokens = 6
+cum_tokens = 6616
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2274
+end = 2275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 2276
+end = 2276
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 166
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+cost_tokens = 6
+cum_tokens = 6622
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3442
+end = 3443
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3444
+end = 3444
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 167
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4104 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4104"
+cost_tokens = 6
+cum_tokens = 6628
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4104
+end = 4105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4106
+end = 4106
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4209 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4209"
+cost_tokens = 6
+cum_tokens = 6634
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4209
+end = 4210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4211
+end = 4211
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 169
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+cost_tokens = 6
+cum_tokens = 6640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4313
+end = 4314
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4315
+end = 4315
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 170
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4332 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4332"
+cost_tokens = 6
+cum_tokens = 6646
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4332
+end = 4333
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4334
+end = 4334
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 171
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 77 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:77"
+cost_tokens = 7
+cum_tokens = 6653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 139 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:139"
+cost_tokens = 10
+cum_tokens = 6663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1137 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1137"
+cost_tokens = 10
+cum_tokens = 6673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1136
+end = 1136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+cost_tokens = 11
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1124
+end = 1124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4332 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4332"
+cost_tokens = 11
+cum_tokens = 6695
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4331
+end = 4331
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 93 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:93"
+cost_tokens = 11
+cum_tokens = 6706
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+cost_tokens = 13
+cum_tokens = 6719
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+cost_tokens = 13
+cum_tokens = 6732
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4312
+end = 4312
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4209 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4209"
+cost_tokens = 14
+cum_tokens = 6746
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4208
+end = 4208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1213 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1213"
+cost_tokens = 15
+cum_tokens = 6761
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1212
+end = 1212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+cost_tokens = 16
+cum_tokens = 6777
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1999 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1999"
+cost_tokens = 16
+cum_tokens = 6793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1998
+end = 1998
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+cost_tokens = 17
+cum_tokens = 6810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1197
+end = 1197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1964 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1964"
+cost_tokens = 17
+cum_tokens = 6827
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1963
+end = 1963
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 175 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:175"
+cost_tokens = 18
+cum_tokens = 6845
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4104 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4104"
+cost_tokens = 18
+cum_tokens = 6863
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4103
+end = 4103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 125 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:125"
+cost_tokens = 14
+cum_tokens = 6877
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1919 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1919"
+cost_tokens = 19
+cum_tokens = 6896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1918
+end = 1918
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3146 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3146"
+cost_tokens = 45
+cum_tokens = 6941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3146
+end = 3151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3146 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3146"
+cost_tokens = 15
+cum_tokens = 6956
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3145
+end = 3145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+cost_tokens = 19
+cum_tokens = 6975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3444
+end = 3444
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1389 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1389"
+cost_tokens = 41
+cum_tokens = 7016
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1389
+end = 1393
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1394
+end = 1394
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 193
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3891 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3891"
+cost_tokens = 41
+cum_tokens = 7057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3891
+end = 3895
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3896
+end = 3896
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 194
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3891 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3891"
+cost_tokens = 13
+cum_tokens = 7070
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3890
+end = 3890
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4371 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4371"
+cost_tokens = 41
+cum_tokens = 7111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4371
+end = 4375
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4376
+end = 4376
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 196
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4371 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4371"
+cost_tokens = 21
+cum_tokens = 7132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4370
+end = 4370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+cost_tokens = 35
+cum_tokens = 7167
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3440
+end = 3441
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 363 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:363"
+cost_tokens = 40
+cum_tokens = 7207
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 361
+end = 362
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1628 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1628"
+cost_tokens = 50
+cum_tokens = 7257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1628
+end = 1632
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1633
+end = 1633
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 200
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3154 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3154"
+cost_tokens = 67
+cum_tokens = 7324
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3154
+end = 3160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3154 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3154"
+cost_tokens = 22
+cum_tokens = 7346
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 3153
+end = 3153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 256 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:256"
+cost_tokens = 49
+cum_tokens = 7395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 253
+end = 255
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1628 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1628"
+cost_tokens = 56
+cum_tokens = 7451
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1625
+end = 1627
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1259 })'
+descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1259"
+cost_tokens = 71
+cum_tokens = 7522
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1259
+end = 1264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1265
+end = 1265
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 205
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1259 })'
+descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1259"
+cost_tokens = 36
+cum_tokens = 7558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1257
+end = 1258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+cost_tokens = 43
+cum_tokens = 7601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 246
+end = 250
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+cost_tokens = 87
+cum_tokens = 7688
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1200
+end = 1207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 9 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #9"
 cost_tokens = 239
-cum_tokens = 1256
+cum_tokens = 7927
 
 [batches.content]
 kind = "lines"
@@ -834,11 +5752,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 18
+position = 209
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #2"
 cost_tokens = 349
-cum_tokens = 1605
+cum_tokens = 8276
 
 [batches.content]
 kind = "lines"
@@ -860,11 +5778,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 19
+position = 210
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 4 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #4"
 cost_tokens = 47
-cum_tokens = 1652
+cum_tokens = 8323
 
 [batches.content]
 kind = "lines"
@@ -894,11 +5812,29 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 20
+position = 211
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+cost_tokens = 100
+cum_tokens = 8423
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 1127
+end = 1133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 7 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #7"
 cost_tokens = 49
-cum_tokens = 1701
+cum_tokens = 8472
 
 [batches.content]
 kind = "lines"
@@ -928,11 +5864,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 21
+position = 213
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 11 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #11"
 cost_tokens = 259
-cum_tokens = 1960
+cum_tokens = 8731
 
 [batches.content]
 kind = "lines"
@@ -1002,11 +5938,113 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 22
+position = 214
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
+descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+cost_tokens = 333
+cum_tokens = 9064
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 13
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 16
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+cost_tokens = 138
+cum_tokens = 9202
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4315
+end = 4318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4320
+end = 4320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4322
+end = 4326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 4328
+end = 4328
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
+descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+cost_tokens = 156
+cum_tokens = 9358
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 403
+end = 404
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 406
+end = 407
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+start = 409
+end = 414
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 15 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #15"
 cost_tokens = 61
-cum_tokens = 2021
+cum_tokens = 9419
 
 [batches.content]
 kind = "lines"
@@ -1036,11 +6074,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 23
+position = 218
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 10 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #10"
 cost_tokens = 412
-cum_tokens = 2433
+cum_tokens = 9831
 
 [batches.content]
 kind = "lines"
@@ -1062,11 +6100,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 24
+position = 219
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 17 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #17"
 cost_tokens = 81
-cum_tokens = 2514
+cum_tokens = 9912
 
 [batches.content]
 kind = "lines"
@@ -1091,204 +6129,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
 start = 226
 end = 229
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 5 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #5"
-cost_tokens = 107
-cum_tokens = 2621
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 54
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 59
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 63
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 14 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #14"
-cost_tokens = 84
-cum_tokens = 2705
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 197
-end = 197
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 199
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 201
-end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/krep/test" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/krep/test'"
-cost_tokens = 42
-cum_tokens = 2747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/krep/test"
-entries = ["benchmark_krep_vs_rg.sh", "test_compat.h", "test_directory.c", "test_krep.c", "test_krep.h", "test_multiple_patterns.c", "test_regex.c"]
-
-[[batches]]
-position = 28
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 13 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #13"
-cost_tokens = 181
-cum_tokens = 2928
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 188
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md"
-start = 195
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE" })'
-descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-cost_tokens = 337
-cum_tokens = 3265
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 11
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/krep/LICENSE"
-start = 15
-end = 24
 
 [batches.content.spans.render]
 kind = "full"

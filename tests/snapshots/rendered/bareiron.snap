@@ -10,13 +10,6 @@ expression: rendered
     workflows/
         build.yml
 .gitignore
-    1→.vscode
-    2→notchian
-    3→bareiron
-    4→bareiron.exe
-    5→src/registries.c
-    6→include/registries.h
-    7→*.bin
 LICENSE
 README.md
     1→# bareiron
@@ -27,57 +20,260 @@ README.md
     9→> [!WARNING]
     10→> Currently, only the vanilla client is officially supported. Issues have been reported when using Fabric or similar.
     12→## Quick start
-    13→For PC x86_64 platforms, grab the [latest build binary](https://github.com/p2r3/bareiron/releases/download/latest/bareiron.exe) and run it. The file is a [Cosmopolitan polyglot](https://github.com/jart/cosmopolitan), which means it'll run on Windows, Linux, and possibly Mac, despite the file extension. Note that the server's default settings cannot be reconfigured without compiling from source.
-    15→For microcontrollers, see the section on **compilation** below.
+    …
     17→## Compilation
-    18→Before compiling, you'll need to dump registry data from a vanilla Minecraft server. On Linux, this can be done automatically using the `extract_registries.sh` script. Otherwise, the manual process is as follows: create a folder called `notchian` here, and put a Minecraft server JAR in it. Then, follow [this guide](https://minecraft.wiki/w/Minecraft_Wiki:Projects/wiki.vg_merge/Data_Generators) to dump all of the registries (use the _second_ command with the `--all` flag). Finally, run `build_registries.js` with either [bun](https://bun.sh/), [node](https://nodejs.org/en/download), or [deno](https://docs.deno.com/runtime/getting_started/installation/).
-    20→- To compile on Linux, install `gcc` and run `./build.sh`.
-    21→- For compiling on Windows, there are a few options:
-    22→  - To compile a native Windows binary: install [MSYS2](https://www.msys2.org/) and open the "MSYS2 MINGW64" shell. From there, run `pacman -Sy mingw-w64-x86_64-gcc`, navigate to this project's directory, and run `./build.sh`.
-    23→  - To compile a native 32-bit binary (compatible with Windows 95/98, but why would you ever want that), use the same steps above, except with `pacman -Sy mingw-w64-cross-gcc` and `./build.sh --9x`.
-    24→  - To compile a MSYS2-linked binary: install [MSYS2](https://www.msys2.org/), and open the "MSYS2 MSYS" shell. From there, install `gcc` (run `pacman -Sy gcc`), navigate to this project's directory and run `./build.sh`. 
-    25→  - To compile and run a Linux binary from Windows: install WSL, and from there install `gcc` and run `./build.sh` in this project's directory.
-    26→- To target an ESP variant, set up a PlatformIO project (select the ESP-IDF framework, **not Arduino**) and clone this repository on top of it. See **Configuration** below for further steps. For better performance, consider changing the clock speed and enabling compiler optimizations. If you don't know how to do this, there are plenty of resources online.
+    …
     28→## Configuration
-    29→Configuring the server requires compiling it from its source code as described in the section above.
-    31→Most user-friendly configuration options are available in `include/globals.h`, including WiFi credentials for embedded setups. Some other details, like the MOTD or starting time of day, can be found in `src/globals.c`. For everything else, you'll have to dig through the code.
-    33→Here's a summary of some of the more important yet less trivial options for those who plan to use this on a real microcontroller with real players:
-    35→- Depending on the player count, the performance of the MCU, and the bandwidth of your network, player position broadcasting could potentially throttle your connection. If you find this to be the case, try commenting out `BROADCAST_ALL_MOVEMENT` and `SCALE_MOVEMENT_UPDATES_TO_PLAYER_COUNT`. This will tie movement to the tickrate. If this change makes movement too choppy, you can decrease `TIME_BETWEEN_TICKS` at the cost of more compute.
-    36→- If you experience crashes or instability related to chests or water, those features can be disabled with `ALLOW_CHESTS` and `DO_FLUID_FLOW`, respectively.
-    37→- If you find frequent repeated chunk generation to choke the server, increasing `VISITED_HISTORY` might help. There isn't _that_ much of a memory footprint for this - increasing it to `64` for example would only take up 240 extra bytes per allocated player.
+    …
     39→## Non-volatile storage (optional)
-    40→This section applies to those who target ESP variants and wish to persist world data after a shutdown. *This is not necessary on PC platforms*, as world and player data is written to `world.bin` by default.
-    42→The simplest way to accomplish this is to set up LittleFS in PlatformIO and comment out the `#ifndef` surrounding `SYNC_WORLD_TO_DISK` in `globals.h`. Since flash writes are typically slow and blocking, you'll likely want to uncomment `DISK_SYNC_BLOCKS_ON_INTERVAL`. Depending on the flash size of your board, you may also have to decrease `MAX_BLOCK_CHANGES`, so that the world data fits in your LittleFS partition.
-    44→If using an SD card module or other virtual file system, you'll have to implement the filesystem setup routine on your own. The built-in serializer should still work though, as it uses POSIX filesystem calls.
-    46→Alternatively, if you can't set up a file system, you can dump and upload world data over TCP. This can be enabled by uncommenting `DEV_ENABLE_BEEF_DUMPS` in `globals.h`. *Note: this system implements no security or authentication.* With this option enabled, anyone with access to the server can upload arbitrary world data.
+    …
     48→## Contribution
-    49→- Create issues and discuss with the maintainer(s) before making pull requests. Even for small changes.
-    50→- Follow the existing code style. Ensure that your changes fit in with the surrounding code, even if you disagree with the style. Pull requests with inconsistent style will be nitpicked.
-    51→- Test your code before creating a pull request or requesting a review, regardless of how "simple" your change is. It's a basic form of respect towards the maintainer and reviewer.
-    52→- Development tooling and compilation improvements _are not welcome,_ unless you've worked with the codebase long enough to have noticed practical shortcomings in that area. Adding a single compiler flag is not a meaningful first contribution.
-    53→- For information on the Minecraft server protocol, [refer to the wiki](https://minecraft.wiki/w/Java_Edition_protocol/Packets). For everything else, use a [search engine](https://google.com).
+    …
 build.sh
 build_registries.js
 extract_registries.sh
 include/
     crafting.h
+        4→#include "globals.h"
+        6→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item);
+        7→void getSmeltingOutput (PlayerData *player);
+        …
     globals.h
+        4→#include <stdint.h>
+        5→#include <unistd.h>
+        15→#define true 1
+        16→#define false 0
+        …
+        18→// TCP port, Minecraft's default is 25565
+        19→#define PORT 25565
+        …
+        21→// How many players to keep in memory, NOT the amount of concurrent players
+        22→// Even when offline, players who have logged on before take up a slot
+        23→#define MAX_PLAYERS 16
+        …
+        25→// How many mobs to allocate memory for
+        26→#define MAX_MOBS (MAX_PLAYERS)
+        …
+        28→// Manhattan distance at which mobs despawn
+        29→#define MOB_DESPAWN_DISTANCE 256
+        …
+        31→// Server game mode: 0 - survival; 1 - creative; 2 - adventure; 3 - spectator
+        32→#define GAMEMODE 0
+        …
+        34→// Max render distance, determines how many chunks to send
+        35→#define VIEW_DISTANCE 2
+        …
+        37→// Time between server ticks in microseconds (default = 1s)
+        38→#define TIME_BETWEEN_TICKS 1000000
+        …
+        40→// Calculated from TIME_BETWEEN_TICKS
+        41→#define TICKS_PER_SECOND ((float)1000000 / TIME_BETWEEN_TICKS)
+        …
+        43→// Initial world generation seed, will be hashed on startup
+        44→// Used in generating terrain and biomes
+        45→#define INITIAL_WORLD_SEED 0xA103DE6C
+        …
+        47→// Initial general RNG seed, will be hashed on startup
+        48→// Used in random game events like item drops and mob behavior
+        49→#define INITIAL_RNG_SEED 0xE2B9419
+        …
+        51→// Size of each bilinearly interpolated area ("minichunk")
+        52→// For best performance, CHUNK_SIZE should be a power of 2
+        53→#define CHUNK_SIZE 8
+        …
+        55→// Terrain low point - should start a bit below sea level for rivers/lakes
+        56→#define TERRAIN_BASE_HEIGHT 60
+        …
+        58→// Cave generation Y level
+        59→#define CAVE_BASE_DEPTH 24
+        …
+        61→// Size of every major biome in multiples of CHUNK_SIZE
+        62→// For best performance, should also be a power of 2
+        63→#define BIOME_SIZE (CHUNK_SIZE * 8)
+        …
+        65→// Calculated from BIOME_SIZE
+        66→#define BIOME_RADIUS (BIOME_SIZE / 2)
+        …
+        68→// How many visited chunk coordinates to "remember"
+        69→// The server will not re-send chunks that the player has recently been in
+        70→// Must be at least 1, otherwise chunks will be sent on each position update
+        71→#define VISITED_HISTORY 4
+        …
+        73→// How many player-made block changes to allow
+        74→// Determines the fixed amount of memory allocated to blocks
+        75→#define MAX_BLOCK_CHANGES 20000
+        …
+        93→#define DISK_SYNC_INTERVAL 15000000
+        …
+        100→// Time in microseconds to spend waiting for data transmission before
+        101→// timing out. Default is 15s, which leaves 5s to prevent starving other
+        102→// clients from Keep Alive packets.
+        103→#define NETWORK_TIMEOUT_TIME 15000000
+        …
+        105→// Size of the receive buffer for incoming string data
+        106→#define MAX_RECV_BUF_LEN 256
+        …
+        165→#define STATE_NONE 0
+        166→#define STATE_STATUS 1
+        167→#define STATE_LOGIN 2
+        168→#define STATE_TRANSFER 3
+        169→#define STATE_CONFIGURATION 4
+        170→#define STATE_PLAY 5
+        …
+        172→extern ssize_t recv_count;
+        173→extern uint8_t recv_buffer[MAX_RECV_BUF_LEN];
+        …
+        175→extern uint32_t world_seed;
+        176→extern uint32_t rng_seed;
+        …
+        178→extern uint16_t world_time;
+        179→extern uint32_t server_ticks;
+        …
+        181→extern char motd[];
+        182→extern uint8_t motd_len;
+        …
+        189→extern uint16_t client_count;
+        …
+        191→typedef struct {
+        192→  short x;
+        193→  short z;
+        194→  uint8_t y;
+        195→  uint8_t block;
+        196→} BlockChange;
+        200→typedef struct {
+        …
+        240→typedef struct {
+        …
+        255→union EntityDataValue {
+        256→  uint8_t byte;
+        257→  int pose;
+        258→};
+        260→typedef struct {
+        261→  uint8_t index;
+        262→  // 0 - Byte
+        263→  // 21 - Pose
+        264→  int type;
+        265→  union EntityDataValue value;
+        266→} EntityData;
+        268→extern BlockChange block_changes[MAX_BLOCK_CHANGES];
+        269→extern int block_changes_count;
+        …
+        271→extern PlayerData player_data[MAX_PLAYERS];
+        272→extern int player_data_count;
+        …
+        274→extern MobData mob_data[MAX_MOBS];
+        …
     packets.h
     procedures.h
+        4→#include <unistd.h>
+        6→#include "globals.h"
     serialize.h
+        4→#include "globals.h"
     structures.h
+        4→void placeTreeStructure (short x, uint8_t y, short z);
+        …
     tools.h
+        4→#include <unistd.h>
+        6→#include "globals.h"
+        8→static inline int mod_abs (int a, int b) {
+        9→  return ((a % b) + b) % b;
+        11→static inline int div_floor (int a, int b) {
+        12→  return a % b < 0 ? (a - b) / b : a / b;
+        15→extern uint64_t total_bytes_received;
+        16→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first);
+        17→ssize_t send_all (int client_fd, const void *buf, ssize_t len);
+        18→void discard_all (int client_fd, size_t remaining, uint8_t require_first);
+        …
+        20→ssize_t writeByte (int client_fd, uint8_t byte);
+        21→ssize_t writeUint16 (int client_fd, uint16_t num);
+        22→ssize_t writeUint32 (int client_fd, uint32_t num);
+        23→ssize_t writeUint64 (int client_fd, uint64_t num);
+        24→ssize_t writeFloat (int client_fd, float num);
+        25→ssize_t writeDouble (int client_fd, double num);
+        …
+        27→uint8_t readByte (int client_fd);
+        28→uint16_t readUint16 (int client_fd);
+        29→int16_t readInt16 (int client_fd);
+        30→uint32_t readUint32 (int client_fd);
+        31→uint64_t readUint64 (int client_fd);
+        32→int64_t readInt64 (int client_fd);
+        33→float readFloat (int client_fd);
+        34→double readDouble (int client_fd);
+        …
+        36→ssize_t readLengthPrefixedData (int client_fd);
+        37→void readString (int client_fd);
+        38→void readStringN (int client_fd, uint32_t max_length);
+        …
+        40→uint32_t fast_rand ();
+        41→uint64_t splitmix64 (uint64_t state);
+        …
     varnum.h
+        4→#include <stdint.h>
+        6→#define SEGMENT_BITS 0x7F
+        7→#define CONTINUE_BIT 0x80
+        8→#define VARNUM_ERROR 0xFFFFFFFF
+        …
+        10→int32_t readVarInt (int client_fd);
+        11→int sizeVarInt (uint32_t value);
+        12→void writeVarInt (int client_fd, uint32_t value);
+        …
     worldgen.h
+        4→#include <stdint.h>
+        6→typedef struct {
+        7→  short x;
+        8→  short z;
+        9→  uint32_t hash;
+        10→  uint8_t biome;
+        11→} ChunkAnchor;
+        13→typedef struct {
+        14→  short x;
+        15→  uint8_t y;
+        16→  short z;
+        17→  uint8_t variant;
+        18→} ChunkFeature;
+        20→uint32_t getChunkHash (short x, short z);
+        21→uint8_t getChunkBiome (short x, short z);
+        22→uint8_t getHeightAtFromHash (int rx, int rz, int _x, int _z, uint32_t chunk_hash, uint8_t biome);
+        23→uint8_t getHeightAt (int x, int z);
+        24→uint8_t getTerrainAt (int x, int y, int z, ChunkAnchor anchor);
+        25→uint8_t getBlockAt (int x, int y, int z);
+        …
+        27→extern uint8_t chunk_section[4096];
+        28→uint8_t buildChunkSection (int cx, int cy, int cz);
+        …
 src/
     CMakeLists.txt
     crafting.c
+        9→void getCraftingOutput (PlayerData *player, uint8_t *count, uint16_t *item) {
+        …
+        349→#define registerSmeltingRecipe(a, b) \
+        …
+        352→void getSmeltingOutput (PlayerData *player) {
+        …
     globals.c
     main.c
+        68→void handlePacket (int client_fd, int length, int packet_id, int state) {
+        …
     packets.c
     procedures.c
     serialize.c
+        1→#include "globals.h"
     structures.c
+        9→void setBlockIfReplaceable (short x, uint8_t y, short z, uint8_t block) {
+        …
+        15→// Places a tree centered on the input coordinates
+        16→void placeTreeStructure (short x, uint8_t y, short z) {
+        …
     tools.c
+        42→uint64_t total_bytes_received = 0;
+        …
+        44→ssize_t recv_all (int client_fd, void *buf, size_t n, uint8_t require_first) {
+        …
     varnum.c
+        14→int32_t readVarInt (int client_fd) {
+        …
+        34→int sizeVarInt (uint32_t value) {
+        …
+        43→void writeVarInt (int client_fd, uint32_t value) {
+        …
     worldgen.c

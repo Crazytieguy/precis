@@ -42,6 +42,7 @@ pub enum BatchKey {
     Typescript(TsKey),
     Json(JsonKey),
     Plaintext(PlaintextKey),
+    C(CKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -83,6 +84,11 @@ impl From<JsonKey> for BatchKey {
 impl From<PlaintextKey> for BatchKey {
     fn from(k: PlaintextKey) -> Self {
         BatchKey::Plaintext(k)
+    }
+}
+impl From<CKey> for BatchKey {
+    fn from(k: CKey) -> Self {
+        BatchKey::C(k)
     }
 }
 
@@ -254,6 +260,44 @@ pub enum PlaintextKey {
     Whole { file: PathBuf },
 }
 
+/// C / C-header batches. Mirrors the Rust walker shape: per-file
+/// orientation batches (top-of-file banner, includes, decl-name surface)
+/// plus per-decl item batches with optional doc / body refinement.
+///
+/// "Public" rule: top-level `function_definition` / `declaration` /
+/// `type_definition` / `preproc_def` / `preproc_function_def` whose
+/// declarator is not `static` (in `.c` files), plus `static inline`
+/// function definitions in `.h` files (header-only inline accessors are
+/// part of the header's public API expansion). The single wrapping
+/// header-guard `#ifndef X` / `#define X` / `#endif` is descended into
+/// transparently.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum CKey {
+    /// Top-of-file `/* */` banner comment (license / brief). Priority
+    /// 1.x for headers, 4.x for `.c` files.
+    HeaderBanner { file: PathBuf },
+    /// `#include` directives — the file's structural dependencies.
+    /// Priority 2.x.
+    Includes { file: PathBuf },
+    /// Surface listing of every top-level public declaration's first
+    /// line — typedefs, function prototypes, struct/enum names, public
+    /// `#define`s, function definitions. Catastrophic-omission hedge.
+    /// Priority 1.x.
+    DeclNames { file: PathBuf },
+    /// One top-level public declaration. For typedefs / function
+    /// prototypes / `extern` decls / `#define`s, the whole statement.
+    /// For struct / enum / union, the whole specifier. For function
+    /// definitions, the signature with a body marker. Keyed by start
+    /// line. Priority 1.x–4.x.
+    Decl { file: PathBuf, start_line: usize },
+    /// Body interior of a function definition. Predecessor: matching
+    /// [`CKey::Decl`] at the same `start_line`. Priority 2.x–3.x.
+    DeclBody { file: PathBuf, start_line: usize },
+    /// Doc comment(s) immediately above a declaration. Predecessor:
+    /// matching [`CKey::Decl`]. Priority 3.x.
+    DeclDoc { file: PathBuf, start_line: usize },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -310,12 +354,14 @@ impl WalkerKey for BatchKey {
             BatchKey::Typescript(k) => k.describe(),
             BatchKey::Json(k) => k.describe(),
             BatchKey::Plaintext(k) => k.describe(),
+            BatchKey::C(k) => k.describe(),
         }
     }
 
     fn concavity_exponent(&self) -> f64 {
         match self {
             BatchKey::Markdown(k) => k.concavity_exponent(),
+            BatchKey::C(k) => k.concavity_exponent(),
             BatchKey::Fs(_)
             | BatchKey::Rust(_)
             | BatchKey::Toml(_)
@@ -452,6 +498,42 @@ impl PlaintextKey {
     pub fn describe(&self) -> String {
         match self {
             PlaintextKey::Whole { file } => format!("plaintext config {}", display_path(file)),
+        }
+    }
+}
+
+impl CKey {
+    /// `Decl` and `DeclBody` carry a steeper concavity than the default
+    /// because C decls are typically very short (a single typedef /
+    /// prototype line) and a header file emits dozens of them. Under
+    /// the default 0.35 exponent each tiny batch has a runaway
+    /// value/cost^0.35 ratio and the scheduler picks the whole stack
+    /// of them before any larger anchor batch (README section, RustKey
+    /// PubItem). 0.45 (matching `MarkdownKey::Section` for non-zero
+    /// indices) tames that without dropping headers out of the schedule
+    /// — calibrated against the divergence reports for sds, bareiron,
+    /// and krep.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            CKey::Decl { .. } | CKey::DeclBody { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    pub fn describe(&self) -> String {
+        match self {
+            CKey::HeaderBanner { file } => format!("c header banner in {}", display_path(file)),
+            CKey::Includes { file } => format!("c includes in {}", display_path(file)),
+            CKey::DeclNames { file } => format!("c decl names surface in {}", display_path(file)),
+            CKey::Decl { file, start_line } => {
+                format!("c decl at {}:{}", display_path(file), start_line)
+            }
+            CKey::DeclBody { file, start_line } => {
+                format!("c decl body at {}:{}", display_path(file), start_line)
+            }
+            CKey::DeclDoc { file, start_line } => {
+                format!("c decl doc at {}:{}", display_path(file), start_line)
+            }
         }
     }
 }
