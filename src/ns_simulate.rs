@@ -8,7 +8,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchId, ValueSignals};
+use crate::batch::BatchId;
 use crate::content::{BatchContent, Render, Span};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
@@ -200,12 +200,8 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         };
 
         let batch_id = BatchId::new(pos);
-        let batch = Batch {
-            content,
-            signals: ValueSignals::default(),
-        };
 
-        let cost = tree.marginal_cost(&batch);
+        let cost = tree.marginal_cost(&content);
         let cumulative_before = cumulative;
         cumulative = cumulative.saturating_add(cost.tokens);
 
@@ -225,7 +221,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
         }
 
         let ancestors = collect_ancestors(&ns_batch.id, &ns.batches, &ns_id_to_batch_id);
-        let conflicts = tree.apply(&batch, batch_id, |id| ancestors.contains(&id));
+        let conflicts = tree.apply(&content, batch_id, |id| ancestors.contains(&id));
         for c in conflicts {
             let existing_batch = batch_id_to_ns
                 .get(&c.existing_owner)

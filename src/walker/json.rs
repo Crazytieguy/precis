@@ -12,11 +12,13 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchKey, FsKey, JsonKey, ResolvedBatch, ValueSignals};
+use crate::batch::{Batch, BatchKey, JsonKey};
+use crate::content::BatchContent;
+use crate::value::mix_signals;
 
 use super::{
-    Candidate, FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, signal_factor,
-    single_file_lines_batch,
+    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
+    single_file_lines_content,
 };
 
 /// Hard cap on `Whole` JSON config rendering. Above this, we skip the
@@ -24,134 +26,124 @@ use super::{
 /// manifests in node_modules) are pure noise.
 const WHOLE_LINE_CAP: usize = 60;
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let json_files = files_with_extension(dir, "json");
     if json_files.is_empty() {
         return Vec::new();
     }
     let mut out = Vec::new();
     for file in json_files {
-        let name = file
-            .file_name()
-            .and_then(|n| n.to_str())
-            .unwrap_or_default();
+        let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+            continue;
+        };
         if is_skipped_json(name) {
             continue;
         }
         if is_package_json(name) {
-            // Chain identity → entry → scripts → dependencies so a
-            // compact (one-line) package.json — where all four key
-            // categories collapse onto the same source line — renders
-            // through the predecessor-override path instead of tripping
-            // a non-ancestor overlap. Order matches their typical value
-            // ranking, so the chain doesn't displace anything in the
-            // normal multi-line case.
-            let identity = JsonKey::Identity { file: file.clone() };
-            out.push(candidate(identity.clone(), identity_signals(&file, ctx)));
-            let entry = JsonKey::Entry { file: file.clone() };
-            out.push(
-                candidate(entry.clone(), entry_signals(&file, ctx))
-                    .with_predecessor(BatchKey::Json(identity)),
-            );
-            let scripts = JsonKey::Scripts { file: file.clone() };
-            out.push(
-                candidate(scripts.clone(), scripts_signals(&file, ctx))
-                    .with_predecessor(BatchKey::Json(entry)),
-            );
-            out.push(
-                candidate(
-                    JsonKey::Dependencies { file: file.clone() },
-                    dependencies_signals(&file, ctx),
-                )
-                .with_predecessor(BatchKey::Json(scripts)),
-            );
-        } else {
-            // FS metadata avoids reading the file when the size hint alone
-            // already disqualifies it — typical generated JSONs are huge.
-            let byte_len = std::fs::metadata(&file)
-                .map(|m| m.len() as usize)
-                .unwrap_or(usize::MAX);
-            if byte_len > WHOLE_LINE_CAP * 200 {
-                continue;
-            }
-            let line_count = ctx
-                .read_source(&file)
-                .map(|s| s.lines().count())
-                .unwrap_or(usize::MAX);
-            if line_count > WHOLE_LINE_CAP * 2 {
-                continue;
-            }
-            out.push(candidate(
-                JsonKey::Whole { file: file.clone() },
-                whole_signals(&file, name, ctx),
-            ));
+            emit_package_json(&file, ctx, &mut out);
+        } else if let Some(batch) = whole_json_batch(&file, name, ctx) {
+            out.push(batch);
         }
     }
     out
 }
 
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Json(jk) = key else {
-        return None;
-    };
-    match jk {
-        JsonKey::Identity { file } => {
-            mat_keys(file, is_identity_key, identity_signals(file, ctx), ctx)
-        }
-        JsonKey::Entry { file } => mat_keys(file, is_entry_key, entry_signals(file, ctx), ctx),
-        JsonKey::Scripts { file } => {
-            mat_keys(file, is_scripts_key, scripts_signals(file, ctx), ctx)
-        }
-        JsonKey::Dependencies { file } => mat_keys(
-            file,
-            is_dependencies_key,
-            dependencies_signals(file, ctx),
-            ctx,
-        ),
-        JsonKey::Whole { file } => mat_whole(file, ctx),
-    }
-}
-
-fn mat_keys(
-    file: &Path,
-    matches: impl Fn(&str) -> bool,
-    signals: ValueSignals,
-    ctx: &WalkCtx,
-) -> Option<ResolvedBatch> {
-    let (source, tree) = parse_json(ctx, file)?;
-    let pairs = top_level_pairs(&tree, &source);
-    let mut lines: Vec<usize> = Vec::new();
-    for (name, start, end) in pairs {
-        if matches(&name) {
-            lines.extend(start..=end);
-        }
-    }
-    if lines.is_empty() {
+fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
+    // FS metadata avoids reading the file when the size hint alone
+    // already disqualifies it — typical generated JSONs are huge.
+    let byte_len = std::fs::metadata(file)
+        .map(|m| m.len() as usize)
+        .unwrap_or(usize::MAX);
+    if byte_len > WHOLE_LINE_CAP * 200 {
         return None;
     }
-    single_file_lines_batch(file, &source, FileLines::new(dedup_sorted(lines)), signals)
-}
-
-fn mat_whole(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
     let source = ctx.read_source(file)?;
     let line_count = source.lines().count();
     if line_count == 0 || line_count > WHOLE_LINE_CAP {
         return None;
     }
     let lines: Vec<usize> = (1..=line_count).collect();
-    let name = file
-        .file_name()
-        .and_then(|n| n.to_str())
-        .unwrap_or_default();
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        whole_signals(file, name, ctx),
-    )
+    let content = single_file_lines_content(file, &source, FileLines::new(lines))?;
+    Some(Batch {
+        key: JsonKey::Whole {
+            file: file.to_path_buf(),
+        }
+        .into(),
+        predecessor: None,
+        content,
+        value: whole_value(file, name, ctx),
+    })
+}
+
+/// Emit the four `package.json` batches chained as
+/// `Identity ← Entry ← Scripts ← Dependencies`. The chain exists so a
+/// compact one-line `package.json` (where all four key groups collapse
+/// onto the same source line) renders through the predecessor-override
+/// path instead of tripping a non-ancestor overlap. For typical
+/// multi-line files the spans are disjoint and the chain costs nothing.
+///
+/// Predecessor advances only when the prior section actually emitted —
+/// a `package.json` missing identity keys still chains Entry → Scripts →
+/// Dependencies cleanly rather than orphaning them on an unscheduled
+/// Identity batch.
+fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>) {
+    let Some((source, tree)) = parse_json(ctx, file) else {
+        return;
+    };
+    let pairs = top_level_pairs(&tree, &source);
+    let mut prev: Option<BatchKey> = None;
+    let mut push = |key: JsonKey, value: f64, name_match: fn(&str) -> bool| {
+        let Some(content) = section_content(file, &source, &pairs, name_match) else {
+            return;
+        };
+        let emitted = BatchKey::Json(key.clone());
+        out.push(Batch {
+            key: key.into(),
+            predecessor: prev.clone(),
+            content,
+            value,
+        });
+        prev = Some(emitted);
+    };
+    let f = file.to_path_buf();
+    push(
+        JsonKey::Identity { file: f.clone() },
+        identity_value(file, ctx),
+        is_identity_key,
+    );
+    push(
+        JsonKey::Entry { file: f.clone() },
+        entry_value(file, ctx),
+        is_entry_key,
+    );
+    push(
+        JsonKey::Scripts { file: f.clone() },
+        scripts_value(file, ctx),
+        is_scripts_key,
+    );
+    push(
+        JsonKey::Dependencies { file: f },
+        dependencies_value(file, ctx),
+        is_dependencies_key,
+    );
+}
+
+fn section_content(
+    file: &Path,
+    source: &str,
+    pairs: &[(String, usize, usize)],
+    name_match: fn(&str) -> bool,
+) -> Option<BatchContent> {
+    let mut lines: Vec<usize> = Vec::new();
+    for (name, start, end) in pairs {
+        if name_match(name) {
+            lines.extend(*start..=*end);
+        }
+    }
+    if lines.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, source, FileLines::new(dedup_sorted(lines)))
 }
 
 // --- file-name predicates ---
@@ -242,62 +234,33 @@ fn is_dependencies_key(k: &str) -> bool {
     )
 }
 
-// --- signals ---
+// --- value ---
 
-fn candidate(jk: JsonKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(jk.into(), signals)
+fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(1.0, 0.7, 0.85, path_depth_factor(file, ctx))
 }
 
-fn identity_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 1.0,
-        follow_up_minimization: 0.7,
-        zero_tool_call_understanding: 0.85,
-        depth_factor: signal_factor(file, ctx),
-    }
+fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.85, 0.85, 0.6, path_depth_factor(file, ctx))
 }
 
-fn entry_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.85,
-        follow_up_minimization: 0.85,
-        zero_tool_call_understanding: 0.6,
-        depth_factor: signal_factor(file, ctx),
-    }
+fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.6, 0.85, 0.55, path_depth_factor(file, ctx))
 }
 
-fn scripts_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.6,
-        follow_up_minimization: 0.85,
-        zero_tool_call_understanding: 0.55,
-        depth_factor: signal_factor(file, ctx),
-    }
+fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx))
 }
 
-fn dependencies_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.4,
-        follow_up_minimization: 0.7,
-        zero_tool_call_understanding: 0.4,
-        depth_factor: signal_factor(file, ctx),
-    }
-}
-
-fn whole_signals(file: &Path, name: &str, ctx: &WalkCtx) -> ValueSignals {
+fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
     // tsconfig.json sits at the top of the public-facing tooling — rate it
     // just under package identity. Other configs are mid-rank.
     let lower = name.to_ascii_lowercase();
     let is_tsconfig =
         lower == "tsconfig.json" || (lower.starts_with("tsconfig.") && lower.ends_with(".json"));
     let cat = if is_tsconfig { 0.6 } else { 0.35 };
-    let zero = if is_tsconfig { 0.7 } else { 0.45 };
-    ValueSignals {
-        catastrophic_omission: cat,
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: zero,
-        depth_factor: signal_factor(file, ctx),
-    }
+    let ztu = if is_tsconfig { 0.7 } else { 0.45 };
+    mix_signals(cat, 0.55, ztu, path_depth_factor(file, ctx))
 }
 
 // --- parser + AST helpers ---

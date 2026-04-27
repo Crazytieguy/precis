@@ -1,4 +1,4 @@
-scores: Sim=0.542 Reached=20/43 Early=6 Late=9 Partial=9 Missing=14 Used=5381/10000
+scores: Sim=0.543 Reached=21/43 Early=6 Late=9 Partial=9 Missing=13 Used=5881/10000
 
 ## Tier rollup
 
@@ -8,7 +8,7 @@ scores: Sim=0.542 Reached=20/43 Early=6 Late=9 Partial=9 Missing=14 Used=5381/10
 | 2 | 7 | 4 | 3 | 0 | 0.85 |
 | 3 | 8 | 6 | 1 | 1 | 0.81 |
 | 4 | 10 | 2 | 0 | 8 | 0.22 |
-| 5 | 12 | 3 | 4 | 5 | 0.44 |
+| 5 | 12 | 4 | 4 | 4 | 0.52 |
 
 ## Arrival ledger (non-aligned or partial-credit NS batches)
 
@@ -38,10 +38,10 @@ scores: Sim=0.542 Reached=20/43 Early=6 Late=9 Partial=9 Missing=14 Used=5381/10
 | 4.3 | 3238 | 1558 | -1680 | 1.00 | early | tsconfig.json — full | json config tsconfig.json (t=1558, 15 atoms) |
 | 4.4 | 3455 | — | — | 0.00 | missing | CI workflow (main.yml) |  |
 | 4.5 | 3690 | 1896 | -1794 | 1.00 | early | package.json scripts | package scripts in package.json (t=1896, 12 atoms) |
-| 4.6 | 3890 | — | — | 0.05 | missing | test-types-compilation.ts preamble — Events type + handler decls | imports in test/test-types-compilation.ts (t=5032, 1 atoms) |
+| 4.6 | 3890 | — | — | 0.05 | missing | test-types-compilation.ts preamble — Events type + handler decls | imports in test/test-types-compilation.ts (t=5532, 1 atoms) |
 | 4.7 | 4287 | — | — | 0.00 | missing | test-types-compilation.ts on()/off() blocks |  |
 | 4.8 | 4485 | — | — | 0.00 | missing | test-types-compilation.ts emit() block |  |
-| 4.9 | 4724 | — | — | 0.17 | missing | test/index_test.ts imports + outer-block tests | imports in test/index_test.ts (t=5092, 4 atoms) |
+| 4.9 | 4724 | — | — | 0.17 | missing | test/index_test.ts imports + outer-block tests | imports in test/index_test.ts (t=5592, 4 atoms) |
 | 4.10 | 4955 | — | — | 0.00 | missing | test/index_test.ts mitt# Events type + beforeEach |  |
 | 5.1 | 5244 | — | — | 0.72 | partial | README install section | README.md section #2 (t=2314, 17 atoms) |
 | 5.2 | 5401 | — | — | 0.00 | missing | Test body: wildcard '*' invocation |  |
@@ -49,12 +49,11 @@ scores: Sim=0.542 Reached=20/43 Early=6 Late=9 Partial=9 Missing=14 Used=5381/10
 | 5.4 | 6411 | — | — | 0.00 | missing | Test bodies: off() removal semantics |  |
 | 5.5 | 6664 | — | — | 0.00 | missing | Test bodies: emit() typed dispatch + case sensitivity |  |
 | 5.6 | 7020 | — | — | 0.60 | partial | README API parameter tables | README.md section #10 (t=4681, 7 atoms) |
-| 5.7 | 7520 | — | — | 0.00 | missing | .eslintrc — full |  |
 | 5.8 | 8020 | 5023 | -2997 | 0.84 | early | README Examples / Contribute / License sections | headings outline in README.md (t=1266, 22 atoms) |
 | 5.9 | 8386 | 4025 | -4361 | 1.00 | early | package.json devDependencies | package dependencies in package.json (t=4025, 23 atoms) |
 | 5.10 | 8625 | 4406 | -4219 | 0.89 | early | .editorconfig + .gitignore | plaintext config .editorconfig (t=4406, 15 atoms) |
 | 5.11 | 8837 | — | — | 0.58 | partial | .github/PULL_REQUEST_TEMPLATE.md | .github/PULL_REQUEST_TEMPLATE.md section #0 (t=4130, 8 atoms) |
-| 5.12 | 8863 | — | — | 0.67 | partial | LICENSE — MIT preamble | plaintext config LICENSE (t=5381, 2 atoms) |
+| 5.12 | 8863 | — | — | 0.67 | partial | LICENSE — MIT preamble | plaintext config LICENSE (t=5881, 2 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -66,7 +65,7 @@ scores: Sim=0.542 Reached=20/43 Early=6 Late=9 Partial=9 Missing=14 Used=5381/10
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 268 | 0.93 | 289 | 5381 | plaintext config LICENSE |
+| 268 | 0.93 | 289 | 5881 | plaintext config LICENSE |
 | 132 | 1.00 | 132 | 2028 | README.md section #5 |
 | 126 | 0.73 | 173 | 225 | package identity in package.json |
 | 120 | 0.57 | 212 | 1089 | package entrypoints in package.json |

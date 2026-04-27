@@ -1,37 +1,27 @@
-//! Scheduler: greedy value/cost picker with a predecessor-gated candidate
-//! pool.
+//! Scheduler: greedy value/cost picker with predecessor-gated eligibility.
 //!
-//! At any time the scheduler holds:
-//!
-//! - **Pending candidates** (`self.candidates`): walker-emitted
-//!   [`Candidate`]s waiting for their predecessor (if any) to be
-//!   scheduled. No upper-bound ranking; they're held purely to honor
-//!   predecessor sequencing. Once a candidate's predecessor is scheduled
-//!   (or it has no predecessor) it becomes eligible and is materialized
-//!   before the next scheduling decision.
-//!
-//! - **Materialized entries** (`self.entries`): resolved content + final
-//!   signals + exact marginal cost against the current tree. Ranked by
-//!   `score(signals) / marginal_cost^k`.
+//! Walkers emit [`Batch<K>`] units directly (key + optional predecessor +
+//! content + scalar value). The scheduler absorbs each into a single
+//! pool, gates eligibility on whether the batch's predecessor (if any)
+//! is already scheduled, and ranks eligible batches by
+//! `value / cost^k`. Each iteration picks the best eligible exact
+//! batch — under prefix-monotone scheduling
+//! (see `docs/design-notes.md`), if the top-ranked exact doesn't fit
+//! the scheduler stops, no fallback to smaller batches.
 //!
 //! Generic over `W: Walker` so the scheduler never names any walker-
 //! specific key variant. `W::Key` is an opaque [`WalkerKey`] as far as
 //! the scheduler is concerned — it needs identity (`Eq`/`Hash`) and
 //! tiebreak order (`Ord`) only.
-//!
-//! Each iteration: drain all currently-eligible pending candidates into
-//! the materialized pool, then pick the best exact. Under prefix-monotone
-//! scheduling (see `docs/design-notes.md`), if the top-ranked exact
-//! doesn't fit the scheduler stops — no fallback to a smaller batch.
 
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
-use crate::batch::{Batch, BatchId, WalkerKey};
+use crate::batch::{Batch, BatchId};
 use crate::content::BatchContent;
 use crate::render::{Cost, RenderedTree, SourceCache};
-use crate::value::{ratio as score_ratio, score};
-use crate::walker::{Candidate, WalkCtx, Walker};
+use crate::value::ratio as score_ratio;
+use crate::walker::{WalkCtx, Walker};
 
 /// A single scheduled batch, captured in order for downstream consumers
 /// (schedule snapshots, divergence metric). Generic over the walker's
@@ -54,15 +44,6 @@ pub struct RunReport<K> {
     pub scheduled: Vec<ScheduledBatchRecord<K>>,
 }
 
-/// Scheduler-private record holding a materialized batch + its walker-
-/// declared identity. `Batch` itself is key-free; `BatchEntry` carries
-/// the scheduler bookkeeping that was previously inlined into `Batch`.
-struct BatchEntry<K: WalkerKey> {
-    key: K,
-    predecessor: Option<K>,
-    batch: Batch,
-}
-
 pub struct Scheduler<W: Walker> {
     walker: W,
     ctx: WalkCtx,
@@ -71,28 +52,22 @@ pub struct Scheduler<W: Walker> {
     byte_budget: Option<usize>,
     consumed: Cost,
 
-    /// Materialized batches, indexed by [`BatchId`] (which is the position).
-    entries: Vec<BatchEntry<W::Key>>,
-    /// Stable key→id lookup for predecessor resolution.
+    /// Walker-emitted batches, indexed by [`BatchId`] (which is the position).
+    entries: Vec<Batch<W::Key>>,
+    /// Stable key→id lookup for predecessor resolution + dedup.
     key_to_id: HashMap<W::Key, BatchId>,
     /// Scheduled batches.
     scheduled: HashSet<BatchId>,
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
-    /// Pending candidates waiting on their predecessor to be scheduled
-    /// (or, with no predecessor, waiting for the next drain pass).
-    candidates: HashMap<W::Key, Candidate<W::Key>>,
-    /// Keys that failed materialization (`materialize` returned `None`)
-    /// and their dependents. Never retried.
-    dead: HashSet<W::Key>,
-    /// Cached marginal cost per materialized batch. Populated lazily by
+    /// Cached marginal cost per emitted batch. Populated lazily by
     /// `best_exact` on cache miss; selectively cleared by `schedule`
     /// when the just-applied batch mutates render-tree state any other
     /// batch's marginal cost depends on.
     cost_cache: HashMap<BatchId, Cost>,
     /// Reverse index: each path → batches whose marginal cost depends
-    /// on render-tree state at that path. Populated at materialize time
-    /// from the batch's content (Lines: span paths; Fs: group parents).
+    /// on render-tree state at that path. Populated at absorb time from
+    /// the batch's content (Lines: span paths; Fs: group parents).
     /// Lines and Fs use disjoint cells of the render tree, so a single
     /// `PathBuf`-keyed index suffices — even on a hypothetical
     /// file-vs-dir collision the worst case is over-invalidation.
@@ -125,8 +100,6 @@ impl<W: Walker> Scheduler<W> {
             key_to_id: HashMap::new(),
             scheduled: HashSet::new(),
             scheduled_log: Vec::new(),
-            candidates: HashMap::new(),
-            dead: HashSet::new(),
             cost_cache: HashMap::new(),
             path_to_batches: HashMap::new(),
         }
@@ -143,17 +116,15 @@ impl<W: Walker> Scheduler<W> {
     /// scheduled batches. Used by `render_schedule` and the divergence
     /// test.
     pub fn run_with_report(mut self) -> RunReport<W::Key> {
-        for c in self.walker.seed(&self.ctx) {
-            self.absorb_candidate(c);
+        for batch in self.walker.seed(&self.ctx) {
+            self.absorb(batch);
         }
 
-        // Prefix-monotone scheduling: drain currently-eligible pending
-        // candidates into the materialized pool, then pick the top exact.
-        // If it fits, schedule it; otherwise stop (no fallback to smaller
-        // batches). This makes the schedule at T_small a true prefix of
-        // T_large's schedule.
+        // Prefix-monotone scheduling: rank eligible entries by
+        // `value / cost^k` and pick the best-fit; if the top-ranked
+        // exact doesn't fit, stop (no fallback to smaller batches). This
+        // makes the schedule at `T_small` a true prefix of `T_large`'s.
         loop {
-            self.drain_eligible_candidates();
             let Some((id, _, cost)) = self.best_exact() else {
                 break;
             };
@@ -190,7 +161,7 @@ impl<W: Walker> Scheduler<W> {
                 let entry = &self.entries[id.index()];
                 Some(ScheduledBatchRecord {
                     key: entry.key.clone(),
-                    content: entry.batch.content.clone(),
+                    content: entry.content.clone(),
                     cost,
                     cum_tokens: *cum,
                 })
@@ -204,19 +175,23 @@ impl<W: Walker> Scheduler<W> {
 
     // ---- absorption ----
 
-    fn absorb_candidate(&mut self, c: Candidate<W::Key>) {
-        if self.key_to_id.contains_key(&c.key)
-            || self.dead.contains(&c.key)
-            || self.candidates.contains_key(&c.key)
-        {
+    /// Add a walker-emitted batch to the pool. Idempotent on key.
+    fn absorb(&mut self, batch: Batch<W::Key>) {
+        if self.key_to_id.contains_key(&batch.key) {
             return;
         }
-        self.candidates.insert(c.key.clone(), c);
+        let id = BatchId::new(self.entries.len());
+        for path in relevant_paths(&batch.content) {
+            self.path_to_batches.entry(path).or_default().push(id);
+        }
+        self.key_to_id.insert(batch.key.clone(), id);
+        self.entries.push(batch);
     }
 
     /// Eligibility check: predecessor is scheduled (or no predecessor).
-    /// If the predecessor has been materialized but not yet scheduled,
-    /// the candidate is not yet eligible.
+    /// Orphan dependents (predecessor never emitted) stay pending forever
+    /// — that's intentional; walkers are responsible for not declaring a
+    /// predecessor they aren't going to emit.
     fn eligible(&self, pred: Option<&W::Key>) -> bool {
         match pred {
             None => true,
@@ -227,35 +202,9 @@ impl<W: Walker> Scheduler<W> {
         }
     }
 
-    /// A candidate is dead by transitivity if its predecessor is in `dead`.
-    fn predecessor_dead(&self, pred: Option<&W::Key>) -> bool {
-        pred.is_some_and(|p| self.dead.contains(p))
-    }
-
-    // ---- candidate pool ----
-
-    /// Materialize every currently-eligible pending candidate. Eligibility
-    /// = predecessor scheduled (or no predecessor), and predecessor not
-    /// dead. Materialization itself can't make new candidates eligible
-    /// (only `schedule` extends `self.scheduled`), so a single pass over
-    /// the current pool is sufficient.
-    fn drain_eligible_candidates(&mut self) {
-        let eligible: Vec<W::Key> = self
-            .candidates
-            .iter()
-            .filter_map(|(key, c)| {
-                let pred = c.predecessor.as_ref();
-                (!self.predecessor_dead(pred) && self.eligible(pred)).then(|| key.clone())
-            })
-            .collect();
-        for key in eligible {
-            let _ = self.materialize(&key);
-        }
-    }
-
     // ---- exact pool ----
 
-    /// Top-ranked eligible exact batch regardless of fit, with its
+    /// Top-ranked eligible batch regardless of fit, with its
     /// already-computed cost. Returning `Cost` here lets the main loop do
     /// the fit check and (on schedule) apply without recomputing —
     /// `cost_spans` is the hot path per iteration.
@@ -287,14 +236,14 @@ impl<W: Walker> Scheduler<W> {
             }
             if let Some(&cached) = self.cost_cache.get(&id) {
                 if verify_hits {
-                    let fresh = self.tree.marginal_cost(&entry.batch);
+                    let fresh = self.tree.marginal_cost(&entry.content);
                     debug_assert_eq!(
                         fresh, cached,
                         "stale cost_cache entry for batch {id:?} — invalidation logic missed a dependency",
                     );
                 }
             } else {
-                let fresh = self.tree.marginal_cost(&entry.batch);
+                let fresh = self.tree.marginal_cost(&entry.content);
                 self.cost_cache.insert(id, fresh);
             }
         }
@@ -309,8 +258,7 @@ impl<W: Walker> Scheduler<W> {
                 continue;
             }
             let cost = self.cost_cache[&id];
-            let value = score(&entry.batch.signals);
-            let ratio = score_ratio(value, cost.tokens);
+            let ratio = score_ratio(entry.value, cost.tokens);
             let better = best
                 .as_ref()
                 .is_none_or(|(br, _, bk, _)| ratio > *br || (ratio == *br && &entry.key < bk));
@@ -333,34 +281,6 @@ impl<W: Walker> Scheduler<W> {
         true
     }
 
-    // ---- materialization ----
-
-    /// Materialize `key`: remove it from the candidate pool, call the
-    /// walker, and either record it as dead or absorb the resolved batch
-    /// into the exact pool. Returns the assigned [`BatchId`] on success.
-    fn materialize(&mut self, key: &W::Key) -> Option<BatchId> {
-        let candidate = self.candidates.remove(key)?;
-        let Some(resolved) = self.walker.materialize(key, &self.ctx) else {
-            self.dead.insert(key.clone());
-            return None;
-        };
-        let id = BatchId::new(self.entries.len());
-        let batch = Batch {
-            content: resolved.content,
-            signals: resolved.signals,
-        };
-        for path in relevant_paths(&batch.content) {
-            self.path_to_batches.entry(path).or_default().push(id);
-        }
-        self.entries.push(BatchEntry {
-            key: key.clone(),
-            predecessor: candidate.predecessor,
-            batch,
-        });
-        self.key_to_id.insert(key.clone(), id);
-        Some(id)
-    }
-
     // ---- scheduling ----
 
     fn schedule(&mut self, id: BatchId, cost: Cost) {
@@ -375,10 +295,10 @@ impl<W: Walker> Scheduler<W> {
         );
 
         let ancestors = self.ancestors_of(id);
-        let batch_clone = self.entries[id.index()].batch.clone();
+        let entry_content = self.entries[id.index()].content.clone();
         let conflicts = self
             .tree
-            .apply(&batch_clone, id, |i| ancestors.contains(&i));
+            .apply(&entry_content, id, |i| ancestors.contains(&i));
         debug_assert!(
             conflicts.is_empty(),
             "walker-emitted batch hit non-ancestor overlap: {:?}",
@@ -389,15 +309,15 @@ impl<W: Walker> Scheduler<W> {
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 
-        // Invalidate cached marginal costs for any other materialized
-        // batch whose marginal cost depends on render-tree state at a
-        // path the just-applied batch mutated. Also lazily prune
-        // already-scheduled ids from the dependents list — they never
-        // re-enter `best_exact`, so keeping them inflates the
-        // invalidation loop on hot files like `src/lib.rs`.
+        // Invalidate cached marginal costs for any other emitted batch
+        // whose marginal cost depends on render-tree state at a path the
+        // just-applied batch mutated. Also lazily prune already-scheduled
+        // ids from the dependents list — they never re-enter `best_exact`,
+        // so keeping them inflates the invalidation loop on hot files
+        // like `src/lib.rs`.
         self.cost_cache.remove(&id);
         let scheduled = &self.scheduled;
-        for path in relevant_paths(&batch_clone.content) {
+        for path in relevant_paths(&entry_content) {
             if let Some(dependents) = self.path_to_batches.get_mut(&path) {
                 dependents.retain(|d| !scheduled.contains(d));
                 for dep in dependents {
@@ -409,8 +329,8 @@ impl<W: Walker> Scheduler<W> {
         // Walker learns about the new scheduled key; emit successors.
         let key = self.entries[id.index()].key.clone();
         let successors = self.walker.expand(&key, &self.ctx);
-        for c in successors {
-            self.absorb_candidate(c);
+        for batch in successors {
+            self.absorb(batch);
         }
     }
 

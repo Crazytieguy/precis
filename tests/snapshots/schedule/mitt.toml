@@ -1,7 +1,7 @@
 fixture = "mitt"
 budget = 10000
-cumulative_tokens = 5381
-batch_count = 46
+cumulative_tokens = 5881
+batch_count = 47
 
 [[batches]]
 position = 1
@@ -1623,10 +1623,28 @@ kind = "full"
 
 [[batches]]
 position = 44
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/.eslintrc" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/mitt/.eslintrc"
+cost_tokens = 500
+cum_tokens = 5523
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/.eslintrc"
+start = 1
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts" })'
 descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/test-types-compilation.ts"
 cost_tokens = 9
-cum_tokens = 5032
+cum_tokens = 5532
 
 [batches.content]
 kind = "lines"
@@ -1640,11 +1658,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts" })'
 descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/mitt/test/index_test.ts"
 cost_tokens = 60
-cum_tokens = 5092
+cum_tokens = 5592
 
 [batches.content]
 kind = "lines"
@@ -1658,11 +1676,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/LICENSE" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/mitt/LICENSE"
 cost_tokens = 289
-cum_tokens = 5381
+cum_tokens = 5881
 
 [batches.content]
 kind = "lines"

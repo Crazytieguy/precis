@@ -1,141 +1,102 @@
 //! Walker trait + shared context.
 //!
-//! The walker trait splits three concerns that `precis` v0.2-first-pass
-//! conflated:
+//! A walker emits [`Batch<K>`] units containing the key, optional
+//! predecessor edge, fully-built `BatchContent`, and a scalar `value`. The
+//! scheduler ranks emitted batches by `value / cost^k`, gates by
+//! predecessor scheduling, and applies content to the rendered tree.
 //!
-//! - **Discovery** (`seed` / `expand`): cheap; returns [`Candidate`]s named
-//!   by [`BatchKey`]. No file I/O beyond `read_dir`. No parsing. The
-//!   scheduler decides which candidates advance.
-//! - **Materialization** (`materialize`): expensive; reads + parses the
-//!   relevant source, returns a [`ResolvedBatch`] with final content and
-//!   value signals. Only called once a candidate has enough FS-only
-//!   evidence to be worth paying for (two-tier frontier in the scheduler).
-//! - **Scoring**: not the walker's job at all. The scheduler composes
-//!   [`ValueSignals`] via [`value`](crate::value) into a scalar.
-//!
-//! Why the split. The previous trait combined "emit a batch" with "schedule
-//! me as a successor of the parent folder", which meant `successors()` on a
-//! folder listing read + parsed every child file eagerly. Cross-file
-//! batches couldn't exist (each walker saw one file at a time); predecessor
-//! edges within a single call couldn't exist (the scheduler stamped the
-//! predecessor from the currently-scheduled batch's id). The new split
-//! makes all three unrepresentable by accident.
+//! Walkers are encouraged to keep emission as cheap as feasible (the
+//! scheduler does the heavy lifting around ranking and applying), but
+//! parsing in `expand` is fine — every per-file parse is cached on
+//! [`WalkCtx`] and shared across all batches that touch the same file.
 
-use std::cell::{OnceCell, RefCell};
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::cell::RefCell;
+use std::collections::{BTreeSet, HashMap};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Language, Node, Tree};
 
-use crate::batch::{ResolvedBatch, ValueSignals, WalkerKey};
+use crate::batch::{Batch, BatchKey, FsKey, WalkerKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::render::SourceCache;
 
 pub mod fs;
 pub mod json;
 pub mod markdown;
-pub mod multi;
 pub mod plaintext;
 pub mod rust;
 pub mod toml;
 pub mod typescript;
 
-/// A discovered batch that hasn't been materialized yet. Emitted by
-/// `seed` / `expand`. Carries the stable key (so other candidates can
-/// name it as predecessor) and the FS-only [`ValueSignals`] the walker
-/// can fill in cheaply. The candidate pool exists so candidates whose
-/// predecessor isn't yet scheduled can wait — the scheduler eagerly
-/// materializes any candidate whose predecessor is scheduled (or who
-/// has no predecessor) before each scheduling decision.
-///
-/// Generic over the walker's own key type (see [`Walker::Key`]), so the
-/// scheduler/renderer never names any walker-specific enum.
-#[derive(Debug, Clone)]
-pub struct Candidate<K: WalkerKey> {
-    pub key: K,
-    /// Optional predecessor edge — same as
-    /// [`NsBatch::predecessor`](crate::north_star::NsBatch): candidate
-    /// stays pending until predecessor is scheduled, and line overlap
-    /// with earlier batches must follow the chain.
-    pub predecessor: Option<K>,
-    /// FS-only value signals. After materialization these are overwritten
-    /// with the resolved batch's (usually richer) signals.
-    pub signals: ValueSignals,
-}
-
-impl<K: WalkerKey> Candidate<K> {
-    pub fn new(key: K, signals: ValueSignals) -> Self {
-        Self {
-            key,
-            predecessor: None,
-            signals,
-        }
-    }
-
-    pub fn with_predecessor(mut self, pred: K) -> Self {
-        self.predecessor = Some(pred);
-        self
-    }
-}
-
-/// Walker contract. A single implementor composes the filesystem walker
-/// with per-language walkers (see [`multi::MultiWalker`]). The associated
-/// `Key` type is walker-private: scheduler + renderer never name it, and
-/// adding a new walker doesn't change scheduler/renderer code.
+/// Walker contract. The associated `Key` type is walker-private: scheduler +
+/// renderer never name it, and adding a new walker doesn't change
+/// scheduler/renderer code.
 pub trait Walker {
     type Key: WalkerKey;
 
-    /// Initial candidates. Typically the root filesystem listing.
-    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
+    /// Initial batches emitted before any scheduling decision. Typically
+    /// the root filesystem listing.
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
 
-    /// Called when a candidate is scheduled. Returns newly-discovered
-    /// candidates. `scheduled` is the key just moved into the tree; the
-    /// walker uses it to decide what to propose next (e.g. listing `src/`
-    /// exposes `RustKey::PubDecls { src_dir: "src" }`).
-    ///
-    /// Per-run metadata that needs source reads (module visibility,
-    /// workspace membership) lives behind `WalkCtx` `OnceCell`s. Outside
-    /// those caches, `expand` must not do per-call file I/O — the
-    /// scheduler relies on each pending candidate being cheap to emit.
-    fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Candidate<Self::Key>>;
+    /// Called when a batch is scheduled — returns newly-discovered
+    /// batches. `scheduled` is the key just moved into the tree; the
+    /// walker uses it to decide what to propose next (e.g. once a
+    /// directory listing is scheduled, language walkers emit per-file
+    /// batches for files in that dir).
+    fn expand(&mut self, scheduled: &Self::Key, ctx: &WalkCtx) -> Vec<Batch<Self::Key>>;
+}
 
-    /// Read source, parse, and build the concrete batch for `key`. Returns
-    /// `None` when materialization finds nothing (e.g. no `pub` items in
-    /// the crate) — the scheduler then marks the key dead and never
-    /// retries. This is the **only** method allowed to call
-    /// `fs::read_to_string` (enforced by convention; see [`WalkCtx`] which
-    /// centralizes source + parse caches).
-    fn materialize(&mut self, key: &Self::Key, ctx: &WalkCtx) -> Option<ResolvedBatch>;
+/// Top-level walker: filesystem listings drive discovery; per-language
+/// modules (`rust`, `markdown`, `toml`, `typescript`, `json`, `plaintext`)
+/// own per-dir candidate emission and are dispatched here. There's no
+/// trait-object indirection — the language list is a closed set known at
+/// this site.
+#[derive(Default)]
+pub struct FsWalker;
+
+impl Walker for FsWalker {
+    type Key = BatchKey;
+
+    fn seed(&mut self, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        fs::seed(ctx)
+    }
+
+    fn expand(&mut self, scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+        let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
+            return Vec::new();
+        };
+        let mut out = Vec::new();
+        out.extend(fs::expand_subdirs(dir, ctx));
+        out.extend(rust::expand_in_dir(dir, ctx));
+        out.extend(markdown::expand_in_dir(dir, ctx));
+        out.extend(toml::expand_in_dir(dir, ctx));
+        out.extend(typescript::expand_in_dir(dir, ctx));
+        out.extend(json::expand_in_dir(dir, ctx));
+        out.extend(plaintext::expand_in_dir(dir, ctx));
+        out
+    }
 }
 
 /// Per-run context. Holds the seed root plus a shared source cache +
 /// per-file parse cache. The source cache is the same handle the
 /// [`RenderedTree`](crate::render::RenderedTree) uses for render-time
 /// materialization, so each file is read at most once across the whole run.
+///
+/// Per-walker run state — cross-file analyses each language wants to
+/// memoize for the run — lives in language-named fields below. Each
+/// language walker's state struct is defined alongside that walker; the
+/// shared cells stay typed and explicit rather than going through a
+/// `TypeId`-keyed bag. New languages add a field here and own its
+/// initialization.
 pub struct WalkCtx {
     root: PathBuf,
     source_cache: SourceCache,
     /// Tree-sitter parse results, keyed by path.
     tree_cache: RefCell<HashMap<PathBuf, Arc<Tree>>>,
-    /// Lazy, per-run map of `<crate root>/src/lib.rs` reachability for the
-    /// Rust walker. Populated on first read; see `walker::rust`.
-    rust_module_visibility: OnceCell<HashMap<PathBuf, rust::Visibility>>,
-    /// Lazy, per-run set of Cargo workspace member Cargo.toml paths
-    /// (canonicalized) when the seed-root `Cargo.toml` declares a
-    /// `[workspace]`. Empty when the seed isn't a workspace root.
-    cargo_workspace_members: OnceCell<HashSet<PathBuf>>,
-    /// Memoizes `is_workspace_member` lookups so the canonicalize syscall
-    /// runs once per file rather than once per signal computation.
-    workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
-    /// Lazy per-dir set of `#[macro_export]` macro names, keyed by the
-    /// directory the Rust walker scoped its `MacroNames` batch to.
-    /// Populated on first read by `rust::collect_exported_macro_names_in_dir`
-    /// — needed both at `expand` time (one call per dir) and at every
-    /// `RustKey::MacroBody` `materialize` (which would otherwise re-walk
-    /// every sibling `.rs` file's parse tree per macro). Stored behind an
-    /// `Arc` so callers consume the set without cloning.
-    rust_exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
+    /// Per-run state owned by `walker::rust` — module visibility,
+    /// workspace membership, exported-macro names per dir.
+    rust_state: rust::RustState,
 }
 
 impl WalkCtx {
@@ -148,10 +109,7 @@ impl WalkCtx {
             root,
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
-            rust_module_visibility: OnceCell::new(),
-            cargo_workspace_members: OnceCell::new(),
-            workspace_member_lookup: RefCell::new(HashMap::new()),
-            rust_exported_macros_per_dir: RefCell::new(HashMap::new()),
+            rust_state: rust::RustState::new(),
         }
     }
 
@@ -204,48 +162,18 @@ impl WalkCtx {
         Some((source, arc))
     }
 
-    pub(in crate::walker) fn rust_module_visibility_map(
-        &self,
-        init: impl FnOnce() -> HashMap<PathBuf, rust::Visibility>,
-    ) -> &HashMap<PathBuf, rust::Visibility> {
-        self.rust_module_visibility.get_or_init(init)
-    }
-
-    pub(in crate::walker) fn rust_exported_macros_in_dir(
-        &self,
-        dir: &Path,
-        init: impl FnOnce() -> HashSet<String>,
-    ) -> Arc<HashSet<String>> {
-        if let Some(arc) = self.rust_exported_macros_per_dir.borrow().get(dir) {
-            return arc.clone();
-        }
-        let arc = Arc::new(init());
-        self.rust_exported_macros_per_dir
-            .borrow_mut()
-            .insert(dir.to_path_buf(), arc.clone());
-        arc
+    pub(in crate::walker) fn rust_state(&self) -> &rust::RustState {
+        &self.rust_state
     }
 
     /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
-    /// a workspace member by the seed-root `Cargo.toml`.
+    /// a workspace member by the seed-root `Cargo.toml`. The TOML walker
+    /// uses this to dampen `[package]` identity weighting on sub-crate
+    /// manifests (where most identity is inherited from the workspace
+    /// root). Lives on `RustState` because workspace resolution is a
+    /// Cargo concept and the cache should die with the run.
     pub fn is_workspace_member(&self, file: &Path) -> bool {
-        let members = self
-            .cargo_workspace_members
-            .get_or_init(|| toml::collect_workspace_members(&self.root));
-        if members.is_empty() {
-            return false;
-        }
-        if let Some(&hit) = self.workspace_member_lookup.borrow().get(file) {
-            return hit;
-        }
-        let hit = file
-            .canonicalize()
-            .map(|c| members.contains(&c))
-            .unwrap_or(false);
-        self.workspace_member_lookup
-            .borrow_mut()
-            .insert(file.to_path_buf(), hit);
-        hit
+        self.rust_state.is_workspace_member(file, &self.root)
     }
 }
 
@@ -272,33 +200,58 @@ impl FileLines {
     }
 }
 
-/// Composed location prior for `ValueSignals::depth_factor`. Folds the
-/// path's depth penalty (`value::depth_factor`) and the non-essential-
-/// directory discount (`WalkCtx::non_essential_factor`) into one
-/// multiplier. Every per-file walker uses the same recipe; lifting the
-/// helper here keeps it from drifting between walkers.
-pub(crate) fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+/// Path-relative location prior shared by every per-file walker: depth
+/// penalty (`value::depth_factor`) folded with the non-essential-directory
+/// discount (`WalkCtx::non_essential_factor`). Walkers without an
+/// entrypoint concept call this directly; walkers that pin entrypoints to
+/// depth ≤ 1 use [`file_depth_factor`] which adds that knob.
+pub(crate) fn path_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     crate::value::depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
 }
 
-/// Build a [`ResolvedBatch`] whose content is a set of spans for one file.
-/// Blank source lines are filtered from the `full` set; an ellipsis at a
-/// line already in `full` is dropped. Returns `None` when the resulting
-/// span set is empty — caller propagates as "dead key".
-pub(crate) fn single_file_lines_batch(
+/// [`path_depth_factor`] with optional entrypoint pinning. When
+/// `is_entrypoint` is true the depth is clamped to 1 — an `index.ts` at
+/// depth 5 ranks the same as one at depth 1, since it's the file the
+/// agent looks at first regardless of how the package is laid out. The
+/// non-essential discount still applies (an entrypoint inside `tests/`
+/// doesn't get an unconditional pass).
+pub(crate) fn file_depth_factor(file: &Path, ctx: &WalkCtx, is_entrypoint: bool) -> f64 {
+    let depth = ctx.depth_from_root(file);
+    let pinned_depth = if is_entrypoint { depth.min(1) } else { depth };
+    crate::value::depth_factor(pinned_depth) * ctx.non_essential_factor(file)
+}
+
+/// Build a [`BatchContent::Lines`] from a single file's [`FileLines`]
+/// spec. Blank source lines are filtered from the `full` set; an ellipsis
+/// at a line already in `full` is dropped. Returns `None` when the
+/// resulting span set is empty (caller declines to emit the batch).
+pub(crate) fn single_file_lines_content(
     path: &Path,
     source: &str,
     lines: FileLines,
-    signals: ValueSignals,
-) -> Option<ResolvedBatch> {
+) -> Option<BatchContent> {
     let spans = build_file_spans(path, source, lines);
     if spans.is_empty() {
         return None;
     }
-    Some(ResolvedBatch {
-        content: BatchContent::Lines { spans },
-        signals,
-    })
+    Some(BatchContent::Lines { spans })
+}
+
+/// Parse `file` and run a per-file `FileLines` collector, yielding a
+/// `BatchContent::Lines` if the result is non-empty. Used by walkers
+/// whose per-file batches share the parse-then-collect-spans shape
+/// (currently rust + ts). Caller supplies the parser closure so
+/// language-specific parser dispatch (e.g. `.ts` vs `.tsx`) stays in
+/// the language module.
+pub(crate) fn build_per_file_content(
+    file: &Path,
+    ctx: &WalkCtx,
+    parse: impl Fn(&WalkCtx, &Path) -> Option<(Arc<str>, Arc<Tree>)>,
+    collect: impl Fn(&Tree, &str) -> FileLines,
+) -> Option<BatchContent> {
+    let (source, tree) = parse(ctx, file)?;
+    let lines = collect(&tree, &source);
+    single_file_lines_content(file, &source, lines)
 }
 
 /// Convert a `FileLines` spec for one file into contiguous [`Span`] ranges.

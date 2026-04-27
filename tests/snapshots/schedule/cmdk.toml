@@ -1,7 +1,7 @@
 fixture = "cmdk"
 budget = 10000
-cumulative_tokens = 9149
-batch_count = 87
+cumulative_tokens = 9484
+batch_count = 89
 
 [[batches]]
 position = 1
@@ -504,10 +504,28 @@ kind = "full"
 
 [[batches]]
 position = 22
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
+cost_tokens = 202
+cum_tokens = 1083
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
+start = 4
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx" })'
 descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx"
 cost_tokens = 369
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -689,11 +707,11 @@ end = 954
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 169 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:169"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -715,11 +733,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 664 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:664"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -741,11 +759,11 @@ end = 665
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 729 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:729"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -767,11 +785,11 @@ end = 730
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 774 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:774"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -793,11 +811,11 @@ end = 775
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 787 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:787"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -819,11 +837,11 @@ end = 788
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 833 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:833"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -845,11 +863,11 @@ end = 834
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 882 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:882"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -871,11 +889,11 @@ end = 883
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 899 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:899"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -897,11 +915,11 @@ end = 900
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 909 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:909"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -923,11 +941,11 @@ end = 910
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 941 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:941"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -941,11 +959,11 @@ end = 941
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 942 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:942"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -959,11 +977,11 @@ end = 942
 kind = "full"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 943 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:943"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -977,11 +995,11 @@ end = 943
 kind = "full"
 
 [[batches]]
-position = 35
+position = 36
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 945 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:945"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -995,11 +1013,11 @@ end = 945
 kind = "full"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 946 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:946"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1013,11 +1031,11 @@ end = 946
 kind = "full"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 947 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:947"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1031,11 +1049,11 @@ end = 947
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 948 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:948"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1049,11 +1067,11 @@ end = 948
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 949 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:949"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1067,11 +1085,11 @@ end = 949
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 950 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:950"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1085,11 +1103,11 @@ end = 950
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 951 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:951"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1103,11 +1121,11 @@ end = 951
 kind = "full"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 952 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:952"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1121,11 +1139,11 @@ end = 952
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 953 })'
 descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:953"
 cost_tokens = 0
-cum_tokens = 1250
+cum_tokens = 1452
 
 [batches.content]
 kind = "lines"
@@ -1139,11 +1157,11 @@ end = 953
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 899 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:899"
 cost_tokens = 59
-cum_tokens = 1309
+cum_tokens = 1511
 
 [batches.content]
 kind = "lines"
@@ -1165,11 +1183,11 @@ end = 903
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 774 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:774"
 cost_tokens = 97
-cum_tokens = 1406
+cum_tokens = 1608
 
 [batches.content]
 kind = "lines"
@@ -1191,11 +1209,11 @@ end = 780
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 882 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:882"
 cost_tokens = 26
-cum_tokens = 1432
+cum_tokens = 1634
 
 [batches.content]
 kind = "lines"
@@ -1209,11 +1227,11 @@ end = 881
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 899 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:899"
 cost_tokens = 27
-cum_tokens = 1459
+cum_tokens = 1661
 
 [batches.content]
 kind = "lines"
@@ -1227,11 +1245,11 @@ end = 898
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 909 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:909"
 cost_tokens = 30
-cum_tokens = 1489
+cum_tokens = 1691
 
 [batches.content]
 kind = "lines"
@@ -1245,11 +1263,11 @@ end = 908
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 729 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:729"
 cost_tokens = 37
-cum_tokens = 1526
+cum_tokens = 1728
 
 [batches.content]
 kind = "lines"
@@ -1263,11 +1281,11 @@ end = 728
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 787 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:787"
 cost_tokens = 38
-cum_tokens = 1564
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -1281,11 +1299,11 @@ end = 786
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 882 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:882"
 cost_tokens = 178
-cum_tokens = 1742
+cum_tokens = 1944
 
 [batches.content]
 kind = "lines"
@@ -1299,11 +1317,11 @@ end = 893
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 909 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:909"
 cost_tokens = 179
-cum_tokens = 1921
+cum_tokens = 2123
 
 [batches.content]
 kind = "lines"
@@ -1325,11 +1343,11 @@ end = 927
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 774 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:774"
 cost_tokens = 48
-cum_tokens = 1969
+cum_tokens = 2171
 
 [batches.content]
 kind = "lines"
@@ -1343,11 +1361,11 @@ end = 773
 kind = "full"
 
 [[batches]]
-position = 54
+position = 55
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 833 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:833"
 cost_tokens = 52
-cum_tokens = 2021
+cum_tokens = 2223
 
 [batches.content]
 kind = "lines"
@@ -1361,11 +1379,11 @@ end = 832
 kind = "full"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 664 })'
 descriptor = "export doc at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:664"
 cost_tokens = 66
-cum_tokens = 2087
+cum_tokens = 2289
 
 [batches.content]
 kind = "lines"
@@ -1379,11 +1397,11 @@ end = 663
 kind = "full"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json"
 cost_tokens = 242
-cum_tokens = 2329
+cum_tokens = 2531
 
 [batches.content]
 kind = "lines"
@@ -1397,11 +1415,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md section #3"
 cost_tokens = 65
-cum_tokens = 2394
+cum_tokens = 2596
 
 [batches.content]
 kind = "lines"
@@ -1423,11 +1441,29 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json" })'
+descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
+cost_tokens = 133
+cum_tokens = 2729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
+start = 14
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md" })'
 descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/cmdk/README.md"
 cost_tokens = 290
-cum_tokens = 2684
+cum_tokens = 3019
 
 [batches.content]
 kind = "lines"
@@ -1785,11 +1821,11 @@ end = 463
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 14 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #14"
 cost_tokens = 11
-cum_tokens = 2695
+cum_tokens = 3030
 
 [batches.content]
 kind = "lines"
@@ -1811,11 +1847,11 @@ end = 287
 kind = "full"
 
 [[batches]]
-position = 60
+position = 62
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #1"
 cost_tokens = 23
-cum_tokens = 2718
+cum_tokens = 3053
 
 [batches.content]
 kind = "lines"
@@ -1837,11 +1873,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 61
+position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #3"
 cost_tokens = 41
-cum_tokens = 2759
+cum_tokens = 3094
 
 [batches.content]
 kind = "lines"
@@ -1863,11 +1899,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 62
+position = 64
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 11 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #11"
 cost_tokens = 16
-cum_tokens = 2775
+cum_tokens = 3110
 
 [batches.content]
 kind = "lines"
@@ -1889,11 +1925,11 @@ end = 262
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 22 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #22"
 cost_tokens = 113
-cum_tokens = 2888
+cum_tokens = 3223
 
 [batches.content]
 kind = "lines"
@@ -1955,11 +1991,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 64
+position = 66
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 21 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #21"
 cost_tokens = 143
-cum_tokens = 3031
+cum_tokens = 3366
 
 [batches.content]
 kind = "lines"
@@ -1989,11 +2025,11 @@ end = 460
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 10 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #10"
 cost_tokens = 22
-cum_tokens = 3053
+cum_tokens = 3388
 
 [batches.content]
 kind = "lines"
@@ -2015,11 +2051,11 @@ end = 258
 kind = "full"
 
 [[batches]]
-position = 66
+position = 68
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 787 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:787"
 cost_tokens = 400
-cum_tokens = 3453
+cum_tokens = 3788
 
 [batches.content]
 kind = "lines"
@@ -2057,11 +2093,11 @@ end = 826
 kind = "full"
 
 [[batches]]
-position = 67
+position = 69
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 729 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:729"
 cost_tokens = 435
-cum_tokens = 3888
+cum_tokens = 4223
 
 [batches.content]
 kind = "lines"
@@ -2107,11 +2143,11 @@ end = 767
 kind = "full"
 
 [[batches]]
-position = 68
+position = 70
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 833 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:833"
 cost_tokens = 467
-cum_tokens = 4355
+cum_tokens = 4690
 
 [batches.content]
 kind = "lines"
@@ -2141,11 +2177,11 @@ end = 876
 kind = "full"
 
 [[batches]]
-position = 69
+position = 71
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts", start_line: 155 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts:155"
 cost_tokens = 126
-cum_tokens = 4481
+cum_tokens = 4816
 
 [batches.content]
 kind = "lines"
@@ -2159,11 +2195,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 70
+position = 72
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 664 })'
 descriptor = "export body at /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx:664"
 cost_tokens = 636
-cum_tokens = 5117
+cum_tokens = 5452
 
 [batches.content]
 kind = "lines"
@@ -2249,11 +2285,11 @@ end = 722
 kind = "full"
 
 [[batches]]
-position = 71
+position = 73
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 19 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #19"
 cost_tokens = 37
-cum_tokens = 5154
+cum_tokens = 5489
 
 [batches.content]
 kind = "lines"
@@ -2275,11 +2311,11 @@ end = 428
 kind = "full"
 
 [[batches]]
-position = 72
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 20 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #20"
 cost_tokens = 375
-cum_tokens = 5529
+cum_tokens = 5864
 
 [batches.content]
 kind = "lines"
@@ -2389,11 +2425,11 @@ end = 454
 kind = "full"
 
 [[batches]]
-position = 73
+position = 75
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #2"
 cost_tokens = 583
-cum_tokens = 6112
+cum_tokens = 6447
 
 [batches.content]
 kind = "lines"
@@ -2503,11 +2539,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 74
+position = 76
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/package.json" })'
 descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/package.json"
 cost_tokens = 189
-cum_tokens = 6301
+cum_tokens = 6636
 
 [batches.content]
 kind = "lines"
@@ -2521,11 +2557,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 75
+position = 77
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md section #2"
 cost_tokens = 277
-cum_tokens = 6578
+cum_tokens = 6913
 
 [batches.content]
 kind = "lines"
@@ -2579,11 +2615,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 76
+position = 78
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 12 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #12"
 cost_tokens = 76
-cum_tokens = 6654
+cum_tokens = 6989
 
 [batches.content]
 kind = "lines"
@@ -2621,11 +2657,11 @@ end = 272
 kind = "full"
 
 [[batches]]
-position = 77
+position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 6 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #6"
 cost_tokens = 81
-cum_tokens = 6735
+cum_tokens = 7070
 
 [batches.content]
 kind = "lines"
@@ -2663,11 +2699,11 @@ end = 188
 kind = "full"
 
 [[batches]]
-position = 78
+position = 80
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md section #0"
 cost_tokens = 386
-cum_tokens = 7121
+cum_tokens = 7456
 
 [batches.content]
 kind = "lines"
@@ -2769,11 +2805,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 79
+position = 81
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/ARCHITECTURE.md section #1"
 cost_tokens = 433
-cum_tokens = 7554
+cum_tokens = 7889
 
 [batches.content]
 kind = "lines"
@@ -2835,11 +2871,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 80
+position = 82
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 9 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #9"
 cost_tokens = 129
-cum_tokens = 7683
+cum_tokens = 8018
 
 [batches.content]
 kind = "lines"
@@ -2885,11 +2921,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 81
+position = 83
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 13 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #13"
 cost_tokens = 136
-cum_tokens = 7819
+cum_tokens = 8154
 
 [batches.content]
 kind = "lines"
@@ -2927,11 +2963,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 82
+position = 84
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/cmdk/.gitignore"
 cost_tokens = 123
-cum_tokens = 7942
+cum_tokens = 8277
 
 [batches.content]
 kind = "lines"
@@ -2953,11 +2989,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 83
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 7 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #7"
 cost_tokens = 179
-cum_tokens = 8121
+cum_tokens = 8456
 
 [batches.content]
 kind = "lines"
@@ -3003,11 +3039,11 @@ end = 210
 kind = "full"
 
 [[batches]]
-position = 84
+position = 86
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 16 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #16"
 cost_tokens = 205
-cum_tokens = 8326
+cum_tokens = 8661
 
 [batches.content]
 kind = "lines"
@@ -3045,11 +3081,11 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 85
+position = 87
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 8 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #8"
 cost_tokens = 276
-cum_tokens = 8602
+cum_tokens = 8937
 
 [batches.content]
 kind = "lines"
@@ -3111,11 +3147,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 86
+position = 88
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 18 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #18"
 cost_tokens = 253
-cum_tokens = 8855
+cum_tokens = 9190
 
 [batches.content]
 kind = "lines"
@@ -3177,11 +3213,11 @@ end = 424
 kind = "full"
 
 [[batches]]
-position = 87
+position = 89
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md section #5"
 cost_tokens = 294
-cum_tokens = 9149
+cum_tokens = 9484
 
 [batches.content]
 kind = "lines"

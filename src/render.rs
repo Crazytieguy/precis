@@ -16,7 +16,7 @@ use std::path::{Path, PathBuf};
 use std::rc::Rc;
 use std::sync::Arc;
 
-use crate::batch::{Batch, BatchId};
+use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, FsGroup, Render, Span, explode_spans};
 use crate::fs_util::{EntryKind, list_dir};
 use crate::tokenizer;
@@ -122,10 +122,10 @@ impl RenderedTree {
         &self.root
     }
 
-    /// Marginal cost of applying `batch` against the current state.
-    pub fn marginal_cost(&self, batch: &Batch) -> Cost {
+    /// Marginal cost of applying `content` against the current state.
+    pub fn marginal_cost(&self, content: &BatchContent) -> Cost {
         let mut total = Cost::default();
-        self.visit_atom_costs(batch, |c| total = total + c);
+        self.visit_atom_costs(content, |c| total = total + c);
         total
     }
 
@@ -137,9 +137,9 @@ impl RenderedTree {
     /// accounting to attribute off-NS spend to atoms with their actual
     /// marginal contribution — bodies and short decls can sit in the
     /// same batch but differ ~10× in token weight.
-    pub fn marginal_cost_per_atom(&self, batch: &Batch) -> Vec<Cost> {
+    pub fn marginal_cost_per_atom(&self, content: &BatchContent) -> Vec<Cost> {
         let mut out = Vec::new();
-        self.visit_atom_costs(batch, |c| out.push(c));
+        self.visit_atom_costs(content, |c| out.push(c));
         out
     }
 
@@ -148,25 +148,26 @@ impl RenderedTree {
     /// `marginal_cost` sums into a scalar without allocating, and
     /// `marginal_cost_per_atom` collects into a `Vec<Cost>` for callers
     /// that need per-atom granularity.
-    fn visit_atom_costs<F: FnMut(Cost)>(&self, batch: &Batch, mut visit: F) {
-        match &batch.content {
+    fn visit_atom_costs<F: FnMut(Cost)>(&self, content: &BatchContent, mut visit: F) {
+        match content {
             BatchContent::Fs { groups } => self.visit_fs_atom_costs(groups, &mut visit),
             BatchContent::Lines { spans } => self.visit_span_atom_costs(spans, &mut visit),
         }
     }
 
-    /// Apply a batch. `owner` is the batch's id; `is_ancestor(id)` tells us
-    /// whether an existing line's owner is an ancestor — non-ancestor
-    /// overlaps are returned as [`ApplyConflict`]s so callers can surface
-    /// them as violations (simulator) or debug-assert (scheduler, which
+    /// Apply `content` against the rendered tree. `owner` is the
+    /// emitting batch's id; `is_ancestor(id)` tells us whether an
+    /// existing line's owner is an ancestor — non-ancestor overlaps
+    /// are returned as [`ApplyConflict`]s so callers can surface them
+    /// as violations (simulator) or debug-assert (scheduler, which
     /// trusts walker-emitted batches to declare correct predecessors).
     pub fn apply(
         &mut self,
-        batch: &Batch,
+        content: &BatchContent,
         owner: BatchId,
         is_ancestor: impl Fn(BatchId) -> bool,
     ) -> Vec<ApplyConflict> {
-        match &batch.content {
+        match content {
             BatchContent::Fs { groups } => {
                 for group in groups {
                     self.apply_fs_group(group);

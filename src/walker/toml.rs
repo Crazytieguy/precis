@@ -14,11 +14,12 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchKey, FsKey, ResolvedBatch, TomlKey, ValueSignals};
-use crate::value::depth_factor;
+use crate::batch::{Batch, BatchKey, TomlKey};
+use crate::value::mix_signals;
 
 use super::{
-    Candidate, FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, single_file_lines_batch,
+    FileLines, WalkCtx, dedup_sorted, fs::files_with_extension, path_depth_factor,
+    single_file_lines_content,
 };
 
 /// Multiplier applied to `[package]` Identity signals on workspace-member
@@ -27,69 +28,56 @@ use super::{
 /// Rust walker's `pub(crate)` damping.
 const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let toml_files = files_with_extension(dir, "toml");
     if toml_files.is_empty() {
         return Vec::new();
     }
     let mut out = Vec::new();
     for file in toml_files {
-        out.push(candidate(
-            TomlKey::Identity { file: file.clone() },
-            identity_signals(&file, ctx),
-        ));
-        out.push(candidate(
-            TomlKey::Features { file: file.clone() },
-            features_signals(&file, ctx),
-        ));
-        out.push(candidate(
-            TomlKey::Dependencies { file: file.clone() },
-            dependencies_signals(&file, ctx),
-        ));
+        if let Some(content) = build_section_content(&file, ctx, |n| {
+            matches!(n, "package" | "workspace" | "workspace.package")
+        }) {
+            out.push(Batch {
+                key: TomlKey::Identity { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: identity_value(&file, ctx),
+            });
+        }
+        if let Some(content) = build_section_content(&file, ctx, |n| n == "features") {
+            out.push(Batch {
+                key: TomlKey::Features { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: features_value(&file, ctx),
+            });
+        }
+        if let Some(content) = build_section_content(&file, ctx, |n| {
+            matches!(
+                n,
+                "dependencies"
+                    | "dev-dependencies"
+                    | "build-dependencies"
+                    | "workspace.dependencies"
+            )
+        }) {
+            out.push(Batch {
+                key: TomlKey::Dependencies { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: dependencies_value(&file, ctx),
+            });
+        }
     }
     out
 }
 
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Toml(tk) = key else {
-        return None;
-    };
-    match tk {
-        TomlKey::Identity { file } => mat_sections(
-            file,
-            |n| matches!(n, "package" | "workspace" | "workspace.package"),
-            identity_signals(file, ctx),
-            ctx,
-        ),
-        TomlKey::Features { file } => {
-            mat_sections(file, |n| n == "features", features_signals(file, ctx), ctx)
-        }
-        TomlKey::Dependencies { file } => mat_sections(
-            file,
-            |n| {
-                matches!(
-                    n,
-                    "dependencies"
-                        | "dev-dependencies"
-                        | "build-dependencies"
-                        | "workspace.dependencies"
-                )
-            },
-            dependencies_signals(file, ctx),
-            ctx,
-        ),
-    }
-}
-
-fn mat_sections(
+fn build_section_content(
     file: &Path,
-    name_match: impl Fn(&str) -> bool,
-    signals: ValueSignals,
     ctx: &WalkCtx,
-) -> Option<ResolvedBatch> {
+    name_match: impl Fn(&str) -> bool,
+) -> Option<crate::content::BatchContent> {
     let (source, tree) = parse_toml(ctx, file)?;
     let sections = collect_sections(&tree, &source);
     let mut line_numbers: Vec<usize> = Vec::new();
@@ -101,54 +89,24 @@ fn mat_sections(
     if line_numbers.is_empty() {
         return None;
     }
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(dedup_sorted(line_numbers)),
-        signals,
-    )
+    single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
-// --- candidate helpers ---
-
-fn candidate(tk: TomlKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(tk.into(), signals)
-}
-
-fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
-}
-
-fn identity_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
+fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let m = if ctx.is_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
-    ValueSignals {
-        catastrophic_omission: m,
-        follow_up_minimization: 0.7 * m,
-        zero_tool_call_understanding: 0.85 * m,
-        depth_factor: signal_factor(file, ctx),
-    }
+    mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
 }
 
-fn features_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.75,
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.5,
-        depth_factor: signal_factor(file, ctx),
-    }
+fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.75, 0.6, 0.5, path_depth_factor(file, ctx))
 }
 
-fn dependencies_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.4,
-        follow_up_minimization: 0.7,
-        zero_tool_call_understanding: 0.4,
-        depth_factor: signal_factor(file, ctx),
-    }
+fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx))
 }
 
 // --- parser ---

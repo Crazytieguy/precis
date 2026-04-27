@@ -39,18 +39,15 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchKey, FsKey, ResolvedBatch, TsKey, ValueSignals};
-use crate::value::depth_factor;
+use crate::batch::{Batch, BatchKey, TsKey};
+use crate::value::mix_signals;
 
 use super::{
-    Candidate, FileLines, WalkCtx, dedup_sorted, extend_span, fs::files_with_any_extension,
-    push_rows, signature_end_row, single_file_lines_batch,
+    FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
+    fs::files_with_any_extension, push_rows, signature_end_row, single_file_lines_content,
 };
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let ts_files = files_with_any_extension(dir, &["ts", "tsx"]);
     if ts_files.is_empty() {
         return Vec::new();
@@ -60,17 +57,26 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     for file in &ts_files {
         let ep = is_entrypoint_file(file);
 
-        if ep {
-            out.push(candidate(
-                TsKey::ModuleDocLede { file: file.clone() },
-                module_doc_lede_signals(file, ctx),
-            ));
+        if ep
+            && let Some(content) =
+                build_per_file_content(file, ctx, parse_ts, collect_module_doc_lede)
+        {
+            out.push(Batch {
+                key: TsKey::ModuleDocLede { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: module_doc_lede_value(file, ctx),
+            });
         }
 
-        out.push(candidate(
-            TsKey::Imports { file: file.clone() },
-            imports_signals(file, ctx),
-        ));
+        if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
+            out.push(Batch {
+                key: TsKey::Imports { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: imports_value(file, ctx),
+            });
+        }
 
         let Some((source, tree)) = parse_ts(ctx, file) else {
             continue;
@@ -80,92 +86,73 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             continue;
         }
         let names_key = TsKey::ExportNames { file: file.clone() };
-        out.push(candidate(
-            names_key.clone(),
-            export_names_signals(file, ctx),
-        ));
+        if let Some(content) =
+            single_file_lines_content(file, &source, collect_export_names(&tree, &source))
+        {
+            out.push(Batch {
+                key: names_key.clone().into(),
+                predecessor: None,
+                content,
+                value: export_names_value(file, ctx),
+            });
+        }
+        let names_predecessor = BatchKey::Typescript(names_key);
         for item in &exports {
-            let key = TsKey::Export {
+            let export_key = TsKey::Export {
                 file: file.clone(),
                 start_line: item.start_line,
             };
-            out.push(
-                candidate(key.clone(), export_signals(file, item.kind, ctx))
-                    .with_predecessor(BatchKey::Typescript(names_key.clone())),
-            );
-            out.push(
-                candidate(
-                    TsKey::ExportDoc {
+            if let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_export_lines(&tree, &source, item.start_line),
+            ) {
+                out.push(Batch {
+                    key: export_key.clone().into(),
+                    predecessor: Some(names_predecessor.clone()),
+                    content,
+                    value: export_value(file, item.kind, ctx),
+                });
+            }
+            let export_predecessor = BatchKey::Typescript(export_key);
+            if let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_export_doc_lines(&tree, &source, file, item.start_line),
+            ) {
+                out.push(Batch {
+                    key: TsKey::ExportDoc {
                         file: file.clone(),
                         start_line: item.start_line,
-                    },
-                    export_doc_signals(file, item.kind, ctx),
+                    }
+                    .into(),
+                    predecessor: Some(export_predecessor.clone()),
+                    content,
+                    value: export_doc_value(file, item.kind, ctx),
+                });
+            }
+            if item.has_emittable_body
+                && let Some(content) = single_file_lines_content(
+                    file,
+                    &source,
+                    collect_export_body(&tree, &source, item.start_line),
                 )
-                .with_predecessor(BatchKey::Typescript(key.clone())),
-            );
-            if item.has_emittable_body {
-                out.push(
-                    candidate(
-                        TsKey::ExportBody {
-                            file: file.clone(),
-                            start_line: item.start_line,
-                        },
-                        export_body_signals(file, item.kind, ctx),
-                    )
-                    .with_predecessor(BatchKey::Typescript(key)),
-                );
+            {
+                out.push(Batch {
+                    key: TsKey::ExportBody {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    }
+                    .into(),
+                    predecessor: Some(export_predecessor),
+                    content,
+                    value: export_body_value(file, item.kind, ctx),
+                });
             }
         }
     }
 
     out
-}
-
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Typescript(tk) = key else {
-        return None;
-    };
-    match tk {
-        TsKey::ModuleDocLede { file } => mat_per_file(
-            file,
-            collect_module_doc_lede,
-            module_doc_lede_signals(file, ctx),
-            ctx,
-        ),
-        TsKey::Imports { file } => {
-            mat_per_file(file, collect_imports, imports_signals(file, ctx), ctx)
-        }
-        TsKey::ExportNames { file } => mat_per_file(
-            file,
-            collect_export_names,
-            export_names_signals(file, ctx),
-            ctx,
-        ),
-        TsKey::Export { file, start_line } => {
-            let (source, tree) = parse_ts(ctx, file)?;
-            let kind = classify_export_at(&tree, &source, *start_line)?;
-            let lines = collect_export_lines(&tree, &source, *start_line);
-            single_file_lines_batch(file, &source, lines, export_signals(file, kind, ctx))
-        }
-        TsKey::ExportDoc { file, start_line } => {
-            let (source, tree) = parse_ts(ctx, file)?;
-            let kind = classify_export_at(&tree, &source, *start_line)?;
-            let lines = collect_export_doc_lines(&tree, &source, file, *start_line);
-            single_file_lines_batch(file, &source, lines, export_doc_signals(file, kind, ctx))
-        }
-        TsKey::ExportBody { file, start_line } => {
-            let (source, tree) = parse_ts(ctx, file)?;
-            let kind = classify_export_at(&tree, &source, *start_line)?;
-            let lines = collect_export_body(&tree, &source, *start_line);
-            single_file_lines_batch(file, &source, lines, export_body_signals(file, kind, ctx))
-        }
-    }
-}
-
-// --- candidate + signal helpers ---
-
-fn candidate(tk: TsKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(tk.into(), signals)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -619,14 +606,6 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
     })
 }
 
-/// Materializer-path lookup: classify the export at `start_line` without
-/// re-running `find_export_starts` (which would recompute every export's
-/// body AST walk just to discard the count). All callers downstream of
-/// materialize need only the `ItemKind` for signal weighting.
-fn classify_export_at(tree: &Tree, source: &str, start_line: usize) -> Option<ItemKind> {
-    locate_export_decl(tree, source, start_line).map(|l| l.kind())
-}
-
 /// Files whose name signals "module entrypoint / public surface".
 fn is_entrypoint_file(path: &Path) -> bool {
     path.file_name()
@@ -638,74 +617,47 @@ fn entrypoint_boost(path: &Path) -> f64 {
     if is_entrypoint_file(path) { 1.4 } else { 1.0 }
 }
 
-fn file_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
-    let depth = ctx.depth_from_root(path);
-    let raw = if is_entrypoint_file(path) {
-        depth_factor(depth.min(1))
-    } else {
-        depth_factor(depth)
-    };
-    raw * ctx.non_essential_factor(path)
+fn ts_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
+    file_depth_factor(path, ctx, is_entrypoint_file(path))
 }
 
-fn module_doc_lede_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.5,
-        zero_tool_call_understanding: 0.9,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn module_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx))
 }
 
-fn imports_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.3 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: 0.3,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.3 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx))
 }
 
-fn export_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.35,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn export_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
 }
 
-fn export_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
-    ValueSignals {
-        catastrophic_omission: (0.70 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.85 * k).min(1.0),
-        zero_tool_call_understanding: 0.65,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.85 * k).min(1.0);
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
 }
 
-fn export_doc_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
-    ValueSignals {
-        catastrophic_omission: (0.20 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.6 * k).min(1.0),
-        zero_tool_call_understanding: 0.8,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.6 * k).min(1.0);
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
 }
 
 // Strictly below `Export.catastrophic` (0.70) — `Export`'s signature already
 // hedges existence; the body is a refinement. Strictly above
 // `Export.follow_up` (0.85) — body is the prime "don't go grep" signal.
-fn export_body_signals(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> ValueSignals {
+fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
-    ValueSignals {
-        catastrophic_omission: (0.45 * k * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.9 * k).min(1.0),
-        zero_tool_call_understanding: 0.8,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.9 * k).min(1.0);
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
 }
 
 // --- parser ---
@@ -721,22 +673,6 @@ fn parse_ts(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
         tree_sitter_typescript::LANGUAGE_TYPESCRIPT.into()
     };
     ctx.parse_tree(path, &language)
-}
-
-// --- shared materializer shapes ---
-
-fn mat_per_file<F>(
-    file: &Path,
-    collect: F,
-    signals: ValueSignals,
-    ctx: &WalkCtx,
-) -> Option<ResolvedBatch>
-where
-    F: Fn(&Tree, &str) -> FileLines,
-{
-    let (source, tree) = parse_ts(ctx, file)?;
-    let lines = collect(&tree, &source);
-    single_file_lines_batch(file, &source, lines, signals)
 }
 
 // --- collectors ---

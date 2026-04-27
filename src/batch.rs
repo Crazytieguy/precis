@@ -426,63 +426,22 @@ fn display_path(path: &std::path::Path) -> String {
     path.display().to_string()
 }
 
-/// A materialized batch handed to the renderer: content + value signals.
-/// The scheduler tracks key/predecessor bookkeeping separately.
-#[derive(Debug, Clone)]
-pub struct Batch {
-    pub content: BatchContent,
-    pub signals: ValueSignals,
-}
-
-/// What a walker's materializer returns; the scheduler stamps an id and
-/// absorbs it into the frontier.
-#[derive(Debug, Clone)]
-pub struct ResolvedBatch {
-    pub content: BatchContent,
-    pub signals: ValueSignals,
-}
-
-/// Multi-signal value inputs. Walkers fill these in; the value model
-/// composes them into a scalar for ranking.
+/// A walker-emitted scheduling unit. Carries the walker's key (so other
+/// candidates can name it as predecessor), the rendered content, and the
+/// scalar value used for ranking. The scheduler stamps a [`BatchId`] when
+/// the batch enters the pool but the walker never sees it.
 ///
-/// Each signal is a 0..1 score:
-/// - `catastrophic_omission`: harm if the agent never sees this content.
-/// - `follow_up_minimization`: tool calls this content saves.
-/// - `zero_tool_call_understanding`: does seeing this complete a mental
-///   model so the agent can reason without follow-up.
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub struct ValueSignals {
-    pub catastrophic_omission: f64,
-    pub follow_up_minimization: f64,
-    pub zero_tool_call_understanding: f64,
-    /// Relative-depth adjustment: multiplied into the final value.
-    pub depth_factor: f64,
-}
-
-impl Default for ValueSignals {
-    fn default() -> Self {
-        Self {
-            catastrophic_omission: 0.0,
-            follow_up_minimization: 0.0,
-            zero_tool_call_understanding: 0.0,
-            depth_factor: 1.0,
-        }
-    }
-}
-
-impl ValueSignals {
-    /// Multiply the three 0..1 signals by `factor`, leaving
-    /// `depth_factor` unchanged. Used by walkers that want a coarser
-    /// granularity to rank below their parent batch — e.g. a
-    /// markdown H3 sub-section relative to its H2 parent. The
-    /// `depth_factor` is a path-relative location prior, not part of
-    /// the per-batch magnitude, so it doesn't scale.
-    pub fn scale_value(self, factor: f64) -> Self {
-        Self {
-            catastrophic_omission: self.catastrophic_omission * factor,
-            follow_up_minimization: self.follow_up_minimization * factor,
-            zero_tool_call_understanding: self.zero_tool_call_understanding * factor,
-            depth_factor: self.depth_factor,
-        }
-    }
+/// Walkers compute `value` directly: it's the scalar input to
+/// [`crate::value::ratio`], on a shared cross-walker scale (calibration
+/// across walkers is a divergence-reports problem, not a code-level
+/// invariant — see `docs/design-notes.md`).
+#[derive(Debug, Clone)]
+pub struct Batch<K: WalkerKey> {
+    pub key: K,
+    /// Optional predecessor edge. The batch stays pending until its
+    /// predecessor is scheduled; line overlap with earlier batches is only
+    /// permitted along this chain (see [`crate::content`] / `render`).
+    pub predecessor: Option<K>,
+    pub content: BatchContent,
+    pub value: f64,
 }

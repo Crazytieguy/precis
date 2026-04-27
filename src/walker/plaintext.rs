@@ -13,36 +13,29 @@
 //! passwords, and `precis` output is intended for downstream agents /
 //! logs.
 //!
-//! Two caps protect the budget against surprise:
-//! - `PLAINTEXT_LINE_CAP` is the cheap `expand`-time discriminator,
-//!   gated via FS metadata only (the discovery/materialize contract
-//!   forbids per-call file I/O in `expand`).
-//! - `PLAINTEXT_TOKEN_CAP` is enforced at materialize time on the
-//!   rendered batch — line counts under-estimate token cost on dense
-//!   content.
+//! Budget protection: `PLAINTEXT_LINE_CAP` skips any file whose source
+//! line count exceeds the cap. Plaintext files this walker owns are
+//! intentionally short — anything bigger should either be a `Read` call
+//! by the agent or land in a format-aware walker.
 
 use std::path::Path;
 
-use crate::batch::{Batch, BatchKey, FsKey, PlaintextKey, ResolvedBatch, ValueSignals};
-use crate::render::RenderedTree;
+use crate::batch::{Batch, BatchKey, PlaintextKey};
+use crate::value::mix_signals;
 
-use super::{Candidate, FileLines, WalkCtx, fs::list_dir, signal_factor, single_file_lines_batch};
+use super::{FileLines, WalkCtx, fs::list_dir, path_depth_factor, single_file_lines_content};
 
 /// Hard cap on the number of source lines a plaintext file may have to
 /// be considered for a `Whole` batch. Larger files are skipped wholesale.
 const PLAINTEXT_LINE_CAP: usize = 60;
 
-/// Hard cap on the rendered token cost of a plaintext `Whole` batch.
-/// Enforced at materialize time. Line count alone under-estimates token
-/// cost on dense content; this is the real ceiling on per-batch
-/// displacement budget.
-const PLAINTEXT_TOKEN_CAP: usize = 400;
-
 /// FS-metadata pre-flight gate: skip files whose raw byte size is
-/// obviously past the cap before opening them. The 200-bytes-per-line
-/// heuristic is conservative — most plaintext config lines are well
-/// under 100 bytes, but heavily-commented `.editorconfig`s can hit it.
-const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 200;
+/// obviously past the cap before opening them. 80 bytes/line bounds
+/// the worst-case rendered cost (line-cap × ~80 chars × token-overhead)
+/// to roughly 1500 tokens — comfortably below any single budget chunk
+/// the scheduler would let plaintext claim. Files denser than this
+/// are agent-`Read` territory, not precis output.
+const PLAINTEXT_BYTE_GATE: usize = PLAINTEXT_LINE_CAP * 80;
 
 /// What kind of plaintext file this is. Drives the signal preset and
 /// keeps the (filename → preset) mapping in one table.
@@ -98,10 +91,7 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
     }
 }
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let entries = list_dir(dir);
     let mut out = Vec::new();
     for (name, kind) in entries {
@@ -118,54 +108,28 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         if byte_len > PLAINTEXT_BYTE_GATE {
             continue;
         }
-        out.push(candidate(
-            PlaintextKey::Whole { file: file.clone() },
-            class_signals(class, &file, ctx),
-        ));
+        let Some(source) = ctx.read_source(&file) else {
+            continue;
+        };
+        let line_count = source.lines().count();
+        if line_count == 0 || line_count > PLAINTEXT_LINE_CAP {
+            continue;
+        }
+        let lines: Vec<usize> = (1..=line_count).collect();
+        let Some(content) = single_file_lines_content(&file, &source, FileLines::new(lines)) else {
+            continue;
+        };
+        out.push(Batch {
+            key: PlaintextKey::Whole { file: file.clone() }.into(),
+            predecessor: None,
+            content,
+            value: class_value(class, &file, ctx),
+        });
     }
     out
 }
 
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Plaintext(pk) = key else {
-        return None;
-    };
-    let PlaintextKey::Whole { file } = pk;
-    let source = ctx.read_source(file)?;
-    let line_count = source.lines().count();
-    if line_count == 0 || line_count > PLAINTEXT_LINE_CAP {
-        return None;
-    }
-    let lines: Vec<usize> = (1..=line_count).collect();
-    let name = file.file_name().and_then(|n| n.to_str()).unwrap_or("");
-    let class = classify_plaintext(name)?;
-    let resolved = single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        class_signals(class, file, ctx),
-    )?;
-    // Token-cap: the displacement ceiling has to be the scheduler's
-    // view of marginal cost (line numbers + indent + `→` per line),
-    // not raw source bytes. Build a throwaway tree rooted at the run
-    // root so `marginal_cost` produces the same number the scheduler
-    // would see on a fresh apply.
-    let probe_batch = Batch {
-        content: resolved.content.clone(),
-        signals: resolved.signals,
-    };
-    let probe_tree = RenderedTree::new(ctx.root().to_path_buf(), ctx.source_cache().clone());
-    if probe_tree.marginal_cost(&probe_batch).tokens > PLAINTEXT_TOKEN_CAP {
-        return None;
-    }
-    Some(resolved)
-}
-
-fn candidate(pk: PlaintextKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(pk.into(), signals)
-}
-
-fn class_signals(class: Class, file: &Path, ctx: &WalkCtx) -> ValueSignals {
+fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
     // Tuned against frozen-NS divergence baselines: License gets the
     // floor because pure boilerplate rarely shifts how an agent uses
     // the code, and at higher weights it displaced one tier-tail
@@ -177,18 +141,13 @@ fn class_signals(class: Class, file: &Path, ctx: &WalkCtx) -> ValueSignals {
         Class::EditorConfig => (0.25, 0.35, 0.30),
         Class::Toolchain => (0.30, 0.35, 0.30),
     };
-    ValueSignals {
-        catastrophic_omission: cat,
-        follow_up_minimization: fu,
-        zero_tool_call_understanding: ztu,
-        depth_factor: signal_factor(file, ctx),
-    }
+    mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
 }
 
 #[cfg(test)]
 mod tests {
     use crate::scheduler::Scheduler;
-    use crate::walker::multi::MultiWalker;
+    use crate::walker::FsWalker;
 
     use super::*;
 
@@ -243,7 +202,7 @@ mod tests {
         }
     }
 
-    /// Drive the full `MultiWalker` + scheduler against a real
+    /// Drive the full `FsWalker` + scheduler against a real
     /// directory (per Codex round-1 P2: in-memory `SourceCache`
     /// preload bypasses `read_dir` and never exercises the discovery
     /// path). Asserts the plaintext content lands in the rendered
@@ -259,7 +218,7 @@ mod tests {
         .unwrap();
         std::fs::write(root.join(".gitignore"), "target/\n*.tmp\n").unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), MultiWalker, 4_000, None);
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         let rendered = report.tree.render();
 
@@ -289,7 +248,7 @@ mod tests {
             .join("\n");
         std::fs::write(root.join("LICENSE"), body).unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), MultiWalker, 4_000, None);
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_no_plaintext_whole(&report, "LICENSE");
     }
@@ -306,26 +265,7 @@ mod tests {
             .collect();
         std::fs::write(root.join("LICENSE"), body).unwrap();
 
-        let scheduler = Scheduler::new(root.to_path_buf(), MultiWalker, 4_000, None);
-        let report = scheduler.run_with_report();
-        assert_no_plaintext_whole(&report, "LICENSE");
-    }
-
-    /// A dense LICENSE that fits the line cap but blows the token
-    /// cap is rejected at materialize time.
-    #[test]
-    fn plaintext_token_cap_rejects_dense_content() {
-        let dir = tempfile::tempdir().unwrap();
-        let root = dir.path();
-        let line: String = std::iter::repeat_n("supercalifragilisticexpialidocious", 8)
-            .collect::<Vec<_>>()
-            .join(" ");
-        let body: String = std::iter::repeat_n(line.as_str(), PLAINTEXT_LINE_CAP)
-            .collect::<Vec<_>>()
-            .join("\n");
-        std::fs::write(root.join("LICENSE"), body).unwrap();
-
-        let scheduler = Scheduler::new(root.to_path_buf(), MultiWalker, 100_000, None);
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
         let report = scheduler.run_with_report();
         assert_no_plaintext_whole(&report, "LICENSE");
     }

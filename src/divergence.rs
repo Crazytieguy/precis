@@ -95,7 +95,7 @@ use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
-use crate::batch::{Batch, BatchId, ValueSignals};
+use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
@@ -303,17 +303,13 @@ impl<'a> BuildCtx<'a> {
         for (pos, b) in ns.batches.iter().enumerate() {
             let content = resolve_content(&b.content, fixture_root)?;
             let atoms = atoms_from_content(&content, &source_cache, fixture_root);
-            let batch = Batch {
-                content: content.clone(),
-                signals: ValueSignals::default(),
-            };
-            let marginal = tree.marginal_cost(&batch);
+            let marginal = tree.marginal_cost(&content);
             cum += marginal.tokens;
             let batch_id = BatchId::new(pos);
             // Divergence doesn't care about predecessor-chain conflicts
             // here — that's `simulate_ns`'s job. `|_| true` accepts any
             // existing owner so the tree evolves faithfully regardless.
-            let _ = tree.apply(&batch, batch_id, |_| true);
+            let _ = tree.apply(&content, batch_id, |_| true);
             ns_rows.push(NsRow {
                 id: b.id.clone(),
                 tier: parse_tier(&b.id),
@@ -335,18 +331,14 @@ impl<'a> BuildCtx<'a> {
             .enumerate()
             .map(|(pos, b)| {
                 let atoms = atoms_from_content(&b.content, &source_cache, fixture_root);
-                let batch = Batch {
-                    content: b.content.clone(),
-                    signals: ValueSignals::default(),
-                };
-                let per_atom = walker_tree.marginal_cost_per_atom(&batch);
+                let per_atom = walker_tree.marginal_cost_per_atom(&b.content);
                 debug_assert_eq!(
                     per_atom.len(),
                     atoms.len(),
                     "marginal_cost_per_atom and atoms_from_content must agree on atom count and order — order invariant"
                 );
                 let atom_token_costs = per_atom.into_iter().map(|c| c.tokens).collect();
-                let _ = walker_tree.apply(&batch, BatchId::new(pos), |_| true);
+                let _ = walker_tree.apply(&b.content, BatchId::new(pos), |_| true);
                 WalkerRow {
                     atoms,
                     atom_token_costs,

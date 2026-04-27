@@ -41,12 +41,14 @@ use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchKey, FsKey, MarkdownKey, ResolvedBatch, ValueSignals};
+use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::tokenizer;
-use crate::value::depth_factor;
+use crate::value::mix_signals;
 
-use super::{Candidate, FileLines, WalkCtx, fs::files_with_extension, single_file_lines_batch};
+use super::{
+    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
+};
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
 /// suppresses itself. The outline is the predecessor of every section,
@@ -91,10 +93,7 @@ const BULLET_MIN_ITEMS: usize = 3;
 const BULLET_MIN_LARGE_ITEMS: usize = 2;
 const BULLET_LARGE_ITEM_BYTES: usize = 200;
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
     if md_files.is_empty() {
         return Vec::new();
@@ -106,10 +105,14 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
             .and_then(|n| n.to_str())
             .unwrap_or_default();
         if name.eq_ignore_ascii_case("SUMMARY.md") {
-            out.push(candidate(
-                MarkdownKey::SummaryWhole { file: file.clone() },
-                summary_signals(&file, ctx),
-            ));
+            if let Some(content) = build_summary_content(&file, ctx) {
+                out.push(Batch {
+                    key: MarkdownKey::SummaryWhole { file: file.clone() }.into(),
+                    predecessor: None,
+                    content,
+                    value: summary_value(&file, ctx),
+                });
+            }
             continue;
         }
 
@@ -128,36 +131,46 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         let outline_key =
             outline_emits.then(|| MarkdownKey::HeadingsOutline { file: file.clone() });
 
-        if let Some(h) = &headline_key {
-            out.push(candidate(h.clone(), readme_headline_signals(&file, ctx)));
+        let mut headline_emitted: Option<BatchKey> = None;
+        if let Some(h) = &headline_key
+            && let Some(content) = build_headline_content(&file, &source, &tree)
+        {
+            out.push(Batch {
+                key: h.clone().into(),
+                predecessor: None,
+                content,
+                value: readme_headline_value(&file, ctx),
+            });
+            headline_emitted = Some(BatchKey::Markdown(h.clone()));
         }
-        if let Some(o) = &outline_key {
-            let mut cand = candidate(o.clone(), headings_outline_signals(&file, ctx));
-            if let Some(h) = &headline_key {
-                cand = cand.with_predecessor(BatchKey::Markdown(h.clone()));
-            }
-            out.push(cand);
+        let mut outline_emitted: Option<BatchKey> = None;
+        if let Some(o) = &outline_key
+            && let Some(content) = build_outline_content(&file, &source, &outline_rows)
+        {
+            out.push(Batch {
+                key: o.clone().into(),
+                predecessor: headline_emitted.clone(),
+                content,
+                value: headings_outline_value(&file, ctx),
+            });
+            outline_emitted = Some(BatchKey::Markdown(o.clone()));
         }
 
-        let section_predecessor = outline_key
-            .as_ref()
-            .or(headline_key.as_ref())
-            .cloned()
-            .map(BatchKey::Markdown);
+        let section_predecessor = outline_emitted.or(headline_emitted);
 
         for (idx, range) in ranges.iter().enumerate() {
-            let signals = section_signals(&file, range, ctx);
-            let mut cand = candidate(
-                MarkdownKey::Section {
-                    file: file.clone(),
-                    section_index: idx,
-                },
-                signals,
-            );
-            if let Some(p) = section_predecessor.clone() {
-                cand = cand.with_predecessor(p);
+            if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
+                out.push(Batch {
+                    key: MarkdownKey::Section {
+                        file: file.clone(),
+                        section_index: idx,
+                    }
+                    .into(),
+                    predecessor: section_predecessor.clone(),
+                    content,
+                    value: section_value(&file, range, ctx),
+                });
             }
-            out.push(cand);
         }
     }
     out
@@ -183,61 +196,21 @@ fn outline_emits_for(rows: &[(usize, usize)], source: &str) -> bool {
     bytes <= MAX_OUTLINE_HEADING_BYTES
 }
 
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Markdown(mk) = key else {
-        return None;
-    };
-    match mk {
-        MarkdownKey::SummaryWhole { file } => mat_summary(file, ctx),
-        MarkdownKey::ReadmeHeadline { file } => mat_readme_headline(file, ctx),
-        MarkdownKey::HeadingsOutline { file } => mat_headings_outline(file, ctx),
-        MarkdownKey::Section {
-            file,
-            section_index,
-        } => mat_section(file, *section_index, ctx),
-    }
+// --- value ---
+
+fn summary_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.9, 0.8, 0.7, path_depth_factor(file, ctx))
 }
 
-// --- candidate helpers ---
-
-fn candidate(mk: MarkdownKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(mk.into(), signals)
+fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
 
-// --- signals ---
-
-fn signal_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    depth_factor(ctx.depth_from_root(file)) * ctx.non_essential_factor(file)
+fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx))
 }
 
-fn summary_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.9,
-        follow_up_minimization: 0.8,
-        zero_tool_call_understanding: 0.7,
-        depth_factor: signal_factor(file, ctx),
-    }
-}
-
-fn readme_headline_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.9,
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.8,
-        depth_factor: signal_factor(file, ctx),
-    }
-}
-
-fn headings_outline_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.7,
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: 0.4,
-        depth_factor: signal_factor(file, ctx),
-    }
-}
-
-fn readme_section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> ValueSignals {
+fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     // README sections share a flat base (catastrophic 0.55,
     // follow-up 0.8, ztu 0.7) — a single section is a piece of
     // README body that just fits more often when split. The mild
@@ -248,13 +221,7 @@ fn readme_section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> V
     // Index counts real H2 sections only (the H1-unwrap synthetic
     // intro at parent_index=0 doesn't count), so a `# Title` README's
     // first real H2 gets factor 1.0.
-    ValueSignals {
-        catastrophic_omission: 0.55,
-        follow_up_minimization: 0.8,
-        zero_tool_call_understanding: 0.7,
-        depth_factor: signal_factor(file, ctx),
-    }
-    .scale_value(readme_index_decay(range))
+    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx)) * readme_index_decay(range)
 }
 
 /// Mild index decay for README sections. Counts real H2 sections only
@@ -277,7 +244,7 @@ fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
     ((idx as f64 + 1.0).powf(-exp)).max(floor)
 }
 
-fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> ValueSignals {
+fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     let is_guide = is_changelog_class(file);
     // Changelogs are conventionally sorted newest-first, so later
     // sections are ancient release notes of decreasing relevance. Apply
@@ -292,33 +259,23 @@ fn heading_slab_signals(file: &Path, parent_index: usize, ctx: &WalkCtx) -> Valu
     } else {
         1.0
     };
-    ValueSignals {
-        catastrophic_omission: if is_guide { 0.5 } else { 0.3 },
-        follow_up_minimization: 0.5,
-        zero_tool_call_understanding: 0.5,
-        depth_factor: signal_factor(file, ctx),
-    }
-    .scale_value(scale)
+    let cat = if is_guide { 0.5 } else { 0.3 };
+    mix_signals(cat, 0.5, 0.5, path_depth_factor(file, ctx)) * scale
 }
 
-/// Pick the appropriate signals for a `SectionRange`. Both `expand` and
-/// `mat_section` route through this so the two phases stay consistent.
-/// `H3Child` and `BulletItem` ranges scale the parent's three 0..1
-/// signals — identical weights would over-rank them on
-/// `value / cost^0.35` once the cost drops to per-sub-section size.
-/// `Intro` keeps full weight (it carries the H2 heading + topic
-/// prelude).
-fn section_signals(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> ValueSignals {
+/// Per-section value. `H3Child` and `BulletItem` ranges scale the parent's
+/// value — identical weights would over-rank them on `value / cost^0.35`
+/// once the cost drops to per-sub-section size. `Intro` keeps full weight
+/// (it carries the H2 heading + topic prelude).
+fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     let parent = if is_readme(file) {
-        readme_section_signals(file, range, ctx)
+        readme_section_value(file, range, ctx)
     } else {
-        heading_slab_signals(file, range.parent_index, ctx)
+        heading_slab_value(file, range.parent_index, ctx)
     };
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
-        SectionKind::H3Child | SectionKind::BulletItem => {
-            parent.scale_value(SUB_SECTION_SIGNAL_SCALE)
-        }
+        SectionKind::H3Child | SectionKind::BulletItem => parent * SUB_SECTION_SIGNAL_SCALE,
     }
 }
 
@@ -349,53 +306,41 @@ fn parse_inline(text: &str) -> Option<Tree> {
     parser.parse(text, None)
 }
 
-// --- materializers ---
+// --- content builders ---
 
-fn mat_summary(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
+fn build_summary_content(file: &Path, ctx: &WalkCtx) -> Option<BatchContent> {
     let source = ctx.read_source(file)?;
     let line_count = source.lines().count();
     let lines: Vec<usize> = (1..=line_count).collect();
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(lines),
-        summary_signals(file, ctx),
-    )
+    single_file_lines_content(file, &source, FileLines::new(lines))
 }
 
-fn mat_readme_headline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let (source, tree) = parse_md(ctx, file)?;
-    let spec = headline_spec(&tree, &source)?;
-    let spans = build_headline_spans(file, &source, &spec);
+fn build_headline_content(file: &Path, source: &str, tree: &Tree) -> Option<BatchContent> {
+    let spec = headline_spec(tree, source)?;
+    let spans = build_headline_spans(file, source, &spec);
     if spans.is_empty() {
         return None;
     }
-    Some(ResolvedBatch {
-        content: BatchContent::Lines { spans },
-        signals: readme_headline_signals(file, ctx),
-    })
+    Some(BatchContent::Lines { spans })
 }
 
-fn mat_headings_outline(file: &Path, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let (source, tree) = parse_md(ctx, file)?;
-    let rows = collectable_outline_rows(file, &tree, &source);
+fn build_outline_content(
+    file: &Path,
+    source: &str,
+    rows: &[(usize, usize)],
+) -> Option<BatchContent> {
     if rows.len() < 2 {
         return None;
     }
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for (start, end) in &rows {
+    for (start, end) in rows {
         for r in *start..=*end {
             full.push(r);
         }
         ellipses.push(end + 1);
     }
-    single_file_lines_batch(
-        file,
-        &source,
-        FileLines::new(full).with_ellipses(ellipses),
-        headings_outline_signals(file, ctx),
-    )
+    single_file_lines_content(file, source, FileLines::new(full).with_ellipses(ellipses))
 }
 
 /// Heading-row ranges (1-based, inclusive) the `HeadingsOutline` batch
@@ -440,10 +385,13 @@ fn collect_heading_nodes<'a>(node: Node<'a>, out: &mut Vec<Node<'a>>) {
     }
 }
 
-fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let (source, tree) = parse_md(ctx, file)?;
-    let ranges = logical_sections(file, &tree, &source);
-    let range = ranges.get(section_index)?;
+fn build_section_content(
+    file: &Path,
+    source: &str,
+    tree: &Tree,
+    section_index: usize,
+    range: &SectionRange,
+) -> Option<BatchContent> {
     let (start, end) = (range.start, range.end);
 
     // For README section 0, exclude lines already covered by
@@ -454,7 +402,7 @@ fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<Resol
     // is a no-op.
     let effective_start = if section_index == 0
         && is_readme(file)
-        && let Some(spec) = headline_spec(&tree, &source)
+        && let Some(spec) = headline_spec(tree, source)
         && let Some(max_row) = spec.last_covered_row()
     {
         (max_row + 1).max(start)
@@ -466,8 +414,7 @@ fn mat_section(file: &Path, section_index: usize, ctx: &WalkCtx) -> Option<Resol
     }
 
     let lines: Vec<usize> = (effective_start..=end).collect();
-    let signals = section_signals(file, range, ctx);
-    single_file_lines_batch(file, &source, FileLines::new(lines), signals)
+    single_file_lines_content(file, source, FileLines::new(lines))
 }
 
 fn is_readme(file: &Path) -> bool {

@@ -16,16 +16,14 @@ pub mod tokenizer;
 pub mod value;
 pub mod walker;
 
-pub use batch::{
-    Batch, BatchKey, FsKey, MarkdownKey, ResolvedBatch, RustKey, TomlKey, ValueSignals, WalkerKey,
-};
+pub use batch::{Batch, BatchKey, FsKey, MarkdownKey, RustKey, TomlKey, WalkerKey};
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};
 pub use schedule_types::{Atom, Schedule, ScheduledBatch};
 
 use scheduler::Scheduler;
-use walker::multi::MultiWalker;
+use walker::FsWalker;
 
 /// Render a precis summary of the given path(s) under the given budgets.
 ///
@@ -41,7 +39,7 @@ pub fn render(
         .ok_or_else(|| anyhow!("no path provided"))?
         .as_ref();
     let root = canonicalize_dir(path)?;
-    let scheduler = Scheduler::new(root, MultiWalker, token_budget, byte_budget);
+    let scheduler = Scheduler::new(root, FsWalker, token_budget, byte_budget);
     let tree = scheduler.run();
     Ok(tree.render())
 }
@@ -62,11 +60,7 @@ pub fn render_with_schedule(
         if sb.cum_tokens > budget {
             break;
         }
-        let batch = Batch {
-            content: sb.content.clone(),
-            signals: ValueSignals::default(),
-        };
-        tree.apply(&batch, batch::BatchId::new(i), |_| true);
+        tree.apply(&sb.content, batch::BatchId::new(i), |_| true);
     }
     Ok(tree.render())
 }
@@ -89,7 +83,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .unwrap_or("")
         .to_string();
 
-    let scheduler = Scheduler::new(root, MultiWalker, budget, None);
+    let scheduler = Scheduler::new(root, FsWalker, budget, None);
     let report = scheduler.run_with_report();
 
     let cumulative_tokens = report.scheduled.last().map(|b| b.cum_tokens).unwrap_or(0);

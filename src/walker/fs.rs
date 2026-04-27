@@ -6,57 +6,39 @@
 
 use std::path::{Path, PathBuf};
 
-use crate::batch::{BatchKey, FsKey, ResolvedBatch, ValueSignals};
+use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
 use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
-use crate::value::depth_factor;
+use crate::value::mix_signals;
 
-use super::{Candidate, WalkCtx};
+use super::{WalkCtx, path_depth_factor};
 
 /// Seed: list the root directory.
-pub fn seed(ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    vec![dir_listing_candidate(ctx.root().to_path_buf(), ctx)]
+pub fn seed(ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    dir_listing_batch(ctx.root().to_path_buf(), ctx)
+        .into_iter()
+        .collect()
 }
 
-/// Expand a scheduled `FsKey::DirListing` into successor candidates:
-/// subdirectory listings for each subdir. File-based candidates are
-/// emitted by per-language walkers (see [`multi::expand`]).
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+/// Subdirectory listings for the dir whose listing was just scheduled.
+/// File-based batches are emitted by per-language walkers; the FS walker
+/// only owns directory recursion.
+pub fn expand_subdirs(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let children = list_dir(dir);
     let mut out = Vec::new();
     for (name, kind) in children {
-        if matches!(kind, EntryKind::Directory) && !should_skip_dir(&name) {
-            out.push(dir_listing_candidate(dir.join(&name), ctx));
+        if matches!(kind, EntryKind::Directory)
+            && !should_skip_dir(&name)
+            && let Some(batch) = dir_listing_batch(dir.join(&name), ctx)
+        {
+            out.push(batch);
         }
     }
     out
 }
 
 // ---- additional helpers ----
-
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = key else {
-        return None;
-    };
-    let children = list_dir(dir);
-    if children.is_empty() {
-        return None;
-    }
-    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
-    Some(ResolvedBatch {
-        content: BatchContent::Fs {
-            groups: vec![FsGroup {
-                parent: dir.clone(),
-                entries: FsEntries::Listed(paths),
-            }],
-        },
-        signals: dir_listing_signals_for_path(dir, ctx),
-    })
-}
 
 /// Enumerate the files under `dir` (non-recursive) matching an extension.
 /// Returns absolute paths. Used by per-language walkers to build cross-file
@@ -119,30 +101,33 @@ fn walk_files_recursive(dir: &Path, ext: &str, out: &mut Vec<PathBuf>) {
     }
 }
 
-fn dir_listing_candidate(dir: PathBuf, ctx: &WalkCtx) -> Candidate<BatchKey> {
-    let signals = dir_listing_signals_for_path(&dir, ctx);
-    Candidate::new(FsKey::DirListing { dir }.into(), signals)
+fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
+    let children = list_dir(&dir);
+    if children.is_empty() {
+        return None;
+    }
+    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
+    let value = dir_listing_value(&dir, ctx);
+    Some(Batch {
+        key: FsKey::DirListing { dir: dir.clone() }.into(),
+        predecessor: None,
+        content: BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: dir,
+                entries: FsEntries::Listed(paths),
+            }],
+        },
+        value,
+    })
 }
 
-fn dir_listing_signals_for_path(dir: &Path, ctx: &WalkCtx) -> ValueSignals {
-    let depth = ctx.depth_from_root(dir);
-    let mut s = if dir == ctx.root() {
-        ValueSignals {
-            catastrophic_omission: 0.95,
-            follow_up_minimization: 0.6,
-            zero_tool_call_understanding: 0.5,
-            depth_factor: 1.0,
-        }
+fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
+    let (cat, fu, ztu) = if dir == ctx.root() {
+        (0.95, 0.6, 0.5)
     } else {
-        ValueSignals {
-            catastrophic_omission: 0.5,
-            follow_up_minimization: 0.45,
-            zero_tool_call_understanding: 0.25,
-            depth_factor: depth_factor(depth),
-        }
+        (0.5, 0.45, 0.25)
     };
-    s.depth_factor *= ctx.non_essential_factor(dir);
-    s
+    mix_signals(cat, fu, ztu, path_depth_factor(dir, ctx))
 }
 
 /// Directories the walker never recurses into. Matches common

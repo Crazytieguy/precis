@@ -182,8 +182,6 @@ crates/
     mdbook-renderer/
         Cargo.toml
         README.md
-            1→# mdbook-renderer
-            7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Library to assist implementing an mdbook renderer.
@@ -215,8 +213,6 @@ crates/
     mdbook-summary/
         Cargo.toml
         README.md
-            1→# mdbook-summary
-            7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Summary parser for mdBook.
@@ -265,6 +261,14 @@ guide/
     guide-helper/
     src/
 package.json
+    2→  "dependencies": {
+    3→    "browser-ui-test": "0.23.3",
+    4→    "eslint": "^9.34.0"
+    5→  },
+    6→  "scripts": {
+    7→    "lint": "eslint --no-warn-ignored crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js crates/mdbook-html/front-end/**/*js.hbs",
+    8→    "lint-fix": "eslint --fix crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js"
+    9→  }
 rustfmt.toml
 src/
     cmd/

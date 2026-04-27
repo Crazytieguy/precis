@@ -30,69 +30,6 @@ LICENSE.md
 README.md
     5→# ⌘K…
     7→⌘K is a command menu React component that can also be used as an accessible combobox. You render items, it filters and sorts them automatically. ⌘K supports a fully composable API <sup><sup>[How?](/ARCHITECTURE.md)</sup></sup>, so you can wrap items in other components or even as static JSX.
-    9→## Install
-    …
-    11→```bash
-    12→pnpm install cmdk
-    13→```
-    15→## Use
-    …
-    82→## Parts and styling
-    …
-    84→All parts forward props, including `ref`, to an appropriate element. Each part has a specific data-attribute (starting with `cmdk-`) that can be used for styling.
-    86→### Command `[cmdk-root]`
-    …
-    153→### Dialog `[cmdk-dialog]` `[cmdk-overlay]`
-    …
-    180→### Input `[cmdk-input]`
-    …
-    190→### List `[cmdk-list]`
-    …
-    212→### Item `[cmdk-item]` `[data-disabled?]` `[data-selected?]`
-    …
-    242→### Group `[cmdk-group]` `[hidden?]`
-    …
-    256→### Separator `[cmdk-separator]`
-    …
-    260→### Empty `[cmdk-empty]`
-    …
-    262→Automatically renders when there are no results for the search query.
-    264→### Loading `[cmdk-loading]`
-    …
-    274→### `useCommandState(state => state.selectedField)`
-    …
-    285→## Examples
-    …
-    287→Code snippets for common use cases.
-    289→### Nested items
-    …
-    338→### Show sub-items when searching
-    …
-    361→### Asynchronous results
-    …
-    397→### Use inside Popover
-    …
-    426→### Drop in stylesheets
-    …
-    430→## FAQ
-    …
-    456→## History
-    …
-    462→## Testing
-    …
-    464→First, install dependencies and Playwright browsers:
-    466→```bash
-    467→pnpm install
-    468→pnpm playwright install
-    469→```
-    471→Then ensure you've built the library:
-    473→```bash
-    474→pnpm build
-    475→```
-    477→Then run the tests using your local build against real browser engines:
-    479→```bash
-    480→pnpm test
-    481→```
 cmdk/
     package.json
         2→  "name": "cmdk",
@@ -244,6 +181,25 @@ cmdk/
 package.json
     2→  "name": "cmdk-root",
     3→  "private": true,
+    4→  "scripts": {
+    5→    "build": "pnpm -F cmdk build",
+    6→    "dev": "pnpm -F cmdk build --watch",
+    7→    "website": "pnpm -F cmdk-website dev",
+    8→    "testsite": "pnpm -F cmdk-tests dev",
+    9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
+    10→    "preinstall": "npx only-allow pnpm",
+    11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
+    12→    "test": "playwright test"
+    13→  },
+    14→  "devDependencies": {
+    15→    "@playwright/test": "1.51.0",
+    16→    "husky": "^8.0.1",
+    17→    "lint-staged": "15.2.0",
+    18→    "prettier": "2.7.1",
+    19→    "tsup": "8.0.1",
+    20→    "typescript": "4.6.4"
+    21→  },
+    22→  "packageManager": "pnpm@8.8.0",
 playwright.config.ts
     1→import { PlaywrightTestConfig, devices } from '@playwright/test'
     27→export default config

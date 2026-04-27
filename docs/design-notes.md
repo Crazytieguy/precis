@@ -194,20 +194,44 @@ earlier ones along the legitimate predecessor path.
 Many concerns precis cares about are cross-language (value heuristics,
 ranking signals, render conventions, structural priorities); only the parts
 that genuinely depend on a language's grammar belong in language-specific
-code. The exact abstraction for sharing between the two layers is deferred
-until the Stage 4 ontology is concrete; the discipline meanwhile is:
-**don't accidentally specialize cross-language code to a single language**.
+code. Discipline: **don't accidentally specialize cross-language code to a
+single language**.
 
-`ValueSignals::depth_factor` is a current example of an abstraction worth
-revisiting once we support more languages. It's the channel every walker
-folds contextual/location priors into (fs depth, non-essential-dir
-penalty, sibling count, entrypoint boost, filename conventions). Today
-all walkers converge on roughly the same recipe, but the helper functions
-live in `src/value.rs` (cross-language) while the composition happens
-in each walker (`src/walker/<lang>.rs`). As more languages land, watch
-whether the composition itself becomes a duplicated pattern that wants
-to be shared, vs. whether languages diverge enough that a single scalar
-is the wrong shape and we need richer per-signal location context.
+Current shape:
+
+- The `Walker` trait emits [`Batch<K>`] units carrying `key`,
+  `predecessor`, fully-built `BatchContent`, and a scalar `value: f64`.
+  No `expand`/`materialize` split — walkers compute content at emit time
+  (parse trees cached on `WalkCtx`).
+- The `FsWalker` (`src/walker/mod.rs`) is the top-level `Walker` impl;
+  it owns directory recursion and dispatches per-extension hooks
+  (`rust::expand_in_dir`, `markdown::expand_in_dir`, …) when a
+  directory listing is scheduled. Closed-set enum dispatch — adding a
+  language touches `BatchKey`, the language module, and `FsWalker::expand`.
+- Path-relative location priors live in shared helpers
+  (`walker::path_depth_factor`, `walker::file_depth_factor`,
+  `value::non_essential_factor`, `value::depth_factor`).
+- Value composition uses the `value::mix_signals(cat, fu, ztu, depth)`
+  helper. The triple is a useful *expressive* convention at the call
+  site (per-batch `(catastrophic, follow-up, zero-tool-call)` tuning
+  reads naturally) but the trait surface is just `value: f64`. Walkers
+  are free to skip the helper and compute their value any other way.
+- Per-walker run state (cross-file analyses worth memoizing) lives in
+  named fields on `WalkCtx` — today only `rust_state: rust::RustState`
+  (module visibility, workspace membership, exported macros). New
+  languages add a typed field rather than smuggling state through a
+  `TypeId` bag.
+
+Tradeoff worth recording: collapsing `ValueSignals` (3-axis tuple +
+shared mix) to `value: f64` lost a global tuning knob —
+`W_CATASTROPHIC=1000 / W_FOLLOW_UP=400 / W_ZERO_CALL=300` used to be a
+single edit-site. Per-batch tuning reads the same as before
+(constants carried at the call site via `mix_signals`), but global
+re-balancing now means editing every walker. The phantom-knob
+calibration in git history was first-pass and never retuned, so the
+loss is small in practice; if a future calibration push wants a
+per-axis global knob back, the right shape is probably per-walker
+mix functions rather than a re-introduced central type.
 
 ## Deferred (pick up in later sessions)
 
@@ -225,10 +249,10 @@ is the wrong shape and we need richer per-signal location context.
   constructor would make "path outside the seed root" or "file path used as
   a directory" unrepresentable. Worth doing once the walker surface is more
   varied.
-- **`ValueSignals` / `Cost` newtypes** — signals admit NaN / negative /
-  infinite; `Cost { tokens, bytes }` admits absolute nonsense. A
-  `FiniteNonNegativeSignal` + private-field `Cost` constructors would catch
-  bad inputs at the boundary. Cheap; defer until something misuses them.
+- **`Cost` newtype** — `Cost { tokens, bytes }` admits absolute nonsense
+  (negative values, mismatched units). A private-field constructor would
+  catch bad inputs at the boundary. Cheap; defer until something misuses
+  it.
 
 ### Render
 - **Filesystem-level override** — file-content batch superseding a folder
@@ -251,12 +275,27 @@ is the wrong shape and we need richer per-signal location context.
 - **Multi-path seed** — the CLI accepts `Vec<PathBuf>` but `render()`
   uses only the first path. Multi-root scheduling (one budget across
   roots) is deferred.
-- **Lazy materialization frontier** — eager materialization (post the
-  speculative-pool drop) parses every emitted candidate, even ones
-  that never fit. Pathological wide-frontier fixtures could justify a
-  materialization cap; benign on the current 10 fixtures. The
-  per-batch marginal-cost cache covers the inner-loop redundancy but
-  doesn't shrink `entries`. Defer until a real fixture surfaces it.
+- **Eligible-id tracking in the scheduler hot path** — `best_exact`
+  scans the full `entries` vector twice per scheduling iteration and
+  filters out ineligible batches via `self.eligible(...)` HashMap
+  lookups. Pre-collapse the candidate pool was separate from the
+  ranked pool, so ineligible batches didn't participate in the rank
+  scan. Concrete fix: maintain `eligible_ids: Vec<BatchId>` updated in
+  `absorb` (push when no predecessor) and in `schedule` (after marking
+  scheduled, push dependents whose predecessor just became scheduled
+  — needs a `pred_key_to_dependents` reverse index). Then `best_exact`
+  iterates only over eligible ids. Benign on current fixture sizes
+  (~140 batches) but real with deep predecessor chains. Defer until a
+  profile or a wide-frontier fixture motivates it.
+- **Cheap min-tokens lower bound for early pruning** — every emitted
+  batch carries fully-built content, and `RenderedTree::marginal_cost`
+  is the only path to a real cost number. A tight lower-bound estimator
+  on `BatchContent` (e.g., line count × min-row-overhead, possibly
+  taking already-rendered overlap into account) would let the scheduler
+  prune obviously-too-big batches without touching the render tree.
+  Goal-only — the right interface is open (line count alone misses
+  predecessor-overlap savings; full marginal cost is too expensive).
+  Defer until a profile or a wide-frontier fixture motivates it.
 - **Rust mod-visibility resolver — `#[path]` and inline-pub-mod
   children.** The resolver intentionally doesn't honor
   `#[path = "..."]` attributes or descend into `pub mod foo { mod
@@ -264,49 +303,49 @@ is the wrong shape and we need richer per-signal location context.
   fallback is conservative-correct in these cases; lift if a fixture
   surfaces them.
 
+### Value/cost ranking — high priority, experimentation territory
+
+The single biggest open lever on NS divergence. Per-tier rollup across
+fixtures shows a consistent pattern: walker reaches tier 1 reliably
+(avg credit ~0.70–0.99), tier 2 mostly (~0.32–0.91), then drops sharply
+at tier 3+ (~0.10–0.30). Two sub-symptoms that *seem* distinct but are
+plausibly the same problem and worth investigating together:
+
+- **Cost-side concavity**: `value::ratio` is `value / cost^0.35` for
+  every batch (gentler than `sqrt`; see the commit that moved off
+  `sqrt`). May want per-category shapes (hard cap on `CrateDocLede`
+  size, gentler concavity on test-as-spec batches), or a different
+  functional form entirely.
+- **Sibling-count devaluation**: when a file emits many per-item
+  batches (a config module with 20 `pub struct` children), each one's
+  individual value/cost ratio beats the value/cost of a single
+  important body elsewhere (`CommandArgs` in `src/cmd.rs`), producing
+  a "wide-but-shallow signature sweep" across deep files at the
+  expense of root-level anchors. A first attempt folded a
+  `sibling_factor(n_siblings)` into `PubItem`'s depth factor —
+  regressed more than it improved. Dense core files (anyhow's
+  `src/lib.rs` with ~25 pub items) are *legitimately* dense;
+  decoration-heavy dense files (otree's `src/config/colors.rs` with 7
+  color sub-structs) look structurally identical but have very
+  different intrinsic value. `is_entrypoint_file` doesn't reliably
+  distinguish them.
+
+**This area is high-priority and explicitly experimentation territory.**
+Multiple creative approaches are likely needed — different formulas,
+per-category shapes, richer sibling/density signals, NS-author updates
+that rank `PubItemNames`-style location hints as first-class.
+Calibration drives divergence; expect to iterate against the metric
+across the fixture set rather than expect the first try to land.
+
+Tunables: per-batch values (set in each walker module's `*_value`
+fns); `mix_signals` weights in `src/value.rs`; cost concavity exponent
+in `value::ratio`; tier weights in `src/divergence.rs` (`TAU`,
+`REACH_THRESHOLD`, `MISSING_FLOOR`, `EARLY_FACTOR`, `LATE_FACTOR`,
+`UNMAPPED_COST_THRESHOLD`).
+
 ### Stopping criterion / value function
 - **Stopping criterion beyond "no batch fits"** — dynamic floor or
   value/cost threshold so we stop earlier when remaining batches are weak.
-- **Per-category sublinearity** — `value::ratio` uses `value / cost^0.35`
-  for every batch (gentler than `sqrt` — see the commit that moved off
-  `sqrt` for reasoning). May want per-category shapes (e.g. hard cap on
-  `CrateDocLede` size, gentler concavity on test-as-spec batches).
-- **Signal-weight calibration** — `W_CATASTROPHIC = 1000`, `W_FOLLOW_UP =
-  400`, `W_ZERO_CALL = 300` are first-pass. Tune under the divergence
-  metric across the fixture set.
-- **Sibling-count devaluation** — when a file emits many per-item
-  batches (e.g. a config module with 20 `pub struct` children), each
-  one's individual value/cost ratio beats the value/cost of a single
-  important body elsewhere (e.g. `CommandArgs` in `src/cmd.rs`),
-  producing a "wide-but-shallow signature sweep" across deep files at
-  the expense of root-level anchors. The old design collapsed all pub
-  items per file into one batch which naturally dampened this; the
-  split-per-item model is better for ranking precision but loses the
-  dampener. A first attempt folded a `sibling_factor(n_siblings)` into
-  `PubItem`'s `depth_factor` at walker expand time — but it regressed
-  more than it improved. The tradeoff is structural: dense core files
-  (anyhow's `src/lib.rs` with ~25 pub items, log's `src/lib.rs`
-  similar) are *legitimately* dense; penalizing them displaces their
-  load-bearing bodies (Level/LevelFilter rustdoc, Chain/Context docs)
-  in favor of content elsewhere that's not actually more valuable.
-  Decoration-heavy dense files (otree's `src/config/colors.rs` with 7
-  color sub-structs) look structurally identical but have very
-  different intrinsic value. `is_entrypoint_file` doesn't reliably
-  distinguish them — `mod.rs` catches both tests/ helpers and real
-  module roots. Needs a richer signal than sibling count alone.
-  Plausibly pairs with an eventual NS-author update that ranks
-  `PubItemNames`-style location hints as first-class, so the
-  calibration target is clearer.
-
-### Walker calibration — tier-3 falloff is the open lever
-
-The per-tier rollup across fixtures shows a consistent pattern:
-walker reaches tier 1 reliably (avg credit ~0.70–0.99), tier 2
-mostly (~0.32–0.91), then drops sharply at tier 3+ (~0.10–0.30).
-Walker value-model weights (`W_CATASTROPHIC`, `W_FOLLOW_UP`,
-`W_ZERO_CALL`, sublinearity exponent) are first-pass — tune under
-the divergence metric across the fixture set. See "Stopping
-criterion / value function" above for per-signal items.
 
 ### NS author repeatability — only one run per fixture
 
@@ -329,10 +368,10 @@ stability becomes a question.
   match the whole line.
 
 ### Process
-- **More languages** — TypeScript and Python are the next likely targets
-  after Rust + markdown.
-- **Larger fixtures** — the v0.2 fixture set (log/anyhow/mdbook) is small
-  by design. Add scale fixtures once the perf work is in.
+- **More languages** — Python is the next likely target after Rust /
+  markdown / TypeScript / JSON / TOML / plaintext.
+- **Larger fixtures** — the current fixture set is small by design. Add
+  scale fixtures once the perf work is in.
 - **North Star regeneration is expensive** — three drafts (up to ~40
   min each) + a combiner pass. Batch NS updates across multiple
   planned changes to amortize the cost.

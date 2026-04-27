@@ -30,25 +30,99 @@
 //! Parse trees are cached in [`WalkCtx`]; the same file parsed once powers
 //! every Rust batch that touches it.
 
+use std::cell::{OnceCell, RefCell};
 use std::collections::{HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
 
-use crate::batch::{BatchKey, FsKey, ResolvedBatch, RustKey, ValueSignals};
+use crate::batch::{Batch, BatchKey, RustKey};
 use crate::content::{BatchContent, Span};
-use crate::value::depth_factor;
+use crate::value::{depth_factor, mix_signals};
 
 use super::{
-    Candidate, FileLines, WalkCtx, build_file_spans, dedup_sorted, extend_span,
-    fs::files_with_extension, push_rows, signature_end_row, single_file_lines_batch,
+    FileLines, WalkCtx, build_file_spans, build_per_file_content, dedup_sorted, extend_span,
+    file_depth_factor, fs::files_with_extension, push_rows, signature_end_row,
+    single_file_lines_content,
 };
 
-pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-    let BatchKey::Fs(FsKey::DirListing { dir }) = scheduled else {
-        return Vec::new();
-    };
+/// Per-run Rust-walker state owned by [`WalkCtx`]. Stores cross-file
+/// analyses that the Rust walker needs to memoize for a single run:
+/// module visibility (which `.rs` files are reachable from `src/lib.rs`'s
+/// `pub mod` graph), Cargo workspace membership, and per-directory
+/// exported-macro-name sets. Pure storage — computation lives in the
+/// walker's free functions and accesses state through [`WalkCtx::rust_state`].
+pub struct RustState {
+    module_visibility: OnceCell<HashMap<PathBuf, Visibility>>,
+    exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
+    workspace_members: OnceCell<HashSet<PathBuf>>,
+    workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
+}
+
+impl RustState {
+    pub fn new() -> Self {
+        Self {
+            module_visibility: OnceCell::new(),
+            exported_macros_per_dir: RefCell::new(HashMap::new()),
+            workspace_members: OnceCell::new(),
+            workspace_member_lookup: RefCell::new(HashMap::new()),
+        }
+    }
+
+    pub(in crate::walker) fn module_visibility_map(
+        &self,
+        init: impl FnOnce() -> HashMap<PathBuf, Visibility>,
+    ) -> &HashMap<PathBuf, Visibility> {
+        self.module_visibility.get_or_init(init)
+    }
+
+    pub(in crate::walker) fn exported_macros_in_dir(
+        &self,
+        dir: &Path,
+        init: impl FnOnce() -> HashSet<String>,
+    ) -> Arc<HashSet<String>> {
+        if let Some(arc) = self.exported_macros_per_dir.borrow().get(dir) {
+            return arc.clone();
+        }
+        let arc = Arc::new(init());
+        self.exported_macros_per_dir
+            .borrow_mut()
+            .insert(dir.to_path_buf(), arc.clone());
+        arc
+    }
+
+    /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as
+    /// a workspace member by the seed-root `Cargo.toml`. Lookups are
+    /// memoized to avoid one canonicalize syscall per signal computation.
+    pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
+        let members = self
+            .workspace_members
+            .get_or_init(|| super::toml::collect_workspace_members(root));
+        if members.is_empty() {
+            return false;
+        }
+        if let Some(&hit) = self.workspace_member_lookup.borrow().get(file) {
+            return hit;
+        }
+        let hit = file
+            .canonicalize()
+            .map(|c| members.contains(&c))
+            .unwrap_or(false);
+        self.workspace_member_lookup
+            .borrow_mut()
+            .insert(file.to_path_buf(), hit);
+        hit
+    }
+}
+
+impl Default for RustState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let rust_files = files_with_extension(dir, "rs");
     if rust_files.is_empty() {
         return Vec::new();
@@ -60,29 +134,49 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     for file in &rust_files {
         let ep = is_entrypoint_file(file);
         if ep {
-            let lede = RustKey::CrateDocLede { file: file.clone() };
-            out.push(candidate(lede.clone(), crate_doc_lede_signals(file, ctx)));
-            out.push(
-                candidate(
+            let lede_key = RustKey::CrateDocLede { file: file.clone() };
+            if let Some(content) =
+                build_per_file_content(file, ctx, parse_rust, collect_module_doc_lede)
+            {
+                out.push(batch(
+                    lede_key.clone(),
+                    None,
+                    content,
+                    crate_doc_lede_value(file, ctx),
+                ));
+            }
+            if let Some(content) =
+                build_per_file_content(file, ctx, parse_rust, collect_module_doc_body)
+            {
+                out.push(batch(
                     RustKey::CrateDocBody { file: file.clone() },
-                    crate_doc_body_signals(file, ctx),
-                )
-                .with_predecessor(BatchKey::Rust(lede)),
-            );
-            out.push(candidate(
-                RustKey::ModUse { file: file.clone() },
-                mod_use_signals(file, ctx),
-            ));
-            out.push(candidate(
-                RustKey::MethodSigs { file: file.clone() },
-                method_sigs_signals(file, ctx),
-            ));
+                    Some(BatchKey::Rust(lede_key)),
+                    content,
+                    crate_doc_body_value(file, ctx),
+                ));
+            }
+            if let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use) {
+                out.push(batch(
+                    RustKey::ModUse { file: file.clone() },
+                    None,
+                    content,
+                    mod_use_value(file, ctx),
+                ));
+            }
+            if let Some(content) =
+                build_per_file_content(file, ctx, parse_rust, collect_method_sigs)
+            {
+                out.push(batch(
+                    RustKey::MethodSigs { file: file.clone() },
+                    None,
+                    content,
+                    method_sigs_value(file, ctx),
+                ));
+            }
         }
 
-        // Per-item pub declarations. We need to read the file to find item
-        // start lines — but we cache the parse tree in `WalkCtx`, so this
-        // work is shared with later `materialize` calls. If a file has zero
-        // pub items, no per-item candidates are emitted.
+        // Per-item pub declarations. Parse the file once; the cached tree
+        // is shared with every per-item collector below.
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
@@ -90,66 +184,80 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
         if items.is_empty() {
             continue;
         }
-        // Intentionally not modeled as a separate batch in current north stars
-        // (they rank full bodies only). Reviewers will flag the resulting
-        // "struct header + …" rendering as a partial body, which is correct
-        // against the frozen NS. Planned: next NS-author pass will rank a
-        // PubItemNames-equivalent as its own tier-1 location hint so
-        // reviewer grading matches walker emission. Deferred to batch with
-        // other NS-side changes before the next fixture round.
         let names_key = RustKey::PubItemNames { file: file.clone() };
-        out.push(candidate(
-            names_key.clone(),
-            pub_item_names_signals(file, ctx),
-        ));
+        if let Some(content) =
+            single_file_lines_content(file, &source, collect_pub_item_names(&tree, &source))
+        {
+            out.push(batch(
+                names_key.clone(),
+                None,
+                content,
+                pub_item_names_value(file, ctx),
+            ));
+        }
+        let names_predecessor = BatchKey::Rust(names_key);
         for item in &items {
-            let key = RustKey::PubItem {
+            let pub_item_key = RustKey::PubItem {
                 file: file.clone(),
                 start_line: item.start_line,
             };
-            out.push(
-                candidate(
-                    key.clone(),
-                    pub_item_signals(file, item.kind, item.surface, ctx),
-                )
-                .with_predecessor(BatchKey::Rust(names_key.clone())),
-            );
+            if let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_pub_item(&tree, &source, item.start_line),
+            ) {
+                out.push(batch(
+                    pub_item_key.clone(),
+                    Some(names_predecessor.clone()),
+                    content,
+                    pub_item_value(file, item.kind, item.surface, ctx),
+                ));
+            }
             // Pre-classify the doc-shape so empty Lede / empty Body
             // candidates aren't emitted. An empty Lede with a Body
-            // predecessored on it would dead-key the body permanently
-            // via the scheduler's `materialize`-returns-`None` path.
+            // predecessored on it would render the body unreachable.
             let raw_doc = collect_pub_item_doc_raw(&tree, &source, item.start_line);
             let lede_lines =
                 split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
             let body_lines = split_doc_lines_at_first_heading(raw_doc, &source, DocSection::Body);
-            let item_key = BatchKey::Rust(key);
-            let mut lede_emitted = None;
+            let item_key = BatchKey::Rust(pub_item_key);
+            let mut lede_emitted: Option<BatchKey> = None;
             if !lede_lines.is_empty() {
                 let lede_key = RustKey::PubItemDocLede {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
-                out.push(
-                    candidate(
+                if let Some(content) = single_file_lines_content(
+                    file,
+                    &source,
+                    collect_pub_item_doc_section(&tree, &source, item.start_line, DocSection::Lede),
+                ) {
+                    out.push(batch(
                         lede_key.clone(),
-                        pub_item_doc_lede_signals(file, item.kind, item.surface, ctx),
-                    )
-                    .with_predecessor(item_key.clone()),
-                );
-                lede_emitted = Some(BatchKey::Rust(lede_key));
+                        Some(item_key.clone()),
+                        content,
+                        pub_item_doc_lede_value(file, item.kind, item.surface, ctx),
+                    ));
+                    lede_emitted = Some(BatchKey::Rust(lede_key));
+                }
             }
-            if !body_lines.is_empty() {
+            if !body_lines.is_empty()
+                && let Some(content) = single_file_lines_content(
+                    file,
+                    &source,
+                    collect_pub_item_doc_section(&tree, &source, item.start_line, DocSection::Body),
+                )
+            {
                 let body_key = RustKey::PubItemDocBody {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
-                out.push(
-                    candidate(
-                        body_key,
-                        pub_item_doc_body_signals(file, item.kind, item.surface, ctx),
-                    )
-                    .with_predecessor(lede_emitted.unwrap_or(item_key)),
-                );
+                out.push(batch(
+                    body_key,
+                    Some(lede_emitted.unwrap_or(item_key)),
+                    content,
+                    pub_item_doc_body_value(file, item.kind, item.surface, ctx),
+                ));
             }
         }
     }
@@ -159,127 +267,45 @@ pub fn expand(scheduled: &BatchKey, ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
     // `find_pub_item_starts` skips `macro_definition` nodes, and the loop's
     // early `continue` on empty pub items would silently skip macro-only
     // files like `tests/fixtures/log/src/macros.rs`.
-    let macro_names = RustKey::MacroNames {
-        src_dir: dir.clone(),
+    let exported_names = ctx
+        .rust_state()
+        .exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
+    let macro_names_key = RustKey::MacroNames {
+        src_dir: dir.to_path_buf(),
     };
-    out.push(candidate(
-        macro_names.clone(),
-        macro_names_signals(dir_depth),
-    ));
-    let macro_names_key = BatchKey::Rust(macro_names);
-    let exported_names = ctx.rust_exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
+    if let Some(content) = build_cross_file_content(dir, ctx, collect_macro_name_lines) {
+        out.push(batch(
+            macro_names_key.clone(),
+            None,
+            content,
+            macro_names_value(dir_depth),
+        ));
+    }
+    let macro_predecessor = BatchKey::Rust(macro_names_key);
     for file in &rust_files {
         let Some((source, tree)) = parse_rust(ctx, file) else {
             continue;
         };
         for info in find_macro_starts(&tree, &source, &exported_names) {
-            out.push(
-                candidate(
+            if let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_macro_body_at(&tree, &source, info.start_line),
+            ) {
+                out.push(batch(
                     RustKey::MacroBody {
                         file: file.clone(),
                         start_line: info.start_line,
                     },
-                    macro_body_signals(file, &info, ctx),
-                )
-                .with_predecessor(macro_names_key.clone()),
-            );
+                    Some(macro_predecessor.clone()),
+                    content,
+                    macro_body_value(file, &info, ctx),
+                ));
+            }
         }
     }
 
     out
-}
-
-pub fn materialize(key: &BatchKey, ctx: &WalkCtx) -> Option<ResolvedBatch> {
-    let BatchKey::Rust(rk) = key else {
-        return None;
-    };
-    match rk {
-        RustKey::CrateDocLede { file } => mat_per_file(
-            file,
-            collect_module_doc_lede,
-            crate_doc_lede_signals(file, ctx),
-            ctx,
-        ),
-        RustKey::CrateDocBody { file } => mat_per_file(
-            file,
-            collect_module_doc_body,
-            crate_doc_body_signals(file, ctx),
-            ctx,
-        ),
-        RustKey::ModUse { file } => {
-            mat_per_file(file, collect_mod_use, mod_use_signals(file, ctx), ctx)
-        }
-        RustKey::PubItemNames { file } => mat_per_file(
-            file,
-            collect_pub_item_names,
-            pub_item_names_signals(file, ctx),
-            ctx,
-        ),
-        RustKey::PubItem { file, start_line } => {
-            let (source, tree) = parse_rust(ctx, file)?;
-            let item = find_item_at(&tree, &source, *start_line)?;
-            let lines = collect_pub_item(&tree, &source, *start_line);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                pub_item_signals(file, item.kind, item.surface, ctx),
-            )
-        }
-        RustKey::PubItemDocLede { file, start_line } => {
-            let (source, tree) = parse_rust(ctx, file)?;
-            let item = find_item_at(&tree, &source, *start_line)?;
-            let lines = collect_pub_item_doc_section(&tree, &source, *start_line, DocSection::Lede);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                pub_item_doc_lede_signals(file, item.kind, item.surface, ctx),
-            )
-        }
-        RustKey::PubItemDocBody { file, start_line } => {
-            let (source, tree) = parse_rust(ctx, file)?;
-            let item = find_item_at(&tree, &source, *start_line)?;
-            let lines = collect_pub_item_doc_section(&tree, &source, *start_line, DocSection::Body);
-            single_file_lines_batch(
-                file,
-                &source,
-                lines,
-                pub_item_doc_body_signals(file, item.kind, item.surface, ctx),
-            )
-        }
-        RustKey::MethodSigs { file } => mat_per_file(
-            file,
-            collect_method_sigs,
-            method_sigs_signals(file, ctx),
-            ctx,
-        ),
-        RustKey::MacroNames { src_dir } => mat_cross_file(
-            src_dir,
-            collect_macro_name_lines,
-            macro_names_signals(ctx.depth_from_root(src_dir)),
-            ctx,
-        ),
-        RustKey::MacroBody { file, start_line } => {
-            // The wrapper-vs-root classification needs the set of every
-            // `#[macro_export]` macro in the same `src_dir`, so resolve
-            // it from the file's parent. Parse trees are cached on
-            // `WalkCtx`, so the per-dir sweep is cheap.
-            let dir = file.parent()?;
-            let exported_names =
-                ctx.rust_exported_macros_in_dir(dir, || compute_exported_macros(dir, ctx));
-            let (source, tree) = parse_rust(ctx, file)?;
-            let info = find_macro_at(&tree, &source, *start_line, &exported_names)?;
-            let lines = collect_macro_body_at(&tree, &source, *start_line);
-            single_file_lines_batch(file, &source, lines, macro_body_signals(file, &info, ctx))
-        }
-    }
-}
-
-// --- candidate + signal helpers ---
-
-fn candidate(rk: RustKey, signals: ValueSignals) -> Candidate<BatchKey> {
-    Candidate::new(rk.into(), signals)
 }
 
 /// Kind of a top-level pub item, used to weight its batch. Traits are the
@@ -396,12 +422,6 @@ fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
     out
 }
 
-fn find_item_at(tree: &Tree, source: &str, start_line: usize) -> Option<PubItemInfo> {
-    find_pub_item_starts(tree, source)
-        .into_iter()
-        .find(|i| i.start_line == start_line)
-}
-
 /// Files whose filename signals "crate entrypoint / main module surface".
 fn is_entrypoint_file(path: &Path) -> bool {
     path.file_name()
@@ -420,91 +440,52 @@ fn entrypoint_boost(path: &Path) -> f64 {
     }
 }
 
-/// Depth factor for a file. Entrypoints are pinned to depth 1 so
-/// `src/lib.rs` isn't penalized relative to root-depth content. All files
-/// multiply by a non-essential-directory factor.
-fn file_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
-    let depth = ctx.depth_from_root(path);
-    let raw = if is_entrypoint_file(path) {
-        depth_factor(depth.min(1))
-    } else {
-        depth_factor(depth)
-    };
-    raw * ctx.non_essential_factor(path)
+/// Composed location prior for Rust files: depth penalty (entrypoints
+/// pinned to depth 1) folded with the non-essential-directory discount.
+fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    file_depth_factor(file, ctx, is_entrypoint_file(file))
 }
 
-fn crate_doc_lede_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.8 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.5,
-        zero_tool_call_understanding: 0.9,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn crate_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx))
 }
 
-fn crate_doc_body_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.35 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.75,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.35 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx))
 }
 
-fn mod_use_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.3 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.55,
-        zero_tool_call_understanding: 0.3,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn mod_use_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.3 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.55, 0.3, rust_depth_factor(file, ctx))
 }
 
-fn pub_item_names_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
+fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Cheap surface listing — catastrophic-omission hedge. Ranks high
     // because missing it means the agent doesn't know items exist.
     // File-level visibility applies the same axis as `ApiSurface::factor`
     // (0.4 for Restricted) — a names listing of items that aren't on the
     // public API is structurally less valuable to the agent.
     let s = file_visibility_factor(file, ctx);
-    ValueSignals {
-        catastrophic_omission: (0.8 * entrypoint_boost(file) * s).min(1.0),
-        follow_up_minimization: 0.6 * s,
-        zero_tool_call_understanding: 0.35 * s,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.8 * entrypoint_boost(file) * s).min(1.0);
+    mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx))
 }
 
-fn pub_item_signals(
-    file: &Path,
-    kind: ItemKind,
-    surface: ApiSurface,
-    ctx: &WalkCtx,
-) -> ValueSignals {
+fn pub_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let s = effective_surface(surface, ctx, file).factor();
-    ValueSignals {
-        catastrophic_omission: (0.70 * k * s * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.85 * k * s).min(1.0),
-        zero_tool_call_understanding: 0.65 * s,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.70 * k * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.85 * k * s).min(1.0);
+    mix_signals(cat, fu, 0.65 * s, rust_depth_factor(file, ctx))
 }
 
-fn pub_item_doc_lede_signals(
-    file: &Path,
-    kind: ItemKind,
-    surface: ApiSurface,
-    ctx: &WalkCtx,
-) -> ValueSignals {
+fn pub_item_doc_lede_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let s = effective_surface(surface, ctx, file).factor();
-    ValueSignals {
-        catastrophic_omission: (0.20 * k * s * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.6 * k * s).min(1.0),
-        zero_tool_call_understanding: 0.8 * s,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.20 * k * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.6 * k * s).min(1.0);
+    mix_signals(cat, fu, 0.8 * s, rust_depth_factor(file, ctx))
 }
 
 /// Body weights are a strict refinement of the lede: body rarely adds
@@ -513,20 +494,12 @@ fn pub_item_doc_lede_signals(
 /// `# Examples` does save tool calls (0.55 vs lede 0.6), and ztu
 /// drops to 0.55 since example walls add only marginal understanding
 /// over the lede prose.
-fn pub_item_doc_body_signals(
-    file: &Path,
-    kind: ItemKind,
-    surface: ApiSurface,
-    ctx: &WalkCtx,
-) -> ValueSignals {
+fn pub_item_doc_body_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let s = effective_surface(surface, ctx, file).factor();
-    ValueSignals {
-        catastrophic_omission: (0.10 * k * s * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.55 * k * s).min(1.0),
-        zero_tool_call_understanding: 0.55 * s,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.10 * k * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.55 * k * s).min(1.0);
+    mix_signals(cat, fu, 0.55 * s, rust_depth_factor(file, ctx))
 }
 
 /// Combine a per-item local `ApiSurface` with the file's effective
@@ -549,22 +522,13 @@ fn file_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     }
 }
 
-fn method_sigs_signals(file: &Path, ctx: &WalkCtx) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: (0.5 * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: 0.8,
-        zero_tool_call_understanding: 0.4,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let cat = (0.5 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.8, 0.4, rust_depth_factor(file, ctx))
 }
 
-fn macro_names_signals(depth: usize) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: 0.75,
-        follow_up_minimization: 0.6,
-        zero_tool_call_understanding: 0.4,
-        depth_factor: depth_factor(depth),
-    }
+fn macro_names_value(depth: usize) -> f64 {
+    mix_signals(0.75, 0.6, 0.4, depth_factor(depth))
 }
 
 /// Per-macro signals. Three demotion axes stack multiplicatively:
@@ -585,17 +549,14 @@ fn macro_names_signals(depth: usize) -> ValueSignals {
 /// collector excluded `__-prefixed` macros entirely; per-macro
 /// emission keeps them visible at low priority so the scheduler
 /// decides on budget.
-fn macro_body_signals(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> ValueSignals {
+fn macro_body_value(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> f64 {
     let underscore = if info.underscore_private { 0.4 } else { 1.0 };
     let doc_hidden = if info.doc_hidden { 0.4 } else { 1.0 };
     let wrapper = if info.is_wrapper { 0.6 } else { 1.0 };
     let axis = underscore * doc_hidden * wrapper;
-    ValueSignals {
-        catastrophic_omission: (0.50 * axis * entrypoint_boost(file)).min(1.0),
-        follow_up_minimization: (0.70 * axis).min(1.0),
-        zero_tool_call_understanding: 0.55 * axis,
-        depth_factor: file_depth_factor(file, ctx),
-    }
+    let cat = (0.50 * axis * entrypoint_boost(file)).min(1.0);
+    let fu = (0.70 * axis).min(1.0);
+    mix_signals(cat, fu, 0.55 * axis, rust_depth_factor(file, ctx))
 }
 
 // --- parser ---
@@ -604,28 +565,9 @@ fn parse_rust(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_rust::LANGUAGE.into())
 }
 
-// --- shared materializer shapes ---
+// --- per-batch content builders ---
 
-fn mat_per_file<F>(
-    file: &Path,
-    collect: F,
-    signals: ValueSignals,
-    ctx: &WalkCtx,
-) -> Option<ResolvedBatch>
-where
-    F: Fn(&Tree, &str) -> FileLines,
-{
-    let (source, tree) = parse_rust(ctx, file)?;
-    let lines = collect(&tree, &source);
-    single_file_lines_batch(file, &source, lines, signals)
-}
-
-fn mat_cross_file<F>(
-    src_dir: &Path,
-    collect: F,
-    signals: ValueSignals,
-    ctx: &WalkCtx,
-) -> Option<ResolvedBatch>
+fn build_cross_file_content<F>(src_dir: &Path, ctx: &WalkCtx, collect: F) -> Option<BatchContent>
 where
     F: Fn(&Tree, &str) -> FileLines,
 {
@@ -644,10 +586,21 @@ where
     if all_spans.is_empty() {
         return None;
     }
-    Some(ResolvedBatch {
-        content: BatchContent::Lines { spans: all_spans },
-        signals,
-    })
+    Some(BatchContent::Lines { spans: all_spans })
+}
+
+fn batch(
+    key: RustKey,
+    predecessor: Option<BatchKey>,
+    content: BatchContent,
+    value: f64,
+) -> Batch<BatchKey> {
+    Batch {
+        key: key.into(),
+        predecessor,
+        content,
+        value,
+    }
 }
 
 // --- AST collectors ---
@@ -1110,17 +1063,6 @@ fn find_macro_starts(
     out
 }
 
-fn find_macro_at(
-    tree: &Tree,
-    source: &str,
-    start_line: usize,
-    exported_names: &HashSet<String>,
-) -> Option<MacroInfo> {
-    find_macro_starts(tree, source, exported_names)
-        .into_iter()
-        .find(|m| m.start_line == start_line)
-}
-
 /// Read the `name` child (or fall back to first `identifier`) of a
 /// `macro_definition` node and return its text.
 fn macro_definition_name<'a>(node: Node, source: &'a str) -> Option<&'a str> {
@@ -1228,7 +1170,9 @@ where
 /// declaration in the current file). `pub use crate::...` and
 /// `pub use super::...` paths are not modeled.
 fn module_visibility(ctx: &WalkCtx, file: &Path) -> Visibility {
-    let map = ctx.rust_module_visibility_map(|| compute_module_visibility(ctx));
+    let map = ctx
+        .rust_state()
+        .module_visibility_map(|| compute_module_visibility(ctx));
     if let Some(&v) = map.get(file) {
         return v;
     }

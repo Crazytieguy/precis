@@ -1,33 +1,20 @@
-//! Value model: composes [`ValueSignals`] into a scalar `f64` for the
-//! scheduler's greedy pick. Walkers contribute *signals*, not values — the
-//! mixing weights live here so every walker's output is comparable on one
-//! scale.
+//! Value-model helpers shared across walkers: depth pricing, non-essential
+//! discounts, and the cost-side concavity used by the scheduler. Walkers
+//! compute their batch's `value: f64` directly; the scheduler ranks by
+//! [`ratio`].
 //!
-//! The three mixing weights (`W_CATASTROPHIC`, `W_FOLLOW_UP`, `W_ZERO_CALL`)
-//! are the ontology's three failure modes we're trying to avoid. First-pass
-//! calibration; tune against north-star divergence reports.
+//! [`mix_signals`] is a convenience for walkers that still find it natural
+//! to express per-batch tuning as a `(catastrophic, follow-up, zero-call)`
+//! triple — the weights live here so per-batch numbers stay comparable
+//! across walkers. It's not load-bearing: a walker is free to skip the
+//! helper and compute its value however. First-pass weights; calibration
+//! is experimentation territory (see `docs/design-notes.md`).
 
-use crate::batch::ValueSignals;
-
-/// Weight on the catastrophic-omission signal. Highest — missing this
-/// content means the agent forms a wrong mental model.
-pub const W_CATASTROPHIC: f64 = 1000.0;
-
-/// Weight on the follow-up-minimization signal. Each 1.0 saves one tool
-/// call's worth of work.
-pub const W_FOLLOW_UP: f64 = 400.0;
-
-/// Weight on the zero-tool-call-understanding signal. How much this content
-/// contributes to answering a question *without* any follow-up.
-pub const W_ZERO_CALL: f64 = 300.0;
-
-/// Compose a set of signals into a scalar value. Linear in signals,
-/// multiplied by the depth/boost factor. Value is always >= 0.
-pub fn score(signals: &ValueSignals) -> f64 {
-    let base = W_CATASTROPHIC * signals.catastrophic_omission
-        + W_FOLLOW_UP * signals.follow_up_minimization
-        + W_ZERO_CALL * signals.zero_tool_call_understanding;
-    base * signals.depth_factor.max(0.0)
+/// Mix three first-pass signal axes — catastrophic-omission,
+/// follow-up minimization, zero-tool-call understanding — into a scalar
+/// value, scaled by the path-relative depth/non-essential factor.
+pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
+    (1000.0 * cat + 400.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
 /// Down-weight a batch by filesystem depth. Depth 0 (root) and depth 1

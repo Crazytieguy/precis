@@ -6,20 +6,11 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use precis::batch::{BatchKey, FsKey, ResolvedBatch, RustKey, ValueSignals};
+use precis::batch::{Batch, BatchKey, FsKey, RustKey};
 use precis::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
-use precis::walker::{Candidate, WalkCtx, Walker};
-
-fn sig(n: f64) -> ValueSignals {
-    ValueSignals {
-        catastrophic_omission: n,
-        follow_up_minimization: n,
-        zero_tool_call_understanding: n,
-        depth_factor: 1.0,
-    }
-}
+use precis::walker::{WalkCtx, Walker};
 
 fn one_child(name: &str) -> FsEntries {
     FsEntries::Listed(vec![PathBuf::from(name)])
@@ -34,9 +25,9 @@ fn single_span(path: PathBuf, start: usize, end: usize, render: Render) -> Vec<S
     }]
 }
 
-// Common stub paths. `/stub` doesn't exist; the synthetic walker answers
-// every key's materialize directly, and each test preloads a `SourceCache`
-// so the render pipeline materializes spans without touching the real FS.
+// Common stub paths. `/stub` doesn't exist; the synthetic walker emits
+// every batch directly, and each test preloads a `SourceCache` so the
+// render pipeline materializes spans without touching the real FS.
 const STUB_DIR: &str = "/stub";
 
 fn stub_dir() -> PathBuf {
@@ -49,6 +40,20 @@ fn stub_file(name: &str) -> PathBuf {
 
 fn listing_key() -> BatchKey {
     BatchKey::Fs(FsKey::DirListing { dir: stub_dir() })
+}
+
+fn fs_listing_batch(value: f64, child: &str) -> Batch<BatchKey> {
+    Batch {
+        key: listing_key(),
+        predecessor: None,
+        content: BatchContent::Fs {
+            groups: vec![FsGroup {
+                parent: stub_dir(),
+                entries: one_child(child),
+            }],
+        },
+        value,
+    }
 }
 
 fn preload(cache: &SourceCache, path: &Path, contents: &str) {
@@ -64,71 +69,55 @@ fn scheduler_invariants_override_via_predecessor_chain() {
     impl Walker for OverrideChain {
         type Key = BatchKey;
 
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9))]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            vec![fs_listing_batch(900.0, "synthetic.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                let decls = BatchKey::Rust(RustKey::PubItem {
+                let pub_item_key = BatchKey::Rust(RustKey::PubItem {
                     file: stub_file("synthetic.rs"),
                     start_line: 1,
                 });
                 vec![
-                    Candidate::new(decls.clone(), sig(0.5)),
-                    Candidate::new(
-                        BatchKey::Rust(RustKey::PubItemDocLede {
+                    Batch {
+                        key: pub_item_key.clone(),
+                        predecessor: None,
+                        content: BatchContent::Lines {
+                            spans: vec![
+                                Span {
+                                    path: stub_file("synthetic.rs"),
+                                    start: 1,
+                                    end: 1,
+                                    render: Render::Truncated {
+                                        pattern: r"^fn [a-z]+".into(),
+                                    },
+                                },
+                                Span {
+                                    path: stub_file("synthetic.rs"),
+                                    start: 2,
+                                    end: 2,
+                                    render: Render::Truncated {
+                                        pattern: r"^fn [a-z]+".into(),
+                                    },
+                                },
+                            ],
+                        },
+                        value: 500.0,
+                    },
+                    Batch {
+                        key: BatchKey::Rust(RustKey::PubItemDocLede {
                             file: stub_file("synthetic.rs"),
                             start_line: 1,
                         }),
-                        sig(0.3),
-                    )
-                    .with_predecessor(decls),
+                        predecessor: Some(pub_item_key),
+                        content: BatchContent::Lines {
+                            spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
+                        },
+                        value: 300.0,
+                    },
                 ]
             } else {
                 Vec::new()
-            }
-        }
-        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
-            match key {
-                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::Fs {
-                        groups: vec![FsGroup {
-                            parent: dir.clone(),
-                            entries: one_child("synthetic.rs"),
-                        }],
-                    },
-                    signals: sig(0.9),
-                }),
-                BatchKey::Rust(RustKey::PubItem { .. }) => Some(ResolvedBatch {
-                    content: BatchContent::Lines {
-                        spans: vec![
-                            Span {
-                                path: stub_file("synthetic.rs"),
-                                start: 1,
-                                end: 1,
-                                render: Render::Truncated {
-                                    pattern: r"^fn [a-z]+".into(),
-                                },
-                            },
-                            Span {
-                                path: stub_file("synthetic.rs"),
-                                start: 2,
-                                end: 2,
-                                render: Render::Truncated {
-                                    pattern: r"^fn [a-z]+".into(),
-                                },
-                            },
-                        ],
-                    },
-                    signals: sig(0.5),
-                }),
-                BatchKey::Rust(RustKey::PubItemDocLede { .. }) => Some(ResolvedBatch {
-                    content: BatchContent::Lines {
-                        spans: single_span(stub_file("synthetic.rs"), 1, 1, Render::Full),
-                    },
-                    signals: sig(0.3),
-                }),
-                _ => None,
             }
         }
     }
@@ -157,34 +146,17 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     impl Walker for OneEntry {
         type Key = BatchKey;
 
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9))]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            vec![fs_listing_batch(900.0, "synthetic.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                vec![Candidate::new(
-                    BatchKey::Rust(RustKey::PubItem {
+                vec![Batch {
+                    key: BatchKey::Rust(RustKey::PubItem {
                         file: stub_file("synthetic.rs"),
                         start_line: 1,
                     }),
-                    sig(0.5),
-                )]
-            } else {
-                Vec::new()
-            }
-        }
-        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
-            match key {
-                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::Fs {
-                        groups: vec![FsGroup {
-                            parent: dir.clone(),
-                            entries: one_child("synthetic.rs"),
-                        }],
-                    },
-                    signals: sig(0.9),
-                }),
-                BatchKey::Rust(RustKey::PubItem { .. }) => Some(ResolvedBatch {
+                    predecessor: None,
                     content: BatchContent::Lines {
                         spans: vec![Span {
                             path: stub_file("synthetic.rs"),
@@ -193,9 +165,10 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
                             render: Render::Full,
                         }],
                     },
-                    signals: sig(0.5),
-                }),
-                _ => None,
+                    value: 500.0,
+                }]
+            } else {
+                Vec::new()
             }
         }
     }
@@ -224,51 +197,35 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
     impl Walker for OverlappingWalker {
         type Key = BatchKey;
 
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            vec![Candidate::new(listing_key(), sig(0.9))]
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            vec![fs_listing_batch(900.0, "f.rs")]
         }
-        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+        fn expand(&mut self, scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if matches!(scheduled, BatchKey::Fs(FsKey::DirListing { .. })) {
-                // Two siblings — neither has the other as predecessor.
+                let line_content = || BatchContent::Lines {
+                    spans: single_span(stub_file("f.rs"), 1, 1, Render::Full),
+                };
                 vec![
-                    Candidate::new(
-                        BatchKey::Rust(RustKey::PubItem {
+                    Batch {
+                        key: BatchKey::Rust(RustKey::PubItem {
                             file: stub_file("f.rs"),
                             start_line: 1,
                         }),
-                        sig(0.5),
-                    ),
-                    Candidate::new(
-                        BatchKey::Rust(RustKey::MethodSigs {
+                        predecessor: None,
+                        content: line_content(),
+                        value: 500.0,
+                    },
+                    Batch {
+                        key: BatchKey::Rust(RustKey::MethodSigs {
                             file: stub_file("f.rs"),
                         }),
-                        sig(0.5),
-                    ),
+                        predecessor: None,
+                        content: line_content(),
+                        value: 500.0,
+                    },
                 ]
             } else {
                 Vec::new()
-            }
-        }
-        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
-            let mk = || ResolvedBatch {
-                content: BatchContent::Lines {
-                    spans: single_span(stub_file("f.rs"), 1, 1, Render::Full),
-                },
-                signals: sig(0.5),
-            };
-            match key {
-                BatchKey::Fs(FsKey::DirListing { dir }) => Some(ResolvedBatch {
-                    content: BatchContent::Fs {
-                        groups: vec![FsGroup {
-                            parent: dir.clone(),
-                            entries: one_child("f.rs"),
-                        }],
-                    },
-                    signals: sig(0.9),
-                }),
-                BatchKey::Rust(RustKey::PubItem { .. }) => Some(mk()),
-                BatchKey::Rust(RustKey::MethodSigs { .. }) => Some(mk()),
-                _ => None,
             }
         }
     }
@@ -295,61 +252,45 @@ fn scheduler_invariants_fs_overlap_invalidates_cached_cost() {
     // per test, so the unsafe `set_var` is safe — no other threads
     // are reading the env at this point.
     //
-    // A is given a stronger value signal so it schedules first; the
+    // A is given a stronger value so it schedules first; the
     // ranking ratio (value / cost^k) plus dedup-on-already-listed gates
     // the rest of the test naturally.
     // SAFETY: nextest runs each test in its own single-threaded process.
     unsafe { std::env::set_var("PRECIS_VERIFY_COST_CACHE", "1") };
-    #[derive(PartialEq, Eq)]
-    enum Which {
-        ListingA,
-        ListingB,
+    fn key_a() -> BatchKey {
+        // Distinct directory paths so the keys hash differently —
+        // both batches still emit groups parented at the shared
+        // `/stub` directory, which is what the cache cares about.
+        BatchKey::Fs(FsKey::DirListing {
+            dir: PathBuf::from("/stub-a"),
+        })
     }
-    fn key_for(which: &Which) -> BatchKey {
-        match which {
-            // Distinct directory paths so the keys hash differently —
-            // both materializers still emit groups parented at the
-            // shared `/stub` directory, which is what the cache cares
-            // about. Using two separate `DirListing` keys with identical
-            // `dir` fields would collapse them into one entry.
-            Which::ListingA => BatchKey::Fs(FsKey::DirListing {
-                dir: PathBuf::from("/stub-a"),
-            }),
-            Which::ListingB => BatchKey::Fs(FsKey::DirListing {
-                dir: PathBuf::from("/stub-b"),
-            }),
-        }
+    fn key_b() -> BatchKey {
+        BatchKey::Fs(FsKey::DirListing {
+            dir: PathBuf::from("/stub-b"),
+        })
     }
 
     struct OverlapWalker;
     impl Walker for OverlapWalker {
         type Key = BatchKey;
 
-        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             vec![
-                Candidate::new(key_for(&Which::ListingA), sig(0.9)),
-                Candidate::new(key_for(&Which::ListingB), sig(0.4)),
-            ]
-        }
-
-        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Candidate<BatchKey>> {
-            Vec::new()
-        }
-
-        fn materialize(&mut self, key: &BatchKey, _ctx: &WalkCtx) -> Option<ResolvedBatch> {
-            if key == &key_for(&Which::ListingA) {
-                return Some(ResolvedBatch {
+                Batch {
+                    key: key_a(),
+                    predecessor: None,
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: stub_dir(),
                             entries: FsEntries::Listed(vec![PathBuf::from("a.rs")]),
                         }],
                     },
-                    signals: sig(0.9),
-                });
-            }
-            if key == &key_for(&Which::ListingB) {
-                return Some(ResolvedBatch {
+                    value: 900.0,
+                },
+                Batch {
+                    key: key_b(),
+                    predecessor: None,
                     content: BatchContent::Fs {
                         groups: vec![FsGroup {
                             parent: stub_dir(),
@@ -359,10 +300,13 @@ fn scheduler_invariants_fs_overlap_invalidates_cached_cost() {
                             ]),
                         }],
                     },
-                    signals: sig(0.4),
-                });
-            }
-            None
+                    value: 400.0,
+                },
+            ]
+        }
+
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            Vec::new()
         }
     }
 
