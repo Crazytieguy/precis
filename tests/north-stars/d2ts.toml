@@ -1,0 +1,699 @@
+fixture = "d2ts"
+revision_pin = "418591d5"
+summary = """
+d2ts is a TypeScript pnpm-workspace monorepo implementing differential
+dataflow for incremental view maintenance. The repo contains four
+packages: `d2ts` (the full library — multidimensional `Version` /
+`Antichain` frontiers, `MultiSet`, the `D2` graph builder, the
+operator catalog under `src/operators/`, persistent variants under
+`src/sqlite/`, and an ElectricSQL ShapeStream adapter under
+`src/electric/`); `d2mini` (a slim in-memory variant without
+frontiers); `d2ql` (an experimental SQL-like query language that
+compiles to a d2ts pipeline + a fluent query builder + a Store
+materialization layer); and `d2ts-benchmark` (a perf harness pitting
+d2ts/SQLite/naive against each other). There are also worked
+examples under `examples/` (basic, joins, iterate, includes,
+fruit-processed, min/max, plus a `d2ql/` subdir and a full
+PG+Electric integration in `electric/`).
+
+The ranking is built for the full distribution of plausible dev
+queries against this repo: explanations of differential-dataflow
+concepts (versions, frontiers, multisets, the index trace structure,
+how `iterate`/`reduce`/`join` actually work); pipeline-author
+questions ("how do I key/join/aggregate?", "what operators are
+available?", "what does `consolidate` do?"); type-system / API
+discovery (`pipe` overloads, `KeyValue`, `Message`, `IStreamBuilder`);
+extension / plugin work in `d2ts` (adding a new operator, hooking a
+new source, persisting state via SQLite); cross-package work in
+`d2ql` (compiling new SQL features, the `Query` schema, the query
+builder, the `Store`); ops/CI/release questions (changesets, the CI
+workflow, eslint/tsconfig). Catastrophic-omission hedges show up as
+location batches: every operator file under `src/operators/`
+together; the full `index.ts` re-export set; every `Select`/`Where`
+field together; every aggregate function name together. Breadth is
+weighted ahead of depth — a small budget should let an agent reach
+the right *file* even when it can't read the body.
+"""
+
+# ---- Tier 1: orientation ----------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README one-liner"
+justification = """
+The single most load-bearing line in the repo: "D2TS is a TypeScript
+implementation of differential dataflow". One sentence anchors the
+whole snapshot for almost any query — even at the smallest budgets.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 26, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level workspace listing"
+justification = """
+The repo root listing — packages/, examples/, README/LICENSE, configs.
+Single biggest navigational fact: that this is a monorepo with
+specific top-level dirs.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Packages directory listing"
+justification = """
+Names the four packages: `d2ts`, `d2mini`, `d2ql`, `d2ts-benchmark`.
+Single most important content-routing fact after the README lede —
+"is this question about the core lib or d2ql?" gets answered here.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "pnpm workspace globs"
+justification = """
+Two-line file: confirms `packages/*` + `examples/*` is the workspace
+shape. Tells the agent nothing else lives in the workspace.
+"""
+content = { kind = "lines", spans = [
+  { path = "pnpm-workspace.yaml", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README — incremental + Electric pitch"
+justification = """
+Two more sentences from the README: incremental processing of changes
+(not full recomputes) and the ElectricSQL ShapeStream tie-in. Reframes
+the query "is this just rxjs?" before the agent even asks.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 30, end = 32, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "d2mini one-liner"
+justification = """
+"d2mini is a minimal implementation of D2TS but without
+multi-dimensional versioning" — defines the d2mini⇄d2ts relationship
+in one line; agent now knows which package to read for which question.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2mini/README.md", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "d2ql one-liner"
+justification = """
+"D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled
+to a D2TS pipeline." Plus the experimental flag. Defines d2ql's
+relation to d2ts in one line.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ql/README.md", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+# ---- Tier 2: core public-API surface ---------------------------------------
+# Breadth-first: file layouts, public types, signatures (not bodies).
+# Location/signature batches that mitigate catastrophic-omission risk for
+# the operator catalog and core types.
+
+[[batches]]
+id = "2.1"
+descriptor = "d2ts src layout"
+justification = """
+Names every file in the core package's src dir: `d2.ts`, `graph.ts`,
+`multiset.ts`, `order.ts`, `types.ts`, `version-index.ts`, `utils.ts`,
+plus the `operators/`, `sqlite/`, `electric/` subdirs. After this the
+agent can locate any concept by file with at most one grep.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages/d2ts/src", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "d2ts package re-exports (`index.ts`)"
+justification = """
+The package's public surface: re-exports from d2.ts / order.ts /
+multiset.ts / version-index.ts / operators/index.ts / types.ts. Six
+lines, but they tell the agent exactly what's importable from
+`@electric-sql/d2ts`.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/index.ts", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Operator catalog (operators/ filenames)"
+justification = """
+The single most load-bearing fs listing in the repo. Names every
+operator file under `packages/d2ts/src/operators/`: buffer, concat,
+consolidate, count, debug, distinct, filter, filterBy, groupBy,
+iterate, join, keying, map, negate, orderBy, output, pipe, reduce,
+topK, topKWithFractionalIndex. Without this, every "is there an X
+operator?" query needs a full grep.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages/d2ts/src/operators", entries = "all" },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Version + Antichain class names + factory `v(…)`"
+justification = """
+The cached-Version factory `v(…)` (the user-facing helper) + the two
+class declarations + `Frontier`. Names the lattice vocabulary an
+agent will use to reason about ordering / frontiers.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/order.ts", start = 10, end = 10, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/order.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "packages/d2ts/src/order.ts", start = 138, end = 138, render = { kind = "full" } },
+  { path = "packages/d2ts/src/order.ts", start = 277, end = 277, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Core types: KeyValue, MessageType, Message"
+justification = """
+Three of the most-referenced types in the codebase. `KeyValue<K,V>`
+is the convention for keyed streams (see operators); `Message<T>` is
+what flows through every operator; `MessageType.DATA` /
+`MessageType.FRONTIER` is the discriminator.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/types.ts", start = 5, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Core types: DataMessage, FrontierMessage, PipedOperator"
+justification = """
+Completes the message-type story (DataMessage carries `version` +
+`collection`; FrontierMessage is `Version | Antichain`) and shows the
+`PipedOperator<I,O>` shape — the type a piped operator must satisfy.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/types.ts", start = 24, end = 30, render = { kind = "full" } },
+  { path = "packages/d2ts/src/types.ts", start = 117, end = 119, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "operators/index.ts (operator re-exports)"
+justification = """
+The complete operator-name set: every name re-exported from
+`operators/index.ts` is a public operator. Pairs with 2.3 for full
+catastrophic-omission coverage on the operator catalog.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/index.ts", start = 1, end = 20, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "MultiSet method names (full catalog)"
+justification = """
+Every public method on `MultiSet` truncated at `(`: map / filter /
+negate / concat / consolidate / join / reduce / count / sum / min /
+max / distinct / iterate / extend / getInner. Tells the agent the
+full algebra a `MultiSet` exposes — used inside operator impls and
+constructable directly via the public API.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/multiset.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 40, end = 40, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 128, end = 128, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 167, end = 167, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 183, end = 183, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 220, end = 220, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 258, end = 258, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 291, end = 291, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 303, end = 303, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/multiset.ts", start = 308, end = 308, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "D2 class + RootStreamBuilder method names"
+justification = """
+The `D2` class entry point and method names truncated at the opening
+paren. Catalog-style: every public method (`newInput`, `addOperator`,
+`frontier`/`pushFrontier`/`popFrontier`, `finalize`,
+`step`/`run`/`pendingWork`) plus the `RootStreamBuilder.sendData` /
+`sendFrontier`. Answers "what methods does `D2` have?" without a
+follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/d2.ts", start = 11, end = 11, render = { kind = "full" } },
+  { path = "packages/d2ts/src/d2.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "packages/d2ts/src/d2.ts", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 64, end = 64, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 68, end = 68, render = { kind = "full" } },
+  { path = "packages/d2ts/src/d2.ts", start = 73, end = 73, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 82, end = 82, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 86, end = 86, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/d2.ts", start = 166, end = 167, render = { kind = "full" } },
+  { path = "packages/d2ts/src/d2.ts", start = 174, end = 174, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Operator interfaces: IOperator, IDifferenceStreamReader/Writer"
+justification = """
+The interfaces an operator-author or graph-extender needs to satisfy.
+`IOperator` (run/hasPendingWork/frontiers), the reader (drain/isEmpty/
+probeFrontierLessThan), the writer (sendData/sendFrontier/newReader).
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/types.ts", start = 31, end = 50, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "ID2 + IStreamBuilder shape"
+justification = """
+The graph and stream-builder interfaces in their condensed form: the
+`ID2` method names + the `IStreamBuilder` accessor names + the
+overload comment that explains why `pipe` has 20 overloads.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/types.ts", start = 52, end = 73, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "Top-level README — operator catalog with descriptions"
+justification = """
+The README's bullet list of every operator with a one-line description
+(buffer / concat / consolidate / count / distinct / filter / iterate /
+join / keyBy / map / reduce / rekey / unkey / output / pipe). Pairs
+with 2.3 (filenames) and 2.7 (re-exports) — names plus meanings, no
+follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 53, end = 71, render = { kind = "full" } },
+] }
+
+# ---- Tier 3: d2ts core impls ----------------------------------------------
+# The semantically-rich heart of the package: graph base classes, the
+# canonical operator factory pattern, and the load-bearing operator
+# bodies (consolidate, the Index trace, reduce/join, iterate).
+
+[[batches]]
+id = "3.1"
+descriptor = "Antichain.create polymorphic constructor"
+justification = """
+The factory that explains why every API in this codebase accepts
+`Antichain | Version | number | number[]`. Resolves the user-facing
+"can I just pass an integer for the frontier?" question.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/order.ts", start = 148, end = 166, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "graph.ts class hierarchy (signatures only)"
+justification = """
+The base classes operators inherit from: `Operator`,
+`UnaryOperator`, `BinaryOperator`, plus `DifferenceStreamReader` /
+`DifferenceStreamWriter`. Names + member signatures so the agent
+sees the run / drain / inputMessages / inputAFrontier vocabulary.
+Avoids reading 200 lines of body.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/graph.ts", start = 20, end = 20, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 27, end = 27, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 33, end = 33, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 58, end = 58, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 87, end = 87, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 100, end = 100, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 111, end = 111, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 131, end = 131, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 135, end = 135, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 144, end = 144, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 154, end = 154, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 158, end = 158, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 171, end = 171, render = { kind = "full" } },
+  { path = "packages/d2ts/src/graph.ts", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 186, end = 186, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 194, end = 194, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 198, end = 198, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "packages/d2ts/src/graph.ts", start = 202, end = 202, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "LinearUnaryOperator base class (operators/base.ts)"
+justification = """
+The reusable parent for every "stateless, one-collection-in,
+one-collection-out" operator (map / filter / negate). Shows the
+canonical `inputMessages()` loop, the FRONTIER handling, and how
+`outputFrontier` is advanced. After this the agent can read any
+linear-unary operator file and skim it.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/base.ts", start = 1, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Keying operators (keyBy/unkey/rekey)"
+justification = """
+The whole `keying.ts` file is 34 lines and is just three thin map
+wrappers — but those three names answer most "how do I prep data for
+join?" questions. Cheap and load-bearing.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/keying.ts", start = 1, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "map() operator: canonical factory pattern"
+justification = """
+`map.ts` — every operator factory in the codebase follows this exact
+shape (build a StreamBuilder, instantiate the operator, addOperator,
+addStream, return). The boilerplate the agent will copy when adding a
+new operator.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/map.ts", start = 30, end = 51, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "ConsolidateOperator: the \"versions complete\" pattern"
+justification = """
+The canonical stateful-but-trivial operator: buffers per-version,
+flushes versions that are no longer covered by the input frontier,
+then advances the output frontier. The shape every per-version-buffered
+operator (buffer.ts, the SQLite consolidate, etc.) repeats.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/consolidate.ts", start = 16, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "Index<K,V> trace: signatures + interface"
+justification = """
+The data structure that join + reduce share. The interface
+(reconstructAt / versions / addValue / append / join / compact / keys /
+has) plus the class declaration. The agent now knows what an "index"
+is in this codebase without reading 270 lines.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/version-index.ts", start = 8, end = 17, render = { kind = "full" } },
+  { path = "packages/d2ts/src/version-index.ts", start = 28, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "ReduceOperator: class + ingest loop"
+justification = """
+The class declaration, fields (`#index`, `#indexOut`, `#keysTodo`),
+constructor, and the message-ingestion loop (lines 32–65). Pairs
+with 3.9 — together they explain why `reduce` accumulates an Index
+trace and what `keysTodo` tracks. Splits the heavy operator body
+across two batches to satisfy the growth envelope.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/reduce.ts", start = 12, end = 65, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "ReduceOperator: finished-versions + delta computation"
+justification = """
+The semantically subtle half: walk completed versions, for each
+(key, version) reconstruct from `#index` + `#indexOut`, run the
+user fn, compute the multiplicity *delta* against the previous
+output, emit only non-zero deltas, then advance + compact. This is
+the explanation for "why does reduce only emit changes, not full
+group results?".
+"""
+predecessor = "3.8"
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/reduce.ts", start = 66, end = 122, render = { kind = "full" } },
+] }
+
+
+[[batches]]
+id = "3.10"
+descriptor = "JoinOperator: class shape + delta-join kernel"
+justification = """
+The class declaration with `#indexA`/`#indexB` traces, an ellipsis
+hiding the symmetric A/B ingest loops (same shape as ReduceOperator
+3.8), and the load-bearing kernel (lines 83–122): `deltaA ⨝ indexB`
++ `indexA ⨝ deltaB` (avoids double-counting), append deltas to
+indexes, advance `outputFrontier = meet(inputAFrontier,
+inputBFrontier)`, then compact both traces.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/join.ts", start = 29, end = 47, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 48, end = 48, render = { kind = "ellipsis" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 83, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "Join factory + JoinType + named variants"
+justification = """
+The five join modes ('inner' | 'left' | 'right' | 'full' | 'anti'),
+the dispatcher, and the headers of innerJoin/antiJoin/leftJoin/
+rightJoin/fullJoin. Catastrophic-omission hedge for "is there a left
+join?". Most variants are 1-screen wrappers around innerJoin + concat
++ negate; just the headers suffice.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/join.ts", start = 21, end = 25, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 130, end = 153, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 159, end = 159, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 192, end = 192, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 220, end = 220, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 245, end = 245, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/join.ts", start = 273, end = 273, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "iterate(): scope/feedback wiring"
+justification = """
+The user-facing `iterate()` factory: extend the frontier (one extra
+dimension), wire `ingress → concat(feedback) → f → FeedbackOperator
+→ feedback`, then `egress`. Explanation for how versions become 2D
+inside an iterate block.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/iterate.ts", start = 222, end = 254, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "iterate.ts class names"
+justification = """
+The four operators that implement iteration scope:
+`IngressOperator` (extends version dimensions, emits negate at next
+step), `EgressOperator` (truncates back), `FeedbackOperator`
+(tracks in-flight per top-level version with a 3-empty-update grace
+window before closing). Class names only — bodies are subtle but
+optional reading; pointers suffice.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/iterate.ts", start = 15, end = 15, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/iterate.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/iterate.ts", start = 80, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.14"
+descriptor = "groupBy + aggregate function names"
+justification = """
+The high-level `groupBy(keyExtractor, aggregates)` signature plus
+every aggregate factory's name (sum / count / avg / min / max /
+median / mode) and the `groupByOperators` registry. Matches the
+GROUP BY surface that d2ql plugs into. Catastrophic-omission hedge:
+all seven aggregates in one batch.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 39, end = 43, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 139, end = 141, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 157, end = 157, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 173, end = 175, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 203, end = 205, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 224, end = 226, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 246, end = 248, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 294, end = 296, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/groupBy.ts", start = 335, end = 343, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.15"
+descriptor = "topK + orderBy + indexed variants (signatures)"
+justification = """
+Names every public ordering operator: `topK`, `topKWithIndex`,
+`topKWithFractionalIndex`, `orderBy`, `orderByWithIndex`,
+`orderByWithFractionalIndex`. The fractional-index variants use
+`fractional-indexing` to keep stable indices when items move
+position. Catastrophic-omission hedge for the ordering surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/operators/topK.ts", start = 22, end = 29, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/topK.ts", start = 60, end = 67, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/topKWithFractionalIndex.ts", start = 19, end = 22, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/orderBy.ts", start = 23, end = 28, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/orderBy.ts", start = 76, end = 83, render = { kind = "full" } },
+  { path = "packages/d2ts/src/operators/orderBy.ts", start = 140, end = 147, render = { kind = "full" } },
+] }
+
+# ---- Tier 4: extension surfaces (sqlite, electric, d2mini) ------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "sqlite/ + electric/ subdir listings"
+justification = """
+The two extension subdirs of the core package. `sqlite/` (database.ts
+/ context.ts / version-index.ts / operators/) — every persistent
+operator variant lives under operators/. `electric/` is just
+`index.ts` (ShapeStream → D2 input adapter). After this batch the
+agent can route any "is there a SQLite/Electric X?" question.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages/d2ts/src/sqlite", entries = "all" },
+  { parent = "packages/d2ts/src/sqlite/operators", entries = "all" },
+  { parent = "packages/d2ts/src/electric", entries = "all" },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "d2mini src + operators listings"
+justification = """
+Names every file in `packages/d2mini/src/`, including all operator
+files. d2mini mirrors d2ts's operator catalog minus iterate/buffer
+plus `orderByBTree` and `topKWithFractionalIndexBTree` variants.
+Catastrophic-omission hedge for d2mini's surface.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages/d2mini/src", entries = "all" },
+  { parent = "packages/d2mini/src/operators", entries = "all" },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "d2ql src + query-builder listings"
+justification = """
+Names every file in `packages/d2ql/src/`: compiler.ts /
+evaluators.ts / extractors.ts / functions.ts / group-by.ts /
+joins.ts / key-by.ts / order-by.ts / select.ts / schema.ts /
+schema.json / store.ts / types.ts / utils.ts, plus the
+query-builder/ subdir. Catastrophic-omission hedge for d2ql's
+internal modules.
+"""
+content = { kind = "fs", groups = [
+  { parent = "packages/d2ql/src", entries = "all" },
+  { parent = "packages/d2ql/src/query-builder", entries = "all" },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Examples + benchmark listings"
+justification = """
+Names every file under `examples/` (incl. `d2ql/` and `electric/`)
+and `packages/d2ts-benchmark/src`. Lets the agent point at a
+canonical example for any operator question and at the benchmark
+suite for "is X faster than Y?" questions.
+"""
+content = { kind = "fs", groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "examples/d2ql", entries = "all" },
+  { parent = "examples/electric", entries = "all" },
+  { parent = "examples/electric/src", entries = "all" },
+  { parent = "examples/electric/db", entries = "all" },
+  { parent = "examples/electric/db/migrations", entries = "all" },
+  { parent = "packages/d2ts-benchmark/src", entries = "all" },
+] }
+
+
+# ---- Tier 5: d2ql + electric API anchors -----------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "d2ql Query interface + compileQuery signature"
+justification = """
+The single most load-bearing API in d2ql: `BaseQuery` (select / from /
+join / where / groupBy / having / orderBy / limit / offset),
+`Query.keyBy`+`with`, plus `compileQuery(query, inputs)` signature.
+After this batch the agent can author or modify a d2ql query.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ql/src/schema.ts", start = 207, end = 207, render = { kind = "full" } },
+  { path = "packages/d2ql/src/schema.ts", start = 212, end = 228, render = { kind = "full" } },
+  { path = "packages/d2ql/src/schema.ts", start = 233, end = 235, render = { kind = "full" } },
+  { path = "packages/d2ql/src/schema.ts", start = 239, end = 241, render = { kind = "full" } },
+  { path = "packages/d2ql/src/compiler.ts", start = 16, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "d2ql function + aggregate + comparator names"
+justification = """
+The three closed-set vocabularies that the d2ql `Query` builds on:
+`AllowedFunctionName` (DATE/JSON_EXTRACT/UPPER/LOWER/COALESCE/CONCAT/
+LENGTH/ORDER_INDEX), `AggregateFunctionName` (SUM/COUNT/AVG/MIN/MAX/
+MEDIAN/MODE), `Comparator` (=/!=/</.../like/in/is/...). Listing some
+without all is a catastrophic-omission risk.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ql/src/schema.ts", start = 53, end = 62, render = { kind = "full" } },
+  { path = "packages/d2ql/src/schema.ts", start = 71, end = 78, render = { kind = "full" } },
+  { path = "packages/d2ql/src/schema.ts", start = 105, end = 117, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "Electric adapter entry points"
+justification = """
+The signatures of the two functions that bridge ElectricSQL with
+D2: `electricStreamToD2Input` (push ShapeStream → D2 input) and
+`outputElectricMessages` (D2 output → ChangeMessage[]). Plus the
+options shape so an agent knows about `lsnToVersion` / `runOn`.
+"""
+content = { kind = "lines", spans = [
+  { path = "packages/d2ts/src/electric/index.ts", start = 40, end = 40, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 44, end = 44, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 48, end = 48, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 50, end = 50, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 52, end = 52, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 56, end = 57, render = { kind = "full" } },
+  { path = "packages/d2ts/src/electric/index.ts", start = 328, end = 333, render = { kind = "full" } },
+] }

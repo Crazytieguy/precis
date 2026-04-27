@@ -69,6 +69,8 @@ per_fixture_tests!(vaul);
 per_fixture_tests!(ky);
 per_fixture_tests!(superstruct);
 per_fixture_tests!(enclosed);
+per_fixture_tests!(toasty);
+per_fixture_tests!(d2ts);
 
 // ---- paths -------------------------------------------------------------
 
