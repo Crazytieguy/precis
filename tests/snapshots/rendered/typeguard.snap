@@ -1,0 +1,133 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+        bug_report.yaml
+        config.yml
+        features_request.yaml
+    SECURITY.md
+        1→# Security Policy
+        …
+        3→## Supported Versions
+        …
+        5→The latest major/minor versions will get security updates and bug fixes.
+        6→Earlier versions are unsupported.
+        8→| Version | Supported          |
+        9→|---------| ------------------ |
+        10→| 4.4.x   | :white_check_mark: |
+        11→| < 4.4.0 | :x:                |
+        13→## Reporting a Vulnerability
+        …
+        15→See the [security](https://github.com/agronholm/typeguard/security)
+        16→section to view existing security advisories or to report a new vulnerability.
+    dependabot.yml
+    pull_request_template.md
+        2→## Changes
+        …
+        4→Fixes #. <!-- Provide issue number if exists -->
+        6→<!-- Please give a short brief about these changes. -->
+        8→## Checklist
+        …
+        10→If this is a user-facing code change, like a bugfix or a new feature, please ensure that
+        11→you've fulfilled the following conditions (where applicable):
+        13→- [ ] You've added tests (in `tests/`) added which would fail without your patch
+        14→- [ ] You've updated the documentation (in `docs/`, in case of behavior changes or new
+        15→features)
+        16→- [ ] You've added a new changelog entry (in `docs/versionhistory.rst`).
+        18→If this is a trivial change, like a typo fix or a code reformatting, then you can ignore
+        19→these instructions.
+        21→### Updating the changelog
+        …
+        23→If there are no entries after the last release, use `**UNRELEASED**` as the version.
+        24→If, say, your patch fixes issue #999, the entry should look like this:
+        26→`* Fix big bad boo-boo in the pytest plugin (#999
+        27→<https://github.com/agronholm/typeguard/issues/999>_; PR by @yourgithubaccount)`
+        29→If there's no issue linked, just link to your pull request instead by updating the
+        30→changelog after you've created the PR.
+    workflows/
+        publish.yml
+        test.yml
+.gitignore
+    1→.project
+    2→.pydevproject
+    3→.idea
+    4→.tox
+    5→.coverage*
+    6→.cache
+    7→.eggs/
+    8→*.egg-info/
+    9→*.pyc
+    10→__pycache__/
+    11→docs/_build/
+    12→dist/
+    13→build/
+    14→.mypy_cache/
+    15→.pytest_cache/
+    16→.ruff_cache/
+.pre-commit-config.yaml
+.readthedocs.yml
+LICENSE
+    1→This is the MIT license: http://www.opensource.org/licenses/mit-license.php
+    3→Copyright (c) Alex Grönholm
+    5→Permission is hereby granted, free of charge, to any person obtaining a copy of this
+    6→software and associated documentation files (the "Software"), to deal in the Software
+    7→without restriction, including without limitation the rights to use, copy, modify, merge,
+    8→publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+    9→to whom the Software is furnished to do so, subject to the following conditions:
+    11→The above copyright notice and this permission notice shall be included in all copies or
+    12→substantial portions of the Software.
+    14→THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+    15→INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+    16→PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+    17→FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+    18→OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    19→DEALINGS IN THE SOFTWARE.
+README.rst
+docs/
+    api.rst
+    conf.py
+    contributing.rst
+    extending.rst
+    features.rst
+    index.rst
+    userguide.rst
+    versionhistory.rst
+pyproject.toml
+src/
+    typeguard/
+        __init__.py
+        _checkers.py
+        _config.py
+        _decorators.py
+        _exceptions.py
+        _functions.py
+        _importhook.py
+        _memo.py
+        _pytest_plugin.py
+        _suppression.py
+        _transformer.py
+        _utils.py
+        py.typed
+tests/
+    __init__.py
+    conftest.py
+    deferredannos.py
+    dummymodule.py
+    dummymodule_py312.py
+    mypy/
+        negative.py
+        positive.py
+        test_type_annotations.py
+    test_checkers.py
+    test_importhook.py
+    test_instrumentation.py
+    test_plugins.py
+    test_pytest_plugin.py
+    test_suppression.py
+    test_transformer.py
+    test_typechecked.py
+    test_utils.py
+    test_warn_on_error.py

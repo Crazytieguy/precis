@@ -1,0 +1,3304 @@
+fixture = "commander"
+budget = 10000
+cumulative_tokens = 8253
+batch_count = 72
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander'"
+cost_tokens = 102
+cum_tokens = 102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander"
+entries = [".editorconfig", ".gitattributes", ".github", ".gitignore", ".prettierignore", ".prettierrc.js", "CHANGELOG.md", "CONTRIBUTING.md", "LICENSE", "Readme.md", "Readme_zh-CN.md", "SECURITY.md", "docs", "eslint.config.js", "esm.mjs", "examples", "index.js", "jest.config.js", "lib", "package-lock.json", "package-support.json", "package.json", "tests", "tsconfig.js.json", "tsconfig.json", "tsconfig.ts.json", "typings"]
+
+[[batches]]
+position = 2
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md" })'
+descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+cost_tokens = 30
+cum_tokens = 132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+cost_tokens = 29
+cum_tokens = 161
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 4
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md section #0"
+cost_tokens = 0
+cum_tokens = 161
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/typings" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/typings'"
+cost_tokens = 17
+cum_tokens = 178
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/typings"
+entries = ["esm.d.mts", "index.d.ts", "index.test-d.ts"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/.github" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/.github'"
+cost_tokens = 20
+cum_tokens = 198
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/.github"
+entries = ["FUNDING.yml", "PULL_REQUEST_TEMPLATE.md", "dependabot.yml", "workflows"]
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/.github/workflows" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/.github/workflows'"
+cost_tokens = 10
+cum_tokens = 208
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/workflows"
+entries = ["codeql-analysis.yml", "tests.yml"]
+
+[[batches]]
+position = 8
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+cost_tokens = 28
+cum_tokens = 236
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/lib" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/lib'"
+cost_tokens = 25
+cum_tokens = 261
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/lib"
+entries = ["argument.js", "command.js", "error.js", "help.js", "option.js", "suggestSimilar.js"]
+
+[[batches]]
+position = 10
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md section #1"
+cost_tokens = 28
+cum_tokens = 289
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 63
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+descriptor = "package identity in /Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+cost_tokens = 220
+cum_tokens = 509
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 2
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/docs" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/docs'"
+cost_tokens = 36
+cum_tokens = 545
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/docs"
+entries = ["deprecated.md", "help-in-depth.md", "options-in-depth.md", "parsing-and-hooks.md", "release-policy.md", "terminology.md", "zh-CN"]
+
+[[batches]]
+position = 13
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+cost_tokens = 42
+cum_tokens = 587
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+descriptor = "package entrypoints in /Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+cost_tokens = 282
+cum_tokens = 869
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 35
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 44
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN'"
+cost_tokens = 25
+cum_tokens = 894
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN"
+entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语表.md"]
+
+[[batches]]
+position = 16
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+cost_tokens = 67
+cum_tokens = 961
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 192
+end = 192
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 17
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json"
+cost_tokens = 164
+cum_tokens = 1125
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json"
+start = 1
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #0"
+cost_tokens = 106
+cum_tokens = 1231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+descriptor = "package scripts in /Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+cost_tokens = 259
+cum_tokens = 1490
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 21
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.ts.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.ts.json"
+cost_tokens = 239
+cum_tokens = 1729
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.ts.json"
+start = 1
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts" })'
+descriptor = "imports in /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
+cost_tokens = 26
+cum_tokens = 1755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/SECURITY.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/SECURITY.md section #0"
+cost_tokens = 73
+cum_tokens = 1828
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/SECURITY.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/SECURITY.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/SECURITY.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md section #1"
+cost_tokens = 29
+cum_tokens = 1857
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md"
+start = 61
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md section #0"
+cost_tokens = 43
+cum_tokens = 1900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 19
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+cost_tokens = 197
+cum_tokens = 2097
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 171
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 227
+end = 227
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 229
+end = 229
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 238
+end = 238
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/deprecated.md"
+start = 239
+end = 239
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 26
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+cost_tokens = 127
+cum_tokens = 2224
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 27
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package-support.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/commander/package-support.json"
+cost_tokens = 165
+cum_tokens = 2389
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package-support.json"
+start = 1
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+descriptor = "package dependencies in /Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+cost_tokens = 256
+cum_tokens = 2645
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 62
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 78
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json" })'
+descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+cost_tokens = 527
+cum_tokens = 3172
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 9
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 20
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.json"
+start = 26
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md section #7"
+cost_tokens = 78
+cum_tokens = 3250
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 956
+end = 956
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 958
+end = 958
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 960
+end = 964
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts" })'
+descriptor = "export names surface in /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+cost_tokens = 352
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 340
+end = 340
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 342
+end = 342
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 345
+end = 345
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 354
+end = 354
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 367
+end = 368
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 370
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 376
+end = 376
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1094
+end = 1094
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1100
+end = 1100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1104
+end = 1104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1109
+end = 1111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1113
+end = 1113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 341
+end = 341
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 343
+end = 343
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 346
+end = 346
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 355
+end = 355
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 369
+end = 369
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 371
+end = 371
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 375
+end = 375
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 377
+end = 377
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1095
+end = 1095
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1101
+end = 1101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1105
+end = 1105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1112
+end = 1112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 32
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 38 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:38"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 340 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:340"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 340
+end = 340
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 367 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:367"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 368 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:368"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 368
+end = 368
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 374 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:374"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1109 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1109"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1109
+end = 1109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1110 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1110"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1110
+end = 1110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1111 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1111"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1111
+end = 1111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1113 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1113"
+cost_tokens = 0
+cum_tokens = 3602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1113
+end = 1113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 31 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:31"
+cost_tokens = 10
+cum_tokens = 3612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1100 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1100"
+cost_tokens = 15
+cum_tokens = 3627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1100
+end = 1102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 342 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:342"
+cost_tokens = 21
+cum_tokens = 3648
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 342
+end = 344
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1104 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1104"
+cost_tokens = 24
+cum_tokens = 3672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1104
+end = 1107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 345 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:345"
+cost_tokens = 29
+cum_tokens = 3701
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 345
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 349 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:349"
+cost_tokens = 38
+cum_tokens = 3739
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 349
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 370 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:370"
+cost_tokens = 36
+cum_tokens = 3775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 370
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 1094 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:1094"
+cost_tokens = 53
+cum_tokens = 3828
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 1094
+end = 1099
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 16 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:16"
+cost_tokens = 55
+cum_tokens = 3883
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 16
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 40 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:40"
+cost_tokens = 63
+cum_tokens = 3946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 40
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 354 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:354"
+cost_tokens = 121
+cum_tokens = 4067
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 354
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 359
+end = 360
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 362
+end = 365
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 48 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:48"
+cost_tokens = 176
+cum_tokens = 4243
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 48
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 95 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:95"
+cost_tokens = 410
+cum_tokens = 4653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 95
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 99
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 132
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md" })'
+descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+cost_tokens = 163
+cum_tokens = 4816
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 114
+end = 114
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md section #2"
+cost_tokens = 32
+cum_tokens = 4848
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.github/PULL_REQUEST_TEMPLATE.md"
+start = 44
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.gitignore" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/commander/.gitignore"
+cost_tokens = 44
+cum_tokens = 4892
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.gitignore"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md section #0"
+cost_tokens = 825
+cum_tokens = 5717
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 12
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #2"
+cost_tokens = 55
+cum_tokens = 5772
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts", start_line: 210 })'
+descriptor = "export at /Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts:210"
+cost_tokens = 759
+cum_tokens = 6531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 212
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 218
+end = 218
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 226
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 237
+end = 237
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 239
+end = 239
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 241
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 243
+end = 243
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 246
+end = 246
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 253
+end = 253
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 255
+end = 255
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 262
+end = 262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 264
+end = 264
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 269
+end = 269
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 272
+end = 272
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 279
+end = 282
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 286
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 295
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 316
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 326
+end = 326
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 331
+end = 335
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.d.ts"
+start = 338
+end = 338
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig" })'
+descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig"
+cost_tokens = 104
+cum_tokens = 6635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig"
+start = 6
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md section #7"
+cost_tokens = 74
+cum_tokens = 6709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md"
+start = 895
+end = 895
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md"
+start = 897
+end = 897
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme_zh-CN.md"
+start = 899
+end = 903
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #7"
+cost_tokens = 36
+cum_tokens = 6745
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md section #1"
+cost_tokens = 110
+cum_tokens = 6855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CONTRIBUTING.md"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #10"
+cost_tokens = 36
+cum_tokens = 6891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 226
+end = 226
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 228
+end = 228
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #1"
+cost_tokens = 116
+cum_tokens = 7007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 19
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #11"
+cost_tokens = 36
+cum_tokens = 7043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md section #0"
+cost_tokens = 192
+cum_tokens = 7235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 8
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md"
+start = 15
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #5"
+cost_tokens = 61
+cum_tokens = 7296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md section #0"
+cost_tokens = 215
+cum_tokens = 7511
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
+start = 7
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md section #3"
+cost_tokens = 258
+cum_tokens = 7769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 149
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 152
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 159
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 165
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md"
+start = 171
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md section #0"
+cost_tokens = 224
+cum_tokens = 7993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 5
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/terminology.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md section #0"
+cost_tokens = 260
+cum_tokens = 8253
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 8
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/parsing-and-hooks.md"
+start = 17
+end = 23
+
+[batches.content.spans.render]
+kind = "full"

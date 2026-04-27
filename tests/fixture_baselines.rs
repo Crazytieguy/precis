@@ -76,6 +76,9 @@ per_fixture_tests!(tomli);
 per_fixture_tests!(xxhash);
 per_fixture_tests!(go_multierror, "go-multierror");
 per_fixture_tests!(pluggy);
+per_fixture_tests!(commander);
+per_fixture_tests!(tock);
+per_fixture_tests!(typeguard);
 
 // ---- paths -------------------------------------------------------------
 
