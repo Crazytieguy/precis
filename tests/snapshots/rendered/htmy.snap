@@ -18,20 +18,6 @@ README.md
     14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
     16→## Key features
     …
-    18→- **Async**-first, to let you make the best use of modern async tools.
-    19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
-    20→- Sync and async **function components** with **decorator syntax**.
-    21→- All baseline **HTML** tags built-in.
-    22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
-    23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
-    24→- **Markdown** support with tools for customization.
-    25→- Async, JSON based **internationalization**.
-    26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
-    27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
-    28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
-    29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
-    30→- **Compatible** with any other templating library through wrappers.
-    31→- **Fully-typed**.
     33→## Testimonials
     …
     47→## Support
@@ -39,16 +25,8 @@ README.md
     49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
     51→## Installation
     …
-    53→The package is available on PyPI and can be installed with:
-    55→```console
-    56→$ pip install htmy
-    57→```
-    59→The package has the following optional dependencies:
-    61→- `lxml` _(recommended)_: When installed, it is prioritized over `xml.etree.ElementTree` and provides more secure, faster, and more flexible HTML and XML processing. It is used, for example, for Markdown processing. Install with: `pip install "htmy[lxml]"`.
     63→## Concepts
     …
-    65→The entire library -- from the rendering engine itself to the built-in components -- is built around a few simple protocols and a handful of simple utility classes. This means that you can easily customize, extend, or replace basically everything in the library. Yes, even the rendering engine. The remaining parts will keep working as expected.
-    67→Also, the library doesn't rely on advanced Python features such as metaclasses or descriptors. There are also no complex base classes and the like. Even a junior engineer could understand, develop, and debug an application that's built with `htmy`.
     69→### Components
     …
     167→### Built-in components
@@ -65,24 +43,12 @@ README.md
     …
     307→## XSS prevention
     …
-    309→`htmy` does XML/HTML escaping by default. This means user input is normally sanitized and rendered safely.
-    311→There are a couple of notable exceptions to this, where components by design allow XML/HTML inputs and assume they are safe:
-    313→- `Snippet`: The primary use-case is to efficiently render XML/HTML templates, filling in placeholders with dynamic content. In this case you must ensure that the input template itself is safe!
-    314→- `MD`: This component builds on `Snippet` to support markdown inputs and performs automatic markdown to HTML conversion. You must ensure the input text is safe!
     316→## AI assistance
     …
-    318→The library is registered at [Context7](https://context7.com/volfpeter).
-    320→To get good AI assistance, all you need to do is register the Context7 MCP server in your coding tool and tell the agent to use it.
-    322→Because of the similarity with native HTML, JSX, and React, you can expect good results, both for vibe coding or inline completion.
     324→## Compatibility and performance
     …
-    326→By design, `htmy` is compatible with any other Python templating library, for example Jinja, through wrappers. A wrapper is simply a custom `htmy` component that internally offloads rendering to another templating framework. This makes it possible to easily combine `htmy` with other libraries, to gradually adopt it, and even to enjoy the benefits of multiple frameworks.
-    328→Performance strongly depends on how you use `htmy`. The `Snippet` component for example makes it possible to reach almost Python string formatting performance, while rendering large, deep component trees is noticeably slower than Jinja for example. Wrapping another templating library for certain use-cases, or pre-rendering components and later using `Snippet` to fill in the dynamic content can be beneficial for performance.
     330→## Framework integrations
     …
-    332→FastAPI:
-    334→- [holm](https://github.com/volfpeter/holm): Web development framework that brings the Next.js developer experience to Python, built on FastAPI, htmy, and FastHX.
-    335→- [FastHX](https://github.com/volfpeter/fasthx): Declarative server-side rendering utility for FastAPI with built-in HTMX support.
     337→## External examples
     …
     339→- [lipsum-chat](https://github.com/volfpeter/lipsum-chat): A simple chat application using `FastAPI`, `htmx`, and `fasthx`.
@@ -90,14 +56,8 @@ README.md
     …
     353→## Dependencies
     …
-    355→The library aims to minimze its dependencies. Currently the following dependencies are required:
-    357→- `anyio`: for async file operations and networking.
-    358→- `async-lru`: for async caching.
-    359→- `markdown`: for markdown parsing.
     361→## Development
     …
-    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
-    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -106,25 +66,10 @@ README.md
 docs/
     api/
         core.md
-            1→# ::: htmy.core
-            3→    options:
-            4→        show_root_heading: true
         etree.md
-            1→# ::: htmy.etree
-            3→    options:
-            4→        show_root_heading: true
         function_component.md
-            1→# ::: htmy.function_component
-            3→    options:
-            4→        show_root_heading: true
         html.md
-            1→# ::: htmy.html
-            3→    options:
-            4→        show_root_heading: true
         i18n.md
-            1→# ::: htmy.i18n
-            3→    options:
-            4→        show_root_heading: true
         md.md
             1→# ::: htmy.md.core
             …
@@ -132,33 +77,13 @@ docs/
             4→        show_root_heading: true
             6→# ::: htmy.md.typing
             …
-            8→    options:
-            9→        show_root_heading: true
         renderer/
             baseline.md
-                1→# ::: htmy.renderer.baseline
-                3→    options:
-                4→        show_root_heading: true
             default.md
-                1→# ::: htmy.renderer.default
-                3→    options:
-                4→        show_root_heading: true
             typing.md
-                1→# ::: htmy.renderer.typing
-                3→    options:
-                4→        show_root_heading: true
         snippet.md
-            1→# ::: htmy.snippet
-            3→    options:
-            4→        show_root_heading: true
         typing.md
-            1→# ::: htmy.typing
-            3→    options:
-            4→        show_root_heading: true
         utils.md
-            1→# ::: htmy.utils
-            3→    options:
-            4→        show_root_heading: true
     components-guide.md
         1→# Components guide
         …
@@ -168,14 +93,10 @@ docs/
         …
         184→## When to use components, when to use component factories?
         …
-        186→There is no hard rule, but hopefully the previous sections gave you enough guidance to make an informed decision in every case. In general, if a component factory is enough, then it's often the better choice, but if you feel safer using only components, then that's just as good.
     examples/
     function-components.md
         1→# Function components
         …
-        3→The default and most flexible way to define an `htmy` component is to add a sync or async `htmy(self, context: Context) -> Component` method to a class, often to enhance a pre-existing business object with `htmy` rendering capabilities.
-        5→However, in many cases, especially when you're not enhancing an existing class, this ends up being very verbose and requires a lot of boilerplate: you need to define a class, add the necessary properties, and finally implement the `htmy()` method. This is especially impractical when the component has no properties.
-        7→Function components address these issues by allowing you to fully skip class creation and define the component simply as a function (well, or method, as we'll see later). This removes the need for any boilerplate, while also making the code more concise and easier to read.
         9→## Function component types
         …
         26→## Creating function components
@@ -187,85 +108,207 @@ docs/
         150→### Methods
         …
     index.md
-        10→# `htmy`
-        …
-        12→**Async**, **pure-Python** server-side rendering engine.
-        14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
-        16→## Key features
-        …
-        33→## Testimonials
-        …
-        47→## Support
-        …
-        49→Consider supporting the development and maintenance of the project through [sponsoring](https://buymeacoffee.com/volfpeter), or reach out for [consulting](https://www.volfp.com/contact?subject=Consulting%20-%20HTMY) so you can get the most out of the library.
-        51→## Installation
-        …
-        63→## Concepts
-        …
-        69→### Components
-        …
-        167→### Built-in components
-        …
-        179→### Rendering
-        …
-        211→### Context
-        …
-        279→### Formatter
-        …
-        291→### Error boundary
-        …
-        299→### Sync or async?
-        …
-        307→## XSS prevention
-        …
-        316→## AI assistance
-        …
-        324→## Compatibility and performance
-        …
-        330→## Framework integrations
-        …
-        337→## Why
-        …
-        349→## Dependencies
-        …
-        351→The library aims to minimze its dependencies. Currently the following dependencies are required:
-        353→- `anyio`: for async file operations and networking.
-        354→- `async-lru`: for async caching.
-        355→- `markdown`: for markdown parsing.
-        357→## Development
-        …
-        359→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
-        361→The documentation is built with `zensical` and `mkdocstrings`.
-        363→## Contributing
-        …
-        373→## License - MIT
-        …
-        375→The package is open-sourced under the conditions of the [MIT license](https://choosealicense.com/licenses/mit/).
 examples/
 htmy/
     __init__.py
+        46→join_classes = join
+        48→HTMY = Renderer
     core.py
+        19→class Fragment:
+        20→    """Fragment utility component that simply wraps some children components."""
+        22→    __slots__ = ("_children",)
+        38→class WithContext(Fragment):
+        39→    """
+        40→    A simple, static context provider component.
+        41→    """
+        43→    __slots__ = ("_context",)
+        64→class ContextAware:
+        …
+        100→    __slots__ = ()
+        102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
+        146→class SkipProperty(Exception):
+        147→    """Exception raised by property formatters if the property should be skipped."""
+        149→    ...
+        157→class Text(str):
+        158→    """Marker class for differentiating text content from other strings."""
+        160→    ...
+        163→class SafeStr(Text):
+        …
+        172→    ...
+        175→class XBool(enum.Enum):
+        …
+        183→    true = True
+        184→    false = False
+        196→def xml_format_string(value: str) -> str:
+        197→    """Escapes `<`, `>`, and `&` characters in the given string, unless it's a `SafeStr`."""
+        198→    return value if isinstance(value, SafeStr) else xml_escape(value)
+        201→class Formatter(ContextAware):
+        …
+        220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
     error_boundary.py
+        15→class ErrorBoundary:
+        16→    """
+        17→    Error boundary component for graceful error handling.
+        19→    If an error occurs during the rendering of the error boundary's subtree,
+        20→    the fallback component will be rendered instead.
+        21→    """
+        23→    __slots__ = ("_children", "_errors", "_fallback")
+        25→    def __init__(
+        …
+        45→    async def htmy(self, context: Context) -> Component:
+        …
+        56→    def _fallback_component(self, error: Exception) -> ComponentType:
+        …
     etree.py
+        23→class ETreeConverter:
+        …
     function_component.py
     html.py
     i18n.py
+        11→TranslationResource = Mapping[str, Any]
+        15→class I18nError(Exception): ...
+        …
+        18→class I18nKeyError(I18nError): ...
+        …
+        21→class I18nValueError(I18nError): ...
+        …
+        24→class I18n(ContextAware):
+        25→    """
+        26→    Context-aware async internationalization utility.
+        27→    """
+        29→    __slots__ = ("_fallback", "_path")
+        31→    _root_keys: ClassVar[frozenset[str]] = frozenset(("", "."))
+        32→    """Special keys that represent the "root" object, i.e. the entire translation resource file."""
+        115→@alru_cache()
+        116→async def load_translation_resource(path: Path) -> TranslationResource:
+        147→def resolve_json_path(root: Path, dotted_subpath: str) -> Path:
+        …
     io.py
+        11→async def load_text_file(path: str | Path) -> str:
+        12→    """Loads the text content from the given path."""
+        13→    async with await open_file(path, "r") as f:
+        14→        return await f.read()
     md/
         __init__.py
+            1→from .core import MD as MD
+            2→from .core import MarkdownParser as MarkdownParser
+            3→from .typing import MarkdownMetadataDict as MarkdownMetadataDict
+            4→from .typing import MarkdownParserFunction as MarkdownParserFunction
+            5→from .typing import MarkdownRenderFunction as MarkdownRenderFunction
+            6→from .typing import ParsedMarkdown as ParsedMarkdown
         core.py
+            20→class MarkdownParser(ContextAware):
+            …
+            81→class MD(Snippet):
+            …
+            98→    __slots__ = (
+            99→        "_converter",
+            100→        "_renderer",
+            101→    )
         typing.py
+            11→MarkdownMetadataDict: TypeAlias = dict[str, Any]
+            14→class ParsedMarkdown(TypedDict):
+            15→    """Type definition for parsed markdown data."""
+            17→    content: str
+            18→    metadata: NotRequired[MarkdownMetadataDict | None]
+            21→MarkdownParserFunction: TypeAlias = Callable[[str], ParsedMarkdown]
+            24→MarkdownRenderFunction: TypeAlias = Callable[[Component, MarkdownMetadataDict | None], Component]
     py.typed
     renderer/
         __init__.py
+            1→from .baseline import Renderer as _BaselineRenderer
+            2→from .default import Renderer as _DefaultRenderer
+            3→from .typing import is_renderer as is_renderer
+            4→from .typing import is_streaming_renderer as is_streaming_renderer
+            6→Renderer = _DefaultRenderer
+            9→StreamingRenderer = _BaselineRenderer
+            12→BaselineRenderer = _BaselineRenderer
         baseline.py
+            18→class Renderer:
+            …
+            28→    __slots__ = ("_default_context", "_string_formatter")
         context.py
+            6→class RendererContext:
+            7→    """
+            8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
+            9→    """
+            11→    @classmethod
+            12→    def from_context(cls, context: Context) -> RendererType:
         default.py
+            20→class _Node:
+            …
+            50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
+            53→class _ComponentRenderer:
+            …
+            205→async def _render_component(
+            …
+            228→class Renderer:
+            …
+            236→    __slots__ = ("_default_context", "_string_formatter")
         typing.py
+            12→class RendererType(Protocol):
+            13→    """Protocol definition for renderers."""
+            29→def is_renderer(obj: Any | None) -> TypeGuard[RendererType]:
+            30→    """Type guard that checks if the given object is a renderer."""
+            36→class StreamingRendererType(RendererType, Protocol):
+            37→    """Protocol definition for streaming renderers."""
+            53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:
+            54→    """Type guard that checks if the given object is a streaming renderer."""
     snippet.py
+        27→class Slots:
+        …
+        158→class Snippet:
+        …
+        216→    __slots__ = ("_path_or_text", "_text_processor", "_text_resolver")
     tag.py
+        12→class _TagWithPropsImpl:
+        13→    __slots__ = ("name", "props")
+        24→class _TagImpl:
+        25→    __slots__ = ("child_separator", "children", "name", "props")
+        53→_default_formatter = Formatter()
+        56→class TagWithProps:
+        57→    """
+        58→    Creates a tag type that can have properties, but not children.
+        60→    Arguments:
+        61→        **props: Tag properties.
+        62→    """
+        64→    __slots__ = ("name",)
+        73→class Tag:
+        74→    __slots__ = ("child_separator", "name")
+        84→def wildcard_tag(
+        85→    *children: ComponentType,
+        86→    htmy_name: str,
+        87→    htmy_child_separator: ComponentType = None,
+        88→    **props: PropertyValue,
+        89→) -> ComponentType:
+        100→    return _TagImpl(htmy_name, props, children, htmy_child_separator)
     typing.py
+        1→from collections.abc import Callable, Coroutine, Mapping, MutableMapping
+        2→from typing import Any, Protocol, TypeAlias, TypeVar
     utils.py
+        12→def join_components(
+        13→    components: ComponentSequence,
+        14→    separator: ComponentType,
+        15→    pad: bool = False,
+        16→) -> Generator[ComponentType, None, None]:
+        42→def join(*items: str | None, separator: str = " ") -> str:
+        43→    """
+        44→    Joins the given strings with the given separator, skipping `None` values.
+        45→    """
+        46→    return separator.join(i for i in items if i)
+        49→def is_htmy_component_type(comp: Any) -> TypeGuard[HTMYComponentType]:
+        50→    """Returns whether the given object is a `HTMYComponentType` (has a `htmy` method)."""
+        51→    # Lazy check, should be good enough.
+        52→    return hasattr(comp, "htmy")
+        55→def is_component_type(comp: Any) -> TypeGuard[ComponentType]:
+        56→    """Returns whether the given object is a `ComponentType`."""
+        62→def is_component_sequence(comp: Component) -> TypeGuard[ComponentSequence]:
+        63→    """Returns whether the given component is a `ComponentSequence`."""
+        64→    return isinstance(comp, (list, tuple))
+        67→def as_component_sequence(comp: Component) -> ComponentSequence:
+        68→    """Returns the given component as a `ComponentSequence`."""
+        73→def as_component_type(comp: Component) -> ComponentType:
+        74→    """Returns the given component as a `ComponentType` (not sequence)."""
 mkdocs.yaml
 pyproject.toml
 tests/

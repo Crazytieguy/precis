@@ -74,10 +74,15 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         }
     }
     if let Some(name) = path.file_name().and_then(|n| n.to_str()) {
-        // File-level heuristic: `__private_api.rs`, `__internals.rs`,
-        // `inner.rs`, etc. — files whose name itself says "not the
-        // public surface".
-        if name.starts_with("__") || name.starts_with("_") || name == "inner.rs" {
+        // File-level heuristic for Rust private-helper conventions:
+        // `__private_api.rs`, `__internals.rs`, `inner.rs`. The
+        // discount is intentionally Rust-only — `_hooks.py` /
+        // `__init__.py` are load-bearing Python (PEP 8 internal-but-
+        // public convention), and `_app.tsx` / `_routes.json` are
+        // framework orientation files (Next.js, Cloudflare). A blanket
+        // `_*` rule would penalize all of those.
+        let ext = path.extension().and_then(|e| e.to_str());
+        if name == "inner.rs" || (ext == Some("rs") && name.starts_with("__")) {
             return 0.5;
         }
         // Co-located test files: `foo.test.ts`, `foo.spec.ts`,
@@ -123,4 +128,55 @@ pub fn ratio_with_exponent(value: f64, cost_tokens: usize, cost_exponent: f64) -
         return f64::INFINITY;
     }
     value / (cost_tokens as f64).powf(cost_exponent)
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::path::Path;
+
+    /// The file-level discount for "private helper" filenames is
+    /// Rust-only — Python `_*.py` files (PEP 8 internal-but-load-bearing
+    /// convention) and framework underscore files (Next.js `_app.tsx`,
+    /// Cloudflare `_routes.json`) keep their full weight. The literal
+    /// `inner.rs` and `__-prefixed *.rs` patterns still discount.
+    #[test]
+    fn value_underscore_filename_discount_is_rust_only() {
+        let root = Path::new("/repo");
+        // Rust private helper conventions: still 0.5.
+        assert_eq!(
+            non_essential_factor(&root.join("src/__private_api.rs"), root),
+            0.5,
+        );
+        assert_eq!(non_essential_factor(&root.join("src/inner.rs"), root), 0.5,);
+        // Python load-bearing files: full weight.
+        assert_eq!(
+            non_essential_factor(&root.join("src/pluggy/_hooks.py"), root),
+            1.0,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join("src/pluggy/__init__.py"), root),
+            1.0,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join("src/pkg/__main__.py"), root),
+            1.0,
+        );
+        // Framework underscore files in JS/TS land: full weight.
+        assert_eq!(
+            non_essential_factor(&root.join("pages/_app.tsx"), root),
+            1.0,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join("packages/x/_routes.json"), root),
+            1.0,
+        );
+        // Single-underscore `*.rs` files no longer get a discount —
+        // prefer to specialize per file with a literal allowlist if a
+        // regression appears.
+        assert_eq!(
+            non_essential_factor(&root.join("src/_helper.rs"), root),
+            1.0,
+        );
+    }
 }

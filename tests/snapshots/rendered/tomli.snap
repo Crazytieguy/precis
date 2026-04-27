@@ -26,75 +26,21 @@ CHANGELOG.md
     21→## 2.2.0
     23→- Added
     24→  - mypyc generated binary wheels for common platforms
-    26→## 2.1.0
-    28→- Deprecated
-    29→  - Instantiating `TOMLDecodeError` with free-form arguments.
-    30→    `msg`, `doc` and `pos` arguments should be given.
-    31→- Added
-    32→  - `msg`, `doc`, `pos`, `lineno` and `colno` attributes to `TOMLDecodeError`
-    34→## 2.0.2
-    36→- Removed
-    37→  - Python 3.7 support
-    38→- Improved
-    39→  - Make `loads` raise `TypeError` not `AttributeError` on bad input types that do not have the `replace` attribute.
-    40→    Improve error message when `bytes` is received.
-    41→- Type annotations
-    42→  - Type annotate `load` input as `typing.IO[bytes]` (previously `typing.BinaryIO`).
     56→## 1.2.3
     58→- Fixed
     59→  - Backport: Allow lower case "t" and "z" in datetimes
-    94→## 1.2.0
-    96→- Deprecated
-    97→  - Text file objects as input to `load`.
-    98→    Binary file objects should be used instead to avoid opening a TOML file with universal newlines or with an encoding other than UTF-8.
     100→## 1.1.0
     102→- Added
     103→  - `load` can now take a binary file object
     105→## 1.0.4
     107→- Performance
     108→  - Minor boost (~4%)
-    110→## 1.0.3
-    112→- Fixed
-    113→  - Raise `TOMLDecodeError` instead of `ValueError` when parsing dates and datetimes that pass the regex check but don't correspond to a valid date or datetime.
-    114→- Performance
-    115→  - Improved multiline literal string parsing performance
     117→## 1.0.2
     119→- Performance
     120→  - Minor boost (~4%)
     122→## 1.0.1
     124→- Performance
     125→  - A significant boost
-    127→## 1.0.0
-    129→- Fixed
-    130→  - Raise `TOMLDecodeError` instead of `KeyError` when overwriting implicitly in an inline table
-    147→## 0.2.8
-    149→- Performance
-    150→  - Significant boost to comment parsing speed
-    152→## 0.2.7
-    154→- Added
-    155→  - Improved `TOMLDecodeError` error messages.
-    156→    Line and column are included when applicable.
-    158→## 0.2.6
-    160→- Performance
-    161→  - Over 5% boost
-    163→## 0.2.5
-    165→- Fixed
-    166→  - Made exception type `TOMLDecodeError` when overwriting a value with a deeply nested table
-    168→## 0.2.4
-    170→- Fixed
-    171→  - `TOMLDecodeError` is now raised when attempting to overwrite a value in an inline table's or array's namespace with a table definition
-    173→## 0.2.3
-    175→- Fixed
-    176→  - Error type was not TOMLDecodeError in some obscure cases
-    185→## 0.2.1
-    187→- Fixed
-    188→  - `TOMLDecodeError` is now raised for duplicate keys in inline tables,
-    189→    as opposed to silently overriding the previous value
-    191→## 0.2.0
-    193→- Changed
-    194→  - Project name to Tomli
-    195→- Performance
-    196→  - A performance boost
 LICENSE
 LICENSE-HEADER
 MANIFEST.in
@@ -146,25 +92,8 @@ README.md
     …
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
     …
-    81→```python
-    82→import tomli
-    84→with open("path_to_file/conf.toml", "rb") as f:
-    85→    toml_dict = tomli.load(f)
-    86→```
-    88→The file must be opened in binary mode (with the `"rb"` flag).
-    89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
-    90→both of which are required to correctly parse TOML.
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     …
-    94→```python
-    95→import tomli
-    97→try:
-    98→    toml_dict = tomli.loads("]] this is invalid TOML [[")
-    99→except tomli.TOMLDecodeError:
-    100→    print("Yep, definitely not valid.")
-    101→```
-    103→Note that error messages are considered informational only.
-    104→They should not be assumed to stay constant across Tomli versions.
     106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
     …
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
@@ -177,8 +106,6 @@ README.md
     …
     177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
     …
-    179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
-    181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
     183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
     201→## Performance<a name="performance"></a>
@@ -190,30 +117,105 @@ README.md
     230→### Pure Python<a name="pure-python"></a>
     …
 benchmark/
-    LICENSE
-    README.md
-        1→# Benchmark
-    data.toml
-    requirements.txt
-    run.py
 fuzzer/
     fuzz.py
+        1→import atheris
+        20→def test_one_input(input_bytes: bytes) -> None:
+        21→    # We need a Unicode string, not bytes
+        53→def print_err(data):
+        54→    codepoints = [hex(ord(x)) for x in data]
+        55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
+        56→    sys.stderr.flush()
+        59→def normalize_toml_obj(toml_obj: dict) -> None:
+        60→    """Make NaNs equal when compared (without using recursion)."""
+        61→    to_process = [toml_obj]
+        62→    while to_process:
+        63→        cont = to_process.pop()
+        64→        for k, v in cont.items() if isinstance(cont, dict) else enumerate(cont):
+        65→            if isinstance(v, float) and isnan(v):
+        66→                cont[k] = "nan"
+        67→            elif isinstance(v, (dict, list)):
+        68→                to_process.append(v)
+        71→def main():
+        72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
+        73→    fuzzer_options = sys.argv
+        74→    atheris.Setup(fuzzer_options, test_one_input)
+        75→    atheris.Fuzz()
     requirements.txt
 profiler/
     profiler_script.py
+        1→"""A script for profiling.
+        3→To generate and read results:
+        4→  - `tox -e profile`
+        5→  - `firefox .tox/prof/output.svg`
+        6→"""
+        8→from pathlib import Path
+        10→import tomli
+        12→benchmark_toml = (
+        13→    (Path(__file__).parent.parent / "benchmark" / "data.toml").read_bytes().decode()
+        14→)
     requirements.txt
 pyproject.toml
 scripts/
     mypyc_tox
     requirements.txt
     use_setuptools.py
+        1→"""Script that switches build backend to setuptools with mypyc support.
+        3→Overwrites pyproject.toml. Does not create a backup.
+        4→"""
+        6→from pathlib import Path
+        7→import tomllib
+        9→import tomli_w  # type: ignore[import-not-found]
+        12→def use_setuptools() -> None:
+        …
 setup.py
+    1→import os
+    3→from setuptools import setup  # type: ignore[import-untyped]
 src/
     tomli/
         __init__.py
+            5→__all__ = ("loads", "load", "TOMLDecodeError")
+            6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
+            8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
         _re.py
+            5→from __future__ import annotations
+            7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
+            8→from functools import lru_cache
+            9→import re
+            11→TYPE_CHECKING = False
+            12→if TYPE_CHECKING:
+            13→    from typing import Any, Final
+            15→    from ._types import ParseFloat
+            17→_TIME_RE_STR: Final = r"""
+            26→RE_NUMBER: Final = re.compile(
+            45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)
+            46→RE_DATETIME: Final = re.compile(
+            59→def match_to_datetime(match: re.Match[str]) -> datetime | date:
+            60→    """Convert a `RE_DATETIME` match to `datetime.datetime` or `datetime.date`.
+            62→    Raises ValueError if the match does not correspond to a valid date
+            63→    or datetime.
+            64→    """
+            98→@lru_cache(maxsize=None)
+            99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+            100→    sign = 1 if sign_str == "+" else -1
+            101→    return timezone(
+            102→        timedelta(
+            103→            hours=sign * int(hour_str),
+            104→            minutes=sign * int(minute_str),
+            105→        )
+            106→    )
+            109→def match_to_localtime(match: re.Match[str]) -> time:
+            …
+            116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
+            117→    if match.group("floatpart"):
+            118→        return parse_float(match.group())
+            119→    return int(match.group(), 0)
         _types.py
+            5→from typing import Any, Callable, Tuple
+            8→ParseFloat = Callable[[str], Any]
+            9→Key = Tuple[str, ...]
+            10→Pos = int
         py.typed
 tests/
 tomllib.md

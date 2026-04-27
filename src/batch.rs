@@ -44,6 +44,7 @@ pub enum BatchKey {
     Plaintext(PlaintextKey),
     C(CKey),
     Go(GoKey),
+    Python(PythonKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -95,6 +96,11 @@ impl From<CKey> for BatchKey {
 impl From<GoKey> for BatchKey {
     fn from(k: GoKey) -> Self {
         BatchKey::Go(k)
+    }
+}
+impl From<PythonKey> for BatchKey {
+    fn from(k: PythonKey) -> Self {
+        BatchKey::Python(k)
     }
 }
 
@@ -360,6 +366,82 @@ pub enum GoKey {
     GoMod { file: PathBuf },
 }
 
+/// Python batches. Mirrors the Go / C walkers' shape — per-file
+/// orientation (imports + `__all__` + module docstring + module-level
+/// dunder assignments fold into [`PythonKey::Imports`]) plus per-decl
+/// item batches (top-level def / class / non-dunder constant), and
+/// per-method batches inside top-level classes (Rust precedent —
+/// methods are first-class scheduling units).
+///
+/// **Decorator handling**: tree-sitter Python wraps a decorated def /
+/// class in `decorated_definition`. The walker treats that wrapper as
+/// the unit, so a `Decl`'s `start_line` is the `@decorator` row and
+/// the span includes the decorator lines.
+///
+/// **Visibility**: emits all top-level + class-body items. A
+/// `visibility_factor` discount (1.0 unprefixed, 0.6 leading-`_`,
+/// 1.0 dunder) ranks public-by-PEP-8 names above leading-`_`-prefixed
+/// "internal" ones rather than hard-filtering. NSes anchor on
+/// intentionally-private names (`pluggy._callers._multicall`,
+/// `pluggy._hooks.HookCaller._add_hookimpl`).
+///
+/// `test_*.py` / `*_test.py` files surface a separate
+/// [`PythonKey::TestNames`] batch listing every `def test_*` first
+/// line (decorator-aware) and skip per-decl bodies. The 0.2
+/// multiplier from [`crate::value::non_essential_factor`] keeps the
+/// test surface deprioritized vs. ordinary source.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum PythonKey {
+    /// Top-of-file `import` / `from … import …` statements, optional
+    /// module docstring, `__all__`, and module-level dunder
+    /// assignments (`__version__`, `__author__`). Plumbing batch.
+    /// Priority 2.x.
+    Imports { file: PathBuf },
+    /// Surface listing of every top-level class, def (sync or async),
+    /// and non-dunder simple-assignment first line.
+    /// Catastrophic-omission hedge. Priority 1.x.
+    DeclNames { file: PathBuf },
+    /// One top-level item. For class, the `class Foo(Base):` header
+    /// (decorator lines included if decorated). For def, signature
+    /// with body marker. For constant, the assignment line(s). Keyed
+    /// by start line (the decorator row when decorated). Priority
+    /// 1.x–4.x.
+    Decl { file: PathBuf, start_line: usize },
+    /// Docstring of a top-level def or class — the
+    /// `expression_statement(string)` at the start of its body, after
+    /// any leading comments. Predecessor: matching [`PythonKey::Decl`].
+    /// Priority 3.x.
+    DeclDoc { file: PathBuf, start_line: usize },
+    /// Body interior of a top-level def. Skips the leading docstring
+    /// (covered by [`PythonKey::DeclDoc`]). Predecessor: matching
+    /// [`PythonKey::Decl`]. Priority 2.x–3.x.
+    DeclBody { file: PathBuf, start_line: usize },
+    /// Class body excluding method def signatures and the leading
+    /// docstring — covers TypedDict / dataclass / Protocol / Pydantic
+    /// fields, `__slots__`, class-level constants. Predecessor:
+    /// matching class [`PythonKey::Decl`]. Priority 3.x–4.x.
+    ClassBody { file: PathBuf, start_line: usize },
+    /// Surface listing of every method def first line across every
+    /// top-level class in this file — Rust [`RustKey::MethodSigs`]
+    /// analog. Decorator-aware. Catastrophic-omission hedge for class
+    /// APIs. Priority 2.x.
+    MethodSigs { file: PathBuf },
+    /// Per-method version of [`PythonKey::Decl`] for a method inside
+    /// a top-level class. Predecessor: enclosing class's
+    /// [`PythonKey::Decl`]. Priority 2.x–4.x.
+    Method { file: PathBuf, start_line: usize },
+    /// Method's docstring. Predecessor: matching
+    /// [`PythonKey::Method`]. Priority 3.x.
+    MethodDoc { file: PathBuf, start_line: usize },
+    /// Method's body interior, sans leading docstring. Predecessor:
+    /// matching [`PythonKey::Method`]. Priority 3.x–4.x.
+    MethodBody { file: PathBuf, start_line: usize },
+    /// Surface listing of every `def test_*` first line in a `test_*.py`
+    /// / `*_test.py` file (top-level + class-body, decorator-aware).
+    /// Skipped for non-test files. Priority 3.x–5.x.
+    TestNames { file: PathBuf },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -418,6 +500,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Plaintext(k) => k.describe(),
             BatchKey::C(k) => k.describe(),
             BatchKey::Go(k) => k.describe(),
+            BatchKey::Python(k) => k.describe(),
         }
     }
 
@@ -427,6 +510,7 @@ impl WalkerKey for BatchKey {
             BatchKey::C(k) => k.concavity_exponent(),
             BatchKey::Go(k) => k.concavity_exponent(),
             BatchKey::Json(k) => k.concavity_exponent(),
+            BatchKey::Python(k) => k.concavity_exponent(),
             BatchKey::Fs(_)
             | BatchKey::Rust(_)
             | BatchKey::Toml(_)
@@ -617,6 +701,64 @@ impl GoKey {
                 format!("go test names surface in {}", display_path(file))
             }
             GoKey::GoMod { file } => format!("go module file {}", display_path(file)),
+        }
+    }
+}
+
+impl PythonKey {
+    /// Per-decl / per-method batches carry the same 0.45 concavity as
+    /// the C / Go walkers — Python decls are short (a single `def
+    /// name(...):`, a single `class X(Base):` line), source files
+    /// emit dozens of them, and the default 0.35 lets every tiny one
+    /// out-rank larger anchors. `ClassBody` keeps the default because
+    /// field listings have a structural tie to the class.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            PythonKey::Decl { .. }
+            | PythonKey::DeclBody { .. }
+            | PythonKey::Method { .. }
+            | PythonKey::MethodBody { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    pub fn describe(&self) -> String {
+        match self {
+            PythonKey::Imports { file } => format!("python imports in {}", display_path(file)),
+            PythonKey::DeclNames { file } => {
+                format!("python decl names surface in {}", display_path(file))
+            }
+            PythonKey::Decl { file, start_line } => {
+                format!("python decl at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::DeclDoc { file, start_line } => {
+                format!("python decl doc at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::DeclBody { file, start_line } => {
+                format!("python decl body at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::ClassBody { file, start_line } => {
+                format!("python class body at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::MethodSigs { file } => {
+                format!("python method sigs in {}", display_path(file))
+            }
+            PythonKey::Method { file, start_line } => {
+                format!("python method at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::MethodDoc { file, start_line } => {
+                format!("python method doc at {}:{}", display_path(file), start_line)
+            }
+            PythonKey::MethodBody { file, start_line } => {
+                format!(
+                    "python method body at {}:{}",
+                    display_path(file),
+                    start_line
+                )
+            }
+            PythonKey::TestNames { file } => {
+                format!("python test names surface in {}", display_path(file))
+            }
         }
     }
 }

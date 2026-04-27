@@ -27,6 +27,7 @@ pub mod go;
 pub mod json;
 pub mod markdown;
 pub mod plaintext;
+pub mod python;
 pub mod rust;
 pub mod toml;
 pub mod typescript;
@@ -78,6 +79,7 @@ impl Walker for FsWalker {
         out.extend(plaintext::expand_in_dir(dir, ctx));
         out.extend(c::expand_in_dir(dir, ctx));
         out.extend(go::expand_in_dir(dir, ctx));
+        out.extend(python::expand_in_dir(dir, ctx));
         out
     }
 }
