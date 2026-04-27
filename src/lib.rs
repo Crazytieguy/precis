@@ -46,6 +46,31 @@ pub fn render(
     Ok(tree.render())
 }
 
+/// Replay a previously-produced [`Schedule`] against a fresh tree at
+/// `budget` (≤ the schedule's budget). Stops once cumulative tokens
+/// exceed `budget`; under prefix-monotone scheduling this matches what
+/// [`render`] would have produced at the smaller budget directly,
+/// without re-running the walker.
+pub fn render_with_schedule(
+    schedule: &Schedule,
+    root: impl AsRef<Path>,
+    budget: usize,
+) -> Result<String> {
+    let root = canonicalize_dir(root.as_ref())?;
+    let mut tree = RenderedTree::new(root, SourceCache::new());
+    for (i, sb) in schedule.batches.iter().enumerate() {
+        if sb.cum_tokens > budget {
+            break;
+        }
+        let batch = Batch {
+            content: sb.content.clone(),
+            signals: ValueSignals::default(),
+        };
+        tree.apply(&batch, batch::BatchId::new(i), |_| true);
+    }
+    Ok(tree.render())
+}
+
 /// Run the walker at `budget` and return a structured `Schedule` — the
 /// input both the regression-snapshot test and `compare-ns` (divergence
 /// metric) consume. Strings out the ordered batch log: keys are formatted

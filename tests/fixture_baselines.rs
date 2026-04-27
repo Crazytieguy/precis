@@ -28,8 +28,8 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use precis::{
-    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked,
-    render as render_precis, render_schedule,
+    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked, render_schedule,
+    render_with_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -117,7 +117,7 @@ fn check_fixture_baselines(fixture: &str) {
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
     check_schedule_toml(fixture, &schedule);
     check_divergence(fixture, &fixture_dir, &schedule);
-    check_rendered(fixture, &fixture_dir);
+    check_rendered(fixture, &fixture_dir, &schedule);
 }
 
 fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
@@ -151,9 +151,9 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
     );
 }
 
-fn check_rendered(fixture: &str, fixture_dir: &Path) {
-    let rendered = render_precis(&[fixture_dir], RENDERED_BUDGET, None)
-        .unwrap_or_else(|e| panic!("render({fixture}): {e}"));
+fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
+    let rendered = render_with_schedule(schedule, fixture_dir, RENDERED_BUDGET)
+        .unwrap_or_else(|e| panic!("render_with_schedule({fixture}): {e}"));
     if update_baselines() {
         unsafe {
             std::env::set_var("INSTA_UPDATE", "always");
