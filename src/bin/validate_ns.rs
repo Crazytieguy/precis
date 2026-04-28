@@ -198,6 +198,14 @@ fn format_violation(v: &Violation) -> String {
             "overlapping spans within one batch at {}:{line} (batch spans must be disjoint — cross-batch overrides go through predecessor edges)",
             path.display()
         ),
+        Violation::OverlappingFsEntry {
+            parent,
+            entry,
+            existing_batch,
+        } => format!(
+            "overlapping fs entry: {} lists {entry:?}, already owned by {existing_batch} (split-listing rows must partition entries)",
+            parent.display()
+        ),
         Violation::CapExceeded { cumulative, cap } => {
             format!("cap exceeded: cumulative {cumulative} > {cap} tokens")
         }

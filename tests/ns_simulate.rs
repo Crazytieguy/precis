@@ -181,6 +181,50 @@ spans = [
     );
 }
 
+#[test]
+fn ns_simulate_detects_overlapping_fs_entries_across_batches() {
+    let pin = fixture_pin(LOG_FIXTURE);
+    let ns = load_ns_toml(&format!(
+        r#"fixture = "log"
+revision_pin = "{pin}"
+
+[[batches]]
+id = "1"
+descriptor = "root listing"
+justification = "orientation"
+[batches.content]
+kind = "fs"
+groups = [{{ parent = ".", entries = ["src"] }}]
+
+[[batches]]
+id = "2"
+descriptor = "duplicate root listing"
+justification = "duplicate fs atom"
+[batches.content]
+kind = "fs"
+groups = [{{ parent = ".", entries = ["src", "Cargo.toml"] }}]
+"#
+    ));
+    let report = simulate_ns(&ns, Path::new(LOG_FIXTURE)).expect("simulate");
+    assert!(
+        report.batches[0].violations.is_empty(),
+        "first owner should pass, got {:?}",
+        report.batches[0].violations
+    );
+    assert!(
+        report.batches[1].violations.iter().any(|v| matches!(
+            v,
+            Violation::OverlappingFsEntry {
+                entry,
+                existing_batch,
+                ..
+            } if entry == "src" && existing_batch == "1"
+        )),
+        "expected OverlappingFsEntry for src, got {:?}",
+        report.batches[1].violations
+    );
+}
+
 /// Multi-line `Render::Ellipsis` span renders one `…` per covered line
 /// — visually indistinguishable from a single marker (no line numbers
 /// to differentiate them) but costs N× the tokens. The schema doc on

@@ -3,13 +3,13 @@
 //! instead of greedily. Produces per-batch marginal cost + cumulative +
 //! violation data for `validate-ns`.
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 
 use anyhow::Result;
 
 use crate::batch::BatchId;
-use crate::content::{BatchContent, Render, Span};
+use crate::content::{BatchContent, FsEntries, Render, Span};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
 use crate::render::{Cost, RenderedTree, SourceCache};
@@ -107,6 +107,14 @@ pub enum Violation {
     /// spans must be disjoint; cross-batch overrides go through
     /// predecessor edges instead.
     OverlappingSpans { path: PathBuf, line: usize },
+    /// Two batches list the same `(parent, entry)` FS atom. Directory
+    /// listings are boolean atoms; split rows should partition entries
+    /// rather than repeat the same parent/name pair.
+    OverlappingFsEntry {
+        parent: PathBuf,
+        entry: String,
+        existing_batch: String,
+    },
     /// Cumulative cost exceeds the token cap after this batch.
     CapExceeded { cumulative: usize, cap: usize },
 }
@@ -155,6 +163,7 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
     let mut cumulative: usize = 0;
     let mut largest: Option<(String, usize)> = None;
     let mut batches_out: Vec<SimulatedBatch> = Vec::with_capacity(ns.batches.len());
+    let mut fs_atom_owners: BTreeMap<(PathBuf, String), String> = BTreeMap::new();
 
     for (pos, ns_batch) in ns.batches.iter().enumerate() {
         let mut violations = Vec::new();
@@ -198,6 +207,11 @@ pub fn simulate_ns(ns: &NorthStar, fixture_root: &Path) -> Result<SimulationRepo
                 continue;
             }
         };
+        violations.extend(validate_fs_entries(
+            &content,
+            &ns_batch.id,
+            &mut fs_atom_owners,
+        ));
 
         let batch_id = BatchId::new(pos);
 
@@ -286,6 +300,38 @@ fn skipped_batch(
         predecessor: ns_batch.predecessor.clone(),
         violations,
     }
+}
+
+fn validate_fs_entries(
+    content: &BatchContent,
+    batch_id: &str,
+    owners: &mut BTreeMap<(PathBuf, String), String>,
+) -> Vec<Violation> {
+    let BatchContent::Fs { groups } = content else {
+        return Vec::new();
+    };
+    let mut violations = Vec::new();
+    for group in groups {
+        let FsEntries::Listed(paths) = &group.entries else {
+            continue;
+        };
+        for path in paths {
+            let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+                continue;
+            };
+            let atom = (group.parent.clone(), name.to_string());
+            if let Some(existing_batch) = owners.get(&atom) {
+                violations.push(Violation::OverlappingFsEntry {
+                    parent: group.parent.clone(),
+                    entry: name.to_string(),
+                    existing_batch: existing_batch.clone(),
+                });
+            } else {
+                owners.insert(atom, batch_id.to_string());
+            }
+        }
+    }
+    violations
 }
 
 fn validate_spans(spans: &[Span], fixture_root: &Path, cache: &SourceCache) -> Vec<Violation> {
