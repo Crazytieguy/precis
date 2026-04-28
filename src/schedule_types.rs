@@ -21,6 +21,12 @@ pub struct Schedule {
     pub cumulative_tokens: usize,
     pub batch_count: usize,
     pub batches: Vec<ScheduledBatch>,
+    /// Full discovered candidate pool for diagnostics such as divergence
+    /// coverage hints. This is intentionally kept out of schedule TOML
+    /// snapshots; fixture baseline tests aggregate divergence reports from
+    /// the in-memory schedules they already produce.
+    #[serde(skip)]
+    pub candidates: Vec<CandidateBatch>,
 }
 
 /// One scheduled batch's public-facing record. `content` is the resolved
@@ -33,6 +39,15 @@ pub struct ScheduledBatch {
     pub descriptor: String,
     pub cost_tokens: usize,
     pub cum_tokens: usize,
+    pub content: BatchContent,
+}
+
+/// One walker-emitted candidate, whether or not it was scheduled.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CandidateBatch {
+    pub key: String,
+    pub predecessor: Option<String>,
+    pub descriptor: String,
     pub content: BatchContent,
 }
 

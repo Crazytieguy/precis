@@ -237,30 +237,18 @@ fn scheduler_invariants_non_predecessor_overlap_panics_in_debug() {
     let _ = scheduler.run();
 }
 
+#[cfg(debug_assertions)]
 #[test]
-fn scheduler_invariants_fs_overlap_invalidates_cached_cost() {
-    // Two sibling DirListing batches share `/stub` as parent. Listing A
-    // covers [a.rs]; Listing B covers [a.rs, b.rs]. With proper cache
-    // invalidation, B's marginal cost after A schedules drops to just
-    // the b.rs row (a.rs is already listed). Without invalidation, the
-    // recompute-on-hit assertion in `best_exact` panics with "stale
-    // cost_cache entry".
-    //
-    // We enable `PRECIS_VERIFY_COST_CACHE=1` so the assertion fires
-    // even though it's opt-in by default (the verification is too
-    // expensive to run on every test). nextest spawns a fresh process
-    // per test, so the unsafe `set_var` is safe — no other threads
-    // are reading the env at this point.
-    //
-    // A is given a stronger value so it schedules first; the
-    // ranking ratio (value / cost^k) plus dedup-on-already-listed gates
-    // the rest of the test naturally.
-    // SAFETY: nextest runs each test in its own single-threaded process.
-    unsafe { std::env::set_var("PRECIS_VERIFY_COST_CACHE", "1") };
+#[should_panic(expected = "overlapping FS atom")]
+fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
+    // Two sibling DirListing batches share `/stub` as parent and both
+    // claim `a.rs`. The production FS walker emits one full listing per
+    // directory, so overlapping FS atoms are a walker-contract violation
+    // rejected at absorb time rather than a scheduler-supported case.
     fn key_a() -> BatchKey {
         // Distinct directory paths so the keys hash differently —
-        // both batches still emit groups parented at the shared
-        // `/stub` directory, which is what the cache cares about.
+        // both batches still emit groups parented at `/stub`, which is
+        // the render cell whose ownership must be unique.
         BatchKey::Fs(FsKey::DirListing {
             dir: PathBuf::from("/stub-a"),
         })
@@ -312,14 +300,5 @@ fn scheduler_invariants_fs_overlap_invalidates_cached_cost() {
 
     let cache = SourceCache::new();
     let scheduler = Scheduler::with_source_cache(stub_dir(), OverlapWalker, 10_000, None, cache);
-    let tree = scheduler.run();
-    let rendered = tree.render();
-    assert!(
-        rendered.contains("a.rs"),
-        "listing A should have scheduled: {rendered}"
-    );
-    assert!(
-        rendered.contains("b.rs"),
-        "listing B's b.rs should have scheduled (a.rs already listed): {rendered}"
-    );
+    let _ = scheduler.run();
 }

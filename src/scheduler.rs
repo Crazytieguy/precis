@@ -14,11 +14,15 @@
 //! the scheduler is concerned — it needs identity (`Eq`/`Hash`) and
 //! tiebreak order (`Ord`) only.
 
+#[cfg(debug_assertions)]
+use std::collections::BTreeMap;
 use std::collections::{HashMap, HashSet};
-use std::path::{Path, PathBuf};
+use std::path::PathBuf;
 
 use crate::batch::{Batch, BatchId, WalkerKey};
 use crate::content::BatchContent;
+#[cfg(debug_assertions)]
+use crate::content::FsEntries;
 use crate::render::{Cost, RenderedTree, SourceCache};
 use crate::value::ratio_with_exponent as score_ratio;
 use crate::walker::{WalkCtx, Walker};
@@ -39,9 +43,12 @@ pub struct ScheduledBatchRecord<K> {
 /// log of scheduled batches. `render()` can be called on the tree; the
 /// log drives `render_schedule()` and the divergence metric.
 #[derive(Debug)]
-pub struct RunReport<K> {
+pub struct RunReport<K: WalkerKey> {
     pub tree: RenderedTree,
     pub scheduled: Vec<ScheduledBatchRecord<K>>,
+    /// All walker-emitted batches discovered during this run, including
+    /// batches that never made it into the prefix-monotone schedule.
+    pub candidates: Vec<Batch<K>>,
 }
 
 pub struct Scheduler<W: Walker> {
@@ -61,17 +68,15 @@ pub struct Scheduler<W: Walker> {
     /// Ordered log of scheduled batch ids + costs for the final report.
     scheduled_log: Vec<(BatchId, Cost)>,
     /// Cached marginal cost per emitted batch. Populated lazily by
-    /// `best_exact` on cache miss; selectively cleared by `schedule`
-    /// when the just-applied batch mutates render-tree state any other
-    /// batch's marginal cost depends on.
+    /// `best_exact` on cache miss. Walker invariants keep cached costs
+    /// stable: non-ancestor line overlap is rejected during apply, and
+    /// debug builds reject overlapping FS atoms at absorb time.
     cost_cache: HashMap<BatchId, Cost>,
-    /// Reverse index: each path → batches whose marginal cost depends
-    /// on render-tree state at that path. Populated at absorb time from
-    /// the batch's content (Lines: span paths; Fs: group parents).
-    /// Lines and Fs use disjoint cells of the render tree, so a single
-    /// `PathBuf`-keyed index suffices — even on a hypothetical
-    /// file-vs-dir collision the worst case is over-invalidation.
-    path_to_batches: HashMap<PathBuf, Vec<BatchId>>,
+    /// Debug-only owner map for FS render cells. The production walker
+    /// emits one full listing per directory, so overlapping sibling FS
+    /// atoms are a walker-contract violation rather than a scheduler case.
+    #[cfg(debug_assertions)]
+    fs_atom_owners: BTreeMap<(PathBuf, String), W::Key>,
 }
 
 impl<W: Walker> Scheduler<W> {
@@ -101,7 +106,8 @@ impl<W: Walker> Scheduler<W> {
             scheduled: HashSet::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
-            path_to_batches: HashMap::new(),
+            #[cfg(debug_assertions)]
+            fs_atom_owners: BTreeMap::new(),
         }
     }
 
@@ -153,12 +159,13 @@ impl<W: Walker> Scheduler<W> {
             }
         }
 
+        let entries = self.entries;
         let scheduled = self
             .scheduled_log
             .into_iter()
             .scan(0usize, |cum, (id, cost)| {
                 *cum += cost.tokens;
-                let entry = &self.entries[id.index()];
+                let entry = &entries[id.index()];
                 Some(ScheduledBatchRecord {
                     key: entry.key.clone(),
                     content: entry.content.clone(),
@@ -170,6 +177,7 @@ impl<W: Walker> Scheduler<W> {
         RunReport {
             tree: self.tree,
             scheduled,
+            candidates: entries,
         }
     }
 
@@ -180,12 +188,38 @@ impl<W: Walker> Scheduler<W> {
         if self.key_to_id.contains_key(&batch.key) {
             return;
         }
+        #[cfg(debug_assertions)]
+        self.assert_disjoint_fs_atoms(&batch);
         let id = BatchId::new(self.entries.len());
-        for path in relevant_paths(&batch.content) {
-            self.path_to_batches.entry(path).or_default().push(id);
-        }
         self.key_to_id.insert(batch.key.clone(), id);
         self.entries.push(batch);
+    }
+
+    #[cfg(debug_assertions)]
+    fn assert_disjoint_fs_atoms(&mut self, batch: &Batch<W::Key>) {
+        let BatchContent::Fs { groups } = &batch.content else {
+            return;
+        };
+        for group in groups {
+            let FsEntries::Listed(paths) = &group.entries else {
+                continue;
+            };
+            for path in paths {
+                let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+                    continue;
+                };
+                let atom = (group.parent.clone(), name.to_string());
+                if let Some(owner) = self.fs_atom_owners.get(&atom) {
+                    debug_assert_eq!(
+                        owner, &batch.key,
+                        "overlapping FS atom {:?} emitted by {:?} and {:?}",
+                        atom, owner, batch.key,
+                    );
+                } else {
+                    self.fs_atom_owners.insert(atom, batch.key.clone());
+                }
+            }
+        }
     }
 
     /// Eligibility check: predecessor is scheduled (or no predecessor).
@@ -224,7 +258,6 @@ impl<W: Walker> Scheduler<W> {
         // Two passes so we can mutate `cost_cache` without holding a
         // borrow into `entries`: first compute any missing costs, then
         // rank using the now-populated cache.
-        let verify_hits = cfg!(debug_assertions) && verify_cost_cache_enabled();
         for idx in 0..self.entries.len() {
             let id = BatchId::new(idx);
             if self.scheduled.contains(&id) {
@@ -234,15 +267,7 @@ impl<W: Walker> Scheduler<W> {
             if !self.eligible(entry.predecessor.as_ref()) {
                 continue;
             }
-            if let Some(&cached) = self.cost_cache.get(&id) {
-                if verify_hits {
-                    let fresh = self.tree.marginal_cost(&entry.content);
-                    debug_assert_eq!(
-                        fresh, cached,
-                        "stale cost_cache entry for batch {id:?} — invalidation logic missed a dependency",
-                    );
-                }
-            } else {
+            if !self.cost_cache.contains_key(&id) {
                 let fresh = self.tree.marginal_cost(&entry.content);
                 self.cost_cache.insert(id, fresh);
             }
@@ -309,22 +334,11 @@ impl<W: Walker> Scheduler<W> {
         self.consumed.tokens += cost.tokens;
         self.consumed.bytes += cost.bytes;
 
-        // Invalidate cached marginal costs for any other emitted batch
-        // whose marginal cost depends on render-tree state at a path the
-        // just-applied batch mutated. Also lazily prune already-scheduled
-        // ids from the dependents list — they never re-enter `best_exact`,
-        // so keeping them inflates the invalidation loop on hot files
-        // like `src/lib.rs`.
+        // Drop the scheduled batch's cached cost. Other cached costs stay
+        // stable under walker invariants: siblings don't mutate each
+        // other's render cells, and ancestor refinements are scheduled
+        // before a dependent first becomes eligible/cached.
         self.cost_cache.remove(&id);
-        let scheduled = &self.scheduled;
-        for path in relevant_paths(&entry_content) {
-            if let Some(dependents) = self.path_to_batches.get_mut(&path) {
-                dependents.retain(|d| !scheduled.contains(d));
-                for dep in dependents {
-                    self.cost_cache.remove(dep);
-                }
-            }
-        }
 
         // Walker learns about the new scheduled key; emit successors.
         let key = self.entries[id.index()].key.clone();
@@ -353,43 +367,4 @@ impl<W: Walker> Scheduler<W> {
         }
         set
     }
-}
-
-/// `PRECIS_VERIFY_COST_CACHE=1` opt-in for the recompute-on-hit
-/// assertion in `best_exact`. Read once per process — toggling at
-/// runtime isn't supported, but the value of an env var rarely changes
-/// inside a test run anyway.
-fn verify_cost_cache_enabled() -> bool {
-    use std::sync::OnceLock;
-    static FLAG: OnceLock<bool> = OnceLock::new();
-    *FLAG.get_or_init(|| {
-        std::env::var("PRECIS_VERIFY_COST_CACHE")
-            .map(|v| matches!(v.as_str(), "1" | "true"))
-            .unwrap_or(false)
-    })
-}
-
-/// Paths whose render-tree state the marginal cost of `content`
-/// depends on, used as the invalidation key for `Scheduler::cost_cache`.
-///
-/// - `Lines`: each unique span path (Lines marginal cost reads
-///   `nodes[path].content` to compute refinement deltas).
-/// - `Fs`: each unique group parent (Fs marginal cost reads
-///   `nodes[parent].children` to skip already-listed entries).
-///
-/// Cross-variant invalidation is unnecessary: `apply_fs_group` only
-/// mutates `Dir.children` (and inserts empty `File`/`Dir` nodes whose
-/// content is empty — Lines `existing.get(line) == None` either way),
-/// and `apply_spans` only mutates `File.content`. Lines paths and Fs
-/// parents thus invalidate disjoint cells of the render tree even
-/// when sharing a `PathBuf` (which can't happen in practice — file
-/// vs. dir paths differ).
-fn relevant_paths(content: &BatchContent) -> Vec<PathBuf> {
-    let mut paths: Vec<&Path> = match content {
-        BatchContent::Lines { spans } => spans.iter().map(|s| s.path.as_path()).collect(),
-        BatchContent::Fs { groups } => groups.iter().map(|g| g.parent.as_path()).collect(),
-    };
-    paths.sort();
-    paths.dedup();
-    paths.into_iter().map(PathBuf::from).collect()
 }

@@ -20,7 +20,7 @@ pub use batch::{Batch, BatchKey, FsKey, MarkdownKey, RustKey, TomlKey, WalkerKey
 pub use content::{BatchContent, FsEntries, FsGroup, Render, Span};
 pub use fs_util::{EntryKind, list_dir};
 pub use render::{Cost, RenderedTree, SourceCache};
-pub use schedule_types::{Atom, Schedule, ScheduledBatch};
+pub use schedule_types::{Atom, CandidateBatch, Schedule, ScheduledBatch};
 
 use scheduler::Scheduler;
 use walker::FsWalker;
@@ -100,12 +100,23 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
             content: b.content,
         })
         .collect::<Vec<_>>();
+    let candidates = report
+        .candidates
+        .into_iter()
+        .map(|b| CandidateBatch {
+            key: format!("{:?}", &b.key),
+            predecessor: b.predecessor.as_ref().map(|p| format!("{p:?}")),
+            descriptor: WalkerKey::describe(&b.key),
+            content: b.content,
+        })
+        .collect();
     Ok(Schedule {
         fixture,
         budget,
         cumulative_tokens,
         batch_count: batches.len(),
         batches,
+        candidates,
     })
 }
 
