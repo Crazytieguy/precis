@@ -29,18 +29,9 @@ CHANGELOG.md
     56→## 1.2.3
     58→- Fixed
     59→  - Backport: Allow lower case "t" and "z" in datetimes
-    100→## 1.1.0
-    102→- Added
-    103→  - `load` can now take a binary file object
     105→## 1.0.4
     107→- Performance
     108→  - Minor boost (~4%)
-    117→## 1.0.2
-    119→- Performance
-    120→  - Minor boost (~4%)
-    122→## 1.0.1
-    124→- Performance
-    125→  - A significant boost
 LICENSE
 LICENSE-HEADER
 MANIFEST.in
@@ -128,14 +119,6 @@ fuzzer/
         56→    sys.stderr.flush()
         59→def normalize_toml_obj(toml_obj: dict) -> None:
         60→    """Make NaNs equal when compared (without using recursion)."""
-        61→    to_process = [toml_obj]
-        62→    while to_process:
-        63→        cont = to_process.pop()
-        64→        for k, v in cont.items() if isinstance(cont, dict) else enumerate(cont):
-        65→            if isinstance(v, float) and isnan(v):
-        66→                cont[k] = "nan"
-        67→            elif isinstance(v, (dict, list)):
-        68→                to_process.append(v)
         71→def main():
         72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
         73→    fuzzer_options = sys.argv
@@ -178,6 +161,20 @@ src/
             6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
             8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
+            19→TYPE_CHECKING = False
+            35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
+            37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
+            41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
+            42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
+            44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+            45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
+            47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
+            49→TOML_WS: Final = frozenset(" \t")
+            50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
+            51→BARE_KEY_CHARS: Final = frozenset(
+            52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
+            53→)
+            54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
         _re.py
             5→from __future__ import annotations
             7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
@@ -198,13 +195,6 @@ src/
             64→    """
             98→@lru_cache(maxsize=None)
             99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
-            100→    sign = 1 if sign_str == "+" else -1
-            101→    return timezone(
-            102→        timedelta(
-            103→            hours=sign * int(hour_str),
-            104→            minutes=sign * int(minute_str),
-            105→        )
-            106→    )
             109→def match_to_localtime(match: re.Match[str]) -> time:
             …
             116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:

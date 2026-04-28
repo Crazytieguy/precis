@@ -40,7 +40,10 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, TsKey};
-use crate::value::mix_signals;
+use crate::value::{
+    NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
+    names_surface_chunk_index,
+};
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
@@ -86,19 +89,31 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
         let per_export_factor = type_machinery_factor(file, &exports);
-        let names_key = TsKey::ExportNames { file: file.clone() };
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_export_names(&tree, &source))
-        {
+        let chunk_count = names_surface_chunk_count(exports.len());
+        let names_predecessors: Vec<_> = (0..chunk_count)
+            .map(|chunk_index| {
+                BatchKey::Typescript(TsKey::ExportNames {
+                    file: file.clone(),
+                    chunk_index,
+                })
+            })
+            .collect();
+        for (chunk_index, chunk) in exports.chunks(NAMES_SURFACE_CHUNK_SIZE).enumerate() {
+            let Some(content) =
+                single_file_lines_content(file, &source, collect_export_names_from(chunk))
+            else {
+                continue;
+            };
             out.push(Batch {
-                key: names_key.clone().into(),
+                key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: export_names_value(file, ctx),
+                value: export_names_value(file, ctx, chunk_index, chunk_count),
             });
         }
-        let names_predecessor = BatchKey::Typescript(names_key);
-        for item in &exports {
+        for (item_index, item) in exports.iter().enumerate() {
+            let names_predecessor =
+                names_predecessors[names_surface_chunk_index(item_index)].clone();
             let export_key = TsKey::Export {
                 file: file.clone(),
                 start_line: item.start_line,
@@ -708,9 +723,10 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx))
 }
 
-fn export_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn export_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
+        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
@@ -812,11 +828,10 @@ fn is_bare_reexport(node: Node) -> bool {
     first_decl_child(node).is_none() && has_export_clause(node) && has_from_source(node)
 }
 
-fn collect_export_names(tree: &Tree, source: &str) -> FileLines {
-    let items = find_export_starts(tree, source);
+fn collect_export_names_from(items: &[ExportInfo]) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for item in &items {
+    for item in items {
         full.push(item.start_line);
         ellipses.push(item.start_line + 1);
     }

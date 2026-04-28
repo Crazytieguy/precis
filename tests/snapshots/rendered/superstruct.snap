@@ -136,22 +136,6 @@ docs/
             25→### `Infer`
             …
         utilities.md
-            1→# Utilities
-            …
-            5→### `assign`
-            …
-            20→### `deprecated`
-            …
-            38→### `dynamic`
-            …
-            51→### `lazy`
-            …
-            64→### `omit`
-            …
-            78→### `partial`
-            …
-            97→### `pick`
-            …
     resources/
         faq.md
             1→# FAQ
@@ -262,18 +246,7 @@ src/
         31→  branch!: Array<any>
         32→  failures: () => Array<Failure>;
         35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-        36→    let cached: Array<Failure> | undefined
-        37→    const { message, explanation, ...rest } = failure
-        38→    const { path } = failure
-        39→    const msg =
-        40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
-        41→    super(explanation ?? msg)
-        42→    if (explanation != null) this.cause = msg
-        43→    Object.assign(this, rest)
-        44→    this.name = this.constructor.name
-        45→    this.failures = () => {
-        46→      return (cached ??= [failure, ...failures()])
-        47→    }
+        …
     index.ts
         1→export * from './error.js'
         2→export * from './struct.js'
@@ -282,6 +255,11 @@ src/
         5→export * from './structs/types.js'
         6→export * from './structs/utilities.js'
     struct.ts
+        261→/**
+        262→ * A `Refiner` takes a value of a known type and validates it against a further
+        263→ * constraint.
+        264→ */
+        266→export type Refiner<T> = (value: T, context: Context) => Result
     structs/
         coercions.ts
             16→export function coerce<T, S, C>(
@@ -355,6 +333,11 @@ src/
             …
         types.ts
         utilities.ts
+            247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
+            248→  console.warn(
+            249→    'superstruct@0.11 - The `struct` helper has been renamed to `define`.'
+            250→  )
+            252→  return define(name, validator)
     utils.ts
 test/
 tsconfig.json

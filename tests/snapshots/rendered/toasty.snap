@@ -171,6 +171,36 @@ crates/
         CONTEXT.md
         Cargo.toml
         src/
+            driver/
+            driver.rs
+                18→pub trait Driver: Debug + Send + Sync + 'static {
+                …
+                45→pub trait Connection: Debug + Send + 'static {
+                …
+            error/
+            error.rs
+                36→pub struct Error {
+                37→    inner: Arc<ErrorInner>,
+                38→}
+                41→pub trait IntoError {
+                42→    /// Converts this type into an Error.
+                43→    fn into_error(self) -> Error;
+                44→}
+            lib.rs
+                15→/// A Result type alias that uses Toasty's [`Error`] type.
+                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+                …
+            macros.rs
+                2→macro_rules! path {
+                …
+            schema/
+            schema.rs
+                22→pub struct Schema {
+                …
+            stmt/
+            stmt.rs
+                253→pub enum Statement {
+                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
@@ -241,10 +271,6 @@ crates/
                 …
     toasty-driver-postgresql/
         Cargo.toml
-            6→[features]
-            7→rust_decimal = ["dep:rust_decimal", "toasty-core/rust_decimal"]
-            8→bigdecimal = ["dep:bigdecimal", "toasty-core/bigdecimal"]
-            9→jiff = ["dep:jiff", "toasty-core/jiff", "postgres-types/with-jiff-0_2"]
         src/
             lib.rs
                 24→pub struct PostgreSQL {
@@ -326,24 +352,6 @@ crates/
         tests/
 docs/
     ARCHITECTURE.md
-        1→# Toasty Architecture Overview
-        …
-        3→## Project Structure
-        …
-        7→## Crates
-        …
-        9→### 1. toasty
-        …
-        26→### 2. toasty-core
-        …
-        39→### 3. toasty-codegen
-        …
-        54→### 4. toasty-driver-*
-        …
-        63→### 5. toasty-sql
-        …
-        74→## Further Reading
-        …
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context

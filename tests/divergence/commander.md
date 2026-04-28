@@ -1,4 +1,4 @@
-scores: Sim=0.376 Reached=6/41 Early=3 Late=1 Partial=4 Missing=31 Used=9969/10000
+scores: Sim=0.371 Reached=6/41 Early=3 Late=0 Partial=4 Missing=31 Used=9969/10000
 
 ## Verdict
 
@@ -30,7 +30,7 @@ Tiers: 1=3/5 reached, 1 partial, 1 missing, avg=0.84; 2=1/8 reached, 2 partial, 
 | wrong-slice / granularity | 6 | 2 | 4 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 25 | 25 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 2 | 2 | 0 | 0 | filesystem/listing value |
-| timing-only | 4 | 0 | 0 | 4 | usually no code change |
+| timing-only | 3 | 0 | 0 | 3 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -39,7 +39,7 @@ Tiers: 1=3/5 reached, 1 partial, 1 missing, avg=0.84; 2=1/8 reached, 2 partial, 
 | too expensive at final margin | 2 | 0.01 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=4, no discovered candidate=25
+Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=3, no discovered candidate=25
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -113,7 +113,6 @@ Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=4, no discov
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 153 | 102 | -51 | 1.00 | early | Top-level fs | fs-only |
-| 1.3 | 195 | 261 | +66 | 1.00 | late | lib/ + typings/ listings | fs-only |
 | 1.4 | 225 | 132 | -93 | 1.00 | early | Readme title + tagline | [scheduled bbox exact=2/2] README headline in Readme.md (t=132, 2 atoms) |
 | 7.7 | 9995 | 6060 | -3935 | 1.00 | early | options-in-depth — table of contents | [scheduled bbox exact=3/3] docs/options-in-depth.md section #0 (t=6060, 3 atoms) |
 
@@ -130,14 +129,14 @@ Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=4, no discov
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 825 | 1.00 | 825 | 4376 | Readme.md section #0 |
+| 825 | 1.00 | 825 | 4048 | Readme.md section #0 |
 | 759 | 1.00 | 759 | 7805 | export at typings/index.d.ts:210 |
 | 527 | 1.00 | 527 | 9651 | json config tsconfig.json |
 | 410 | 1.00 | 410 | 5294 | export at typings/index.d.ts:95 |
-| 352 | 1.00 | 352 | 2507 | export names surface in typings/index.d.ts |
 | 340 | 1.00 | 340 | 8723 | docs/deprecated.md section #0 |
 | 303 | 0.97 | 311 | 8347 | docs/release-policy.md section #0 |
-| 259 | 1.00 | 259 | 1694 | package scripts in package.json |
-| 256 | 1.00 | 256 | 2077 | package dependencies in package.json |
+| 259 | 1.00 | 259 | 2183 | package scripts in package.json |
+| 256 | 1.00 | 256 | 2566 | package dependencies in package.json |
 | 246 | 0.95 | 258 | 6318 | Readme.md section #3 |
-| 3511 | — | — | — | +30 more rows |
+| 239 | 1.00 | 239 | 4884 | json config tsconfig.ts.json |
+| 3624 | — | — | — | +31 more rows |

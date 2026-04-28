@@ -1,4 +1,4 @@
-scores: Sim=0.393 Reached=14/40 Early=4 Late=7 Partial=5 Missing=21 Used=9991/10000
+scores: Sim=0.392 Reached=14/40 Early=4 Late=7 Partial=5 Missing=21 Used=9922/10000
 
 ## Verdict
 
@@ -62,20 +62,20 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 4.1 | 1595 | — | — | 0.15 | missing | _manager.py — every class + def name | [scheduled bbox exact=0/34] python decl doc at src/pluggy/_manager.py:83 (t=6582, 11 atoms); better unscheduled exact=29/34: python method sigs in src/pluggy/_manager.py (60 atoms, too expensive at final margin) |
-| 5.4 | 3651 | — | — | 0.05 | missing | HookCaller._add_hookimpl body — the actual ordering algorithm | [scheduled bbox exact=1/22] python method doc at src/pluggy/_hooks.py:453 (t=9057, 1 atoms); better unscheduled exact=20/22: python method body at src/pluggy/_hooks.py:453 (20 atoms, too expensive at final margin) |
+| 4.1 | 1595 | — | — | 0.15 | missing | _manager.py — every class + def name | [scheduled bbox exact=0/34] python decl doc at src/pluggy/_manager.py:83 (t=7373, 11 atoms); better unscheduled exact=29/34: python method sigs in src/pluggy/_manager.py (60 atoms, too expensive at final margin) |
+| 5.4 | 3651 | — | — | 0.05 | missing | HookCaller._add_hookimpl body — the actual ordering algorithm | [scheduled bbox exact=1/22] python method doc at src/pluggy/_hooks.py:453 (t=9363, 1 atoms); better unscheduled exact=20/22: python method body at src/pluggy/_hooks.py:453 (20 atoms, too expensive at final margin) |
 | 7.3 | 7193 | — | — | 0.00 | missing | test_pluginmanager.py — every test fn name | [unscheduled bbox exact=32/32] python test names surface in testing/test_pluginmanager.py (63 atoms, too expensive at final margin) |
-| 7.11 | 9819 | — | — | 0.09 | missing | _callers._multicall body — the actual call loop | [scheduled bbox exact=4/43] python decl doc at src/pluggy/_callers.py:82 (t=6413, 4 atoms); better unscheduled exact=35/43: python decl body at src/pluggy/_callers.py:82 (35 atoms, too expensive at final margin) |
+| 7.11 | 9819 | — | — | 0.09 | missing | _callers._multicall body — the actual call loop | [scheduled bbox exact=4/43] python decl doc at src/pluggy/_callers.py:82 (t=6973, 4 atoms); better unscheduled exact=35/43: python decl body at src/pluggy/_callers.py:82 (35 atoms, too expensive at final margin) |
 
 ### wrong-slice / granularity
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 4.5 | 2581 | — | — | 0.63 | partial | _warnings.py — full file (Pluggy*Warning classes) | [scheduled bbox exact=10/27] python decl doc at src/pluggy/_warnings.py:10 (t=6870, 10 atoms) |
-| 5.1 | 2873 | — | — | 0.73 | partial | PluginManager class docstring | [scheduled bbox exact=11/15] python decl doc at src/pluggy/_manager.py:83 (t=6582, 11 atoms) |
-| 5.3 | 3369 | — | — | 0.55 | partial | HookCaller __slots__ + the 6-bucket call-order comment | [scheduled bbox exact=7/29] python method at src/pluggy/_hooks.py:393 (t=9289, 7 atoms); better unscheduled exact=11/29: python method body at src/pluggy/_hooks.py:393 (11 atoms, too expensive at final margin) |
-| 5.6 | 4494 | — | — | 0.62 | partial | Result API — force_result, force_exception, get_result bodies | [scheduled bbox exact=6/37] python method doc at src/pluggy/_result.py:67 (t=7258, 6 atoms); better unscheduled exact=7/37: python method body at src/pluggy/_result.py:91 (7 atoms, too expensive at final margin) |
-| 7.2 | 6827 | — | — | 0.72 | partial | testing/conftest.py — pm + he_pm fixtures | [scheduled bbox exact=7/25] python decl body at testing/conftest.py:7 (t=4492, 7 atoms) |
+| 4.5 | 2581 | — | — | 0.63 | partial | _warnings.py — full file (Pluggy*Warning classes) | [scheduled bbox exact=10/27] python decl doc at src/pluggy/_warnings.py:10 (t=7661, 10 atoms) |
+| 5.1 | 2873 | — | — | 0.73 | partial | PluginManager class docstring | [scheduled bbox exact=11/15] python decl doc at src/pluggy/_manager.py:83 (t=7373, 11 atoms) |
+| 5.3 | 3369 | — | — | 0.55 | partial | HookCaller __slots__ + the 6-bucket call-order comment | [scheduled bbox exact=7/29] python method at src/pluggy/_hooks.py:393 (t=9595, 7 atoms); better unscheduled exact=11/29: python method body at src/pluggy/_hooks.py:393 (11 atoms, too expensive at final margin) |
+| 5.6 | 4494 | — | — | 0.62 | partial | Result API — force_result, force_exception, get_result bodies | [scheduled bbox exact=6/37] python method doc at src/pluggy/_result.py:67 (t=8049, 6 atoms); better unscheduled exact=7/37: python method body at src/pluggy/_result.py:91 (7 atoms, too expensive at final margin) |
+| 7.2 | 6827 | — | — | 0.72 | partial | testing/conftest.py — pm + he_pm fixtures | [scheduled bbox exact=7/25] python decl body at testing/conftest.py:7 (t=5177, 7 atoms) |
 | 7.4 | 7623 | — | — | 0.00 | missing | test_hookcaller.py + test_multicall.py — every test fn name | [unscheduled bbox exact=21/36] python test names surface in testing/test_multicall.py (41 atoms, too expensive at final margin) |
 | 7.5 | 8023 | — | — | 0.00 | missing | Smaller test files — every test fn name | [unscheduled bbox exact=13/35] python test names surface in testing/test_invocations.py (25 atoms, too expensive at final margin) |
 | 7.12 | 9946 | — | — | 0.31 | missing | Top-level meta — AGENTS.md, SECURITY.md, MANIFEST.in | [scheduled bbox exact=2/13] SECURITY.md section #0 (t=423, 2 atoms) |
@@ -110,12 +110,12 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.3 | 256 | 766 | +510 | 1.00 | late | Source package layout (src/pluggy/) | fs-only |
 | 1.4 | 406 | 1185 | +779 | 1.00 | late | __all__ — full public-name list | [scheduled bbox exact=16/16] python imports in src/pluggy/__init__.py (t=1185, 16 atoms) |
-| 4.2 | 2037 | 8799 | +6762 | 1.00 | late | _hooks.py — every class + def name (markers, HookCaller, HookImpl, HookSpec) | [scheduled bbox exact=30/42] python method sigs in src/pluggy/_hooks.py (t=8799, 59 atoms) |
-| 4.3 | 2138 | 5803 | +3665 | 1.00 | late | _callers.py — every def + _multicall signature | [scheduled bbox exact=5/9] python decl names surface in src/pluggy/_callers.py (t=1378, 8 atoms) |
-| 4.4 | 2275 | 2443 | +168 | 1.00 | aligned+over | _result.py — Result class + every method (in full) | [scheduled bbox exact=10/12] python method sigs in src/pluggy/_result.py (t=2430, 13 atoms) |
-| 4.6 | 2682 | 6213 | +3531 | 1.00 | late | _tracing.py — class + def names | [scheduled bbox exact=9/11] python method sigs in src/pluggy/_tracing.py (t=6213, 17 atoms) |
-| 5.2 | 3038 | 5362 | +2324 | 0.83 | late | HookspecMarker + HookimplMarker class docstrings | [scheduled bbox exact=0/12] python method at src/pluggy/_hooks.py:111 (t=9697, 8 atoms) |
-| 5.5 | 4080 | 7096 | +3016 | 0.91 | late | HookspecOpts + HookimplOpts — TypedDict bodies | [scheduled bbox exact=16/32] python class body at src/pluggy/_hooks.py:56 (t=7096, 16 atoms) |
+| 4.2 | 2037 | 9129 | +7092 | 1.00 | late | _hooks.py — every class + def name (markers, HookCaller, HookImpl, HookSpec) | [scheduled bbox exact=22/42] python method sigs #1 in src/pluggy/_hooks.py (t=9129, 43 atoms) |
+| 4.3 | 2138 | 6160 | +4022 | 1.00 | late | _callers.py — every def + _multicall signature | [scheduled bbox exact=5/9] python decl names surface in src/pluggy/_callers.py (t=1378, 8 atoms) |
+| 4.4 | 2275 | 2646 | +371 | 1.00 | aligned+over | _result.py — Result class + every method (in full) | [scheduled bbox exact=10/12] python method sigs in src/pluggy/_result.py (t=2633, 13 atoms) |
+| 4.6 | 2682 | 6773 | +4091 | 1.00 | late | _tracing.py — class + def names | [scheduled bbox exact=9/11] python method sigs in src/pluggy/_tracing.py (t=6773, 17 atoms) |
+| 5.2 | 3038 | 4153 | +1115 | 0.83 | late | HookspecMarker + HookimplMarker class docstrings | [scheduled bbox exact=0/12] python method at src/pluggy/_hooks.py:111 (t=6455, 8 atoms) |
+| 5.5 | 4080 | 7887 | +3807 | 0.91 | late | HookspecOpts + HookimplOpts — TypedDict bodies | [scheduled bbox exact=16/32] python class body at src/pluggy/_hooks.py:56 (t=7887, 16 atoms) |
 | 7.1 | 6579 | 501 | -6078 | 1.00 | early | testing/ FS listing | fs-only |
 | 7.10 | 9300 | 394 | -8906 | 1.00 | early | changelog/ + downstream/ FS listings | fs-only |
 | 7.13 | 9964 | 135 | -9829 | 1.00 | early | scripts/ FS + .github/workflows/ FS | fs-only |
@@ -131,14 +131,14 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 284 | 1.00 | 284 | 2876 | python decl names surface in docs/conf.py |
-| 208 | 1.00 | 208 | 8217 | python imports in src/pluggy/_hooks.py |
-| 201 | 1.00 | 201 | 4102 | python decl at testing/benchmark.py:54 |
-| 191 | 0.65 | 294 | 4786 | python decl names surface in src/pluggy/_hooks.py |
-| 161 | 1.00 | 161 | 7464 | python imports in src/pluggy/_callers.py |
-| 158 | 1.00 | 158 | 4403 | python decl at docs/conf.py:66 |
-| 152 | 1.00 | 152 | 7901 | python decl body at testing/benchmark.py:40 |
-| 146 | 1.00 | 146 | 3901 | python decl at docs/conf.py:41 |
-| 139 | 1.00 | 139 | 7603 | python decl body at scripts/release.py:15 |
+| 201 | 1.00 | 201 | 4694 | python decl at testing/benchmark.py:54 |
+| 161 | 1.00 | 161 | 8255 | python imports in src/pluggy/_callers.py |
+| 158 | 1.00 | 158 | 5088 | python decl at docs/conf.py:66 |
+| 152 | 1.00 | 152 | 8692 | python decl body at testing/benchmark.py:40 |
+| 149 | 1.00 | 149 | 3203 | python decl names surface #1 in docs/conf.py |
+| 146 | 1.00 | 146 | 4493 | python decl at docs/conf.py:41 |
+| 139 | 1.00 | 139 | 8394 | python decl body at scripts/release.py:15 |
 | 136 | 1.00 | 136 | 3549 | python decl at docs/conf.py:96 |
-| 2925 | — | — | — | +36 more rows |
+| 135 | 1.00 | 135 | 2069 | python decl names surface in docs/conf.py |
+| 131 | 0.72 | 181 | 3936 | python decl names surface in src/pluggy/_hooks.py |
+| 3124 | — | — | — | +39 more rows |

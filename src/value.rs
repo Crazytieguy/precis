@@ -17,6 +17,41 @@ pub fn mix_signals(cat: f64, fu: f64, ztu: f64, depth: f64) -> f64 {
     (1000.0 * cat + 400.0 * fu + 300.0 * ztu) * depth.max(0.0)
 }
 
+/// Chunk size for names-surface gates. Twelve declarations is roughly one
+/// screenful of API anchors: enough context to orient, small enough that a
+/// later chunk does not make the first chunk too expensive for descendants.
+pub const NAMES_SURFACE_CHUNK_SIZE: usize = 12;
+
+/// First chunks are deliberately a little below the previous unchunked
+/// surface value so small unchunked files still win comparable rank races.
+const CHUNKED_NAMES_FIRST_CHUNK_FACTOR: f64 = 0.9;
+/// A 0.25 falloff puts the fourth chunk at about half the first chunk,
+/// keeping source-order tails available without letting giant catalogs win
+/// every early scheduling slot.
+const CHUNKED_NAMES_FALLOFF: f64 = 0.25;
+
+pub fn names_surface_chunk_count(dependent_count: usize) -> usize {
+    dependent_count.div_ceil(NAMES_SURFACE_CHUNK_SIZE)
+}
+
+pub fn names_surface_chunk_index(item_index: usize) -> usize {
+    item_index / NAMES_SURFACE_CHUNK_SIZE
+}
+
+/// Value multiplier for a names-surface batch that gates per-item
+/// descendants. The surface carries its own orientation value, but it
+/// also unlocks the scheduler's ability to choose precise child batches
+/// later; dense public API files should therefore beat unrelated
+/// follow-up batches without letting one enormous catalog dominate the
+/// whole prefix.
+pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
+    if chunk_count <= 1 {
+        1.0
+    } else {
+        CHUNKED_NAMES_FIRST_CHUNK_FACTOR / (1.0 + chunk_index as f64 * CHUNKED_NAMES_FALLOFF)
+    }
+}
+
 /// Down-weight a batch by filesystem depth. Depth 0 (root) and depth 1
 /// (files directly in root, e.g. Cargo.toml, README.md) are unpenalized;
 /// penalty grows for deeper content. First-pass placeholder; calibrate

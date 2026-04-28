@@ -209,7 +209,7 @@ pub enum TsKey {
     /// Surface listing of every top-level export's first line — a
     /// catastrophic-omission hedge when individual decls don't all fit.
     /// Priority 1.x.
-    ExportNames { file: PathBuf },
+    ExportNames { file: PathBuf, chunk_index: usize },
     /// One top-level export's declaration. For interface/type/class/enum,
     /// the whole item. For function, signature with body marker. For
     /// const/let, the assignment line. Keyed by start line so each
@@ -400,7 +400,7 @@ pub enum PythonKey {
     /// Surface listing of every top-level class, def (sync or async),
     /// and non-dunder simple-assignment first line.
     /// Catastrophic-omission hedge. Priority 1.x.
-    DeclNames { file: PathBuf },
+    DeclNames { file: PathBuf, chunk_index: usize },
     /// One top-level item. For class, the `class Foo(Base):` header
     /// (decorator lines included if decorated). For def, signature
     /// with body marker. For constant, the assignment line(s). Keyed
@@ -425,7 +425,7 @@ pub enum PythonKey {
     /// top-level class in this file — Rust [`RustKey::MethodSigs`]
     /// analog. Decorator-aware. Catastrophic-omission hedge for class
     /// APIs. Priority 2.x.
-    MethodSigs { file: PathBuf },
+    MethodSigs { file: PathBuf, chunk_index: usize },
     /// Per-method version of [`PythonKey::Decl`] for a method inside
     /// a top-level class. Predecessor: enclosing class's
     /// [`PythonKey::Decl`]. Priority 2.x–4.x.
@@ -616,8 +616,8 @@ impl TsKey {
         match self {
             TsKey::ModuleDocLede { file } => format!("module-doc lede in {}", display_path(file)),
             TsKey::Imports { file } => format!("imports in {}", display_path(file)),
-            TsKey::ExportNames { file } => {
-                format!("export names surface in {}", display_path(file))
+            TsKey::ExportNames { file, chunk_index } => {
+                describe_chunked_surface("export names surface", file, *chunk_index)
             }
             TsKey::Export { file, start_line } => {
                 format!("export at {}:{}", display_path(file), start_line)
@@ -739,8 +739,8 @@ impl PythonKey {
     pub fn describe(&self) -> String {
         match self {
             PythonKey::Imports { file } => format!("python imports in {}", display_path(file)),
-            PythonKey::DeclNames { file } => {
-                format!("python decl names surface in {}", display_path(file))
+            PythonKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("python decl names surface", file, *chunk_index)
             }
             PythonKey::Decl { file, start_line } => {
                 format!("python decl at {}:{}", display_path(file), start_line)
@@ -754,8 +754,8 @@ impl PythonKey {
             PythonKey::ClassBody { file, start_line } => {
                 format!("python class body at {}:{}", display_path(file), start_line)
             }
-            PythonKey::MethodSigs { file } => {
-                format!("python method sigs in {}", display_path(file))
+            PythonKey::MethodSigs { file, chunk_index } => {
+                describe_chunked_surface("python method sigs", file, *chunk_index)
             }
             PythonKey::Method { file, start_line } => {
                 format!("python method at {}:{}", display_path(file), start_line)
@@ -815,6 +815,14 @@ impl CKey {
 
 fn display_path(path: &std::path::Path) -> String {
     path.display().to_string()
+}
+
+fn describe_chunked_surface(label: &str, file: &std::path::Path, chunk_index: usize) -> String {
+    if chunk_index == 0 {
+        format!("{label} in {}", display_path(file))
+    } else {
+        format!("{label} #{chunk_index} in {}", display_path(file))
+    }
 }
 
 /// A walker-emitted scheduling unit. Carries the walker's key (so other

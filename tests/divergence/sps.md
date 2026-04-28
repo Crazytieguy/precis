@@ -1,4 +1,4 @@
-scores: Sim=0.392 Reached=17/49 Early=7 Late=3 Partial=4 Missing=28 Used=9805/10000
+scores: Sim=0.375 Reached=17/49 Early=7 Late=3 Partial=4 Missing=28 Used=9805/10000
 
 ## Verdict
 
@@ -62,7 +62,7 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=5, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 3.4 | 5428 | — | — | 0.06 | missing | SpsError variant signatures | [scheduled bbox exact=2/31] pub-item names surface in sps-common/src/error.rs (t=988, 3 atoms); better unscheduled exact=29/31: pub item at sps-common/src/error.rs:6 (56 atoms, too expensive at final margin) |
+| 3.4 | 5428 | — | — | 0.06 | missing | SpsError variant signatures | [scheduled bbox exact=2/31] pub-item names surface in sps-common/src/error.rs (t=660, 3 atoms); better unscheduled exact=29/31: pub item at sps-common/src/error.rs:6 (56 atoms, too expensive at final margin) |
 | 3.5 | 5758 | — | — | 0.15 | missing | InstallTargetIdentifier + Formula struct fields | [scheduled bbox exact=4/34] pub item at sps-common/src/model/mod.rs:17 (t=3126, 4 atoms); better unscheduled exact=28/34: pub item at sps-common/src/model/formula.rs:57 (28 atoms, too expensive at final margin) |
 | 3.7 | 6269 | — | — | 0.10 | missing | InstalledArtifact variants | [scheduled bbox exact=1/10] pub-item names surface in sps-common/src/model/artifact.rs (t=3147, 2 atoms); better unscheduled exact=9/10: pub item at sps-common/src/model/artifact.rs:9 (30 atoms, too expensive at final margin) |
 | 4.11 | 9912 | — | — | 0.00 | missing | API entry-points (sps-net::api) | [unscheduled bbox exact=9/10] pub-item names surface in sps-net/src/api.rs (17 atoms, too expensive at final margin) |
@@ -72,7 +72,7 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=5, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 144 | — | — | 0.57 | partial | README lede — what sps is | [scheduled bbox exact=3/7] README.md section #0 (t=3061, 3 atoms) |
-| 1.5 | 503 | — | — | 0.00 | missing | CLI per-subcommand module list | [scheduled same-file] pub item at sps/src/cli.rs:44 (t=635, 11 atoms) |
+| 1.5 | 503 | — | — | 0.00 | missing | CLI per-subcommand module list | [scheduled same-file] pub item at sps/src/cli.rs:44 (t=1021, 11 atoms) |
 | 1.6 | 678 | — | — | 0.00 | missing | main.rs — Tokio entry signature + Init early-out | [scheduled same-file] mod/use plumbing in sps/src/main.rs (t=9805, 16 atoms) |
 | 1.7 | 744 | — | — | 0.00 | missing | main.rs — Config::load failure hint | [scheduled same-file] mod/use plumbing in sps/src/main.rs (t=9805, 16 atoms) |
 | 1.8 | 936 | — | — | 0.00 | missing | main.rs — auto-update gate | [scheduled same-file] mod/use plumbing in sps/src/main.rs (t=9805, 16 atoms) |
@@ -88,12 +88,12 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=5, scheduled same-file
 | 3.3 | 5074 | — | — | 0.00 | missing | Config — sps_root resolution + cellar/cask path bodies | [scheduled bbox exact=0/36] pub item at sps-common/src/config.rs:15 (t=1620, 8 atoms) |
 | 3.6 | 6151 | — | — | 0.00 | missing | Cask struct fields | [unscheduled bbox exact=28/39] pub item at sps-common/src/model/cask.rs:116 (28 atoms, predecessor not scheduled: pub-item names surface in sps-common/src/model/cask.rs) |
 | 3.8 | 6543 | — | — | 0.48 | missing | Dependency + DependencyTag bitflags | [scheduled bbox exact=5/21] pub item at sps-common/src/dependency/definition.rs:53 (t=1170, 5 atoms) |
-| 3.9 | 6739 | — | — | 0.31 | missing | Requirement enum (macOS / Xcode / Other) | [scheduled bbox exact=5/16] pub item at sps-common/src/dependency/requirement.rs:7 (t=1043, 5 atoms) |
-| 3.10 | 6925 | — | — | 0.29 | missing | Cache API surface | [scheduled bbox exact=4/17] pub item at sps-common/src/cache.rs:15 (t=955, 4 atoms) |
-| 3.11 | 7098 | — | — | 0.47 | missing | InstalledKeg + KegRegistry signatures | [scheduled bbox exact=5/17] pub item at sps-common/src/keg.rs:13 (t=878, 5 atoms) |
+| 3.9 | 6739 | — | — | 0.31 | missing | Requirement enum (macOS / Xcode / Other) | [scheduled bbox exact=5/16] pub item at sps-common/src/dependency/requirement.rs:7 (t=826, 5 atoms) |
+| 3.10 | 6925 | — | — | 0.29 | missing | Cache API surface | [scheduled bbox exact=4/17] pub item at sps-common/src/cache.rs:15 (t=627, 4 atoms) |
+| 3.11 | 7098 | — | — | 0.47 | missing | InstalledKeg + KegRegistry signatures | [scheduled bbox exact=5/17] pub item at sps-common/src/keg.rs:13 (t=550, 5 atoms) |
 | 4.4 | 8457 | — | — | 0.03 | missing | OperationPlanner + plan_operations signature | [scheduled bbox exact=2/31] pub-item names surface in sps/src/pipeline/planner.rs (t=3308, 2 atoms); better unscheduled exact=6/31: pub item at sps/src/pipeline/planner.rs:184 (6 atoms, discovered unscheduled) |
 | 4.6 | 9097 | — | — | 0.26 | missing | DependencyResolver — ResolutionContext + ResolvedGraph | [scheduled bbox exact=0/27] pub item at sps-common/src/dependency/resolver.rs:42 (t=8875, 9 atoms); better unscheduled exact=13/27: pub item at sps-common/src/dependency/resolver.rs:27 (13 atoms, discovered unscheduled) |
-| 4.7 | 9280 | — | — | 0.07 | missing | core worker entry — execute_sync_job | [scheduled bbox exact=2/14] pub-item names surface in sps-core/src/pipeline/worker.rs (t=451, 2 atoms); better unscheduled exact=7/14: pub item at sps-core/src/pipeline/worker.rs:21 (7 atoms, discovered unscheduled) |
+| 4.7 | 9280 | — | — | 0.07 | missing | core worker entry — execute_sync_job | [scheduled bbox exact=2/14] pub-item names surface in sps-core/src/pipeline/worker.rs (t=395, 2 atoms); better unscheduled exact=7/14: pub item at sps-core/src/pipeline/worker.rs:21 (7 atoms, discovered unscheduled) |
 | 4.9 | 9653 | — | — | 0.61 | partial | Install entry-points — install_bottle / build_from_source / install_cask signatures | [scheduled bbox exact=6/18] pub item at sps-core/src/install/cask/mod.rs:232 (t=2105, 6 atoms) |
 | 4.10 | 9784 | — | — | 0.00 | missing | Bottle platform selection — get_bottle_for_platform | [unscheduled bbox exact=1/5] pub item at sps-core/src/install/bottle/exec.rs:210 (2 atoms, predecessor not scheduled: pub-item names surface in sps-core/src/install/bottle/exec.rs) |
 
@@ -114,11 +114,11 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=5, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.4 | 327 | 635 | +308 | 0.92 | late | CLI subcommand enum | [scheduled bbox exact=11/12] pub item at sps/src/cli.rs:44 (t=635, 11 atoms) |
-| 2.1 | 1476 | 758 | -718 | 1.00 | early | Per-crate src/ listings | fs-only |
+| 1.4 | 327 | 1021 | +694 | 0.92 | late | CLI subcommand enum | [scheduled bbox exact=11/12] pub item at sps/src/cli.rs:44 (t=1021, 11 atoms) |
+| 2.1 | 1476 | 430 | -1046 | 1.00 | early | Per-crate src/ listings | fs-only |
 | 2.6 | 2517 | 6823 | +4306 | 0.80 | late | sps-common — dependency module exports | [scheduled bbox exact=8/10] mod/use plumbing in sps-common/src/dependency/mod.rs (t=6823, 8 atoms) |
 | 2.8 | 2759 | 1695 | -1064 | 1.00 | early | sps-core/install/cask sub-listing | fs-only |
-| 2.13 | 3564 | 682 | -2882 | 1.00 | early | sps-core — pipeline / check / uninstall / upgrade / utils sub-listings | fs-only |
+| 2.13 | 3564 | 1068 | -2496 | 1.00 | early | sps-core — pipeline / check / uninstall / upgrade / utils sub-listings | fs-only |
 | 2.15 | 3657 | 7291 | +3634 | 1.00 | late | sps bin — pipeline & cli sub-listings | fs-only |
 | 3.1 | 4273 | 1620 | -2653 | 0.89 | early | Config struct fields | [scheduled bbox exact=8/9] pub item at sps-common/src/config.rs:15 (t=1620, 8 atoms) |
 | 4.1 | 7436 | 4233 | -3203 | 0.82 | early | Pipeline shared types — JobAction / PlannedJob / WorkerJob / PipelineEvent header | [scheduled bbox exact=11/34] pub item at sps-common/src/pipeline.rs:20 (t=4168, 11 atoms) |

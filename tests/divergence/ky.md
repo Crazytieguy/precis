@@ -1,4 +1,4 @@
-scores: Sim=0.421 Reached=13/38 Early=3 Late=7 Partial=6 Missing=19 Used=9233/10000
+scores: Sim=0.428 Reached=13/38 Early=3 Late=7 Partial=6 Missing=19 Used=9233/10000
 
 ## Verdict
 
@@ -62,7 +62,7 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=2, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 2.3 | 1356 | — | — | 0.08 | missing | KyInstance: every member's signature (location batch) | [scheduled bbox exact=1/12] export names surface in source/types/ky.ts (t=1142, 2 atoms); better unscheduled exact=12/12: export at source/types/ky.ts:5 (140 atoms, too expensive at final margin) |
-| 3.1 | 3855 | — | — | 0.07 | missing | KyOptions: every option's name + type signature (location batch) | [scheduled bbox exact=1/14] export names surface in source/types/options.ts (t=7506, 2 atoms); better unscheduled exact=14/14: export at source/types/options.ts:33 (207 atoms, too expensive at final margin) |
+| 3.1 | 3855 | — | — | 0.07 | missing | KyOptions: every option's name + type signature (location batch) | [scheduled bbox exact=1/14] export names surface in source/types/options.ts (t=7107, 2 atoms); better unscheduled exact=14/14: export at source/types/options.ts:33 (207 atoms, too expensive at final margin) |
 
 ### wrong-slice / granularity
 
@@ -75,16 +75,16 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=2, scheduled same-file
 | 2.5 | 1953 | — | — | 0.44 | missing | source/index.ts imports + createInstance signature + default export | [scheduled bbox exact=6/16] imports in source/index.ts (t=2020, 6 atoms) |
 | 2.6 | 2246 | — | — | 0.00 | missing | source/index.ts createInstance body | [scheduled same-file] imports in source/index.ts (t=2020, 6 atoms) |
 | 2.7 | 2473 | — | — | 0.00 | missing | Default ky() body-method behavior + body shortcuts list | [unscheduled bbox exact=2/3] readme.md section #3 (2 atoms, discovered unscheduled) |
-| 2.9 | 3186 | — | — | 0.29 | missing | ForceRetryOptions type + RetryMarker + retry() factory signature | [scheduled bbox exact=5/28] export names surface in source/core/constants.ts (t=6642, 5 atoms); better unscheduled exact=13/28: export at source/core/constants.ts:68 (63 atoms, too expensive at final margin) |
-| 2.10 | 3658 | — | — | 0.77 | partial | kyOptionKeys + vendor/request option registries | [scheduled bbox exact=16/44] export at source/core/constants.ts:265 (t=7070, 16 atoms) |
-| 3.2 | 4024 | — | — | 0.29 | missing | RetryOptions: every field + ShouldRetryState (location batch) | [scheduled bbox exact=3/14] export at source/types/retry.ts:3 (t=4021, 10 atoms); better unscheduled exact=11/14: export at source/types/retry.ts:15 (117 atoms, too expensive at final margin) |
+| 2.9 | 3186 | — | — | 0.29 | missing | ForceRetryOptions type + RetryMarker + retry() factory signature | [scheduled bbox exact=4/28] export names surface in source/core/constants.ts (t=7782, 4 atoms); better unscheduled exact=13/28: export at source/core/constants.ts:68 (63 atoms, too expensive at final margin) |
+| 2.10 | 3658 | — | — | 0.77 | partial | kyOptionKeys + vendor/request option registries | [scheduled bbox exact=16/44] export at source/core/constants.ts:265 (t=4287, 16 atoms) |
+| 3.2 | 4024 | — | — | 0.29 | missing | RetryOptions: every field + ShouldRetryState (location batch) | [scheduled bbox exact=3/14] export at source/types/retry.ts:3 (t=4364, 10 atoms); better unscheduled exact=11/14: export at source/types/retry.ts:15 (117 atoms, too expensive at final margin) |
 | 3.3 | 4324 | — | — | 0.78 | partial | Hooks types: every state + hook type alias (location batch) | [scheduled bbox exact=11/23] export names surface in source/types/hooks.ts (t=3841, 18 atoms) |
-| 3.5 | 5127 | — | — | 0.71 | partial | Options interface (extends KyOptions + RequestInit) + InternalOptions + NormalizedOptions | [scheduled bbox exact=11/37] export at source/types/options.ts:358 (t=7878, 11 atoms) |
+| 3.5 | 5127 | — | — | 0.71 | partial | Options interface (extends KyOptions + RequestInit) + InternalOptions + NormalizedOptions | [scheduled bbox exact=11/37] export at source/types/options.ts:358 (t=7479, 11 atoms) |
 | 3.6 | 5252 | — | — | 0.09 | missing | ResponsePromise type signature (no examples) | [scheduled bbox exact=2/12] export names surface in source/types/ResponsePromise.ts (t=1158, 2 atoms); better unscheduled exact=8/12: export at source/types/ResponsePromise.ts:6 (32 atoms, discovered unscheduled) |
-| 4.2 | 6709 | — | — | 0.01 | missing | #calculateRetryDelay — full retry-decision logic | [scheduled bbox exact=2/73] export at source/core/Ky.ts:33 (t=5508, 2 atoms); better unscheduled exact=57/73: export body at source/core/Ky.ts:33 (57 atoms, too expensive at final margin) |
+| 4.2 | 6709 | — | — | 0.01 | missing | #calculateRetryDelay — full retry-decision logic | [scheduled bbox exact=2/73] export at source/core/Ky.ts:33 (t=5851, 2 atoms); better unscheduled exact=57/73: export body at source/core/Ky.ts:33 (57 atoms, too expensive at final margin) |
 | 5.1 | 6904 | — | — | 0.67 | partial | type-guards.ts: isKyError + isHTTPError + isTimeoutError + isForceRetryError signatures | [scheduled bbox exact=8/12] export names surface in source/utils/type-guards.ts (t=2115, 8 atoms) |
 | 5.2 | 7223 | — | — | 0.71 | partial | HTTPError + TimeoutError class bodies | [scheduled bbox exact=9/28] export body at source/errors/HTTPError.ts:5 (t=3651, 9 atoms) |
-| 5.3 | 7546 | — | — | 0.79 | partial | ForceRetryError class body + NonError signature | [scheduled bbox exact=12/28] export body at source/errors/ForceRetryError.ts:8 (t=4860, 12 atoms) |
+| 5.3 | 7546 | — | — | 0.79 | partial | ForceRetryError class body + NonError signature | [scheduled bbox exact=12/28] export body at source/errors/ForceRetryError.ts:8 (t=5203, 12 atoms) |
 | 6.1 | 7855 | — | — | 0.10 | missing | normalize.ts: defaultRetryOptions values + normalizeRequestMethod | [scheduled bbox exact=2/21] export at source/utils/normalize.ts:5 (t=1668, 2 atoms) |
 | 6.2 | 8679 | — | — | 0.13 | missing | merge.ts deepMerge: special-cased keys (signal/context/searchParams/hooks/headers) | [scheduled bbox exact=8/67] export at source/utils/merge.ts:38 (t=2898, 8 atoms); better unscheduled exact=48/67: export body at source/utils/merge.ts:86 (59 atoms, too expensive at final margin) |
 
@@ -109,13 +109,13 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=2, scheduled same-file
 | 1.3 | 163 | 2661 | +2498 | 1.00 | late | Readme top-level section headings (## only) | [scheduled bbox exact=9/10] headings outline in readme.md (t=2661, 52 atoms) |
 | 1.5 | 331 | 244 | -87 | 0.92 | aligned | Readme benefits-over-fetch list | [scheduled bbox exact=11/12] README headline in readme.md (t=244, 11 atoms) |
 | 1.6 | 447 | 1296 | +849 | 1.00 | late | source/ tree (all immediate children + every subdir) | fs-only |
-| 1.8 | 714 | 6135 | +5421 | 0.93 | late | package.json identity (name, version, description, exports, engines) | [scheduled bbox exact=4/15] package identity in package.json (t=791, 12 atoms) |
+| 1.8 | 714 | 6478 | +5764 | 0.93 | late | package.json identity (name, version, description, exports, engines) | [scheduled bbox exact=4/15] package identity in package.json (t=791, 12 atoms) |
 | 1.9 | 845 | 2661 | +1816 | 1.00 | late | Readme `## API` H3 location index | [scheduled bbox exact=13/13] headings outline in readme.md (t=2661, 20 atoms) |
-| 2.1 | 1051 | 6819 | +5768 | 0.87 | late | source/core/constants.ts: requestMethods + responseTypes + maxSafeTimeout + stop | [scheduled bbox exact=10/15] export at source/core/constants.ts:46 (t=6819, 10 atoms) |
+| 2.1 | 1051 | 7933 | +6882 | 0.87 | late | source/core/constants.ts: requestMethods + responseTypes + maxSafeTimeout + stop | [scheduled bbox exact=10/15] export at source/core/constants.ts:46 (t=7933, 10 atoms) |
 | 2.8 | 2901 | 8426 | +5525 | 0.88 | late | core/constants.ts: feature-detection flags | [scheduled bbox exact=26/34] export at source/core/constants.ts:4 (t=8426, 26 atoms) |
-| 3.4 | 4587 | 7572 | +2985 | 0.83 | late | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | [scheduled bbox exact=9/18] export names surface in source/types/options.ts (t=7506, 12 atoms) |
+| 3.4 | 4587 | 7173 | +2586 | 0.83 | late | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | [scheduled bbox exact=9/18] export names surface in source/types/options.ts (t=7107, 12 atoms) |
 | 3.7 | 5448 | 1767 | -3681 | 0.93 | early | KyRequest + KyResponse + common Primitive/LiteralUnion types | [scheduled bbox exact=6/14] export names surface in source/types/common.ts (t=1746, 6 atoms) |
-| 4.1 | 5804 | 5508 | -296 | 0.96 | aligned | Ky class member declarations + every method signature (location batch) | [scheduled bbox exact=22/23] export at source/core/Ky.ts:33 (t=5508, 34 atoms) |
+| 4.1 | 5804 | 5851 | +47 | 0.96 | aligned | Ky class member declarations + every method signature (location batch) | [scheduled bbox exact=22/23] export at source/core/Ky.ts:33 (t=5851, 34 atoms) |
 | 6.3 | 8901 | 3171 | -5730 | 0.88 | early | timeout.ts body | [scheduled bbox exact=15/24] export body at source/utils/timeout.ts:9 (t=3171, 15 atoms) |
 | 6.4 | 9072 | 1890 | -7182 | 1.00 | early | options.ts utils + body.ts streaming exports + small util one-liners | [scheduled bbox exact=0/9] export body at source/utils/body.ts:90 (t=8638, 22 atoms) |
 
@@ -130,14 +130,14 @@ Candidate hint kinds: scheduled bbox=26, unscheduled bbox=2, scheduled same-file
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 371 | 0.93 | 400 | 6135 | package dependencies in package.json |
+| 371 | 0.93 | 400 | 6478 | package dependencies in package.json |
 | 312 | 0.85 | 366 | 791 | package identity in package.json |
 | 255 | 1.00 | 255 | 9186 | export body at source/utils/options.ts:4 |
 | 229 | 1.00 | 229 | 8931 | export body at source/utils/normalize.ts:28 |
 | 212 | 1.00 | 212 | 8638 | export body at source/utils/body.ts:90 |
 | 191 | 1.00 | 191 | 8124 | export body at source/utils/options.ts:30 |
 | 155 | 1.00 | 155 | 3403 | export body at source/utils/delay.ts:9 |
-| 148 | 0.92 | 161 | 4248 | export body at source/errors/NonError.ts:6 |
-| 140 | 1.00 | 140 | 5689 | export body at source/utils/merge.ts:16 |
+| 148 | 0.92 | 161 | 4591 | export body at source/errors/NonError.ts:6 |
+| 140 | 1.00 | 140 | 6032 | export body at source/utils/merge.ts:16 |
 | 131 | 0.39 | 335 | 2661 | headings outline in readme.md |
 | 1605 | — | — | — | +21 more rows |

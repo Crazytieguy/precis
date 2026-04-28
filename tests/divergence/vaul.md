@@ -1,4 +1,4 @@
-scores: Sim=0.554 Reached=15/33 Early=3 Late=7 Partial=5 Missing=13 Used=9416/10000
+scores: Sim=0.560 Reached=15/33 Early=3 Late=6 Partial=5 Missing=13 Used=9416/10000
 
 ## Verdict
 
@@ -46,11 +46,10 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=3, fs-only=5, no disco
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | aligned | none | 1 |
-| scheduled bbox | aligned | low | 2 |
+| scheduled bbox | aligned | low | 3 |
 | scheduled bbox | aligned | high | 1 |
 | scheduled bbox | early | low | 1 |
 | scheduled bbox | early | high | 1 |
-| scheduled bbox | late | low | 1 |
 | scheduled bbox | late | full | 5 |
 | scheduled bbox | missing | none | 1 |
 | scheduled bbox | missing | low | 3 |
@@ -73,7 +72,7 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=3, fs-only=5, no disco
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.1 | 46 | — | — | 0.75 | partial | package.json — name, version, description | [scheduled bbox exact=3/4] package identity in package.json (t=314, 3 atoms) |
-| 2.2 | 730 | — | — | 0.64 | partial | Handle component — snap-point cycle + double-tap timing constants | [scheduled bbox exact=4/11] export at src/index.tsx:996 (t=906, 4 atoms) |
+| 2.2 | 730 | — | — | 0.64 | partial | Handle component — snap-point cycle + double-tap timing constants | [scheduled bbox exact=4/11] export at src/index.tsx:996 (t=883, 4 atoms) |
 | 2.6 | 2011 | — | — | 0.55 | partial | Overlay + Content render — what data-vaul-* attributes appear on DOM | [scheduled bbox exact=11/20] export body at src/index.tsx:803 (t=4161, 11 atoms) |
 | 2.9 | 3228 | — | — | 0.79 | partial | NestedRoot + Portal — nested-drawer wiring + container override | [scheduled bbox exact=25/38] export body at src/index.tsx:1098 (t=2797, 25 atoms) |
 | 3.5 | 5171 | — | — | 0.06 | missing | context.ts — DrawerContextValue interface (parent/child contract) | [scheduled bbox exact=2/35] imports in src/context.ts (t=3524, 2 atoms) |
@@ -103,16 +102,16 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=3, fs-only=5, no disco
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 108 | 62 | -46 | 1.00 | early | Top-level repo listing | fs-only |
-| 1.4 | 242 | 425 | +183 | 1.00 | late | src/ listing — every source file | fs-only |
-| 1.5 | 355 | 1374 | +1019 | 1.00 | late | Drawer namespace export — the public component map | [scheduled bbox exact=12/12] export at src/index.tsx:1137 (t=1374, 12 atoms) |
+| 1.4 | 242 | 402 | +160 | 1.00 | late | src/ listing — every source file | fs-only |
+| 1.5 | 355 | 1351 | +996 | 1.00 | late | Drawer namespace export — the public component map | [scheduled bbox exact=12/12] export at src/index.tsx:1137 (t=1351, 12 atoms) |
 | 1.6 | 503 | 8119 | +7616 | 1.00 | late | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | [scheduled bbox exact=8/8] package dependencies in package.json (t=8119, 8 atoms) |
-| 2.1 | 642 | 851 | +209 | 1.00 | late | All top-level export locations in src/index.tsx | [scheduled bbox exact=1/11] export at src/index.tsx:50 (t=6622, 88 atoms) |
-| 2.3 | 1020 | 1273 | +253 | 0.95 | aligned | WithFadeFromProps / WithoutFadeFromProps — snap-point fade contract | [scheduled bbox exact=12/22] export at src/index.tsx:27 (t=1273, 12 atoms) |
+| 2.1 | 642 | 828 | +186 | 1.00 | aligned+over | All top-level export locations in src/index.tsx | [scheduled bbox exact=1/11] export at src/index.tsx:50 (t=6622, 88 atoms) |
+| 2.3 | 1020 | 1250 | +230 | 0.95 | aligned | WithFadeFromProps / WithoutFadeFromProps — snap-point fade contract | [scheduled bbox exact=12/22] export at src/index.tsx:27 (t=1250, 12 atoms) |
 | 2.4 | 1393 | 6622 | +5229 | 1.00 | late | DialogProps — every prop name (signatures only, no JSDoc) | [scheduled bbox exact=28/28] export at src/index.tsx:50 (t=6622, 87 atoms) |
 | 2.7 | 2405 | 6622 | +4217 | 1.00 | late | DialogProps — JSDoc for the high-traffic props | [scheduled bbox exact=30/30] export at src/index.tsx:50 (t=6622, 50 atoms) |
 | 2.8 | 2810 | 6622 | +3812 | 1.00 | late | DialogProps — JSDoc for the lower-traffic props | [scheduled bbox exact=29/29] export at src/index.tsx:50 (t=6622, 73 atoms) |
 | 3.1 | 4321 | 2963 | -1358 | 0.94 | early | constants.ts — every tunable threshold and timing | [scheduled bbox exact=15/18] export names surface in src/constants.ts (t=2923, 15 atoms) |
-| 3.2 | 4399 | 618 | -3781 | 0.86 | early | types.ts — DrawerDirection, SnapPoint, AnyFunction | [scheduled bbox exact=4/7] export at src/types.ts:2 (t=618, 4 atoms) |
+| 3.2 | 4399 | 595 | -3804 | 0.86 | early | types.ts — DrawerDirection, SnapPoint, AnyFunction | [scheduled bbox exact=4/7] export at src/types.ts:2 (t=595, 4 atoms) |
 | 3.3 | 4502 | 4332 | -170 | 1.00 | aligned+over | helpers.ts — every exported function (signature heads only) | [scheduled bbox exact=0/8] export body at src/helpers.ts:72 (t=7047, 15 atoms) |
 | 3.6 | 5503 | 5282 | -221 | 0.82 | aligned | useSnapPoints — full parameter shape | [scheduled bbox exact=24/28] export at src/use-snap-points.ts:7 (t=5282, 24 atoms) |
 | 3.8 | 6394 | 7047 | +653 | 0.85 | aligned | helpers.ts — dampenValue, getTranslate, isVertical bodies | [scheduled bbox exact=15/34] export body at src/helpers.ts:72 (t=7047, 15 atoms) |

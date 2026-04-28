@@ -83,21 +83,6 @@ docs/
         36→language = "en"
         38→pygments_style = "sphinx"
         40→html_theme = "alabaster"
-        41→html_theme_options = {
-        54→html_sidebars = {
-        55→    "**": ["about.html", "localtoc.html", "relations.html", "searchbox.html"]
-        56→}
-        57→html_static_path = ["_static"]
-        61→man_pages = [(master_doc, "pluggy", "pluggy Documentation", [author], 1)]
-        63→autodoc_member_order = "bysource"
-        65→nitpicky = True
-        66→nitpick_ignore = {
-        83→texinfo_documents = [
-        96→intersphinx_mapping = {
-        106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-        107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
-        130→def setup(app: "sphinx.application.Sphinx") -> None:
-        131→    configure_logging(app)
     examples/
     index.rst
     requirements.txt
@@ -203,6 +188,8 @@ src/
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
             37→_AfterTrace: TypeAlias = Callable[
+            38→    [Result[Any], str, Sequence[HookImpl], Mapping[str, Any]], None
+            39→]
             42→def _warn_for_function(warning: Warning, function: Callable[..., object]) -> None:
             …
             52→class PluginValidationError(Exception):
@@ -250,6 +237,13 @@ src/
             …
             107→_Result = Result
         _tracing.py
+            1→"""
+            2→Tracing utils
+            3→"""
+            5→from __future__ import annotations
+            7→from collections.abc import Callable
+            8→from collections.abc import Sequence
+            9→from typing import Any
             12→_Writer = Callable[[str], object]
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:
@@ -267,6 +261,16 @@ src/
         py.typed
 testing/
     benchmark.py
+        1→"""
+        2→Benchmarking and performance tests.
+        3→"""
+        5→from typing import Any
+        7→import pytest
+        9→from pluggy import HookimplMarker
+        10→from pluggy import HookspecMarker
+        11→from pluggy import PluginManager
+        12→from pluggy._callers import _multicall
+        13→from pluggy._hooks import HookImpl
         16→hookspec = HookspecMarker("example")
         17→hookimpl = HookimplMarker("example")
         20→@hookimpl

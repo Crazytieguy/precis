@@ -1,4 +1,4 @@
-scores: Sim=0.304 Reached=19/42 Early=9 Late=9 Partial=3 Missing=20 Used=7336/10000
+scores: Sim=0.307 Reached=19/42 Early=9 Late=8 Partial=3 Missing=20 Used=7336/10000
 
 ## Verdict
 
@@ -31,7 +31,7 @@ Tiers: 1=6/8 reached, 0 partial, 2 missing, avg=0.75; 2=3/3 reached, 0 partial, 
 | wrong-slice / granularity | 14 | 11 | 3 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 3 | 3 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 2 | 2 | 0 | 0 | filesystem/listing value |
-| timing-only | 19 | 0 | 0 | 19 | usually no code change |
+| timing-only | 18 | 0 | 0 | 18 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -41,7 +41,7 @@ Tiers: 1=6/8 reached, 0 partial, 2 missing, avg=0.75; 2=3/3 reached, 0 partial, 
 | discovered unscheduled | 2 | 0.82 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=24, unscheduled bbox=4, scheduled same-file=7, fs-only=4, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=24, unscheduled bbox=4, scheduled same-file=7, fs-only=3, no discovered candidate=3
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -76,7 +76,7 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=4, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 4.1 | 1342 | — | — | 0.00 | missing | index.tsx — module imports + 'use client' | [scheduled same-file] export body at cmdk/src/index.tsx:664 (t=4468, 49 atoms) |
-| 4.2 | 1557 | — | — | 0.54 | partial | index.tsx — public exports surface | [scheduled bbox exact=13/24] export names surface in cmdk/src/index.tsx (t=788, 13 atoms) |
+| 4.2 | 1557 | — | — | 0.54 | partial | index.tsx — public exports surface | [scheduled bbox exact=9/24] export names surface #1 in cmdk/src/index.tsx (t=506, 9 atoms) |
 | 4.4 | 1857 | — | — | 0.00 | missing | index.tsx — data-attribute selectors + SELECT_EVENT | [scheduled same-file] export body at cmdk/src/index.tsx:664 (t=4468, 49 atoms) |
 | 4.5 | 2215 | — | — | 0.00 | missing | index.tsx — internal type system (Context/State/Store) | [scheduled same-file] export body at cmdk/src/index.tsx:664 (t=4468, 49 atoms) |
 | 5.2 | 2755 | — | — | 0.17 | missing | README — Command (root) value/filter/keywords/loop prose | [scheduled bbox exact=2/12] headings outline in README.md (t=1949, 2 atoms); better unscheduled exact=9/12: README.md section #4 (51 atoms, discovered unscheduled) |
@@ -109,9 +109,8 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=4, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.1 | 78 | 222 | +144 | 1.00 | late | README lede — one-sentence elevator pitch | [scheduled bbox exact=1/1] README headline in README.md (t=222, 1 atoms) |
+| 1.1 | 78 | 232 | +154 | 1.00 | late | README lede — one-sentence elevator pitch | [scheduled bbox exact=1/1] README headline in README.md (t=232, 1 atoms) |
 | 1.2 | 140 | 62 | -78 | 1.00 | early | Top-level filesystem layout | fs-only |
-| 1.3 | 163 | 232 | +69 | 1.00 | late | Library inner layout — only two source files | fs-only |
 | 1.4 | 257 | 6221 | +5964 | 1.00 | late | Library runtime dependencies | [scheduled bbox exact=6/6] package dependencies in cmdk/package.json (t=6221, 6 atoms) |
 | 1.5 | 291 | 1659 | +1368 | 1.00 | late | pnpm workspace members | [scheduled bbox exact=4/4] plaintext config pnpm-workspace.yaml (t=1659, 4 atoms) |
 | 1.8 | 751 | 2255 | +1504 | 1.00 | late | Root scripts — how to build/run/test | [scheduled bbox exact=10/10] package scripts in package.json (t=2255, 10 atoms) |

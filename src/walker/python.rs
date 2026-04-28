@@ -46,7 +46,10 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, PythonKey};
-use crate::value::mix_signals;
+use crate::value::{
+    NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
+    names_surface_chunk_index,
+};
 
 use super::{
     FileLines, WalkCtx, dedup_sorted, extend_span, file_depth_factor, fs::files_with_extension,
@@ -118,44 +121,68 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        let names_key = PythonKey::DeclNames { file: file.clone() };
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_decl_names_from(&decls))
-        {
+        let names_chunk_count = names_surface_chunk_count(decls.len());
+        let names_predecessors: Vec<_> = (0..names_chunk_count)
+            .map(|chunk_index| {
+                BatchKey::Python(PythonKey::DeclNames {
+                    file: file.clone(),
+                    chunk_index,
+                })
+            })
+            .collect();
+        for (chunk_index, chunk) in decls.chunks(NAMES_SURFACE_CHUNK_SIZE).enumerate() {
+            let Some(content) =
+                single_file_lines_content(file, &source, collect_decl_names_from(chunk))
+            else {
+                continue;
+            };
             out.push(Batch {
-                key: names_key.clone().into(),
+                key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
             });
         }
-        let names_predecessor = BatchKey::Python(names_key);
 
-        let methods_by_class = collect_methods_by_class(&decls, &source);
-        let mut method_sigs_predecessor = None;
-        if !methods_by_class.is_empty()
-            && let Some(content) = single_file_lines_content(
+        let mut method_sigs_predecessors = vec![None; names_chunk_count];
+        let mut methods_by_chunk = vec![Vec::new(); names_chunk_count];
+        for (class_index, methods) in collect_methods_by_class(&decls, &source) {
+            methods_by_chunk[names_surface_chunk_index(class_index)].push((class_index, methods));
+        }
+        for (chunk_index, methods_by_class) in methods_by_chunk.into_iter().enumerate() {
+            if methods_by_class.is_empty() {
+                continue;
+            }
+            let Some(content) = single_file_lines_content(
                 file,
                 &source,
                 collect_method_sigs_from(&methods_by_class),
-            )
-        {
-            let key = PythonKey::MethodSigs { file: file.clone() };
+            ) else {
+                continue;
+            };
+            let key = PythonKey::MethodSigs {
+                file: file.clone(),
+                chunk_index,
+            };
             out.push(Batch {
                 key: key.clone().into(),
-                // Predecessor: DeclNames. The MethodSigs `Full+Ellipsis`
-                // pair shares lines with DeclNames' ellipsis row when a
-                // class header at line N is followed immediately by a
-                // method/decorator at line N+1. Chaining through DeclNames
-                // makes the line-N+1 overlap an ancestor overlap.
-                predecessor: Some(names_predecessor.clone()),
+                // Predecessor: same decl-name chunk. The MethodSigs
+                // `Full+Ellipsis` pair can share the class header's
+                // following ellipsis row, so chunking both surfaces keeps
+                // overlap ancestry local.
+                predecessor: Some(BatchKey::Python(PythonKey::DeclNames {
+                    file: file.clone(),
+                    chunk_index,
+                })),
                 content,
                 value: method_sigs_value(file, ctx),
             });
-            method_sigs_predecessor = Some(BatchKey::Python(key));
+            method_sigs_predecessors[chunk_index] = Some(BatchKey::Python(key));
         }
 
-        for decl in &decls {
+        for (decl_index, decl) in decls.iter().enumerate() {
+            let chunk_index = names_surface_chunk_index(decl_index);
+            let names_predecessor = names_predecessors[chunk_index].clone();
             let decl_key = PythonKey::Decl {
                 file: file.clone(),
                 start_line: decl.start_line,
@@ -227,8 +254,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         &source,
                         &src_lines,
                         decl,
-                        method_sigs_predecessor
-                            .as_ref()
+                        method_sigs_predecessors
+                            .get(chunk_index)
+                            .and_then(Option::as_ref)
                             .unwrap_or(&decl_predecessor),
                     ));
                 }
@@ -586,8 +614,9 @@ fn collect_methods_by_class<'a>(
 ) -> Vec<(usize, Vec<DeclInfo<'a>>)> {
     decls
         .iter()
-        .filter(|d| d.kind == DeclKind::Class)
-        .map(|d| (d.start_line, collect_methods_in_class(d, source)))
+        .enumerate()
+        .filter(|(_, d)| d.kind == DeclKind::Class)
+        .map(|(index, d)| (index, collect_methods_in_class(d, source)))
         .filter(|(_, ms)| !ms.is_empty())
         .collect()
 }
@@ -794,8 +823,9 @@ fn is_init_py(file: &Path) -> bool {
     file.file_name().and_then(|n| n.to_str()) == Some("__init__.py")
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     mix_signals(0.65, 0.55, 0.35, python_depth_factor(file, ctx))
+        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {

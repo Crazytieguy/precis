@@ -122,6 +122,28 @@ docs/
     terminology.md
     zh-CN/
         不再推荐使用的功能.md
+            1→# 不再推荐使用的功能
+            …
+            18→## .option() 方法的正则表达式参数
+            …
+            30→## noHelp
+            …
+            40→## 默认导入的全局 Command 对象
+            …
+            61→## .help() 与 .outputHelp() 的回调函数参数
+            …
+            79→## .on('--help')
+            …
+            104→## .on('command:*')
+            …
+            114→## .command('*')
+            …
+            134→## cmd.description(cmdDescription, argDescriptions)
+            …
+            157→## InvalidOptionArgumentError
+            …
+            187→## 短选项标志长于单个字符
+            …
         可变参数的选项.md
             1→# 可变参数的选项
             …
@@ -258,7 +280,20 @@ typings/
         45→  exitCode?: number;
         46→}
         48→export class Argument {
-        …
+        49→  description: string;
+        50→  required: boolean;
+        51→  variadic: boolean;
+        52→  defaultValue?: any;
+        53→  defaultValueDescription?: string;
+        54→  parseArg?: <T>(value: string, previous: T) => T;
+        55→  argChoices?: string[];
+        62→  constructor(arg: string, description?: string);
+        67→  name(): string;
+        72→  default(value: unknown, description?: string): this;
+        77→  argParser<T>(fn: (value: string, previous: T) => T): this;
+        82→  choices(values: readonly string[]): this;
+        87→  argRequired(): this;
+        92→  argOptional(): this;
         95→export class Option {
         …
         210→export class Help {
@@ -287,34 +322,6 @@ typings/
         363→  getErrHasColors?(): boolean;
         364→  stripColor?(str: string): string;
         365→}
-        367→export type AddHelpTextPosition = 'beforeAll' | 'before' | 'after' | 'afterAll';
-        368→export type HookEvent = 'preSubcommand' | 'preAction' | 'postAction';
-        …
-        370→export type OptionValueSource =
-        371→  | LiteralUnion<'default' | 'config' | 'env' | 'cli' | 'implied', string>
-        372→  | undefined;
-        374→export type OptionValues = Record<string, any>;
-        …
-        376→export class Command {
-        …
-        1094→export interface CommandOptions {
-        1095→  hidden?: boolean;
-        1096→  isDefault?: boolean;
-        1097→  /** @deprecated since v7, replaced by hidden */
-        1098→  noHelp?: boolean;
-        1099→}
-        1100→export interface ExecutableCommandOptions extends CommandOptions {
-        1101→  executableFile?: string;
-        1102→}
-        1104→export interface ParseOptionsResult {
-        1105→  operands: string[];
-        1106→  unknown: string[];
-        1107→}
-        1109→export function createCommand(name?: string): Command;
-        1110→export function createOption(flags: string, description?: string): Option;
-        1111→export function createArgument(name: string, description?: string): Argument;
-        …
-        1113→export const program: Command;
     index.test-d.ts
         1→import * as commander from './index';
         2→import { expectType } from 'tsd';

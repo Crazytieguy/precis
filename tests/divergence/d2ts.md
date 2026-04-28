@@ -1,4 +1,4 @@
-scores: Sim=0.298 Reached=10/41 Early=2 Late=6 Partial=4 Missing=27 Used=9963/10000
+scores: Sim=0.298 Reached=10/41 Early=3 Late=7 Partial=4 Missing=27 Used=9959/10000
 
 ## Verdict
 
@@ -30,7 +30,7 @@ Tiers: 1=3/7 reached, 4 partial, 0 missing, avg=0.78; 2=3/12 reached, 0 partial,
 | wrong-slice / granularity | 12 | 8 | 4 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 13 | 13 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 4 | 4 | 0 | 0 | filesystem/listing value |
-| timing-only | 8 | 0 | 0 | 8 | usually no code change |
+| timing-only | 10 | 0 | 0 | 10 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -39,16 +39,16 @@ Tiers: 1=3/7 reached, 4 partial, 0 missing, avg=0.78; 2=3/12 reached, 0 partial,
 | too expensive at final margin | 2 | 0.77 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=12, unscheduled bbox=7, fs-only=7, no discovered candidate=13
+Candidate hint kinds: scheduled bbox=13, unscheduled bbox=7, fs-only=8, no discovered candidate=13
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | early | none | 1 |
-| scheduled bbox | late | none | 1 |
 | scheduled bbox | late | low | 1 |
-| scheduled bbox | late | full | 2 |
+| scheduled bbox | late | high | 1 |
+| scheduled bbox | late | full | 3 |
 | scheduled bbox | missing | low | 3 |
 | scheduled bbox | partial | low | 4 |
 | unscheduled bbox | missing | none | 1 |
@@ -61,7 +61,7 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=7, fs-only=7, no disco
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 2.8 | 1382 | — | — | 0.06 | missing | MultiSet method names (full catalog) | [scheduled bbox exact=1/16] export names surface in packages/d2ts/src/multiset.ts (t=3206, 2 atoms); better unscheduled exact=16/16: export at packages/d2ts/src/multiset.ts:9 (39 atoms, too expensive at final margin) |
+| 2.8 | 1382 | — | — | 0.06 | missing | MultiSet method names (full catalog) | [scheduled bbox exact=1/16] export names surface in packages/d2ts/src/multiset.ts (t=2898, 2 atoms); better unscheduled exact=16/16: export at packages/d2ts/src/multiset.ts:9 (39 atoms, too expensive at final margin) |
 | 2.12 | 2436 | — | — | 0.00 | missing | Top-level README — operator catalog with descriptions | [unscheduled bbox exact=19/19] README.md section #2 (19 atoms, too expensive at final margin) |
 
 ### wrong-slice / granularity
@@ -74,12 +74,12 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=7, fs-only=7, no disco
 | 1.7 | 494 | — | — | 0.60 | partial | d2ql one-liner | [scheduled bbox exact=2/5] README headline in packages/d2ql/README.md (t=482, 2 atoms) |
 | 2.5 | 919 | — | — | 0.00 | missing | Core types: KeyValue, MessageType, Message | [unscheduled bbox exact=9/18] export at packages/d2ts/src/types.ts:14 (9 atoms, predecessor not scheduled: export names surface in packages/d2ts/src/types.ts) |
 | 2.6 | 1019 | — | — | 0.00 | missing | Core types: DataMessage, FrontierMessage, PipedOperator | [unscheduled bbox exact=0/10] export at packages/d2ts/src/types.ts:64 (50 atoms, predecessor not scheduled: export names surface in packages/d2ts/src/types.ts) |
-| 2.9 | 1537 | — | — | 0.29 | missing | D2 class + RootStreamBuilder method names | [scheduled bbox exact=4/17] export names surface in packages/d2ts/src/d2.ts (t=3271, 8 atoms); better unscheduled exact=13/17: export at packages/d2ts/src/d2.ts:15 (32 atoms, too expensive at final margin) |
+| 2.9 | 1537 | — | — | 0.29 | missing | D2 class + RootStreamBuilder method names | [scheduled bbox exact=4/17] export names surface in packages/d2ts/src/d2.ts (t=3041, 8 atoms); better unscheduled exact=13/17: export at packages/d2ts/src/d2.ts:15 (32 atoms, too expensive at final margin) |
 | 2.10 | 1760 | — | — | 0.00 | missing | Operator interfaces: IOperator, IDifferenceStreamReader/Writer | [unscheduled bbox exact=8/20] export at packages/d2ts/src/types.ts:43 (8 atoms, predecessor not scheduled: export names surface in packages/d2ts/src/types.ts) |
 | 2.11 | 2056 | — | — | 0.00 | missing | ID2 + IStreamBuilder shape | [unscheduled bbox exact=11/22] export at packages/d2ts/src/types.ts:52 (11 atoms, predecessor not scheduled: export names surface in packages/d2ts/src/types.ts) |
 | 3.1 | 2667 | — | — | 0.00 | missing | Antichain.create polymorphic constructor | [unscheduled bbox exact=15/19] export body at packages/d2ts/src/order.ts:138 (15 atoms, predecessor not scheduled: export at packages/d2ts/src/order.ts:138) |
-| 5.1 | 9394 | — | — | 0.14 | missing | d2ql Query interface + compileQuery signature | [scheduled bbox exact=4/28] export at packages/d2ql/src/compiler.ts:16 (t=9276, 4 atoms); better unscheduled exact=12/28: export at packages/d2ql/src/schema.ts:207 (16 atoms, predecessor not scheduled: export names surface in packages/d2ql/src/schema.ts) |
-| 5.2 | 9687 | — | — | 0.00 | missing | d2ql function + aggregate + comparator names | [unscheduled bbox exact=13/31] export at packages/d2ql/src/schema.ts:105 (13 atoms, predecessor not scheduled: export names surface in packages/d2ql/src/schema.ts) |
+| 5.1 | 9394 | — | — | 0.14 | missing | d2ql Query interface + compileQuery signature | [scheduled bbox exact=4/28] export at packages/d2ql/src/compiler.ts:16 (t=3884, 4 atoms); better unscheduled exact=12/28: export at packages/d2ql/src/schema.ts:207 (16 atoms, predecessor not scheduled: export names surface #2 in packages/d2ql/src/schema.ts) |
+| 5.2 | 9687 | — | — | 0.00 | missing | d2ql function + aggregate + comparator names | [unscheduled bbox exact=13/31] export at packages/d2ql/src/schema.ts:105 (13 atoms, predecessor not scheduled: export names surface #1 in packages/d2ql/src/schema.ts) |
 
 ### no discovered candidate
 
@@ -115,11 +115,13 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=7, fs-only=7, no disco
 | 1.2 | 131 | 54 | -77 | 1.00 | early | Top-level workspace listing | fs-only |
 | 1.3 | 153 | 257 | +104 | 1.00 | late | Packages directory listing | fs-only |
 | 1.4 | 179 | 1086 | +907 | 1.00 | late | pnpm workspace globs | [scheduled bbox exact=3/3] plaintext config pnpm-workspace.yaml (t=1086, 3 atoms) |
-| 2.1 | 538 | 1983 | +1445 | 1.00 | late | d2ts src layout | fs-only |
-| 2.2 | 608 | 3081 | +2473 | 1.00 | late | d2ts package re-exports (`index.ts`) | [scheduled bbox exact=6/6] imports in packages/d2ts/src/index.ts (t=3081, 6 atoms) |
-| 2.4 | 744 | 3134 | +2390 | 1.00 | late | Version + Antichain class names + factory `v(…)` | [scheduled bbox exact=0/4] export body at packages/d2ts/src/order.ts:10 (t=8163, 8 atoms); better unscheduled exact=1/4: export at packages/d2ts/src/order.ts:138 (36 atoms, too expensive at final margin) |
-| 3.2 | 2908 | 7981 | +5073 | 1.00 | late | graph.ts class hierarchy (signatures only) | [scheduled bbox exact=7/22] export at packages/d2ts/src/graph.ts:171 (t=7981, 20 atoms) |
-| 5.3 | 9955 | 2671 | -7284 | 1.00 | early | Electric adapter entry points | [scheduled bbox exact=0/16] export body at packages/d2ts/src/electric/index.ts:222 (t=6360, 76 atoms) |
+| 2.1 | 538 | 1675 | +1137 | 1.00 | late | d2ts src layout | fs-only |
+| 2.2 | 608 | 2773 | +2165 | 1.00 | late | d2ts package re-exports (`index.ts`) | [scheduled bbox exact=6/6] imports in packages/d2ts/src/index.ts (t=2773, 6 atoms) |
+| 2.4 | 744 | 2826 | +2082 | 1.00 | late | Version + Antichain class names + factory `v(…)` | [scheduled bbox exact=4/4] export names surface in packages/d2ts/src/order.ts (t=2826, 7 atoms) |
+| 3.2 | 2908 | 9959 | +7051 | 1.00 | late | graph.ts class hierarchy (signatures only) | [scheduled bbox exact=7/22] export at packages/d2ts/src/graph.ts:171 (t=9959, 20 atoms) |
+| 3.7 | 4670 | 6879 | +2209 | 1.00 | late | Index<K,V> trace: signatures + interface | [scheduled bbox exact=10/11] export at packages/d2ts/src/version-index.ts:8 (t=6879, 10 atoms) |
+| 4.3 | 8937 | 3597 | -5340 | 1.00 | early | d2ql src + query-builder listings | fs-only |
+| 5.3 | 9955 | 2363 | -7592 | 1.00 | early | Electric adapter entry points | [scheduled bbox exact=0/16] export body at packages/d2ts/src/electric/index.ts:222 (t=8216, 76 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -132,20 +134,21 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=7, fs-only=7, no disco
 | 2 | 167 | export at packages/d2ts/src/utils.ts:<n> |
 | 2 | 136 | export at packages/d2mini/src/utils.ts:<n> |
 | 2 | 131 | export at packages/d2ts-benchmark/src/base.ts:<n> |
+| 2 | 122 | export at packages/d2ql/src/evaluators.ts:<n> |
 | 2 | 104 | export at packages/d2ql/src/extractors.ts:<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 948 | 1.00 | 948 | 6360 | export body at packages/d2ts/src/electric/index.ts:222 |
-| 238 | 1.00 | 238 | 8920 | imports in packages/d2ts/src/electric/index.ts |
-| 216 | 1.00 | 216 | 4560 | package dependencies in package.json |
-| 169 | 1.00 | 169 | 8518 | headings outline in packages/d2ts/README.md |
+| 948 | 1.00 | 948 | 8216 | export body at packages/d2ts/src/electric/index.ts:222 |
+| 216 | 1.00 | 216 | 6177 | package dependencies in package.json |
 | 167 | 1.00 | 167 | 839 | headings outline in README.md |
-| 165 | 0.88 | 188 | 2904 | export body at packages/d2ts/src/electric/index.ts:328 |
-| 164 | 1.00 | 164 | 8682 | packages/d2ts/README.md section #0 |
-| 160 | 1.00 | 160 | 2422 | export at packages/d2ts/src/electric/index.ts:222 |
-| 136 | 1.00 | 136 | 1327 | package scripts in package.json |
-| 131 | 0.82 | 160 | 6719 | export at packages/d2ts/src/graph.ts:111 |
-| 3799 | — | — | — | +48 more rows |
+| 165 | 0.88 | 188 | 2596 | export body at packages/d2ts/src/electric/index.ts:328 |
+| 160 | 1.00 | 160 | 2114 | export at packages/d2ts/src/electric/index.ts:222 |
+| 136 | 1.00 | 136 | 1421 | package scripts in package.json |
+| 131 | 0.82 | 160 | 8621 | export at packages/d2ts/src/graph.ts:111 |
+| 123 | 1.00 | 123 | 8954 | export names surface in packages/d2mini/src/graph.ts |
+| 121 | 1.00 | 121 | 1954 | export at packages/d2ts/src/electric/index.ts:103 |
+| 118 | 1.00 | 118 | 3369 | imports in packages/d2ts-benchmark/src/index.ts |
+| 3571 | — | — | — | +48 more rows |

@@ -1,4 +1,4 @@
-scores: Sim=0.425 Reached=17/49 Early=2 Late=9 Partial=8 Missing=24 Used=9803/10000
+scores: Sim=0.428 Reached=17/49 Early=2 Late=9 Partial=8 Missing=24 Used=9803/10000
 
 ## Verdict
 
@@ -72,14 +72,14 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=6, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.5 | 341 | — | — | 0.73 | partial | src/cmd module map | [scheduled bbox exact=7/11] mod/use plumbing in src/cmd/mod.rs (t=5990, 7 atoms) |
-| 1.8 | 741 | — | — | 0.08 | missing | CLI subcommand dispatch — match arms | [scheduled bbox exact=0/12] mod/use plumbing in src/main.rs (t=6086, 9 atoms) |
-| 2.2 | 1047 | — | — | 0.69 | partial | mdbook-core lib + module map | [scheduled bbox exact=5/16] mod/use plumbing in crates/mdbook-core/src/lib.rs (t=4494, 5 atoms) |
-| 2.7 | 1496 | — | — | 0.75 | partial | mdbook-html crate lib + module map | [scheduled bbox exact=5/8] mod/use plumbing in crates/mdbook-html/src/lib.rs (t=4618, 5 atoms) |
-| 3.1 | 1960 | — | — | 0.54 | partial | Book / BookItem struct shapes | [scheduled bbox exact=8/24] pub item at crates/mdbook-core/src/book.rs:119 (t=6265, 8 atoms) |
-| 3.2 | 2164 | — | — | 0.06 | missing | Chapter struct fields | [scheduled bbox exact=2/17] pub-item names surface in crates/mdbook-core/src/book.rs (t=6162, 2 atoms); better unscheduled exact=10/17: pub item at crates/mdbook-core/src/book.rs:141 (29 atoms, too expensive at final margin) |
-| 3.3 | 2246 | — | — | 0.00 | missing | Book impl method names | [scheduled same-file] pub-item names surface in crates/mdbook-core/src/book.rs (t=6162, 10 atoms) |
-| 3.4 | 2625 | — | — | 0.03 | missing | MDBook struct + public method names | [scheduled bbox exact=2/32] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=7070, 2 atoms); better unscheduled exact=12/32: pub item at crates/mdbook-driver/src/mdbook.rs:29 (12 atoms, discovered unscheduled) |
+| 1.5 | 341 | — | — | 0.73 | partial | src/cmd module map | [scheduled bbox exact=7/11] mod/use plumbing in src/cmd/mod.rs (t=6462, 7 atoms) |
+| 1.8 | 741 | — | — | 0.08 | missing | CLI subcommand dispatch — match arms | [scheduled bbox exact=0/12] mod/use plumbing in src/main.rs (t=6558, 9 atoms) |
+| 2.2 | 1047 | — | — | 0.69 | partial | mdbook-core lib + module map | [scheduled bbox exact=5/16] mod/use plumbing in crates/mdbook-core/src/lib.rs (t=3392, 5 atoms) |
+| 2.7 | 1496 | — | — | 0.75 | partial | mdbook-html crate lib + module map | [scheduled bbox exact=5/8] mod/use plumbing in crates/mdbook-html/src/lib.rs (t=3621, 5 atoms) |
+| 3.1 | 1960 | — | — | 0.54 | partial | Book / BookItem struct shapes | [scheduled bbox exact=8/24] pub item at crates/mdbook-core/src/book.rs:119 (t=6737, 8 atoms) |
+| 3.2 | 2164 | — | — | 0.06 | missing | Chapter struct fields | [scheduled bbox exact=2/17] pub-item names surface in crates/mdbook-core/src/book.rs (t=6634, 2 atoms); better unscheduled exact=10/17: pub item at crates/mdbook-core/src/book.rs:141 (29 atoms, too expensive at final margin) |
+| 3.3 | 2246 | — | — | 0.00 | missing | Book impl method names | [scheduled same-file] pub-item names surface in crates/mdbook-core/src/book.rs (t=6634, 10 atoms) |
+| 3.4 | 2625 | — | — | 0.03 | missing | MDBook struct + public method names | [scheduled bbox exact=2/32] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=4754, 2 atoms); better unscheduled exact=12/32: pub item at crates/mdbook-driver/src/mdbook.rs:29 (12 atoms, discovered unscheduled) |
 | 3.7 | 4011 | — | — | 0.00 | missing | Config struct (top-level book.toml shape) | [unscheduled bbox exact=16/22] pub item at crates/mdbook-core/src/config.rs:63 (16 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
 | 3.8 | 4133 | — | — | 0.00 | missing | Config method names + Config::set | [unscheduled same-file] pub item at crates/mdbook-core/src/config.rs:449 (73 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
 | 3.9 | 4753 | — | — | 0.00 | missing | BookConfig + BuildConfig + RustConfig + RustEdition fields | [unscheduled bbox exact=16/50] pub item at crates/mdbook-core/src/config.rs:318 (16 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
@@ -89,14 +89,14 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=6, scheduled same-file
 | 3.16 | 7060 | — | — | 0.43 | missing | RenderContext impl methods (incl. from_json) | [scheduled bbox exact=0/7] pub item at crates/mdbook-renderer/src/lib.rs:40 (t=3106, 22 atoms); better unscheduled exact=4/7: mod/use plumbing in crates/mdbook-renderer/src/lib.rs (4 atoms, discovered unscheduled) |
 | 3.17 | 7552 | — | — | 0.00 | missing | MDBOOK_* env-var override rules | [unscheduled same-file] pub item at crates/mdbook-core/src/config.rs:449 (73 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
 | 4.1 | 7635 | — | — | 0.78 | partial | Builtin preprocessors module — re-exports | [scheduled bbox exact=6/9] mod/use plumbing in crates/mdbook-driver/src/builtin_preprocessors/mod.rs (t=7662, 6 atoms) |
-| 4.3 | 8077 | — | — | 0.00 | missing | MDBook::load body — book.toml + Config wiring | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=7070, 2 atoms) |
+| 4.3 | 8077 | — | — | 0.00 | missing | MDBook::load body — book.toml + Config wiring | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=4754, 2 atoms) |
 | 4.4 | 8287 | — | — | 0.07 | missing | load.rs — load_book entrypoint | [scheduled bbox exact=2/15] pub item at crates/mdbook-driver/src/load.rs:10 (t=8083, 2 atoms) |
-| 4.5 | 8522 | — | — | 0.00 | missing | execute_build_process — the build pipeline | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=7070, 2 atoms) |
-| 4.6 | 8610 | — | — | 0.00 | missing | Default preprocessors + topological order | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=7070, 2 atoms) |
-| 4.7 | 8735 | — | — | 0.58 | partial | BookBuilder type — mdbook init API | [scheduled bbox exact=6/12] pub item at crates/mdbook-driver/src/init.rs:13 (t=7430, 6 atoms) |
-| 5.2 | 9440 | — | — | 0.00 | missing | Theme — bundled-asset names | [scheduled same-file] pub item at crates/mdbook-html/src/theme/mod.rs:40 (t=6921, 22 atoms) |
-| 6.1 | 9515 | — | — | 0.15 | missing | build subcommand — clap surface | [scheduled bbox exact=2/7] pub item at src/cmd/build.rs:8 (t=5264, 2 atoms) |
-| 6.2 | 9597 | — | — | 0.25 | missing | command_prelude shared args | [scheduled bbox exact=3/8] pub-item names surface in src/cmd/command_prelude.rs (t=5405, 3 atoms); better unscheduled exact=6/8: pub item at src/cmd/command_prelude.rs:7 (44 atoms, too expensive at final margin) |
+| 4.5 | 8522 | — | — | 0.00 | missing | execute_build_process — the build pipeline | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=4754, 2 atoms) |
+| 4.6 | 8610 | — | — | 0.00 | missing | Default preprocessors + topological order | [scheduled same-file] pub-item names surface in crates/mdbook-driver/src/mdbook.rs (t=4754, 2 atoms) |
+| 4.7 | 8735 | — | — | 0.58 | partial | BookBuilder type — mdbook init API | [scheduled bbox exact=6/12] pub item at crates/mdbook-driver/src/init.rs:13 (t=5114, 6 atoms) |
+| 5.2 | 9440 | — | — | 0.00 | missing | Theme — bundled-asset names | [scheduled same-file] pub item at crates/mdbook-html/src/theme/mod.rs:40 (t=7393, 22 atoms) |
+| 6.1 | 9515 | — | — | 0.15 | missing | build subcommand — clap surface | [scheduled bbox exact=2/7] pub item at src/cmd/build.rs:8 (t=5736, 2 atoms) |
+| 6.2 | 9597 | — | — | 0.25 | missing | command_prelude shared args | [scheduled bbox exact=3/8] pub-item names surface in src/cmd/command_prelude.rs (t=5877, 3 atoms); better unscheduled exact=6/8: pub item at src/cmd/command_prelude.rs:7 (44 atoms, too expensive at final margin) |
 
 ### no discovered candidate
 
@@ -121,25 +121,25 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=6, scheduled same-file
 | 1.3 | 202 | 652 | +450 | 1.00 | late | crates/ directory listing | fs-only |
 | 1.4 | 239 | 604 | +365 | 1.00 | late | Workspace package summary — name + description | [scheduled bbox exact=3/3] [package] in Cargo.toml (t=604, 15 atoms) |
 | 1.6 | 482 | 604 | +122 | 0.92 | aligned | Workspace members + edition | [scheduled bbox exact=11/12] [package] in Cargo.toml (t=604, 11 atoms) |
-| 1.7 | 536 | 5181 | +4645 | 1.00 | late | src/ tree (top-level bin sources) | fs-only |
-| 2.1 | 882 | 7217 | +6335 | 1.00 | late | mdbook-driver crate role | [scheduled bbox exact=10/10] crate-doc lede in crates/mdbook-driver/src/lib.rs (t=7217, 10 atoms) |
+| 1.7 | 536 | 5653 | +5117 | 1.00 | late | src/ tree (top-level bin sources) | fs-only |
+| 2.1 | 882 | 4901 | +4019 | 1.00 | late | mdbook-driver crate role | [scheduled bbox exact=10/10] crate-doc lede in crates/mdbook-driver/src/lib.rs (t=4901, 10 atoms) |
 | 2.3 | 1121 | 2007 | +886 | 1.00 | late | mdbook-summary crate lede | [scheduled bbox exact=5/5] crate-doc lede in crates/mdbook-summary/src/lib.rs (t=2007, 5 atoms) |
 | 2.4 | 1229 | 976 | -253 | 0.86 | aligned | mdbook-markdown crate lede | [scheduled bbox exact=6/7] crate-doc lede in crates/mdbook-markdown/src/lib.rs (t=976, 6 atoms) |
 | 2.8 | 1555 | 7508 | +5953 | 1.00 | late | mdbook-driver source layout | fs-only |
-| 2.9 | 1591 | 6283 | +4692 | 1.00 | late | mdbook-core source layout | fs-only |
-| 3.5 | 3208 | 5887 | +2679 | 0.87 | late | Preprocessor trait + PreprocessorContext | [scheduled bbox exact=16/45] pub item at crates/mdbook-preprocessor/src/lib.rs:51 (t=2487, 16 atoms) |
-| 3.6 | 3742 | 4296 | +554 | 0.90 | aligned | Renderer trait + RenderContext | [scheduled bbox exact=22/40] pub item at crates/mdbook-renderer/src/lib.rs:40 (t=3106, 22 atoms) |
+| 2.9 | 1591 | 6755 | +5164 | 1.00 | late | mdbook-core source layout | fs-only |
+| 3.5 | 3208 | 6359 | +3151 | 0.87 | late | Preprocessor trait + PreprocessorContext | [scheduled bbox exact=16/45] pub item at crates/mdbook-preprocessor/src/lib.rs:51 (t=2487, 16 atoms) |
+| 3.6 | 3742 | 4601 | +859 | 0.90 | aligned | Renderer trait + RenderContext | [scheduled bbox exact=22/40] pub item at crates/mdbook-renderer/src/lib.rs:40 (t=3106, 22 atoms) |
 | 3.13 | 6324 | 1171 | -5153 | 0.95 | early | MarkdownOptions + new_cmark_parser | [scheduled bbox exact=17/21] pub item at crates/mdbook-markdown/src/lib.rs:15 (t=1171, 17 atoms) |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 306 | 1.00 | 306 | 6921 | pub item at crates/mdbook-html/src/theme/mod.rs:40 |
-| 257 | 1.00 | 257 | 5143 | [features] in Cargo.toml |
+| 306 | 1.00 | 306 | 7393 | pub item at crates/mdbook-html/src/theme/mod.rs:40 |
+| 257 | 1.00 | 257 | 5615 | [features] in Cargo.toml |
 | 176 | 0.50 | 349 | 604 | [package] in Cargo.toml |
-| 159 | 1.00 | 159 | 3793 | headings outline in CONTRIBUTING.md |
-| 145 | 1.00 | 145 | 6497 | macro_export body at crates/mdbook-core/src/utils/mod.rs:17 |
+| 159 | 1.00 | 159 | 4098 | headings outline in CONTRIBUTING.md |
+| 145 | 1.00 | 145 | 6969 | macro_export body at crates/mdbook-core/src/utils/mod.rs:17 |
 | 137 | 1.00 | 137 | 9536 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |
 | 131 | 1.00 | 131 | 9054 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |
 | 111 | 1.00 | 111 | 7822 | README headline in guide/src/for_developers/README.md |

@@ -1,4 +1,4 @@
-scores: Sim=0.474 Reached=22/42 Early=3 Late=13 Partial=5 Missing=15 Used=8992/10000
+scores: Sim=0.535 Reached=22/42 Early=3 Late=12 Partial=5 Missing=15 Used=8992/10000
 
 ## Verdict
 
@@ -29,7 +29,7 @@ Tiers: 1=4/4 reached, 0 partial, 0 missing, avg=1.00; 2=2/2 reached, 0 partial, 
 |:----------|-----:|--------:|--------:|-------:|:-------------|
 | ranking-recoverable | 4 | 4 | 0 | 0 | value/ranking |
 | wrong-slice / granularity | 16 | 11 | 5 | 0 | walker granularity / wrong slice |
-| timing-only | 17 | 0 | 0 | 17 | usually no code change |
+| timing-only | 16 | 0 | 0 | 16 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -40,7 +40,7 @@ Tiers: 1=4/4 reached, 0 partial, 0 missing, avg=1.00; 2=2/2 reached, 0 partial, 
 | discovered unscheduled | 1 | 0.02 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file=2, fs-only=1
+Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file=2
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -74,11 +74,11 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 3.2 | 384 | — | — | 0.67 | partial | Tools — mod_abs / div_floor inline helpers | [scheduled bbox exact=4/6] c decl names surface in include/tools.h (t=1393, 4 atoms) |
-| 3.4 | 653 | — | — | 0.40 | missing | structures.h + crafting.h — full (tiny) | [scheduled bbox exact=3/15] c decl names surface in include/crafting.h (t=235, 3 atoms) |
-| 3.5 | 803 | — | — | 0.64 | partial | varnum.h — full | [scheduled bbox exact=8/14] c decl names surface in include/varnum.h (t=370, 8 atoms) |
+| 3.4 | 653 | — | — | 0.40 | missing | structures.h + crafting.h — full (tiny) | [scheduled bbox exact=3/15] c decl names surface in include/crafting.h (t=283, 3 atoms) |
+| 3.5 | 803 | — | — | 0.64 | partial | varnum.h — full | [scheduled bbox exact=8/14] c decl names surface in include/varnum.h (t=418, 8 atoms) |
 | 3.6 | 899 | — | — | 0.75 | partial | README — Configuration intro paragraph | [scheduled bbox exact=3/4] README.md section #3 (t=7832, 3 atoms) |
-| 3.7 | 1143 | — | — | 0.05 | missing | serialize.h — full (disk-sync API + #ifdef shape) | [scheduled bbox exact=1/21] c includes in include/serialize.h (t=255, 1 atoms) |
-| 3.13 | 2443 | — | — | 0.77 | partial | worldgen.h — full | [scheduled bbox exact=14/30] c decl names surface in include/worldgen.h (t=619, 14 atoms) |
+| 3.7 | 1143 | — | — | 0.05 | missing | serialize.h — full (disk-sync API + #ifdef shape) | [scheduled bbox exact=1/21] c includes in include/serialize.h (t=303, 1 atoms) |
+| 3.13 | 2443 | — | — | 0.77 | partial | worldgen.h — full | [scheduled bbox exact=14/30] c decl names surface in include/worldgen.h (t=667, 14 atoms) |
 | 4.5 | 3794 | — | — | 0.72 | partial | globals.h — runtime extern declarations | [scheduled bbox exact=13/18] c decl names surface in include/globals.h (t=2269, 13 atoms) |
 | 4.7 | 4813 | — | — | 0.00 | missing | globals.h — feature toggle #defines + their comments | [scheduled same-file] c decl names surface in include/globals.h (t=2269, 82 atoms) |
 | 4.9 | 5889 | — | — | 0.43 | missing | globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate) | [scheduled bbox exact=6/35] c decl names surface in include/globals.h (t=2269, 6 atoms) |
@@ -94,9 +94,8 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.3 | 79 | 830 | +751 | 1.00 | late | README — Minecraft + protocol versions | [scheduled bbox exact=2/2] README.md section #0 (t=830, 2 atoms) |
-| 1.4 | 146 | 830 | +684 | 1.00 | late | README — project priorities | [scheduled bbox exact=1/1] README.md section #0 (t=830, 1 atoms) |
-| 2.1 | 194 | 878 | +684 | 1.00 | late | src/ listing | fs-only |
+| 1.3 | 79 | 878 | +799 | 1.00 | late | README — Minecraft + protocol versions | [scheduled bbox exact=2/2] README.md section #0 (t=878, 2 atoms) |
+| 1.4 | 146 | 878 | +732 | 1.00 | late | README — project priorities | [scheduled bbox exact=1/1] README.md section #0 (t=878, 1 atoms) |
 | 3.1 | 298 | 2269 | +1971 | 1.00 | late | Connection state-machine constants (STATE_*) | [scheduled bbox exact=6/6] c decl names surface in include/globals.h (t=2269, 6 atoms) |
 | 3.3 | 500 | 2773 | +2273 | 1.00 | late | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | [scheduled bbox exact=5/9] c decl names surface in include/globals.h (t=2269, 5 atoms) |
 | 3.8 | 1350 | 5221 | +3871 | 1.00 | late | packets.h — serverbound (cs_) function names | [scheduled bbox exact=21/22] c decl names surface in include/packets.h (t=5221, 21 atoms) |

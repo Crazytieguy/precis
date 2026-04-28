@@ -124,10 +124,18 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
+    } else if is_source_dir(dir) {
+        (0.6, 0.5, 0.3)
     } else {
         (0.5, 0.45, 0.25)
     };
     mix_signals(cat, fu, ztu, path_depth_factor(dir, ctx))
+}
+
+fn is_source_dir(dir: &Path) -> bool {
+    dir.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| matches!(name, "src" | "lib"))
 }
 
 /// Directories the walker never recurses into. Matches common

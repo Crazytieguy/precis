@@ -1,4 +1,4 @@
-scores: Sim=0.431 Reached=17/40 Early=0 Late=13 Partial=4 Missing=19 Used=9988/10000
+scores: Sim=0.436 Reached=17/40 Early=0 Late=12 Partial=4 Missing=19 Used=9988/10000
 
 ## Verdict
 
@@ -45,11 +45,11 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3, no disco
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | aligned | low | 1 |
+| scheduled bbox | aligned | low | 2 |
 | scheduled bbox | late | none | 1 |
 | scheduled bbox | late | low | 5 |
 | scheduled bbox | late | high | 3 |
-| scheduled bbox | late | full | 2 |
+| scheduled bbox | late | full | 1 |
 | scheduled bbox | missing | low | 11 |
 | scheduled bbox | partial | low | 4 |
 | unscheduled bbox | missing | low | 1 |
@@ -67,11 +67,11 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3, no disco
 | 3.5 | 3755 | — | — | 0.00 | missing | loads body — rule dispatch + statement terminator | [unscheduled bbox exact=36/39] python decl body at src/tomli/_parser.py:149 (36 atoms, too expensive at final margin) |
 | 3.6 | 3977 | — | — | 0.00 | missing | TOMLDecodeError.__init__ — pos→line/col body | [unscheduled bbox exact=16/18] python method body at src/tomli/_parser.py:87 (16 atoms, too expensive at final margin) |
 | 3.8 | 4897 | — | — | 0.00 | missing | parse_value — datetime/number/special-float tail | [unscheduled bbox exact=25/29] python decl body at src/tomli/_parser.py:684 (25 atoms, too expensive at final margin) |
-| 4.2 | 6679 | — | — | 0.05 | missing | create_list_rule body — [[arr]] header | [scheduled bbox exact=2/21] python decl names surface in src/tomli/_parser.py (t=5096, 2 atoms); better unscheduled exact=18/21: python decl body at src/tomli/_parser.py:390 (18 atoms, too expensive at final margin) |
-| 4.3 | 7159 | — | — | 0.06 | missing | key_value_rule body | [scheduled bbox exact=2/31] python decl at src/tomli/_parser.py:413 (t=5197, 2 atoms); better unscheduled exact=26/31: python decl body at src/tomli/_parser.py:413 (26 atoms, too expensive at final margin) |
-| 4.4 | 7480 | — | — | 0.10 | missing | parse_inline_table — head + first key/value insert | [scheduled bbox exact=2/21] python decl at src/tomli/_parser.py:528 (t=5379, 2 atoms); better unscheduled exact=18/21: python decl body at src/tomli/_parser.py:528 (18 atoms, too expensive at final margin) |
+| 4.2 | 6679 | — | — | 0.05 | missing | create_list_rule body — [[arr]] header | [scheduled bbox exact=2/21] python decl names surface #2 in src/tomli/_parser.py (t=6644, 2 atoms); better unscheduled exact=18/21: python decl body at src/tomli/_parser.py:390 (18 atoms, too expensive at final margin) |
+| 4.3 | 7159 | — | — | 0.06 | missing | key_value_rule body | [scheduled bbox exact=2/31] python decl at src/tomli/_parser.py:413 (t=6707, 2 atoms); better unscheduled exact=26/31: python decl body at src/tomli/_parser.py:413 (26 atoms, too expensive at final margin) |
+| 4.4 | 7480 | — | — | 0.10 | missing | parse_inline_table — head + first key/value insert | [scheduled bbox exact=2/21] python decl at src/tomli/_parser.py:528 (t=6830, 2 atoms); better unscheduled exact=18/21: python decl body at src/tomli/_parser.py:528 (18 atoms, too expensive at final margin) |
 | 4.5 | 7650 | — | — | 0.00 | missing | parse_inline_table — comma/close loop tail | [unscheduled bbox exact=12/12] python decl body at src/tomli/_parser.py:528 (12 atoms, too expensive at final margin) |
-| 4.7 | 8290 | — | — | 0.00 | missing | parse_basic_str body | [scheduled bbox exact=1/29] python decl names surface in src/tomli/_parser.py (t=5096, 1 atoms); better unscheduled exact=29/29: python decl body at src/tomli/_parser.py:652 (29 atoms, too expensive at final margin) |
+| 4.7 | 8290 | — | — | 0.00 | missing | parse_basic_str body | [scheduled bbox exact=1/29] python decl names surface #3 in src/tomli/_parser.py (t=7322, 1 atoms); better unscheduled exact=29/29: python decl body at src/tomli/_parser.py:652 (29 atoms, too expensive at final margin) |
 | 5.1 | 8921 | — | — | 0.12 | missing | README FAQ: type mapping table | [scheduled bbox exact=2/17] headings outline in README.md (t=946, 2 atoms); better unscheduled exact=16/17: README.md section #11 (16 atoms, too expensive at final margin) |
 
 ### wrong-slice / granularity
@@ -82,12 +82,12 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3, no disco
 | 1.3 | 166 | — | — | 0.75 | partial | Public API: __init__ __all__ + version | [scheduled bbox exact=3/4] python imports in src/tomli/__init__.py (t=379, 3 atoms) |
 | 2.2 | 491 | — | — | 0.67 | partial | _types.py — full | [scheduled bbox exact=3/6] python decl names surface in src/tomli/_types.py (t=411, 3 atoms) |
 | 3.3 | 2972 | — | — | 0.00 | missing | tests/* test method names | [unscheduled bbox exact=7/19] python test names surface in tests/test_misc.py (13 atoms, too expensive at final margin) |
-| 3.7 | 4502 | — | — | 0.05 | missing | parse_value — dispatch head (strings/bools/array/inline-table) | [scheduled bbox exact=2/44] python decl at src/tomli/_parser.py:684 (t=5256, 2 atoms); better unscheduled exact=35/44: python decl body at src/tomli/_parser.py:684 (35 atoms, too expensive at final margin) |
-| 3.10 | 5527 | — | — | 0.08 | missing | Flags — set + is_ (the actual lookup) | [scheduled bbox exact=4/27] python method sigs in src/tomli/_parser.py (t=6055, 4 atoms); better unscheduled exact=15/27: python method body at src/tomli/_parser.py:260 (15 atoms, too expensive at final margin) |
+| 3.7 | 4502 | — | — | 0.05 | missing | parse_value — dispatch head (strings/bools/array/inline-table) | [scheduled bbox exact=2/44] python decl at src/tomli/_parser.py:684 (t=7356, 2 atoms); better unscheduled exact=35/44: python decl body at src/tomli/_parser.py:684 (35 atoms, too expensive at final margin) |
+| 3.10 | 5527 | — | — | 0.08 | missing | Flags — set + is_ (the actual lookup) | [scheduled bbox exact=4/27] python method sigs #1 in src/tomli/_parser.py (t=4630, 4 atoms); better unscheduled exact=15/27: python method body at src/tomli/_parser.py:260 (15 atoms, too expensive at final margin) |
 | 3.12 | 6145 | — | — | 0.12 | missing | README usage: Decimal floats | [scheduled bbox exact=2/17] headings outline in README.md (t=946, 2 atoms); better unscheduled exact=12/17: README.md section #6 (12 atoms, too expensive at final margin) |
-| 4.6 | 7937 | — | — | 0.09 | missing | parse_array body | [scheduled bbox exact=2/23] python decl at src/tomli/_parser.py:502 (t=5291, 2 atoms); better unscheduled exact=18/23: python decl body at src/tomli/_parser.py:502 (18 atoms, too expensive at final margin) |
+| 4.6 | 7937 | — | — | 0.09 | missing | parse_array body | [scheduled bbox exact=2/23] python decl at src/tomli/_parser.py:502 (t=6742, 2 atoms); better unscheduled exact=18/23: python decl body at src/tomli/_parser.py:502 (18 atoms, too expensive at final margin) |
 | 4.8 | 8626 | — | — | 0.07 | missing | README usage: tomllib compat shim | [scheduled bbox exact=2/28] headings outline in README.md (t=946, 2 atoms); better unscheduled exact=21/28: README.md section #7 (21 atoms, too expensive at final margin) |
-| 5.3 | 9565 | — | — | 0.77 | partial | CHANGELOG: 2.4 + 2.1 entries | [scheduled bbox exact=6/13] CHANGELOG.md section #5 (t=3666, 6 atoms) |
+| 5.3 | 9565 | — | — | 0.77 | partial | CHANGELOG: 2.4 + 2.1 entries | [scheduled bbox exact=6/13] CHANGELOG.md section #5 (t=5348, 6 atoms) |
 
 ### no discovered candidate
 
@@ -106,19 +106,19 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3, no disco
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.4 | 192 | 305 | +113 | 1.00 | late | src/tomli/ module listing | fs-only |
-| 1.5 | 279 | 5134 | +4855 | 0.80 | late | loads / load signatures + docstrings | [scheduled bbox exact=0/5] python decl body at src/tomli/_parser.py:137 (t=6733, 8 atoms) |
-| 1.6 | 403 | 5711 | +5308 | 0.90 | late | TOMLDecodeError class + docstring | [scheduled bbox exact=8/10] python decl doc at src/tomli/_parser.py:76 (t=5711, 8 atoms) |
+| 1.5 | 279 | 4093 | +3814 | 0.80 | late | loads / load signatures + docstrings | [scheduled bbox exact=0/5] python decl body at src/tomli/_parser.py:137 (t=5148, 8 atoms) |
+| 1.6 | 403 | 4374 | +3971 | 0.90 | late | TOMLDecodeError class + docstring | [scheduled bbox exact=8/10] python decl doc at src/tomli/_parser.py:76 (t=4374, 8 atoms) |
 | 2.1 | 433 | 9307 | +8874 | 1.00 | late | tests/ directory listing | fs-only |
-| 2.3 | 697 | 6159 | +5462 | 0.88 | late | _parser.py: state-class headers + Flags constants | [scheduled bbox exact=2/17] python method sigs in src/tomli/_parser.py (t=6055, 22 atoms) |
-| 2.4 | 844 | 1986 | +1142 | 1.00 | late | _re.py: regex constants + match-helper locations | [scheduled bbox exact=1/8] python decl at src/tomli/_re.py:26 (t=4225, 19 atoms) |
+| 2.3 | 697 | 4734 | +4037 | 0.88 | late | _parser.py: state-class headers + Flags constants | [scheduled bbox exact=2/17] python method sigs #1 in src/tomli/_parser.py (t=4630, 22 atoms) |
+| 2.4 | 844 | 1986 | +1142 | 1.00 | late | _re.py: regex constants + match-helper locations | [scheduled bbox exact=1/8] python decl at src/tomli/_re.py:26 (t=5971, 19 atoms) |
 | 2.5 | 1160 | 2642 | +1482 | 0.88 | late | README intro paragraph | [scheduled bbox exact=14/17] README.md section #1 (t=2642, 14 atoms) |
-| 2.7 | 1904 | 5096 | +3192 | 1.00 | late | _parser.py: parse_* and skip_* function locations | [scheduled bbox exact=22/22] python decl names surface in src/tomli/_parser.py (t=5096, 43 atoms) |
+| 2.7 | 1904 | 7322 | +5418 | 1.00 | late | _parser.py: parse_* and skip_* function locations | [scheduled bbox exact=12/22] python decl names surface #2 in src/tomli/_parser.py (t=6644, 24 atoms) |
 | 2.9 | 2392 | 8531 | +6139 | 0.81 | late | README usage: parse a file + handle errors | [scheduled bbox exact=10/26] README.md section #5 (t=8180, 10 atoms) |
-| 3.1 | 2491 | 6733 | +4242 | 1.00 | late | load body | [scheduled bbox exact=8/8] python decl body at src/tomli/_parser.py:137 (t=6733, 8 atoms) |
-| 3.9 | 5138 | 6897 | +1759 | 0.84 | late | Flags — __init__, add_pending, finalize_pending, unset_all | [scheduled bbox exact=8/19] python method sigs in src/tomli/_parser.py (t=6055, 8 atoms) |
+| 3.1 | 2491 | 5148 | +2657 | 1.00 | late | load body | [scheduled bbox exact=8/8] python decl body at src/tomli/_parser.py:137 (t=5148, 8 atoms) |
+| 3.9 | 5138 | 5498 | +360 | 0.84 | aligned | Flags — __init__, add_pending, finalize_pending, unset_all | [scheduled bbox exact=8/19] python method sigs #1 in src/tomli/_parser.py (t=4630, 8 atoms) |
 | 3.11 | 5894 | 9755 | +3861 | 0.94 | late | NestedDict body — table-tree builder | [scheduled bbox exact=10/31] python method body at src/tomli/_parser.py:283 (t=9755, 10 atoms) |
 | 4.1 | 6395 | 9988 | +3593 | 0.83 | late | create_dict_rule body — [table] header | [scheduled bbox exact=15/18] python decl body at src/tomli/_parser.py:370 (t=9988, 15 atoms) |
-| 5.2 | 9402 | 7701 | -1701 | 0.86 | aligned | skip_chars / skip_until / skip_comment / skip_comments_and_array_ws | [scheduled bbox exact=11/49] python decl body at src/tomli/_parser.py:327 (t=7701, 11 atoms) |
+| 5.2 | 9402 | 6924 | -2478 | 0.86 | aligned | skip_chars / skip_until / skip_comment / skip_comments_and_array_ws | [scheduled bbox exact=11/49] python decl body at src/tomli/_parser.py:327 (t=6355, 11 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -131,14 +131,14 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3, no disco
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 320 | 0.37 | 871 | 5096 | python decl names surface in src/tomli/_parser.py |
 | 315 | 1.00 | 315 | 8929 | python decl body at fuzzer/fuzz.py:20 |
-| 239 | 1.00 | 239 | 4225 | python decl at src/tomli/_re.py:26 |
+| 251 | 1.00 | 251 | 2965 | python decl names surface in src/tomli/_parser.py |
+| 239 | 1.00 | 239 | 5971 | python decl at src/tomli/_re.py:26 |
 | 189 | 0.50 | 379 | 946 | headings outline in README.md |
 | 184 | 1.00 | 184 | 8420 | python decl body at src/tomli/_parser.py:463 |
 | 165 | 1.00 | 165 | 7996 | python decl body at src/tomli/_parser.py:481 |
 | 164 | 1.00 | 164 | 9501 | CHANGELOG.md section #7 |
 | 162 | 1.00 | 162 | 1800 | tomllib.md section #0 |
-| 161 | 1.00 | 161 | 3566 | python decl at src/tomli/_re.py:46 |
-| 158 | 1.00 | 158 | 6544 | python decl at src/tomli/_parser.py:57 |
+| 161 | 1.00 | 161 | 3842 | python decl at src/tomli/_re.py:46 |
+| 158 | 1.00 | 158 | 5049 | python decl at src/tomli/_parser.py:57 |
 | 2845 | — | — | — | +32 more rows |

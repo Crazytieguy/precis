@@ -1,4 +1,4 @@
-scores: Sim=0.433 Reached=18/50 Early=8 Late=5 Partial=12 Missing=20 Used=9476/10000
+scores: Sim=0.435 Reached=18/50 Early=8 Late=5 Partial=12 Missing=20 Used=9476/10000
 
 ## Verdict
 
@@ -57,8 +57,8 @@ Candidate hint kinds: scheduled bbox=31, scheduled same-file=11, fs-only=4
 | 2.2 | 534 | — | — | 0.60 | partial | ContentType enum context | [scheduled bbox exact=6/10] pub item at src/parse/mod.rs:18 (t=3100, 14 atoms) |
 | 2.4 | 836 | — | — | 0.16 | missing | ContentType::new_parser dispatch | [scheduled bbox exact=3/13] impl method sigs in src/parse/mod.rs (t=2850, 3 atoms) |
 | 2.5 | 931 | — | — | 0.70 | partial | Tree struct fields | [scheduled bbox exact=7/10] pub item at src/tree.rs:14 (t=1455, 7 atoms) |
-| 2.6 | 1144 | — | — | 0.76 | partial | ItemValue + FieldType | [scheduled bbox exact=8/25] pub item at src/tree.rs:42 (t=618, 8 atoms) |
-| 2.7 | 1215 | — | — | 0.00 | missing | Tree public fn signatures | [scheduled same-file] pub item at src/tree.rs:42 (t=618, 8 atoms) |
+| 2.6 | 1144 | — | — | 0.76 | partial | ItemValue + FieldType | [scheduled bbox exact=8/25] pub item at src/tree.rs:42 (t=602, 8 atoms) |
+| 2.7 | 1215 | — | — | 0.00 | missing | Tree public fn signatures | [scheduled same-file] pub item at src/tree.rs:42 (t=602, 8 atoms) |
 | 2.8 | 1432 | — | — | 0.00 | missing | main.rs run() — config + flag dispatch | [scheduled same-file] mod/use plumbing in src/main.rs (t=5581, 22 atoms) |
 | 2.9 | 1755 | — | — | 0.00 | missing | main.rs run() — content type + data read | [scheduled same-file] mod/use plumbing in src/main.rs (t=5581, 22 atoms) |
 | 2.10 | 1929 | — | — | 0.00 | missing | main.rs run() — --to short-circuit | [scheduled same-file] mod/use plumbing in src/main.rs (t=5581, 22 atoms) |
@@ -83,7 +83,7 @@ Candidate hint kinds: scheduled bbox=31, scheduled same-file=11, fs-only=4
 | 5.8 | 8331 | — | — | 0.08 | missing | Config::load + Config::parse | [scheduled bbox exact=6/39] impl method sigs in src/config/mod.rs (t=5038, 6 atoms) |
 | 5.9 | 8613 | — | — | 0.04 | missing | Config::get_path resolution | [scheduled bbox exact=2/24] impl method sigs in src/config/mod.rs (t=5038, 2 atoms) |
 | 5.10 | 8986 | — | — | 0.70 | partial | Color struct + Colors namespaces | [scheduled bbox exact=0/37] pub item at src/config/colors.rs:162 (t=6808, 24 atoms) |
-| 6.4 | 9967 | — | — | 0.00 | missing | clipboard OS routing | [scheduled same-file] pub item at src/clipboard.rs:28 (t=437, 2 atoms) |
+| 6.4 | 9967 | — | — | 0.00 | missing | clipboard OS routing | [scheduled same-file] pub item at src/clipboard.rs:28 (t=356, 2 atoms) |
 
 ### fs/listing
 
@@ -95,9 +95,9 @@ Candidate hint kinds: scheduled bbox=31, scheduled same-file=11, fs-only=4
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.3 | 92 | 374 | +282 | 1.00 | late | src/ module layout | fs-only |
+| 1.3 | 92 | 293 | +201 | 1.00 | late | src/ module layout | fs-only |
 | 1.4 | 156 | 5581 | +5425 | 1.00 | late | main.rs module declarations | [scheduled bbox exact=9/9] mod/use plumbing in src/main.rs (t=5581, 9 atoms) |
-| 1.5 | 185 | 320 | +135 | 1.00 | late | README section headings | [scheduled bbox exact=1/4] README.md section #4 (t=7220, 12 atoms) |
+| 1.5 | 185 | 485 | +300 | 1.00 | late | README section headings | [scheduled bbox exact=1/4] README.md section #4 (t=7220, 12 atoms) |
 | 1.6 | 329 | 255 | -74 | 0.92 | aligned | Cargo package metadata | [scheduled bbox exact=11/12] [package] in Cargo.toml (t=255, 11 atoms) |
 | 2.1 | 391 | 3100 | +2709 | 1.00 | late | ContentType variants — locations only | [scheduled bbox exact=8/8] pub item at src/parse/mod.rs:18 (t=3100, 13 atoms) |
 | 2.3 | 653 | 3403 | +2750 | 1.00 | late | Parser trait method signatures | [scheduled bbox exact=7/7] pub item at src/parse/mod.rs:36 (t=3403, 23 atoms) |

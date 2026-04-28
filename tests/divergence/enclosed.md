@@ -1,4 +1,4 @@
-scores: Sim=0.535 Reached=15/45 Early=5 Late=7 Partial=1 Missing=29 Used=9969/10000
+scores: Sim=0.525 Reached=15/45 Early=6 Late=7 Partial=1 Missing=29 Used=9969/10000
 
 ## Verdict
 
@@ -31,7 +31,7 @@ Tiers: 1=7/12 reached, 0 partial, 5 missing, avg=0.61; 2=6/8 reached, 0 partial,
 | wrong-slice / granularity | 12 | 12 | 0 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 11 | 11 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 0 | 1 | 0 | filesystem/listing value |
-| timing-only | 12 | 0 | 0 | 12 | usually no code change |
+| timing-only | 13 | 0 | 0 | 13 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -41,7 +41,7 @@ Tiers: 1=7/12 reached, 0 partial, 5 missing, avg=0.61; 2=6/8 reached, 0 partial,
 | too expensive at final margin | 5 | 1.42 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file=2, unscheduled same-file=2, fs-only=7, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file=2, unscheduled same-file=2, fs-only=8, no discovered candidate=11
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -59,8 +59,8 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.10 | 1225 | — | — | 0.12 | missing | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=1850, 2 atoms); better unscheduled exact=14/16: README.md section #1 (14 atoms, too expensive at final margin) |
-| 1.11 | 1499 | — | — | 0.20 | missing | README — how-it-works (creator side) | [scheduled bbox exact=2/10] headings outline in README.md (t=1850, 2 atoms); better unscheduled exact=9/10: README.md section #5 (9 atoms, too expensive at final margin) |
+| 1.10 | 1225 | — | — | 0.12 | missing | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=2180, 2 atoms); better unscheduled exact=14/16: README.md section #1 (14 atoms, too expensive at final margin) |
+| 1.11 | 1499 | — | — | 0.20 | missing | README — how-it-works (creator side) | [scheduled bbox exact=2/10] headings outline in README.md (t=2180, 2 atoms); better unscheduled exact=9/10: README.md section #5 (9 atoms, too expensive at final margin) |
 | 1.12 | 1700 | — | — | 0.00 | missing | README — how-it-works (recipient side) | [unscheduled bbox exact=6/7] README.md section #5 (6 atoms, too expensive at final margin) |
 | 2.8 | 2657 | — | — | 0.00 | missing | lib package.json — runtime dependencies | [unscheduled bbox exact=8/8] package dependencies in packages/lib/package.json (8 atoms, predecessor not scheduled: package scripts in packages/lib/package.json) |
 | 4.1 | 5055 | — | — | 0.00 | missing | Config — env var name catalog (locations only) | [unscheduled bbox exact=26/26] export at packages/app-server/src/modules/app/config/config.ts:5 (242 atoms, too expensive at final margin) |
@@ -70,10 +70,10 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.2 | 127 | — | — | 0.00 | missing | README h1 + tagline | [scheduled same-file] headings outline in README.md (t=1850, 38 atoms) |
-| 1.9 | 872 | — | — | 0.20 | missing | README — project structure (per-package one-liners) | [scheduled bbox exact=2/10] headings outline in README.md (t=1850, 2 atoms); better unscheduled exact=7/10: README.md section #11 (7 atoms, too expensive at final margin) |
+| 1.2 | 127 | — | — | 0.00 | missing | README h1 + tagline | [scheduled same-file] headings outline in README.md (t=2180, 38 atoms) |
+| 1.9 | 872 | — | — | 0.20 | missing | README — project structure (per-package one-liners) | [scheduled bbox exact=2/10] headings outline in README.md (t=2180, 2 atoms); better unscheduled exact=7/10: README.md section #11 (7 atoms, too expensive at final margin) |
 | 2.7 | 2545 | — | — | 0.45 | missing | @enclosed/lib README — install + usage example | [scheduled bbox exact=9/31] packages/lib/README.md section #1 (t=9969, 9 atoms); better unscheduled exact=11/31: packages/lib/README.md section #2 (11 atoms, too expensive at final margin) |
-| 3.3 | 2947 | — | — | 0.12 | missing | Cloudflare Workers entrypoint (full) | [scheduled bbox exact=1/8] export at packages/app-server/src/index.cloudflare.ts:8 (t=2056, 1 atoms); better unscheduled exact=2/8: imports in packages/app-server/src/index.cloudflare.ts (2 atoms, too expensive at final margin) |
+| 3.3 | 2947 | — | — | 0.12 | missing | Cloudflare Workers entrypoint (full) | [scheduled bbox exact=1/8] export at packages/app-server/src/index.cloudflare.ts:8 (t=844, 1 atoms); better unscheduled exact=2/8: imports in packages/app-server/src/index.cloudflare.ts (2 atoms, too expensive at final margin) |
 | 3.4 | 3451 | — | — | 0.05 | missing | Hono createServer factory + middleware stack | [scheduled bbox exact=2/41] export names surface in packages/app-server/src/modules/app/server.ts (t=5389, 2 atoms); better unscheduled exact=15/41: imports in packages/app-server/src/modules/app/server.ts (15 atoms, too expensive at final margin) |
 | 4.3 | 5731 | — | — | 0.43 | missing | Config — getConfig export + figue setup | [scheduled bbox exact=5/14] export body at packages/app-server/src/modules/app/config/config.ts:258 (t=8458, 5 atoms) |
 | 4.4 | 5875 | — | — | 0.00 | missing | Node.js entrypoint — config + storage + server build | [unscheduled same-file] imports in packages/app-server/src/index.node.ts (14 atoms, too expensive at final margin) |
@@ -110,16 +110,17 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.4 | 168 | 9778 | +9610 | 1.00 | late | pnpm workspace glob | [scheduled bbox exact=2/2] plaintext config pnpm-workspace.yaml (t=9778, 2 atoms) |
-| 1.5 | 250 | 1631 | +1381 | 0.83 | late | Root package.json — name + version + license | [scheduled bbox exact=4/6] package identity in package.json (t=332, 4 atoms) |
-| 1.6 | 357 | 1631 | +1274 | 1.00 | late | Root package.json — author + repo + engines | [scheduled bbox exact=5/8] package identity in package.json (t=332, 5 atoms) |
+| 1.5 | 250 | 1729 | +1479 | 0.83 | late | Root package.json — name + version + license | [scheduled bbox exact=4/6] package identity in package.json (t=332, 4 atoms) |
+| 1.6 | 357 | 1729 | +1372 | 1.00 | late | Root package.json — author + repo + engines | [scheduled bbox exact=5/8] package identity in package.json (t=332, 5 atoms) |
 | 1.7 | 497 | 9778 | +9281 | 1.00 | late | pnpm-workspace.yaml — catalog versions | [scheduled bbox exact=9/9] plaintext config pnpm-workspace.yaml (t=9778, 9 atoms) |
-| 1.8 | 694 | 1631 | +937 | 0.95 | late | Root package.json — scripts + keywords + devDeps | [scheduled bbox exact=10/19] package identity in package.json (t=332, 10 atoms) |
-| 2.1 | 1726 | 713 | -1013 | 1.00 | early | Top-level lib package contents | fs-only |
-| 2.2 | 1742 | 966 | -776 | 1.00 | early | lib/src — top-level source modules | fs-only |
-| 2.3 | 2101 | 5203 | +3102 | 0.96 | late | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=1138, 19 atoms) |
-| 2.4 | 2124 | 451 | -1673 | 1.00 | early | Top-level app-server package contents | fs-only |
+| 1.8 | 694 | 1729 | +1035 | 0.95 | late | Root package.json — scripts + keywords + devDeps | [scheduled bbox exact=10/19] package identity in package.json (t=332, 10 atoms) |
+| 2.1 | 1726 | 401 | -1325 | 1.00 | early | Top-level lib package contents | fs-only |
+| 2.2 | 1742 | 498 | -1244 | 1.00 | early | lib/src — top-level source modules | fs-only |
+| 2.3 | 2101 | 5203 | +3102 | 0.96 | late | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=670, 19 atoms) |
+| 2.4 | 2124 | 734 | -1390 | 1.00 | early | Top-level app-server package contents | fs-only |
 | 2.5 | 2187 | 3111 | +924 | 1.00 | late | Top-level app-client package contents | fs-only |
-| 2.6 | 2259 | 1212 | -1047 | 1.00 | early | Top-level cli + crypto + docs package contents | fs-only |
+| 2.6 | 2259 | 1241 | -1018 | 1.00 | early | Top-level cli + crypto + docs package contents | fs-only |
+| 3.1 | 2678 | 836 | -1842 | 1.00 | early | app-server/src — top-level entry layout | fs-only |
 | 6.5 | 9990 | 4863 | -5127 | 1.00 | early | Docs site — page map (VitePress src layout) | fs-only |
 
 ## Walker waste rollup (by descriptor pattern)
@@ -134,9 +135,9 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, scheduled same-file
 |-----------:|----------:|-----:|--------:|:------|
 | 545 | 1.00 | 545 | 8071 | export at packages/app-client/playwright.config.ts:12 |
 | 254 | 1.00 | 254 | 3648 | export at packages/app-client/vite.config.ts:8 |
-| 171 | 1.00 | 171 | 1512 | headings outline in CONTRIBUTING.md |
+| 171 | 1.00 | 171 | 1599 | headings outline in CONTRIBUTING.md |
 | 166 | 1.00 | 166 | 4832 | imports in packages/app-client/src/index.tsx |
-| 165 | 0.85 | 195 | 1850 | headings outline in README.md |
+| 165 | 0.85 | 195 | 2180 | headings outline in README.md |
 | 137 | 1.00 | 137 | 6785 | export at packages/crypto/src/index.node.ts:8 |
 | 137 | 1.00 | 137 | 6922 | export at packages/crypto/src/index.web.ts:8 |
 | 114 | 1.00 | 114 | 9293 | README.md section #14 |

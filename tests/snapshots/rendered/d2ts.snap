@@ -127,8 +127,6 @@ packages/
             3→**This is an experimental package**
             5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
             7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
-            140→## Planned Features
-            142→Future versions may support additional SQL features and optimizations.
         eslint.config.mjs
         package.json
         src/
@@ -223,32 +221,42 @@ packages/
                     348→  }
             graph.ts
             index.ts
+                1→export * from './d2.js'
+                2→export * from './order.js'
+                3→export * from './multiset.js'
+                4→export * from './version-index.js'
+                5→export * from './operators/index.js'
+                6→export * from './types.js'
             multiset.ts
+                3→export type MultiSetArray<T> = [T, number][]
+                4→export type KeyedData<T> = [key: string, value: T]
+                …
+                9→export class MultiSet<T> {
+                …
             operators/
             order.ts
+                10→export function v(version: number | number[]): Version {
+                …
+                29→export class Version {
+                …
+                138→export class Antichain {
+                …
+                277→export class Frontier extends Antichain {
+                278→  constructor(...elements: Version[]) {
+                279→    super(elements)
             sqlite/
             types.ts
             utils.ts
             version-index.ts
+                8→export interface IndexType<K, V> {
+                …
+                28→export class Index<K, V> implements IndexType<K, V> {
+                …
         tests/
         tsconfig.json
         vitest.config.js
     d2ts-benchmark/
         CHANGELOG.md
-            1→# @electric-sql/d2ts-benchmark
-            …
-            3→## 0.0.4
-            …
-            5→### Patch Changes
-            …
-            13→## 0.0.3
-            …
-            15→### Patch Changes
-            …
-            20→## 0.0.2
-            …
-            22→### Patch Changes
-            …
         package.json
         src/
             base.ts
@@ -272,12 +280,6 @@ packages/
                 20→export function generateGraph(results: SizeResults[]) {
                 …
             index.ts
-                1→import { Suite } from './base'
-                2→import { D2, MultiSet, map, innerJoin as join, filter, v, output } from '@electric-sql/d2ts'
-                3→import { innerJoin as joinSql } from '@electric-sql/d2ts/sqlite'
-                4→import { BetterSQLite3Wrapper } from '@electric-sql/d2ts/sqlite'
-                5→import Database from 'better-sqlite3'
-                6→import { generateGraph } from './graph'
         tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml
