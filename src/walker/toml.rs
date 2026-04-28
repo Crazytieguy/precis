@@ -3,7 +3,8 @@
 //! section group (identity / features / dependencies).
 //!
 //! Keys:
-//! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`
+//! - `Identity { file }` — `[package]`, `[workspace]`, `[workspace.package]`,
+//!   `[project]`
 //! - `Features { file }` — `[features]`
 //! - `Dependencies { file }` — `[dependencies]`, `[dev-dependencies]`,
 //!   `[build-dependencies]`, `[workspace.dependencies]`
@@ -28,6 +29,10 @@ use super::{
 /// Rust walker's `pub(crate)` damping.
 const WORKSPACE_MEMBER_IDENTITY_FACTOR: f64 = 0.4;
 
+const PYPROJECT_LEDE_IDENTITY_FACTOR: f64 = 0.5;
+const PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR: f64 = 0.4;
+const PYPROJECT_NON_LEDE_IDENTITY_FACTOR: f64 = 0.1;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let toml_files = files_with_extension(dir, "toml");
     if toml_files.is_empty() {
@@ -36,7 +41,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in toml_files {
         if let Some(content) = build_section_content(&file, ctx, |n| {
-            matches!(n, "package" | "workspace" | "workspace.package")
+            matches!(n, "package" | "workspace" | "workspace.package" | "project")
         }) {
             out.push(Batch {
                 key: TomlKey::Identity { file: file.clone() }.into(),
@@ -83,7 +88,11 @@ fn build_section_content(
     let mut line_numbers: Vec<usize> = Vec::new();
     for (name, start_line, end_line) in sections {
         if name_match(&name) {
-            line_numbers.extend(start_line..=end_line);
+            if name == "project" {
+                line_numbers.extend(project_identity_lines(&source, start_line, end_line));
+            } else {
+                line_numbers.extend(start_line..=end_line);
+            }
         }
     }
     if line_numbers.is_empty() {
@@ -92,13 +101,70 @@ fn build_section_content(
     single_file_lines_content(file, &source, FileLines::new(dedup_sorted(line_numbers)))
 }
 
+fn project_identity_lines(source: &str, start_line: usize, end_line: usize) -> Vec<usize> {
+    let mut out = vec![start_line];
+    for (idx, line) in source.lines().enumerate() {
+        let line_no = idx + 1;
+        if line_no <= start_line || line_no > end_line {
+            continue;
+        }
+        if is_project_scalar_pair_line(line) {
+            out.push(line_no);
+        }
+    }
+    out
+}
+
+fn is_project_scalar_pair_line(line: &str) -> bool {
+    let Some((key, value)) = line.trim_start().split_once('=') else {
+        return false;
+    };
+    let key = key.trim();
+    matches!(key, "name" | "description")
+        && value
+            .trim_start()
+            .chars()
+            .next()
+            .is_some_and(|ch| ch != '[')
+}
+
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let m = if ctx.is_workspace_member(file) {
+    let m = if let Some(factor) = pyproject_identity_factor(file, ctx) {
+        factor
+    } else if ctx.is_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
     mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
+}
+
+fn is_pyproject_manifest(file: &Path) -> bool {
+    file.file_name().and_then(|name| name.to_str()) == Some("pyproject.toml")
+}
+
+fn pyproject_identity_factor(file: &Path, ctx: &WalkCtx) -> Option<f64> {
+    if !is_pyproject_manifest(file) {
+        return None;
+    }
+    let project_is_lede = parse_toml(ctx, file)
+        .map(|(source, tree)| {
+            collect_sections(&tree, &source)
+                .first()
+                .is_some_and(|(name, _, _)| name == "project")
+        })
+        .unwrap_or(false);
+    if !project_is_lede {
+        return Some(PYPROJECT_NON_LEDE_IDENTITY_FACTOR);
+    }
+    let has_package_json = file
+        .parent()
+        .is_some_and(|parent| parent.join("package.json").exists());
+    Some(if has_package_json {
+        PYPROJECT_HYBRID_LEDE_IDENTITY_FACTOR
+    } else {
+        PYPROJECT_LEDE_IDENTITY_FACTOR
+    })
 }
 
 fn features_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -291,6 +357,26 @@ mod tests {
     fn fixture_path(rel: &str) -> PathBuf {
         let crate_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
         crate_root.join("tests/fixtures").join(rel)
+    }
+
+    #[test]
+    fn walker_toml_project_identity_filters_array_values() {
+        let source = r#"[project]
+name = "demo"
+dynamic = ["version"]
+description = "Demo package"
+authors = [{ name = "Ada" }]
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://example.com"
+"#;
+
+        let lines = project_identity_lines(source, 1, 9);
+        assert_eq!(lines, vec![1, 2, 4]);
     }
 
     /// mdbook fixture: explicit `crates/*` glob, three literal entries

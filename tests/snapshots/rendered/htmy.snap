@@ -301,20 +301,9 @@ htmy/
         1→from collections.abc import Callable, Coroutine, Mapping, MutableMapping
         2→from typing import Any, Protocol, TypeAlias, TypeVar
     utils.py
-        12→def join_components(
-        …
-        42→def join(*items: str | None, separator: str = " ") -> str:
-        …
-        49→def is_htmy_component_type(comp: Any) -> TypeGuard[HTMYComponentType]:
-        …
-        55→def is_component_type(comp: Any) -> TypeGuard[ComponentType]:
-        …
-        62→def is_component_sequence(comp: Component) -> TypeGuard[ComponentSequence]:
-        …
-        67→def as_component_sequence(comp: Component) -> ComponentSequence:
-        …
-        73→def as_component_type(comp: Component) -> ComponentType:
-        …
 mkdocs.yaml
 pyproject.toml
+    1→[project]
+    2→name = "htmy"
+    4→description = "Async, pure-Python server-side rendering engine."
 tests/

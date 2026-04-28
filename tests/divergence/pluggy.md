@@ -4,7 +4,7 @@ scores: Sim=0.392 Reached=14/40 Early=4 Late=7 Partial=4 Missing=22 Used=9938/10
 
 Verdict: coverage-gap bound
 Likely primary lever: add walker candidates for no-discovered NS rows
-Evidence: 2 ranking-recoverable (w×gap=0.41), 10 wrong-slice/granularity (w×gap=0.52), 13 no-discovered (w×gap=3.20)
+Evidence: 2 ranking-recoverable (w×gap=0.41), 12 wrong-slice/granularity (w×gap=0.55), 11 no-discovered (w×gap=3.17)
 Secondary intervention: free final budget for 2 too-expensive candidates
 Loss reasons: 0 predecessor-gated, 2 too-expensive, 0 discovered-unscheduled
 Top rows: 1.2, 2.1, 2.2, 3.2, 5.7, ...
@@ -16,8 +16,8 @@ _`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit)
 
 | intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
 |:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| add walker candidates for no-discovered rows | 13 | 3.20 | 4/7/13 | NS rows have no discovered line candidate | 1.2, 2.1, 2.2, 3.2, 5.7, ... |
-| split wrong-slice walker batches | 10 | 0.52 | 2/5/10 | nearby candidates have low exact atom overlap | 5.4, 4.5, 5.3, 5.1, 5.6, ... |
+| add walker candidates for no-discovered rows | 11 | 3.17 | 4/7/11 | NS rows have no discovered line candidate | 1.2, 2.1, 2.2, 3.2, 5.7, ... |
+| split wrong-slice walker batches | 12 | 0.55 | 2/5/12 | nearby candidates have low exact atom overlap | 5.4, 4.5, 5.3, 5.1, 5.6, ... |
 | free final budget / demote late waste | 2 | 0.41 | 1/1/2 | high-overlap candidates exceed final remaining budget, exact total=61/66 | 4.1, 7.3 |
 
 Tiers: 1=3/4 reached, 0 partial, 1 missing, avg=0.75; 2=0/2 reached, 0 partial, 2 missing, avg=0.00; 3=1/2 reached, 0 partial, 1 missing, avg=0.50; 4=4/6 reached, 1 partial, 1 missing, avg=0.80; 5=2/7 reached, 2 partial, 3 missing, avg=0.50; 6=0/5 reached, 0 partial, 5 missing, avg=0.00; 7=4/14 reached, 1 partial, 9 missing, avg=0.37
@@ -27,8 +27,8 @@ Tiers: 1=3/4 reached, 0 partial, 1 missing, avg=0.75; 2=0/2 reached, 0 partial, 
 | diagnosis | rows | missing | partial | timing | likely lever |
 |:----------|-----:|--------:|--------:|-------:|:-------------|
 | ranking-recoverable | 2 | 2 | 0 | 0 | value/ranking |
-| wrong-slice / granularity | 10 | 6 | 4 | 0 | walker granularity / wrong slice |
-| no discovered candidate | 13 | 13 | 0 | 0 | walker coverage or predecessor-gated emit |
+| wrong-slice / granularity | 12 | 8 | 4 | 0 | walker granularity / wrong slice |
+| no discovered candidate | 11 | 11 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | 0 | filesystem/listing value |
 | timing-only | 12 | 0 | 0 | 12 | usually no code change |
 
@@ -39,7 +39,7 @@ Tiers: 1=3/4 reached, 0 partial, 1 missing, avg=0.75; 2=0/2 reached, 0 partial, 
 | too expensive at final margin | 2 | 0.41 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no discovered candidate=13
+Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, unscheduled same-file=1, fs-only=6, no discovered candidate=11
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -53,7 +53,7 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 | scheduled bbox | missing | none | 1 |
 | scheduled bbox | missing | low | 4 |
 | scheduled bbox | partial | low | 4 |
-| unscheduled bbox | missing | low | 2 |
+| unscheduled bbox | missing | low | 3 |
 | unscheduled bbox | missing | full | 1 |
 
 ## Arrival ledger by diagnosis
@@ -77,6 +77,8 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 | 7.2 | 6827 | — | — | 0.72 | partial | testing/conftest.py — pm + he_pm fixtures | [scheduled bbox exact=7/25] python decl body at testing/conftest.py:7 body 12 (t=5153, 7 atoms) |
 | 7.4 | 7623 | — | — | 0.00 | missing | test_hookcaller.py + test_multicall.py — every test fn name | [unscheduled bbox exact=21/36] python test names surface in testing/test_multicall.py (41 atoms, too expensive at final margin) |
 | 7.5 | 8023 | — | — | 0.00 | missing | Smaller test files — every test fn name | [unscheduled bbox exact=13/35] python test names surface in testing/test_invocations.py (25 atoms, too expensive at final margin) |
+| 7.6 | 8324 | — | — | 0.00 | missing | pyproject.toml — [project] essentials (skip classifier list) | [unscheduled bbox exact=3/26] [package] in pyproject.toml (3 atoms, discovered unscheduled) |
+| 7.7 | 8576 | — | — | 0.00 | missing | pyproject.toml — [tool.ruff.lint] config | [unscheduled same-file] [package] in pyproject.toml (3 atoms, discovered unscheduled) |
 | 7.11 | 9819 | — | — | 0.09 | missing | _callers._multicall body — the actual call loop | [scheduled bbox exact=4/43] python decl doc at src/pluggy/_callers.py:82 (t=6945, 4 atoms); better unscheduled exact=31/43: python decl body at src/pluggy/_callers.py:82 body 97 (31 atoms, too expensive at final margin) |
 | 7.12 | 9946 | — | — | 0.31 | missing | Top-level meta — AGENTS.md, SECURITY.md, MANIFEST.in | [scheduled bbox exact=2/13] SECURITY.md section #0 (t=423, 2 atoms) |
 
@@ -93,8 +95,6 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=3, fs-only=6, no disco
 | 6.3 | 5479 | — | — | 0.00 | missing | Eggsample lib.py + eggsample-spam (host impls + plugin impls) | no discovered line candidate |
 | 6.4 | 6020 | — | — | 0.00 | missing | docs/index.rst — "Call time order" section (tryfirst / trylast) | no discovered line candidate |
 | 6.5 | 6517 | — | — | 0.00 | missing | docs/index.rst — Wrappers (new-style) wrapper-protocol summary | no discovered line candidate |
-| 7.6 | 8324 | — | — | 0.00 | missing | pyproject.toml — [project] essentials (skip classifier list) | no discovered line candidate |
-| 7.7 | 8576 | — | — | 0.00 | missing | pyproject.toml — [tool.ruff.lint] config | no discovered line candidate |
 | 7.8 | 8859 | — | — | 0.00 | missing | tox.ini — [tox] + [testenv] + [pytest] (skip release/docs envs) | no discovered line candidate |
 | 7.9 | 9238 | — | — | 0.00 | missing | CHANGELOG.rst — pluggy 1.6.0 entry only | no discovered line candidate |
 

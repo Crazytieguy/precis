@@ -173,9 +173,7 @@ microbootstrap/
         35→def merge_pydantic_configs(
         …
         48→def merge_dataclasses_configs(
-        49→    config_to_merge: "_DataclassT",
-        50→    config_with_changes: "_DataclassT",
-        51→) -> "_DataclassT":
+        …
         60→def merge_dict_configs(
         …
         96→def is_valid_path(maybe_path: str) -> bool:
@@ -304,4 +302,7 @@ package.json
     20→    "vuepress-theme-hope": "^2.0.0-rc.52"
     21→  }
 pyproject.toml
+    1→[project]
+    2→name = "microbootstrap"
+    3→description = "Package for bootstrapping new micro-services"
 tests/
