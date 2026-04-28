@@ -132,6 +132,46 @@ richer sibling/density signals, NS-author updates that rank
 divergence; expect to iterate against the metric across the fixture
 set rather than land it on the first try.
 
+## Divergence diagnostic — deferred architectural items
+
+Two known approximations in the divergence report's diagnostic layer
+(`src/divergence/{diagnosis,synthesis}.rs`). Worth fixing before serious
+calibration that depends on distinguishing them; not blocking for the first
+walker/value pass.
+
+- **Loss reasons use post-hoc state.** `candidate_loss` checks
+  `row.final_cost.tokens > remaining_tokens` against the *final* rendered
+  tree and the *final* remaining budget, not the candidate's state at first
+  eligibility. Both inputs can differ from eligibility time. Budget can be
+  consumed by later wins. Marginal cost can also shift: the scheduler's
+  cache invalidation is path-based, not predecessor-based, so a
+  non-ancestor batch on the same file (e.g., another seed-rooted chain on
+  `src/lib.rs`) can amortize file/group overhead, and ancestor refinements
+  can change rendered line states in non-trivial ways. So the labels
+  conflate at least three cases: candidate fit when eligible but lost the
+  value/cost^k race to competing batches; candidate never fit once
+  eligible; candidate's cost looked different at end-of-run because later
+  schedules changed render-tree state on its paths. The three want
+  different interventions (tune ranking; demote low-value spend / shrink
+  the candidate; investigate render-tree-state effects). The right fix is
+  scheduler-side instrumentation: record eligibility, marginal cost, fit
+  status, and rank at decision time, and attribute losses against that.
+  Lower urgency if next work is walker granularity (which the current
+  corpus mostly says is the lever).
+
+- **`Schedule.candidates` is `#[serde(skip)]`.** The candidate pool
+  needed by unscheduled-bbox / predecessor-gating / coverage-gap
+  diagnostics doesn't survive TOML serialization. Scheduled-bbox and
+  scheduled-same-file hints still work from `schedule.batches` alone, so
+  basic ledger rows aren't affected — but anyone calling
+  `generate_divergence_report` from a deserialized schedule silently loses
+  the unscheduled-candidate signal entirely (rows that would have shown
+  `[unscheduled bbox exact=...]` or `predecessor not scheduled` collapse
+  to `no discovered candidate`). In-process baseline tests pass the
+  in-memory `Schedule` so they're unaffected. Either persist enough
+  candidate metadata, or split the API/type so reports require a
+  candidate-bearing schedule and fail loudly when the pool is empty.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost
