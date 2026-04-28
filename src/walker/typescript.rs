@@ -90,18 +90,25 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
         let per_export_factor = type_machinery_factor(file, &exports);
         let chunk_count = names_surface_chunk_count(exports.len());
+        let export_count = exports.len();
+        let type_only_export_count = exports.iter().filter(|item| item.is_type_only).count();
+        let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let names_predecessors: Vec<_> = (0..chunk_count)
             .map(|chunk_index| {
                 BatchKey::Typescript(TsKey::ExportNames {
                     file: file.clone(),
                     chunk_index,
+                    export_count,
+                    type_only_export_count,
                 })
             })
             .collect();
         for (chunk_index, chunk) in exports.chunks(NAMES_SURFACE_CHUNK_SIZE).enumerate() {
-            let Some(content) =
-                single_file_lines_content(file, &source, collect_export_names_from(chunk))
-            else {
+            let Some(content) = single_file_lines_content(
+                file,
+                &source,
+                collect_export_names_from(chunk, &export_start_lines),
+            ) else {
                 continue;
             };
             out.push(Batch {
@@ -828,12 +835,18 @@ fn is_bare_reexport(node: Node) -> bool {
     first_decl_child(node).is_none() && has_export_clause(node) && has_from_source(node)
 }
 
-fn collect_export_names_from(items: &[ExportInfo]) -> FileLines {
+fn collect_export_names_from(
+    items: &[ExportInfo],
+    export_start_lines: &HashSet<usize>,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     for item in items {
         full.push(item.start_line);
-        ellipses.push(item.start_line + 1);
+        let ellipsis_line = item.start_line + 1;
+        if !export_start_lines.contains(&ellipsis_line) {
+            ellipses.push(ellipsis_line);
+        }
     }
     FileLines::new(full).with_ellipses(ellipses)
 }

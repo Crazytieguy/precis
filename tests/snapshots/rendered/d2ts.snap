@@ -125,8 +125,6 @@ packages/
         README.md
             1→# D2QL
             3→**This is an experimental package**
-            5→D2QL is a subset of SQL, encoded as JSON/TypeScript, that's compiled to a D2TS pipeline. It provides a declarative way to express data transformations using familiar SQL-like syntax.
-            7→This is a work in progress, and the syntax is subject to change as we explore the space of SQL-like query languages for D2TS.
         eslint.config.mjs
         package.json
         src/
@@ -172,12 +170,6 @@ packages/
                     111→  debug = false,
                     112→}: ElectricStreamToD2InputOptions<T>): RootStreamBuilder<[key: string, T]> {
                     …
-                    216→/**
-                    217→ * Operator that outputs the messages from the stream in ElectricSQL format
-                    218→ *
-                    219→ * TODO: Have two modes `replica=default` and `replica=full` to match the two modes
-                    220→ * of core Electric.
-                    221→ */
                     222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
                     223→  [K, V]
                     224→> {
@@ -221,37 +213,48 @@ packages/
                     348→  }
             graph.ts
             index.ts
-                1→export * from './d2.js'
-                2→export * from './order.js'
-                3→export * from './multiset.js'
-                4→export * from './version-index.js'
-                5→export * from './operators/index.js'
-                6→export * from './types.js'
             multiset.ts
-                3→export type MultiSetArray<T> = [T, number][]
-                4→export type KeyedData<T> = [key: string, value: T]
-                …
-                9→export class MultiSet<T> {
-                …
             operators/
             order.ts
-                10→export function v(version: number | number[]): Version {
-                …
-                29→export class Version {
-                …
-                138→export class Antichain {
-                …
-                277→export class Frontier extends Antichain {
-                278→  constructor(...elements: Version[]) {
-                279→    super(elements)
             sqlite/
             types.ts
+                5→export type KeyValue<K, V> = [K, V]
+                …
+                7→export const MessageType = {
+                8→  DATA: 1,
+                9→  FRONTIER: 2,
+                10→} as const
+                12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+                …
+                14→export type Message<T> =
+                …
+                24→export type DataMessage<T> = {
+                25→  version: Version
+                26→  collection: MultiSet<T>
+                27→}
+                29→export type FrontierMessage = Version | Antichain
+                …
+                31→export interface IOperator<_T> {
+                32→  run(): void
+                33→  hasPendingWork(): boolean
+                34→  frontiers(): [Antichain[], Antichain]
+                35→}
+                37→export interface IDifferenceStreamReader<T> {
+                38→  drain(): Message<T>[]
+                39→  isEmpty(): boolean
+                40→  probeFrontierLessThan(frontier: Antichain): boolean
+                41→}
+                43→export interface IDifferenceStreamWriter<T> {
+                …
+                52→export interface ID2 {
+                …
+                64→export interface IStreamBuilder<T> {
+                …
+                117→export type PipedOperator<I, O> = (
+                118→  stream: IStreamBuilder<I>,
+                119→) => IStreamBuilder<O>
             utils.ts
             version-index.ts
-                8→export interface IndexType<K, V> {
-                …
-                28→export class Index<K, V> implements IndexType<K, V> {
-                …
         tests/
         tsconfig.json
         vitest.config.js

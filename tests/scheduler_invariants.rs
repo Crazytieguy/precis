@@ -6,7 +6,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use precis::batch::{Batch, BatchKey, FsKey, RustKey};
+use precis::batch::{Batch, BatchKey, FsKey, RustKey, TsKey, WalkerKey};
 use precis::content::{BatchContent, FsEntries, FsGroup, Render, Span};
 use precis::render::SourceCache;
 use precis::scheduler::Scheduler;
@@ -184,6 +184,85 @@ fn scheduler_invariants_tiny_budget_truncates_cleanly() {
     assert!(
         !rendered.contains("very long line"),
         "tiny budget shouldn't fit content"
+    );
+}
+
+#[test]
+fn scheduler_invariants_gated_descendant_value_promotes_predecessor() {
+    struct GatedValueWalker;
+    impl Walker for GatedValueWalker {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            let gate_file = stub_file("api.ts");
+            let gate = BatchKey::Typescript(TsKey::ExportNames {
+                file: gate_file.clone(),
+                chunk_index: 0,
+                export_count: 12,
+                type_only_export_count: 12,
+            });
+            let mut out = vec![
+                Batch {
+                    key: gate.clone(),
+                    predecessor: None,
+                    content: BatchContent::Lines {
+                        spans: single_span(gate_file.clone(), 1, 1, Render::Full),
+                    },
+                    value: 100.0,
+                },
+                Batch {
+                    key: BatchKey::Typescript(TsKey::Imports {
+                        file: stub_file("other.rs"),
+                    }),
+                    predecessor: None,
+                    content: BatchContent::Lines {
+                        spans: single_span(stub_file("other.rs"), 1, 1, Render::Full),
+                    },
+                    value: 180.0,
+                },
+            ];
+            for line in 2..=13 {
+                out.push(Batch {
+                    key: BatchKey::Typescript(TsKey::Export {
+                        file: gate_file.clone(),
+                        start_line: line,
+                    }),
+                    predecessor: Some(gate.clone()),
+                    content: BatchContent::Lines {
+                        spans: single_span(gate_file.clone(), line, line, Render::Full),
+                    },
+                    value: if line == 2 { 1_000.0 } else { 50.0 },
+                });
+            }
+            out
+        }
+
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            Vec::new()
+        }
+    }
+
+    let cache = SourceCache::new();
+    let gate_file = stub_file("api.ts");
+    let gate_source: String = (1..=13)
+        .map(|line| format!("export type T{line} = string;\n"))
+        .collect();
+    preload(&cache, &gate_file, &gate_source);
+    preload(&cache, &stub_file("other.rs"), "impl Other {}\n");
+    let scheduler = Scheduler::with_source_cache(stub_dir(), GatedValueWalker, 10_000, None, cache);
+    let report = scheduler.run_with_report();
+
+    assert!(
+        matches!(
+            report.scheduled.first().map(|r| &r.key),
+            Some(BatchKey::Typescript(TsKey::ExportNames { .. }))
+        ),
+        "scheduled order: {:?}",
+        report
+            .scheduled
+            .iter()
+            .map(|r| r.key.describe())
+            .collect::<Vec<_>>()
     );
 }
 

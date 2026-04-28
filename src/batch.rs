@@ -209,7 +209,12 @@ pub enum TsKey {
     /// Surface listing of every top-level export's first line — a
     /// catastrophic-omission hedge when individual decls don't all fit.
     /// Priority 1.x.
-    ExportNames { file: PathBuf, chunk_index: usize },
+    ExportNames {
+        file: PathBuf,
+        chunk_index: usize,
+        export_count: usize,
+        type_only_export_count: usize,
+    },
     /// One top-level export's declaration. For interface/type/class/enum,
     /// the whole item. For function, signature with body marker. For
     /// const/let, the assignment line. Keyed by start line so each
@@ -486,6 +491,14 @@ pub trait WalkerKey:
     fn concavity_exponent(&self) -> f64 {
         crate::value::DEFAULT_CONCAVITY_EXPONENT
     }
+
+    /// Weight for routing discovered descendant value back into this
+    /// key's scheduling score. Defaults to off: most predecessor edges
+    /// are ordinary refinements, not broad gates whose children should
+    /// affect the parent's rank.
+    fn gated_descendant_value_weight(&self) -> f64 {
+        0.0
+    }
 }
 
 impl WalkerKey for BatchKey {
@@ -516,6 +529,13 @@ impl WalkerKey for BatchKey {
             | BatchKey::Toml(_)
             | BatchKey::Typescript(_)
             | BatchKey::Plaintext(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    fn gated_descendant_value_weight(&self) -> f64 {
+        match self {
+            BatchKey::Typescript(k) => k.gated_descendant_value_weight(),
+            _ => 0.0,
         }
     }
 }
@@ -612,13 +632,41 @@ impl MarkdownKey {
 }
 
 impl TsKey {
+    pub fn gated_descendant_value_weight(&self) -> f64 {
+        // Broad, mostly type-only export-name surfaces are real gates:
+        // individual exports can be high-value descendants, but none can
+        // compete until the names surface lands. Runtime-heavy catalogs and
+        // tiny type files keep their normal standalone rank.
+        const MIN_EXPORT_SURFACE_COUNT: usize = 10;
+        const MIN_TYPE_ONLY_EXPORT_RATIO: f64 = 0.75;
+
+        let TsKey::ExportNames {
+            export_count,
+            type_only_export_count,
+            ..
+        } = self
+        else {
+            return 0.0;
+        };
+        if *export_count < MIN_EXPORT_SURFACE_COUNT {
+            0.0
+        } else {
+            let type_only_ratio = *type_only_export_count as f64 / *export_count as f64;
+            if type_only_ratio >= MIN_TYPE_ONLY_EXPORT_RATIO {
+                type_only_ratio
+            } else {
+                0.0
+            }
+        }
+    }
+
     pub fn describe(&self) -> String {
         match self {
             TsKey::ModuleDocLede { file } => format!("module-doc lede in {}", display_path(file)),
             TsKey::Imports { file } => format!("imports in {}", display_path(file)),
-            TsKey::ExportNames { file, chunk_index } => {
-                describe_chunked_surface("export names surface", file, *chunk_index)
-            }
+            TsKey::ExportNames {
+                file, chunk_index, ..
+            } => describe_chunked_surface("export names surface", file, *chunk_index),
             TsKey::Export { file, start_line } => {
                 format!("export at {}:{}", display_path(file), start_line)
             }

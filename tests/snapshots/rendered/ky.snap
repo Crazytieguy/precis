@@ -82,13 +82,6 @@ readme.md
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
     …
-    35→```sh
-    36→npm install ky
-    37→```
-    39→###### CDN
-    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
-    42→- [unpkg](https://unpkg.com/ky)
-    43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
     …
     85→## API
@@ -134,10 +127,8 @@ readme.md
     …
     1339→## Browser support
     …
-    1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
     …
-    1345→Node.js 18 and later.
     1347→## Related
     …
     1352→## Maintainers
@@ -205,6 +196,29 @@ source/
             5→export type KyInstance = {
             …
         options.ts
+            6→export type SearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams | undefined;
+            …
+            9→export type SearchParamsOption = SearchParamsInit | Record<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>>;
+            …
+            11→export type RequestHttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete';
+            12→export type HttpMethod = LiteralUnion<RequestHttpMethod | 'options' | 'trace', string>;
+            …
+            14→export type Input = string | URL | Request;
+            …
+            16→export type Progress = {
+            …
+            27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
+            …
+            33→export type KyOptions = {
+            …
+            307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
+            …
+            312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+            …
+            358→export type InternalOptions = Required<
+            …
+            373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
+            …
         request.ts
             1→export type KyRequest<T = unknown> = {
             2→	json: <J = T>() => Promise<J>;
@@ -240,20 +254,6 @@ source/
         is.ts
             2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
         merge.ts
-            6→export const validateAndMerge = (...sources: Array<Partial<Options> | undefined>): Partial<Options> => {
-            …
-            16→export const mergeHeaders = (source1: KyHeadersInit = {}, source2: KyHeadersInit = {}) => {
-            …
-            38→export const mergeHooks = (original: Hooks = {}, incoming: Hooks = {}): Required<Hooks> => (
-            39→	{
-            40→		beforeRequest: newHookValue(original, incoming, 'beforeRequest'),
-            41→		beforeRetry: newHookValue(original, incoming, 'beforeRetry'),
-            42→		afterResponse: newHookValue(original, incoming, 'afterResponse'),
-            43→		beforeError: newHookValue(original, incoming, 'beforeError'),
-            44→	}
-            45→);
-            86→export const deepMerge = <T>(...sources: Array<Partial<T> | undefined>): T => {
-            …
         normalize.ts
             5→export const normalizeRequestMethod = (input: string): string =>
             6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
