@@ -52,8 +52,8 @@ use crate::value::{
 };
 
 use super::{
-    FileLines, WalkCtx, dedup_sorted, extend_span, file_depth_factor, fs::files_with_extension,
-    push_rows, signature_end_row, single_file_lines_content,
+    FileLines, WalkCtx, dedup_sorted, extend_nonblank_rows, extend_span, file_depth_factor,
+    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -453,11 +453,6 @@ fn collect_methods_in_class<'a>(class_decl: &DeclInfo<'a>, source: &str) -> Vec<
     out
 }
 
-fn name_of<'a>(node: Node<'a>, source: &'a str) -> Option<&'a str> {
-    let n = node.child_by_field_name("name")?;
-    Some(&source[n.start_byte()..n.end_byte()])
-}
-
 fn is_underscore_private(name: &str) -> bool {
     if name.is_empty() {
         return false;
@@ -690,16 +685,15 @@ fn collect_def_body(inner: Node, src_lines: &[&str]) -> FileLines {
     let body_start = body.start_position().row;
     let body_end = body.end_position().row;
     let mut out = Vec::new();
-    for row in body_start..=body_end {
-        if let Some((s, e)) = docstring_rows
-            && row >= s
-            && row <= e
-        {
-            continue;
+    if let Some((doc_start, doc_end)) = docstring_rows {
+        if body_start < doc_start {
+            extend_nonblank_rows(&mut out, src_lines, body_start, doc_start - 1);
         }
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
+        if doc_end < body_end {
+            extend_nonblank_rows(&mut out, src_lines, doc_end + 1, body_end);
         }
+    } else {
+        extend_nonblank_rows(&mut out, src_lines, body_start, body_end);
     }
     if out.is_empty() {
         return FileLines::new(Vec::new());
@@ -726,22 +720,24 @@ fn collect_class_body(inner: Node, src_lines: &[&str]) -> FileLines {
     }
     let body_start = body.start_position().row;
     let body_end = body.end_position().row;
+    let mut excluded = method_ranges;
+    if let Some(d) = docstring {
+        excluded.push((d.start_position().row, d.end_position().row));
+    }
+    excluded.sort_by_key(|(start, _)| *start);
+
     let mut out = Vec::new();
-    'rows: for row in body_start..=body_end {
-        for (s, e) in &method_ranges {
-            if row >= *s && row <= *e {
-                continue 'rows;
-            }
+    let mut range_start = body_start;
+    for (skip_start, skip_end) in excluded {
+        if range_start < skip_start {
+            extend_nonblank_rows(&mut out, src_lines, range_start, skip_start - 1);
         }
-        if let Some(d) = docstring
-            && row >= d.start_position().row
-            && row <= d.end_position().row
-        {
-            continue;
+        if range_start <= skip_end {
+            range_start = skip_end + 1;
         }
-        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
-            out.push(row + 1);
-        }
+    }
+    if range_start <= body_end {
+        extend_nonblank_rows(&mut out, src_lines, range_start, body_end);
     }
     FileLines::new(out)
 }

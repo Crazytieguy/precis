@@ -92,9 +92,9 @@ Candidate hint kinds: scheduled bbox=26, scheduled same-file=9, fs-only=1, no di
 | 2.2 | 667 | 829 | +162 | 0.82 | aligned | Emitter<Events> interface — full | [scheduled bbox exact=14/17] export at src/index.ts:23 (t=829, 14 atoms) |
 | 2.4 | 912 | 588 | -324 | 1.00 | early | mitt() default-export signature | [scheduled bbox exact=3/3] export at src/index.ts:46 (t=588, 3 atoms) |
 | 2.7 | 1302 | 5202 | +3900 | 0.90 | late | README API one-line method descriptions | [scheduled bbox exact=10/21] headings outline in README.md (t=1023, 10 atoms) |
-| 3.1 | 1401 | 2280 | +879 | 0.82 | late | mitt() body — Map default + return-shape skeleton | [scheduled bbox exact=9/11] export body at src/index.ts:46 (t=2280, 9 atoms) |
-| 3.2 | 1606 | 2280 | +674 | 0.95 | late | emit() body — the only non-trivial method | [scheduled bbox exact=18/19] export body at src/index.ts:46 (t=2280, 18 atoms) |
-| 3.3 | 1717 | 2280 | +563 | 1.00 | late | on() body | [scheduled bbox exact=8/8] export body at src/index.ts:46 (t=2280, 8 atoms) |
+| 3.1 | 1401 | 2280 | +879 | 0.82 | late | mitt() body — Map default + return-shape skeleton | [scheduled bbox exact=9/11] export body at src/index.ts:46 body 49 (t=2280, 9 atoms) |
+| 3.2 | 1606 | 2280 | +674 | 0.95 | late | emit() body — the only non-trivial method | [scheduled bbox exact=18/19] export body at src/index.ts:46 body 49 (t=2280, 18 atoms) |
+| 3.3 | 1717 | 2280 | +563 | 1.00 | late | on() body | [scheduled bbox exact=8/8] export body at src/index.ts:46 body 49 (t=2280, 8 atoms) |
 | 4.5 | 3690 | 2515 | -1175 | 1.00 | early | package.json scripts | [scheduled bbox exact=12/12] package scripts in package.json (t=2515, 12 atoms) |
 | 5.7 | 7520 | 4918 | -2602 | 1.00 | early | .eslintrc — full | [scheduled bbox exact=52/52] plaintext config .eslintrc (t=4918, 52 atoms) |
 | 5.8 | 8020 | 5532 | -2488 | 0.84 | early | README Examples / Contribute / License sections | [scheduled bbox exact=10/37] headings outline in README.md (t=1023, 22 atoms) |

@@ -114,6 +114,25 @@ src/
         33→  value: input
         34→): Match<input, output> {
         35→  return new MatchExpression(value, unmatched) as any;
+        47→class MatchExpression<input, output> {
+        48→  constructor(private input: input, private state: MatchState<output>) {}
+        50→  with(...args: any[]): MatchExpression<input, output> {
+        …
+        94→  when(
+        95→    predicate: (value: input) => unknown,
+        96→    handler: (selection: input, value: input) => output
+        97→  ): MatchExpression<input, output> {
+        …
+        110→  otherwise(handler: (value: input) => output): output {
+        …
+        115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
+        …
+        120→  run(): output {
+        …
+        124→  returnType() {
+        …
+        128→  narrow() {
+        …
     patterns.ts
     types/
         BuildMany.ts

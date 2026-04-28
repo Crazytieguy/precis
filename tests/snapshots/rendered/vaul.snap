@@ -165,6 +165,8 @@ src/
         989→export type HandleProps = React.ComponentPropsWithoutRef<'div'> & {
         990→  preventCycle?: boolean;
         991→};
+        993→const LONG_HANDLE_PRESS_TIMEOUT = 250;
+        994→const DOUBLE_TAP_TIMEOUT = 120;
         996→export const Handle = React.forwardRef<HTMLDivElement, HandleProps>(function (
         997→  { preventCycle = false, children, ...rest },
         998→  ref,

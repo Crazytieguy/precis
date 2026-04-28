@@ -69,8 +69,8 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 4.1 | 2380 | — | — | 0.00 | missing | docs/reference/types.md — H3 catalog (all 27 entries) | [unscheduled bbox exact=26/26] headings outline in docs/reference/types.md (51 atoms, too expensive at final margin) |
 | 4.4 | 3305 | — | — | 0.15 | missing | errors.md — StructError property table | [scheduled bbox exact=2/13] headings outline in docs/reference/errors.md (t=1278, 2 atoms); better unscheduled exact=11/13: docs/reference/errors.md section #2 (11 atoms, too expensive at final margin) |
-| 5.4 | 6093 | — | — | 0.00 | missing | object() implementation | [unscheduled bbox exact=41/48] export body at src/structs/types.ts:298 (41 atoms, predecessor not scheduled: export at src/structs/types.ts:298) |
-| 5.5 | 6541 | — | — | 0.00 | missing | union() implementation | [unscheduled bbox exact=39/47] export body at src/structs/types.ts:522 (39 atoms, predecessor not scheduled: export at src/structs/types.ts:522) |
+| 5.4 | 6093 | — | — | 0.00 | missing | object() implementation | [unscheduled bbox exact=41/48] export body at src/structs/types.ts:298 body 299 (41 atoms, predecessor not scheduled: export at src/structs/types.ts:298) |
+| 5.5 | 6541 | — | — | 0.00 | missing | union() implementation | [unscheduled bbox exact=39/47] export body at src/structs/types.ts:522 body 525 (39 atoms, predecessor not scheduled: export at src/structs/types.ts:522) |
 
 ### wrong-slice / granularity
 
@@ -79,11 +79,11 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 | 1.1 | 96 | — | — | 0.00 | missing | Readme one-line lede | [scheduled same-file] headings outline in Readme.md (t=260, 12 atoms) |
 | 1.4 | 306 | — | — | 0.00 | missing | Readme runtime-errors paragraph | [scheduled same-file] headings outline in Readme.md (t=260, 12 atoms) |
 | 2.6 | 1168 | — | — | 0.76 | partial | docs/summary.md (the GitBook TOC) | [scheduled bbox exact=19/25] mdBook SUMMARY at docs/summary.md (t=1928, 19 atoms) |
-| 3.1 | 1448 | — | — | 0.00 | missing | structs/types.ts — all 24 type-factory names | [unscheduled bbox exact=0/25] export body at src/structs/types.ts:298 (41 atoms, predecessor not scheduled: export at src/structs/types.ts:298) |
+| 3.1 | 1448 | — | — | 0.00 | missing | structs/types.ts — all 24 type-factory names | [unscheduled bbox exact=0/25] export body at src/structs/types.ts:298 body 299 (41 atoms, predecessor not scheduled: export at src/structs/types.ts:298) |
 | 4.5 | 3875 | — | — | 0.18 | missing | core.md — `assert` / `create` / `validate` definitions | [scheduled bbox exact=6/34] headings outline in docs/reference/core.md (t=1609, 10 atoms); better unscheduled exact=7/34: docs/reference/core.md section #5 (7 atoms, too expensive at final margin) |
 | 4.6 | 4064 | — | — | 0.13 | missing | coercions.md — `defaulted` worked example | [scheduled bbox exact=2/15] headings outline in docs/reference/coercions.md (t=1323, 2 atoms); better unscheduled exact=11/15: docs/reference/coercions.md section #1 (11 atoms, too expensive at final margin) |
-| 5.1 | 4816 | — | — | 0.16 | missing | utils.ts run() — the central traversal generator | [scheduled bbox exact=12/67] export at src/utils.ts:130 (t=6734, 12 atoms); better unscheduled exact=47/67: export body at src/utils.ts:130 (47 atoms, too expensive at final margin) |
-| 5.7 | 7243 | — | — | 0.36 | missing | coerce() + defaulted() implementations | [scheduled bbox exact=8/55] export body at src/structs/coercions.ts:16 (t=3387, 8 atoms); better unscheduled exact=20/55: export body at src/structs/coercions.ts:38 (20 atoms, too expensive at final margin) |
+| 5.1 | 4816 | — | — | 0.16 | missing | utils.ts run() — the central traversal generator | [scheduled bbox exact=12/67] export at src/utils.ts:130 (t=6734, 12 atoms); better unscheduled exact=47/67: export body at src/utils.ts:130 body 141 (47 atoms, too expensive at final margin) |
+| 5.7 | 7243 | — | — | 0.36 | missing | coerce() + defaulted() implementations | [scheduled bbox exact=8/55] export body at src/structs/coercions.ts:16 body 21 (t=3387, 8 atoms); better unscheduled exact=20/55: export body at src/structs/coercions.ts:38 body 45 (20 atoms, too expensive at final margin) |
 | 6.5 | 9499 | — | — | 0.00 | missing | types.ts — `object` and `type` reference bodies | [unscheduled bbox exact=18/42] docs/reference/types.md section #23 (18 atoms, predecessor not scheduled: headings outline in docs/reference/types.md) |
 
 ### no discovered candidate
@@ -114,15 +114,15 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 | 2.3 | 694 | 1979 | +1285 | 1.00 | late | docs/ subtree listings | fs-only |
 | 2.5 | 851 | 260 | -591 | 1.00 | early | Readme section headings (locations only) | [scheduled bbox exact=6/7] headings outline in Readme.md (t=260, 11 atoms) |
 | 3.2 | 1533 | 2307 | +774 | 1.00 | late | structs/refinements.ts — all 7 refinement names | [scheduled bbox exact=7/7] export names surface in src/structs/refinements.ts (t=2307, 13 atoms) |
-| 3.3 | 1571 | 1047 | -524 | 1.00 | early | structs/coercions.ts — coerce / defaulted / trimmed | [scheduled bbox exact=0/3] export body at src/structs/coercions.ts:16 (t=3387, 8 atoms) |
+| 3.3 | 1571 | 1047 | -524 | 1.00 | early | structs/coercions.ts — coerce / defaulted / trimmed | [scheduled bbox exact=0/3] export body at src/structs/coercions.ts:16 body 21 (t=3387, 8 atoms) |
 | 3.4 | 1682 | 9870 | +8188 | 1.00 | late | structs/utilities.ts — assign/define/deprecated/dynamic/lazy/omit/partial/pick/struct | [scheduled bbox exact=8/9] export names surface in src/structs/utilities.ts (t=9870, 24 atoms) |
 | 3.5 | 1789 | 5838 | +4049 | 1.00 | late | struct.ts — Struct class + assert/create/is/mask/validate signatures | [scheduled bbox exact=6/11] export at src/struct.ts:10 (t=5838, 37 atoms) |
 | 3.6 | 1985 | 4613 | +2628 | 1.00 | late | struct.ts — public types (Context, Infer, Describe, Result, Coercer, Validator, Refiner) | [scheduled bbox exact=8/15] export names surface in src/struct.ts (t=4542, 12 atoms) |
 | 3.7 | 2170 | 505 | -1665 | 0.95 | early | error.ts — Failure type + StructError class signature | [scheduled bbox exact=10/19] export at src/error.ts:5 (t=414, 10 atoms) |
-| 5.2 | 5074 | 5462 | +388 | 0.89 | aligned | struct.ts validate() body | [scheduled bbox exact=15/27] export body at src/struct.ts:185 (t=5462, 15 atoms) |
-| 5.3 | 5610 | 9025 | +3415 | 0.90 | late | struct.ts Struct class constructor + 4 hook fields | [scheduled bbox exact=28/51] export body at src/struct.ts:10 (t=9025, 28 atoms) |
-| 5.6 | 6716 | 6026 | -690 | 0.89 | aligned | refine() implementation | [scheduled bbox exact=11/18] export body at src/structs/refinements.ts:146 (t=6026, 11 atoms) |
-| 5.8 | 7434 | 3003 | -4431 | 0.93 | early | error.ts StructError constructor | [scheduled bbox exact=12/14] export body at src/error.ts:25 (t=3003, 12 atoms) |
+| 5.2 | 5074 | 5462 | +388 | 0.89 | aligned | struct.ts validate() body | [scheduled bbox exact=15/27] export body at src/struct.ts:185 body 194 (t=5462, 15 atoms) |
+| 5.3 | 5610 | 9025 | +3415 | 0.90 | late | struct.ts Struct class constructor + 4 hook fields | [scheduled bbox exact=28/51] export body at src/struct.ts:10 body 30 (t=9025, 28 atoms) |
+| 5.6 | 6716 | 6026 | -690 | 0.89 | aligned | refine() implementation | [scheduled bbox exact=11/18] export body at src/structs/refinements.ts:146 body 151 (t=6026, 11 atoms) |
+| 5.8 | 7434 | 3003 | -4431 | 0.93 | early | error.ts StructError constructor | [scheduled bbox exact=12/14] export body at src/error.ts:25 body 36 (t=3003, 12 atoms) |
 | 6.7 | 9978 | 2208 | -7770 | 1.00 | early | Guide H2 headings — all 14 across guides 02-06 | [scheduled bbox exact=4/13] headings outline in docs/guides/02-validating-data.md (t=2208, 7 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
@@ -142,10 +142,10 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 | 422 | 1.00 | 422 | 8240 | export at src/utils.ts:334 |
 | 324 | 1.00 | 324 | 7559 | package scripts in package.json |
 | 269 | 0.89 | 301 | 9326 | package dependencies in package.json |
-| 254 | 1.00 | 254 | 8552 | export body at src/utils.ts:67 |
+| 254 | 1.00 | 254 | 8552 | export body at src/utils.ts:67 body 73 |
 | 249 | 0.65 | 381 | 886 | package identity in package.json |
 | 222 | 0.94 | 236 | 6296 | export names surface in src/utils.ts |
 | 109 | 1.00 | 109 | 9627 | export doc at src/error.ts:25 |
-| 107 | 1.00 | 107 | 4227 | export body at src/structs/refinements.ts:33 |
-| 107 | 1.00 | 107 | 4334 | export body at src/structs/refinements.ts:55 |
+| 107 | 1.00 | 107 | 4227 | export body at src/structs/refinements.ts:33 body 40 |
+| 107 | 1.00 | 107 | 4334 | export body at src/structs/refinements.ts:55 body 62 |
 | 1566 | — | — | — | +23 more rows |

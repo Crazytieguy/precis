@@ -201,7 +201,7 @@ impl WalkCtx {
 /// line verbatim; `ellipses` = emit a walker `…` marker at that line number
 /// (no text, no rendered line number — but a real line number so descendant
 /// batches can override it with real content).
-#[derive(Default, Debug)]
+#[derive(Default, Debug, Clone)]
 pub(crate) struct FileLines {
     pub full: Vec<usize>,
     pub ellipses: Vec<usize>,
@@ -330,11 +330,43 @@ pub(crate) fn build_file_spans(path: &Path, source: &str, lines: FileLines) -> V
 /// Append every 1-based row covered by `node` to `out`, skipping any
 /// trailing newline at the end of the node's text.
 pub(crate) fn extend_span(out: &mut Vec<usize>, node: Node, source: &str) {
-    let start = node.start_position().row;
+    push_rows(
+        out,
+        node.start_position().row,
+        node_end_row_trimmed(node, source),
+    );
+}
+
+/// 0-based final row covered by `node`, ignoring trailing newline bytes.
+pub(crate) fn node_end_row_trimmed(node: Node, source: &str) -> usize {
     let text = &source[node.start_byte()..node.end_byte()];
-    let internal_lines = text.trim_end_matches(['\n', '\r']).split('\n').count();
-    let span = internal_lines.max(1) - 1;
-    push_rows(out, start, start + span);
+    node.start_position().row
+        + text
+            .trim_end_matches(['\n', '\r'])
+            .split('\n')
+            .count()
+            .max(1)
+        - 1
+}
+
+/// Declared `name` field as source text, when the grammar exposes one.
+pub(crate) fn name_of<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    let name = node.child_by_field_name("name")?;
+    Some(&source[name.start_byte()..name.end_byte()])
+}
+
+/// Append non-blank rows from the inclusive 0-based range as 1-based lines.
+pub(crate) fn extend_nonblank_rows(
+    out: &mut Vec<usize>,
+    src_lines: &[&str],
+    start_row: usize,
+    end_row: usize,
+) {
+    for row in start_row..=end_row {
+        if src_lines.get(row).is_some_and(|t| !t.trim().is_empty()) {
+            out.push(row + 1);
+        }
+    }
 }
 
 /// 0-based row of a declaration's signature end: the row before its body
