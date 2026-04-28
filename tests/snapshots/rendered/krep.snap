@@ -27,6 +27,20 @@ README.md
     17→Just as skilled fishers identify patterns in the water to locate fish quickly, I designed "krep" to find patterns in text with maximum efficiency. The name is also short and easy to remember—perfect for a command-line utility that users might type hundreds of times per day.
     19→## Key Features
     …
+    21→- **Multiple search algorithms**: Boyer-Moore-Horspool, KMP, Aho-Corasick for optimal performance across different pattern types
+    22→- **Algorithm selection**: Automatic smart selection with optional `--algo` override for fine-tuning
+    23→- **SIMD acceleration**: Uses SSE4.2, AVX2, or NEON instructions when available for blazing-fast searches
+    24→- **Memory-mapped I/O**: Maximizes throughput when processing large files
+    25→- **Multi-threaded search**: Automatically parallelizes searches across available CPU cores
+    26→- **Regex support**: POSIX Extended Regular Expression searching
+    27→- **Multiple pattern search**: Efficiently search for multiple patterns simultaneously using Aho-Corasick
+    28→- **Recursive directory search**: Skip binary files and common non-code directories
+    29→- **Gitignore support**: Respect `.gitignore` files during recursive search with `--gitignore`
+    30→- **Stdin pattern input**: Read patterns from stdin with `-f -` for seamless pipeline integration
+    31→- **Colored output**: Highlights matches for better readability
+    32→- **UI/UX refresh (v2.2)**: New terminal color palette, clearer `-o` line index styling, and a redesigned help screen
+    33→- **Specialized algorithms**: Optimized handling for single-character and short patterns
+    34→- **Match Limiting**: Stop searching a file after a specific number of matching lines are found.
     36→## What's New in v2.2.0
     …
     38→- Refined terminal-first UI with a cleaner, more legible color theme
@@ -48,6 +62,18 @@ README.md
     …
     134→## Command Line Options
     …
+    136→- `-i, --ignore-case` Case-insensitive search
+    137→- `-c, --count` Count matching lines only
+    138→- `-o, --only-matching` Print only the matched parts of lines
+    142→- `-E, --extended-regexp` Use POSIX Extended Regular Expressions
+    144→- `-r, --recursive` Recursively search directories
+    145→- `--gitignore` Respect `.gitignore` files during recursive search
+    148→- `-s STRING, --string=STRING` Search in the provided STRING instead of file(s)
+    149→- `-w, --word-regexp` Match only whole words
+    150→- `--color[=WHEN]` Control color output ('always', 'never', 'auto')
+    151→- `--no-simd` Explicitly disable SIMD acceleration
+    152→- `-v, --version` Show version information
+    153→- `-h, --help` Show help message
     155→## Performance Benchmarks
     …
     171→### krep v2.1.0 vs ripgrep (warm cache, 7 runs average baseline)
@@ -159,87 +185,4 @@ krep.h
     14→#include <pthread.h>   // For mutex types (though no longer used for counting)
     15→#include <stdatomic.h> // For atomic types used in structs
     16→#include <ctype.h>     // For isalnum function
-    19→extern unsigned char lower_table[256];
-    …
-    21→// Forward declaration for Aho-Corasick trie structure
-    22→struct ac_trie;
-    23→typedef struct ac_trie ac_trie_t;
-    …
-    34→#define KREP_COLOR_RESET "\033[0m"
-    35→#define KREP_COLOR_FILENAME "\033[1;38;5;81m"   // Bright cyan
-    36→#define KREP_COLOR_SEPARATOR "\033[38;5;244m"   // Muted gray
-    37→#define KREP_COLOR_LINE_NUMBER "\033[1;38;5;111m" // Soft mint
-    38→#define KREP_COLOR_MATCH "\033[1;38;5;222m"     // Warm amber
-    39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
-    …
-    41→/* --- Help UI Colors --- */
-    42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
-    43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
-    44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
-    45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
-    …
-    49→typedef struct
-    50→{
-    51→   size_t start_offset; // Starting position of the match
-    52→   size_t end_offset;   // Ending position of the match (exclusive)
-    53→} match_position_t;
-    55→typedef struct match_result_t // Add the struct tag here
-    …
-    65→typedef struct search_params
-    …
-    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
-    99→                                  const char *text_start,
-    100→                                  size_t text_len,
-    101→                                  match_result_t *result);
-    104→typedef struct
-    …
-    125→typedef struct task
-    …
-    132→typedef struct
-    …
-    145→/* --- Thread Pool API --- */
-    146→thread_pool_t *thread_pool_init(int num_threads);
-    147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
-    148→void thread_pool_wait_all(thread_pool_t *pool);
-    149→void thread_pool_destroy(thread_pool_t *pool);
-    …
-    161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
-    …
-    170→int search_string(const search_params_t *params, const char *text);
-    …
-    180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
-    …
-    182→/* --- Match result management functions --- */
-    183→match_result_t *match_result_init(uint64_t initial_capacity);
-    184→bool match_result_add(match_result_t *result, size_t start_offset, size_t end_offset);
-    185→void match_result_free(match_result_t *result);
-    186→bool match_result_merge(match_result_t *dest, const match_result_t *src, size_t chunk_offset);
-    …
-    200→size_t print_matching_items(const char *filename, const char *text, size_t text_len, const match_result_t *result, const search_params_t *params);
-    …
-    202→// Print usage information
-    203→void print_usage(const char *program_name);
-    …
-    207→uint64_t boyer_moore_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
-    208→uint64_t kmp_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
-    209→uint64_t regex_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
-    210→uint64_t memchr_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
-    211→uint64_t memchr_short_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result); // New function for short patterns
-    …
-    230→/* --- Helper Functions --- */
-    231→bool memory_equals_case_insensitive(const unsigned char *s1, const unsigned char *s2, size_t n);
-    232→void prepare_bad_char_table(const unsigned char *pattern, size_t pattern_len, int *bad_char_table, bool case_sensitive);
-    233→search_func_t select_search_algorithm(const search_params_t *params);
-    234→const char *get_algorithm_name(search_func_t func);
-    …
-    278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
-    …
-    288→size_t find_line_end(const char *text, size_t text_len, size_t pos);
-    …
-    298→static inline bool is_word_char(char c)
-    299→{
-    …
-    312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
-    313→{
-    …
 test/

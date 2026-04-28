@@ -1,4 +1,4 @@
-scores: Sim=0.535 Reached=22/42 Early=3 Late=12 Partial=5 Missing=15 Used=8992/10000
+scores: Sim=0.534 Reached=22/42 Early=3 Late=12 Partial=5 Missing=15 Used=8992/10000
 
 ## Verdict
 
@@ -98,15 +98,15 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 | 1.4 | 146 | 878 | +732 | 1.00 | late | README — project priorities | [scheduled bbox exact=1/1] README.md section #0 (t=878, 1 atoms) |
 | 3.1 | 298 | 2269 | +1971 | 1.00 | late | Connection state-machine constants (STATE_*) | [scheduled bbox exact=6/6] c decl names surface in include/globals.h (t=2269, 6 atoms) |
 | 3.3 | 500 | 2773 | +2273 | 1.00 | late | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | [scheduled bbox exact=5/9] c decl names surface in include/globals.h (t=2269, 5 atoms) |
-| 3.8 | 1350 | 5221 | +3871 | 1.00 | late | packets.h — serverbound (cs_) function names | [scheduled bbox exact=21/22] c decl names surface in include/packets.h (t=5221, 21 atoms) |
-| 3.9 | 1545 | 5221 | +3676 | 1.00 | late | packets.h — clientbound (sc_) function names, part 1 | [scheduled bbox exact=19/20] c decl names surface in include/packets.h (t=5221, 19 atoms) |
-| 3.10 | 1712 | 5221 | +3509 | 1.00 | late | packets.h — clientbound (sc_) function names, part 2 | [scheduled bbox exact=17/17] c decl names surface in include/packets.h (t=5221, 17 atoms) |
-| 3.11 | 1987 | 4055 | +2068 | 1.00 | late | procedures.h — game-logic function names, part 1 | [scheduled bbox exact=26/26] c decl names surface in include/procedures.h (t=4055, 32 atoms) |
-| 3.12 | 2107 | 4055 | +1948 | 1.00 | late | procedures.h — game-logic function names, part 2 | [scheduled bbox exact=13/13] c decl names surface in include/procedures.h (t=4055, 18 atoms) |
+| 3.8 | 1350 | 5244 | +3894 | 1.00 | late | packets.h — serverbound (cs_) function names | [scheduled bbox exact=21/22] c decl names surface in include/packets.h (t=5244, 21 atoms) |
+| 3.9 | 1545 | 5244 | +3699 | 1.00 | late | packets.h — clientbound (sc_) function names, part 1 | [scheduled bbox exact=19/20] c decl names surface in include/packets.h (t=5244, 19 atoms) |
+| 3.10 | 1712 | 5244 | +3532 | 1.00 | late | packets.h — clientbound (sc_) function names, part 2 | [scheduled bbox exact=17/17] c decl names surface in include/packets.h (t=5244, 17 atoms) |
+| 3.11 | 1987 | 4078 | +2091 | 1.00 | late | procedures.h — game-logic function names, part 1 | [scheduled bbox exact=26/26] c decl names surface in include/procedures.h (t=4078, 32 atoms) |
+| 3.12 | 2107 | 4078 | +1971 | 1.00 | late | procedures.h — game-logic function names, part 2 | [scheduled bbox exact=13/13] c decl names surface in include/procedures.h (t=4078, 18 atoms) |
 | 3.14 | 2733 | 1393 | -1340 | 0.82 | early | tools.h — I/O + RNG function names (rest) | [scheduled bbox exact=23/28] c decl names surface in include/tools.h (t=1393, 28 atoms) |
-| 4.2 | 3378 | 6128 | +2750 | 0.95 | late | PlayerData struct — full | [scheduled bbox exact=39/41] c decl at include/globals.h:200 (t=6128, 39 atoms) |
+| 4.2 | 3378 | 6277 | +2899 | 0.95 | late | PlayerData struct — full | [scheduled bbox exact=39/41] c decl at include/globals.h:200 (t=6277, 39 atoms) |
 | 4.4 | 3629 | 2518 | -1111 | 0.92 | early | EntityData / EntityDataValue (entity metadata serialization) | [scheduled bbox exact=7/12] c decl at include/globals.h:260 (t=2518, 7 atoms) |
-| 4.6 | 4079 | 5579 | +1500 | 0.81 | late | src/globals.c — runtime defaults + literal MOTD/brand | [scheduled bbox exact=21/26] c decl names surface in src/globals.c (t=5579, 21 atoms) |
+| 4.6 | 4079 | 5683 | +1604 | 0.81 | late | src/globals.c — runtime defaults + literal MOTD/brand | [scheduled bbox exact=21/26] c decl names surface in src/globals.c (t=5683, 21 atoms) |
 | 4.8 | 5344 | 2659 | -2685 | 1.00 | early | globals.h — tickrate / RNG seeds / world-gen knobs | [scheduled bbox exact=22/40] c decl names surface in include/globals.h (t=2269, 22 atoms) |
 | 4.11 | 6273 | 7832 | +1559 | 0.80 | aligned | README — Configuration 'important options' bullets | [scheduled bbox exact=4/5] README.md section #3 (t=7832, 4 atoms) |
 | 4.12 | 6815 | 8902 | +2087 | 0.90 | late | README — Compilation section | [scheduled bbox exact=9/10] README.md section #2 (t=8902, 9 atoms) |
@@ -115,7 +115,7 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 
 | n | off_tokens_total | pattern |
 |--:|-----------------:|:--------|
-| 3 | 572 | README.md section #<n> |
+| 2 | 374 | README.md section #<n> |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
@@ -123,7 +123,6 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 |-----------:|----------:|-----:|--------:|:------|
 | 364 | 0.89 | 407 | 6930 | c decl names surface in src/worldgen.c |
 | 260 | 1.00 | 260 | 7412 | README.md section #4 |
-| 198 | 1.00 | 198 | 6523 | README.md section #5 |
 | 135 | 1.00 | 135 | 8083 | c includes in src/main.c |
 | 135 | 1.00 | 135 | 8218 | c includes in src/procedures.c |
 | 114 | 1.00 | 114 | 3239 | README.md section #1 |
@@ -131,4 +130,5 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=5, scheduled same-file
 | 103 | 1.00 | 103 | 7152 | c includes in src/worldgen.c |
 | 90 | 1.00 | 90 | 8992 | c decl body at src/varnum.c:43 |
 | 78 | 1.00 | 78 | 8374 | c decl body at src/worldgen.c:117 |
-| 669 | — | — | — | +11 more rows |
+| 78 | 1.00 | 78 | 8296 | c decl body at src/worldgen.c:13 |
+| 591 | — | — | — | +10 more rows |

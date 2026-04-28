@@ -1,4 +1,4 @@
-scores: Sim=0.567 Reached=18/43 Early=2 Late=11 Partial=7 Missing=18 Used=9905/10000
+scores: Sim=0.563 Reached=18/43 Early=2 Late=11 Partial=7 Missing=18 Used=10000/10000
 
 ## Verdict
 
@@ -62,33 +62,33 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8, fs-only=2
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 3.4 | 2423 | — | — | 0.00 | missing | README commands list (Use/Short for every cmd) | [unscheduled bbox exact=17/18] README.md section #5 (17 atoms, too expensive at final margin) |
 | 5.2 | 4047 | — | — | 0.00 | missing | Env-var bindings (TOCK_*) | [unscheduled bbox exact=15/15] go decl body at internal/config/config.go:80 (15 atoms, too expensive at final margin) |
-| 6.7 | 6277 | — | — | 0.03 | missing | File-repo Find body (filter logic) | [scheduled bbox exact=1/38] go decl names surface in internal/adapters/repositories/file/repository.go (t=6782, 2 atoms); better unscheduled exact=32/38: go decl body at internal/adapters/repositories/file/repository.go:27 (54 atoms, too expensive at final margin) |
+| 6.7 | 6277 | — | — | 0.03 | missing | File-repo Find body (filter logic) | [scheduled bbox exact=1/38] go decl names surface in internal/adapters/repositories/file/repository.go (t=6944, 2 atoms); better unscheduled exact=32/38: go decl body at internal/adapters/repositories/file/repository.go:27 (54 atoms, too expensive at final margin) |
 | 7.2 | 6956 | — | — | 0.00 | missing | cli/root.go — AddCommand block | [unscheduled bbox exact=15/16] go decl body at internal/adapters/cli/root.go:31 (15 atoms, too expensive at final margin) |
 | 7.3 | 7464 | — | — | 0.00 | missing | cli/root.go — PersistentPreRunE body | [unscheduled bbox exact=37/45] go decl body at internal/adapters/cli/root.go:31 (37 atoms, too expensive at final margin) |
-| 7.5 | 8014 | — | — | 0.00 | missing | Service Start body | [scheduled bbox exact=1/43] go decl names surface in internal/services/activity/service.go (t=8294, 1 atoms); better unscheduled exact=35/43: go decl body at internal/services/activity/service.go:24 (35 atoms, too expensive at final margin) |
+| 7.5 | 8014 | — | — | 0.00 | missing | Service Start body | [scheduled bbox exact=1/43] go decl names surface in internal/services/activity/service.go (t=8479, 1 atoms); better unscheduled exact=35/43: go decl body at internal/services/activity/service.go:24 (35 atoms, too expensive at final margin) |
 | 9.5 | 9600 | — | — | 0.00 | missing | calendar.go: handleKeyMsg case lines | [unscheduled bbox exact=9/9] go decl body at internal/adapters/cli/calendar.go:520 (45 atoms, too expensive at final margin) |
 
 ### wrong-slice / granularity
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.3 | 134 | — | — | 0.60 | partial | README feature lede (first half) | [scheduled bbox exact=3/5] README.md section #1 (t=4805, 3 atoms) |
+| 1.3 | 134 | — | — | 0.60 | partial | README feature lede (first half) | [scheduled bbox exact=3/5] README.md section #1 (t=4924, 3 atoms) |
 | 1.6 | 435 | — | — | 0.75 | partial | go.mod module + Go version + UI deps | [scheduled bbox exact=6/8] go module file go.mod (t=653, 6 atoms) |
-| 2.6 | 1858 | — | — | 0.43 | missing | models.Activity helper methods | [scheduled bbox exact=6/21] go decl names surface in internal/core/models/activity.go (t=1743, 6 atoms); better unscheduled exact=7/21: go decl body at internal/core/models/activity.go:31 (7 atoms, discovered unscheduled) |
-| 3.1 | 1926 | — | — | 0.67 | partial | main.go — entry point | [scheduled bbox exact=4/9] go package + imports in cmd/tock/main.go (t=1810, 4 atoms) |
-| 4.1 | 2510 | — | — | 0.75 | partial | Activity service constructor | [scheduled bbox exact=4/8] go decl at internal/services/activity/service.go:15 (t=8345, 4 atoms) |
-| 4.2 | 3040 | — | — | 0.14 | missing | File-format ParseActivity | [scheduled bbox exact=7/50] go decl names surface in internal/adapters/repositories/file/parser.go (t=5608, 7 atoms); better unscheduled exact=36/50: go decl body at internal/adapters/repositories/file/parser.go:20 (36 atoms, too expensive at final margin) |
-| 4.3 | 3173 | — | — | 0.10 | missing | File-format FormatActivity (writer side) | [scheduled bbox exact=2/10] go decl names surface in internal/adapters/repositories/file/parser.go (t=5608, 2 atoms); better unscheduled exact=6/10: go decl body at internal/adapters/repositories/file/parser.go:72 (6 atoms, too expensive at final margin) |
-| 6.1 | 4497 | — | — | 0.79 | partial | timeutil: Formatter type + display formats | [scheduled bbox exact=15/43] go decl names surface in internal/timeutil/timeutil.go (t=3633, 15 atoms) |
+| 2.6 | 1858 | — | — | 0.43 | missing | models.Activity helper methods | [scheduled bbox exact=6/21] go decl names surface in internal/core/models/activity.go (t=1786, 6 atoms); better unscheduled exact=7/21: go decl body at internal/core/models/activity.go:31 (7 atoms, too expensive at final margin) |
+| 3.1 | 1926 | — | — | 0.67 | partial | main.go — entry point | [scheduled bbox exact=4/9] go package + imports in cmd/tock/main.go (t=1871, 4 atoms) |
+| 4.1 | 2510 | — | — | 0.75 | partial | Activity service constructor | [scheduled bbox exact=4/8] go decl at internal/services/activity/service.go:15 (t=8530, 4 atoms) |
+| 4.2 | 3040 | — | — | 0.14 | missing | File-format ParseActivity | [scheduled bbox exact=7/50] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 7 atoms); better unscheduled exact=36/50: go decl body at internal/adapters/repositories/file/parser.go:20 (36 atoms, too expensive at final margin) |
+| 4.3 | 3173 | — | — | 0.10 | missing | File-format FormatActivity (writer side) | [scheduled bbox exact=2/10] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 2 atoms); better unscheduled exact=6/10: go decl body at internal/adapters/repositories/file/parser.go:72 (6 atoms, too expensive at final margin) |
+| 6.1 | 4497 | — | — | 0.79 | partial | timeutil: Formatter type + display formats | [scheduled bbox exact=15/43] go decl names surface in internal/timeutil/timeutil.go (t=3726, 15 atoms) |
 | 6.2 | 4861 | — | — | 0.00 | missing | TimeWarrior repo: type + filename + toTWInterval | [unscheduled bbox exact=0/35] go decl body at internal/adapters/repositories/timewarrior/repository.go:235 (41 atoms, predecessor not scheduled: go decl at internal/adapters/repositories/timewarrior/repository.go:235) |
-| 6.3 | 5074 | — | — | 0.75 | partial | Notes-repo: paths + frontmatter + signatures | [scheduled bbox exact=12/20] go decl names surface in internal/adapters/repositories/notes/repository.go (t=6380, 13 atoms) |
-| 6.5 | 5652 | — | — | 0.21 | missing | extra.CalculateEndTime | [scheduled bbox exact=6/33] go package + imports in internal/extra/extra.go (t=4506, 6 atoms); better unscheduled exact=18/33: go decl body at internal/extra/extra.go:11 (18 atoms, too expensive at final margin) |
-| 6.6 | 5880 | — | — | 0.20 | missing | File-repo: type + constructor | [scheduled bbox exact=4/25] go decl names surface in internal/adapters/repositories/file/repository.go (t=6782, 4 atoms); better unscheduled exact=14/25: go package + imports in internal/adapters/repositories/file/repository.go (14 atoms, too expensive at final margin) |
-| 7.1 | 6789 | — | — | 0.24 | missing | cli/root.go — context keys + NewRootCmd shell | [scheduled bbox exact=10/42] go decl names surface in internal/adapters/cli/root.go (t=7333, 10 atoms); better unscheduled exact=15/42: go package + imports in internal/adapters/cli/root.go (15 atoms, too expensive at final margin) |
-| 7.4 | 7530 | — | — | 0.17 | missing | cli/root.go — initRepository (file/timewarrior switch) | [scheduled bbox exact=2/6] go decl names surface in internal/adapters/cli/root.go (t=7333, 2 atoms); better unscheduled exact=4/6: go decl body at internal/adapters/cli/root.go:127 (4 atoms, discovered unscheduled) |
+| 6.3 | 5074 | — | — | 0.75 | partial | Notes-repo: paths + frontmatter + signatures | [scheduled bbox exact=12/20] go decl names surface in internal/adapters/repositories/notes/repository.go (t=6542, 13 atoms) |
+| 6.5 | 5652 | — | — | 0.21 | missing | extra.CalculateEndTime | [scheduled bbox exact=6/33] go package + imports in internal/extra/extra.go (t=4625, 6 atoms); better unscheduled exact=18/33: go decl body at internal/extra/extra.go:11 (18 atoms, too expensive at final margin) |
+| 6.6 | 5880 | — | — | 0.20 | missing | File-repo: type + constructor | [scheduled bbox exact=4/25] go decl names surface in internal/adapters/repositories/file/repository.go (t=6944, 4 atoms); better unscheduled exact=14/25: go package + imports in internal/adapters/repositories/file/repository.go (14 atoms, too expensive at final margin) |
+| 7.1 | 6789 | — | — | 0.24 | missing | cli/root.go — context keys + NewRootCmd shell | [scheduled bbox exact=10/42] go decl names surface in internal/adapters/cli/root.go (t=7518, 10 atoms); better unscheduled exact=15/42: go package + imports in internal/adapters/cli/root.go (15 atoms, too expensive at final margin) |
+| 7.4 | 7530 | — | — | 0.17 | missing | cli/root.go — initRepository (file/timewarrior switch) | [scheduled bbox exact=2/6] go decl names surface in internal/adapters/cli/root.go (t=7518, 2 atoms); better unscheduled exact=4/6: go decl body at internal/adapters/cli/root.go:127 (4 atoms, too expensive at final margin) |
 | 8.1 | 8456 | — | — | 0.00 | missing | start/stop/add flag declarations | [unscheduled bbox exact=9/21] go decl body at internal/adapters/cli/stop.go:14 (9 atoms, too expensive at final margin) |
-| 9.1 | 9185 | — | — | 0.48 | missing | report flag declarations + reportOptions | [scheduled bbox exact=10/21] go decl at internal/adapters/cli/report.go:20 (t=9031, 10 atoms) |
-| 9.3 | 9346 | — | — | 0.78 | partial | ICS generator — public fn signatures | [scheduled bbox exact=6/9] go decl names surface in internal/services/ics/generator.go (t=1051, 6 atoms) |
+| 9.1 | 9185 | — | — | 0.48 | missing | report flag declarations + reportOptions | [scheduled bbox exact=10/21] go decl at internal/adapters/cli/report.go:20 (t=9268, 10 atoms) |
+| 9.3 | 9346 | — | — | 0.78 | partial | ICS generator — public fn signatures | [scheduled bbox exact=6/9] go decl names surface in internal/services/ics/generator.go (t=1086, 6 atoms) |
 | 9.7 | 9955 | — | — | 0.00 | missing | Remaining commands' flag declarations | [unscheduled bbox exact=3/12] go decl body at internal/adapters/cli/last.go:21 (3 atoms, too expensive at final margin) |
 
 ### timing-only
@@ -97,18 +97,18 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8, fs-only=2
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.1 | 8 | 165 | +157 | 1.00 | late | README title | [scheduled bbox exact=1/1] README headline in README.md (t=165, 1 atoms) |
 | 1.4 | 178 | 300 | +122 | 1.00 | late | internal/ subpackage listing | fs-only |
-| 1.5 | 316 | 4805 | +4489 | 1.00 | late | README feature lede (rest) | [scheduled bbox exact=6/6] README.md section #1 (t=4805, 6 atoms) |
-| 2.1 | 690 | 1181 | +491 | 0.80 | late | Sentinel errors (whole file) | [scheduled bbox exact=6/10] go decl at internal/core/errors/errors.go:5 (t=1181, 6 atoms) |
-| 2.2 | 810 | 4924 | +4114 | 1.00 | late | models.Activity struct fields | [scheduled bbox exact=8/9] go decl at internal/core/models/activity.go:10 (t=4924, 8 atoms) |
-| 2.3 | 1062 | 7555 | +6493 | 0.85 | late | ports.ActivityResolver interface | [scheduled bbox exact=10/20] go decl at internal/core/ports/ports.go:11 (t=7555, 10 atoms) |
-| 2.4 | 1217 | 3119 | +1902 | 0.91 | late | ports.ActivityRepository + NotesRepository | [scheduled bbox exact=6/11] go decl at internal/core/ports/ports.go:22 (t=3119, 6 atoms) |
-| 2.5 | 1630 | 5135 | +3505 | 0.84 | late | dto request/filter/report types | [scheduled bbox exact=12/50] go decl names surface in internal/core/dto/activity_dto.go (t=1249, 12 atoms) |
-| 3.3 | 2188 | 5495 | +3307 | 1.00 | late | Cobra command factory locations across cli/ | [scheduled bbox exact=1/14] go decl at internal/adapters/cli/calendar.go:25 (t=8649, 1 atoms) |
-| 5.1 | 3722 | 5883 | +2161 | 0.87 | late | Config struct + sub-structs | [scheduled bbox exact=14/47] go decl names surface in internal/config/config.go (t=2058, 14 atoms) |
-| 6.4 | 5311 | 8294 | +2983 | 1.00 | late | Service method signatures | [scheduled bbox exact=9/9] go decl names surface in internal/services/activity/service.go (t=8294, 17 atoms) |
-| 8.2 | 8859 | 8868 | +9 | 0.94 | aligned | Theme/Styles fields + theme constructor names | [scheduled bbox exact=11/36] go decl names surface in internal/adapters/cli/theme.go (t=4140, 17 atoms) |
+| 1.5 | 316 | 4924 | +4608 | 1.00 | late | README feature lede (rest) | [scheduled bbox exact=6/6] README.md section #1 (t=4924, 6 atoms) |
+| 2.1 | 690 | 1216 | +526 | 0.80 | late | Sentinel errors (whole file) | [scheduled bbox exact=6/10] go decl at internal/core/errors/errors.go:5 (t=1216, 6 atoms) |
+| 2.2 | 810 | 5071 | +4261 | 1.00 | late | models.Activity struct fields | [scheduled bbox exact=8/9] go decl at internal/core/models/activity.go:10 (t=5071, 8 atoms) |
+| 2.3 | 1062 | 7740 | +6678 | 0.85 | late | ports.ActivityResolver interface | [scheduled bbox exact=10/20] go decl at internal/core/ports/ports.go:11 (t=7740, 10 atoms) |
+| 2.4 | 1217 | 3200 | +1983 | 0.91 | late | ports.ActivityRepository + NotesRepository | [scheduled bbox exact=6/11] go decl at internal/core/ports/ports.go:22 (t=3200, 6 atoms) |
+| 2.5 | 1630 | 5297 | +3667 | 0.84 | late | dto request/filter/report types | [scheduled bbox exact=12/50] go decl names surface in internal/core/dto/activity_dto.go (t=1292, 12 atoms) |
+| 3.3 | 2188 | 5657 | +3469 | 1.00 | late | Cobra command factory locations across cli/ | [scheduled bbox exact=1/14] go decl at internal/adapters/cli/calendar.go:25 (t=8859, 1 atoms) |
+| 5.1 | 3722 | 6045 | +2323 | 0.87 | late | Config struct + sub-structs | [scheduled bbox exact=14/47] go decl names surface in internal/config/config.go (t=2139, 14 atoms) |
+| 6.4 | 5311 | 8479 | +3168 | 1.00 | late | Service method signatures | [scheduled bbox exact=9/9] go decl names surface in internal/services/activity/service.go (t=8479, 17 atoms) |
+| 8.2 | 8859 | 9078 | +219 | 0.94 | aligned | Theme/Styles fields + theme constructor names | [scheduled bbox exact=11/36] go decl names surface in internal/adapters/cli/theme.go (t=4233, 17 atoms) |
 | 9.2 | 9203 | 788 | -8415 | 1.00 | early | Mocks directory listing | fs-only |
-| 9.6 | 9671 | 3284 | -6387 | 1.00 | early | calendar_sidebar.go: section renderer signatures | [scheduled bbox exact=4/4] go decl names surface in internal/adapters/cli/calendar_sidebar.go (t=3284, 7 atoms) |
+| 9.6 | 9671 | 3365 | -6306 | 1.00 | early | calendar_sidebar.go: section renderer signatures | [scheduled bbox exact=4/4] go decl names surface in internal/adapters/cli/calendar_sidebar.go (t=3365, 7 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -120,14 +120,14 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8, fs-only=2
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 281 | 0.96 | 294 | 8649 | go decl names surface in internal/adapters/cli/calendar.go |
-| 258 | 1.00 | 258 | 7838 | docs/commands.md section #0 |
-| 214 | 0.57 | 375 | 9590 | go decl names surface in internal/adapters/cli/interactive.go |
-| 195 | 0.94 | 208 | 6091 | go decl names surface in internal/adapters/cli/list_gui.go |
+| 281 | 0.96 | 294 | 8859 | go decl names surface in internal/adapters/cli/calendar.go |
+| 258 | 1.00 | 258 | 8023 | docs/commands.md section #0 |
+| 214 | 0.57 | 375 | 9885 | go decl names surface in internal/adapters/cli/interactive.go |
+| 195 | 0.94 | 208 | 6253 | go decl names surface in internal/adapters/cli/list_gui.go |
 | 182 | 1.00 | 182 | 970 | headings outline in docs/commands.md |
-| 157 | 0.59 | 264 | 7333 | go decl names surface in internal/adapters/cli/root.go |
-| 154 | 0.92 | 168 | 5495 | go decl names surface in internal/adapters/cli/ical.go |
-| 153 | 1.00 | 153 | 7069 | go decl at internal/adapters/cli/analyze.go:70 |
-| 152 | 0.92 | 165 | 5305 | go decl names surface in internal/adapters/cli/watch.go |
-| 114 | 0.68 | 168 | 6782 | go decl names surface in internal/adapters/repositories/file/repository.go |
-| 1818 | — | — | — | +24 more rows |
+| 157 | 0.59 | 264 | 7518 | go decl names surface in internal/adapters/cli/root.go |
+| 154 | 0.92 | 168 | 5657 | go decl names surface in internal/adapters/cli/ical.go |
+| 153 | 1.00 | 153 | 7231 | go decl at internal/adapters/cli/analyze.go:70 |
+| 152 | 0.92 | 165 | 5467 | go decl names surface in internal/adapters/cli/watch.go |
+| 114 | 0.68 | 168 | 6944 | go decl names surface in internal/adapters/repositories/file/repository.go |
+| 1650 | — | — | — | +22 more rows |

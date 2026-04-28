@@ -54,10 +54,16 @@ README.md
     146→A Map of event names to registered handler functions.
     148→### on
     …
+    150→Register an event handler for the given type.
     157→### off
     …
+    159→Remove an event handler for the given type.
+    160→If `handler` is omitted, all handlers of the given type are removed.
     167→### emit
     …
+    169→Invoke all handlers for the given type.
+    170→If present, `'*'` handlers are invoked after type-matched handlers.
+    172→Note: Manually firing '\*' handlers is not supported.
     179→## Contribute
     …
     181→First off, thanks for taking the time to contribute!

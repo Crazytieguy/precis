@@ -36,47 +36,12 @@ expression: rendered
     3→}
 CHANGELOG.md
     1→# Changelog
-    30→## [7.7.1](https://github.com/npm/node-semver/compare/v7.7.0...v7.7.1) (2025-02-03)
-    31→### Bug Fixes
-    32→* [`af761c0`](https://github.com/npm/node-semver/commit/af761c05bd53eef83b5e20f8b09360b0e70557dc) [#764](https://github.com/npm/node-semver/pull/764) inc: fully capture prerelease identifier (#764) (@wraithgar)
-    218→## 7.3.0
-    220→* Add `subset(r1, r2)` method to determine if `r1` range is entirely
-    221→  contained by `r2` range.
-    223→## 7.2.3
-    225→* Fix handling of `includePrelease` mode where version ranges like `1.0.0 -
-    226→  2.0.0` would include `3.0.0-pre` and not `1.0.0-pre`.
-    228→## 7.2.2
-    230→* Fix bug where `2.0.0-pre` would be included in `^1.0.0` if
-    231→  `includePrerelease` was set to true.
-    233→## 7.2.0
-    235→* Add `simplifyRange` method to attempt to generate a more human-readable
-    236→  range expression that is equivalent to a supplied range, for a given set
-    237→  of versions.
-    239→## 7.1.2
-    241→* Remove fancy lazy-loading logic, as it was causing problems for webpack
-    242→  users.
-    244→## 7.1.0
-    246→* Add `require('semver/preload')` to load the entire module without using
-    247→  lazy getter methods.
-    249→## 7.0.0
-    251→* Refactor module into separate files for better tree-shaking
-    252→* Drop support for very old node versions, use const/let, `=>` functions,
-    253→  and classes.
     255→## 6.3.0
     257→* Expose the token enum on the exports
-    259→## 6.2.0
-    261→* Coerce numbers to strings when passed to semver.coerce()
-    262→* Add `rtl` option to coerce from right to left
     264→## 6.1.3
     266→* Handle X-ranges properly in includePrerelease mode
     268→## 6.1.2
     270→* Do not throw when testing invalid version strings
-    272→## 6.1.1
-    274→* Add options support for semver.coerce()
-    275→* Handle undefined version passed to Range.test
-    277→## 6.1.0
-    279→* Add semver.compareBuild function
-    280→* Support `*` in semver.intersects
     290→## 5.7
     292→* Add `minVersion` method
     301→## 5.5
@@ -85,11 +50,6 @@ CHANGELOG.md
     307→* Add intersection checking
     309→## 5.3
     311→* Add `minSatisfying` method
-    313→## 5.2
-    315→* Add `prerelease(v)` that returns prerelease components
-    317→## 5.1
-    319→* Add Backus-Naur for ranges
-    320→* Remove excessively cute inspection methods
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
     3→# Contributing
@@ -114,10 +74,8 @@ CONTRIBUTING.md
     …
     44→### Dependencies
     …
-    46→It should be noted that our team does not accept third-party dependency updates/PRs.  If you submit a PR trying to update our dependencies we will close it with or without a reference to these contribution guidelines.
     48→### Tools/Automation
     …
-    50→Our core team is responsible for the maintenance of the tooling/automation in this project and we ask contributors to not make changes to these when contributing (e.g. `.github/*`, `.eslintrc.json`, `.licensee.json`).  Most of those files also have a header at the top to remind folks they are automatically generated.  Pull requests that alter these will not be accepted.
 LICENSE
 README.md
     1→semver(1) -- The semantic versioner for npm
@@ -140,29 +98,89 @@ README.md
     …
     184→### Prerelease Tags
     …
+    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
+    187→it will only be allowed to satisfy comparator sets if at least one
+    188→comparator with the same `[major, minor, patch]` tuple also has a
+    189→prerelease tag.
+    199→The purpose of this behavior is twofold.  First, prerelease versions
+    200→frequently are updated very quickly, and contain many breaking changes
+    201→that are (by the author's design) not yet fit for public consumption.
+    202→Therefore, by default, they are excluded from range-matching
+    203→semantics.
+    212→Note that this behavior can be suppressed (treating all prerelease
+    213→versions as if they were normal versions, for range-matching)
+    214→by setting the `includePrerelease` flag on the options
+    215→object to any
+    216→[functions](https://github.com/npm/node-semver#functions) that do
+    217→range matching.
     279→### Advanced Range Syntax
     …
+    281→Advanced range syntax desugars to primitive comparators in
+    282→deterministic ways.
+    284→Advanced ranges may be combined in the same way as primitive
+    285→comparators using white space or `||`.
     384→### Range Grammar
     …
     408→## Functions
     …
     453→### Comparison
     …
+    455→* `gt(v1, v2)`: `v1 > v2`
+    456→* `gte(v1, v2)`: `v1 >= v2`
+    457→* `lt(v1, v2)`: `v1 < v2`
+    458→* `lte(v1, v2)`: `v1 <= v2`
+    459→* `eq(v1, v2)`: `v1 == v2` This is true if they're logically equivalent,
+    460→  even if they're not the same string.  You already know how to
+    461→  compare strings.
+    462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+    463→* `cmp(v1, comparator, v2)`: Pass in a comparison string, and it'll call
+    464→  the corresponding function above.  `"==="` and `"!=="` do simple
+    465→  string comparison, but are included for completeness.  Throws if an
+    466→  invalid comparison string is provided.
+    467→* `compare(v1, v2)`: Return `0` if `v1 == v2`, or `1` if `v1` is greater, or `-1` if
+    468→  `v2` is greater.  Sorts in ascending order if passed to `Array.sort()`.
+    469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
+    470→  in descending order when passed to `Array.sort()`.
+    471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
+    472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
+    473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
+    474→* `diff(v1, v2)`: Returns the difference between two versions by the release type
+    475→  (`major`, `premajor`, `minor`, `preminor`, `patch`, `prepatch`, or `prerelease`),
+    476→  or null if the versions are the same.
     478→### Sorting
     …
-    480→* `sort(versions)`: Returns a sorted array of versions based on the `compareBuild` 
-    481→  function.
-    482→* `rsort(versions)`: The reverse of `sort`. Returns an array of versions based on
-    483→  the `compareBuild` function in descending order.
     485→### Comparators
     …
     487→* `intersects(comparator)`: Return true if the comparators intersect
     489→### Ranges
     …
+    491→* `validRange(range)`: Return the valid range or null if it's not valid.
+    492→* `satisfies(version, range)`: Return true if the version satisfies the
+    493→  range.
+    494→* `maxSatisfying(versions, range)`: Return the highest version in the list
+    495→  that satisfies the range, or `null` if none of them do.
+    496→* `minSatisfying(versions, range)`: Return the lowest version in the list
+    497→  that satisfies the range, or `null` if none of them do.
+    498→* `minVersion(range)`: Return the lowest version that can match
+    499→  the given range.
+    500→* `gtr(version, range)`: Return `true` if the version is greater than all the
+    501→  versions possible in the range.
+    502→* `ltr(version, range)`: Return `true` if the version is less than all the
+    503→  versions possible in the range.
+    508→* `intersects(range)`: Return true if any of the range comparators intersect.
+    517→* `subset(subRange, superRange)`: Return `true` if the `subRange` range is
+    518→  entirely contained by the `superRange` range.
+    528→If you want to know if a version satisfies or does not satisfy a
+    529→range, use the `satisfies(version, range)` function.
     531→### Coercion
     …
+    533→* `coerce(version, options)`: Coerces a string to semver if possible
     558→### Clean
     …
+    560→* `clean(version)`: Clean a string to be a valid semver if possible
+    562→This will return a cleaned and trimmed semver version. If the provided
+    563→version is not valid a null will be returned. This does not work for
+    564→ranges.
     576→## Constants
     …
     578→As a convenience, helper constants are exported to provide information about what `node-semver` supports:
@@ -170,11 +188,6 @@ README.md
     …
     600→### `SEMVER_SPEC_VERSION`
     …
-    602→2.0.0
-    604→```
-    605→const semver = require('semver');
-    607→console.log('We are currently using the semver specification version:', semver.SEMVER_SPEC_VERSION);
-    608→```
     610→## Exported Modules
     …
 SECURITY.md

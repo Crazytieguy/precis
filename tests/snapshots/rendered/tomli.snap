@@ -26,12 +26,6 @@ CHANGELOG.md
     21→## 2.2.0
     23→- Added
     24→  - mypyc generated binary wheels for common platforms
-    56→## 1.2.3
-    58→- Fixed
-    59→  - Backport: Allow lower case "t" and "z" in datetimes
-    105→## 1.0.4
-    107→- Performance
-    108→  - Minor boost (~4%)
 LICENSE
 LICENSE-HEADER
 MANIFEST.in
@@ -59,19 +53,6 @@ README.md
     30→<!-- mdformat-toc end -->
     32→## Intro<a name="intro"></a>
     …
-    34→Tomli is a Python library for parsing [TOML](https://toml.io).
-    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
-    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
-    38→A version of Tomli, the `tomllib` module,
-    39→was added to the standard library in Python 3.11
-    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
-    41→Tomli continues to provide a backport on PyPI for Python versions
-    42→where the standard library module is not available
-    43→and that have not yet reached their end-of-life.
-    45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
-    46→to generate binary wheels for most of the widely used platforms,
-    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
-    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
     50→## Installation<a name="installation"></a>
     …
     52→```bash
@@ -83,20 +64,43 @@ README.md
     …
     79→### Parse a TOML file<a name="parse-a-toml-file"></a>
     …
+    81→```python
+    82→import tomli
+    84→with open("path_to_file/conf.toml", "rb") as f:
+    85→    toml_dict = tomli.load(f)
+    86→```
+    88→The file must be opened in binary mode (with the `"rb"` flag).
+    89→Binary mode will enforce decoding the file as UTF-8 with universal newlines disabled,
+    90→both of which are required to correctly parse TOML.
     92→### Handle invalid TOML<a name="handle-invalid-toml"></a>
     …
     106→### Construct `decimal.Decimal`s from TOML floats<a name="construct-decimaldecimals-from-toml-floats"></a>
     …
+    117→Note that `decimal.Decimal` can be replaced with another callable that converts a TOML float from string to a Python type.
+    118→The `decimal.Decimal` is, however, a practical choice for use cases where float inaccuracies can not be tolerated.
+    120→Illegal types are `dict` and `list`, and their subtypes.
+    121→A `ValueError` will be raised if `parse_float` produces illegal types.
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
     152→## FAQ<a name="faq"></a>
     …
     154→### Why this parser?<a name="why-this-parser"></a>
     …
+    156→- it's lil'
+    157→- pure Python with zero dependencies
+    161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
+    162→- 100% spec compliant: passes all tests in
+    163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
+    164→  test suite
+    165→- thoroughly tested: 100% branch coverage
     167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
     …
+    169→No.
+    175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
     177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
     …
+    179→[Tomli-W](https://github.com/hukkin/tomli-w) is the write-only counterpart of Tomli, providing `dump` and `dumps` functions.
+    181→The core library does not include write capability, as most TOML use cases are read-only, and Tomli intends to be minimal.
     183→### How do TOML types map into Python types?<a name="how-do-toml-types-map-into-python-types"></a>
     …
     201→## Performance<a name="performance"></a>
@@ -161,20 +165,6 @@ src/
             6→__version__ = "2.4.0"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
             8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
-            19→TYPE_CHECKING = False
-            35→MAX_INLINE_NESTING: Final = sys.getrecursionlimit()
-            37→ASCII_CTRL: Final = frozenset(chr(i) for i in range(32)) | frozenset(chr(127))
-            41→ILLEGAL_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t")
-            42→ILLEGAL_MULTILINE_BASIC_STR_CHARS: Final = ASCII_CTRL - frozenset("\t\n")
-            44→ILLEGAL_LITERAL_STR_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-            45→ILLEGAL_MULTILINE_LITERAL_STR_CHARS: Final = ILLEGAL_MULTILINE_BASIC_STR_CHARS
-            47→ILLEGAL_COMMENT_CHARS: Final = ILLEGAL_BASIC_STR_CHARS
-            49→TOML_WS: Final = frozenset(" \t")
-            50→TOML_WS_AND_NEWLINE: Final = TOML_WS | frozenset("\n")
-            51→BARE_KEY_CHARS: Final = frozenset(
-            52→    "abcdefghijklmnopqrstuvwxyz" "ABCDEFGHIJKLMNOPQRSTUVWXYZ" "0123456789" "-_"
-            53→)
-            54→KEY_INITIAL_CHARS: Final = BARE_KEY_CHARS | frozenset("\"'")
         _re.py
             5→from __future__ import annotations
             7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
@@ -224,3 +214,4 @@ tomllib.md
     …
     20→### Steps to convert
     …
+    24→- Remove `__version__ = ...` line from `cpython:Lib/tomllib/__init__.py`

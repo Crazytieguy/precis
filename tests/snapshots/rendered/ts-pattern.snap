@@ -18,6 +18,7 @@ README.md
     42→Write **better** and **safer conditions**. Pattern matching lets you express complex conditions in a single, compact expression. Your code becomes **shorter** and **more readable**. Exhaustiveness checking ensures you haven’t forgotten **any possible case**.
     44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
     46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
+    51→- **Typesafe**, with helpful [type inference](#type-inference).
 benchmarks/
 docs/
     roadmap.md
@@ -217,9 +218,7 @@ src/
             194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
             195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
             196→export type NullishPattern = Chainable<
-            197→  GuardP<unknown, null | undefined>,
-            198→  never
-            199→>;
+            …
             201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
             …
             210→export type Chainable<p, omitted extends string = never> = p &

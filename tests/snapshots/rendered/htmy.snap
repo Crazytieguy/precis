@@ -18,6 +18,20 @@ README.md
     14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
     16→## Key features
     …
+    18→- **Async**-first, to let you make the best use of modern async tools.
+    19→- **Powerful**, React-like **context support**, so you can avoid prop-drilling.
+    20→- Sync and async **function components** with **decorator syntax**.
+    21→- All baseline **HTML** tags built-in.
+    22→- **Async HTML streaming** support for optimal TTFB (time to first byte).
+    23→- Support for **native HTML/XML** documents with dynamic formatting and **slot rendering**, **without custom syntax**.
+    24→- **Markdown** support with tools for customization.
+    25→- Async, JSON based **internationalization**.
+    26→- Built-in, easy to use `ErrorBoundary` component for graceful error handling.
+    27→- **Unopinionated**: use the backend, CSS, and JS frameworks of your choice, the way you want to use them.
+    28→- Everything is **easily customizable**, from the rendering engine to components, formatting and context management.
+    29→- Automatic and customizable **property-name conversion** from snake case to kebab case.
+    30→- **Compatible** with any other templating library through wrappers.
+    31→- **Fully-typed**.
     33→## Testimonials
     …
     47→## Support
@@ -41,6 +55,7 @@ README.md
     …
     299→### Sync or async?
     …
+    305→In all other cases, it's best to use sync components.
     307→## XSS prevention
     …
     316→## AI assistance
@@ -287,28 +302,19 @@ htmy/
         2→from typing import Any, Protocol, TypeAlias, TypeVar
     utils.py
         12→def join_components(
-        13→    components: ComponentSequence,
-        14→    separator: ComponentType,
-        15→    pad: bool = False,
-        16→) -> Generator[ComponentType, None, None]:
+        …
         42→def join(*items: str | None, separator: str = " ") -> str:
-        43→    """
-        44→    Joins the given strings with the given separator, skipping `None` values.
-        45→    """
-        46→    return separator.join(i for i in items if i)
+        …
         49→def is_htmy_component_type(comp: Any) -> TypeGuard[HTMYComponentType]:
-        50→    """Returns whether the given object is a `HTMYComponentType` (has a `htmy` method)."""
-        51→    # Lazy check, should be good enough.
-        52→    return hasattr(comp, "htmy")
+        …
         55→def is_component_type(comp: Any) -> TypeGuard[ComponentType]:
-        56→    """Returns whether the given object is a `ComponentType`."""
+        …
         62→def is_component_sequence(comp: Component) -> TypeGuard[ComponentSequence]:
-        63→    """Returns whether the given component is a `ComponentSequence`."""
-        64→    return isinstance(comp, (list, tuple))
+        …
         67→def as_component_sequence(comp: Component) -> ComponentSequence:
-        68→    """Returns the given component as a `ComponentSequence`."""
+        …
         73→def as_component_type(comp: Component) -> ComponentType:
-        74→    """Returns the given component as a `ComponentType` (not sequence)."""
+        …
 mkdocs.yaml
 pyproject.toml
 tests/

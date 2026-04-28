@@ -24,12 +24,35 @@ README.md
     1→# MCPHost 🤖
     3→A CLI host application that enables Large Language Models (LLMs) to interact with external tools through the Model Context Protocol (MCP). Currently supports Claude, OpenAI, Google Gemini, and Ollama models.
     5→Discuss the Project on [Discord](https://discord.gg/RqSS2NQVsY)
+    9→- [Overview](#overview-)
+    10→- [Features](#features-)
+    11→- [Requirements](#requirements-)
+    12→- [Environment Setup](#environment-setup-)
+    13→- [Installation](#installation-)
+    14→- [SDK Usage](#sdk-usage-)
+    35→- [Automation & Scripting](#automation--scripting-)
+    36→- [MCP Server Compatibility](#mcp-server-compatibility-)
+    37→- [Contributing](#contributing-)
+    38→- [License](#license-)
+    39→- [Acknowledgments](#acknowledgments-)
+    62→- Interactive conversations with multiple AI models
+    63→- **Non-interactive mode** for scripting and automation
+    64→- **Script mode** for executable YAML-based automation scripts
+    65→- Support for multiple concurrent MCP servers
+    66→- **Tool filtering** with `allowedTools` and `excludedTools` per server
+    67→- Dynamic tool discovery and integration
+    68→- Tool calling capabilities across all supported models
+    69→- Configurable MCP server locations and arguments
+    70→- Consistent command interface across model types
+    71→- Configurable message history window for context management
+    72→- **OAuth authentication** support for Anthropic (alternative to API keys)
+    73→- **Hooks system** for custom integrations and security policies
+    74→- **Environment variable substitution** in configs and scripts
+    75→- **Builtin servers** for common functionality (filesystem, bash, todo, http)
     124→## Installation 📦
     126→```bash
     127→go install github.com/mark3labs/mcphost@latest
     128→```
-    967→## MCP Server Compatibility 🔌
-    969→MCPHost can work with any MCP-compliant server. For examples and reference implementations, see the [MCP Servers Repository](https://github.com/modelcontextprotocol/servers).
     981→## License 📄
     983→This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 cmd/
@@ -101,14 +124,6 @@ internal/
     agent/
         agent.go
         factory.go
-            15→type SpinnerFunc func(message string, fn func() error) error
-            …
-            19→type AgentCreationOptions struct {
-            …
-            43→func CreateAgent(ctx context.Context, opts *AgentCreationOptions) (*Agent, error) {
-            …
-            76→func ParseModelName(modelString string) (provider, model string) {
-            …
         streaming.go
             19→func StreamWithCallback(ctx context.Context, reader *schema.StreamReader[*schema.Message], callback func(string)) (*schema.Message, error) {
             …
@@ -191,8 +206,6 @@ internal/
             …
             37→type Cost struct {
             …
-            48→// Limit represents the context and output limits for a model.
-            49→// Used during code generation to parse token limit data from models.dev.
             50→type Limit struct {
             51→	// Context is the maximum number of input tokens
             52→	Context int `json:"context"`
@@ -207,16 +220,8 @@ internal/
             …
         models_data.go
             4→package models
-            6→// ModelInfo represents information about a specific model
             7→type ModelInfo struct {
-            8→	ID          string
-            9→	Name        string
-            10→	Attachment  bool
-            11→	Reasoning   bool
-            12→	Temperature bool
-            13→	Cost        Cost
-            14→	Limit       Limit
-            15→}
+            …
             17→// Cost represents the pricing information for a model
             18→type Cost struct {
             19→	Input      float64
@@ -266,17 +271,6 @@ internal/
         connection_pool.go
         debug_logger.go
             1→package tools
-            7→type DebugLogger interface {
-            …
-            19→type SimpleDebugLogger struct {
-            20→	enabled bool
-            21→}
-            27→func NewSimpleDebugLogger(enabled bool) *SimpleDebugLogger {
-            28→	return &SimpleDebugLogger{enabled: enabled}
-            35→func (l *SimpleDebugLogger) LogDebug(message string) {
-            …
-            43→func (l *SimpleDebugLogger) IsDebugEnabled() bool {
-            44→	return l.enabled
         mcp.go
         mcp_test.go
     ui/

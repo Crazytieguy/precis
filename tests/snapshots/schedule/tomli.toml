@@ -1,7 +1,7 @@
 fixture = "tomli"
 budget = 10000
-cumulative_tokens = 9988
-batch_count = 184
+cumulative_tokens = 9933
+batch_count = 196
 
 [[batches]]
 position = 1
@@ -939,10 +939,82 @@ kind = "full"
 
 [[batches]]
 position = 32
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 19 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #19"
+cost_tokens = 6
+cum_tokens = 974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 169
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 13 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #13"
+cost_tokens = 8
+cum_tokens = 982
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 14 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #14"
+cost_tokens = 11
+cum_tokens = 993
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 18 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #18"
+cost_tokens = 14
+cum_tokens = 1007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #0"
 cost_tokens = 362
-cum_tokens = 1330
+cum_tokens = 1369
 
 [batches.content]
 kind = "lines"
@@ -972,11 +1044,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 33
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 12 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #12"
+position = 37
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 25 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #25"
 cost_tokens = 75
-cum_tokens = 1405
+cum_tokens = 1444
 
 [batches.content]
 kind = "lines"
@@ -1006,11 +1078,29 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 34
+position = 38
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 16 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #16"
+cost_tokens = 26
+cum_tokens = 1470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 71 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py:71"
 cost_tokens = 40
-cum_tokens = 1445
+cum_tokens = 1510
 
 [batches.content]
 kind = "lines"
@@ -1024,11 +1114,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 35
+position = 40
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #1"
 cost_tokens = 48
-cum_tokens = 1493
+cum_tokens = 1558
 
 [batches.content]
 kind = "lines"
@@ -1050,11 +1140,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 36
+position = 41
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler/profiler_script.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/tomli/profiler/profiler_script.py"
 cost_tokens = 70
-cum_tokens = 1563
+cum_tokens = 1628
 
 [batches.content]
 kind = "lines"
@@ -1092,11 +1182,29 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 37
+position = 42
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 23 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #23"
+cost_tokens = 31
+cum_tokens = 1659
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py"
 cost_tokens = 75
-cum_tokens = 1638
+cum_tokens = 1734
 
 [batches.content]
 kind = "lines"
@@ -1134,11 +1242,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 38
+position = 44
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #0"
 cost_tokens = 162
-cum_tokens = 1800
+cum_tokens = 1896
 
 [batches.content]
 kind = "lines"
@@ -1176,11 +1284,29 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 39
+position = 45
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 21 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #21"
+cost_tokens = 33
+cum_tokens = 1929
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 4 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #4"
 cost_tokens = 35
-cum_tokens = 1835
+cum_tokens = 1964
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1328,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 40
+position = 47
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py"
 cost_tokens = 151
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1308,11 +1434,11 @@ end = 117
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 11 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:11"
 cost_tokens = 0
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +1452,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 42
+position = 49
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 45 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:45"
 cost_tokens = 0
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1344,11 +1470,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 43
+position = 50
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 59 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:59"
 cost_tokens = 0
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1362,11 +1488,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 44
+position = 51
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 109 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:109"
 cost_tokens = 0
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1380,11 +1506,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 45
+position = 52
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 116 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:116"
 cost_tokens = 0
-cum_tokens = 1986
+cum_tokens = 2115
 
 [batches.content]
 kind = "lines"
@@ -1398,11 +1524,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 46
+position = 53
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 98 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:98"
 cost_tokens = 24
-cum_tokens = 2010
+cum_tokens = 2139
 
 [batches.content]
 kind = "lines"
@@ -1416,11 +1542,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 47
+position = 54
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 116 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:116"
 cost_tokens = 34
-cum_tokens = 2044
+cum_tokens = 2173
 
 [batches.content]
 kind = "lines"
@@ -1434,11 +1560,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 48
+position = 55
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 59 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:59"
 cost_tokens = 55
-cum_tokens = 2099
+cum_tokens = 2228
 
 [batches.content]
 kind = "lines"
@@ -1460,11 +1586,29 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 49
+position = 56
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 9 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #9"
+cost_tokens = 40
+cum_tokens = 2268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 120
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 53 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py:53"
 cost_tokens = 57
-cum_tokens = 2156
+cum_tokens = 2325
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1622,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 50
+position = 58
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #2"
 cost_tokens = 56
-cum_tokens = 2212
+cum_tokens = 2381
 
 [batches.content]
 kind = "lines"
@@ -1504,11 +1648,109 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 51
+position = 59
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 22 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #22"
+cost_tokens = 41
+cum_tokens = 2422
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #4"
+cost_tokens = 55
+cum_tokens = 2477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 81
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 84
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #5"
+cost_tokens = 56
+cum_tokens = 2533
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 88
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 8 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #8"
+cost_tokens = 56
+cum_tokens = 2589
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 117
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 17 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #17"
+cost_tokens = 51
+cum_tokens = 2640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 162
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 3 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #3"
 cost_tokens = 59
-cum_tokens = 2271
+cum_tokens = 2699
 
 [batches.content]
 kind = "lines"
@@ -1530,11 +1772,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 52
+position = 65
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py"
 cost_tokens = 83
-cum_tokens = 2354
+cum_tokens = 2782
 
 [batches.content]
 kind = "lines"
@@ -1572,11 +1814,29 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 53
+position = 66
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #3"
+cost_tokens = 28
+cum_tokens = 2810
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #1"
 cost_tokens = 288
-cum_tokens = 2642
+cum_tokens = 3098
 
 [batches.content]
 kind = "lines"
@@ -1614,11 +1874,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 54
+position = 68
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 8 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #8"
 cost_tokens = 42
-cum_tokens = 2684
+cum_tokens = 3140
 
 [batches.content]
 kind = "lines"
@@ -1640,11 +1900,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 55
+position = 69
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 14 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #14"
 cost_tokens = 30
-cum_tokens = 2714
+cum_tokens = 3170
 
 [batches.content]
 kind = "lines"
@@ -1666,11 +1926,47 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 56
+position = 70
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 10 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #10"
+cost_tokens = 71
+cum_tokens = 3241
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 125
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 2 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #2"
+cost_tokens = 34
+cum_tokens = 3275
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 251
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1740,11 +2036,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 57
+position = 73
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 19 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:19"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1758,11 +2054,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 58
+position = 74
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 35 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:35"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1776,11 +2072,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 59
+position = 75
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 37 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:37"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1794,11 +2090,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 60
+position = 76
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 41 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:41"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +2108,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 61
+position = 77
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 42 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:42"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +2126,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 62
+position = 78
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 44 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:44"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1848,11 +2144,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 63
+position = 79
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 45 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:45"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1866,11 +2162,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 64
+position = 80
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 47 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:47"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1884,11 +2180,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 65
+position = 81
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 49 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:49"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1902,11 +2198,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 66
+position = 82
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 50 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:50"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1920,11 +2216,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 67
+position = 83
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 54 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:54"
 cost_tokens = 0
-cum_tokens = 2965
+cum_tokens = 3526
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +2234,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 68
+position = 84
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 51 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:51"
 cost_tokens = 25
-cum_tokens = 2990
+cum_tokens = 3551
 
 [batches.content]
 kind = "lines"
@@ -1956,11 +2252,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 69
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 16 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #16"
 cost_tokens = 30
-cum_tokens = 3020
+cum_tokens = 3581
 
 [batches.content]
 kind = "lines"
@@ -1982,11 +2278,11 @@ end = 120
 kind = "full"
 
 [[batches]]
-position = 70
+position = 86
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 17 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #17"
 cost_tokens = 29
-cum_tokens = 3049
+cum_tokens = 3610
 
 [batches.content]
 kind = "lines"
@@ -2008,11 +2304,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 71
+position = 87
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 59 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py:59"
 cost_tokens = 108
-cum_tokens = 3157
+cum_tokens = 3718
 
 [batches.content]
 kind = "lines"
@@ -2026,11 +2322,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 72
+position = 88
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 13 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #13"
 cost_tokens = 36
-cum_tokens = 3193
+cum_tokens = 3754
 
 [batches.content]
 kind = "lines"
@@ -2052,11 +2348,29 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 73
+position = 89
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 20 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #20"
+cost_tokens = 73
+cum_tokens = 3827
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 171
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 98 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:98"
 cost_tokens = 72
-cum_tokens = 3265
+cum_tokens = 3899
 
 [batches.content]
 kind = "lines"
@@ -2070,11 +2384,29 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 74
+position = 91
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 15 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #15"
+cost_tokens = 75
+cum_tokens = 3974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 158
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py", start_line: 12 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py:12"
 cost_tokens = 120
-cum_tokens = 3385
+cum_tokens = 4094
 
 [batches.content]
 kind = "lines"
@@ -2088,11 +2420,37 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 75
+position = 93
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 11 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #11"
+cost_tokens = 92
+cum_tokens = 4186
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 131
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 135
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 150
-cum_tokens = 3535
+cum_tokens = 4336
 
 [batches.content]
 kind = "lines"
@@ -2138,11 +2496,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 76
+position = 95
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 109 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:109"
 cost_tokens = 83
-cum_tokens = 3618
+cum_tokens = 4419
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2514,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 77
+position = 96
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 21 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #21"
 cost_tokens = 32
-cum_tokens = 3650
+cum_tokens = 4451
 
 [batches.content]
 kind = "lines"
@@ -2182,11 +2540,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 78
+position = 97
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 23 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #23"
 cost_tokens = 31
-cum_tokens = 3681
+cum_tokens = 4482
 
 [batches.content]
 kind = "lines"
@@ -2208,11 +2566,37 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 79
+position = 98
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #7"
+cost_tokens = 98
+cum_tokens = 4580
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 108
+end = 110
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 112
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 46 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:46"
 cost_tokens = 161
-cum_tokens = 3842
+cum_tokens = 4741
 
 [batches.content]
 kind = "lines"
@@ -2226,11 +2610,53 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 80
+position = 100
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 12 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #12"
+cost_tokens = 103
+cum_tokens = 4844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 141
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 144
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
+start = 149
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 213
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2412,11 +2838,11 @@ end = 350
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 102
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 55 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:55"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2430,11 +2856,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 82
+position = 103
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 71 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:71"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2448,11 +2874,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 83
+position = 104
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 76 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:76"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2466,11 +2892,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 84
+position = 105
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 137 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:137"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2484,11 +2910,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 85
+position = 106
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 149 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:149"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2502,11 +2928,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 86
+position = 107
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 220 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:220"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2520,11 +2946,11 @@ end = 220
 kind = "full"
 
 [[batches]]
-position = 87
+position = 108
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 278 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:278"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2538,11 +2964,11 @@ end = 278
 kind = "full"
 
 [[batches]]
-position = 88
+position = 109
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 312 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:312"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2556,11 +2982,11 @@ end = 312
 kind = "full"
 
 [[batches]]
-position = 89
+position = 110
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 318 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:318"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2574,11 +3000,11 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 90
+position = 111
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 349 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:349"
 cost_tokens = 0
-cum_tokens = 4055
+cum_tokens = 5057
 
 [batches.content]
 kind = "lines"
@@ -2592,11 +3018,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 91
+position = 112
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 149 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:149"
 cost_tokens = 11
-cum_tokens = 4066
+cum_tokens = 5068
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +3036,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 92
+position = 113
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 220 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:220"
 cost_tokens = 14
-cum_tokens = 4080
+cum_tokens = 5082
 
 [batches.content]
 kind = "lines"
@@ -2628,11 +3054,11 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 93
+position = 114
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 137 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:137"
 cost_tokens = 13
-cum_tokens = 4093
+cum_tokens = 5095
 
 [batches.content]
 kind = "lines"
@@ -2646,11 +3072,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 94
+position = 115
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 71 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:71"
 cost_tokens = 32
-cum_tokens = 4125
+cum_tokens = 5127
 
 [batches.content]
 kind = "lines"
@@ -2664,11 +3090,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 95
+position = 116
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 327 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:327"
 cost_tokens = 64
-cum_tokens = 4189
+cum_tokens = 5191
 
 [batches.content]
 kind = "lines"
@@ -2682,11 +3108,11 @@ end = 334
 kind = "full"
 
 [[batches]]
-position = 96
+position = 117
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 220 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:220"
 cost_tokens = 80
-cum_tokens = 4269
+cum_tokens = 5271
 
 [batches.content]
 kind = "lines"
@@ -2700,11 +3126,11 @@ end = 227
 kind = "full"
 
 [[batches]]
-position = 97
+position = 118
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 76 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:76"
 cost_tokens = 105
-cum_tokens = 4374
+cum_tokens = 5376
 
 [batches.content]
 kind = "lines"
@@ -2726,11 +3152,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 98
+position = 119
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 318 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:318"
 cost_tokens = 51
-cum_tokens = 4425
+cum_tokens = 5427
 
 [batches.content]
 kind = "lines"
@@ -2744,11 +3170,11 @@ end = 324
 kind = "full"
 
 [[batches]]
-position = 99
+position = 120
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", chunk_index: 1 })'
 descriptor = "python method sigs #1 in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 205
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +3356,11 @@ end = 314
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 121
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 229 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:229"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +3374,11 @@ end = 229
 kind = "full"
 
 [[batches]]
-position = 101
+position = 122
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 233 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:233"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +3392,11 @@ end = 233
 kind = "full"
 
 [[batches]]
-position = 102
+position = 123
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 236 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:236"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +3410,11 @@ end = 236
 kind = "full"
 
 [[batches]]
-position = 103
+position = 124
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 241 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:241"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3428,11 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 104
+position = 125
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 249 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:249"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3446,11 @@ end = 249
 kind = "full"
 
 [[batches]]
-position = 105
+position = 126
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 260 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:260"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3464,11 @@ end = 260
 kind = "full"
 
 [[batches]]
-position = 106
+position = 127
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 300 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:300"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3482,11 @@ end = 300
 kind = "full"
 
 [[batches]]
-position = 107
+position = 128
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 313 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:313"
 cost_tokens = 0
-cum_tokens = 4630
+cum_tokens = 5632
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3500,11 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 108
+position = 129
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 279 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:279"
 cost_tokens = 13
-cum_tokens = 4643
+cum_tokens = 5645
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3518,11 @@ end = 280
 kind = "full"
 
 [[batches]]
-position = 109
+position = 130
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 233 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:233"
 cost_tokens = 13
-cum_tokens = 4656
+cum_tokens = 5658
 
 [batches.content]
 kind = "lines"
@@ -3110,11 +3536,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 110
+position = 131
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 283 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:283"
 cost_tokens = 44
-cum_tokens = 4700
+cum_tokens = 5702
 
 [batches.content]
 kind = "lines"
@@ -3128,11 +3554,11 @@ end = 288
 kind = "full"
 
 [[batches]]
-position = 111
+position = 132
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 279 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:279"
 cost_tokens = 15
-cum_tokens = 4715
+cum_tokens = 5717
 
 [batches.content]
 kind = "lines"
@@ -3146,11 +3572,11 @@ end = 281
 kind = "full"
 
 [[batches]]
-position = 112
+position = 133
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 313 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:313"
 cost_tokens = 19
-cum_tokens = 4734
+cum_tokens = 5736
 
 [batches.content]
 kind = "lines"
@@ -3164,11 +3590,11 @@ end = 315
 kind = "full"
 
 [[batches]]
-position = 113
+position = 134
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 87 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:87"
 cost_tokens = 81
-cum_tokens = 4815
+cum_tokens = 5817
 
 [batches.content]
 kind = "lines"
@@ -3182,11 +3608,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 114
+position = 135
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 229 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:229"
 cost_tokens = 38
-cum_tokens = 4853
+cum_tokens = 5855
 
 [batches.content]
 kind = "lines"
@@ -3200,11 +3626,11 @@ end = 231
 kind = "full"
 
 [[batches]]
-position = 115
+position = 136
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 236 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:236"
 cost_tokens = 38
-cum_tokens = 4891
+cum_tokens = 5893
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3644,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 116
+position = 137
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 57 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:57"
 cost_tokens = 158
-cum_tokens = 5049
+cum_tokens = 6051
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3662,29 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 117
+position = 138
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #7"
+cost_tokens = 51
+cum_tokens = 6102
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 137 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:137"
 cost_tokens = 99
-cum_tokens = 5148
+cum_tokens = 6201
 
 [batches.content]
 kind = "lines"
@@ -3254,11 +3698,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 118
+position = 140
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 349 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:349"
 cost_tokens = 100
-cum_tokens = 5248
+cum_tokens = 6301
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3716,11 @@ end = 358
 kind = "full"
 
 [[batches]]
-position = 119
+position = 141
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #5"
 cost_tokens = 100
-cum_tokens = 5348
+cum_tokens = 6401
 
 [batches.content]
 kind = "lines"
@@ -3298,11 +3742,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 120
+position = 142
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 18 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #18"
 cost_tokens = 48
-cum_tokens = 5396
+cum_tokens = 6449
 
 [batches.content]
 kind = "lines"
@@ -3324,11 +3768,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 121
+position = 143
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 26 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #26"
 cost_tokens = 38
-cum_tokens = 5434
+cum_tokens = 6487
 
 [batches.content]
 kind = "lines"
@@ -3350,11 +3794,53 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 122
+position = 144
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #5"
+cost_tokens = 63
+cum_tokens = 6550
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 33
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 241 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:241"
 cost_tokens = 64
-cum_tokens = 5498
+cum_tokens = 6614
 
 [batches.content]
 kind = "lines"
@@ -3368,11 +3854,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 123
+position = 146
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 12 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #12"
 cost_tokens = 67
-cum_tokens = 5565
+cum_tokens = 6681
 
 [batches.content]
 kind = "lines"
@@ -3394,11 +3880,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 124
+position = 147
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 24 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #24"
 cost_tokens = 46
-cum_tokens = 5611
+cum_tokens = 6727
 
 [batches.content]
 kind = "lines"
@@ -3420,45 +3906,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 125
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 10 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #10"
-cost_tokens = 72
-cum_tokens = 5683
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 177
-end = 177
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 126
+position = 148
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 22 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #22"
 cost_tokens = 49
-cum_tokens = 5732
+cum_tokens = 6776
 
 [batches.content]
 kind = "lines"
@@ -3480,11 +3932,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 127
+position = 149
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 26 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:26"
 cost_tokens = 239
-cum_tokens = 5971
+cum_tokens = 7015
 
 [batches.content]
 kind = "lines"
@@ -3498,11 +3950,37 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 128
+position = 150
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md section #4"
+cost_tokens = 71
+cum_tokens = 7086
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py", start_line: 17 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_re.py:17"
 cost_tokens = 106
-cum_tokens = 6077
+cum_tokens = 7192
 
 [batches.content]
 kind = "lines"
@@ -3516,11 +3994,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 129
+position = 152
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 6 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #6"
 cost_tokens = 125
-cum_tokens = 6202
+cum_tokens = 7317
 
 [batches.content]
 kind = "lines"
@@ -3542,11 +4020,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 130
+position = 153
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 327 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:327"
 cost_tokens = 153
-cum_tokens = 6355
+cum_tokens = 7470
 
 [batches.content]
 kind = "lines"
@@ -3568,11 +4046,11 @@ end = 346
 kind = "full"
 
 [[batches]]
-position = 131
+position = 154
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 29 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #29"
 cost_tokens = 48
-cum_tokens = 6403
+cum_tokens = 7518
 
 [batches.content]
 kind = "lines"
@@ -3594,11 +4072,11 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 132
+position = 155
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", chunk_index: 2 })'
 descriptor = "python decl names surface #2 in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 241
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3796,11 +4274,11 @@ end = 596
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 156
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 361 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:361"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3814,11 +4292,11 @@ end = 361
 kind = "full"
 
 [[batches]]
-position = 134
+position = 157
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 370 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:370"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3832,11 +4310,11 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 135
+position = 158
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 390 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:390"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3850,11 +4328,11 @@ end = 390
 kind = "full"
 
 [[batches]]
-position = 136
+position = 159
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 463 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:463"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3868,11 +4346,11 @@ end = 463
 kind = "full"
 
 [[batches]]
-position = 137
+position = 160
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 481 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:481"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3886,11 +4364,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 138
+position = 161
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 497 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:497"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3904,11 +4382,11 @@ end = 497
 kind = "full"
 
 [[batches]]
-position = 139
+position = 162
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 595 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:595"
 cost_tokens = 0
-cum_tokens = 6644
+cum_tokens = 7759
 
 [batches.content]
 kind = "lines"
@@ -3922,11 +4400,11 @@ end = 595
 kind = "full"
 
 [[batches]]
-position = 140
+position = 163
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 564 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:564"
 cost_tokens = 30
-cum_tokens = 6674
+cum_tokens = 7789
 
 [batches.content]
 kind = "lines"
@@ -3940,11 +4418,11 @@ end = 566
 kind = "full"
 
 [[batches]]
-position = 141
+position = 164
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 413 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:413"
 cost_tokens = 33
-cum_tokens = 6707
+cum_tokens = 7822
 
 [batches.content]
 kind = "lines"
@@ -3958,11 +4436,11 @@ end = 415
 kind = "full"
 
 [[batches]]
-position = 142
+position = 165
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 502 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:502"
 cost_tokens = 35
-cum_tokens = 6742
+cum_tokens = 7857
 
 [batches.content]
 kind = "lines"
@@ -3976,11 +4454,11 @@ end = 504
 kind = "full"
 
 [[batches]]
-position = 143
+position = 166
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 447 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:447"
 cost_tokens = 36
-cum_tokens = 6778
+cum_tokens = 7893
 
 [batches.content]
 kind = "lines"
@@ -3994,11 +4472,11 @@ end = 449
 kind = "full"
 
 [[batches]]
-position = 144
+position = 167
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 595 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:595"
 cost_tokens = 15
-cum_tokens = 6793
+cum_tokens = 7908
 
 [batches.content]
 kind = "lines"
@@ -4012,11 +4490,11 @@ end = 596
 kind = "full"
 
 [[batches]]
-position = 145
+position = 168
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 528 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:528"
 cost_tokens = 37
-cum_tokens = 6830
+cum_tokens = 7945
 
 [batches.content]
 kind = "lines"
@@ -4030,11 +4508,11 @@ end = 530
 kind = "full"
 
 [[batches]]
-position = 146
+position = 169
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 497 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:497"
 cost_tokens = 24
-cum_tokens = 6854
+cum_tokens = 7969
 
 [batches.content]
 kind = "lines"
@@ -4048,11 +4526,11 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 147
+position = 170
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 361 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:361"
 cost_tokens = 70
-cum_tokens = 6924
+cum_tokens = 8039
 
 [batches.content]
 kind = "lines"
@@ -4066,11 +4544,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 148
+position = 171
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 447 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:447"
 cost_tokens = 150
-cum_tokens = 7074
+cum_tokens = 8189
 
 [batches.content]
 kind = "lines"
@@ -4084,11 +4562,11 @@ end = 460
 kind = "full"
 
 [[batches]]
-position = 149
+position = 172
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark'"
 cost_tokens = 20
-cum_tokens = 7094
+cum_tokens = 8209
 
 [batches.content]
 kind = "fs"
@@ -4098,11 +4576,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark"
 entries = ["LICENSE", "README.md", "data.toml", "requirements.txt", "run.py"]
 
 [[batches]]
-position = 150
+position = 173
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/README.md" })'
 descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/README.md"
 cost_tokens = 7
-cum_tokens = 7101
+cum_tokens = 8216
 
 [batches.content]
 kind = "lines"
@@ -4116,11 +4594,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 151
+position = 174
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 25 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #25"
 cost_tokens = 55
-cum_tokens = 7156
+cum_tokens = 8271
 
 [batches.content]
 kind = "lines"
@@ -4142,11 +4620,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 152
+position = 175
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", chunk_index: 3 })'
 descriptor = "python decl names surface #3 in /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
 cost_tokens = 166
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +4742,11 @@ end = 765
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 176
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 599 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:599"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4282,11 +4760,11 @@ end = 599
 kind = "full"
 
 [[batches]]
-position = 154
+position = 177
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 612 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:612"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4300,11 +4778,11 @@ end = 612
 kind = "full"
 
 [[batches]]
-position = 155
+position = 178
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 621 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:621"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4318,11 +4796,11 @@ end = 621
 kind = "full"
 
 [[batches]]
-position = 156
+position = 179
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 652 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:652"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4336,11 +4814,11 @@ end = 652
 kind = "full"
 
 [[batches]]
-position = 157
+position = 180
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 760 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:760"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4354,11 +4832,11 @@ end = 760
 kind = "full"
 
 [[batches]]
-position = 158
+position = 181
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 764 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:764"
 cost_tokens = 0
-cum_tokens = 7322
+cum_tokens = 8437
 
 [batches.content]
 kind = "lines"
@@ -4372,11 +4850,11 @@ end = 764
 kind = "full"
 
 [[batches]]
-position = 159
+position = 182
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 684 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:684"
 cost_tokens = 34
-cum_tokens = 7356
+cum_tokens = 8471
 
 [batches.content]
 kind = "lines"
@@ -4390,11 +4868,11 @@ end = 686
 kind = "full"
 
 [[batches]]
-position = 160
+position = 183
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 760 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:760"
 cost_tokens = 27
-cum_tokens = 7383
+cum_tokens = 8498
 
 [batches.content]
 kind = "lines"
@@ -4408,11 +4886,11 @@ end = 761
 kind = "full"
 
 [[batches]]
-position = 161
+position = 184
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 764 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:764"
 cost_tokens = 88
-cum_tokens = 7471
+cum_tokens = 8586
 
 [batches.content]
 kind = "lines"
@@ -4434,11 +4912,11 @@ end = 771
 kind = "full"
 
 [[batches]]
-position = 162
+position = 185
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 612 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:612"
 cost_tokens = 90
-cum_tokens = 7561
+cum_tokens = 8676
 
 [batches.content]
 kind = "lines"
@@ -4452,11 +4930,11 @@ end = 618
 kind = "full"
 
 [[batches]]
-position = 163
+position = 186
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 764 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:764"
 cost_tokens = 122
-cum_tokens = 7683
+cum_tokens = 8798
 
 [batches.content]
 kind = "lines"
@@ -4486,11 +4964,11 @@ end = 782
 kind = "full"
 
 [[batches]]
-position = 164
+position = 187
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 599 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:599"
 cost_tokens = 148
-cum_tokens = 7831
+cum_tokens = 8946
 
 [batches.content]
 kind = "lines"
@@ -4504,11 +4982,11 @@ end = 609
 kind = "full"
 
 [[batches]]
-position = 165
+position = 188
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 481 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:481"
 cost_tokens = 165
-cum_tokens = 7996
+cum_tokens = 9111
 
 [batches.content]
 kind = "lines"
@@ -4522,11 +5000,11 @@ end = 494
 kind = "full"
 
 [[batches]]
-position = 166
+position = 189
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 15 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #15"
 cost_tokens = 80
-cum_tokens = 8076
+cum_tokens = 9191
 
 [batches.content]
 kind = "lines"
@@ -4548,11 +5026,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 167
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 5 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #5"
+position = 190
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #6"
 cost_tokens = 104
-cum_tokens = 8180
+cum_tokens = 9295
 
 [batches.content]
 kind = "lines"
@@ -4590,11 +5068,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 168
+position = 191
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 28 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #28"
 cost_tokens = 56
-cum_tokens = 8236
+cum_tokens = 9351
 
 [batches.content]
 kind = "lines"
@@ -4616,11 +5094,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 169
+position = 192
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 463 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:463"
 cost_tokens = 184
-cum_tokens = 8420
+cum_tokens = 9535
 
 [batches.content]
 kind = "lines"
@@ -4634,53 +5112,11 @@ end = 478
 kind = "full"
 
 [[batches]]
-position = 170
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 4 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #4"
-cost_tokens = 111
-cum_tokens = 8531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 81
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 84
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 88
-end = 90
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
+position = 193
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 30 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #30"
 cost_tokens = 58
-cum_tokens = 8589
+cum_tokens = 9593
 
 [batches.content]
 kind = "lines"
@@ -4702,11 +5138,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 172
+position = 194
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/run.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/run.py"
 cost_tokens = 25
-cum_tokens = 8614
+cum_tokens = 9618
 
 [batches.content]
 kind = "lines"
@@ -4744,11 +5180,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 173
+position = 195
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/run.py", start_line: 37 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/tomli/benchmark/run.py:37"
 cost_tokens = 0
-cum_tokens = 8614
+cum_tokens = 9618
 
 [batches.content]
 kind = "lines"
@@ -4762,11 +5198,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 174
+position = 196
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 20 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py:20"
 cost_tokens = 315
-cum_tokens = 8929
+cum_tokens = 9933
 
 [batches.content]
 kind = "lines"
@@ -4799,250 +5235,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py"
 start = 41
 end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 175
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 300 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:300"
-cost_tokens = 109
-cum_tokens = 9038
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
-start = 301
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 176
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 9 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md section #9"
-cost_tokens = 112
-cum_tokens = 9150
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 169
-end = 169
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 171
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 10 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #10"
-cost_tokens = 127
-cum_tokens = 9277
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 77
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests'"
-cost_tokens = 30
-cum_tokens = 9307
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests"
-entries = ["__init__.py", "burntsushi.py", "data", "test_data.py", "test_error.py", "test_misc.py"]
-
-[[batches]]
-position = 179
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/__init__.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/tomli/tests/__init__.py"
-cost_tokens = 24
-cum_tokens = 9331
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/__init__.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/__init__.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 180
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data'"
-cost_tokens = 6
-cum_tokens = 9337
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests/data"
-entries = ["invalid", "valid"]
-
-[[batches]]
-position = 181
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 7 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #7"
-cost_tokens = 164
-cum_tokens = 9501
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 46
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 11 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md section #11"
-cost_tokens = 130
-cum_tokens = 9631
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md"
-start = 86
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 283 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:283"
-cost_tokens = 124
-cum_tokens = 9755
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
-start = 289
-end = 298
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py", start_line: 370 })'
-descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py:370"
-cost_tokens = 233
-cum_tokens = 9988
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
-start = 371
-end = 373
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
-start = 375
-end = 381
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_parser.py"
-start = 383
-end = 387
 
 [batches.content.spans.render]
 kind = "full"

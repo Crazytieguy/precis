@@ -61,6 +61,16 @@ README.md
     34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
     36→## Features
     …
+    39→- **File Attachments**: Share files securely with your notes.
+    40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
+    42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
+    43→- **i18n Support**: Available in multiple languages.
+    44→- **Authentication**: Optional email/password authentication to create notes.
+    45→- **Dark Mode**: A dark theme for late-night note sharing.
+    46→- **Responsive Design**: Works on all devices, from desktops to mobile phones.
+    47→- **Open Source**: The source code is available under the Apache 2.0 License.
+    48→- **Self-Hostable**: Run your instance of Enclosed for private note sharing.
+    49→- **CLI**: A command-line interface for creating notes from the terminal.
     52→## Self host
     …
     54→### Try it with Docker
@@ -205,17 +215,8 @@ packages/
                     …
                 config.usecases.ts
                     3→export const {
-                    4→  get: getInstanceUrl,
-                    5→  set: setInstanceUrl,
-                    6→} = createConfigBindings({ key: 'instance-url' });
+                    …
             create-note/
-                create-note.command.ts
-                    13→export const createNoteCommand = defineCommand({
-                    …
-                create-note.usecases.test.ts
-                create-note.usecases.ts
-                    3→export async function getNoteContent({
-                    …
             files/
                 files.services.test.ts
                 files.services.ts
@@ -274,17 +275,7 @@ packages/
                 8→export const {
                 …
             node/
-                crypto.node.usecases.test.ts
-                crypto.node.usecases.ts
-                    5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
-                    …
-                encryption-algorithms/
             web/
-                crypto.web.usecases.test.ts
-                crypto.web.usecases.ts
-                    1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
-                    …
-                encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
@@ -377,10 +368,6 @@ packages/
         package.json
         src/
             api/
-                api.client.ts
-                api.constants.ts
-                api.models.test.ts
-                api.models.ts
             crypto/
             files/
                 files.models.ts

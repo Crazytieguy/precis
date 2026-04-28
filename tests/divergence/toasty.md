@@ -4,10 +4,10 @@ scores: Sim=0.342 Reached=7/55 Early=4 Late=3 Partial=11 Missing=37 Used=9934/10
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 11 ranking-recoverable (w×gap=3.16), 27 wrong-slice/granularity (w×gap=3.19), 0 no-discovered (w×gap=0.00)
-Secondary intervention: free final budget for 9 too-expensive candidates
-Loss reasons: 2 predecessor-gated, 9 too-expensive, 0 discovered-unscheduled
-Top rows: 3.2, 1.1, 3.5, 3.6, 2.1, ...
+Evidence: 9 ranking-recoverable (w×gap=2.38), 29 wrong-slice/granularity (w×gap=3.97), 0 no-discovered (w×gap=0.00)
+Secondary intervention: free final budget for 7 too-expensive candidates
+Loss reasons: 2 predecessor-gated, 7 too-expensive, 0 discovered-unscheduled
+Top rows: 3.2, 3.3, 1.1, 3.4, 3.5, ...
 Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
 
 ## Top opportunities
@@ -16,8 +16,8 @@ _`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit)
 
 | intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
 |:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| split wrong-slice walker batches | 27 | 3.19 | 8/17/27 | nearby candidates have low exact atom overlap | 3.2, 1.1, 3.5, 3.6, 2.1, ... |
-| free final budget / demote late waste | 9 | 3.08 | 6/7/9 | high-overlap candidates exceed final remaining budget, exact total=109/123 | 2.3, 2.4, 2.5, 3.3, 3.4, ... |
+| split wrong-slice walker batches | 29 | 3.97 | 10/19/29 | nearby candidates have low exact atom overlap | 3.2, 3.3, 1.1, 3.4, 3.5, ... |
+| free final budget / demote late waste | 7 | 2.30 | 4/5/7 | high-overlap candidates exceed final remaining budget, exact total=85/95 | 2.3, 2.4, 2.5, 4.2, 6.1, ... |
 | promote headings outline in docs/architecture/query-engine.md | 1 | 0.05 | 0/1/1 | 0 files, exact total=18/19 | 6.6 |
 | promote headings outline in docs/CHANGE_GUIDE.md | 1 | 0.02 | 0/0/1 | 0 files, exact total=10/12 | 8.5 |
 
@@ -27,8 +27,8 @@ Tiers: 1=4/6 reached, 1 partial, 1 missing, avg=0.77; 2=0/5 reached, 2 partial, 
 
 | diagnosis | rows | missing | partial | timing | likely lever |
 |:----------|-----:|--------:|--------:|-------:|:-------------|
-| ranking-recoverable | 11 | 11 | 0 | 0 | value/ranking |
-| wrong-slice / granularity | 27 | 16 | 11 | 0 | walker granularity / wrong slice |
+| ranking-recoverable | 9 | 9 | 0 | 0 | value/ranking |
+| wrong-slice / granularity | 29 | 18 | 11 | 0 | walker granularity / wrong slice |
 | fs/listing | 10 | 10 | 0 | 0 | filesystem/listing value |
 | timing-only | 7 | 0 | 0 | 7 | usually no code change |
 
@@ -37,7 +37,7 @@ Tiers: 1=4/6 reached, 1 partial, 1 missing, avg=0.77; 2=0/5 reached, 2 partial, 
 | loss reason | rows | w(t)×gap | likely lever |
 |:------------|-----:|---------:|:-------------|
 | predecessor not scheduled | 2 | 0.07 | promote predecessor |
-| too expensive at final margin | 9 | 3.08 | free final budget |
+| too expensive at final margin | 7 | 2.30 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=28, unscheduled bbox=10, scheduled same-file=1, fs-only=16
@@ -62,11 +62,9 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=10, scheduled same-fil
 | 2.3 | 729 | — | — | 0.00 | missing | Hello-toasty: Db::builder + connect | [unscheduled bbox exact=12/15] entry item at examples/hello-toasty/src/main.rs:34 (12 atoms, too expensive at final margin) |
 | 2.4 | 830 | — | — | 0.00 | missing | Hello-toasty: User::create + get_by_id + get_by_email | [unscheduled bbox exact=7/7] entry item at examples/hello-toasty/src/main.rs:34 (18 atoms, too expensive at final margin) |
 | 2.5 | 1071 | — | — | 0.00 | missing | Hello-toasty: relation use + delete + create_many + nested create | [unscheduled bbox exact=16/16] entry item at examples/hello-toasty/src/main.rs:34 (27 atoms, too expensive at final margin) |
-| 3.3 | 1641 | — | — | 0.06 | missing | ARCHITECTURE.md: toasty crate role | [scheduled bbox exact=2/16] headings outline in docs/ARCHITECTURE.md (t=4241, 2 atoms); better unscheduled exact=13/16: docs/ARCHITECTURE.md section #2 (13 atoms, too expensive at final margin) |
-| 3.4 | 1823 | — | — | 0.08 | missing | ARCHITECTURE.md: toasty-core crate role | [scheduled bbox exact=2/12] headings outline in docs/ARCHITECTURE.md (t=4241, 2 atoms); better unscheduled exact=11/12: docs/ARCHITECTURE.md section #3 (11 atoms, too expensive at final margin) |
 | 4.2 | 2901 | — | — | 0.07 | missing | Db: struct + every public fn signature | [scheduled bbox exact=1/15] pub-item names surface in crates/toasty/src/db.rs (t=7295, 2 atoms); better unscheduled exact=13/15: impl method sigs in crates/toasty/src/db.rs (26 atoms, too expensive at final margin) |
 | 6.1 | 4879 | — | — | 0.00 | missing | Engine module: every phase mod declared | [unscheduled bbox exact=20/23] mod/use plumbing in crates/toasty/src/engine.rs (20 atoms, too expensive at final margin) |
-| 6.6 | 5815 | — | — | 0.00 | missing | Query engine doc: 5-phase compilation pipeline diagram | [unscheduled bbox exact=18/19] docs/architecture/query-engine.md section #3 (18 atoms, predecessor not scheduled: headings outline in docs/architecture/query-engine.md) |
+| 6.6 | 5815 | — | — | 0.00 | missing | Query engine doc: 5-phase compilation pipeline diagram | [unscheduled bbox exact=18/19] docs/architecture/query-engine.md section #6 (18 atoms, predecessor not scheduled: headings outline in docs/architecture/query-engine.md) |
 | 7.6 | 6768 | — | — | 0.12 | missing | Driver trait: 6 method signatures | [scheduled bbox exact=1/8] pub-item names surface in crates/toasty-core/src/driver.rs (t=3759, 2 atoms); better unscheduled exact=7/8: pub item at crates/toasty-core/src/driver.rs:18 (19 atoms, too expensive at final margin) |
 | 7.7 | 6931 | — | — | 0.09 | missing | Connection trait: 4 method signatures | [scheduled bbox exact=1/11] pub-item names surface in crates/toasty-core/src/driver.rs (t=3759, 2 atoms); better unscheduled exact=10/11: pub item at crates/toasty-core/src/driver.rs:45 (15 atoms, too expensive at final margin) |
 | 8.5 | 7917 | — | — | 0.00 | missing | docs/CHANGE_GUIDE.md: where-changes-go matrix | [unscheduled bbox exact=10/12] docs/CHANGE_GUIDE.md section #1 (10 atoms, predecessor not scheduled: headings outline in docs/CHANGE_GUIDE.md) |
@@ -80,8 +78,10 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=10, scheduled same-fil
 | 2.2 | 572 | — | — | 0.71 | partial | Hello-toasty: Todo model with belongs_to | [scheduled bbox exact=10/14] entry item at examples/hello-toasty/src/main.rs:19 (t=662, 10 atoms) |
 | 3.1 | 1145 | — | — | 0.71 | partial | ARCHITECTURE.md: opening + Crates header | [scheduled bbox exact=5/7] headings outline in docs/ARCHITECTURE.md (t=4241, 5 atoms) |
 | 3.2 | 1404 | — | — | 0.05 | missing | Engine pipeline phases (canonical phase list) | [scheduled bbox exact=2/20] pub-item names surface in crates/toasty/src/engine.rs (t=7317, 2 atoms); better unscheduled exact=12/20: pub-item doc lede at crates/toasty/src/engine.rs:38 (12 atoms, predecessor not scheduled: pub item at crates/toasty/src/engine.rs:38) |
-| 3.5 | 2115 | — | — | 0.09 | missing | ARCHITECTURE.md: codegen + drivers | [scheduled bbox exact=4/23] headings outline in docs/ARCHITECTURE.md (t=4241, 4 atoms); better unscheduled exact=13/23: docs/ARCHITECTURE.md section #4 (13 atoms, too expensive at final margin) |
-| 3.6 | 2306 | — | — | 0.20 | missing | ARCHITECTURE.md: toasty-sql + further reading | [scheduled bbox exact=4/15] headings outline in docs/ARCHITECTURE.md (t=4241, 4 atoms); better unscheduled exact=9/15: docs/ARCHITECTURE.md section #6 (9 atoms, too expensive at final margin) |
+| 3.3 | 1641 | — | — | 0.06 | missing | ARCHITECTURE.md: toasty crate role | [scheduled bbox exact=2/16] headings outline in docs/ARCHITECTURE.md (t=4241, 2 atoms); better unscheduled exact=6/16: docs/ARCHITECTURE.md section #3 (6 atoms, too expensive at final margin) |
+| 3.4 | 1823 | — | — | 0.08 | missing | ARCHITECTURE.md: toasty-core crate role | [scheduled bbox exact=2/12] headings outline in docs/ARCHITECTURE.md (t=4241, 2 atoms); better unscheduled exact=9/12: docs/ARCHITECTURE.md section #7 (9 atoms, too expensive at final margin) |
+| 3.5 | 2115 | — | — | 0.09 | missing | ARCHITECTURE.md: codegen + drivers | [scheduled bbox exact=4/23] headings outline in docs/ARCHITECTURE.md (t=4241, 4 atoms); better unscheduled exact=11/23: docs/ARCHITECTURE.md section #9 (11 atoms, too expensive at final margin) |
+| 3.6 | 2306 | — | — | 0.20 | missing | ARCHITECTURE.md: toasty-sql + further reading | [scheduled bbox exact=4/15] headings outline in docs/ARCHITECTURE.md (t=4241, 4 atoms); better unscheduled exact=7/15: docs/ARCHITECTURE.md section #12 (7 atoms, too expensive at final margin) |
 | 4.1 | 2598 | — | — | 0.60 | partial | toasty/src/lib.rs: public re-exports | [scheduled bbox exact=22/35] mod/use plumbing in crates/toasty/src/lib.rs (t=8171, 24 atoms) |
 | 5.1 | 3247 | — | — | 0.00 | missing | toasty/src/stmt.rs: typed Statement<M> wrapper | [unscheduled bbox exact=28/43] mod/use plumbing in crates/toasty/src/stmt.rs (28 atoms, too expensive at final margin) |
 | 5.3 | 3556 | — | — | 0.00 | missing | Select<M>: every public method signature | [unscheduled bbox exact=10/16] impl method sigs in crates/toasty/src/stmt/select.rs (21 atoms, predecessor not scheduled: listing of 'crates/toasty/src/stmt') |

@@ -1,4 +1,4 @@
-scores: Sim=0.369 Reached=6/41 Early=3 Late=0 Partial=4 Missing=31 Used=9988/10000
+scores: Sim=0.369 Reached=6/41 Early=3 Late=0 Partial=4 Missing=31 Used=9975/10000
 
 ## Verdict
 
@@ -65,10 +65,10 @@ Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=3, no discov
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.1 | 51 | — | — | 0.75 | partial | Package identity (name, version, description) | [scheduled bbox exact=3/4] package identity in package.json (t=548, 3 atoms) |
-| 1.5 | 300 | — | — | 0.44 | missing | Readme major H2 sections | [scheduled bbox exact=1/9] Readme.md section #3 (t=6373, 23 atoms) |
-| 2.3 | 710 | — | — | 0.73 | partial | Terminology doc — definitions | [scheduled bbox exact=8/11] docs/terminology.md section #0 (t=6597, 8 atoms) |
-| 2.4 | 791 | — | — | 0.71 | partial | Terminology doc — example | [scheduled bbox exact=5/7] docs/terminology.md section #0 (t=6597, 5 atoms) |
-| 5.1 | 4569 | — | — | 0.78 | partial | parsing-and-hooks doc | [scheduled bbox exact=18/23] docs/parsing-and-hooks.md section #0 (t=6857, 18 atoms) |
+| 1.5 | 300 | — | — | 0.44 | missing | Readme major H2 sections | [scheduled bbox exact=1/9] Readme.md section #3 (t=6430, 23 atoms) |
+| 2.3 | 710 | — | — | 0.73 | partial | Terminology doc — definitions | [scheduled bbox exact=8/11] docs/terminology.md section #0 (t=6654, 8 atoms) |
+| 2.4 | 791 | — | — | 0.71 | partial | Terminology doc — example | [scheduled bbox exact=5/7] docs/terminology.md section #0 (t=6654, 5 atoms) |
+| 5.1 | 4569 | — | — | 0.78 | partial | parsing-and-hooks doc | [scheduled bbox exact=18/23] docs/parsing-and-hooks.md section #0 (t=6914, 18 atoms) |
 | 7.5 | 9802 | — | — | 0.00 | missing | Readme Commands + Automated help sub-headings | [unscheduled bbox exact=4/13] Readme.md section #5 (140 atoms, too expensive at final margin) |
 
 ### no discovered candidate
@@ -114,7 +114,7 @@ Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=3, no discov
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 153 | 102 | -51 | 1.00 | early | Top-level fs | fs-only |
 | 1.4 | 225 | 132 | -93 | 1.00 | early | Readme title + tagline | [scheduled bbox exact=2/2] README headline in Readme.md (t=132, 2 atoms) |
-| 7.7 | 9995 | 6115 | -3880 | 1.00 | early | options-in-depth — table of contents | [scheduled bbox exact=3/3] docs/options-in-depth.md section #0 (t=6115, 3 atoms) |
+| 7.7 | 9995 | 6172 | -3823 | 1.00 | early | options-in-depth — table of contents | [scheduled bbox exact=3/3] docs/options-in-depth.md section #0 (t=6172, 3 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -130,13 +130,13 @@ Candidate hint kinds: scheduled bbox=7, unscheduled bbox=3, fs-only=3, no discov
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 825 | 1.00 | 825 | 4103 | Readme.md section #0 |
-| 759 | 1.00 | 759 | 7860 | export at typings/index.d.ts:210 |
-| 527 | 1.00 | 527 | 9706 | json config tsconfig.json |
-| 410 | 1.00 | 410 | 5349 | export at typings/index.d.ts:95 |
-| 340 | 1.00 | 340 | 8778 | docs/deprecated.md section #0 |
-| 303 | 0.97 | 311 | 8402 | docs/release-policy.md section #0 |
+| 759 | 1.00 | 759 | 7917 | export at typings/index.d.ts:210 |
+| 527 | 1.00 | 527 | 9763 | json config tsconfig.json |
+| 410 | 1.00 | 410 | 5388 | export at typings/index.d.ts:95 |
+| 340 | 1.00 | 340 | 8835 | docs/deprecated.md section #0 |
+| 303 | 0.97 | 311 | 8459 | docs/release-policy.md section #0 |
 | 259 | 1.00 | 259 | 2238 | package scripts in package.json |
 | 256 | 1.00 | 256 | 2621 | package dependencies in package.json |
-| 246 | 0.95 | 258 | 6373 | Readme.md section #3 |
-| 239 | 1.00 | 239 | 4939 | json config tsconfig.ts.json |
+| 246 | 0.95 | 258 | 6430 | Readme.md section #3 |
+| 239 | 1.00 | 239 | 4978 | json config tsconfig.ts.json |
 | 3624 | — | — | — | +31 more rows |

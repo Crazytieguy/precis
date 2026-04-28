@@ -16,18 +16,22 @@
 //! - `Section { file, section_index }` — one scheduling unit of a
 //!   markdown file's body, 0-indexed. Default granularity is one
 //!   H2-level top-level section per batch; `logical_sections`
-//!   subdivides via one of two rules when applicable. *Bullet split*
+//!   subdivides via one of three rules when applicable. *Bullet split*
 //!   (anyhow's `## Details` shape) — an H2 whose non-decorative
 //!   content is a single `list` block becomes one `BulletItem` per
 //!   substantive top-level item. *H3 split* (content-heavy H2 with
 //!   ≥2 H3 children) becomes one `Intro` (when its body is
-//!   substantive) plus one `H3Child` per H3. Both kinds carry a
-//!   global signal scale (`SUB_SECTION_SIGNAL_SCALE`) on the
-//!   per-child ranges to keep them from over-ranking once the
-//!   marginal cost drops to per-sub-section size. Changelog-class
-//!   files (CHANGELOG / CONTRIBUTING / CHANGES) and files whose
-//!   outline isn't emitted are gated out of splitting (the H2
-//!   heading is preserved by `HeadingsOutline` only when it emits).
+//!   substantive) plus one `H3Child` per H3. *Body-block split*
+//!   refines large H3 children into direct paragraph/code/list blocks,
+//!   and can split list-only H2 sections into one body block per item.
+//!   All per-child kinds carry a global signal scale
+//!   (`SUB_SECTION_SIGNAL_SCALE` / `BODY_BLOCK_SIGNAL_SCALE`) to keep
+//!   them from over-ranking once the marginal cost drops to
+//!   per-sub-section size. Changelog-class files (CHANGELOG /
+//!   CONTRIBUTING / CHANGES) are gated out of splitting. H3/prose
+//!   body-block splitting also requires `HeadingsOutline` so heading
+//!   context is preserved; list-only H2 splits are allowed without an
+//!   outline because each item is self-contained.
 //!   Predecessor (when emitted): outline → headline → none, picking
 //!   the deepest available so all heading-row overlaps are
 //!   ancestor-overlaps. Enabling either split rule shifts
@@ -47,7 +51,8 @@ use crate::tokenizer;
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, fs::files_with_extension, path_depth_factor, single_file_lines_content,
+    FileLines, WalkCtx, extend_nonblank_rows, fs::files_with_extension, node_end_row_trimmed,
+    path_depth_factor, single_file_lines_content,
 };
 
 /// Upper bound on collectable heading rows before `HeadingsOutline`
@@ -74,6 +79,18 @@ const H2_SPLIT_BYTES: usize = 600;
 /// relative to other walker batches at the parent H2's calibration
 /// level.
 const SUB_SECTION_SIGNAL_SCALE: f64 = 0.45;
+
+/// Multiplier for `SectionKind::BodyBlock`, which can be as small as a
+/// single paragraph or list item. Body blocks are useful budget fillers
+/// but should not outrank intact declarations / larger doc sections just
+/// because their marginal cost is tiny.
+const BODY_BLOCK_SIGNAL_SCALE: f64 = 0.60;
+
+/// Minimum source-byte length before a section or sub-section is split
+/// into body blocks. WHY: below this, the current divergence corpus mostly
+/// gains schedule churn rather than useful budget relief; it stays lower
+/// than `H2_SPLIT_BYTES` because it can apply after H2 splitting too.
+const BODY_BLOCK_SPLIT_BYTES: usize = 350;
 
 /// Bullet-list-split predicate parameters.
 ///
@@ -262,10 +279,10 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.5, 0.5, path_depth_factor(file, ctx)) * scale
 }
 
-/// Per-section value. `H3Child` and `BulletItem` ranges scale the parent's
-/// value — identical weights would over-rank them on the value/cost ratio
-/// once the cost drops to per-sub-section size. `Intro` keeps full weight
-/// (it carries the H2 heading + topic prelude).
+/// Per-section value. Child ranges scale the parent's value — identical
+/// weights would over-rank them on the value/cost ratio once the cost
+/// drops to per-sub-section size. `Intro` keeps full weight (it carries
+/// the H2 heading + topic prelude).
 fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     let parent = if is_readme(file) {
         readme_section_value(file, range, ctx)
@@ -275,6 +292,7 @@ fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
     match range.kind {
         SectionKind::Whole | SectionKind::Intro => parent,
         SectionKind::H3Child | SectionKind::BulletItem => parent * SUB_SECTION_SIGNAL_SCALE,
+        SectionKind::BodyBlock => parent * BODY_BLOCK_SIGNAL_SCALE,
     }
 }
 
@@ -795,6 +813,9 @@ enum SectionKind {
     /// `should_split_by_bullets`). Preserves the H2 heading via
     /// `HeadingsOutline`, same gating discipline as H3 splitting.
     BulletItem,
+    /// One direct body block (paragraph, code block, nested section, or
+    /// list item) inside a long split section.
+    BodyBlock,
 }
 
 /// Section ranges for batching. The "un-split top-level list" — one
@@ -810,13 +831,17 @@ enum SectionKind {
 ///   substantive top-level list item.
 /// - **H3 split** fires when the H2 has ≥2 direct H3 children and
 ///   meets the byte threshold — emits one `H3Child` per substantive
-///   H3 child.
+///   H3 child, or smaller `BodyBlock`s inside that H3 when it is still
+///   large and block-structured.
+/// - **Body-block split** refines large H3 children into direct
+///   paragraph/code/list blocks, and also fires as a fallback for
+///   list-only H2s whose items are too small for the specialized
+///   bullet split.
 ///
-/// All other top-level entries emit one `Whole` range. Skipping the
-/// split when the file's outline isn't emitted preserves the H2
-/// heading via the `Whole` range — Intro ranges with empty bodies
-/// are elided to avoid `ratio(value, 0) = INFINITY` no-op batches,
-/// so without an outline the H2 heading would otherwise be lost.
+/// All other top-level entries emit one `Whole` range. H3/prose splits
+/// require the outline to preserve heading rows — Intro ranges with
+/// empty bodies are elided to avoid `ratio(value, 0) = INFINITY` no-op
+/// batches, so without an outline the heading would otherwise be lost.
 fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange> {
     let entries = top_level_entries(tree.root_node(), source);
     let outline_will_emit = {
@@ -841,10 +866,11 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
             }
             TopLevelEntry::H2Section { node, start, end } => {
                 let bytes = node.end_byte() - node.start_byte();
-                let split_gate =
+                let structural_split_gate =
                     split_eligible_file && outline_will_emit && bytes >= H2_SPLIT_BYTES;
+                let body_block_split_gate = split_eligible_file && bytes >= H2_SPLIT_BYTES;
 
-                let bullet_items = split_gate
+                let bullet_items = structural_split_gate
                     .then(|| should_split_by_bullets(*node, source))
                     .flatten();
 
@@ -858,9 +884,8 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                         synthetic_intro_present,
                         source,
                     );
-                    for item in &items {
-                        let item_start = item.start_position().row + 1;
-                        let item_end = span_last_row(*item, source) + 1;
+                    for item in items {
+                        let (item_start, item_end) = node_row_range(item, source);
                         out.push(SectionRange {
                             start: item_start,
                             end: item_end,
@@ -872,7 +897,7 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                     continue;
                 }
 
-                let h3s = if split_gate {
+                let h3s = if structural_split_gate {
                     direct_h3_children(*node)
                 } else {
                     Vec::new()
@@ -888,26 +913,32 @@ fn logical_sections(file: &Path, tree: &Tree, source: &str) -> Vec<SectionRange>
                         source,
                     );
                     for h3 in &h3s {
-                        let h3_start = h3.start_position().row + 1;
-                        let h3_end = span_last_row(*h3, source) + 1;
-                        if has_substantive_body(*h3, h3_start, h3_end, source) {
-                            out.push(SectionRange {
-                                start: h3_start,
-                                end: h3_end,
-                                kind: SectionKind::H3Child,
-                                parent_index: parent_idx,
-                                synthetic_intro_present,
-                            });
-                        }
+                        push_h3_child_or_body_blocks(
+                            &mut out,
+                            *h3,
+                            parent_idx,
+                            synthetic_intro_present,
+                            source,
+                        );
                     }
                 } else {
-                    out.push(SectionRange {
-                        start: *start,
-                        end: *end,
-                        kind: SectionKind::Whole,
-                        parent_index: parent_idx,
-                        synthetic_intro_present,
-                    });
+                    let did_body_split = body_block_split_gate
+                        && push_list_body_blocks(
+                            &mut out,
+                            *node,
+                            parent_idx,
+                            synthetic_intro_present,
+                            source,
+                        );
+                    if !did_body_split {
+                        out.push(SectionRange {
+                            start: *start,
+                            end: *end,
+                            kind: SectionKind::Whole,
+                            parent_index: parent_idx,
+                            synthetic_intro_present,
+                        });
+                    }
                 }
             }
         }
@@ -944,6 +975,164 @@ fn push_intro<'a>(
         parent_index: parent_idx,
         synthetic_intro_present,
     });
+}
+
+fn push_h3_child_or_body_blocks(
+    out: &mut Vec<SectionRange>,
+    h3_section: Node<'_>,
+    parent_idx: usize,
+    synthetic_intro_present: bool,
+    source: &str,
+) {
+    let (h3_start, h3_end) = node_row_range(h3_section, source);
+    if !has_substantive_body(h3_section, h3_start, h3_end, source) {
+        return;
+    }
+    if h3_section.end_byte() - h3_section.start_byte() >= BODY_BLOCK_SPLIT_BYTES {
+        let ranges = body_block_ranges(h3_section, source);
+        if push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present) {
+            return;
+        }
+    }
+    out.push(SectionRange {
+        start: h3_start,
+        end: h3_end,
+        kind: SectionKind::H3Child,
+        parent_index: parent_idx,
+        synthetic_intro_present,
+    });
+}
+
+fn push_body_block_ranges(
+    out: &mut Vec<SectionRange>,
+    ranges: Vec<(usize, usize)>,
+    parent_idx: usize,
+    synthetic_intro_present: bool,
+) -> bool {
+    if ranges.len() < 2 {
+        return false;
+    }
+    out.extend(ranges.into_iter().map(|(start, end)| SectionRange {
+        start,
+        end,
+        kind: SectionKind::BodyBlock,
+        parent_index: parent_idx,
+        synthetic_intro_present,
+    }));
+    true
+}
+
+fn push_list_body_blocks(
+    out: &mut Vec<SectionRange>,
+    section: Node<'_>,
+    parent_idx: usize,
+    synthetic_intro_present: bool,
+    source: &str,
+) -> bool {
+    let Some(ranges) = list_only_body_block_ranges(section, source) else {
+        return false;
+    };
+    push_body_block_ranges(out, ranges, parent_idx, synthetic_intro_present)
+}
+
+fn list_only_body_block_ranges(section: Node<'_>, source: &str) -> Option<Vec<(usize, usize)>> {
+    Some(substantive_item_ranges(
+        single_list_with_decorative_siblings(section, source)?,
+        source,
+    ))
+}
+
+fn single_list_with_decorative_siblings<'a>(section: Node<'a>, source: &str) -> Option<Node<'a>> {
+    let mut cur = section.walk();
+    let mut list: Option<Node<'a>> = None;
+    for child in section.children(&mut cur) {
+        match child.kind() {
+            kind if is_section_scaffolding(kind) => continue,
+            "list" => {
+                if list.is_some() {
+                    return None;
+                }
+                list = Some(child);
+            }
+            "paragraph" if is_decorative_paragraph(child, source) => continue,
+            "html_block" if is_decorative_html_block(child, source) => continue,
+            _ => return None,
+        }
+    }
+    list
+}
+
+fn substantive_item_ranges(list: Node<'_>, source: &str) -> Vec<(usize, usize)> {
+    top_level_list_items(list)
+        .into_iter()
+        .filter(|item| has_substantive_list_item(*item))
+        .map(|item| node_row_range(item, source))
+        .collect()
+}
+
+fn body_block_ranges(section: Node<'_>, source: &str) -> Vec<(usize, usize)> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut cur = section.walk();
+    let children: Vec<Node> = section.children(&mut cur).collect();
+    let mut out = Vec::new();
+    let mut i = 0;
+    while i < children.len() {
+        let child = children[i];
+        match child.kind() {
+            kind if is_section_scaffolding(kind) => {
+                i += 1;
+            }
+            "paragraph" if is_decorative_paragraph(child, source) => {
+                i += 1;
+            }
+            "html_block" if is_decorative_html_block(child, source) => {
+                i += 1;
+            }
+            "paragraph"
+                if children
+                    .get(i + 1)
+                    .is_some_and(|n| n.kind() == "list" || is_code_block(n.kind())) =>
+            {
+                let next = children[i + 1];
+                let (start, _) = node_row_range(child, source);
+                let (_, end) = node_row_range(next, source);
+                out.push((start, end));
+                i += 2;
+            }
+            "list" => {
+                out.extend(substantive_item_ranges(child, source));
+                i += 1;
+            }
+            _ => {
+                if let Some(range) = nonblank_node_row_range(child, &src_lines, source) {
+                    out.push(range);
+                }
+                i += 1;
+            }
+        }
+    }
+    out
+}
+
+fn node_row_range(node: Node, source: &str) -> (usize, usize) {
+    (
+        node.start_position().row + 1,
+        node_end_row_trimmed(node, source) + 1,
+    )
+}
+
+fn nonblank_node_row_range(node: Node, src_lines: &[&str], source: &str) -> Option<(usize, usize)> {
+    let (start, end) = node_row_range(node, source);
+    let mut rows = Vec::new();
+    extend_nonblank_rows(&mut rows, src_lines, start - 1, end - 1);
+    (!rows.is_empty()).then_some((start, end))
+}
+
+fn is_section_scaffolding(kind: &str) -> bool {
+    matches!(
+        kind,
+        "atx_heading" | "setext_heading" | "block_continuation"
+    )
 }
 
 /// One entry in the un-split top-level section list. `SyntheticIntro`
@@ -1023,29 +1212,11 @@ fn top_level_entries<'a>(root: Node<'a>, source: &'a str) -> Vec<TopLevelEntry<'
 /// strict: image-only / badge-only blocks have no rendered content
 /// worth scheduling.
 fn should_split_by_bullets<'a>(h2_section: Node<'a>, source: &str) -> Option<Vec<Node<'a>>> {
-    let mut cur = h2_section.walk();
-    let mut list: Option<Node<'a>> = None;
-    for child in h2_section.children(&mut cur) {
-        match child.kind() {
-            "atx_heading" | "setext_heading" => continue,
-            "list" => {
-                if list.is_some() {
-                    return None;
-                }
-                list = Some(child);
-            }
-            "html_block" if is_decorative_html_block(child, source) => continue,
-            "paragraph" if is_decorative_paragraph(child, source) => continue,
-            // `block_continuation` is a tree-sitter-md scaffolding node
-            // with no rendered content; safe to ignore.
-            "block_continuation" => continue,
-            _ => return None,
-        }
-    }
-    let items: Vec<Node<'a>> = top_level_list_items(list?)
-        .into_iter()
-        .filter(|i| has_substantive_list_item(*i))
-        .collect();
+    let items: Vec<Node<'a>> =
+        top_level_list_items(single_list_with_decorative_siblings(h2_section, source)?)
+            .into_iter()
+            .filter(|i| has_substantive_list_item(*i))
+            .collect();
     if items.len() < BULLET_MIN_ITEMS {
         return None;
     }
@@ -1068,6 +1239,10 @@ fn top_level_list_items<'a>(list: Node<'a>) -> Vec<Node<'a>> {
     list.children(&mut cur)
         .filter(|c| c.kind() == "list_item")
         .collect()
+}
+
+fn is_code_block(kind: &str) -> bool {
+    matches!(kind, "fenced_code_block" | "indented_code_block")
 }
 
 /// True iff a `list_item` has at least one non-marker, non-continuation
@@ -1176,10 +1351,7 @@ fn first_child_of_kind<'a>(node: Node<'a>, kind: &str) -> Option<Node<'a>> {
 /// Last source row (0-indexed) covered by `node`, trimming a trailing empty
 /// line tree-sitter-md sometimes includes in a node's span.
 fn span_last_row(node: Node, source: &str) -> usize {
-    let text = &source[node.start_byte()..node.end_byte()];
-    let trimmed = text.trim_end_matches(['\n', '\r']);
-    let internal = trimmed.split('\n').count();
-    node.start_position().row + internal.saturating_sub(1)
+    node_end_row_trimmed(node, source)
 }
 
 #[cfg(test)]
@@ -1660,9 +1832,9 @@ mod tests {
         }
     }
 
-    /// Outline gated out by row-count cap → no split, even for a
-    /// splittable H2 inside the file. Without the outline carrying
-    /// the H2 heading, dropping the heading-only intro would lose it.
+    /// Outline gated out by row-count cap → no structural H3/body split.
+    /// Without the outline carrying the H2 heading, dropping a
+    /// heading-only intro would lose it.
     #[test]
     fn markdown_h2_no_split_when_outline_omitted() {
         // One splittable H2 (with two H3 children + filler), then enough
@@ -1690,7 +1862,7 @@ mod tests {
         assert_eq!(
             usage.kind,
             SectionKind::Whole,
-            "outline-omitted files must keep H2s as Whole; got {usage:?}",
+            "outline-omitted files must keep non-list H2s as Whole; got {usage:?}",
         );
     }
 
@@ -1783,24 +1955,65 @@ mod tests {
         );
     }
 
-    /// Short bullets (each well under `BULLET_LARGE_ITEM_BYTES`) →
-    /// no split, falls through to Whole.
+    /// Short bullets (each well under `BULLET_LARGE_ITEM_BYTES`) miss the
+    /// specialized bullet split, but a long list still falls through to the
+    /// generic body-block split.
     #[test]
-    fn markdown_h2_no_split_short_bullets() {
+    fn markdown_h2_body_block_split_short_bullets() {
         let prefix = "# Title\n\nTagline.\n\n## Features";
         // Make the section large enough overall that the byte gate
-        // can't single-handedly suppress; per-item gate must do it.
+        // can't single-handedly suppress; the specialized bullet-item
+        // gate should reject, then generic body blocks should recover
+        // one range per top-level item.
         let mut src = String::from(prefix);
         for i in 0..40 {
             src.push_str(&format!("\n- short item {i}\n"));
         }
         src.push_str("\n## Next\n\nbody.\n");
         let ranges = sections("README.md", &src);
+        let body_blocks = ranges
+            .iter()
+            .filter(|r| r.kind == SectionKind::BodyBlock)
+            .count();
+        assert_eq!(
+            body_blocks, 40,
+            "long short-bullet list must split into body blocks; got {ranges:?}"
+        );
+    }
+
+    /// H3 split is not always fine-grained enough: a long H3 child with
+    /// several body blocks should refine to `BodyBlock` ranges while a
+    /// sibling H3 with one body block remains an `H3Child`.
+    #[test]
+    fn markdown_h3_child_body_block_split() {
+        let filler = "Additional prose keeps this sub-section large enough for \
+                      body-block splitting while still representing ordinary \
+                      markdown documentation text.\n"
+            .repeat(3);
+        let src = "# Title\n\nTagline.\n\n## Parts\n\n### One\n\n\
+                   Intro paragraph before the example.\n"
+            .to_owned()
+            + &filler
+            + "\n\
+                   ```tsx\nconst one = 1\n```\n\n\
+                   Follow-up paragraph with details.\n"
+            + &filler
+            + "\n\
+                   ### Two\n\n\
+                   Single compact paragraph.\n";
         assert!(
-            ranges
-                .iter()
-                .all(|r| r.kind != SectionKind::BulletItem && r.kind != SectionKind::Intro),
-            "short bullets must not split; got {ranges:?}"
+            src.len() >= H2_SPLIT_BYTES,
+            "test source must clear H2 split gate"
+        );
+        let ranges = sections("README.md", &src);
+        let kinds: Vec<SectionKind> = ranges.iter().map(|r| r.kind).collect();
+        assert!(
+            kinds.contains(&SectionKind::BodyBlock),
+            "long H3 child must split into body blocks; got {ranges:?}"
+        );
+        assert!(
+            kinds.contains(&SectionKind::H3Child),
+            "single-block H3 child must remain whole; got {ranges:?}"
         );
     }
 
@@ -1885,10 +2098,11 @@ mod tests {
         );
     }
 
-    /// Outline-omitted file doesn't bullet-split (otherwise the H2
-    /// heading would be lost, since Intro is heading-only).
+    /// Outline-omitted file doesn't use the specialized `BulletItem`
+    /// split, but the generic body-block fallback can still emit the
+    /// substantive list items.
     #[test]
-    fn markdown_h2_no_split_bullets_when_outline_omitted() {
+    fn markdown_h2_body_block_bullets_when_outline_omitted() {
         let mut src = String::from("# Title\n\nTagline.\n\n");
         src.push_str(&make_bullet_section("## Details", 3, 4));
         for i in 0..(MAX_OUTLINE_HEADINGS + 5) {
@@ -1900,18 +2114,13 @@ mod tests {
             "outline must be omitted for the test premise to hold"
         );
         let ranges = sections("README.md", &src);
-        let details = ranges
-            .iter()
-            .find(|r| {
-                src.lines()
-                    .nth(r.start.saturating_sub(1))
-                    .is_some_and(|l| l.starts_with("## Details"))
-            })
-            .expect("Details section must appear");
-        assert_eq!(
-            details.kind,
-            SectionKind::Whole,
-            "outline-omitted file must keep H2 as Whole; got {details:?}"
+        assert!(
+            ranges.iter().any(|r| r.kind == SectionKind::BodyBlock),
+            "outline-omitted long list should fall back to body blocks; got {ranges:?}",
+        );
+        assert!(
+            !ranges.iter().any(|r| r.kind == SectionKind::BulletItem),
+            "outline-omitted file must not use BulletItem split; got {ranges:?}"
         );
     }
 
