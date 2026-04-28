@@ -119,6 +119,27 @@ packages/
                 14→export class MultiSet<T> {
                 …
             operators/
+                concat.ts
+                consolidate.ts
+                count.ts
+                debug.ts
+                distinct.ts
+                filter.ts
+                filterBy.ts
+                groupBy.ts
+                index.ts
+                join.ts
+                keying.ts
+                map.ts
+                negate.ts
+                orderBy.ts
+                orderByBTree.ts
+                output.ts
+                pipe.ts
+                reduce.ts
+                topK.ts
+                topKWithFractionalIndex.ts
+                topKWithFractionalIndexBTree.ts
             types.ts
             utils.ts
         tests/
@@ -172,6 +193,12 @@ packages/
                     111→  debug = false,
                     112→}: ElectricStreamToD2InputOptions<T>): RootStreamBuilder<[key: string, T]> {
                     …
+                    216→/**
+                    217→ * Operator that outputs the messages from the stream in ElectricSQL format
+                    218→ *
+                    219→ * TODO: Have two modes `replica=default` and `replica=full` to match the two modes
+                    220→ * of core Electric.
+                    221→ */
                     222→export class OutputElectricMessagesOperator<K, V> extends UnaryOperator<
                     223→  [K, V]
                     224→> {
@@ -215,46 +242,52 @@ packages/
                     348→  }
             graph.ts
             index.ts
+                1→export * from './d2.js'
+                2→export * from './order.js'
+                3→export * from './multiset.js'
+                4→export * from './version-index.js'
+                5→export * from './operators/index.js'
+                6→export * from './types.js'
             multiset.ts
             operators/
+                base.ts
+                buffer.ts
+                concat.ts
+                consolidate.ts
+                count.ts
+                debug.ts
+                distinct.ts
+                filter.ts
+                filterBy.ts
+                groupBy.ts
+                index.ts
+                iterate.ts
+                join.ts
+                keying.ts
+                map.ts
+                negate.ts
+                orderBy.ts
+                output.ts
+                pipe.ts
+                reduce.ts
+                topK.ts
+                topKWithFractionalIndex.ts
             order.ts
             sqlite/
+                context.ts
+                    65→export function withSQLite(db: SQLiteDb) {
+                    …
+                    93→export { SQLiteContext }
+                database.ts
+                index.ts
+                    1→export * from './version-index.js'
+                    2→export * from './operators/index.js'
+                    3→export * from './database.js'
+                operators/
+                version-index.ts
+                    60→export class SQLIndex<K, V> {
+                    …
             types.ts
-                5→export type KeyValue<K, V> = [K, V]
-                …
-                7→export const MessageType = {
-                8→  DATA: 1,
-                9→  FRONTIER: 2,
-                10→} as const
-                12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
-                …
-                14→export type Message<T> =
-                …
-                24→export type DataMessage<T> = {
-                25→  version: Version
-                26→  collection: MultiSet<T>
-                27→}
-                29→export type FrontierMessage = Version | Antichain
-                …
-                31→export interface IOperator<_T> {
-                32→  run(): void
-                33→  hasPendingWork(): boolean
-                34→  frontiers(): [Antichain[], Antichain]
-                35→}
-                37→export interface IDifferenceStreamReader<T> {
-                38→  drain(): Message<T>[]
-                39→  isEmpty(): boolean
-                40→  probeFrontierLessThan(frontier: Antichain): boolean
-                41→}
-                43→export interface IDifferenceStreamWriter<T> {
-                …
-                52→export interface ID2 {
-                …
-                64→export interface IStreamBuilder<T> {
-                …
-                117→export type PipedOperator<I, O> = (
-                118→  stream: IStreamBuilder<I>,
-                119→) => IStreamBuilder<O>
             utils.ts
             version-index.ts
         tests/
@@ -265,25 +298,7 @@ packages/
         package.json
         src/
             base.ts
-                4→export interface Benchmark<T> {
-                5→  name: string
-                6→  setup: () => T
-                7→  firstRun: (ctx: T) => void
-                8→  incrementalRun: (ctx: T, i: number) => void
-                9→  teardown?: (ctx: T) => void
-                10→}
-                19→export interface SuiteOptions {
-                20→  name: string
-                21→  totalRuns?: number
-                22→  incrementalRuns?: number
-                23→  warmupRuns?: number
-                24→  maxTimeDoingIncrementalRuns?: number
-                25→}
-                27→export class Suite {
-                …
             graph.ts
-                20→export function generateGraph(results: SizeResults[]) {
-                …
             index.ts
         tsconfig.json
 pnpm-lock.yaml

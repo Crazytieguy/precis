@@ -1,4 +1,4 @@
-scores: Sim=0.381 Reached=21/50 Early=4 Late=15 Partial=11 Missing=18 Used=9957/10000
+scores: Sim=0.445 Reached=21/50 Early=4 Late=14 Partial=11 Missing=18 Used=9957/10000
 
 ## Verdict
 
@@ -31,7 +31,7 @@ Tiers: 1=5/9 reached, 0 partial, 4 missing, avg=0.54; 2=11/14 reached, 2 partial
 | wrong-slice / granularity | 23 | 12 | 11 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 3 | 3 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | 0 | filesystem/listing value |
-| timing-only | 21 | 0 | 0 | 21 | usually no code change |
+| timing-only | 20 | 0 | 0 | 20 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -41,7 +41,7 @@ Tiers: 1=5/9 reached, 0 partial, 4 missing, avg=0.54; 2=11/14 reached, 2 partial
 | too expensive at final margin | 1 | 0.03 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file=4, fs-only=4, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file=4, fs-only=3, no discovered candidate=3
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -72,10 +72,10 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.1 | 26 | — | — | 0.00 | missing | README one-liner statement of purpose | [scheduled same-file] headings outline in README.md (t=1252, 43 atoms) |
-| 1.3 | 158 | — | — | 0.00 | missing | README — list of supported instruments | [scheduled same-file] headings outline in README.md (t=1252, 43 atoms) |
-| 1.4 | 223 | — | — | 0.00 | missing | README — list of target frameworks | [scheduled same-file] headings outline in README.md (t=1252, 43 atoms) |
-| 1.8 | 795 | — | — | 0.00 | missing | README — canonical Litestar quickstart snippet | [scheduled same-file] headings outline in README.md (t=1252, 43 atoms) |
+| 1.1 | 26 | — | — | 0.00 | missing | README one-liner statement of purpose | [scheduled same-file] headings outline in README.md (t=1655, 43 atoms) |
+| 1.3 | 158 | — | — | 0.00 | missing | README — list of supported instruments | [scheduled same-file] headings outline in README.md (t=1655, 43 atoms) |
+| 1.4 | 223 | — | — | 0.00 | missing | README — list of target frameworks | [scheduled same-file] headings outline in README.md (t=1655, 43 atoms) |
+| 1.8 | 795 | — | — | 0.00 | missing | README — canonical Litestar quickstart snippet | [scheduled same-file] headings outline in README.md (t=1655, 43 atoms) |
 | 2.4 | 1345 | — | — | 0.77 | partial | Instrument ABC — overridable hook signatures | [scheduled bbox exact=8/13] python method sigs in microbootstrap/instruments/base.py (t=7275, 8 atoms) |
 | 2.13 | 2761 | — | — | 0.04 | missing | ApplicationBootstrapper.bootstrap — the orchestration body | [scheduled bbox exact=2/26] python method sigs in microbootstrap/bootstrappers/base.py (t=9010, 2 atoms); better unscheduled exact=8/26: python method body at microbootstrap/bootstrappers/base.py:72 body 74 (8 atoms, too expensive at final margin) |
 | 2.14 | 2973 | — | — | 0.63 | partial | ApplicationBootstrapper — overridable hook docstrings | [scheduled bbox exact=8/16] python method sigs in microbootstrap/bootstrappers/base.py (t=9010, 8 atoms) |
@@ -94,7 +94,7 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 | 4.11 | 8133 | — | — | 0.00 | missing | BaseOpentelemetryInstrument.is_ready + OpentelemetryInstrument.define_exclude_urls | [unscheduled bbox exact=8/25] python method sigs in microbootstrap/instruments/opentelemetry_instrument.py (10 atoms, predecessor not scheduled: python decl names surface in microbootstrap/instruments/opentelemetry_instrument.py) |
 | 4.12 | 8408 | — | — | 0.16 | missing | LoggingConfig (fields) | [scheduled bbox exact=2/19] python method at microbootstrap/instruments/logging_instrument.py:140 (t=9683, 2 atoms); better unscheduled exact=10/19: python class body at microbootstrap/instruments/logging_instrument.py:127 (10 atoms, too expensive at final margin) |
 | 5.4 | 9443 | — | — | 0.67 | partial | InstrumentsSetupper — class + setup/teardown + use_instrument registrations | [scheduled bbox exact=8/21] python method sigs in microbootstrap/instruments_setupper.py (t=4423, 16 atoms) |
-| 5.7 | 9841 | — | — | 0.60 | partial | Exceptions — full file | [scheduled bbox exact=6/10] python decl names surface in microbootstrap/exceptions.py (t=717, 6 atoms) |
+| 5.7 | 9841 | — | — | 0.60 | partial | Exceptions — full file | [scheduled bbox exact=6/10] python decl names surface in microbootstrap/exceptions.py (t=747, 6 atoms) |
 
 ### no discovered candidate
 
@@ -115,12 +115,11 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 59 | 33 | -26 | 1.00 | early | Repo top-level layout | fs-only |
-| 1.5 | 315 | 613 | +298 | 1.00 | late | Package top-level files + small subdirs | fs-only |
-| 1.6 | 410 | 2043 | +1633 | 1.00 | late | Bootstrappers + instruments subdir contents | fs-only |
-| 1.7 | 610 | 1925 | +1315 | 1.00 | late | Public API re-exports (__all__) | [scheduled bbox exact=19/19] python imports in microbootstrap/__init__.py (t=1925, 19 atoms) |
-| 1.9 | 1027 | 335 | -692 | 0.89 | early | README table-of-contents (H2/H3 outline) | [scheduled bbox exact=17/19] README headline in README.md (t=335, 17 atoms) |
-| 2.1 | 1093 | 2637 | +1544 | 1.00 | late | Instrument ABC — class declaration | [scheduled bbox exact=3/5] python class body at microbootstrap/instruments/base.py:23 (t=2637, 3 atoms) |
-| 2.2 | 1126 | 2599 | +1473 | 1.00 | late | BaseInstrumentConfig (pydantic base) | [scheduled bbox exact=2/2] python decl names surface in microbootstrap/instruments/base.py (t=2566, 2 atoms) |
+| 1.6 | 410 | 684 | +274 | 1.00 | late | Bootstrappers + instruments subdir contents | fs-only |
+| 1.7 | 610 | 2589 | +1979 | 1.00 | late | Public API re-exports (__all__) | [scheduled bbox exact=19/19] python imports in microbootstrap/__init__.py (t=2589, 19 atoms) |
+| 1.9 | 1027 | 614 | -413 | 0.89 | early | README table-of-contents (H2/H3 outline) | [scheduled bbox exact=17/19] README headline in README.md (t=614, 17 atoms) |
+| 2.1 | 1093 | 2112 | +1019 | 1.00 | late | Instrument ABC — class declaration | [scheduled bbox exact=3/5] python class body at microbootstrap/instruments/base.py:23 (t=2112, 3 atoms) |
+| 2.2 | 1126 | 2074 | +948 | 1.00 | late | BaseInstrumentConfig (pydantic base) | [scheduled bbox exact=2/2] python decl names surface in microbootstrap/instruments/base.py (t=2041, 2 atoms) |
 | 2.3 | 1201 | 7410 | +6209 | 0.86 | late | Instrument ABC — abstract methods (signatures) | [scheduled bbox exact=4/7] python method sigs in microbootstrap/instruments/base.py (t=7275, 4 atoms) |
 | 2.5 | 1527 | 8654 | +7127 | 1.00 | late | BaseServiceSettings — service_* fields | [scheduled bbox exact=11/14] python class body at microbootstrap/settings.py:29 (t=8654, 11 atoms) |
 | 2.6 | 1602 | 8654 | +7052 | 1.00 | late | BaseServiceSettings — pydantic SettingsConfigDict | [scheduled bbox exact=7/7] python class body at microbootstrap/settings.py:29 (t=8654, 7 atoms) |
@@ -133,7 +132,7 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 | 3.5 | 4439 | 6437 | +1998 | 0.93 | late | Litestar instrument subclass locations — class def lines | [scheduled bbox exact=14/15] python decl names surface in microbootstrap/bootstrappers/litestar.py (t=6378, 20 atoms) |
 | 3.6 | 4643 | 5092 | +449 | 0.86 | aligned | FastAPI instrument subclass locations — class def lines | [scheduled bbox exact=12/14] python decl names surface in microbootstrap/bootstrappers/fastapi.py (t=5010, 12 atoms) |
 | 3.7 | 4803 | 6181 | +1378 | 0.80 | aligned | FastStream instrument subclass locations — class def lines | [scheduled bbox exact=8/10] python decl names surface in microbootstrap/bootstrappers/faststream.py (t=6113, 10 atoms) |
-| 5.5 | 9505 | 961 | -8544 | 1.00 | early | create_granian_server signature | [scheduled bbox exact=5/5] python decl at microbootstrap/granian_server.py:27 (t=961, 5 atoms) |
+| 5.5 | 9505 | 1239 | -8266 | 1.00 | early | create_granian_server signature | [scheduled bbox exact=5/5] python decl at microbootstrap/granian_server.py:27 (t=1239, 5 atoms) |
 | 5.6 | 9734 | 3109 | -6625 | 0.94 | early | helpers — public function signatures | [scheduled bbox exact=9/16] python decl names surface in microbootstrap/helpers.py (t=2978, 10 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
@@ -146,13 +145,13 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 277 | 0.58 | 477 | 1925 | python imports in microbootstrap/__init__.py |
-| 242 | 1.00 | 242 | 1252 | headings outline in README.md |
+| 277 | 0.58 | 477 | 2589 | python imports in microbootstrap/__init__.py |
+| 242 | 1.00 | 242 | 1655 | headings outline in README.md |
 | 201 | 0.94 | 214 | 8141 | python decl names surface in microbootstrap/instruments/logging_instrument.py |
 | 170 | 1.00 | 170 | 7601 | README.md section #1 |
 | 154 | 0.84 | 184 | 7006 | python decl names surface in microbootstrap/instruments/sentry_instrument.py |
 | 146 | 0.90 | 163 | 9639 | python method sigs in microbootstrap/instruments/logging_instrument.py |
-| 136 | 1.00 | 136 | 1448 | package dependencies in package.json |
+| 136 | 1.00 | 136 | 1901 | package dependencies in package.json |
 | 97 | 1.00 | 97 | 5819 | python imports in microbootstrap/granian_server.py |
 | 93 | 1.00 | 93 | 5489 | README.md section #7 |
 | 92 | 1.00 | 92 | 5390 | python method sigs #1 in microbootstrap/instruments/opentelemetry_instrument.py |

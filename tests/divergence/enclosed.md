@@ -1,4 +1,4 @@
-scores: Sim=0.532 Reached=14/45 Early=6 Late=6 Partial=1 Missing=30 Used=9915/10000
+scores: Sim=0.532 Reached=14/45 Early=6 Late=6 Partial=1 Missing=30 Used=9903/10000
 
 ## Verdict
 
@@ -60,7 +60,7 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=6, scheduled same-file
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.4 | 168 | — | — | 0.00 | missing | pnpm workspace glob | [unscheduled bbox exact=2/2] plaintext config pnpm-workspace.yaml (2 atoms, too expensive at final margin) |
 | 1.7 | 497 | — | — | 0.00 | missing | pnpm-workspace.yaml — catalog versions | [unscheduled bbox exact=9/9] plaintext config pnpm-workspace.yaml (9 atoms, too expensive at final margin) |
-| 1.11 | 1499 | — | — | 0.20 | missing | README — how-it-works (creator side) | [scheduled bbox exact=2/10] headings outline in README.md (t=2180, 2 atoms); better unscheduled exact=9/10: README.md section #17 (9 atoms, too expensive at final margin) |
+| 1.11 | 1499 | — | — | 0.20 | missing | README — how-it-works (creator side) | [scheduled bbox exact=2/10] headings outline in README.md (t=2168, 2 atoms); better unscheduled exact=9/10: README.md section #17 (9 atoms, too expensive at final margin) |
 | 1.12 | 1700 | — | — | 0.00 | missing | README — how-it-works (recipient side) | [unscheduled bbox exact=6/7] README.md section #17 (6 atoms, too expensive at final margin) |
 | 2.8 | 2657 | — | — | 0.00 | missing | lib package.json — runtime dependencies | [unscheduled bbox exact=8/8] package dependencies in packages/lib/package.json (8 atoms, predecessor not scheduled: package scripts in packages/lib/package.json) |
 | 4.1 | 5055 | — | — | 0.00 | missing | Config — env var name catalog (locations only) | [unscheduled bbox exact=26/26] export at packages/app-server/src/modules/app/config/config.ts:5 (242 atoms, too expensive at final margin) |
@@ -70,18 +70,18 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=6, scheduled same-file
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.2 | 127 | — | — | 0.00 | missing | README h1 + tagline | [scheduled same-file] headings outline in README.md (t=2180, 38 atoms) |
-| 1.9 | 872 | — | — | 0.20 | missing | README — project structure (per-package one-liners) | [scheduled bbox exact=2/10] headings outline in README.md (t=2180, 2 atoms); better unscheduled exact=7/10: README.md section #23 (7 atoms, too expensive at final margin) |
+| 1.2 | 127 | — | — | 0.00 | missing | README h1 + tagline | [scheduled same-file] headings outline in README.md (t=2168, 38 atoms) |
+| 1.9 | 872 | — | — | 0.20 | missing | README — project structure (per-package one-liners) | [scheduled bbox exact=2/10] headings outline in README.md (t=2168, 2 atoms); better unscheduled exact=7/10: README.md section #23 (7 atoms, too expensive at final margin) |
 | 2.7 | 2545 | — | — | 0.19 | missing | @enclosed/lib README — install + usage example | [scheduled bbox exact=4/31] headings outline in packages/lib/README.md (t=1212, 4 atoms); better unscheduled exact=11/31: packages/lib/README.md section #2 (11 atoms, too expensive at final margin) |
 | 3.3 | 2947 | — | — | 0.12 | missing | Cloudflare Workers entrypoint (full) | [scheduled bbox exact=1/8] export at packages/app-server/src/index.cloudflare.ts:8 (t=844, 1 atoms); better unscheduled exact=2/8: imports in packages/app-server/src/index.cloudflare.ts (2 atoms, discovered unscheduled) |
-| 3.4 | 3451 | — | — | 0.05 | missing | Hono createServer factory + middleware stack | [scheduled bbox exact=2/41] export names surface in packages/app-server/src/modules/app/server.ts (t=5625, 2 atoms); better unscheduled exact=15/41: imports in packages/app-server/src/modules/app/server.ts (15 atoms, too expensive at final margin) |
-| 4.3 | 5731 | — | — | 0.43 | missing | Config — getConfig export + figue setup | [scheduled bbox exact=5/14] export body at packages/app-server/src/modules/app/config/config.ts:258 body 259 (t=8792, 5 atoms) |
+| 3.4 | 3451 | — | — | 0.05 | missing | Hono createServer factory + middleware stack | [scheduled bbox exact=2/41] export names surface in packages/app-server/src/modules/app/server.ts (t=5613, 2 atoms); better unscheduled exact=15/41: imports in packages/app-server/src/modules/app/server.ts (15 atoms, too expensive at final margin) |
+| 4.3 | 5731 | — | — | 0.43 | missing | Config — getConfig export + figue setup | [scheduled bbox exact=5/14] export body at packages/app-server/src/modules/app/config/config.ts:258 body 259 (t=8780, 5 atoms) |
 | 4.4 | 5875 | — | — | 0.00 | missing | Node.js entrypoint — config + storage + server build | [unscheduled same-file] imports in packages/app-server/src/index.node.ts (14 atoms, too expensive at final margin) |
 | 4.5 | 6202 | — | — | 0.00 | missing | Node.js entrypoint — static + SPA fallback + cron + listen | [unscheduled same-file] imports in packages/app-server/src/index.node.ts (14 atoms, too expensive at final margin) |
-| 6.1 | 9134 | — | — | 0.00 | missing | Lib — encryptNote body (crypto.usecases) | [scheduled same-file] export names surface in packages/lib/src/crypto/crypto.usecases.ts (t=3892, 2 atoms) |
-| 6.2 | 9232 | — | — | 0.29 | missing | Lib — note URL hash-fragment markers (`pw` / `dar`) | [scheduled bbox exact=2/7] export names surface in packages/lib/src/notes/notes.models.ts (t=4122, 2 atoms) |
-| 6.3 | 9539 | — | — | 0.04 | missing | CLI dispatcher + create-note args | [scheduled bbox exact=2/30] export names surface in packages/cli/src/create-note/create-note.command.ts (t=3074, 2 atoms); better unscheduled exact=12/30: export at packages/cli/src/create-note/create-note.command.ts:13 (12 atoms, too expensive at final margin) |
-| 6.4 | 9903 | — | — | 0.03 | missing | App-client — Solid Router routes | [scheduled bbox exact=2/32] export at packages/app-client/src/routes.tsx:11 (t=3441, 2 atoms); better unscheduled exact=19/32: export body at packages/app-client/src/routes.tsx:11 body 12 (19 atoms, too expensive at final margin) |
+| 6.1 | 9134 | — | — | 0.00 | missing | Lib — encryptNote body (crypto.usecases) | [scheduled same-file] export names surface in packages/lib/src/crypto/crypto.usecases.ts (t=3865, 2 atoms) |
+| 6.2 | 9232 | — | — | 0.29 | missing | Lib — note URL hash-fragment markers (`pw` / `dar`) | [scheduled bbox exact=2/7] export names surface in packages/lib/src/notes/notes.models.ts (t=4095, 2 atoms) |
+| 6.3 | 9539 | — | — | 0.04 | missing | CLI dispatcher + create-note args | [scheduled bbox exact=2/30] export names surface in packages/cli/src/create-note/create-note.command.ts (t=3062, 2 atoms); better unscheduled exact=12/30: export at packages/cli/src/create-note/create-note.command.ts:13 (12 atoms, too expensive at final margin) |
+| 6.4 | 9903 | — | — | 0.03 | missing | App-client — Solid Router routes | [scheduled bbox exact=2/32] export at packages/app-client/src/routes.tsx:11 (t=5056, 2 atoms); better unscheduled exact=19/32: export body at packages/app-client/src/routes.tsx:11 body 12 (19 atoms, too expensive at final margin) |
 
 ### no discovered candidate
 
@@ -112,15 +112,15 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=6, scheduled same-file
 | 1.5 | 250 | 1729 | +1479 | 0.83 | late | Root package.json — name + version + license | [scheduled bbox exact=4/6] package identity in package.json (t=332, 4 atoms) |
 | 1.6 | 357 | 1729 | +1372 | 1.00 | late | Root package.json — author + repo + engines | [scheduled bbox exact=5/8] package identity in package.json (t=332, 5 atoms) |
 | 1.8 | 694 | 1729 | +1035 | 0.95 | late | Root package.json — scripts + keywords + devDeps | [scheduled bbox exact=10/19] package identity in package.json (t=332, 10 atoms) |
-| 1.10 | 1225 | 4500 | +3275 | 0.94 | late | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=2180, 2 atoms) |
+| 1.10 | 1225 | 4473 | +3248 | 0.94 | late | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=2168, 2 atoms) |
 | 2.1 | 1726 | 401 | -1325 | 1.00 | early | Top-level lib package contents | fs-only |
-| 2.2 | 1742 | 498 | -1244 | 1.00 | early | lib/src — top-level source modules | fs-only |
-| 2.3 | 2101 | 5439 | +3338 | 0.96 | late | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=670, 19 atoms) |
+| 2.2 | 1742 | 417 | -1325 | 1.00 | early | lib/src — top-level source modules | fs-only |
+| 2.3 | 2101 | 5427 | +3326 | 0.96 | late | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=601, 19 atoms) |
 | 2.4 | 2124 | 734 | -1390 | 1.00 | early | Top-level app-server package contents | fs-only |
-| 2.5 | 2187 | 3316 | +1129 | 1.00 | late | Top-level app-client package contents | fs-only |
+| 2.5 | 2187 | 3304 | +1117 | 1.00 | late | Top-level app-client package contents | fs-only |
 | 2.6 | 2259 | 1241 | -1018 | 1.00 | early | Top-level cli + crypto + docs package contents | fs-only |
 | 3.1 | 2678 | 836 | -1842 | 1.00 | early | app-server/src — top-level entry layout | fs-only |
-| 6.5 | 9990 | 5099 | -4891 | 1.00 | early | Docs site — page map (VitePress src layout) | fs-only |
+| 6.5 | 9990 | 5087 | -4903 | 1.00 | early | Docs site — page map (VitePress src layout) | fs-only |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -132,14 +132,14 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=6, scheduled same-file
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 545 | 1.00 | 545 | 8405 | export at packages/app-client/playwright.config.ts:12 |
-| 254 | 1.00 | 254 | 3853 | export at packages/app-client/vite.config.ts:8 |
+| 545 | 1.00 | 545 | 8393 | export at packages/app-client/playwright.config.ts:12 |
+| 254 | 1.00 | 254 | 3826 | export at packages/app-client/vite.config.ts:8 |
 | 171 | 1.00 | 171 | 1599 | headings outline in CONTRIBUTING.md |
-| 166 | 1.00 | 166 | 5068 | imports in packages/app-client/src/index.tsx |
-| 165 | 0.85 | 195 | 2180 | headings outline in README.md |
-| 137 | 1.00 | 137 | 7088 | export at packages/crypto/src/index.node.ts:8 |
-| 137 | 1.00 | 137 | 7225 | export at packages/crypto/src/index.web.ts:8 |
-| 114 | 1.00 | 114 | 9627 | README.md section #26 |
-| 112 | 1.00 | 112 | 8672 | README.md section #24 |
-| 112 | 1.00 | 112 | 4373 | headings outline in packages/app-client/README.md |
+| 166 | 1.00 | 166 | 5041 | imports in packages/app-client/src/index.tsx |
+| 165 | 0.85 | 195 | 2168 | headings outline in README.md |
+| 137 | 1.00 | 137 | 7076 | export at packages/crypto/src/index.node.ts:8 |
+| 137 | 1.00 | 137 | 7213 | export at packages/crypto/src/index.web.ts:8 |
+| 114 | 1.00 | 114 | 9615 | README.md section #26 |
+| 112 | 1.00 | 112 | 8660 | README.md section #24 |
+| 112 | 1.00 | 112 | 4346 | headings outline in packages/app-client/README.md |
 | 2239 | — | — | — | +32 more rows |

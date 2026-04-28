@@ -37,7 +37,7 @@
 //! TypeScript grammar family. Parse trees are cached in [`WalkCtx`].
 
 use std::collections::HashSet;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
 use tree_sitter::{Node, Tree};
@@ -51,7 +51,7 @@ use crate::value::{
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
     extend_span, file_depth_factor,
-    fs::{files_with_any_extension, is_source_dir},
+    fs::{JS_MODULE_ENTRYPOINT_FILES, files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     statement_block_parts,
 };
@@ -69,11 +69,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     if js_like_files.is_empty() {
         return Vec::new();
     }
+    // Nested source dirs need index gating so child batches do not crowd the parent surface.
+    let module_entrypoint = (!is_source_dir(dir) || ctx.depth_from_root(dir) > 1)
+        .then(|| module_entrypoint_file(&js_like_files))
+        .flatten();
+    let module_entrypoint_gate = module_entrypoint
+        .as_ref()
+        .map(|file| BatchKey::Typescript(TsKey::Imports { file: file.clone() }));
 
     let mut out = Vec::new();
     for file in &js_like_files {
         let ep = is_entrypoint_file(file);
         let js_factor = js_value_factor(file, ctx);
+        let module_predecessor = module_entrypoint_gate
+            .as_ref()
+            .filter(|_| module_entrypoint.as_deref() != Some(file.as_path()))
+            .cloned();
 
         if ep
             && let Some(content) =
@@ -81,7 +92,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         {
             out.push(Batch {
                 key: TsKey::ModuleDocLede { file: file.clone() }.into(),
-                predecessor: None,
+                predecessor: module_predecessor.clone(),
                 content,
                 value: module_doc_lede_value(file, ctx, js_factor),
             });
@@ -90,7 +101,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
             out.push(Batch {
                 key: TsKey::Imports { file: file.clone() }.into(),
-                predecessor: None,
+                predecessor: module_predecessor.clone(),
                 content,
                 value: imports_value(file, ctx, js_factor),
             });
@@ -128,7 +139,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 };
                 out.push(Batch {
                     key: names_predecessors[chunk_index].clone(),
-                    predecessor: None,
+                    predecessor: module_predecessor.clone(),
                     content,
                     value: export_names_value(file, ctx, chunk_index, chunk_count, js_factor),
                 });
@@ -222,7 +233,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if let Some(content) = single_file_lines_content(file, &source, item.lines) {
                 out.push(Batch {
                     key: item_key.clone().into(),
-                    predecessor: None,
+                    predecessor: module_predecessor.clone(),
                     content,
                     value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
                 });
@@ -269,6 +280,19 @@ fn body_segment_value_factor(body_segment_index: usize) -> f64 {
     } else {
         LATE_BODY_SEGMENT_VALUE_FACTOR
     }
+}
+
+fn module_entrypoint_file(files: &[PathBuf]) -> Option<PathBuf> {
+    files
+        .iter()
+        .find(|file| is_module_bundle_entrypoint(file))
+        .cloned()
+}
+
+fn is_module_bundle_entrypoint(path: &Path) -> bool {
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| JS_MODULE_ENTRYPOINT_FILES.contains(&name))
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

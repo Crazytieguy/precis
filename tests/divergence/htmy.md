@@ -60,9 +60,9 @@ Candidate hint kinds: scheduled bbox=33, unscheduled bbox=3, fs-only=2, no disco
 | 2.3 | 2190 | — | — | 0.30 | missing | Context / Properties / PropertyValue type aliases | [scheduled bbox exact=8/33] python decl names surface in htmy/typing.py (t=6947, 8 atoms) |
 | 2.4 | 2429 | — | — | 0.00 | missing | Context provider protocols | [unscheduled bbox exact=5/26] python decl names surface #1 in htmy/typing.py (5 atoms, too expensive at final margin) |
 | 2.5 | 3034 | — | — | 0.20 | missing | RendererType + StreamingRendererType protocols | [scheduled bbox exact=8/60] python decl names surface in htmy/renderer/typing.py (t=2798, 8 atoms) |
-| 2.6 | 3169 | — | — | 0.54 | partial | Default renderer wiring (renderer/__init__.py) | [scheduled bbox exact=4/13] python imports in htmy/renderer/__init__.py (t=690, 4 atoms) |
+| 2.6 | 3169 | — | — | 0.54 | partial | Default renderer wiring (renderer/__init__.py) | [scheduled bbox exact=4/13] python imports in htmy/renderer/__init__.py (t=371, 4 atoms) |
 | 2.7 | 3325 | — | — | 0.43 | missing | Renderer.__init__ + render signatures | [scheduled bbox exact=5/14] python decl doc at htmy/renderer/default.py:228 (t=6306, 5 atoms); better unscheduled exact=6/14: python method at htmy/renderer/default.py:238 (6 atoms, predecessor not scheduled: python method sigs in htmy/renderer/default.py) |
-| 2.8 | 3558 | — | — | 0.07 | missing | BaselineRenderer (streaming) signatures | [scheduled bbox exact=2/17] python decl names surface in htmy/renderer/baseline.py (t=699, 2 atoms); better unscheduled exact=7/17: python decl doc at htmy/renderer/baseline.py:18 (7 atoms, too expensive at final margin) |
+| 2.8 | 3558 | — | — | 0.07 | missing | BaselineRenderer (streaming) signatures | [scheduled bbox exact=2/17] python decl names surface in htmy/renderer/baseline.py (t=380, 2 atoms); better unscheduled exact=7/17: python decl doc at htmy/renderer/baseline.py:18 (7 atoms, too expensive at final margin) |
 | 2.10 | 4419 | — | — | 0.21 | missing | Fragment / WithContext signatures | [scheduled bbox exact=4/38] python decl names surface in htmy/core.py (t=1668, 4 atoms); better unscheduled exact=8/38: python method sigs in htmy/core.py (8 atoms, too expensive at final margin) |
 | 2.11 | 4603 | — | — | 0.07 | missing | ContextAware base class — public methods | [scheduled bbox exact=0/16] python class body at htmy/core.py:64 (t=1857, 2 atoms); better unscheduled exact=6/16: python method sigs in htmy/core.py (8 atoms, too expensive at final margin) |
 | 2.12 | 5046 | — | — | 0.72 | partial | @component decorator — props+context (function/method) | [scheduled bbox exact=12/36] python method sigs in htmy/function_component.py (t=9140, 30 atoms) |
@@ -74,7 +74,7 @@ Candidate hint kinds: scheduled bbox=33, unscheduled bbox=3, fs-only=2, no disco
 | 2.20 | 7214 | — | — | 0.56 | partial | SafeStr / Text / XBool / SkipProperty + xml_format_string | [scheduled bbox exact=10/45] python decl names surface in htmy/core.py (t=1668, 10 atoms) |
 | 3.2 | 8131 | — | — | 0.05 | missing | html.py — block + form tag inventory (locations) | [scheduled bbox exact=2/41] python decl names surface in htmy/html.py (t=6475, 2 atoms); better unscheduled exact=12/41: python decl names surface #3 in htmy/html.py (12 atoms, too expensive at final margin) |
 | 3.3 | 8784 | — | — | 0.00 | missing | html.py — inline + table + heading tag inventory (locations) | [unscheduled bbox exact=15/78] python class body at htmy/html.py:831 (15 atoms, predecessor not scheduled: python decl at htmy/html.py:831) |
-| 4.1 | 9299 | — | — | 0.00 | missing | Snippet docstring — the 4-step pipeline + warning | [scheduled bbox exact=1/29] python decl names surface in htmy/snippet.py (t=374, 1 atoms); better unscheduled exact=23/29: python decl doc at htmy/snippet.py:158 (23 atoms, too expensive at final margin) |
+| 4.1 | 9299 | — | — | 0.00 | missing | Snippet docstring — the 4-step pipeline + warning | [scheduled bbox exact=1/29] python decl names surface in htmy/snippet.py (t=409, 1 atoms); better unscheduled exact=23/29: python decl doc at htmy/snippet.py:158 (23 atoms, too expensive at final margin) |
 | 4.2 | 9652 | — | — | 0.00 | missing | README — default attribute-formatting rules | [unscheduled bbox exact=6/9] README.md section #35 (6 atoms, too expensive at final margin) |
 
 ### no discovered candidate
@@ -100,7 +100,7 @@ Candidate hint kinds: scheduled bbox=33, unscheduled bbox=3, fs-only=2, no disco
 | 1.8 | 671 | 1566 | +895 | 1.00 | late | README key features (bottom half) | [scheduled bbox exact=1/8] README.md section #10 (t=2885, 1 atoms) |
 | 1.9 | 739 | 4409 | +3670 | 1.00 | late | Public exports — Snippet/Tag | [scheduled bbox exact=5/5] python imports in htmy/__init__.py (t=4409, 5 atoms) |
 | 1.10 | 967 | 4409 | +3442 | 1.00 | late | Public exports — typing aliases | [scheduled bbox exact=16/16] python imports in htmy/__init__.py (t=4409, 16 atoms) |
-| 1.12 | 1216 | 598 | -618 | 1.00 | early | htmy/ package directory listing | fs-only |
+| 1.12 | 1216 | 279 | -937 | 1.00 | early | htmy/ package directory listing | fs-only |
 | 2.9 | 4044 | 9890 | +5846 | 0.83 | late | Tag / TagWithProps / wildcard_tag signatures | [scheduled bbox exact=9/41] python decl doc at htmy/tag.py:84 (t=9890, 9 atoms) |
 | 2.13 | 5399 | 9569 | +4170 | 0.86 | late | @component decorator — context-only (function/method) | [scheduled bbox exact=12/28] python method sigs in htmy/function_component.py (t=9140, 18 atoms) |
 | 2.17 | 6275 | 3456 | -2819 | 0.92 | early | ErrorBoundary class signature | [scheduled bbox exact=6/13] python method at htmy/error_boundary.py:25 (t=3456, 6 atoms) |

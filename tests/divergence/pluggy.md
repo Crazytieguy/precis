@@ -1,4 +1,4 @@
-scores: Sim=0.392 Reached=14/40 Early=4 Late=7 Partial=4 Missing=22 Used=9938/10000
+scores: Sim=0.425 Reached=14/40 Early=4 Late=6 Partial=4 Missing=22 Used=9938/10000
 
 ## Verdict
 
@@ -30,7 +30,7 @@ Tiers: 1=3/4 reached, 0 partial, 1 missing, avg=0.75; 2=0/2 reached, 0 partial, 
 | wrong-slice / granularity | 12 | 8 | 4 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 11 | 11 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | 0 | filesystem/listing value |
-| timing-only | 12 | 0 | 0 | 12 | usually no code change |
+| timing-only | 11 | 0 | 0 | 11 | usually no code change |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
@@ -39,7 +39,7 @@ Tiers: 1=3/4 reached, 0 partial, 1 missing, avg=0.75; 2=0/2 reached, 0 partial, 
 | too expensive at final margin | 2 | 0.41 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, unscheduled same-file=1, fs-only=6, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, unscheduled same-file=1, fs-only=5, no discovered candidate=11
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -80,7 +80,7 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, unscheduled same-fi
 | 7.6 | 8324 | — | — | 0.00 | missing | pyproject.toml — [project] essentials (skip classifier list) | [unscheduled bbox exact=3/26] [package] in pyproject.toml (3 atoms, discovered unscheduled) |
 | 7.7 | 8576 | — | — | 0.00 | missing | pyproject.toml — [tool.ruff.lint] config | [unscheduled same-file] [package] in pyproject.toml (3 atoms, discovered unscheduled) |
 | 7.11 | 9819 | — | — | 0.09 | missing | _callers._multicall body — the actual call loop | [scheduled bbox exact=4/43] python decl doc at src/pluggy/_callers.py:82 (t=6945, 4 atoms); better unscheduled exact=31/43: python decl body at src/pluggy/_callers.py:82 body 97 (31 atoms, too expensive at final margin) |
-| 7.12 | 9946 | — | — | 0.31 | missing | Top-level meta — AGENTS.md, SECURITY.md, MANIFEST.in | [scheduled bbox exact=2/13] SECURITY.md section #0 (t=423, 2 atoms) |
+| 7.12 | 9946 | — | — | 0.31 | missing | Top-level meta — AGENTS.md, SECURITY.md, MANIFEST.in | [scheduled bbox exact=2/13] SECURITY.md section #0 (t=546, 2 atoms) |
 
 ### no discovered candidate
 
@@ -108,18 +108,17 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=4, unscheduled same-fi
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.3 | 256 | 766 | +510 | 1.00 | late | Source package layout (src/pluggy/) | fs-only |
-| 1.4 | 406 | 1185 | +779 | 1.00 | late | __all__ — full public-name list | [scheduled bbox exact=16/16] python imports in src/pluggy/__init__.py (t=1185, 16 atoms) |
+| 1.4 | 406 | 1131 | +725 | 1.00 | late | __all__ — full public-name list | [scheduled bbox exact=16/16] python imports in src/pluggy/__init__.py (t=1131, 16 atoms) |
 | 4.2 | 2037 | 8875 | +6838 | 1.00 | late | _hooks.py — every class + def name (markers, HookCaller, HookImpl, HookSpec) | [scheduled bbox exact=22/42] python method sigs #1 in src/pluggy/_hooks.py (t=8875, 43 atoms) |
 | 4.3 | 2138 | 6166 | +4028 | 1.00 | late | _callers.py — every def + _multicall signature | [scheduled bbox exact=5/9] python decl names surface in src/pluggy/_callers.py (t=1378, 8 atoms) |
 | 4.4 | 2275 | 2646 | +371 | 1.00 | aligned+over | _result.py — Result class + every method (in full) | [scheduled bbox exact=10/12] python method sigs in src/pluggy/_result.py (t=2633, 13 atoms) |
 | 4.6 | 2682 | 6779 | +4097 | 1.00 | late | _tracing.py — class + def names | [scheduled bbox exact=9/11] python method sigs in src/pluggy/_tracing.py (t=6779, 17 atoms) |
 | 5.2 | 3038 | 4026 | +988 | 0.83 | late | HookspecMarker + HookimplMarker class docstrings | [scheduled bbox exact=0/12] python method at src/pluggy/_hooks.py:111 (t=6461, 8 atoms) |
 | 5.5 | 4080 | 7859 | +3779 | 0.91 | late | HookspecOpts + HookimplOpts — TypedDict bodies | [scheduled bbox exact=16/32] python class body at src/pluggy/_hooks.py:56 (t=7859, 16 atoms) |
-| 7.1 | 6579 | 501 | -6078 | 1.00 | early | testing/ FS listing | fs-only |
-| 7.10 | 9300 | 394 | -8906 | 1.00 | early | changelog/ + downstream/ FS listings | fs-only |
+| 7.1 | 6579 | 647 | -5932 | 1.00 | early | testing/ FS listing | fs-only |
+| 7.10 | 9300 | 517 | -8783 | 1.00 | early | changelog/ + downstream/ FS listings | fs-only |
 | 7.13 | 9964 | 135 | -9829 | 1.00 | early | scripts/ FS + .github/workflows/ FS | fs-only |
-| 7.14 | 9996 | 198 | -9798 | 1.00 | early | docs/ root FS + docs/requirements.txt | fs-only |
+| 7.14 | 9996 | 259 | -9737 | 1.00 | early | docs/ root FS + docs/requirements.txt | fs-only |
 
 ## Walker waste rollup (by descriptor pattern)
 

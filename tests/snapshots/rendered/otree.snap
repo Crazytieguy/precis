@@ -59,58 +59,9 @@ src/
         …
     config/
         colors.rs
-            21→pub struct Colors {
-            …
-            78→pub struct DataColors {
-            …
-            162→pub struct TreeColors {
-            …
-            251→pub struct FooterColors {
-            252→    #[serde(default = "FooterColors::default_root")]
-            253→    pub root: Color,
-            255→    pub identify: Color,
-            257→    #[serde(default = "FooterColors::default_message")]
-            258→    pub message: Color,
-            259→}
-            286→pub struct PopupColors {
-            287→    #[serde(default = "PopupColors::default_error_text")]
-            288→    pub error_text: Color,
-            290→    #[serde(default = "PopupColors::default_help_name")]
-            291→    pub help_name: Color,
-            293→    #[serde(default = "PopupColors::default_help_value")]
-            294→    pub help_value: Color,
-            295→}
-            324→pub struct FilterColors {
-            325→    #[serde(default = "FilterColors::default_border")]
-            326→    pub border: Color,
-            327→}
-            342→pub struct Color {
-            343→    pub fg: Option<String>,
-            344→    pub bg: Option<String>,
-            346→    #[serde(default = "Config::disable")]
-            347→    pub bold: bool,
-            348→    #[serde(default = "Config::disable")]
-            349→    pub italic: bool,
-            351→    #[serde(skip)]
-            352→    pub style: Style,
-            353→}
         keys.rs
             54→pub enum Key {
-            55→    Char(char),
-            57→    Ctrl(char),
-            58→    Alt(char),
-            60→    F(u8),
-            62→    Backspace,
-            63→    Enter,
-            64→    Left,
-            65→    Right,
-            66→    Up,
-            67→    Down,
-            68→    PageUp,
-            69→    PageDown,
-            70→    Tab,
-            71→    Esc,
-            72→}
+            …
             195→pub struct Keys {
             …
             351→pub struct KeyAction {
@@ -118,41 +69,8 @@ src/
             353→    pub action: Option<Action>,
             354→}
         mod.rs
-            1→pub mod colors;
-            2→pub mod keys;
-            3→pub mod types;
-            5→use std::collections::HashMap;
-            6→use std::path::PathBuf;
-            7→use std::{env, fs, io};
-            9→use anyhow::{bail, Context, Result};
-            10→use serde::{Deserialize, Serialize};
-            12→use self::colors::Colors;
-            13→use self::keys::Keys;
-            14→use self::types::Types;
             17→pub struct Config {
-            18→    #[serde(default = "Tree::default")]
-            19→    pub tree: Tree,
-            21→    #[serde(default = "Editor::default")]
-            22→    pub editor: Editor,
-            24→    #[serde(default = "Data::default")]
-            25→    pub data: Data,
-            27→    #[serde(default = "Layout::default")]
-            28→    pub layout: Layout,
-            30→    #[serde(default = "Header::default")]
-            31→    pub header: Header,
-            33→    #[serde(default = "Footer::default")]
-            34→    pub footer: Footer,
-            36→    #[serde(default = "Filter::default")]
-            37→    pub filter: Filter,
-            39→    #[serde(default = "Config::empty_map")]
-            40→    pub palette: HashMap<String, String>,
-            42→    #[serde(default = "Colors::default")]
-            43→    pub colors: Colors,
-            45→    #[serde(default = "Types::default")]
-            46→    pub types: Types,
-            48→    #[serde(default = "Keys::default")]
-            49→    pub keys: Keys,
-            50→}
+            …
             53→pub struct Tree {
             54→    #[serde(default = "Config::disable")]
             55→    pub disable_selected_highlight: bool,
@@ -237,15 +155,72 @@ src/
         115→    }
     parse/
         any.rs
+            9→pub struct AnyParser {
+            10→    inner: RefCell<Option<Box<dyn Parser>>>,
+            11→}
         hcl.rs
+            8→pub struct HclParser {}
+            …
         json.rs
+            6→pub struct JsonParser {}
+            …
+            26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
+            …
         jsonl.rs
+            7→pub struct JsonlParser;
+            …
         mod.rs
+            18→pub enum ContentType {
+            19→    Json,
+            20→    Yaml,
+            21→    Toml,
+            22→    Xml,
+            24→    /// See: <https://github.com/hashicorp/hcl>
+            25→    Hcl,
+            27→    /// Useful for some logs file: <https://jsonlines.org/>
+            28→    // TODO: check out json-seq as specified in RFC7464 (https://datatracker.ietf.org/doc/html/rfc7464)?
+            29→    // basically jsonl but every json object is prefixed with 0x1e
+            30→    Jsonl,
+            32→    #[clap(skip)]
+            33→    Any,
+            34→}
+            36→pub trait Parser {
+            37→    fn extension(&self) -> &'static str;
+            39→    fn allow_array_root(&self) -> bool;
+            41→    fn parse(&self, data: &str) -> Result<Value>;
+            43→    fn syntax_highlight(&self, name: &str, value: &Value) -> Vec<SyntaxToken>;
+            45→    fn parse_root(&self, validator: Option<&dyn Parser>, data: &[u8]) -> Result<Value> {
+            46→        let data = String::from_utf8(data.to_vec()).context("parse content utf8")?;
+            47→        let value = self.parse(&data)?;
+            49→        match value {
+            50→            Value::Object(_) => {}
+            51→            Value::Array(_) => {
+            52→                let allow =
+            53→                    validator.map_or_else(|| self.allow_array_root(), Parser::allow_array_root);
+            54→                if !allow {
+            55→                    let schema = validator.map_or_else(|| self.extension(), Parser::extension);
+            56→                    bail!("schema '{schema}' does not allow array as root");
+            57→                }
+            58→            }
+            59→            _ => bail!("root value must be either object or array"),
+            60→        }
+            62→        Ok(value)
+            63→    }
+            64→}
+            66→impl ContentType {
+            67→    pub fn new_parser(self) -> Box<dyn Parser> {
+            …
         syntax.rs
         test_cases/
         toml.rs
+            9→pub struct TomlParser {}
+            …
         xml.rs
+            12→pub struct XmlParser {}
+            …
         yaml.rs
+            8→pub struct YamlParser {}
+            …
     tree.rs
         14→pub struct Tree {
         15→    pub parser: Rc<Box<dyn Parser>>,

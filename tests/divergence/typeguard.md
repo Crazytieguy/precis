@@ -1,4 +1,4 @@
-scores: Sim=0.457 Reached=14/39 Early=3 Late=5 Partial=7 Missing=18 Used=10000/10000
+scores: Sim=0.464 Reached=14/39 Early=3 Late=5 Partial=7 Missing=18 Used=10000/10000
 
 ## Verdict
 
@@ -105,7 +105,7 @@ Candidate hint kinds: scheduled bbox=22, fs-only=3, no discovered candidate=11
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 1.2 | 75 | 190 | +115 | 1.00 | late | docs/ listing | fs-only |
-| 1.3 | 147 | 316 | +169 | 1.00 | late | src/typeguard/ module listing | fs-only |
+| 1.3 | 147 | 262 | +115 | 1.00 | late | src/typeguard/ module listing | fs-only |
 | 1.8 | 964 | 1090 | +126 | 0.94 | aligned | Public re-exports — head of typeguard/__init__.py | [scheduled bbox exact=16/17] python imports in src/typeguard/__init__.py (t=1090, 16 atoms) |
 | 2.1 | 1663 | 8131 | +6468 | 0.82 | late | _exceptions.py — class signatures + summary docstrings | [scheduled bbox exact=5/28] python method sigs in src/typeguard/_exceptions.py (t=2212, 10 atoms) |
 | 2.9 | 4573 | 3881 | -692 | 0.81 | aligned | Checker plug-in API — TypeCheckerCallable / TypeCheckLookupCallback / checker_lookup_functions | [scheduled bbox exact=5/16] python decl at src/typeguard/_checkers.py:89 (t=3881, 5 atoms) |

@@ -1,4 +1,4 @@
-scores: Sim=0.575 Reached=14/40 Early=3 Late=8 Partial=1 Missing=25 Used=9492/10000
+scores: Sim=0.580 Reached=14/40 Early=3 Late=8 Partial=1 Missing=25 Used=9445/10000
 
 ## Verdict
 
@@ -75,10 +75,10 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 3.4 | 3219 | — | — | 0.63 | partial | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=8886, 12 atoms) |
+| 3.4 | 3219 | — | — | 0.63 | partial | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=8839, 12 atoms) |
 | 3.5 | 3533 | — | — | 0.00 | missing | README — X-Ranges desugaring | [unscheduled bbox exact=13/18] README.md section #15 (13 atoms, discovered unscheduled) |
 | 3.7 | 4873 | — | — | 0.00 | missing | README — Caret Ranges desugaring (the most complex) | [unscheduled bbox exact=34/43] README.md section #17 (34 atoms, too expensive at final margin) |
-| 3.9 | 5681 | — | — | 0.42 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4509, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, discovered unscheduled) |
+| 3.9 | 5681 | — | — | 0.42 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4462, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, discovered unscheduled) |
 | 4.3 | 5992 | — | — | 0.00 | missing | Range module — internal helpers (locations) | [unscheduled same-file] export body at classes/range.js:6 body 8 (165 atoms, predecessor not scheduled: export at classes/range.js:6) |
 | 4.4 | 6069 | — | — | 0.00 | missing | Comparator class — method signatures (locations) | [unscheduled bbox exact=7/9] export at classes/comparator.js:5 (12 atoms, predecessor not scheduled: export names surface in classes/comparator.js) |
 | 4.5 | 6460 | — | — | 0.00 | missing | internal/constants.js — full file | [unscheduled bbox exact=10/37] export at internal/constants.js:28 (10 atoms, predecessor not scheduled: export names surface in internal/constants.js) |
@@ -107,18 +107,18 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.1 | 61 | 953 | +892 | 0.80 | late | package.json — name, description, main | [scheduled bbox exact=3/5] package identity in package.json (t=268, 3 atoms) |
+| 1.1 | 61 | 922 | +861 | 0.80 | late | package.json — name, description, main | [scheduled bbox exact=3/5] package identity in package.json (t=268, 3 atoms) |
 | 1.2 | 164 | 103 | -61 | 1.00 | early | Repo top-level listing | fs-only |
-| 1.3 | 281 | 1250 | +969 | 1.00 | late | package.json — bin entry and Node engines floor | [scheduled bbox exact=3/11] package entrypoints in package.json (t=953, 14 atoms) |
+| 1.3 | 281 | 1219 | +938 | 1.00 | late | package.json — bin entry and Node engines floor | [scheduled bbox exact=3/11] package entrypoints in package.json (t=922, 14 atoms) |
 | 2.1 | 354 | 130 | -224 | 1.00 | early | README — title (lede) | [scheduled bbox exact=2/2] README headline in README.md (t=130, 2 atoms) |
-| 2.2 | 515 | 1355 | +840 | 1.00 | late | functions/ + ranges/ listings | fs-only |
-| 2.5 | 1401 | 2697 | +1296 | 1.00 | late | index.js — module.exports object body (canonical public API list) | [scheduled bbox exact=47/47] export at index.js:45 (t=2697, 47 atoms) |
-| 2.6 | 1667 | 9492 | +7825 | 0.83 | late | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8379, 40 atoms) |
-| 3.1 | 1775 | 1764 | -11 | 0.88 | aligned | README — Versions section (leading = and v) | [scheduled bbox exact=6/8] README.md section #3 (t=1764, 6 atoms) |
-| 3.2 | 2375 | 6347 | +3972 | 0.80 | late | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6347, 27 atoms) |
-| 3.3 | 2947 | 6706 | +3759 | 0.88 | late | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=6706, 7 atoms) |
-| 3.8 | 5124 | 8379 | +3255 | 0.84 | late | README — Functions section preface (options doc) | [scheduled bbox exact=15/19] README.md section #19 (t=8379, 15 atoms) |
-| 7.5 | 9924 | 510 | -9414 | 0.88 | early | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9216, 14 atoms) |
+| 2.2 | 515 | 1324 | +809 | 1.00 | late | functions/ + ranges/ listings | fs-only |
+| 2.5 | 1401 | 2650 | +1249 | 1.00 | late | index.js — module.exports object body (canonical public API list) | [scheduled bbox exact=47/47] export at index.js:45 (t=2650, 47 atoms) |
+| 2.6 | 1667 | 9445 | +7778 | 0.83 | late | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8332, 40 atoms) |
+| 3.1 | 1775 | 1717 | -58 | 0.88 | aligned | README — Versions section (leading = and v) | [scheduled bbox exact=6/8] README.md section #3 (t=1717, 6 atoms) |
+| 3.2 | 2375 | 6300 | +3925 | 0.80 | late | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6300, 27 atoms) |
+| 3.3 | 2947 | 6659 | +3712 | 0.88 | late | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=6659, 7 atoms) |
+| 3.8 | 5124 | 8332 | +3208 | 0.84 | late | README — Functions section preface (options doc) | [scheduled bbox exact=15/19] README.md section #19 (t=8332, 15 atoms) |
+| 7.5 | 9924 | 479 | -9445 | 0.88 | early | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9169, 14 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -132,14 +132,14 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 499 | 0.68 | 730 | 8379 | README.md section #19 |
-| 373 | 1.00 | 373 | 5787 | plaintext config .gitignore |
-| 350 | 1.00 | 350 | 5279 | json config release-please-config.json |
-| 330 | 1.00 | 330 | 9216 | CONTRIBUTING.md section #3 |
-| 316 | 1.00 | 316 | 7081 | CHANGELOG.md section #2 |
-| 265 | 0.96 | 276 | 9492 | README.md section #10 |
-| 224 | 1.00 | 224 | 7499 | README.md section #53 |
-| 214 | 1.00 | 214 | 8593 | CHANGELOG.md section #6 |
-| 172 | 1.00 | 172 | 6519 | README.md section #45 |
-| 157 | 1.00 | 157 | 4929 | README.md section #43 |
+| 499 | 0.68 | 730 | 8332 | README.md section #19 |
+| 373 | 1.00 | 373 | 5740 | plaintext config .gitignore |
+| 350 | 1.00 | 350 | 5232 | json config release-please-config.json |
+| 330 | 1.00 | 330 | 9169 | CONTRIBUTING.md section #3 |
+| 316 | 1.00 | 316 | 7034 | CHANGELOG.md section #2 |
+| 265 | 0.96 | 276 | 9445 | README.md section #10 |
+| 224 | 1.00 | 224 | 7452 | README.md section #53 |
+| 214 | 1.00 | 214 | 8546 | CHANGELOG.md section #6 |
+| 172 | 1.00 | 172 | 6472 | README.md section #45 |
+| 157 | 1.00 | 157 | 4882 | README.md section #43 |
 | 1964 | — | — | — | +24 more rows |

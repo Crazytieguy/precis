@@ -223,70 +223,10 @@ entries = ["api.rst", "conf.py", "contributing.rst", "extending.rst", "features.
 
 [[batches]]
 position = 10
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
-cost_tokens = 24
-cum_tokens = 214
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md", section_index: 0 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md section #0"
-cost_tokens = 30
-cum_tokens = 244
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard'"
 cost_tokens = 72
-cum_tokens = 316
+cum_tokens = 262
 
 [batches.content]
 kind = "fs"
@@ -296,11 +236,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard"
 entries = ["__init__.py", "_checkers.py", "_config.py", "_decorators.py", "_exceptions.py", "_functions.py", "_importhook.py", "_memo.py", "_pytest_plugin.py", "_suppression.py", "_transformer.py", "_utils.py", "py.typed"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py"
 cost_tokens = 28
-cum_tokens = 344
+cum_tokens = 290
 
 [batches.content]
 kind = "lines"
@@ -330,11 +270,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py", start_line: 34 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py:34"
 cost_tokens = 0
-cum_tokens = 344
+cum_tokens = 290
 
 [batches.content]
 kind = "lines"
@@ -348,11 +288,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py", start_line: 37 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/__init__.py:37"
 cost_tokens = 0
-cum_tokens = 344
+cum_tokens = 290
 
 [batches.content]
 kind = "lines"
@@ -366,11 +306,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py"
 cost_tokens = 11
-cum_tokens = 355
+cum_tokens = 301
 
 [batches.content]
 kind = "lines"
@@ -392,11 +332,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py:8"
 cost_tokens = 0
-cum_tokens = 355
+cum_tokens = 301
 
 [batches.content]
 kind = "lines"
@@ -410,11 +350,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py", chunk_index: 0 })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py"
 cost_tokens = 11
-cum_tokens = 366
+cum_tokens = 312
 
 [batches.content]
 kind = "lines"
@@ -436,11 +376,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py"
 cost_tokens = 13
-cum_tokens = 379
+cum_tokens = 325
 
 [batches.content]
 kind = "lines"
@@ -462,11 +402,11 @@ end = 489
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py", start_line: 488 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_transformer.py:488"
 cost_tokens = 0
-cum_tokens = 379
+cum_tokens = 325
 
 [batches.content]
 kind = "lines"
@@ -480,11 +420,11 @@ end = 488
 kind = "full"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py"
 cost_tokens = 34
-cum_tokens = 413
+cum_tokens = 359
 
 [batches.content]
 kind = "lines"
@@ -522,11 +462,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 20
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py:16"
 cost_tokens = 0
-cum_tokens = 413
+cum_tokens = 359
 
 [batches.content]
 kind = "lines"
@@ -540,11 +480,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 23
+position = 21
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py", start_line: 75 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_pytest_plugin.py:75"
 cost_tokens = 0
-cum_tokens = 413
+cum_tokens = 359
 
 [batches.content]
 kind = "lines"
@@ -558,11 +498,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 24
+position = 22
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py", start_line: 8 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_memo.py:8"
 cost_tokens = 22
-cum_tokens = 435
+cum_tokens = 381
 
 [batches.content]
 kind = "lines"
@@ -576,11 +516,37 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
+cost_tokens = 24
+cum_tokens = 405
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/docs/conf.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py"
 cost_tokens = 51
-cum_tokens = 486
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -650,11 +616,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 5 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:5"
 cost_tokens = 0
-cum_tokens = 486
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -668,11 +634,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 12 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:12"
 cost_tokens = 0
-cum_tokens = 486
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -686,11 +652,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 19 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:19"
 cost_tokens = 0
-cum_tokens = 486
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -704,11 +670,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 26 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:26"
 cost_tokens = 0
-cum_tokens = 486
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -722,11 +688,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 19 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:19"
 cost_tokens = 19
-cum_tokens = 505
+cum_tokens = 475
 
 [batches.content]
 kind = "lines"
@@ -740,11 +706,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py", start_line: 12 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py:12"
 cost_tokens = 20
-cum_tokens = 525
+cum_tokens = 495
 
 [batches.content]
 kind = "lines"
@@ -753,6 +719,40 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/src/typeguard/_exceptions.py"
 start = 13
 end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md section #0"
+cost_tokens = 30
+cum_tokens = 525
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/typeguard/.github/pull_request_template.md"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "full"

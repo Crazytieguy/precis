@@ -147,6 +147,31 @@ sps-common/
             15→pub use error::{Result, SpsError};
             16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
         model/
+            artifact.rs
+                9→pub enum InstalledArtifact {
+                …
+            cask.rs
+            formula.rs
+            mod.rs
+                3→use std::sync::Arc;
+                5→pub mod artifact;
+                6→pub mod cask;
+                7→pub mod formula;
+                8→pub mod tap;
+                9→pub mod version;
+                12→pub use artifact::InstalledArtifact;
+                13→pub use cask::Cask;
+                14→pub use formula::Formula;
+                17→pub enum InstallTargetIdentifier {
+                18→    Formula(Arc<Formula>),
+                19→    Cask(Arc<Cask>),
+                20→}
+            tap.rs
+                10→pub struct Tap {
+                …
+            version.rs
+                11→pub struct Version(semver::Version);
+                …
         pipeline.rs
 sps-core/
     Cargo.toml
@@ -181,27 +206,14 @@ sps-core/
                 helpers.rs
                 mod.rs
                     25→pub struct CaskInstallManifest {
-                    26→    pub manifest_format_version: String,
-                    27→    pub token: String,
-                    28→    pub version: String,
-                    29→    pub installed_at: u64,
-                    30→    pub artifacts: Vec<InstalledArtifact>,
-                    31→    pub primary_app_file_name: Option<String>,
-                    32→    pub is_installed: bool,              // New flag for soft uninstall
-                    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
-                    34→}
-                    36→/// Returns the path to the cask's version directory in the private store.
+                    …
                     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
                     38→    let version = cask.version.clone().unwrap_or_else(|| "latest".to_string());
                     39→    config.cask_store_version_path(&cask.token, &version)
-                    42→/// Returns the path to the cask's token directory in the private store.
                     43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
                     44→    config.cask_store_token_path(&cask.token)
-                    47→/// Returns the path to the main app bundle for a cask in the private store.
-                    48→/// This assumes the primary app bundle is named as specified in the cask's artifacts.
                     49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
                     …
-                    70→    None
                     73→pub async fn download_cask(cask: &Cask, cache: &Cache) -> Result<PathBuf> {
                     74→    download_cask_with_progress(cask, cache, None).await
                     77→pub async fn download_cask_with_progress(
@@ -229,9 +241,6 @@ sps-core/
                     615→    artifacts: Vec<InstalledArtifact>,
                     616→) -> Result<()> {
                     …
-                    683→/// Recursively cleans up empty parent directories in the private cask store.
-                    684→/// Starts from the given path and walks up, removing empty directories until a non-empty or root is
-                    685→/// found.
                     686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
                     …
             devtools.rs

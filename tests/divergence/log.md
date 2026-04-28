@@ -1,4 +1,4 @@
-scores: Sim=0.527 Reached=15/44 Early=0 Late=10 Partial=3 Missing=26 Used=9067/10000
+scores: Sim=0.518 Reached=15/44 Early=1 Late=9 Partial=3 Missing=26 Used=9067/10000
 
 ## Verdict
 
@@ -86,16 +86,16 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=10, scheduled same-fil
 | 3.5 | 3082 | — | — | 0.00 | missing | Global state + ordering constants | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
 | 3.8 | 4415 | — | — | 0.38 | missing | __private_api log dispatcher | [scheduled bbox exact=11/55] pub item at src/__private_api.rs:84 (t=7383, 11 atoms) |
 | 3.9 | 4715 | — | — | 0.00 | missing | set_logger_inner state transitions | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
-| 4.1 | 5085 | — | — | 0.33 | missing | kv module concept | [scheduled bbox exact=10/30] crate-doc lede in src/kv/mod.rs (t=730, 10 atoms); better unscheduled exact=19/30: crate-doc body in src/kv/mod.rs (19 atoms, too expensive at final margin) |
+| 4.1 | 5085 | — | — | 0.33 | missing | kv module concept | [scheduled bbox exact=10/30] crate-doc lede in src/kv/mod.rs (t=240, 10 atoms); better unscheduled exact=19/30: crate-doc body in src/kv/mod.rs (19 atoms, too expensive at final margin) |
 | 4.2 | 5290 | — | — | 0.55 | partial | kv module re-exports | [scheduled bbox exact=11/20] mod/use plumbing in src/kv/mod.rs (t=3785, 11 atoms) |
 | 4.5 | 5889 | — | — | 0.18 | missing | kv::Value capture constructors | [scheduled bbox exact=3/17] pub item at src/kv/value.rs:119 (t=940, 3 atoms) |
-| 4.6 | 6053 | — | — | 0.58 | partial | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=840, 4 atoms) |
+| 4.6 | 6053 | — | — | 0.58 | partial | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=596, 4 atoms) |
 | 4.8 | 6552 | — | — | 0.00 | missing | kv::Value to_* primitive accessors | [scheduled same-file] pub item at src/kv/value.rs:462 (t=8999, 63 atoms) |
 | 5.4 | 7693 | — | — | 0.00 | missing | Compile-time max_level_* conflict guards | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
 | 5.5 | 7986 | — | — | 0.00 | missing | FromStr impls for Level/LevelFilter | [scheduled bbox exact=0/24] pub item at src/lib.rs:636 (t=1669, 14 atoms); better unscheduled exact=6/24: impl method sigs in src/lib.rs (30 atoms, too expensive at final margin) |
 | 5.9 | 8977 | — | — | 0.07 | missing | non-atomic AtomicUsize fallback | [scheduled bbox exact=2/29] mod/use plumbing in src/lib.rs (t=3344, 2 atoms); better unscheduled exact=7/29: impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
-| 5.12 | 9640 | — | — | 0.00 | missing | kv::Source impl matrix | [scheduled bbox exact=0/37] pub item at src/kv/source.rs:235 (t=886, 4 atoms) |
-| 5.13 | 9784 | — | — | 0.27 | missing | kv::Error variants | [scheduled bbox exact=3/15] pub item at src/kv/error.rs:5 (t=641, 3 atoms) |
+| 5.12 | 9640 | — | — | 0.00 | missing | kv::Source impl matrix | [scheduled bbox exact=0/37] pub item at src/kv/source.rs:235 (t=642, 4 atoms) |
+| 5.13 | 9784 | — | — | 0.27 | missing | kv::Error variants | [scheduled bbox exact=3/15] pub item at src/kv/error.rs:5 (t=151, 3 atoms) |
 
 ### no discovered candidate
 
@@ -113,10 +113,10 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=10, scheduled same-fil
 
 | id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.2 | 102 | 355 | +253 | 1.00 | late | Cargo name + description | [scheduled bbox exact=4/4] [package] in Cargo.toml (t=355, 9 atoms) |
-| 1.3 | 190 | 599 | +409 | 1.00 | late | Crate-doc one-liner | [scheduled bbox exact=6/6] crate-doc lede in src/lib.rs (t=599, 6 atoms) |
-| 1.4 | 231 | 619 | +388 | 1.00 | late | src/ + src/kv/ listing | fs-only |
-| 1.5 | 381 | 599 | +218 | 1.00 | late | Crate-doc target/level/body model | [scheduled bbox exact=9/9] crate-doc lede in src/lib.rs (t=599, 9 atoms) |
+| 1.2 | 102 | 486 | +384 | 1.00 | late | Cargo name + description | [scheduled bbox exact=4/4] [package] in Cargo.toml (t=486, 9 atoms) |
+| 1.3 | 190 | 886 | +696 | 1.00 | late | Crate-doc one-liner | [scheduled bbox exact=6/6] crate-doc lede in src/lib.rs (t=886, 6 atoms) |
+| 1.4 | 231 | 129 | -102 | 1.00 | early | src/ + src/kv/ listing | fs-only |
+| 1.5 | 381 | 886 | +505 | 1.00 | late | Crate-doc target/level/body model | [scheduled bbox exact=9/9] crate-doc lede in src/lib.rs (t=886, 9 atoms) |
 | 2.1 | 735 | 1336 | +601 | 1.00 | late | Public-item map of lib.rs | [scheduled bbox exact=16/17] pub-item names surface in src/lib.rs (t=1336, 31 atoms) |
 | 2.2 | 831 | 4332 | +3501 | 1.00 | late | Macro names (src/macros.rs) | [scheduled bbox exact=1/10] macro_export body at src/macros.rs:75 (t=8159, 38 atoms) |
 | 2.3 | 883 | 2551 | +1668 | 1.00 | late | Log trait method signatures | [scheduled bbox exact=4/4] pub item at src/lib.rs:1249 (t=2551, 17 atoms) |
@@ -145,5 +145,5 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=10, scheduled same-fil
 | 198 | 1.00 | 198 | 3542 | README.md section #0 |
 | 156 | 0.61 | 256 | 4332 | macro_export names across src |
 | 147 | 1.00 | 147 | 2715 | pub item body at src/lib.rs:1529 body 1530 |
-| 128 | 0.70 | 184 | 355 | [package] in Cargo.toml |
+| 128 | 0.70 | 184 | 486 | [package] in Cargo.toml |
 | 1772 | — | — | — | +20 more rows |

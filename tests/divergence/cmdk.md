@@ -1,4 +1,4 @@
-scores: Sim=0.354 Reached=26/42 Early=9 Late=12 Partial=2 Missing=14 Used=9021/10000
+scores: Sim=0.355 Reached=26/42 Early=9 Late=12 Partial=2 Missing=14 Used=9021/10000
 
 ## Verdict
 
@@ -78,10 +78,10 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=3, scheduled same-file
 | 5.5 | 3705 | — | — | 0.72 | partial | README — Group / Separator / Empty / Loading subsections | [scheduled bbox exact=8/32] headings outline in README.md (t=2760, 8 atoms) |
 | 7.2 | 5647 | — | — | 0.00 | missing | command-score — SCORE_* constants (positive weights) | [scheduled same-file] export body at cmdk/src/command-score.ts:155 body 156 (t=3828, 6 atoms) |
 | 7.3 | 6081 | — | — | 0.00 | missing | command-score — PENALTY_* constants (decay weights) | [scheduled same-file] export body at cmdk/src/command-score.ts:155 body 156 (t=3828, 6 atoms) |
-| 8.2 | 6516 | — | — | 0.00 | missing | Playwright config — test dir + dev-server hookup | [scheduled same-file] imports in playwright.config.ts (t=919, 1 atoms) |
-| 9.4 | 8625 | — | — | 0.17 | missing | index.tsx — useCmdk + useValue helpers | [scheduled bbox exact=7/41] module item at cmdk/src/index.tsx:1010 (t=1144, 7 atoms); better unscheduled exact=19/41: module item body at cmdk/src/index.tsx:1010 body 1019 (19 atoms, discovered unscheduled) |
+| 8.2 | 6516 | — | — | 0.00 | missing | Playwright config — test dir + dev-server hookup | [scheduled same-file] imports in playwright.config.ts (t=895, 1 atoms) |
+| 9.4 | 8625 | — | — | 0.17 | missing | index.tsx — useCmdk + useValue helpers | [scheduled bbox exact=7/41] module item at cmdk/src/index.tsx:1010 (t=1120, 7 atoms); better unscheduled exact=19/41: module item body at cmdk/src/index.tsx:1010 body 1019 (19 atoms, discovered unscheduled) |
 | 10.1 | 9027 | — | — | 0.20 | missing | Architecture — Discarded approaches (rejected alternatives) | [scheduled bbox exact=2/10] headings outline in ARCHITECTURE.md (t=736, 2 atoms); better unscheduled exact=5/10: ARCHITECTURE.md section #1 (5 atoms, discovered unscheduled) |
-| 10.7 | 9996 | — | — | 0.45 | missing | index.tsx — Empty body | [scheduled bbox exact=3/9] export doc at cmdk/src/index.tsx:899 (t=1750, 3 atoms) |
+| 10.7 | 9996 | — | — | 0.45 | missing | index.tsx — Empty body | [scheduled bbox exact=3/9] export doc at cmdk/src/index.tsx:899 (t=1726, 3 atoms) |
 
 ### no discovered candidate
 
@@ -105,14 +105,14 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=3, scheduled same-file
 | 1.1 | 78 | 627 | +549 | 1.00 | late | README lede — one-sentence elevator pitch | [scheduled bbox exact=1/1] README headline in README.md (t=627, 1 atoms) |
 | 1.2 | 140 | 62 | -78 | 1.00 | early | Top-level filesystem layout | fs-only |
 | 1.4 | 257 | 6830 | +6573 | 1.00 | late | Library runtime dependencies | [scheduled bbox exact=6/6] package dependencies in cmdk/package.json (t=6830, 6 atoms) |
-| 1.5 | 291 | 2230 | +1939 | 1.00 | late | pnpm workspace members | [scheduled bbox exact=4/4] plaintext config pnpm-workspace.yaml (t=2230, 4 atoms) |
+| 1.5 | 291 | 2206 | +1915 | 1.00 | late | pnpm workspace members | [scheduled bbox exact=4/4] plaintext config pnpm-workspace.yaml (t=2206, 4 atoms) |
 | 1.8 | 751 | 3066 | +2315 | 1.00 | late | Root scripts — how to build/run/test | [scheduled bbox exact=10/10] package scripts in package.json (t=3066, 10 atoms) |
 | 2.1 | 802 | 2760 | +1958 | 1.00 | late | README — top-level section headings | [scheduled bbox exact=1/7] README.md section #2 (t=9021, 54 atoms) |
 | 2.2 | 949 | 2760 | +1811 | 1.00 | late | README — every Parts heading (with [cmdk-*] selectors) | [scheduled bbox exact=10/10] headings outline in README.md (t=2760, 19 atoms) |
 | 2.3 | 1166 | 9021 | +7855 | 0.87 | late | README — basic Use snippet | [scheduled bbox exact=20/23] README.md section #2 (t=9021, 20 atoms) |
-| 4.1 | 1342 | 2470 | +1128 | 0.88 | late | index.tsx — module imports + 'use client' | [scheduled bbox exact=7/8] imports in cmdk/src/index.tsx (t=2470, 7 atoms) |
-| 4.2 | 1557 | 1600 | +43 | 0.96 | aligned | index.tsx — public exports surface | [scheduled bbox exact=10/24] module item at cmdk/src/index.tsx:930 (t=1318, 10 atoms) |
-| 4.3 | 1718 | 1600 | -118 | 1.00 | aligned+over | index.tsx — every component declaration line | [scheduled bbox exact=0/9] export body at cmdk/src/index.tsx:664 body 665 (t=4464, 49 atoms) |
+| 4.1 | 1342 | 2446 | +1104 | 0.88 | late | index.tsx — module imports + 'use client' | [scheduled bbox exact=7/8] imports in cmdk/src/index.tsx (t=2446, 7 atoms) |
+| 4.2 | 1557 | 1576 | +19 | 0.96 | aligned | index.tsx — public exports surface | [scheduled bbox exact=10/24] module item at cmdk/src/index.tsx:930 (t=1294, 10 atoms) |
+| 4.3 | 1718 | 1576 | -142 | 1.00 | aligned+over | index.tsx — every component declaration line | [scheduled bbox exact=0/9] export body at cmdk/src/index.tsx:664 body 665 (t=4464, 49 atoms) |
 | 4.4 | 1857 | 507 | -1350 | 1.00 | early | index.tsx — data-attribute selectors + SELECT_EVENT | [scheduled bbox exact=1/8] module item at cmdk/src/index.tsx:161 (t=679, 1 atoms) |
 | 5.1 | 2516 | 7231 | +4715 | 0.81 | late | README — Item subsection (the most-asked-about part) | [scheduled bbox exact=9/27] README.md section #16 (t=7231, 9 atoms) |
 | 5.2 | 2755 | 7612 | +4857 | 0.83 | late | README — Command (root) value/filter/keywords/loop prose | [scheduled bbox exact=1/12] README.md section #9 (t=7480, 14 atoms) |
@@ -125,7 +125,7 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=3, scheduled same-file
 | 10.3 | 9603 | 4586 | -5017 | 0.86 | early | Architecture — Performance + Groups bodies | [scheduled bbox exact=4/7] headings outline in ARCHITECTURE.md (t=736, 4 atoms) |
 | 10.4 | 9626 | 2794 | -6832 | 1.00 | early | README — Install snippet | [scheduled bbox exact=3/3] README.md section #1 (t=2794, 3 atoms) |
 | 10.5 | 9729 | 809 | -8920 | 0.91 | early | tsup build config | [scheduled bbox exact=9/11] export at cmdk/tsup.config.ts:3 (t=809, 9 atoms) |
-| 10.6 | 9892 | 1903 | -7989 | 0.83 | early | index.tsx — Separator body | [scheduled bbox exact=5/12] export body at cmdk/src/index.tsx:774 body 775 (t=1697, 5 atoms) |
+| 10.6 | 9892 | 1879 | -8013 | 0.83 | early | index.tsx — Separator body | [scheduled bbox exact=5/12] export body at cmdk/src/index.tsx:774 body 775 (t=1673, 5 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -146,6 +146,6 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=3, scheduled same-file
 | 146 | 1.00 | 146 | 8209 | README.md section #12 |
 | 145 | 1.00 | 145 | 6563 | package entrypoints in cmdk/package.json |
 | 143 | 1.00 | 143 | 5002 | README.md section #36 |
-| 135 | 1.00 | 135 | 2365 | module item at cmdk/src/index.tsx:1081 |
+| 135 | 1.00 | 135 | 2341 | module item at cmdk/src/index.tsx:1081 |
 | 133 | 1.00 | 133 | 3199 | package dependencies in package.json |
 | 1414 | — | — | — | +16 more rows |

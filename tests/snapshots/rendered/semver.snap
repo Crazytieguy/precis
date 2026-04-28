@@ -38,6 +38,8 @@ CHANGELOG.md
     1→# Changelog
     255→## 6.3.0
     257→* Expose the token enum on the exports
+    268→## 6.1.2
+    270→* Do not throw when testing invalid version strings
     290→## 5.7
     292→* Add `minVersion` method
     301→## 5.5
@@ -255,8 +257,6 @@ internal/
     parse-options.js
     re.js
 map.js
-    1→'use strict'
-    3→module.exports = testFile => testFile.replace(/test\//, '')
 package.json
     2→  "name": "semver",
     3→  "version": "7.7.4",
@@ -302,8 +302,6 @@ package.json
     51→  },
     52→  "author": "GitHub Inc.",
 preload.js
-    1→'use strict'
-    4→module.exports = require('./index.js')
 range.bnf
 ranges/
     gtr.js

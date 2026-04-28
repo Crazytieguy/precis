@@ -12,7 +12,7 @@ use crate::fs_util::EntryKind;
 pub use crate::fs_util::list_dir;
 use crate::value::mix_signals;
 
-use super::{WalkCtx, path_depth_factor};
+use super::{WalkCtx, file_depth_factor, path_depth_factor};
 
 /// Seed: list the root directory.
 pub fn seed(ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -122,20 +122,59 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 }
 
 fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
+    let module_source_dir = is_module_source_dir(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
-    } else if is_source_dir(dir) {
+    } else if is_source_dir(dir) || module_source_dir {
         (0.6, 0.5, 0.3)
     } else {
         (0.5, 0.45, 0.25)
     };
-    mix_signals(cat, fu, ztu, path_depth_factor(dir, ctx))
+    let depth = if module_source_dir {
+        file_depth_factor(dir, ctx, true)
+    } else {
+        path_depth_factor(dir, ctx)
+    };
+    mix_signals(cat, fu, ztu, depth)
 }
+
+pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
+    "index.ts",
+    "index.tsx",
+    "index.js",
+    "index.mjs",
+    "index.cjs",
+];
+const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
 
 pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|name| matches!(name, "src" | "lib"))
+}
+
+fn has_module_entrypoint(dir: &Path) -> bool {
+    JS_MODULE_ENTRYPOINT_FILES
+        .iter()
+        .chain(NON_JS_MODULE_ENTRYPOINT_FILES.iter())
+        .any(|name| dir.join(name).is_file())
+}
+
+fn is_module_source_dir(dir: &Path) -> bool {
+    has_module_entrypoint(dir)
+        // type/types/typings index files are type surfaces, not module-group public APIs.
+        && !is_type_surface_dir(dir)
+        && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir))
+}
+
+fn is_type_surface_dir(dir: &Path) -> bool {
+    dir.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|name| matches!(name, "type" | "types" | "typings"))
+}
+
+fn has_python_module_entrypoint(dir: &Path) -> bool {
+    dir.join("__init__.py").is_file()
 }
 
 /// Directories the walker never recurses into. Matches common

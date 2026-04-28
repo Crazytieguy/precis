@@ -179,8 +179,6 @@ crates/
     mdbook-renderer/
         Cargo.toml
         README.md
-            1→# mdbook-renderer
-            7→This is the Rust library to implement a [renderer](https://rust-lang.github.io/mdBook/for_developers/backends.html) for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Library to assist implementing an mdbook renderer.
@@ -198,22 +196,9 @@ crates/
                 35→}
                 40→pub struct RenderContext {
                 …
-                63→impl RenderContext {
-                65→    pub fn new<P, Q>(root: P, book: Book, config: Config, destination: Q) -> RenderContext
-                66→    where
-                67→        P: Into<PathBuf>,
-                68→        Q: Into<PathBuf>,
-                69→    {
-                …
-                81→    pub fn source_dir(&self) -> PathBuf {
-                …
-                86→    pub fn from_json<R: Read>(reader: R) -> Result<RenderContext> {
-                …
     mdbook-summary/
         Cargo.toml
         README.md
-            1→# mdbook-summary
-            7→This is the Rust library used to parse the [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html) file structure for [mdBook](https://rust-lang.github.io/mdBook/).
         src/
             lib.rs
                 1→//! Summary parser for mdBook.
@@ -266,6 +251,49 @@ package.json
 rustfmt.toml
 src/
     cmd/
+        build.rs
+            8→pub fn make_subcommand() -> Command {
+            …
+            17→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+        clean.rs
+        command_prelude.rs
+            7→pub trait CommandExt: Sized {
+            …
+            62→pub fn set_dest_dir(args: &ArgMatches, book: &mut MDBook) {
+            …
+        init.rs
+            12→pub fn make_subcommand() -> ClapCommand {
+            …
+            32→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+        mod.rs
+            1→//! Subcommand modules for the `mdbook` binary.
+            3→pub mod build;
+            4→pub mod clean;
+            5→pub mod command_prelude;
+            6→pub mod init;
+            8→pub mod serve;
+            9→pub mod test;
+            11→pub mod watch;
+        serve.rs
+            23→pub fn make_subcommand() -> Command {
+            …
+            51→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+        test.rs
+            9→pub fn make_subcommand() -> Command {
+            …
+            35→pub fn execute(args: &ArgMatches) -> Result<()> {
+            …
+        watch/
+            native.rs
+                11→pub fn rebuild_on_change(
+                …
+            poller.rs
+                18→pub fn rebuild_on_change(
+                …
+        watch.rs
     main.rs
         1→//! The mdbook CLI.
         18→fn main() {
