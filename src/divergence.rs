@@ -99,8 +99,25 @@ use crate::batch::BatchId;
 use crate::content::{BatchContent, FsEntries, Render, explode_spans};
 use crate::north_star::NorthStar;
 use crate::ns_loader::resolve_content;
-use crate::render::{RenderedTree, SourceCache};
-use crate::schedule_types::{Atom, Schedule, ScheduledBatch};
+use crate::render::{Cost, RenderedTree, SourceCache};
+use crate::schedule_types::{Atom, CandidateBatch, Schedule, ScheduledBatch};
+
+mod diagnosis;
+mod render;
+mod synthesis;
+#[cfg(test)]
+use diagnosis::candidate_hint;
+use diagnosis::{
+    CandidateHint, CandidateHintKind, CandidateLoss, CandidateLossReason, DiagnosisKind,
+    ExactOverlap, ExactOverlapBucket, candidate_hint_for_ctx, diagnose_row,
+};
+use render::format_report;
+#[cfg(test)]
+use render::off_ns_attribution;
+use synthesis::{
+    ReportRow, predecessor_groups_from_refs, ranking_loss, report_rows, report_summary, row_ids,
+    sim_gap_weight, top_opportunities,
+};
 
 /// Time-weight half-life (tokens). `w(t) = exp(−t / τ)`. First 2000
 /// tokens carry ~63% of the mass; first 6000 ~95%.
@@ -123,6 +140,7 @@ const LATE_FACTOR: f64 = 1.3;
 
 /// Report threshold: walker-waste rows elide batches below this cost.
 const UNMAPPED_COST_THRESHOLD: usize = 50;
+const WASTE_DETAIL_LIMIT: usize = 10;
 
 /// Headline scores. `reached + partial + missing == total_ns`.
 #[derive(Debug, Clone, Copy)]
@@ -262,6 +280,8 @@ fn byte_end_for(render: &Render, source_line: &str) -> usize {
 struct BuildCtx<'a> {
     ns_rows: Vec<NsRow>,
     walker_rows: Vec<WalkerRow<'a>>,
+    candidate_rows: Vec<CandidateRow<'a>>,
+    scheduled_keys: BTreeSet<String>,
     ns: &'a NorthStar,
     schedule: &'a Schedule,
     fixture_root: PathBuf,
@@ -290,6 +310,13 @@ struct WalkerRow<'a> {
     atom_token_costs: Vec<usize>,
     seen_t: usize,
     batch: &'a ScheduledBatch,
+}
+
+struct CandidateRow<'a> {
+    atoms: Vec<GradedAtom>,
+    final_cost: Cost,
+    scheduled: bool,
+    batch: &'a CandidateBatch,
 }
 
 impl<'a> BuildCtx<'a> {
@@ -347,10 +374,24 @@ impl<'a> BuildCtx<'a> {
                 }
             })
             .collect();
+        let scheduled_keys: BTreeSet<String> =
+            schedule.batches.iter().map(|b| b.key.clone()).collect();
+        let candidate_rows = schedule
+            .candidates
+            .iter()
+            .map(|b| CandidateRow {
+                atoms: atoms_from_content(&b.content, &source_cache, fixture_root),
+                final_cost: walker_tree.marginal_cost(&b.content),
+                scheduled: scheduled_keys.contains(&b.key),
+                batch: b,
+            })
+            .collect();
 
         Ok(Self {
             ns_rows,
             walker_rows,
+            candidate_rows,
+            scheduled_keys,
             ns,
             schedule,
             fixture_root: fixture_root_buf,
@@ -359,8 +400,6 @@ impl<'a> BuildCtx<'a> {
 }
 
 /// Numeric components of a major.minor NS id (`"2.10"` → `[2, 10]`).
-/// Shared by `parse_tier` (first component) and `numeric_id_cmp`
-/// (lexicographic compare across components).
 fn id_components(id: &str) -> Vec<usize> {
     id.split('.').filter_map(|s| s.parse().ok()).collect()
 }
@@ -596,334 +635,6 @@ fn weighted_segment(a: f64, b: f64) -> f64 {
 
 // ---- report ------------------------------------------------------------
 
-fn format_report(scores: &Scores, ctx: &BuildCtx, arrivals: &[Arrival]) -> String {
-    let mut out = String::new();
-    out.push_str(&format!(
-        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Used={}/{}\n",
-        scores.sim,
-        scores.reached,
-        scores.total_ns,
-        scores.early,
-        scores.late,
-        scores.partial,
-        scores.missing,
-        ctx.schedule.cumulative_tokens,
-        ctx.schedule.budget,
-    ));
-
-    format_tier_rollup(&mut out, ctx, arrivals);
-    format_arrival_ledger(&mut out, ctx, arrivals);
-    format_walker_waste(&mut out, ctx);
-
-    out
-}
-
-fn format_tier_rollup(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
-    struct TierAgg {
-        batches: usize,
-        reached: usize,
-        partial: usize,
-        missing: usize,
-        credit_sum: f64,
-    }
-    let mut by_tier: BTreeMap<usize, TierAgg> = BTreeMap::new();
-    for (row, arrival) in ctx.ns_rows.iter().zip(arrivals) {
-        let agg = by_tier.entry(row.tier).or_insert(TierAgg {
-            batches: 0,
-            reached: 0,
-            partial: 0,
-            missing: 0,
-            credit_sum: 0.0,
-        });
-        agg.batches += 1;
-        match arrival.status {
-            ArrivalStatus::Missing => agg.missing += 1,
-            ArrivalStatus::Partial => agg.partial += 1,
-            _ => agg.reached += 1,
-        }
-        agg.credit_sum += arrival.credit;
-    }
-    if by_tier.is_empty() {
-        return;
-    }
-    out.push_str("\n## Tier rollup\n\n");
-    out.push_str("| tier | batches | reached | partial | missing | avg_credit |\n");
-    out.push_str("|-----:|--------:|--------:|--------:|--------:|-----------:|\n");
-    for (tier, agg) in &by_tier {
-        let avg = agg.credit_sum / agg.batches as f64;
-        out.push_str(&format!(
-            "| {tier} | {} | {} | {} | {} | {avg:.2} |\n",
-            agg.batches, agg.reached, agg.partial, agg.missing,
-        ));
-    }
-}
-
-fn format_arrival_ledger(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
-    struct Row<'a> {
-        id: &'a str,
-        exp_t: usize,
-        descriptor: &'a str,
-        arrival: &'a Arrival,
-        ns_row: &'a NsRow,
-    }
-    let mut rows: Vec<Row<'_>> = ctx
-        .ns_rows
-        .iter()
-        .enumerate()
-        .zip(arrivals)
-        .map(|((i, ns_row), arrival)| Row {
-            id: &ns_row.id,
-            exp_t: ns_row.exp_t,
-            descriptor: &ctx.ns.batches[i].descriptor,
-            arrival,
-            ns_row,
-        })
-        .collect();
-    rows.sort_by(|a, b| numeric_id_cmp(a.id, b.id));
-
-    // Show rows that aren't perfectly aligned: anything that's not an
-    // `Aligned` batch with full credit, OR an aligned-with-full-credit
-    // batch where walker over-rendered (the `+over` annotation is its
-    // only surface — the headline counter was dropped).
-    let interesting: Vec<&Row> = rows
-        .iter()
-        .filter(|r| {
-            r.arrival.status != ArrivalStatus::Aligned || r.arrival.credit < 1.0 || r.arrival.over
-        })
-        .collect();
-
-    if interesting.is_empty() {
-        return;
-    }
-    out.push_str("\n## Arrival ledger (non-aligned or partial-credit NS batches)\n\n");
-    out.push_str(
-        "| id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |\n",
-    );
-    out.push_str(
-        "|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|\n",
-    );
-    for r in &interesting {
-        let (reached_cell, delta_cell) = match r.arrival.reached_t {
-            Some(t) => {
-                let delta = t as isize - r.exp_t as isize;
-                let sign = if delta > 0 { "+" } else { "" };
-                (format!("{t}"), format!("{sign}{delta}"))
-            }
-            None => ("—".to_string(), "—".to_string()),
-        };
-        let status_cell = if r.arrival.over && r.arrival.status == ArrivalStatus::Aligned {
-            format!("{}+over", r.arrival.status.label())
-        } else {
-            r.arrival.status.label().to_string()
-        };
-        let hint_cell = nearby_walker_batch_cell(r.ns_row, &ctx.walker_rows, &ctx.fixture_root);
-        out.push_str(&format!(
-            "| {} | {} | {reached_cell} | {delta_cell} | {:.2} | {status_cell} | {} | {hint_cell} |\n",
-            r.id, r.exp_t, r.arrival.credit, r.descriptor,
-        ));
-    }
-}
-
-/// "Nearby" walker batch for an NS row: the walker batch with the most
-/// rendered atoms whose `(path, line)` falls inside the per-file bounding
-/// box of the NS row's expected line atoms. Surfaces shape-mismatch cases
-/// where the walker emitted a parent batch (e.g. a class declaration) that
-/// covers the file region the NS asked about, even though the specific
-/// lines didn't intersect (e.g. NS asked for a method body whose lines
-/// the walker elides). Returns an empty string when no walker batch has
-/// any atom inside the NS row's per-file bbox, or when the NS row has no
-/// line atoms (Fs-only batches).
-fn nearby_walker_batch_cell(
-    ns_row: &NsRow,
-    walker_rows: &[WalkerRow<'_>],
-    fixture_root: &Path,
-) -> String {
-    let mut ns_box: BTreeMap<PathBuf, (usize, usize)> = BTreeMap::new();
-    for ga in &ns_row.atoms {
-        if let Atom::Line { path, line } = &ga.atom {
-            ns_box
-                .entry(path.clone())
-                .and_modify(|(lo, hi)| {
-                    *lo = (*lo).min(*line);
-                    *hi = (*hi).max(*line);
-                })
-                .or_insert((*line, *line));
-        }
-    }
-    if ns_box.is_empty() {
-        return String::new();
-    }
-
-    let mut best: Option<(&WalkerRow<'_>, usize)> = None;
-    for wr in walker_rows {
-        let mut count = 0;
-        for wa in &wr.atoms {
-            if let Atom::Line { path, line } = &wa.atom
-                && let Some((lo, hi)) = ns_box.get(path)
-                && *lo <= *line
-                && *line <= *hi
-            {
-                count += 1;
-            }
-        }
-        if count == 0 {
-            continue;
-        }
-        match best {
-            Some((_, prev)) if prev >= count => {}
-            _ => best = Some((wr, count)),
-        }
-    }
-    match best {
-        Some((wr, count)) => {
-            let desc = strip_fixture_root(&wr.batch.descriptor, fixture_root);
-            format!("{desc} (t={}, {count} atoms)", wr.seen_t)
-        }
-        None => String::new(),
-    }
-}
-
-/// Per-batch off-NS attribution. Returns `(off_ratio, off_tokens)` where
-/// both are weighted by per-atom marginal token cost (not atom count).
-/// `None` for empty batches and for pure-refinement no-ops where every
-/// atom contributed zero marginal cost (an ancestor already rendered
-/// the same content).
-fn off_ns_attribution(
-    atoms: &[GradedAtom],
-    atom_token_costs: &[usize],
-    ns_atom_set: &BTreeSet<Atom>,
-) -> Option<(f64, usize)> {
-    if atoms.is_empty() {
-        return None;
-    }
-    debug_assert_eq!(atoms.len(), atom_token_costs.len());
-    let total_marginal: usize = atom_token_costs.iter().sum();
-    if total_marginal == 0 {
-        return None;
-    }
-    let off_marginal: usize = atom_token_costs
-        .iter()
-        .zip(atoms)
-        .filter(|(_, a)| !ns_atom_set.contains(&a.atom))
-        .map(|(c, _)| *c)
-        .sum();
-    Some((off_marginal as f64 / total_marginal as f64, off_marginal))
-}
-
-fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
-    let ns_atom_set: BTreeSet<Atom> = ctx
-        .ns_rows
-        .iter()
-        .flat_map(|r| r.atoms.iter().map(|a| a.atom.clone()))
-        .collect();
-
-    // For each walker batch: how much of its marginal token spend landed
-    // on atoms NS didn't ask for. Per-atom marginal costs were captured
-    // alongside `atoms` (1:1) when the parallel walker tree was driven
-    // forward, so a refinement-over-ancestor on-NS line costs only its
-    // delta and an already-listed FS entry costs zero — the off_ratio
-    // reflects true marginal share, not uniform-across-atoms.
-    // Sort by off_tokens descending so the biggest calibration targets
-    // are at row 1.
-    struct Row<'a> {
-        wr: &'a WalkerRow<'a>,
-        descriptor_rel: String,
-        off_ratio: f64,
-        off_tokens: usize,
-    }
-    let mut rows: Vec<Row<'_>> = ctx
-        .walker_rows
-        .iter()
-        .filter(|wr| wr.batch.cost_tokens >= UNMAPPED_COST_THRESHOLD)
-        .filter_map(|wr| {
-            let (off_ratio, off_tokens) =
-                off_ns_attribution(&wr.atoms, &wr.atom_token_costs, &ns_atom_set)?;
-            if off_tokens < UNMAPPED_COST_THRESHOLD {
-                return None;
-            }
-            let descriptor_rel = strip_fixture_root(&wr.batch.descriptor, &ctx.fixture_root);
-            Some(Row {
-                wr,
-                descriptor_rel,
-                off_ratio,
-                off_tokens,
-            })
-        })
-        .collect();
-    if rows.is_empty() {
-        return;
-    }
-    rows.sort_by(|a, b| {
-        b.off_tokens
-            .cmp(&a.off_tokens)
-            .then_with(|| a.descriptor_rel.cmp(&b.descriptor_rel))
-    });
-
-    format_walker_waste_rollup(
-        out,
-        rows.iter()
-            .map(|r| (r.descriptor_rel.as_str(), r.off_tokens)),
-    );
-
-    out.push_str(&format!(
-        "\n## Walker waste (off-NS token spend ≥ {UNMAPPED_COST_THRESHOLD})\n\n"
-    ));
-    out.push_str("| off_tokens | off_ratio | cost | first_t | batch |\n");
-    out.push_str("|-----------:|----------:|-----:|--------:|:------|\n");
-    for r in &rows {
-        out.push_str(&format!(
-            "| {} | {:.2} | {} | {} | {} |\n",
-            r.off_tokens, r.off_ratio, r.wr.batch.cost_tokens, r.wr.seen_t, r.descriptor_rel,
-        ));
-    }
-}
-
-/// Rollup of waste rows by descriptor pattern: same descriptor with
-/// position-bearing suffix (`:<line>` for Rust/TS bodies, ` #<index>` for
-/// markdown sections) collapsed to `<n>`. Surfaces systemic walker
-/// over-spend — e.g. "14 `pub-item doc at src/lib.rs:<n>` rows totaling
-/// 3.6k tokens" — that the per-row table buries. Elide patterns with
-/// `n == 1` (no rollup benefit) and the whole section if no pattern has
-/// `n ≥ 2`.
-fn format_walker_waste_rollup<'a>(
-    out: &mut String,
-    rows: impl IntoIterator<Item = (&'a str, usize)>,
-) {
-    struct Group {
-        n: usize,
-        off_tokens_total: usize,
-    }
-    let mut by_pattern: BTreeMap<String, Group> = BTreeMap::new();
-    for (descriptor_rel, off_tokens) in rows {
-        let pattern = pattern_template(descriptor_rel);
-        let g = by_pattern.entry(pattern).or_insert(Group {
-            n: 0,
-            off_tokens_total: 0,
-        });
-        g.n += 1;
-        g.off_tokens_total += off_tokens;
-    }
-    let mut interesting: Vec<(&String, &Group)> =
-        by_pattern.iter().filter(|(_, g)| g.n >= 2).collect();
-    if interesting.is_empty() {
-        return;
-    }
-    interesting.sort_by(|a, b| {
-        b.1.off_tokens_total
-            .cmp(&a.1.off_tokens_total)
-            .then_with(|| a.0.cmp(b.0))
-    });
-    out.push_str("\n## Walker waste rollup (by descriptor pattern)\n\n");
-    out.push_str("| n | off_tokens_total | pattern |\n");
-    out.push_str("|--:|-----------------:|:--------|\n");
-    for (pattern, g) in interesting {
-        out.push_str(&format!(
-            "| {} | {} | {pattern} |\n",
-            g.n, g.off_tokens_total
-        ));
-    }
-}
-
 /// Collapse position-bearing suffixes in a descriptor down to `<n>` so
 /// semantically-similar batches group under one pattern. Shape-specific
 /// matching: only known walker descriptor templates with positional
@@ -995,20 +706,19 @@ fn classify(reached_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatu
     }
 }
 
-/// Sort NS ids numerically: `2.5 < 2.8 < 3.1 < 10.2`. String-sort would
-/// break with `2.10 < 2.2`.
-fn numeric_id_cmp(a: &str, b: &str) -> std::cmp::Ordering {
-    id_components(a).cmp(&id_components(b))
-}
-
 #[cfg(test)]
 mod tests {
     use std::collections::BTreeSet;
     use std::path::PathBuf;
 
-    use crate::schedule_types::Atom;
+    use crate::content::BatchContent;
+    use crate::render::Cost;
+    use crate::schedule_types::{Atom, CandidateBatch, ScheduledBatch};
 
-    use super::{GradedAtom, off_ns_attribution};
+    use super::{
+        CandidateHintKind, CandidateLossReason, CandidateRow, ExactOverlapBucket, GradedAtom,
+        NsRow, WalkerRow, candidate_hint, off_ns_attribution,
+    };
 
     fn line_atom(line: usize, bytes: usize) -> GradedAtom {
         GradedAtom {
@@ -1018,6 +728,95 @@ mod tests {
             },
             bytes,
         }
+    }
+
+    fn path_line_atom(path: &str, line: usize) -> GradedAtom {
+        GradedAtom {
+            atom: Atom::Line {
+                path: PathBuf::from(path),
+                line,
+            },
+            bytes: 1,
+        }
+    }
+
+    fn fs_atom(parent: &str, entry: &str) -> GradedAtom {
+        GradedAtom {
+            atom: Atom::Fs {
+                parent: PathBuf::from(parent),
+                entry: entry.to_string(),
+            },
+            bytes: 1,
+        }
+    }
+
+    fn ns_row(atoms: Vec<GradedAtom>) -> NsRow {
+        NsRow {
+            id: "1.1".to_string(),
+            tier: 1,
+            atoms,
+            exp_t: 1,
+        }
+    }
+
+    fn scheduled_batch(descriptor: &str) -> ScheduledBatch {
+        ScheduledBatch {
+            position: 1,
+            key: descriptor.to_string(),
+            descriptor: descriptor.to_string(),
+            cost_tokens: 1,
+            cum_tokens: 10,
+            content: BatchContent::Lines { spans: vec![] },
+        }
+    }
+
+    fn candidate_batch(descriptor: &str) -> CandidateBatch {
+        CandidateBatch {
+            key: descriptor.to_string(),
+            predecessor: None,
+            descriptor: descriptor.to_string(),
+            content: BatchContent::Lines { spans: vec![] },
+        }
+    }
+
+    fn candidate_batch_with_predecessor(descriptor: &str, predecessor: &str) -> CandidateBatch {
+        CandidateBatch {
+            key: descriptor.to_string(),
+            predecessor: Some(predecessor.to_string()),
+            descriptor: descriptor.to_string(),
+            content: BatchContent::Lines { spans: vec![] },
+        }
+    }
+
+    fn candidate_row<'a>(
+        batch: &'a CandidateBatch,
+        atoms: Vec<GradedAtom>,
+        scheduled: bool,
+    ) -> CandidateRow<'a> {
+        CandidateRow {
+            atoms,
+            final_cost: Cost {
+                tokens: 1,
+                bytes: 1,
+            },
+            scheduled,
+            batch,
+        }
+    }
+
+    fn hint<'a>(
+        ns: &NsRow,
+        walker_rows: &[WalkerRow<'a>],
+        candidate_rows: &[CandidateRow<'a>],
+    ) -> super::CandidateHint {
+        candidate_hint(
+            ns,
+            walker_rows,
+            candidate_rows,
+            &BTreeSet::new(),
+            100,
+            PathBuf::from(".").as_path(),
+        )
     }
 
     /// Heterogeneous batch: one Full atom of a long line + four Ellipsis
@@ -1107,6 +906,172 @@ mod tests {
         let atom_token_costs = vec![0usize, 0];
         let ns_atom_set: BTreeSet<Atom> = BTreeSet::new();
         assert!(off_ns_attribution(&atoms, &atom_token_costs, &ns_atom_set).is_none());
+    }
+
+    #[test]
+    fn divergence_candidate_hint_prioritizes_scheduled_bbox() {
+        let ns = ns_row(vec![path_line_atom("src/lib.rs", 10)]);
+        let scheduled_batch = scheduled_batch("scheduled exact");
+        let candidate_batch = candidate_batch("unscheduled exact");
+        let walker_rows = vec![WalkerRow {
+            atoms: vec![path_line_atom("src/lib.rs", 10)],
+            atom_token_costs: vec![1],
+            seen_t: 10,
+            batch: &scheduled_batch,
+        }];
+        let candidate_rows = vec![candidate_row(
+            &candidate_batch,
+            vec![path_line_atom("src/lib.rs", 10)],
+            false,
+        )];
+
+        let hint = hint(&ns, &walker_rows, &candidate_rows);
+
+        assert_eq!(hint.kind, CandidateHintKind::ScheduledBbox);
+        assert_eq!(
+            hint.exact_overlap.expect("bbox").bucket(),
+            ExactOverlapBucket::Full
+        );
+        assert!(hint.cell.contains("[scheduled bbox exact=1/1]"));
+    }
+
+    #[test]
+    fn divergence_candidate_hint_uses_unscheduled_bbox_before_same_file() {
+        let ns = ns_row(vec![path_line_atom("src/lib.rs", 10)]);
+        let scheduled_batch = scheduled_batch("scheduled same-file");
+        let candidate_batch = candidate_batch("unscheduled exact");
+        let walker_rows = vec![WalkerRow {
+            atoms: vec![path_line_atom("src/lib.rs", 99)],
+            atom_token_costs: vec![1],
+            seen_t: 10,
+            batch: &scheduled_batch,
+        }];
+        let candidate_rows = vec![candidate_row(
+            &candidate_batch,
+            vec![path_line_atom("src/lib.rs", 10)],
+            false,
+        )];
+
+        let hint = hint(&ns, &walker_rows, &candidate_rows);
+
+        assert_eq!(hint.kind, CandidateHintKind::UnscheduledBbox);
+        assert_eq!(
+            hint.exact_overlap.expect("bbox").bucket(),
+            ExactOverlapBucket::Full
+        );
+        assert!(hint.cell.contains("[unscheduled bbox exact=1/1]"));
+    }
+
+    #[test]
+    fn divergence_candidate_hint_reports_same_file_when_bbox_misses() {
+        let ns = ns_row(vec![path_line_atom("src/lib.rs", 10)]);
+        let scheduled_batch = scheduled_batch("scheduled same-file");
+        let walker_rows = vec![WalkerRow {
+            atoms: vec![path_line_atom("src/lib.rs", 99)],
+            atom_token_costs: vec![1],
+            seen_t: 10,
+            batch: &scheduled_batch,
+        }];
+
+        let hint = hint(&ns, &walker_rows, &[]);
+
+        assert_eq!(hint.kind, CandidateHintKind::ScheduledSameFile);
+        assert!(hint.exact_overlap.is_none());
+        assert!(hint.cell.contains("[scheduled same-file]"));
+    }
+
+    #[test]
+    fn divergence_candidate_hint_splits_bbox_exact_overlap() {
+        let ns = ns_row(vec![
+            path_line_atom("src/lib.rs", 10),
+            path_line_atom("src/lib.rs", 12),
+        ]);
+        let scheduled_batch = scheduled_batch("scheduled wrong slice");
+        let walker_rows = vec![WalkerRow {
+            // Inside the NS bbox (10..=12), but not an exact NS atom.
+            atoms: vec![path_line_atom("src/lib.rs", 11)],
+            atom_token_costs: vec![1],
+            seen_t: 10,
+            batch: &scheduled_batch,
+        }];
+
+        let hint = hint(&ns, &walker_rows, &[]);
+
+        assert_eq!(hint.kind, CandidateHintKind::ScheduledBbox);
+        assert_eq!(
+            hint.exact_overlap.expect("bbox").bucket(),
+            ExactOverlapBucket::None
+        );
+        assert!(hint.cell.contains("exact=0/2"));
+    }
+
+    #[test]
+    fn divergence_candidate_hint_surfaces_better_unscheduled_bbox() {
+        let ns = ns_row(vec![
+            path_line_atom("src/lib.rs", 10),
+            path_line_atom("src/lib.rs", 12),
+        ]);
+        let scheduled_batch = scheduled_batch("scheduled wrong slice");
+        let candidate_batch = candidate_batch("unscheduled exact");
+        let walker_rows = vec![WalkerRow {
+            atoms: vec![path_line_atom("src/lib.rs", 11)],
+            atom_token_costs: vec![1],
+            seen_t: 10,
+            batch: &scheduled_batch,
+        }];
+        let candidate_rows = vec![candidate_row(
+            &candidate_batch,
+            vec![
+                path_line_atom("src/lib.rs", 10),
+                path_line_atom("src/lib.rs", 12),
+            ],
+            false,
+        )];
+
+        let hint = hint(&ns, &walker_rows, &candidate_rows);
+
+        assert_eq!(hint.kind, CandidateHintKind::ScheduledBbox);
+        assert!(hint.cell.contains("better unscheduled exact=2/2"));
+        assert!(hint.better_unscheduled.is_some());
+    }
+
+    #[test]
+    fn divergence_candidate_hint_names_unscheduled_predecessor() {
+        let ns = ns_row(vec![path_line_atom("src/lib.rs", 10)]);
+        let parent = candidate_batch("parent names surface");
+        let child = candidate_batch_with_predecessor("child body", "parent names surface");
+        let candidate_rows = vec![
+            candidate_row(&parent, vec![path_line_atom("src/lib.rs", 1)], false),
+            candidate_row(&child, vec![path_line_atom("src/lib.rs", 10)], false),
+        ];
+
+        let hint = hint(&ns, &[], &candidate_rows);
+
+        assert_eq!(hint.kind, CandidateHintKind::UnscheduledBbox);
+        let loss = hint.loss.expect("unscheduled loss");
+        assert_eq!(loss.reason, CandidateLossReason::PredecessorNotScheduled);
+        assert_eq!(loss.predecessor.as_deref(), Some("parent names surface"));
+        assert!(
+            hint.cell
+                .contains("predecessor not scheduled: parent names surface")
+        );
+    }
+
+    #[test]
+    fn divergence_candidate_hint_separates_fs_only_and_no_discovered() {
+        let fs = ns_row(vec![fs_atom(".", "src")]);
+        let no_candidate = ns_row(vec![path_line_atom("src/lib.rs", 10)]);
+
+        let fs_hint = hint(&fs, &[], &[]);
+        let no_candidate_hint = hint(&no_candidate, &[], &[]);
+
+        assert_eq!(fs_hint.kind, CandidateHintKind::FsOnly);
+        assert_eq!(fs_hint.cell, "fs-only");
+        assert_eq!(
+            no_candidate_hint.kind,
+            CandidateHintKind::NoDiscoveredCandidate
+        );
+        assert_eq!(no_candidate_hint.cell, "no discovered line candidate");
     }
 
     use super::pattern_template;

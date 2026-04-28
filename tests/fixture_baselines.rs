@@ -15,17 +15,19 @@
 //!   atom metrics alone don't cover.
 //!
 //! - **Divergence report** — `tests/divergence/<fixture>.md`, one per
-//!   fixture with a frozen NS (`tests/north-stars/<fixture>.toml`).
-//!   Line 1 is echoed to stdout so calibration iterations see all
-//!   scores without opening files. Fixtures without an NS yield no
-//!   report and the test passes vacuously.
+//!   fixture with a frozen NS (`tests/north-stars/<fixture>.toml`),
+//!   plus `tests/divergence/OVERVIEW.md`. Divergence reports are
+//!   generated from the in-memory schedules the per-fixture tests already
+//!   produce; the overview is assembled once all fixture summaries have
+//!   landed in the process-global map.
 //!
 //! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
 
+use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::sync::OnceLock;
+use std::sync::{Mutex, OnceLock};
 
 use precis::{
     Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked, render_schedule,
@@ -109,6 +111,10 @@ fn divergence_path(fixture: &str) -> PathBuf {
         .join(format!("{fixture}.md"))
 }
 
+fn divergence_index_path() -> PathBuf {
+    manifest_dir().join(DIVERGENCE_DIR).join("OVERVIEW.md")
+}
+
 fn ns_path(fixture: &str) -> PathBuf {
     manifest_dir().join(format!("tests/north-stars/{fixture}.toml"))
 }
@@ -135,8 +141,10 @@ fn check_fixture_baselines(fixture: &str) {
     let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
     check_schedule_toml(fixture, &schedule);
-    check_divergence(fixture, &fixture_dir, &schedule);
     check_rendered(fixture, &fixture_dir, &schedule);
+    if let Some(report) = check_divergence(fixture, &fixture_dir, &schedule) {
+        record_divergence_summary(fixture, &report);
+    }
 }
 
 fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
@@ -149,10 +157,10 @@ fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
     );
 }
 
-fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
+fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) -> Option<String> {
     let ns_toml = ns_path(fixture);
     if !ns_toml.exists() {
-        return;
+        return None;
     }
     let ns = load_ns_checked(&ns_toml, fixture_dir)
         .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
@@ -168,6 +176,7 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
         &divergence_path(fixture),
         report.as_bytes(),
     );
+    Some(report)
 }
 
 fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
@@ -224,6 +233,108 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
 }
 
 // ---- invariants --------------------------------------------------------
+
+#[derive(Clone)]
+struct DivergenceSummaryRow {
+    fixture: String,
+    score: String,
+    verdict: String,
+    primary: String,
+    evidence: String,
+    losses: String,
+}
+
+fn divergence_summaries() -> &'static Mutex<BTreeMap<String, DivergenceSummaryRow>> {
+    static CELL: OnceLock<Mutex<BTreeMap<String, DivergenceSummaryRow>>> = OnceLock::new();
+    CELL.get_or_init(|| Mutex::new(BTreeMap::new()))
+}
+
+fn record_divergence_summary(fixture: &str, report: &str) {
+    let row = DivergenceSummaryRow {
+        fixture: fixture.to_string(),
+        score: extract_sim(report).unwrap_or("—").to_string(),
+        verdict: extract_prefixed_line(report, "Verdict: ")
+            .unwrap_or("—")
+            .to_string(),
+        primary: extract_prefixed_line(report, "Likely primary lever: ")
+            .unwrap_or("—")
+            .to_string(),
+        evidence: extract_prefixed_line(report, "Evidence: ")
+            .unwrap_or("—")
+            .to_string(),
+        losses: extract_prefixed_line(report, "Loss reasons: ")
+            .unwrap_or("—")
+            .to_string(),
+    };
+    let expected = fixtures_with_north_stars().len();
+    let mut rows = divergence_summaries()
+        .lock()
+        .expect("divergence summary mutex poisoned");
+    rows.insert(fixture.to_string(), row);
+    if rows.len() == expected {
+        let snapshot = rows.values().cloned().collect::<Vec<_>>();
+        drop(rows);
+        check_divergence_overview(snapshot);
+    }
+}
+
+fn check_divergence_overview(mut rows: Vec<DivergenceSummaryRow>) {
+    rows.sort_by(|a, b| {
+        let score_a = a.score.parse::<f64>().unwrap_or(f64::INFINITY);
+        let score_b = b.score.parse::<f64>().unwrap_or(f64::INFINITY);
+        score_a
+            .partial_cmp(&score_b)
+            .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| a.fixture.cmp(&b.fixture))
+    });
+    let mut index = String::new();
+    index.push_str("# Divergence Summary\n\n");
+    index
+        .push_str("| fixture | Sim | verdict | likely primary lever | evidence | loss reasons |\n");
+    index
+        .push_str("|:--------|----:|:--------|:---------------------|:---------|:-------------|\n");
+    for row in rows {
+        index.push_str(&format!(
+            "| {} | {} | {} | {} | {} | {} |\n",
+            row.fixture, row.score, row.verdict, row.primary, row.evidence, row.losses
+        ));
+    }
+
+    compare_or_update(
+        "divergence summary index",
+        &divergence_index_path(),
+        index.as_bytes(),
+    );
+}
+
+fn fixtures_with_north_stars() -> Vec<String> {
+    let ns_dir = manifest_dir().join("tests/north-stars");
+    let mut fixtures = Vec::new();
+    let read_dir =
+        fs::read_dir(&ns_dir).unwrap_or_else(|e| panic!("read {}: {e}", ns_dir.display()));
+    for entry in read_dir.flatten() {
+        let path = entry.path();
+        if path.extension().and_then(|s| s.to_str()) != Some("toml") {
+            continue;
+        }
+        let Some(fixture) = path.file_stem().and_then(|s| s.to_str()) else {
+            continue;
+        };
+        fixtures.push(fixture.to_string());
+    }
+    fixtures.sort();
+    fixtures
+}
+
+fn extract_sim(report: &str) -> Option<&str> {
+    let first = report.lines().next()?;
+    let after = first.split_once("Sim=")?.1;
+    after.split_whitespace().next()
+}
+
+fn extract_prefixed_line<'a>(report: &'a str, prefix: &str) -> Option<&'a str> {
+    report.lines().find_map(|line| line.strip_prefix(prefix))
+}
 
 #[test]
 fn fixture_baselines_ns_pins_match_fixture_pins() {

@@ -1,50 +1,121 @@
 scores: Sim=0.554 Reached=15/33 Early=3 Late=7 Partial=5 Missing=13 Used=9416/10000
 
-## Tier rollup
+## Verdict
 
-| tier | batches | reached | partial | missing | avg_credit |
-|-----:|--------:|--------:|--------:|--------:|-----------:|
-| 1 | 6 | 4 | 1 | 1 | 0.79 |
-| 2 | 11 | 6 | 3 | 2 | 0.72 |
-| 3 | 12 | 5 | 1 | 6 | 0.45 |
-| 4 | 4 | 0 | 0 | 4 | 0.08 |
+Verdict: coverage-gap bound
+Likely primary lever: add walker candidates for no-discovered NS rows
+Evidence: 3 ranking-recoverable (w×gap=0.17), 9 wrong-slice/granularity (w×gap=0.81), 3 no-discovered (w×gap=1.18)
+Secondary intervention: free final budget for 3 too-expensive candidates
+Loss reasons: 0 predecessor-gated, 3 too-expensive, 0 discovered-unscheduled
+Top rows: 1.3, 2.10, 2.11
+Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
 
-## Arrival ledger (non-aligned or partial-credit NS batches)
+## Top opportunities
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | nearby walker batch |
+_`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit) per row, τ=2000. Same time weighting and credit gap as Sim, but rows can overlap between opportunities — sums across rows are an upper bound on Sim impact, not an additive estimate._
+
+| intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
+|:-------------|-----:|---------:|:----------------------|:---------|:------------|
+| add walker candidates for no-discovered rows | 3 | 1.18 | 1/3/3 | NS rows have no discovered line candidate | 1.3, 2.10, 2.11 |
+| split wrong-slice walker batches | 9 | 0.81 | 3/5/9 | nearby candidates have low exact atom overlap | 2.2, 1.1, 2.6, 3.5, 2.9, ... |
+| free final budget / demote late waste | 3 | 0.17 | 0/1/3 | high-overlap candidates exceed final remaining budget, exact total=102/122 | 3.4, 3.7, 3.9 |
+
+Tiers: 1=4/6 reached, 1 partial, 1 missing, avg=0.79; 2=6/11 reached, 3 partial, 2 missing, avg=0.72; 3=5/12 reached, 1 partial, 6 missing, avg=0.45; 4=0/4 reached, 0 partial, 4 missing, avg=0.08
+
+## Diagnosis rollup
+
+| diagnosis | rows | missing | partial | timing | likely lever |
+|:----------|-----:|--------:|--------:|-------:|:-------------|
+| ranking-recoverable | 3 | 3 | 0 | 0 | value/ranking |
+| wrong-slice / granularity | 9 | 4 | 5 | 0 | walker granularity / wrong slice |
+| no discovered candidate | 3 | 3 | 0 | 0 | walker coverage or predecessor-gated emit |
+| fs/listing | 3 | 3 | 0 | 0 | filesystem/listing value |
+| timing-only | 14 | 0 | 0 | 14 | usually no code change |
+
+## Loss reason rollup (ranking-recoverable rows)
+
+| loss reason | rows | w(t)×gap | likely lever |
+|:------------|-----:|---------:|:-------------|
+| too expensive at final margin | 3 | 0.17 | free final budget |
+
+_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
+Candidate hint kinds: scheduled bbox=21, unscheduled bbox=3, fs-only=5, no discovered candidate=3
+
+## Exact atom overlap rollup (bbox hints)
+
+| kind | status | exact_overlap | rows |
+|:-----|:-------|:--------------|-----:|
+| scheduled bbox | aligned | none | 1 |
+| scheduled bbox | aligned | low | 2 |
+| scheduled bbox | aligned | high | 1 |
+| scheduled bbox | early | low | 1 |
+| scheduled bbox | early | high | 1 |
+| scheduled bbox | late | low | 1 |
+| scheduled bbox | late | full | 5 |
+| scheduled bbox | missing | none | 1 |
+| scheduled bbox | missing | low | 3 |
+| scheduled bbox | partial | low | 5 |
+| unscheduled bbox | missing | high | 2 |
+| unscheduled bbox | missing | full | 1 |
+
+## Arrival ledger by diagnosis
+
+### ranking-recoverable
+
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.1 | 46 | — | — | 0.75 | partial | package.json — name, version, description | package identity in package.json (t=314, 3 atoms) |
-| 1.2 | 108 | 62 | -46 | 1.00 | early | Top-level repo listing |  |
-| 1.3 | 171 | — | — | 0.00 | missing | README — unmaintained notice |  |
-| 1.4 | 242 | 425 | +183 | 1.00 | late | src/ listing — every source file |  |
-| 1.5 | 355 | 1374 | +1019 | 1.00 | late | Drawer namespace export — the public component map | export at src/index.tsx:1137 (t=1374, 12 atoms) |
-| 1.6 | 503 | 8119 | +7616 | 1.00 | late | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | package dependencies in package.json (t=8119, 8 atoms) |
-| 2.1 | 642 | 851 | +209 | 1.00 | late | All top-level export locations in src/index.tsx | export at src/index.tsx:50 (t=6622, 88 atoms) |
-| 2.2 | 730 | — | — | 0.64 | partial | Handle component — snap-point cycle + double-tap timing constants | export names surface in src/index.tsx (t=851, 4 atoms) |
-| 2.3 | 1020 | 1273 | +253 | 0.95 | aligned | WithFadeFromProps / WithoutFadeFromProps — snap-point fade contract | export at src/index.tsx:27 (t=1273, 12 atoms) |
-| 2.4 | 1393 | 6622 | +5229 | 1.00 | late | DialogProps — every prop name (signatures only, no JSDoc) | export at src/index.tsx:50 (t=6622, 87 atoms) |
-| 2.6 | 2011 | — | — | 0.55 | partial | Overlay + Content render — what data-vaul-* attributes appear on DOM | export body at src/index.tsx:803 (t=4161, 11 atoms) |
-| 2.7 | 2405 | 6622 | +4217 | 1.00 | late | DialogProps — JSDoc for the high-traffic props | export at src/index.tsx:50 (t=6622, 50 atoms) |
-| 2.8 | 2810 | 6622 | +3812 | 1.00 | late | DialogProps — JSDoc for the lower-traffic props | export at src/index.tsx:50 (t=6622, 73 atoms) |
-| 2.9 | 3228 | — | — | 0.79 | partial | NestedRoot + Portal — nested-drawer wiring + container override | export body at src/index.tsx:1098 (t=2797, 25 atoms) |
-| 2.10 | 4024 | — | — | 0.00 | missing | style.css — every selector head (locations only) |  |
-| 2.11 | 4132 | — | — | 0.00 | missing | style.css — keyframe names (locations only) |  |
-| 3.1 | 4321 | 2963 | -1358 | 0.94 | early | constants.ts — every tunable threshold and timing | export names surface in src/constants.ts (t=2923, 15 atoms) |
-| 3.2 | 4399 | 618 | -3781 | 0.86 | early | types.ts — DrawerDirection, SnapPoint, AnyFunction | export names surface in src/types.ts (t=597, 4 atoms) |
-| 3.3 | 4502 | 4332 | -170 | 1.00 | aligned+over | helpers.ts — every exported function (signature heads only) | export names surface in src/helpers.ts (t=4332, 15 atoms) |
-| 3.4 | 4688 | — | — | 0.00 | missing | Root inner-function locations (onPress, onDrag, onRelease, …) |  |
-| 3.5 | 5171 | — | — | 0.06 | missing | context.ts — DrawerContextValue interface (parent/child contract) | imports in src/context.ts (t=3524, 2 atoms) |
-| 3.6 | 5503 | 5282 | -221 | 0.82 | aligned | useSnapPoints — full parameter shape | export at src/use-snap-points.ts:7 (t=5282, 24 atoms) |
-| 3.7 | 6032 | — | — | 0.00 | missing | useSnapPoints — return shape + snapPointsOffset memo |  |
-| 3.8 | 6394 | 7047 | +653 | 0.85 | aligned | helpers.ts — dampenValue, getTranslate, isVertical bodies | export body at src/helpers.ts:72 (t=7047, 15 atoms) |
-| 3.9 | 7179 | — | — | 0.00 | missing | Root onRelease — close-threshold + velocity decision |  |
-| 3.10 | 7585 | — | — | 0.64 | partial | browser.ts — every UA-detection function (full file) | export names surface in src/browser.ts (t=2083, 14 atoms) |
-| 3.11 | 8357 | — | — | 0.08 | missing | useScaleBackground — wrapper-scale effect (full hook) | imports in src/use-scale-background.ts (t=7688, 4 atoms) |
-| 3.12 | 9050 | — | — | 0.15 | missing | use-prevent-scroll — exports + the six mobile-Safari quirks | export body at src/use-prevent-scroll.ts:68 (t=5452, 18 atoms) |
-| 4.1 | 9102 | — | — | 0.00 | missing | test/ workspace listing |  |
-| 4.2 | 9201 | — | — | 0.00 | missing | test/src/app/ — every demo page directory |  |
-| 4.3 | 9267 | — | — | 0.00 | missing | test/tests/ — Playwright spec catalog |  |
-| 4.4 | 9693 | — | — | 0.33 | missing | Landing page + Playwright device profiles | export at playwright.config.ts:12 (t=3475, 11 atoms) |
+| 3.4 | 4688 | — | — | 0.00 | missing | Root inner-function locations (onPress, onDrag, onRelease, …) | [unscheduled bbox exact=11/11] export body at src/index.tsx:139 (384 atoms, too expensive at final margin) |
+| 3.7 | 6032 | — | — | 0.00 | missing | useSnapPoints — return shape + snapPointsOffset memo | [unscheduled bbox exact=39/47] export body at src/use-snap-points.ts:7 (178 atoms, too expensive at final margin) |
+| 3.9 | 7179 | — | — | 0.00 | missing | Root onRelease — close-threshold + velocity decision | [unscheduled bbox exact=52/64] export body at src/index.tsx:139 (52 atoms, too expensive at final margin) |
+
+### wrong-slice / granularity
+
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
+|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
+| 1.1 | 46 | — | — | 0.75 | partial | package.json — name, version, description | [scheduled bbox exact=3/4] package identity in package.json (t=314, 3 atoms) |
+| 2.2 | 730 | — | — | 0.64 | partial | Handle component — snap-point cycle + double-tap timing constants | [scheduled bbox exact=4/11] export at src/index.tsx:996 (t=906, 4 atoms) |
+| 2.6 | 2011 | — | — | 0.55 | partial | Overlay + Content render — what data-vaul-* attributes appear on DOM | [scheduled bbox exact=11/20] export body at src/index.tsx:803 (t=4161, 11 atoms) |
+| 2.9 | 3228 | — | — | 0.79 | partial | NestedRoot + Portal — nested-drawer wiring + container override | [scheduled bbox exact=25/38] export body at src/index.tsx:1098 (t=2797, 25 atoms) |
+| 3.5 | 5171 | — | — | 0.06 | missing | context.ts — DrawerContextValue interface (parent/child contract) | [scheduled bbox exact=2/35] imports in src/context.ts (t=3524, 2 atoms) |
+| 3.10 | 7585 | — | — | 0.64 | partial | browser.ts — every UA-detection function (full file) | [scheduled bbox exact=14/36] export names surface in src/browser.ts (t=2083, 14 atoms) |
+| 3.11 | 8357 | — | — | 0.08 | missing | useScaleBackground — wrapper-scale effect (full hook) | [scheduled bbox exact=4/60] imports in src/use-scale-background.ts (t=7688, 4 atoms); better unscheduled exact=45/60: export body at src/use-scale-background.ts:8 (45 atoms, too expensive at final margin) |
+| 3.12 | 9050 | — | — | 0.15 | missing | use-prevent-scroll — exports + the six mobile-Safari quirks | [scheduled bbox exact=0/33] export body at src/use-prevent-scroll.ts:68 (t=5452, 18 atoms) |
+| 4.4 | 9693 | — | — | 0.33 | missing | Landing page + Playwright device profiles | [scheduled bbox exact=11/33] export at playwright.config.ts:12 (t=3475, 11 atoms) |
+
+### no discovered candidate
+
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
+|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
+| 1.3 | 171 | — | — | 0.00 | missing | README — unmaintained notice | no discovered line candidate |
+| 2.10 | 4024 | — | — | 0.00 | missing | style.css — every selector head (locations only) | no discovered line candidate |
+| 2.11 | 4132 | — | — | 0.00 | missing | style.css — keyframe names (locations only) | no discovered line candidate |
+
+### fs/listing
+
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
+|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
+| 4.1 | 9102 | — | — | 0.00 | missing | test/ workspace listing | fs-only |
+| 4.2 | 9201 | — | — | 0.00 | missing | test/src/app/ — every demo page directory | fs-only |
+| 4.3 | 9267 | — | — | 0.00 | missing | test/tests/ — Playwright spec catalog | fs-only |
+
+### timing-only
+
+| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
+|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
+| 1.2 | 108 | 62 | -46 | 1.00 | early | Top-level repo listing | fs-only |
+| 1.4 | 242 | 425 | +183 | 1.00 | late | src/ listing — every source file | fs-only |
+| 1.5 | 355 | 1374 | +1019 | 1.00 | late | Drawer namespace export — the public component map | [scheduled bbox exact=12/12] export at src/index.tsx:1137 (t=1374, 12 atoms) |
+| 1.6 | 503 | 8119 | +7616 | 1.00 | late | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | [scheduled bbox exact=8/8] package dependencies in package.json (t=8119, 8 atoms) |
+| 2.1 | 642 | 851 | +209 | 1.00 | late | All top-level export locations in src/index.tsx | [scheduled bbox exact=1/11] export at src/index.tsx:50 (t=6622, 88 atoms) |
+| 2.3 | 1020 | 1273 | +253 | 0.95 | aligned | WithFadeFromProps / WithoutFadeFromProps — snap-point fade contract | [scheduled bbox exact=12/22] export at src/index.tsx:27 (t=1273, 12 atoms) |
+| 2.4 | 1393 | 6622 | +5229 | 1.00 | late | DialogProps — every prop name (signatures only, no JSDoc) | [scheduled bbox exact=28/28] export at src/index.tsx:50 (t=6622, 87 atoms) |
+| 2.7 | 2405 | 6622 | +4217 | 1.00 | late | DialogProps — JSDoc for the high-traffic props | [scheduled bbox exact=30/30] export at src/index.tsx:50 (t=6622, 50 atoms) |
+| 2.8 | 2810 | 6622 | +3812 | 1.00 | late | DialogProps — JSDoc for the lower-traffic props | [scheduled bbox exact=29/29] export at src/index.tsx:50 (t=6622, 73 atoms) |
+| 3.1 | 4321 | 2963 | -1358 | 0.94 | early | constants.ts — every tunable threshold and timing | [scheduled bbox exact=15/18] export names surface in src/constants.ts (t=2923, 15 atoms) |
+| 3.2 | 4399 | 618 | -3781 | 0.86 | early | types.ts — DrawerDirection, SnapPoint, AnyFunction | [scheduled bbox exact=4/7] export at src/types.ts:2 (t=618, 4 atoms) |
+| 3.3 | 4502 | 4332 | -170 | 1.00 | aligned+over | helpers.ts — every exported function (signature heads only) | [scheduled bbox exact=0/8] export body at src/helpers.ts:72 (t=7047, 15 atoms) |
+| 3.6 | 5503 | 5282 | -221 | 0.82 | aligned | useSnapPoints — full parameter shape | [scheduled bbox exact=24/28] export at src/use-snap-points.ts:7 (t=5282, 24 atoms) |
+| 3.8 | 6394 | 7047 | +653 | 0.85 | aligned | helpers.ts — dampenValue, getTranslate, isVertical bodies | [scheduled bbox exact=15/34] export body at src/helpers.ts:72 (t=7047, 15 atoms) |
 
 ## Walker waste (off-NS token spend ≥ 50)
 
@@ -60,17 +131,4 @@ scores: Sim=0.554 Reached=15/33 Early=3 Late=7 Partial=5 Missing=13 Used=9416/10
 | 170 | 1.00 | 170 | 5452 | export body at src/use-prevent-scroll.ts:68 |
 | 156 | 0.51 | 305 | 4161 | export body at src/index.tsx:803 |
 | 152 | 1.00 | 152 | 5033 | export body at src/helpers.ts:23 |
-| 147 | 1.00 | 147 | 9305 | export doc at src/use-position-fixed.ts:15 |
-| 135 | 1.00 | 135 | 3856 | package scripts in package.json |
-| 134 | 1.00 | 134 | 4881 | export body at src/helpers.ts:42 |
-| 124 | 1.00 | 124 | 2355 | export at src/use-position-fixed.ts:15 |
-| 111 | 1.00 | 111 | 6733 | json config tsconfig.json |
-| 111 | 1.00 | 111 | 9416 | json config turbo.json |
-| 104 | 1.00 | 104 | 4634 | export body at src/helpers.ts:9 |
-| 85 | 1.00 | 85 | 4501 | export body at src/helpers.ts:108 |
-| 80 | 1.00 | 80 | 2435 | export body at src/use-prevent-scroll.ts:34 |
-| 74 | 1.00 | 74 | 7762 | imports in src/use-snap-points.ts |
-| 65 | 1.00 | 65 | 4416 | export body at src/helpers.ts:94 |
-| 60 | 1.00 | 60 | 1898 | export body at src/use-prevent-scroll.ts:294 |
-| 58 | 1.00 | 58 | 6818 | export doc at src/use-prevent-scroll.ts:68 |
-| 57 | 1.00 | 57 | 1971 | export body at src/context.ts:69 |
+| 1345 | — | — | — | +14 more rows |
