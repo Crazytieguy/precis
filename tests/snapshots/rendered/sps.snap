@@ -27,28 +27,6 @@ NOTICE.md
     6→### License
     …
 README.md
-    1→# sps
-    3→> [!WARNING]
-    4→> I will scrap this project in favor of sps v2 some time in the future (when v2 is built and ready which might take a while). The reason is that I am planning to
-    5→> implement my own packaging system, my own version of atomic installs / updated complete with automatic snapshots and full, down to single package rollbacks +
-    6→> automatic cve checks and some other stuffs. After a lot of thinking and looking at Homebrew's architecture I've come to the conclusion that I do not like it (burn
-    7→> me for it ;). Defining my own build system will allow for a more performant and maintainable system in the long run. (Just a bit anxious about how to host packages
-    8→> / do all the repo stuff. Like really anxious but I'll figure it out)
-    9→>
-    10→> Another reason is that I made some choices on internal architecture in the beginning that I have come to see as suboptimal but can not easily refactor so this will
-    11→> allow me to go for the better option right from the get go (go for rx/tx for status propagation from the start, build the core fully async etc.)
-    12→>
-    13→> I have just made the repo for sps2 public. There is no repositories yet and core systems still do not work and need debugging. However it passes ci and the
-    14→> architecture is largely in place. I will have to create a automatic upstream tracking system, automatic builds and create build scripts for the most important
-    15→> tools too still + bootstrap the repositories.
-    16→>
-    17→> Never done that so if anyone has experience with that stuff help is appreciated. 
-    18→>
-    19→> For repo architecture I will probably go for a classic unix style repo format with cloudflare r2 and automatic replication to multiple regions. Well that is quite
-    20→> far out. Still it is coming along well, just built my first package with it. Found some small issues with install right after and am working on those now.
-    21→>
-    22→> https://github.com/alexykn/sps2 Take a look if you want!
-    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
 rustfmt.toml
 sps/
     Cargo.toml
@@ -80,6 +58,9 @@ sps/
             planner.rs
             runner.rs
         pipeline.rs
+            1→pub mod downloader;
+            2→pub mod planner;
+            3→pub mod runner;
 sps-common/
     Cargo.toml
     src/
@@ -113,6 +94,14 @@ sps-common/
                 56→    fn build_time(&self) -> Vec<&Dependency>;
                 57→}
             mod.rs
+                1→pub mod definition; // Renamed from 'dependency'
+                2→pub mod requirement;
+                3→pub mod resolver;
+                6→pub use definition::{Dependency, DependencyExt, DependencyTag}; // Updated source module
+                7→pub use requirement::Requirement;
+                8→pub use resolver::{
+                9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
+                10→};
             requirement.rs
                 7→pub enum Requirement {
                 8→    MacOS(String),
@@ -121,6 +110,8 @@ sps-common/
                 11→}
             resolver.rs
         error.rs
+            1→use std::sync::Arc;
+            3→use thiserror::Error;
             6→pub enum SpsError {
             …
             119→pub type Result<T> = std::result::Result<T, SpsError>;
@@ -141,6 +132,18 @@ sps-common/
             22→    config: Config,
             23→}
         lib.rs
+            2→pub mod cache;
+            3→pub mod config;
+            4→pub mod dependency;
+            5→pub mod error;
+            6→pub mod formulary;
+            7→pub mod keg;
+            8→pub mod model;
+            9→pub mod pipeline;
+            13→pub use cache::Cache;
+            14→pub use config::Config;
+            15→pub use error::{Result, SpsError};
+            16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
         model/
         pipeline.rs
 sps-core/
@@ -230,6 +233,13 @@ sps-core/
             devtools.rs
             extract.rs
             mod.rs
+                5→use std::path::PathBuf;
+                7→use sps_common::config::Config;
+                8→use sps_common::model::formula::Formula;
+                11→pub mod bottle;
+                12→pub mod cask;
+                13→pub mod devtools;
+                14→pub mod extract;
                 17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
                 …
         lib.rs
@@ -266,6 +276,12 @@ sps-core/
                 10→pub fn uninstall_formula_artifacts(
                 …
             mod.rs
+                3→pub mod cask;
+                4→pub mod common;
+                5→pub mod formula;
+                8→pub use cask::{uninstall_cask_artifacts, zap_cask_artifacts};
+                9→pub use common::UninstallOptions;
+                10→pub use formula::uninstall_formula_artifacts;
         upgrade/
             bottle.rs
                 20→pub async fn upgrade_bottle_formula(
@@ -274,6 +290,12 @@ sps-core/
                 15→pub async fn upgrade_cask_package(
                 …
             mod.rs
+                3→pub mod bottle;
+                4→pub mod cask;
+                5→pub mod source;
+                8→pub use self::bottle::upgrade_bottle_formula;
+                9→pub use self::cask::upgrade_cask_package;
+                10→pub use self::source::upgrade_source_formula;
             source.rs
                 19→pub async fn upgrade_source_formula(
                 …

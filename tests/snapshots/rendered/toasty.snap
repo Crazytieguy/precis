@@ -81,18 +81,8 @@ crates/
                 6→    }
                 7→}
             option.rs
-                2→macro_rules! assert_none {
-                …
             result.rs
-                2→macro_rules! assert_err {
-                …
-                22→macro_rules! assert_ok {
-                …
             slice.rs
-                26→macro_rules! assert_unique {
-                …
-                40→macro_rules! assert_empty {
-                …
             str.rs
     toasty/
         CONTEXT.md
@@ -153,10 +143,6 @@ crates/
         src/
             expand/
             expand.rs
-                49→pub(super) fn root_model(model: &Model) -> TokenStream {
-                …
-                60→pub(super) fn embedded_model(model: &Model) -> TokenStream {
-                …
             lib.rs
                 1→mod expand;
                 2→mod schema;
@@ -171,36 +157,6 @@ crates/
         CONTEXT.md
         Cargo.toml
         src/
-            driver/
-            driver.rs
-                18→pub trait Driver: Debug + Send + Sync + 'static {
-                …
-                45→pub trait Connection: Debug + Send + 'static {
-                …
-            error/
-            error.rs
-                36→pub struct Error {
-                37→    inner: Arc<ErrorInner>,
-                38→}
-                41→pub trait IntoError {
-                42→    /// Converts this type into an Error.
-                43→    fn into_error(self) -> Error;
-                44→}
-            lib.rs
-                15→/// A Result type alias that uses Toasty's [`Error`] type.
-                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-                …
-            macros.rs
-                2→macro_rules! path {
-                …
-            schema/
-            schema.rs
-                22→pub struct Schema {
-                …
-            stmt/
-            stmt.rs
-                253→pub enum Statement {
-                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
@@ -230,22 +186,13 @@ crates/
         Cargo.toml
         src/
             driver_test.rs
-                7→pub fn expand(attr: TokenStream, item: TokenStream) -> TokenStream {
-                …
             lib.rs
-                3→mod driver_test;
-                4→mod parse;
-                5→mod test_registry;
-                6→mod test_variants;
-                8→use proc_macro::TokenStream;
                 11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
                 …
                 16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
                 …
                 21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
                 …
-                25→/// Expression macro that evaluates to true or false based on the current driver test expansion.
-                26→/// This is rewritten by the #[driver_test] attribute macro based on the expansion context.
                 28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
                 …
             parse.rs
@@ -253,10 +200,6 @@ crates/
             test_variants.rs
     toasty-driver-mysql/
         Cargo.toml
-            6→[features]
-            7→rust_decimal = ["dep:rust_decimal", "toasty-core/rust_decimal"]
-            8→bigdecimal = ["dep:bigdecimal", "toasty-core/bigdecimal"]
-            9→jiff = ["dep:jiff", "toasty-core/jiff"]
         src/
             lib.rs
                 22→pub struct MySQL {
@@ -295,7 +238,6 @@ crates/
                 …
     toasty-driver-sqlite/
         CONTEXT.md
-            1→# toasty-driver-sqlite Component Context
         Cargo.toml
         src/
             lib.rs
@@ -328,8 +270,6 @@ crates/
     toasty-sql/
         CONTEXT.md
         Cargo.toml
-            7→[dependencies]
-            8→toasty-core.workspace = true
         src/
             lib.rs
                 1→pub mod migration;

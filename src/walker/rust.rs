@@ -58,6 +58,10 @@ pub struct RustState {
     exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
     workspace_members: OnceCell<HashSet<PathBuf>>,
     workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
+    workspace_source_file_lookup: RefCell<HashMap<PathBuf, bool>>,
+    cargo_source_dirs: OnceCell<Vec<PathBuf>>,
+    expanded_dirs: RefCell<HashSet<PathBuf>>,
+    manifest_package_lookup: RefCell<HashMap<PathBuf, bool>>,
 }
 
 impl RustState {
@@ -67,6 +71,10 @@ impl RustState {
             exported_macros_per_dir: RefCell::new(HashMap::new()),
             workspace_members: OnceCell::new(),
             workspace_member_lookup: RefCell::new(HashMap::new()),
+            workspace_source_file_lookup: RefCell::new(HashMap::new()),
+            cargo_source_dirs: OnceCell::new(),
+            expanded_dirs: RefCell::new(HashSet::new()),
+            manifest_package_lookup: RefCell::new(HashMap::new()),
         }
     }
 
@@ -96,9 +104,7 @@ impl RustState {
     /// a workspace member by the seed-root `Cargo.toml`. Lookups are
     /// memoized to avoid one canonicalize syscall per signal computation.
     pub fn is_workspace_member(&self, file: &Path, root: &Path) -> bool {
-        let members = self
-            .workspace_members
-            .get_or_init(|| super::toml::collect_workspace_members(root));
+        let members = self.workspace_members(root);
         if members.is_empty() {
             return false;
         }
@@ -114,6 +120,38 @@ impl RustState {
             .insert(file.to_path_buf(), hit);
         hit
     }
+
+    fn workspace_members(&self, root: &Path) -> &HashSet<PathBuf> {
+        self.workspace_members
+            .get_or_init(|| super::toml::collect_workspace_members(root))
+    }
+
+    pub(in crate::walker) fn cargo_source_dirs(
+        &self,
+        init: impl FnOnce() -> Vec<PathBuf>,
+    ) -> &Vec<PathBuf> {
+        self.cargo_source_dirs.get_or_init(init)
+    }
+
+    fn mark_dir_expanded(&self, dir: &Path) -> bool {
+        let key = dir.canonicalize().unwrap_or_else(|_| dir.to_path_buf());
+        self.expanded_dirs.borrow_mut().insert(key)
+    }
+
+    fn manifest_has_package(&self, manifest: &Path, ctx: &WalkCtx) -> bool {
+        let key = manifest
+            .canonicalize()
+            .unwrap_or_else(|_| manifest.to_path_buf());
+        if let Some(&hit) = self.manifest_package_lookup.borrow().get(&key) {
+            return hit;
+        }
+        let hit = ctx
+            .read_source(&key)
+            .and_then(|text| toml::from_str::<toml::Value>(&text).ok())
+            .is_some_and(|value| value.get("package").and_then(|p| p.as_table()).is_some());
+        self.manifest_package_lookup.borrow_mut().insert(key, hit);
+        hit
+    }
 }
 
 impl Default for RustState {
@@ -123,6 +161,38 @@ impl Default for RustState {
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    let mut out = expand_rust_files_in_dir_once(dir, ctx);
+    if dir == ctx.root() {
+        let source_dirs = ctx
+            .rust_state()
+            .cargo_source_dirs(|| collect_cargo_source_dirs(ctx.root(), ctx));
+        for source_dir in source_dirs
+            .iter()
+            .filter(|source_dir| is_example_source_path(ctx.root(), source_dir))
+        {
+            out.extend(expand_rust_files_in_dir_once(source_dir, ctx));
+        }
+        for source_dir in source_dirs
+            .iter()
+            .filter(|source_dir| !is_example_source_path(ctx.root(), source_dir))
+        {
+            out.extend(gated_on_dir_listing(
+                expand_rust_files_in_dir_once(source_dir, ctx),
+                source_dir,
+            ));
+        }
+    }
+    out
+}
+
+fn expand_rust_files_in_dir_once(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+    if !ctx.rust_state().mark_dir_expanded(dir) {
+        return Vec::new();
+    }
+    expand_rust_files_in_dir(dir, ctx)
+}
+
+fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let rust_files = files_with_extension(dir, "rs");
     if rust_files.is_empty() {
         return Vec::new();
@@ -155,6 +225,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     crate_doc_body_value(file, ctx),
                 ));
             }
+        }
+        if ep || is_workspace_member_source_file(file, ctx) {
             if let Some(content) = build_per_file_content(file, ctx, parse_rust, collect_mod_use) {
                 out.push(batch(
                     RustKey::ModUse { file: file.clone() },
@@ -181,83 +253,116 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let items = find_pub_item_starts(&tree, &source);
-        if items.is_empty() {
-            continue;
-        }
-        let names_key = RustKey::PubItemNames { file: file.clone() };
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_pub_item_names(&tree, &source))
-        {
-            out.push(batch(
-                names_key.clone(),
-                None,
-                content,
-                pub_item_names_value(file, ctx),
-            ));
-        }
-        let names_predecessor = BatchKey::Rust(names_key);
-        for item in &items {
-            let pub_item_key = RustKey::PubItem {
-                file: file.clone(),
-                start_line: item.start_line,
-            };
-            if let Some(content) = single_file_lines_content(
-                file,
-                &source,
-                collect_pub_item(&tree, &source, item.start_line),
-            ) {
+        if !items.is_empty() {
+            let names_key = RustKey::PubItemNames { file: file.clone() };
+            if let Some(content) =
+                single_file_lines_content(file, &source, collect_pub_item_names(&tree, &source))
+            {
                 out.push(batch(
-                    pub_item_key.clone(),
-                    Some(names_predecessor.clone()),
+                    names_key.clone(),
+                    None,
                     content,
-                    pub_item_value(file, item.kind, item.surface, ctx),
+                    pub_item_names_value(file, ctx),
                 ));
             }
-            // Pre-classify the doc-shape so empty Lede / empty Body
-            // candidates aren't emitted. An empty Lede with a Body
-            // predecessored on it would render the body unreachable.
-            let raw_doc = collect_pub_item_doc_raw(&tree, &source, item.start_line);
-            let lede_lines =
-                split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
-            let body_lines = split_doc_lines_at_first_heading(raw_doc, &source, DocSection::Body);
-            let item_key = BatchKey::Rust(pub_item_key);
-            let mut lede_emitted: Option<BatchKey> = None;
-            if !lede_lines.is_empty() {
-                let lede_key = RustKey::PubItemDocLede {
+            let names_predecessor = BatchKey::Rust(names_key);
+            for item in &items {
+                let pub_item_key = RustKey::PubItem {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
                 if let Some(content) = single_file_lines_content(
                     file,
                     &source,
-                    collect_pub_item_doc_section(&tree, &source, item.start_line, DocSection::Lede),
+                    collect_pub_item(&tree, &source, item.start_line),
                 ) {
                     out.push(batch(
-                        lede_key.clone(),
-                        Some(item_key.clone()),
+                        pub_item_key.clone(),
+                        Some(names_predecessor.clone()),
                         content,
-                        pub_item_doc_lede_value(file, item.kind, item.surface, ctx),
+                        pub_item_value(file, item.kind, item.surface, ctx),
                     ));
-                    lede_emitted = Some(BatchKey::Rust(lede_key));
+                }
+                // Pre-classify the doc-shape so empty Lede / empty Body
+                // candidates aren't emitted. An empty Lede with a Body
+                // predecessored on it would render the body unreachable.
+                let raw_doc = collect_pub_item_doc_raw(&tree, &source, item.start_line);
+                let lede_lines =
+                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
+                let body_lines =
+                    split_doc_lines_at_first_heading(raw_doc, &source, DocSection::Body);
+                let item_key = BatchKey::Rust(pub_item_key);
+                let mut lede_emitted: Option<BatchKey> = None;
+                if !lede_lines.is_empty() {
+                    let lede_key = RustKey::PubItemDocLede {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    };
+                    if let Some(content) = single_file_lines_content(
+                        file,
+                        &source,
+                        collect_pub_item_doc_section(
+                            &tree,
+                            &source,
+                            item.start_line,
+                            DocSection::Lede,
+                        ),
+                    ) {
+                        out.push(batch(
+                            lede_key.clone(),
+                            Some(item_key.clone()),
+                            content,
+                            pub_item_doc_lede_value(file, item.kind, item.surface, ctx),
+                        ));
+                        lede_emitted = Some(BatchKey::Rust(lede_key));
+                    }
+                }
+                if !body_lines.is_empty()
+                    && let Some(content) = single_file_lines_content(
+                        file,
+                        &source,
+                        collect_pub_item_doc_section(
+                            &tree,
+                            &source,
+                            item.start_line,
+                            DocSection::Body,
+                        ),
+                    )
+                {
+                    let body_key = RustKey::PubItemDocBody {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    };
+                    out.push(batch(
+                        body_key,
+                        Some(lede_emitted.unwrap_or(item_key)),
+                        content,
+                        pub_item_doc_body_value(file, item.kind, item.surface, ctx),
+                    ));
                 }
             }
-            if !body_lines.is_empty()
-                && let Some(content) = single_file_lines_content(
-                    file,
-                    &source,
-                    collect_pub_item_doc_section(&tree, &source, item.start_line, DocSection::Body),
-                )
-            {
-                let body_key = RustKey::PubItemDocBody {
-                    file: file.clone(),
-                    start_line: item.start_line,
-                };
-                out.push(batch(
-                    body_key,
-                    Some(lede_emitted.unwrap_or(item_key)),
-                    content,
-                    pub_item_doc_body_value(file, item.kind, item.surface, ctx),
-                ));
+        }
+
+        if is_private_entry_item_file(file, ctx) {
+            let entry_items = find_private_top_level_item_starts(&tree, &source);
+            if !entry_items.is_empty() {
+                for item in &entry_items {
+                    if let Some(content) = single_file_lines_content(
+                        file,
+                        &source,
+                        collect_private_entry_item(&tree, &source, item.start_line),
+                    ) {
+                        out.push(batch(
+                            RustKey::EntryItem {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                            },
+                            None,
+                            content,
+                            entry_item_value(file, item.kind, item.surface, ctx),
+                        ));
+                    }
+                }
             }
         }
     }
@@ -306,6 +411,18 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     }
 
     out
+}
+
+fn gated_on_dir_listing(mut batches: Vec<Batch<BatchKey>>, dir: &Path) -> Vec<Batch<BatchKey>> {
+    let gate = BatchKey::Fs(super::FsKey::DirListing {
+        dir: dir.to_path_buf(),
+    });
+    for batch in &mut batches {
+        if batch.predecessor.is_none() {
+            batch.predecessor = Some(gate.clone());
+        }
+    }
+    batches
 }
 
 /// Kind of a top-level pub item, used to weight its batch. Traits are the
@@ -396,15 +513,38 @@ fn item_kind_of(node: Node) -> Option<ItemKind> {
 }
 
 fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
+    find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
+}
+
+fn find_private_top_level_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
+    find_top_level_item_starts(tree, source, TopLevelItemVisibility::Private)
+}
+
+#[derive(Debug, Clone, Copy)]
+enum TopLevelItemVisibility {
+    Public,
+    Private,
+}
+
+fn find_top_level_item_starts(
+    tree: &Tree,
+    source: &str,
+    visibility_filter: TopLevelItemVisibility,
+) -> Vec<PubItemInfo> {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
     for child in root.children(&mut cursor) {
-        if child.kind() == "macro_definition" && has_macro_export(child, source) {
-            continue; // Handled by MacroNames + per-macro MacroBody.
-        }
-        let Some(visibility) = item_visibility(child, source) else {
+        if child.kind() == "macro_definition"
+            && (matches!(visibility_filter, TopLevelItemVisibility::Private)
+                || has_macro_export(child, source))
+        {
             continue;
+        }
+        let visibility = match (visibility_filter, item_visibility(child, source)) {
+            (TopLevelItemVisibility::Public, Some(visibility)) => visibility,
+            (TopLevelItemVisibility::Private, None) => Visibility::Restricted,
+            _ => continue,
         };
         let Some(kind) = item_kind_of(child) else {
             continue;
@@ -427,6 +567,45 @@ fn is_entrypoint_file(path: &Path) -> bool {
     path.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| matches!(n, "lib.rs" | "main.rs" | "mod.rs"))
+}
+
+fn is_private_entry_item_file(path: &Path, ctx: &WalkCtx) -> bool {
+    path.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n == "main.rs")
+        && is_example_source_path(ctx.root(), path)
+}
+
+fn is_workspace_member_source_file(file: &Path, ctx: &WalkCtx) -> bool {
+    let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+    if let Some(&hit) = ctx
+        .rust_state()
+        .workspace_source_file_lookup
+        .borrow()
+        .get(&key)
+    {
+        return hit;
+    }
+    let mut dir = file.parent();
+    let mut hit = false;
+    while let Some(current) = dir {
+        if current.starts_with(ctx.root()) {
+            let manifest = current.join("Cargo.toml");
+            if manifest.is_file() {
+                hit = ctx.rust_state().is_workspace_member(&manifest, ctx.root());
+                break;
+            }
+        }
+        if !current.starts_with(ctx.root()) {
+            break;
+        }
+        dir = current.parent();
+    }
+    ctx.rust_state()
+        .workspace_source_file_lookup
+        .borrow_mut()
+        .insert(key, hit);
+    hit
 }
 
 fn entrypoint_boost(path: &Path) -> f64 {
@@ -457,8 +636,8 @@ fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn mod_use_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let cat = (0.3 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, rust_depth_factor(file, ctx))
+    let cat = (0.42 * entrypoint_boost(file)).min(1.0);
+    mix_signals(cat, 0.65, 0.38, rust_depth_factor(file, ctx))
 }
 
 fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -478,6 +657,22 @@ fn pub_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCt
     let cat = (0.70 * k * s * entrypoint_boost(file)).min(1.0);
     let fu = (0.85 * k * s).min(1.0);
     mix_signals(cat, fu, 0.65 * s, rust_depth_factor(file, ctx))
+}
+
+fn entry_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
+    let k = kind.kind_weight();
+    let s = if surface.doc_hidden { 0.4 } else { 1.0 };
+    // Example entry items are usage flows, so they intentionally bypass the
+    // generic examples/ non-essential discount while still getting depth pinning.
+    let body_axis = if matches!(kind, ItemKind::Fn) {
+        0.85
+    } else {
+        1.0
+    };
+    let cat = (0.50 * k * body_axis * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.75 * k * body_axis * s).min(1.0);
+    let depth = depth_factor(ctx.depth_from_root(file).min(1));
+    mix_signals(cat, fu, 0.70 * body_axis * s, depth)
 }
 
 fn pub_item_doc_lede_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
@@ -523,8 +718,12 @@ fn file_visibility_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    let cat = (0.5 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.8, 0.4, rust_depth_factor(file, ctx))
+    let (cat, fu, ztu) = if is_entrypoint_file(file) {
+        ((0.5 * entrypoint_boost(file)).min(1.0), 0.8, 0.4)
+    } else {
+        (0.25, 0.45, 0.25)
+    };
+    mix_signals(cat, fu, ztu, rust_depth_factor(file, ctx))
 }
 
 fn macro_names_value(depth: usize) -> f64 {
@@ -563,6 +762,68 @@ fn macro_body_value(file: &Path, info: &MacroInfo, ctx: &WalkCtx) -> f64 {
 
 fn parse_rust(ctx: &WalkCtx, path: &Path) -> Option<(Arc<str>, Arc<Tree>)> {
     ctx.parse_tree(path, &tree_sitter_rust::LANGUAGE.into())
+}
+
+fn collect_cargo_source_dirs(root: &Path, ctx: &WalkCtx) -> Vec<PathBuf> {
+    let mut manifests: Vec<PathBuf> = ctx
+        .rust_state()
+        .workspace_members(root)
+        .iter()
+        .cloned()
+        .collect();
+    let root_manifest = root.join("Cargo.toml");
+    if ctx.rust_state().manifest_has_package(&root_manifest, ctx)
+        && let Ok(canonical) = root_manifest.canonicalize()
+    {
+        manifests.push(canonical);
+    }
+    manifests.sort();
+    manifests.dedup();
+
+    let mut dirs = Vec::new();
+    for manifest in manifests {
+        if !ctx.rust_state().manifest_has_package(&manifest, ctx) {
+            continue;
+        }
+        let Some(package_root) = manifest.parent() else {
+            continue;
+        };
+        for source_root in ["src", "tests", "benches", "examples"] {
+            dirs.extend(rust_parent_dirs_under(&package_root.join(source_root)));
+        }
+        if package_root.join("build.rs").is_file() {
+            dirs.push(package_root.to_path_buf());
+        }
+    }
+    dirs.sort();
+    dirs.dedup();
+    dirs
+}
+
+fn is_example_source_path(root: &Path, path: &Path) -> bool {
+    path.strip_prefix(root)
+        .unwrap_or(path)
+        .components()
+        .any(|c| {
+            c.as_os_str()
+                .to_str()
+                .is_some_and(|s| matches!(s, "examples" | "example"))
+        })
+}
+
+fn rust_parent_dirs_under(dir: &Path) -> Vec<PathBuf> {
+    if !dir.exists() {
+        return Vec::new();
+    }
+    let mut dirs = Vec::new();
+    for file in super::fs::files_with_extension_recursive(dir, "rs") {
+        if let Some(parent) = file.parent() {
+            dirs.push(parent.to_path_buf());
+        }
+    }
+    dirs.sort();
+    dirs.dedup();
+    dirs
 }
 
 // --- per-batch content builders ---
@@ -921,12 +1182,7 @@ fn collect_pub_item_names(tree: &Tree, source: &str) -> FileLines {
 /// signature with body-elision marker. No outer rustdoc — that's
 /// `PubItemDocLede` and `PubItemDocBody`.
 fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
+    if let Some(child) = top_level_item_at_start_line(tree, start_line) {
         if item_visibility(child, source).is_none() {
             return FileLines::new(Vec::new());
         }
@@ -949,6 +1205,30 @@ fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
         return FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses));
     }
     FileLines::new(Vec::new())
+}
+
+fn collect_private_entry_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
+    if let Some(child) = top_level_item_at_start_line(tree, start_line) {
+        if item_kind_of(child).is_none() || item_visibility(child, source).is_some() {
+            return FileLines::new(Vec::new());
+        }
+        let mut full = Vec::new();
+        extend_span(&mut full, child, source);
+        return FileLines::new(dedup_sorted(full));
+    }
+    FileLines::new(Vec::new())
+}
+
+fn top_level_item_at_start_line(tree: &Tree, start_line: usize) -> Option<Node<'_>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.start_position().row + 1 != start_line {
+            continue;
+        }
+        return Some(child);
+    }
+    None
 }
 
 /// Lines of the lede or body section of the outer rustdoc preceding
@@ -991,20 +1271,26 @@ fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
         if child.kind() != "impl_item" {
             continue;
         }
-        let sig_end = signature_end_row(child);
-        push_rows(&mut full, child.start_position().row, sig_end);
         let Some(body) = child.child_by_field_name("body") else {
             continue;
         };
+        let start_len = full.len();
+        let mut added_method = false;
+        let sig_end = signature_end_row(child);
+        push_rows(&mut full, child.start_position().row, sig_end);
         let mut body_cursor = body.walk();
         for inner in body.children(&mut body_cursor) {
             if matches!(inner.kind(), "function_item" | "function_signature_item") {
                 let inner_end = signature_end_row(inner);
                 push_rows(&mut full, inner.start_position().row, inner_end);
+                added_method = true;
                 if inner.child_by_field_name("body").is_some() {
                     ellipses.push(inner_end + 2);
                 }
             }
+        }
+        if !added_method {
+            full.truncate(start_len);
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))

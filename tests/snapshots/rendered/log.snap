@@ -32,15 +32,6 @@ README.md
     1→log
     2→===
     4→A Rust library providing a lightweight logging *facade*.
-    6→[![Build status](https://img.shields.io/github/actions/workflow/status/rust-lang/log/main.yml?branch=master)](https://github.com/rust-lang/log/actions)
-    7→[![Latest version](https://img.shields.io/crates/v/log.svg)](https://crates.io/crates/log)
-    8→[![Documentation](https://docs.rs/log/badge.svg)](https://docs.rs/log)
-    9→![License](https://img.shields.io/crates/l/log.svg)
-    11→* [`log` documentation](https://docs.rs/log)
-    13→A logging facade provides a single logging API that abstracts over the actual
-    14→logging implementation. Libraries can use the logging API provided by this
-    15→crate, and the consumer of those libraries can choose the logging
-    16→implementation that is most suitable for its use case.
     19→## Minimum supported `rustc`
     …
     25→## Usage
@@ -57,7 +48,6 @@ src/
     __private_api.rs
     kv/
         error.rs
-            3→/// An error encountered while working with structured data.
             5→pub struct Error {
             6→    inner: Inner,
             7→}
@@ -125,6 +115,16 @@ src/
         24→//! though that default may be overridden. Logger implementations typically use
         25→//! the target to filter requests based on some user configuration.
         26→//!
+        399→use std::cfg;
+        401→use std::error;
+        402→use std::str::FromStr;
+        403→use std::{cmp, fmt, mem};
+        406→mod macros;
+        407→mod serde;
+        410→pub mod kv;
+        413→use std::sync::atomic::{AtomicUsize, Ordering};
+        416→use std::cell::Cell;
+        418→use std::sync::atomic::Ordering;
         475→pub enum Level {
         476→    /// The "error" level.
         477→    ///
@@ -245,6 +245,7 @@ src/
         1580→/// If a logger has not been set, a no-op implementation is returned.
         1581→pub fn logger() -> &'static dyn Log {
         …
+        1600→pub mod __private_api;
         1611→pub const STATIC_MAX_LEVEL: LevelFilter = match cfg!(debug_assertions) {
         1612→    false if cfg!(feature = "release_max_level_off") => LevelFilter::Off,
         1613→    false if cfg!(feature = "release_max_level_error") => LevelFilter::Error,
@@ -259,6 +260,8 @@ src/
         1622→    _ if cfg!(feature = "max_level_debug") => LevelFilter::Debug,
         1623→    _ => LevelFilter::Trace,
         1624→};
+        1627→mod tests {
+        …
     macros.rs
     serde.rs
 test_max_level_features/

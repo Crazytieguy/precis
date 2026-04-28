@@ -118,6 +118,17 @@ src/
             353→    pub action: Option<Action>,
             354→}
         mod.rs
+            1→pub mod colors;
+            2→pub mod keys;
+            3→pub mod types;
+            5→use std::collections::HashMap;
+            6→use std::path::PathBuf;
+            7→use std::{env, fs, io};
+            9→use anyhow::{bail, Context, Result};
+            10→use serde::{Deserialize, Serialize};
+            12→use self::colors::Colors;
+            13→use self::keys::Keys;
+            14→use self::types::Types;
             17→pub struct Config {
             18→    #[serde(default = "Tree::default")]
             19→    pub tree: Tree,
@@ -222,15 +233,10 @@ src/
     parse/
         any.rs
             9→pub struct AnyParser {
-            10→    inner: RefCell<Option<Box<dyn Parser>>>,
-            11→}
-        hcl.rs
-            8→pub struct HclParser {}
             …
+        hcl.rs
         json.rs
         jsonl.rs
-            7→pub struct JsonlParser;
-            …
         mod.rs
             18→pub enum ContentType {
             …
@@ -242,14 +248,10 @@ src/
         syntax.rs
         test_cases/
         toml.rs
-            9→pub struct TomlParser {}
-            …
         xml.rs
             12→pub struct XmlParser {}
             …
         yaml.rs
-            8→pub struct YamlParser {}
-            …
     tree.rs
         14→pub struct Tree {
         15→    pub parser: Rc<Box<dyn Parser>>,

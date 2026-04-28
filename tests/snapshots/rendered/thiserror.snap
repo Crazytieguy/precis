@@ -60,43 +60,14 @@ README.md
     19→<br>
     21→## Example
     …
-    23→```rust
-    24→use thiserror::Error;
-    26→#[derive(Error, Debug)]
-    27→pub enum DataStoreError {
-    28→    #[error("data store disconnected")]
-    29→    Disconnect(#[from] io::Error),
-    30→    #[error("the data for key `{0}` is not available")]
-    31→    Redaction(String),
-    32→    #[error("invalid header (expected {expected:?}, found {found:?})")]
-    33→    InvalidHeader {
-    34→        expected: String,
-    35→        found: String,
-    36→    },
-    37→    #[error("unknown data store error")]
-    38→    Unknown,
-    39→}
-    40→```
-    42→<br>
     44→## Details
     …
-    51→- Errors may be enums, structs with named fields, tuple structs, or unit
-    52→  structs.
     211→## Comparison to anyhow
     …
 build/
 build.rs
 impl/
     Cargo.toml
-        1→[package]
-        2→name = "thiserror-impl"
-        3→version = "2.0.18"
-        4→authors = ["David Tolnay <dtolnay@gmail.com>"]
-        5→description = "Implementation detail of the `thiserror` crate"
-        6→edition = "2021"
-        7→license = "MIT OR Apache-2.0"
-        8→repository = "https://github.com/dtolnay/thiserror"
-        9→rust-version = "1.71"
         14→[dependencies]
         15→proc-macro2 = "1.0.74"
         16→quote = "1.0.35"
@@ -196,10 +167,21 @@ impl/
             505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
             …
         fallback.rs
+            1→use crate::expand::call_site_ident;
+            2→use crate::private;
+            3→use proc_macro2::TokenStream;
+            4→use quote::quote;
+            5→use syn::DeriveInput;
             7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
             …
         fmt.rs
         generics.rs
+            1→use proc_macro2::TokenStream;
+            2→use quote::ToTokens;
+            3→use std::collections::btree_map::Entry;
+            4→use std::collections::{BTreeMap as Map, BTreeSet as Set};
+            5→use syn::punctuated::Punctuated;
+            6→use syn::{parse_quote, GenericArgument, Generics, Ident, PathArguments, Token, Type, WhereClause};
             8→pub struct ParamsInScope<'a> {
             9→    names: Set<&'a Ident>,
             10→}
@@ -228,10 +210,26 @@ impl/
             49→    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
             …
         prop.rs
+            1→use crate::ast::{Enum, Field, Struct, Variant};
+            2→use crate::unraw::MemberUnraw;
+            3→use proc_macro2::Span;
+            4→use syn::Type;
         scan_expr.rs
+            1→use self::{Action::*, Input::*};
+            2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
+            3→use syn::parse::{ParseStream, Result};
+            4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
             192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
             …
         unraw.rs
+            1→use proc_macro2::{Ident, Span, TokenStream};
+            2→use quote::ToTokens;
+            3→use std::cmp::Ordering;
+            4→use std::fmt::{self, Display};
+            5→use std::hash::{Hash, Hasher};
+            6→use syn::ext::IdentExt as _;
+            7→use syn::parse::{Parse, ParseStream, Result};
+            8→use syn::Index;
             12→pub struct IdentUnraw(Ident);
             …
             82→pub enum MemberUnraw {
@@ -239,6 +237,9 @@ impl/
             84→    Unnamed(Index),
             85→}
         valid.rs
+            1→use crate::ast::{Enum, Field, Input, Struct, Variant};
+            2→use crate::attr::Attrs;
+            3→use syn::{Error, GenericArgument, PathArguments, Result, Type};
 rust-toolchain.toml
 src/
     aserror.rs

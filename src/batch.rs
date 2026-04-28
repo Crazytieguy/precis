@@ -132,6 +132,9 @@ pub enum RustKey {
     /// refinement. Keyed by the item's start line so each item has a
     /// distinct batch. Priority 1.x–4.x.
     PubItem { file: PathBuf, start_line: usize },
+    /// A private top-level item in a Rust entrypoint file. Rendered whole so
+    /// example `main.rs` usage flows can surface without `pub` items.
+    EntryItem { file: PathBuf, start_line: usize },
     /// First paragraph of the rustdoc (`///` / `/** */`) above a single
     /// `pub` item — everything up to the first `# Heading` line, or
     /// the whole doc when no heading is present. Predecessor: the
@@ -580,6 +583,9 @@ impl RustKey {
             }
             RustKey::PubItem { file, start_line } => {
                 format!("pub item at {}:{}", display_path(file), start_line)
+            }
+            RustKey::EntryItem { file, start_line } => {
+                format!("entry item at {}:{}", display_path(file), start_line)
             }
             RustKey::PubItemDocLede { file, start_line } => {
                 format!("pub-item doc lede at {}:{}", display_path(file), start_line)
