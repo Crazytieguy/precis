@@ -123,6 +123,7 @@ fuzzer/
         56→    sys.stderr.flush()
         59→def normalize_toml_obj(toml_obj: dict) -> None:
         60→    """Make NaNs equal when compared (without using recursion)."""
+        61→    to_process = [toml_obj]
         71→def main():
         72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
         73→    fuzzer_options = sys.argv

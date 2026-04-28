@@ -457,10 +457,14 @@ pub enum PythonKey {
     /// any leading comments. Predecessor: matching [`PythonKey::Decl`].
     /// Priority 3.x.
     DeclDoc { file: PathBuf, start_line: usize },
-    /// Body interior of a top-level def. Skips the leading docstring
-    /// (covered by [`PythonKey::DeclDoc`]). Predecessor: matching
-    /// [`PythonKey::Decl`]. Priority 2.x–3.x.
-    DeclBody { file: PathBuf, start_line: usize },
+    /// Body slice of a top-level def, split by top-level statement.
+    /// Skips the leading docstring (covered by [`PythonKey::DeclDoc`]).
+    /// Predecessor: matching [`PythonKey::Decl`]. Priority 2.x–3.x.
+    DeclBody {
+        file: PathBuf,
+        start_line: usize,
+        body_start_line: usize,
+    },
     /// Class body excluding method def signatures and the leading
     /// docstring — covers TypedDict / dataclass / Protocol / Pydantic
     /// fields, `__slots__`, class-level constants. Predecessor:
@@ -478,9 +482,13 @@ pub enum PythonKey {
     /// Method's docstring. Predecessor: matching
     /// [`PythonKey::Method`]. Priority 3.x.
     MethodDoc { file: PathBuf, start_line: usize },
-    /// Method's body interior, sans leading docstring. Predecessor:
-    /// matching [`PythonKey::Method`]. Priority 3.x–4.x.
-    MethodBody { file: PathBuf, start_line: usize },
+    /// Method body slice, split by top-level statement, sans leading
+    /// docstring. Predecessor: matching [`PythonKey::Method`]. Priority 3.x–4.x.
+    MethodBody {
+        file: PathBuf,
+        start_line: usize,
+        body_start_line: usize,
+    },
     /// Surface listing of every `def test_*` first line in a `test_*.py`
     /// / `*_test.py` file (top-level + class-body, decorator-aware).
     /// Skipped for non-test files. Priority 3.x–5.x.
@@ -887,8 +895,17 @@ impl PythonKey {
             PythonKey::DeclDoc { file, start_line } => {
                 format!("python decl doc at {}:{}", display_path(file), start_line)
             }
-            PythonKey::DeclBody { file, start_line } => {
-                format!("python decl body at {}:{}", display_path(file), start_line)
+            PythonKey::DeclBody {
+                file,
+                start_line,
+                body_start_line,
+            } => {
+                format!(
+                    "python decl body at {}:{} body {}",
+                    display_path(file),
+                    start_line,
+                    body_start_line
+                )
             }
             PythonKey::ClassBody { file, start_line } => {
                 format!("python class body at {}:{}", display_path(file), start_line)
@@ -902,11 +919,16 @@ impl PythonKey {
             PythonKey::MethodDoc { file, start_line } => {
                 format!("python method doc at {}:{}", display_path(file), start_line)
             }
-            PythonKey::MethodBody { file, start_line } => {
+            PythonKey::MethodBody {
+                file,
+                start_line,
+                body_start_line,
+            } => {
                 format!(
-                    "python method body at {}:{}",
+                    "python method body at {}:{} body {}",
                     display_path(file),
-                    start_line
+                    start_line,
+                    body_start_line
                 )
             }
             PythonKey::TestNames { file } => {

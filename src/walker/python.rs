@@ -22,7 +22,7 @@
 //!   constant. For decorated forms, the span starts at the
 //!   `@decorator` row.
 //! - [`PythonKey::DeclDoc`]: top-level def / class docstring.
-//! - [`PythonKey::DeclBody`]: top-level def body interior, sans
+//! - [`PythonKey::DeclBody`]: top-level def body slices, sans
 //!   leading docstring.
 //! - [`PythonKey::ClassBody`]: top-level class body excluding methods
 //!   and the leading docstring — TypedDict / dataclass / Pydantic
@@ -30,7 +30,8 @@
 //!
 //! Per-method keys (keyed by the method's start line):
 //! - [`PythonKey::Method`] / [`PythonKey::MethodDoc`] /
-//!   [`PythonKey::MethodBody`]: same shape as the per-decl trio.
+//!   [`PythonKey::MethodBody`]: same shape as the per-decl trio, with
+//!   bodies split into top-level statement slices.
 //!
 //! Visibility: emits everything. A `visibility_factor` discount
 //! (1.0 unprefixed, 0.6 leading-`_`, 1.0 dunder) ranks public-by-PEP-8
@@ -52,8 +53,9 @@ use crate::value::{
 };
 
 use super::{
-    FileLines, WalkCtx, dedup_sorted, extend_nonblank_rows, extend_span, file_depth_factor,
-    fs::files_with_extension, name_of, push_rows, signature_end_row, single_file_lines_content,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
+    extend_span, file_depth_factor, fs::files_with_extension, name_of, push_rows,
+    signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -214,20 +216,27 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 
             match decl.kind {
                 DeclKind::Function => {
-                    if let Some(content) = single_file_lines_content(
-                        file,
-                        &source,
-                        collect_def_body(decl.inner_node, &src_lines),
-                    ) {
+                    let parts = def_body_parts(decl.inner_node, &src_lines);
+                    let part_value_factor = body_part_value_factor(parts.len());
+                    for part in parts {
+                        let Some(body_start_line) = part.start_line() else {
+                            continue;
+                        };
+                        let Some(content) =
+                            single_file_lines_content(file, &source, FileLines::new(part.lines))
+                        else {
+                            continue;
+                        };
                         out.push(Batch {
                             key: PythonKey::DeclBody {
                                 file: file.clone(),
                                 start_line: decl.start_line,
+                                body_start_line,
                             }
                             .into(),
                             predecessor: Some(decl_predecessor.clone()),
+                            value: decl_body_value(file, decl, ctx) * part_value_factor,
                             content,
-                            value: decl_body_value(file, decl, ctx),
                         });
                     }
                 }
@@ -306,18 +315,26 @@ fn emit_methods(
             });
         }
 
-        if let Some(content) =
-            single_file_lines_content(file, source, collect_def_body(method.inner_node, src_lines))
-        {
+        let parts = def_body_parts(method.inner_node, src_lines);
+        let part_value_factor = body_part_value_factor(parts.len());
+        for part in parts {
+            let Some(body_start_line) = part.start_line() else {
+                continue;
+            };
+            let Some(content) = single_file_lines_content(file, source, FileLines::new(part.lines))
+            else {
+                continue;
+            };
             out.push(Batch {
                 key: PythonKey::MethodBody {
                     file: file.to_path_buf(),
                     start_line: method.start_line,
+                    body_start_line,
                 }
                 .into(),
-                predecessor: Some(method_predecessor),
+                predecessor: Some(method_predecessor.clone()),
+                value: method_body_value(file, &method, ctx) * part_value_factor,
                 content,
-                value: method_body_value(file, &method, ctx),
             });
         }
     }
@@ -675,30 +692,54 @@ fn is_docstring_statement(node: Node) -> bool {
     matches!(first.kind(), "string" | "concatenated_string")
 }
 
-/// Body interior rows of a def, sans leading docstring + blank lines.
-fn collect_def_body(inner: Node, src_lines: &[&str]) -> FileLines {
+/// Body parts of a def, split by top-level statement, sans leading
+/// docstring + blank lines.
+fn def_body_parts(inner: Node, src_lines: &[&str]) -> Vec<BodyPart> {
     let Some(body) = inner.child_by_field_name("body") else {
-        return FileLines::new(Vec::new());
+        return Vec::new();
     };
     let docstring_rows =
         first_docstring_statement(body).map(|n| (n.start_position().row, n.end_position().row));
-    let body_start = body.start_position().row;
-    let body_end = body.end_position().row;
-    let mut out = Vec::new();
+    let mut parts = statement_block_parts(Some(body), src_lines, "block");
+    if parts.is_empty() {
+        return Vec::new();
+    }
     if let Some((doc_start, doc_end)) = docstring_rows {
-        if body_start < doc_start {
-            extend_nonblank_rows(&mut out, src_lines, body_start, doc_start - 1);
+        let doc_start_line = doc_start + 1;
+        let doc_end_line = doc_end + 1;
+        if parts.len() == 1
+            && parts[0]
+                .start_line()
+                .is_some_and(|line| (doc_start_line..=doc_end_line).contains(&line))
+        {
+            parts = block_child_parts(body, src_lines);
         }
-        if doc_end < body_end {
-            extend_nonblank_rows(&mut out, src_lines, doc_end + 1, body_end);
+        parts.retain(|part| {
+            !part
+                .start_line()
+                .is_some_and(|line| (doc_start_line..=doc_end_line).contains(&line))
+        });
+    }
+    parts
+}
+
+fn block_child_parts(body: Node, src_lines: &[&str]) -> Vec<BodyPart> {
+    let mut parts = Vec::new();
+    let mut cursor = body.walk();
+    for child in body.named_children(&mut cursor) {
+        let mut lines = Vec::new();
+        extend_nonblank_rows(
+            &mut lines,
+            src_lines,
+            child.start_position().row,
+            child.end_position().row,
+        );
+        let lines = dedup_sorted(lines);
+        if !lines.is_empty() {
+            parts.push(BodyPart { lines });
         }
-    } else {
-        extend_nonblank_rows(&mut out, src_lines, body_start, body_end);
     }
-    if out.is_empty() {
-        return FileLines::new(Vec::new());
-    }
-    FileLines::new(out)
+    parts
 }
 
 /// Class body rows, skipping methods (decorated or not) and the leading
@@ -1206,8 +1247,37 @@ def f():
         let doc = collect_doc_for(f.inner_node, &source);
         assert_eq!(doc.full, vec![2]);
         let src_lines: Vec<&str> = source.lines().collect();
-        let body = collect_def_body(f.inner_node, &src_lines);
-        assert_eq!(body.full, vec![3], "body skips docstring on row 2");
+        let body = def_body_parts(f.inner_node, &src_lines);
+        assert_eq!(body.len(), 1);
+        assert_eq!(body[0].lines, vec![3], "body skips docstring on row 2");
+    }
+
+    #[test]
+    fn python_large_def_body_splits_by_top_level_statement() {
+        let src = "\
+def f():
+    \"\"\"docstring.\"\"\"
+    x0 = 0
+    x1 = 1
+    x2 = 2
+    x3 = 3
+    x4 = 4
+    x5 = 5
+    x6 = 6
+    x7 = 7
+    x8 = 8
+    x9 = 9
+    x10 = 10
+    x11 = 11
+    x12 = 12
+";
+        let (source, tree) = parse(src);
+        let decls = find_top_level_decls(&tree, &source);
+        let src_lines: Vec<&str> = source.lines().collect();
+        let parts = def_body_parts(decls[0].inner_node, &src_lines);
+        assert_eq!(parts.len(), 13);
+        assert_eq!(parts[0].lines, vec![3]);
+        assert_eq!(parts[12].lines, vec![15]);
     }
 
     #[test]

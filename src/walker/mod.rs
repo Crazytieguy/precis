@@ -405,13 +405,32 @@ pub(crate) fn statement_block_parts(
     if b.kind() != block_kind {
         return Vec::new();
     }
+    let mut cursor = b.walk();
+    let named_children: Vec<_> = b.named_children(&mut cursor).collect();
     let body_start = b.start_position().row;
     let body_end = b.end_position().row;
-    if body_end <= body_start + 1 {
+    // Python function blocks are indentation-delimited; Rust/TS blocks include brace rows.
+    let undelimited_block = block_kind == "block"
+        && b.parent()
+            .is_some_and(|parent| parent.kind() == "function_definition")
+        && named_children
+            .first()
+            .is_some_and(|child| child.start_position().row == body_start);
+    let content_start = if undelimited_block {
+        body_start
+    } else {
+        body_start + 1
+    };
+    let content_end = if undelimited_block {
+        body_end
+    } else {
+        body_end.saturating_sub(1)
+    };
+    if content_end < content_start {
         return Vec::new();
     }
     let mut interior = Vec::new();
-    extend_nonblank_rows(&mut interior, src_lines, body_start + 1, body_end - 1);
+    extend_nonblank_rows(&mut interior, src_lines, content_start, content_end);
     let interior = dedup_sorted(interior);
     if interior.is_empty() {
         return Vec::new();
@@ -421,10 +440,9 @@ pub(crate) fn statement_block_parts(
     }
 
     let mut parts = Vec::new();
-    let mut cursor = b.walk();
-    for child in b.named_children(&mut cursor) {
-        let start_row = child.start_position().row.max(body_start + 1);
-        let end_row = child.end_position().row.min(body_end - 1);
+    for child in named_children {
+        let start_row = child.start_position().row.max(content_start);
+        let end_row = child.end_position().row.min(content_end);
         if end_row < start_row {
             continue;
         }
