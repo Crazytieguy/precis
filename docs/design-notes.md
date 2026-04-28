@@ -97,10 +97,12 @@ Two related conventions worth resisting drift on:
 
 ## Value/cost ranking — open lever on NS divergence
 
-**High priority.** The single biggest open lever on NS divergence. Per-tier rollup across
-fixtures shows a consistent pattern: walker reaches tier 1 reliably
-(avg credit ~0.70–0.99), tier 2 mostly (~0.32–0.91), then drops sharply
-at tier 3+. The cost concavity is now per-key via
+One of the open levers on NS divergence; current per-fixture priority
+should be read from `tests/divergence/OVERVIEW.md` and the per-fixture
+verdict blocks rather than from this section. Historical context: per-
+tier rollups across fixtures showed a consistent shape — walker reaches
+tier 1 reliably, tier 2 mostly, drops sharply at tier 3+. The cost
+concavity is now per-key via
 `WalkerKey::concavity_exponent` (default `0.35`) — the hook is in place
 for further calibration. Open sub-symptoms:
 
@@ -139,25 +141,24 @@ Two known approximations in the divergence report's diagnostic layer
 calibration that depends on distinguishing them; not blocking for the first
 walker/value pass.
 
-- **Loss reasons use post-hoc state.** `candidate_loss` checks
-  `row.final_cost.tokens > remaining_tokens` against the *final* rendered
-  tree and the *final* remaining budget, not the candidate's state at first
-  eligibility. Both inputs can differ from eligibility time. Budget can be
-  consumed by later wins. Marginal cost can also shift: the scheduler's
-  cache invalidation is path-based, not predecessor-based, so a
-  non-ancestor batch on the same file (e.g., another seed-rooted chain on
-  `src/lib.rs`) can amortize file/group overhead, and ancestor refinements
-  can change rendered line states in non-trivial ways. So the labels
-  conflate at least three cases: candidate fit when eligible but lost the
-  value/cost^k race to competing batches; candidate never fit once
-  eligible; candidate's cost looked different at end-of-run because later
-  schedules changed render-tree state on its paths. The three want
-  different interventions (tune ranking; demote low-value spend / shrink
-  the candidate; investigate render-tree-state effects). The right fix is
-  scheduler-side instrumentation: record eligibility, marginal cost, fit
-  status, and rank at decision time, and attribute losses against that.
-  Lower urgency if next work is walker granularity (which the current
-  corpus mostly says is the lever).
+- **Loss reasons use post-hoc budget state.** `candidate_loss` checks
+  `row.final_cost.tokens > remaining_tokens` against the *final* remaining
+  budget, not the budget at first eligibility. Marginal cost itself is
+  pinned by walker invariants (non-ancestor line overlap is rejected at
+  apply, FS atom overlap is rejected at absorb in debug builds, ancestors
+  are scheduled before a dependent first becomes eligible — see
+  `src/scheduler.rs`), so cost-side drift isn't a concern. But budget is
+  consumed by later wins, so a candidate that fit when first eligible —
+  and lost the `value/cost^k` ratio race to competing batches — gets
+  labeled `too expensive at final margin` once those later wins consumed
+  the headroom. That conflates a true budget-pressure case (candidate
+  never fit) with a ranking-race case (candidate fit when eligible, lost
+  the rank fight, then ran out of room). The two want different
+  interventions: demote low-value spend vs. tune the value/cost ratio so
+  the candidate wins earlier. Right fix is scheduler-side instrumentation:
+  record eligibility, marginal cost, fit status, and rank at decision
+  time, and attribute losses against that. Lower urgency if next work is
+  walker granularity (which the current corpus mostly says is the lever).
 
 - **`Schedule.candidates` is `#[serde(skip)]`.** The candidate pool
   needed by unscheduled-bbox / predecessor-gating / coverage-gap

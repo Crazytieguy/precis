@@ -58,9 +58,9 @@ internally until clean. Takes 15–30 minutes.
 
 ## 3. Freeze (optional human review)
 
-The authored NS is the **frozen** reference. From this point don't edit
-`tests/north-stars/<name>.toml` — amendments need explicit rationale per
-`docs/design-notes.md`.
+The authored NS is the **frozen** reference. From this point don't
+edit `tests/north-stars/<name>.toml`; the calibration loop iterates
+the walker against the NS, not the other way around.
 
 If the user asked to review before proceeding: stop here, show the file
 path. Otherwise: continue.
@@ -92,45 +92,18 @@ this fixture and any fixtures whose reports shifted.
 
 ## 6. Iterate (or report back)
 
-**Use the divergence reports as the primary driver of improvements.**
-Read the new fixture's `tests/divergence/<name>.md`, but also check
-*every* modified divergence report after each walker change — a fix
-that helps `<name>` may regress others, and the diff against the
-committed baselines is the cheap signal. Refer to NS files
-(`tests/north-stars/<name>.toml`) or schedule snapshots
-(`tests/snapshots/schedule/<name>.toml`) only when you need them to
-understand a specific report row.
+Once the fixture is in the corpus, walker / value iteration is handled
+by `Skill(iterate-divergence)`.
 
-For column semantics, scoring formulas, status labels, and threshold
-constants, read the module-level `//!` doc at the top of
-`src/divergence.rs` — that's the source of truth. Don't restate it
-elsewhere.
-
-After a walker change, `UPDATE_BASELINES=1 cargo t` regenerates every
-baseline. `git diff tests/divergence/` shows what got better and what
-got worse at a glance. Run `/simplify` after non-trivial walker
-changes.
-
-**Pursue general solutions.** Every change should improve the walker
-across the general distribution of real-world codebases — fixtures are
-samples, not targets. Prefer an accepted divergence to a
-fixture-specific heuristic.
-
-**When stuck.** A divergence that resists general fixes is a sign to
-consult more perspectives. Spawn an Agent for independent
-brainstorming and/or run `codex-companion adversarial-review` for a
-second opinion. Report back only as a last resort.
-
-Stop iterating when:
-
-- All modified divergence reports read as "remaining gaps are
-  legitimate NS content the walker can't cheaply deliver at this
-  budget", **or**
-- The remaining gaps need schema / NS changes the user should approve.
+If the new fixture's report has obvious red flags before any iteration
+(verdict label that doesn't match what the fixture is for, NS rows
+with empty `descriptor`s, etc.), surface them — those are NS-authoring
+issues, not calibration ones, and may need a respawn of step 2.
 
 ## Things to *not* do
 
 - Don't hand-write NSs. They're large and the agent produces better
   ones than a direct draft.
-- Don't edit a frozen NS without the amendment protocol.
+- Don't edit a frozen NS — the calibration loop iterates the walker
+  against the NS, not the other way around.
 - Don't commit `.new` sidecars (gitignored by default; CI guards).

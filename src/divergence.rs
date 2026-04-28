@@ -1,12 +1,18 @@
 //! Divergence metric + report generator. Compares a walker `Schedule`
-//! run at `T_max` to a frozen `NorthStar`. Two artifacts:
+//! run at `T_max` to a frozen `NorthStar`. Three artifacts:
 //!
 //! - `Scores`: `sim` (integral similarity scalar) + per-NS-batch
 //!   buckets `reached + partial + missing == total_ns` and
 //!   `early` / `late` within `reached`.
-//! - Markdown `Report` (`tests/divergence/<fixture>.md`): line 1 is the
-//!   grep-able score line; body is per-tier rollup, arrival ledger,
-//!   and walker-waste. Stable ordering; perfect alignment ⇒ 1-line file.
+//! - Per-fixture Markdown report (`tests/divergence/<fixture>.md`):
+//!   answer-at-the-top format. Score line, then Verdict block, Top
+//!   opportunities, compressed tier line, diagnosis / loss-reason /
+//!   exact-overlap rollups, arrival ledger grouped by diagnosis, and
+//!   walker waste at the bottom. Stable ordering; perfect alignment ⇒
+//!   very short file.
+//! - Corpus index (`tests/divergence/OVERVIEW.md`): one row per
+//!   fixture sorted by `Sim` ascending. Mirrors each fixture's verdict
+//!   line so an agent picks where to focus from a single file.
 //!
 //! NS `exp_t` is the cumulative marginal cost of applying NS batches in
 //! rank order to one shared `RenderedTree` — same accounting as
@@ -37,16 +43,118 @@
 //! showing strictly more bytes than NS asked → fully credited but
 //! flagged via the `+over` row annotation.
 //!
-//! ## Tier rollup
+//! ## Verdict block
 //!
-//! Per major-id prefix (`1.x`, `2.x`, …): `batches | reached | partial
-//! | missing | avg_credit`. Lets a reader spot which tier the walker
-//! falls off.
+//! The agent brief — first ~7 lines after the score line. Names the
+//! likely primary lever for this fixture and the rows that prove it.
+//! Lever options: `parent-gating bound`, `budget-pressure bound`,
+//! `wrong-slice bound`, `coverage-gap bound`, `ranking-race bound`,
+//! `timing-only / low-action`. Selection is heuristic: pick the
+//! diagnosis with the largest `w(t)×gap` weight (see Top
+//! opportunities), break ties toward more-actionable interventions.
 //!
-//! ## Arrival ledger
+//! Block fields: `Verdict` (lever label), `Likely primary lever`
+//! (one-line action), `Evidence` (bucket counts with weights),
+//! `Secondary intervention` (next-best lever, optional), `Loss reasons`
+//! (for ranking-recoverable rows: predecessor-gated /
+//! too-expensive-at-final-margin / discovered-unscheduled), `Top rows`
+//! (highest-leverage row ids by w(t)×gap), and an anti-Goodhart
+//! reminder. **Wording is heuristic-derived** — verify `Sim` actually
+//! moves after a calibration change, not just bucket counts.
 //!
-//! One row per non-aligned-or-partial NS batch:
-//! `id | exp_t | reached_t | delta_t | credit | status | descriptor`.
+//! ## Top opportunities
+//!
+//! Capped at 5 rows, sorted by `w(t)×gap` descending. Each row is one
+//! intervention with the rows it would address.
+//!
+//! - `intervention` — what to change (e.g. `promote go decl signature
+//!   batches`, `free final budget / demote late waste`, `split
+//!   wrong-slice walker batches`, `add walker candidates for
+//!   no-discovered rows`).
+//! - `rows` — count of NS rows the intervention would help.
+//! - `w(t)×gap` — `Σ exp(-exp_t/τ) × (1 - credit)` over those rows,
+//!   τ=2000, same time weighting and credit-gap as headline `Sim`.
+//!   **Non-additive across opportunities** (rows can overlap between
+//!   opportunities); sum is an upper bound on Sim impact, not an
+//!   additive estimate.
+//! - `bands ≤3k/≤6k/total` — count of rows with `exp_t` ≤ 3000 / ≤
+//!   6000 / overall. Default product budget is 3k, so the first band
+//!   is the most user-relevant.
+//! - `evidence` — short rationale (file count for predecessor-kind
+//!   groups; exact-atom totals; etc.).
+//! - `top row ids` — up to 5 row ids sorted by `w(t)×gap` descending
+//!   (lowest exp_t first), with `...` suffix when more exist.
+//!
+//! Predecessor-kind grouping collapses parent-gated rows by walker-key
+//! class (e.g. all `go decl at <file>` predecessors → one `promote go
+//! decl signature batches` opportunity) — the calibration-relevant
+//! frame, since `value.rs` is tuned by walker-key class rather than
+//! per-batch.
+//!
+//! ## Tier line
+//!
+//! One-line summary per major-id prefix (`1.x`, `2.x`, …) with reached
+//! / partial / missing counts and `avg_credit`. Quick view of where
+//! the walker falls off across tiers. Decompressed from the older
+//! tier rollup table.
+//!
+//! ## Diagnosis rollup
+//!
+//! Counts of arrival-ledger rows by diagnosis bucket: `ranking-
+//! recoverable` (unscheduled high/full exact overlap), `wrong-slice /
+//! granularity` (scheduled or near-bbox at low/none exact),
+//! `no discovered candidate` (walker emits nothing covering NS lines),
+//! `fs/listing`, `timing-only`, `mixed/unknown`. Each bucket carries
+//! `missing / partial / timing` sub-counts and a `likely lever` label.
+//! The diagnosis is the audit trail behind the verdict block — a way
+//! to spot-check that the verdict's primary lever matches the data.
+//!
+//! ## Loss reason rollup (ranking-recoverable rows only)
+//!
+//! Splits the ranking-recoverable bucket by why the candidate didn't
+//! schedule: `predecessor not scheduled`, `too expensive at final
+//! margin`, `discovered unscheduled`. Each carries a `w(t)×gap` and a
+//! per-loss intervention label. **Note**: loss reasons are computed
+//! against the *final* render-tree state, not the candidate's state at
+//! first eligibility — see `docs/design-notes.md` for the post-hoc
+//! caveat.
+//!
+//! ## Candidate hint kinds + Exact-overlap rollup
+//!
+//! Per-row hint shape: `[<hint kind> exact=H/T] <descriptor> (<atoms
+//! count>, <loss>)`. Hint kinds:
+//!
+//! - `scheduled bbox` — a scheduled walker batch's atoms fall inside
+//!   the NS row's per-file line bounding box.
+//! - `unscheduled bbox` — an unscheduled candidate batch does. Often
+//!   ranking-recoverable when exact overlap is high/full.
+//! - `scheduled same-file` / `unscheduled same-file` — atoms in the
+//!   right file but outside the NS row's bbox.
+//! - `fs-only` — NS row carries only Fs atoms; no line bbox to score.
+//! - `no discovered candidate` — no walker-emitted batch has any line
+//!   atom on the row's paths.
+//!
+//! When the chosen hint is `scheduled bbox` and a non-ancestor
+//! unscheduled candidate has *higher* exact overlap, the hint appends
+//! `; better unscheduled exact=H'/T': ...` — surfaces hidden ranking
+//! failures the precedence order would otherwise mask.
+//!
+//! `Exact atom overlap rollup` cross-tabulates `(hint kind, status,
+//! exact bucket)` where exact bucket ∈ `none` (0%), `low` (<80%),
+//! `high` (≥80%), `full` (100%). The `high`+`full` mass on
+//! `unscheduled bbox missing` rows is the pure ranking-recoverable
+//! pool; `low`+`none` on `scheduled bbox` rows is the wrong-slice
+//! pool.
+//!
+//! ## Arrival ledger (by diagnosis)
+//!
+//! One section per diagnosis bucket, in fixed order
+//! (`ranking-recoverable` first, then `wrong-slice`, then
+//! `no discovered candidate`, then `fs/listing`, `mixed/unknown`,
+//! `timing-only`). Within each section, rows sort by `exp_t`
+//! ascending. Per-row columns:
+//! `id | exp_t | reached_t | delta_t | credit | status | descriptor |
+//! candidate hint`.
 //!
 //! - `exp_t` — NS-cumulative tokens at that batch (when NS expects it).
 //! - `reached_t` — walker `cum_tokens` at the batch where this NS
@@ -60,6 +168,12 @@
 //!   `credit < 0.5` → missing, `< 0.8` → partial, else reached;
 //!   within reached, timing classifies via `EARLY_FACTOR = 0.7` /
 //!   `LATE_FACTOR = 1.3` on `delta_t / exp_t`.
+//! - `candidate hint` — see above.
+//!
+//! Within `ranking-recoverable`, predecessor-gated children that share
+//! a parent collapse into a single `group` row in the ledger
+//! (`<n> children of <predecessor>`) — keeps the section scannable
+//! when one parent gates many children.
 //!
 //! ## Walker waste
 //!
