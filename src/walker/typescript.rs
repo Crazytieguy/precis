@@ -56,6 +56,14 @@ use super::{
     statement_block_parts,
 };
 
+// TS/JS catalog files can expose many same-file body refinements. The first
+// four body segments keep full value because they usually cover the main
+// component/function bodies; later segments are commonly nested helper detail.
+const FULL_VALUE_BODY_SEGMENTS_PER_FILE: usize = 4;
+// Keep late body segments schedulable as last-resort detail, but make their
+// value/cost ratio lose to broader structural candidates in budget pressure.
+const LATE_BODY_SEGMENT_VALUE_FACTOR: f64 = 0.05;
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
     if js_like_files.is_empty() {
@@ -95,6 +103,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let exports = find_export_starts(&tree, &source, &src_lines);
         let per_export_factor = type_machinery_factor(file, &exports);
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
+        let mut body_segment_index = 0usize;
         if !exports.is_empty() {
             let chunk_count = names_surface_chunk_count(exports.len());
             let export_count = exports.len();
@@ -191,8 +200,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             content,
                             value: export_body_value(file, item.kind, ctx, js_factor)
                                 * per_export_factor
-                                * part_value_factor,
+                                * part_value_factor
+                                * body_segment_value_factor(body_segment_index),
                         });
+                        body_segment_index += 1;
                     }
                 }
             }
@@ -240,14 +251,24 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         content,
                         value: module_item_body_value(file, item.kind, ctx, js_factor)
                             * per_export_factor
-                            * part_value_factor,
+                            * part_value_factor
+                            * body_segment_value_factor(body_segment_index),
                     });
+                    body_segment_index += 1;
                 }
             }
         }
     }
 
     out
+}
+
+fn body_segment_value_factor(body_segment_index: usize) -> f64 {
+    if body_segment_index < FULL_VALUE_BODY_SEGMENTS_PER_FILE {
+        1.0
+    } else {
+        LATE_BODY_SEGMENT_VALUE_FACTOR
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

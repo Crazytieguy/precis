@@ -136,6 +136,22 @@ docs/
             25→### `Infer`
             …
         utilities.md
+            1→# Utilities
+            …
+            5→### `assign`
+            …
+            20→### `deprecated`
+            …
+            38→### `dynamic`
+            …
+            51→### `lazy`
+            …
+            64→### `omit`
+            …
+            78→### `partial`
+            …
+            97→### `pick`
+            …
     resources/
         faq.md
             1→# FAQ
@@ -246,7 +262,18 @@ src/
         31→  branch!: Array<any>
         32→  failures: () => Array<Failure>;
         35→  constructor(failure: Failure, failures: () => Generator<Failure>) {
-        …
+        36→    let cached: Array<Failure> | undefined
+        37→    const { message, explanation, ...rest } = failure
+        38→    const { path } = failure
+        39→    const msg =
+        40→      path.length === 0 ? message : `At path: ${path.join('.')} -- ${message}`
+        41→    super(explanation ?? msg)
+        42→    if (explanation != null) this.cause = msg
+        43→    Object.assign(this, rest)
+        44→    this.name = this.constructor.name
+        45→    this.failures = () => {
+        46→      return (cached ??= [failure, ...failures()])
+        47→    }
     index.ts
         1→export * from './error.js'
         2→export * from './struct.js'
@@ -314,12 +341,7 @@ src/
             94→  struct: Struct<T, S>,
             95→  regexp: RegExp
             96→): Struct<T, S> {
-            97→  return refine(struct, 'pattern', (value) => {
-            98→    return (
-            99→      regexp.test(value) ||
-            100→      `Expected a ${struct.type} matching \`/${regexp.source}/\` but received "${value}"`
-            101→    )
-            102→  })
+            …
             109→export function size<
             110→  T extends string | number | Date | any[] | Map<any, any> | Set<any>,
             111→  S extends any,
@@ -334,10 +356,7 @@ src/
         types.ts
         utilities.ts
             247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
-            248→  console.warn(
-            249→    'superstruct@0.11 - The `struct` helper has been renamed to `define`.'
-            250→  )
-            252→  return define(name, validator)
+            …
     utils.ts
 test/
 tsconfig.json

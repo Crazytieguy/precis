@@ -58,15 +58,11 @@ src/
         18→export function isSafari(): boolean | undefined {
         19→  return /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
         22→export function isIPad(): boolean | undefined {
-        23→  return (
-        24→    testPlatform(/^iPad/) ||
-        25→    // iPadOS 13 lies and says it's a Mac, but we can distinguish by detecting touch support.
-        26→    (isMac() && navigator.maxTouchPoints > 1)
-        27→  );
+        …
         30→export function isIOS(): boolean | undefined {
-        31→  return isIPhone() || isIPad();
+        …
         34→export function testPlatform(re: RegExp): boolean | undefined {
-        35→  return typeof window !== 'undefined' && window.navigator != null ? re.test(window.navigator.platform) : undefined;
+        …
     constants.ts
         1→export const TRANSITIONS = {
         2→  DURATION: 0.5,
@@ -173,35 +169,9 @@ src/
         999→) {
         …
         1098→export function NestedRoot({ onDrag, onOpenChange, open: nestedIsOpen, ...rest }: DialogProps) {
-        1099→  const { onNestedDrag, onNestedOpenChange, onNestedRelease } = useDrawerContext();
-        1101→  if (!onNestedDrag) {
-        1102→    throw new Error('Drawer.NestedRoot must be placed in another drawer');
-        1103→  }
-        1105→  return (
-        1106→    <Root
-        1107→      nested
-        1108→      open={nestedIsOpen}
-        1109→      onClose={() => {
-        1110→        onNestedOpenChange(false);
-        1111→      }}
-        1112→      onDrag={(e, p) => {
-        1113→        onNestedDrag(e, p);
-        1114→        onDrag?.(e, p);
-        1115→      }}
-        1116→      onOpenChange={(o) => {
-        1117→        if (o) {
-        1118→          onNestedOpenChange(o);
-        1119→        }
-        1120→        onOpenChange?.(o);
-        1121→      }}
-        1122→      onRelease={onNestedRelease}
-        1123→      {...rest}
-        1124→    />
-        1125→  );
+        …
         1130→export function Portal(props: PortalProps) {
-        1131→  const context = useDrawerContext();
-        1132→  const { container = context.container, ...portalProps } = props;
-        1134→  return <DialogPrimitive.Portal container={container} {...portalProps} />;
+        …
         1137→export const Drawer = {
         1138→  Root,
         1139→  NestedRoot,
