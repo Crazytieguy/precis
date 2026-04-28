@@ -369,6 +369,81 @@ pub(crate) fn extend_nonblank_rows(
     }
 }
 
+#[derive(Debug, Clone)]
+pub(crate) struct BodyPart {
+    pub lines: Vec<usize>,
+}
+
+impl BodyPart {
+    pub(crate) fn start_line(&self) -> Option<usize> {
+        self.lines.first().copied()
+    }
+}
+
+// Below roughly a dozen emitted atoms, splitting usually costs more scheduling
+// surface than it saves: descendants are tiny and the parent body batch is
+// already cheap enough to carry as a single region.
+pub(crate) const BODY_SPLIT_MIN_LINES: usize = 12;
+
+pub(crate) fn body_part_value_factor(part_count: usize) -> f64 {
+    if part_count <= 1 {
+        1.0
+    } else {
+        1.0 / part_count as f64
+    }
+}
+
+/// Body slices for a brace-delimited statement block, using top-level
+/// statements inside the block. Blank lines are filtered exactly like
+/// materialized spans.
+pub(crate) fn statement_block_parts(
+    body: Option<Node>,
+    src_lines: &[&str],
+    block_kind: &str,
+) -> Vec<BodyPart> {
+    let Some(b) = body else { return Vec::new() };
+    if b.kind() != block_kind {
+        return Vec::new();
+    }
+    let body_start = b.start_position().row;
+    let body_end = b.end_position().row;
+    if body_end <= body_start + 1 {
+        return Vec::new();
+    }
+    let mut interior = Vec::new();
+    extend_nonblank_rows(&mut interior, src_lines, body_start + 1, body_end - 1);
+    let interior = dedup_sorted(interior);
+    if interior.is_empty() {
+        return Vec::new();
+    }
+    if interior.len() <= BODY_SPLIT_MIN_LINES {
+        return vec![BodyPart { lines: interior }];
+    }
+
+    let mut parts = Vec::new();
+    let mut cursor = b.walk();
+    for child in b.named_children(&mut cursor) {
+        let start_row = child.start_position().row.max(body_start + 1);
+        let end_row = child.end_position().row.min(body_end - 1);
+        if end_row < start_row {
+            continue;
+        }
+        let mut lines = Vec::new();
+        extend_nonblank_rows(&mut lines, src_lines, start_row, end_row);
+        let lines = dedup_sorted(lines);
+        if !lines.is_empty() {
+            parts.push(BodyPart { lines });
+        }
+    }
+    if parts.len() <= 1 {
+        // Named children omit comment-only/interstitial content. Preserve the
+        // complete block when there is nothing meaningful to split.
+        vec![BodyPart { lines: interior }]
+    } else {
+        parts
+    }
+}
+
 /// 0-based row of a declaration's signature end: the row before its body
 /// starts, or its end row if there's no body field.
 pub(crate) fn signature_end_row(node: Node) -> usize {

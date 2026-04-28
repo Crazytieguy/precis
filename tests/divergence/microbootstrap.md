@@ -56,8 +56,7 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 | scheduled bbox | late | full | 4 |
 | scheduled bbox | missing | low | 7 |
 | scheduled bbox | partial | low | 11 |
-| unscheduled bbox | missing | none | 1 |
-| unscheduled bbox | missing | low | 1 |
+| unscheduled bbox | missing | low | 2 |
 | unscheduled bbox | missing | high | 1 |
 
 ## Arrival ledger by diagnosis
@@ -92,7 +91,7 @@ Candidate hint kinds: scheduled bbox=36, unscheduled bbox=3, scheduled same-file
 | 4.6 | 6847 | — | — | 0.54 | partial | FastStreamPrometheusMiddlewareProtocol + PrometheusInstrument.is_ready | [scheduled bbox exact=6/26] python method at microbootstrap/instruments/prometheus_instrument.py:46 (t=5499, 6 atoms); better unscheduled exact=8/26: python method at microbootstrap/instruments/prometheus_instrument.py:37 (8 atoms, too expensive at final margin) |
 | 4.8 | 7193 | — | — | 0.71 | partial | SentryInstrument — class + is_ready | [scheduled bbox exact=2/7] python method sigs in microbootstrap/instruments/sentry_instrument.py (t=7064, 2 atoms) |
 | 4.10 | 7807 | — | — | 0.00 | missing | FastStreamOpentelemetryConfig + FastStreamTelemetryMiddlewareProtocol | [unscheduled bbox exact=6/21] python method at microbootstrap/instruments/opentelemetry_instrument.py:82 (6 atoms, predecessor not scheduled: python method sigs in microbootstrap/instruments/opentelemetry_instrument.py) |
-| 4.11 | 8133 | — | — | 0.00 | missing | BaseOpentelemetryInstrument.is_ready + OpentelemetryInstrument.define_exclude_urls | [unscheduled bbox exact=0/25] python method body at microbootstrap/instruments/opentelemetry_instrument.py:133 (32 atoms, predecessor not scheduled: python method at microbootstrap/instruments/opentelemetry_instrument.py:133) |
+| 4.11 | 8133 | — | — | 0.00 | missing | BaseOpentelemetryInstrument.is_ready + OpentelemetryInstrument.define_exclude_urls | [unscheduled bbox exact=8/25] python method sigs in microbootstrap/instruments/opentelemetry_instrument.py (10 atoms, predecessor not scheduled: python decl names surface in microbootstrap/instruments/opentelemetry_instrument.py) |
 | 4.12 | 8408 | — | — | 0.16 | missing | LoggingConfig (fields) | [scheduled bbox exact=2/19] python method at microbootstrap/instruments/logging_instrument.py:140 (t=9633, 2 atoms); better unscheduled exact=10/19: python class body at microbootstrap/instruments/logging_instrument.py:127 (10 atoms, too expensive at final margin) |
 | 5.4 | 9443 | — | — | 0.67 | partial | InstrumentsSetupper — class + setup/teardown + use_instrument registrations | [scheduled bbox exact=8/21] python method sigs in microbootstrap/instruments_setupper.py (t=4381, 16 atoms) |
 | 5.7 | 9841 | — | — | 0.60 | partial | Exceptions — full file | [scheduled bbox exact=6/10] python decl names surface in microbootstrap/exceptions.py (t=717, 6 atoms) |

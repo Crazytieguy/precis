@@ -212,7 +212,7 @@ src/
         8→macro_rules! debug {
         …
         19→pub fn set_file(file: String) {
-        …
+        20→    FILE.set(file).unwrap();
         23→pub fn write_logs(mut msg: String) -> Result<()> {
         …
     edit.rs
@@ -230,27 +230,21 @@ src/
         24→    data: Arc<Mutex<Data>>,
         25→}
     main.rs
+        111→fn main() {
+        112→    if let Err(err) = run() {
+        113→        eprintln!("Error: {err:#}");
+        114→        process::exit(1);
+        115→    }
     parse/
         any.rs
-            9→pub struct AnyParser {
-            …
         hcl.rs
         json.rs
         jsonl.rs
         mod.rs
-            18→pub enum ContentType {
-            …
-            36→pub trait Parser {
-            …
-            66→impl ContentType {
-            67→    pub fn new_parser(self) -> Box<dyn Parser> {
-            …
         syntax.rs
         test_cases/
         toml.rs
         xml.rs
-            12→pub struct XmlParser {}
-            …
         yaml.rs
     tree.rs
         14→pub struct Tree {

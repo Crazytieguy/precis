@@ -56,8 +56,7 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 | scheduled bbox | late | full | 3 |
 | scheduled bbox | missing | low | 5 |
 | scheduled bbox | partial | low | 1 |
-| unscheduled bbox | missing | none | 1 |
-| unscheduled bbox | missing | low | 1 |
+| unscheduled bbox | missing | low | 2 |
 | unscheduled bbox | missing | high | 2 |
 | unscheduled bbox | missing | full | 1 |
 
@@ -79,7 +78,7 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=5, scheduled same-file
 | 1.1 | 96 | — | — | 0.00 | missing | Readme one-line lede | [scheduled same-file] headings outline in Readme.md (t=260, 12 atoms) |
 | 1.4 | 306 | — | — | 0.00 | missing | Readme runtime-errors paragraph | [scheduled same-file] headings outline in Readme.md (t=260, 12 atoms) |
 | 2.6 | 1168 | — | — | 0.76 | partial | docs/summary.md (the GitBook TOC) | [scheduled bbox exact=19/25] mdBook SUMMARY at docs/summary.md (t=1928, 19 atoms) |
-| 3.1 | 1448 | — | — | 0.00 | missing | structs/types.ts — all 24 type-factory names | [unscheduled bbox exact=0/25] export body at src/structs/types.ts:298 body 299 (41 atoms, predecessor not scheduled: export at src/structs/types.ts:298) |
+| 3.1 | 1448 | — | — | 0.00 | missing | structs/types.ts — all 24 type-factory names | [unscheduled bbox exact=8/25] export names surface in src/structs/types.ts (22 atoms, too expensive at final margin) |
 | 4.5 | 3875 | — | — | 0.18 | missing | core.md — `assert` / `create` / `validate` definitions | [scheduled bbox exact=6/34] headings outline in docs/reference/core.md (t=1609, 10 atoms); better unscheduled exact=7/34: docs/reference/core.md section #5 (7 atoms, too expensive at final margin) |
 | 4.6 | 4064 | — | — | 0.13 | missing | coercions.md — `defaulted` worked example | [scheduled bbox exact=2/15] headings outline in docs/reference/coercions.md (t=1323, 2 atoms); better unscheduled exact=11/15: docs/reference/coercions.md section #1 (11 atoms, too expensive at final margin) |
 | 5.1 | 4816 | — | — | 0.16 | missing | utils.ts run() — the central traversal generator | [scheduled bbox exact=12/67] export at src/utils.ts:130 (t=6734, 12 atoms); better unscheduled exact=47/67: export body at src/utils.ts:130 body 141 (47 atoms, too expensive at final margin) |

@@ -132,9 +132,24 @@ pub enum RustKey {
     /// refinement. Keyed by the item's start line so each item has a
     /// distinct batch. Priority 1.x–4.x.
     PubItem { file: PathBuf, start_line: usize },
-    /// A private top-level item in a Rust entrypoint file. Rendered whole so
-    /// example `main.rs` usage flows can surface without `pub` items.
+    /// Body slice of a public function item, split by top-level statement.
+    /// Predecessor: the matching `PubItem`.
+    PubItemBody {
+        file: PathBuf,
+        start_line: usize,
+        body_start_line: usize,
+    },
+    /// A private top-level item in a Rust entrypoint file. Functions render
+    /// as signatures with body ellipses; non-functions render whole so example
+    /// `main.rs` usage flows can still surface without `pub` items.
     EntryItem { file: PathBuf, start_line: usize },
+    /// Body slice of a private entrypoint function, split by top-level
+    /// statement. Predecessor: the matching `EntryItem`.
+    EntryItemBody {
+        file: PathBuf,
+        start_line: usize,
+        body_start_line: usize,
+    },
     /// First paragraph of the rustdoc (`///` / `/** */`) above a single
     /// `pub` item — everything up to the first `# Heading` line, or
     /// the whole doc when no heading is present. Predecessor: the
@@ -606,8 +621,32 @@ impl RustKey {
             RustKey::PubItem { file, start_line } => {
                 format!("pub item at {}:{}", display_path(file), start_line)
             }
+            RustKey::PubItemBody {
+                file,
+                start_line,
+                body_start_line,
+            } => {
+                format!(
+                    "pub item body at {}:{} body {}",
+                    display_path(file),
+                    start_line,
+                    body_start_line
+                )
+            }
             RustKey::EntryItem { file, start_line } => {
                 format!("entry item at {}:{}", display_path(file), start_line)
+            }
+            RustKey::EntryItemBody {
+                file,
+                start_line,
+                body_start_line,
+            } => {
+                format!(
+                    "entry item body at {}:{} body {}",
+                    display_path(file),
+                    start_line,
+                    body_start_line
+                )
             }
             RustKey::PubItemDocLede { file, start_line } => {
                 format!("pub-item doc lede at {}:{}", display_path(file), start_line)

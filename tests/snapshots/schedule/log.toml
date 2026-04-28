@@ -1,7 +1,7 @@
 fixture = "log"
 budget = 10000
-cumulative_tokens = 8545
-batch_count = 95
+cumulative_tokens = 9067
+batch_count = 104
 
 [[batches]]
 position = 1
@@ -1209,10 +1209,64 @@ kind = "full"
 
 [[batches]]
 position = 37
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1478, body_start_line: 1479 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1478 body 1479"
+cost_tokens = 10
+cum_tokens = 1404
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1479
+end = 1479
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1420, body_start_line: 1421 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1420 body 1421"
+cost_tokens = 14
+cum_tokens = 1418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1421
+end = 1421
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1351, body_start_line: 1352 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1351 body 1352"
+cost_tokens = 18
+cum_tokens = 1436
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1352
+end = 1352
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 842 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:842"
 cost_tokens = 94
-cum_tokens = 1488
+cum_tokens = 1530
 
 [batches.content]
 kind = "lines"
@@ -1226,11 +1280,11 @@ end = 850
 kind = "full"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 636 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:636"
 cost_tokens = 139
-cum_tokens = 1627
+cum_tokens = 1669
 
 [batches.content]
 kind = "lines"
@@ -1244,11 +1298,11 @@ end = 649
 kind = "full"
 
 [[batches]]
-position = 39
+position = 42
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1158 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1158"
 cost_tokens = 18
-cum_tokens = 1645
+cum_tokens = 1687
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1316,11 @@ end = 1120
 kind = "full"
 
 [[batches]]
-position = 40
+position = 43
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 842 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:842"
 cost_tokens = 19
-cum_tokens = 1664
+cum_tokens = 1706
 
 [batches.content]
 kind = "lines"
@@ -1280,11 +1334,11 @@ end = 797
 kind = "full"
 
 [[batches]]
-position = 41
+position = 44
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 475 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:475"
 cost_tokens = 268
-cum_tokens = 1932
+cum_tokens = 1974
 
 [batches.content]
 kind = "lines"
@@ -1298,11 +1352,29 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 42
+position = 45
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1375, body_start_line: 1376 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1375 body 1376"
+cost_tokens = 90
+cum_tokens = 2064
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1376
+end = 1379
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1581 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1581"
 cost_tokens = 40
-cum_tokens = 1972
+cum_tokens = 2104
 
 [batches.content]
 kind = "lines"
@@ -1316,11 +1388,11 @@ end = 1580
 kind = "full"
 
 [[batches]]
-position = 43
+position = 47
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1549 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1549"
 cost_tokens = 46
-cum_tokens = 2018
+cum_tokens = 2150
 
 [batches.content]
 kind = "lines"
@@ -1334,11 +1406,11 @@ end = 1546
 kind = "full"
 
 [[batches]]
-position = 44
+position = 48
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1249 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1249"
 cost_tokens = 401
-cum_tokens = 2419
+cum_tokens = 2551
 
 [batches.content]
 kind = "lines"
@@ -1368,11 +1440,11 @@ end = 1280
 kind = "full"
 
 [[batches]]
-position = 45
+position = 49
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1249 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1249"
 cost_tokens = 17
-cum_tokens = 2436
+cum_tokens = 2568
 
 [batches.content]
 kind = "lines"
@@ -1386,11 +1458,29 @@ end = 1248
 kind = "full"
 
 [[batches]]
-position = 46
+position = 50
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1529, body_start_line: 1530 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1529 body 1530"
+cost_tokens = 147
+cum_tokens = 2715
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1530
+end = 1541
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1611 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1611"
 cost_tokens = 276
-cum_tokens = 2712
+cum_tokens = 2991
 
 [batches.content]
 kind = "lines"
@@ -1404,11 +1494,11 @@ end = 1624
 kind = "full"
 
 [[batches]]
-position = 47
+position = 52
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1566 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1566"
 cost_tokens = 63
-cum_tokens = 2775
+cum_tokens = 3054
 
 [batches.content]
 kind = "lines"
@@ -1422,11 +1512,29 @@ end = 1563
 kind = "full"
 
 [[batches]]
-position = 48
+position = 53
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1396, body_start_line: 1397 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1396 body 1397"
+cost_tokens = 163
+cum_tokens = 3217
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
+start = 1397
+end = 1403
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs" })'
 descriptor = "mod/use plumbing in /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs"
 cost_tokens = 127
-cum_tokens = 2902
+cum_tokens = 3344
 
 [batches.content]
 kind = "lines"
@@ -1512,11 +1620,11 @@ end = 1628
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 55
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 0 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #0"
 cost_tokens = 198
-cum_tokens = 3100
+cum_tokens = 3542
 
 [batches.content]
 kind = "lines"
@@ -1546,11 +1654,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 50
+position = 56
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/error.rs", start_line: 5 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/error.rs:5"
 cost_tokens = 14
-cum_tokens = 3114
+cum_tokens = 3556
 
 [batches.content]
 kind = "lines"
@@ -1564,11 +1672,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 51
+position = 57
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1351 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1351"
 cost_tokens = 73
-cum_tokens = 3187
+cum_tokens = 3629
 
 [batches.content]
 kind = "lines"
@@ -1582,11 +1690,11 @@ end = 1348
 kind = "full"
 
 [[batches]]
-position = 52
+position = 58
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/key.rs", start_line: 7 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/key.rs:7"
 cost_tokens = 20
-cum_tokens = 3207
+cum_tokens = 3649
 
 [batches.content]
 kind = "lines"
@@ -1600,11 +1708,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 53
+position = 59
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 11 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:11"
 cost_tokens = 20
-cum_tokens = 3227
+cum_tokens = 3669
 
 [batches.content]
 kind = "lines"
@@ -1618,11 +1726,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 54
+position = 60
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/mod.rs" })'
 descriptor = "mod/use plumbing in /Users/yoav/projects/precis/tests/fixtures/log/src/kv/mod.rs"
 cost_tokens = 116
-cum_tokens = 3343
+cum_tokens = 3785
 
 [batches.content]
 kind = "lines"
@@ -1684,11 +1792,11 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 55
+position = 61
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 475 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:475"
 cost_tokens = 100
-cum_tokens = 3443
+cum_tokens = 3885
 
 [batches.content]
 kind = "lines"
@@ -1702,11 +1810,11 @@ end = 472
 kind = "full"
 
 [[batches]]
-position = 56
+position = 62
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs", start_line: 235 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs:235"
 cost_tokens = 21
-cum_tokens = 3464
+cum_tokens = 3906
 
 [batches.content]
 kind = "lines"
@@ -1720,11 +1828,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 57
+position = 63
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1003 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1003"
 cost_tokens = 86
-cum_tokens = 3550
+cum_tokens = 3992
 
 [batches.content]
 kind = "lines"
@@ -1738,11 +1846,11 @@ end = 968
 kind = "full"
 
 [[batches]]
-position = 58
+position = 64
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 1129 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:1129"
 cost_tokens = 42
-cum_tokens = 3592
+cum_tokens = 4034
 
 [batches.content]
 kind = "lines"
@@ -1756,11 +1864,11 @@ end = 1133
 kind = "full"
 
 [[batches]]
-position = 59
+position = 65
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 1139 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:1139"
 cost_tokens = 42
-cum_tokens = 3634
+cum_tokens = 4076
 
 [batches.content]
 kind = "lines"
@@ -1774,11 +1882,11 @@ end = 1143
 kind = "full"
 
 [[batches]]
-position = 60
+position = 66
 key = 'Rust(MacroNames { src_dir: "/Users/yoav/projects/precis/tests/fixtures/log/src" })'
 descriptor = "macro_export names across /Users/yoav/projects/precis/tests/fixtures/log/src"
 cost_tokens = 256
-cum_tokens = 3890
+cum_tokens = 4332
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2212,11 @@ end = 574
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 67
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 1149 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:1149"
 cost_tokens = 43
-cum_tokens = 3933
+cum_tokens = 4375
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2230,11 @@ end = 1153
 kind = "full"
 
 [[batches]]
-position = 62
+position = 68
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 1159 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:1159"
 cost_tokens = 43
-cum_tokens = 3976
+cum_tokens = 4418
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2248,11 @@ end = 1163
 kind = "full"
 
 [[batches]]
-position = 63
+position = 69
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 1169 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:1169"
 cost_tokens = 43
-cum_tokens = 4019
+cum_tokens = 4461
 
 [batches.content]
 kind = "lines"
@@ -2158,11 +2266,11 @@ end = 1173
 kind = "full"
 
 [[batches]]
-position = 64
+position = 70
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1200 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1200"
 cost_tokens = 93
-cum_tokens = 4112
+cum_tokens = 4554
 
 [batches.content]
 kind = "lines"
@@ -2176,11 +2284,11 @@ end = 1188
 kind = "full"
 
 [[batches]]
-position = 65
+position = 71
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/CHANGELOG.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/CHANGELOG.md section #2"
 cost_tokens = 21
-cum_tokens = 4133
+cum_tokens = 4575
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2302,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 66
+position = 72
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 636 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:636"
 cost_tokens = 122
-cum_tokens = 4255
+cum_tokens = 4697
 
 [batches.content]
 kind = "lines"
@@ -2212,11 +2320,11 @@ end = 633
 kind = "full"
 
 [[batches]]
-position = 67
+position = 73
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1529 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1529"
 cost_tokens = 94
-cum_tokens = 4349
+cum_tokens = 4791
 
 [batches.content]
 kind = "lines"
@@ -2230,11 +2338,11 @@ end = 1516
 kind = "full"
 
 [[batches]]
-position = 68
+position = 74
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1375 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1375"
 cost_tokens = 97
-cum_tokens = 4446
+cum_tokens = 4888
 
 [batches.content]
 kind = "lines"
@@ -2248,11 +2356,11 @@ end = 1361
 kind = "full"
 
 [[batches]]
-position = 69
+position = 75
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 6 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #6"
 cost_tokens = 19
-cum_tokens = 4465
+cum_tokens = 4907
 
 [batches.content]
 kind = "lines"
@@ -2266,11 +2374,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 70
+position = 76
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1420 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1420"
 cost_tokens = 109
-cum_tokens = 4574
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -2284,11 +2392,11 @@ end = 1413
 kind = "full"
 
 [[batches]]
-position = 71
+position = 77
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml" })'
 descriptor = "[features] in /Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml"
 cost_tokens = 387
-cum_tokens = 4961
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -2342,11 +2450,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 72
+position = 78
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 1 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #1"
 cost_tokens = 75
-cum_tokens = 5036
+cum_tokens = 5478
 
 [batches.content]
 kind = "lines"
@@ -2376,11 +2484,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 73
+position = 79
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/log/.gitignore" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/log/.gitignore"
 cost_tokens = 20
-cum_tokens = 5056
+cum_tokens = 5498
 
 [batches.content]
 kind = "lines"
@@ -2394,11 +2502,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 74
+position = 80
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1478 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1478"
 cost_tokens = 125
-cum_tokens = 5181
+cum_tokens = 5623
 
 [batches.content]
 kind = "lines"
@@ -2412,11 +2520,11 @@ end = 1432
 kind = "full"
 
 [[batches]]
-position = 75
+position = 81
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/CHANGELOG.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/CHANGELOG.md section #5"
 cost_tokens = 21
-cum_tokens = 5202
+cum_tokens = 5644
 
 [batches.content]
 kind = "lines"
@@ -2430,11 +2538,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 76
+position = 82
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1611 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1611"
 cost_tokens = 126
-cum_tokens = 5328
+cum_tokens = 5770
 
 [batches.content]
 kind = "lines"
@@ -2448,11 +2556,11 @@ end = 1610
 kind = "full"
 
 [[batches]]
-position = 77
+position = 83
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 119 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:119"
 cost_tokens = 37
-cum_tokens = 5365
+cum_tokens = 5807
 
 [batches.content]
 kind = "lines"
@@ -2466,11 +2574,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 78
+position = 84
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1396 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1396"
 cost_tokens = 213
-cum_tokens = 5578
+cum_tokens = 6020
 
 [batches.content]
 kind = "lines"
@@ -2484,11 +2592,11 @@ end = 1394
 kind = "full"
 
 [[batches]]
-position = 79
+position = 85
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs", start_line: 51 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs:51"
 cost_tokens = 425
-cum_tokens = 6003
+cum_tokens = 6445
 
 [batches.content]
 kind = "lines"
@@ -2518,11 +2626,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 80
+position = 86
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml" })'
 descriptor = "[dependencies] in /Users/yoav/projects/precis/tests/fixtures/log/Cargo.toml"
 cost_tokens = 397
-cum_tokens = 6400
+cum_tokens = 6842
 
 [batches.content]
 kind = "lines"
@@ -2552,11 +2660,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 81
+position = 87
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs", start_line: 391 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs:391"
 cost_tokens = 318
-cum_tokens = 6718
+cum_tokens = 7160
 
 [batches.content]
 kind = "lines"
@@ -2594,11 +2702,11 @@ end = 411
 kind = "full"
 
 [[batches]]
-position = 82
+position = 88
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/log/benches" })'
 descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/log/benches'"
 cost_tokens = 4
-cum_tokens = 6722
+cum_tokens = 7164
 
 [batches.content]
 kind = "fs"
@@ -2608,11 +2716,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/log/benches"
 entries = ["value.rs"]
 
 [[batches]]
-position = 83
+position = 89
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs" })'
 descriptor = "pub-item names surface in /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
 cost_tokens = 91
-cum_tokens = 6813
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2698,11 +2806,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 90
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 10 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:10"
 cost_tokens = 0
-cum_tokens = 6813
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2716,11 +2824,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 85
+position = 91
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 39 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:39"
 cost_tokens = 0
-cum_tokens = 6813
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2734,11 +2842,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 86
+position = 92
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 103 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:103"
 cost_tokens = 0
-cum_tokens = 6813
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2760,11 +2868,11 @@ end = 104
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 93
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 108 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:108"
 cost_tokens = 0
-cum_tokens = 6813
+cum_tokens = 7255
 
 [batches.content]
 kind = "lines"
@@ -2786,11 +2894,47 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 94
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 108, body_start_line: 109 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:108 body 109"
+cost_tokens = 7
+cum_tokens = 7262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 103, body_start_line: 104 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:103 body 104"
+cost_tokens = 18
+cum_tokens = 7280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 39 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:39"
 cost_tokens = 10
-cum_tokens = 6823
+cum_tokens = 7290
 
 [batches.content]
 kind = "lines"
@@ -2804,11 +2948,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 89
+position = 97
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 84 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:84"
 cost_tokens = 93
-cum_tokens = 6916
+cum_tokens = 7383
 
 [batches.content]
 kind = "lines"
@@ -2830,11 +2974,11 @@ end = 94
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 98
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs", start_line: 51 })'
 descriptor = "pub-item doc lede at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/source.rs:51"
 cost_tokens = 120
-cum_tokens = 7036
+cum_tokens = 7503
 
 [batches.content]
 kind = "lines"
@@ -2848,11 +2992,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 91
+position = 99
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 5 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #5"
 cost_tokens = 61
-cum_tokens = 7097
+cum_tokens = 7564
 
 [batches.content]
 kind = "lines"
@@ -2866,11 +3010,29 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 92
+position = 100
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs", start_line: 84, body_start_line: 94 })'
+descriptor = "pub item body at /Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs:84 body 94"
+cost_tokens = 55
+cum_tokens = 7619
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/log/src/__private_api.rs"
+start = 94
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
 key = 'Rust(PubItemDocBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs", start_line: 1420 })'
 descriptor = "pub-item doc body at /Users/yoav/projects/precis/tests/fixtures/log/src/lib.rs:1420"
 cost_tokens = 55
-cum_tokens = 7152
+cum_tokens = 7674
 
 [batches.content]
 kind = "lines"
@@ -2884,11 +3046,11 @@ end = 1418
 kind = "full"
 
 [[batches]]
-position = 93
+position = 102
 key = 'Rust(MacroBody { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs", start_line: 75 })'
 descriptor = "macro_export body at /Users/yoav/projects/precis/tests/fixtures/log/src/macros.rs:75"
 cost_tokens = 485
-cum_tokens = 7637
+cum_tokens = 8159
 
 [batches.content]
 kind = "lines"
@@ -2926,11 +3088,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 94
+position = 103
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs", start_line: 462 })'
 descriptor = "pub item at /Users/yoav/projects/precis/tests/fixtures/log/src/kv/value.rs:462"
 cost_tokens = 840
-cum_tokens = 8477
+cum_tokens = 8999
 
 [batches.content]
 kind = "lines"
@@ -3040,11 +3202,11 @@ end = 536
 kind = "full"
 
 [[batches]]
-position = 95
+position = 104
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/log/README.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/log/README.md section #2"
 cost_tokens = 68
-cum_tokens = 8545
+cum_tokens = 9067
 
 [batches.content]
 kind = "lines"

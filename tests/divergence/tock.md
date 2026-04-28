@@ -49,8 +49,7 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8, fs-only=2
 | scheduled bbox | late | full | 3 |
 | scheduled bbox | missing | low | 10 |
 | scheduled bbox | partial | low | 7 |
-| unscheduled bbox | missing | none | 1 |
-| unscheduled bbox | missing | low | 2 |
+| unscheduled bbox | missing | low | 3 |
 | unscheduled bbox | missing | high | 3 |
 | unscheduled bbox | missing | full | 2 |
 
@@ -80,7 +79,7 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8, fs-only=2
 | 4.2 | 3040 | — | — | 0.14 | missing | File-format ParseActivity | [scheduled bbox exact=7/50] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 7 atoms); better unscheduled exact=36/50: go decl body at internal/adapters/repositories/file/parser.go:20 (36 atoms, too expensive at final margin) |
 | 4.3 | 3173 | — | — | 0.10 | missing | File-format FormatActivity (writer side) | [scheduled bbox exact=2/10] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 2 atoms); better unscheduled exact=6/10: go decl body at internal/adapters/repositories/file/parser.go:72 (6 atoms, too expensive at final margin) |
 | 6.1 | 4497 | — | — | 0.79 | partial | timeutil: Formatter type + display formats | [scheduled bbox exact=15/43] go decl names surface in internal/timeutil/timeutil.go (t=3726, 15 atoms) |
-| 6.2 | 4861 | — | — | 0.00 | missing | TimeWarrior repo: type + filename + toTWInterval | [unscheduled bbox exact=0/35] go decl body at internal/adapters/repositories/timewarrior/repository.go:235 (41 atoms, predecessor not scheduled: go decl at internal/adapters/repositories/timewarrior/repository.go:235) |
+| 6.2 | 4861 | — | — | 0.00 | missing | TimeWarrior repo: type + filename + toTWInterval | [unscheduled bbox exact=12/35] go decl names surface in internal/adapters/repositories/timewarrior/repository.go (30 atoms, too expensive at final margin) |
 | 6.3 | 5074 | — | — | 0.75 | partial | Notes-repo: paths + frontmatter + signatures | [scheduled bbox exact=12/20] go decl names surface in internal/adapters/repositories/notes/repository.go (t=6542, 13 atoms) |
 | 6.5 | 5652 | — | — | 0.21 | missing | extra.CalculateEndTime | [scheduled bbox exact=6/33] go package + imports in internal/extra/extra.go (t=4625, 6 atoms); better unscheduled exact=18/33: go decl body at internal/extra/extra.go:11 (18 atoms, too expensive at final margin) |
 | 6.6 | 5880 | — | — | 0.20 | missing | File-repo: type + constructor | [scheduled bbox exact=4/25] go decl names surface in internal/adapters/repositories/file/repository.go (t=6944, 4 atoms); better unscheduled exact=14/25: go package + imports in internal/adapters/repositories/file/repository.go (14 atoms, too expensive at final margin) |

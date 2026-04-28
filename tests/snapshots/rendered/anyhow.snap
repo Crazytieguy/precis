@@ -210,7 +210,7 @@ src/
         646→///    |         consider giving this pattern the explicit type `std::result::Result<i32, E>`, where the type parameter `E` is specified
         647→/// ```
         650→pub fn Ok<T>(value: T) -> Result<T> {
-        …
+        651→    Result::Ok(value)
         656→pub mod __private {
         …
     macros.rs

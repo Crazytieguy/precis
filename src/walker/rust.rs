@@ -42,9 +42,9 @@ use crate::content::{BatchContent, Span};
 use crate::value::{depth_factor, mix_signals};
 
 use super::{
-    FileLines, WalkCtx, build_file_spans, build_per_file_content, dedup_sorted, extend_span,
-    file_depth_factor, fs::files_with_extension, push_rows, signature_end_row,
-    single_file_lines_content,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, build_file_spans, build_per_file_content,
+    dedup_sorted, extend_span, file_depth_factor, fs::files_with_extension, name_of, push_rows,
+    signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`]. Stores cross-file
@@ -253,10 +253,11 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let items = find_pub_item_starts(&tree, &source);
+        let src_lines: Vec<&str> = source.lines().collect();
         if !items.is_empty() {
             let names_key = RustKey::PubItemNames { file: file.clone() };
             if let Some(content) =
-                single_file_lines_content(file, &source, collect_pub_item_names(&tree, &source))
+                single_file_lines_content(file, &source, collect_pub_item_names(&items))
             {
                 out.push(batch(
                     names_key.clone(),
@@ -271,11 +272,9 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
-                if let Some(content) = single_file_lines_content(
-                    file,
-                    &source,
-                    collect_pub_item(&tree, &source, item.start_line),
-                ) {
+                if let Some(content) =
+                    single_file_lines_content(file, &source, collect_pub_item(item.node, &source))
+                {
                     out.push(batch(
                         pub_item_key.clone(),
                         Some(names_predecessor.clone()),
@@ -283,15 +282,37 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         pub_item_value(file, item.kind, item.surface, ctx),
                     ));
                 }
+                let item_key = BatchKey::Rust(pub_item_key.clone());
+                let parts = body_parts_for_item(item.node, &src_lines);
+                let part_value_factor = body_part_value_factor(parts.len());
+                for part in parts {
+                    let Some(body_start_line) = part.start_line() else {
+                        continue;
+                    };
+                    let Some(content) =
+                        single_file_lines_content(file, &source, FileLines::new(part.lines))
+                    else {
+                        continue;
+                    };
+                    out.push(batch(
+                        RustKey::PubItemBody {
+                            file: file.clone(),
+                            start_line: item.start_line,
+                            body_start_line,
+                        },
+                        Some(item_key.clone()),
+                        content,
+                        pub_item_body_value(file, item.kind, item.surface, ctx) * part_value_factor,
+                    ));
+                }
                 // Pre-classify the doc-shape so empty Lede / empty Body
                 // candidates aren't emitted. An empty Lede with a Body
                 // predecessored on it would render the body unreachable.
-                let raw_doc = collect_pub_item_doc_raw(&tree, &source, item.start_line);
+                let raw_doc = collect_pub_item_doc_raw(item.node, &source);
                 let lede_lines =
                     split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
                 let body_lines =
-                    split_doc_lines_at_first_heading(raw_doc, &source, DocSection::Body);
-                let item_key = BatchKey::Rust(pub_item_key);
+                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Body);
                 let mut lede_emitted: Option<BatchKey> = None;
                 if !lede_lines.is_empty() {
                     let lede_key = RustKey::PubItemDocLede {
@@ -301,12 +322,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     if let Some(content) = single_file_lines_content(
                         file,
                         &source,
-                        collect_pub_item_doc_section(
-                            &tree,
-                            &source,
-                            item.start_line,
-                            DocSection::Lede,
-                        ),
+                        collect_pub_item_doc_section(raw_doc.clone(), &source, DocSection::Lede),
                     ) {
                         out.push(batch(
                             lede_key.clone(),
@@ -321,12 +337,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     && let Some(content) = single_file_lines_content(
                         file,
                         &source,
-                        collect_pub_item_doc_section(
-                            &tree,
-                            &source,
-                            item.start_line,
-                            DocSection::Body,
-                        ),
+                        collect_pub_item_doc_section(raw_doc.clone(), &source, DocSection::Body),
                     )
                 {
                     let body_key = RustKey::PubItemDocBody {
@@ -343,23 +354,59 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
 
-        if is_private_entry_item_file(file, ctx) {
+        let example_entry = is_example_source_path(ctx.root(), file);
+        let example_main_entry = example_entry && is_main_rs(file);
+        let src_main_entry = is_src_main_file(file);
+        if is_entrypoint_file(file) {
             let entry_items = find_private_top_level_item_starts(&tree, &source);
             if !entry_items.is_empty() {
                 for item in &entry_items {
-                    if let Some(content) = single_file_lines_content(
-                        file,
+                    if !should_emit_private_entry_item(
+                        item.node,
                         &source,
-                        collect_private_entry_item(&tree, &source, item.start_line),
+                        example_main_entry,
+                        src_main_entry,
                     ) {
+                        continue;
+                    }
+                    let entry_item_key = RustKey::EntryItem {
+                        file: file.clone(),
+                        start_line: item.start_line,
+                    };
+                    let entry_lines = collect_private_entry_item(item.node, &source, example_entry);
+                    if let Some(content) = single_file_lines_content(file, &source, entry_lines) {
                         out.push(batch(
-                            RustKey::EntryItem {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                            },
+                            entry_item_key.clone(),
                             None,
                             content,
                             entry_item_value(file, item.kind, item.surface, ctx),
+                        ));
+                    }
+                    if example_entry {
+                        continue;
+                    }
+                    let item_key = BatchKey::Rust(entry_item_key);
+                    let parts = body_parts_for_item(item.node, &src_lines);
+                    let part_value_factor = body_part_value_factor(parts.len());
+                    for part in parts {
+                        let Some(body_start_line) = part.start_line() else {
+                            continue;
+                        };
+                        let Some(content) =
+                            single_file_lines_content(file, &source, FileLines::new(part.lines))
+                        else {
+                            continue;
+                        };
+                        out.push(batch(
+                            RustKey::EntryItemBody {
+                                file: file.clone(),
+                                start_line: item.start_line,
+                                body_start_line,
+                            },
+                            Some(item_key.clone()),
+                            content,
+                            entry_item_body_value(file, item.kind, item.surface, ctx)
+                                * part_value_factor,
                         ));
                     }
                 }
@@ -454,7 +501,8 @@ impl ItemKind {
 }
 
 #[derive(Debug, Clone)]
-struct PubItemInfo {
+struct PubItemInfo<'a> {
+    node: Node<'a>,
     start_line: usize,
     kind: ItemKind,
     surface: ApiSurface,
@@ -512,11 +560,11 @@ fn item_kind_of(node: Node) -> Option<ItemKind> {
     })
 }
 
-fn find_pub_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
+fn find_pub_item_starts<'a>(tree: &'a Tree, source: &str) -> Vec<PubItemInfo<'a>> {
     find_top_level_item_starts(tree, source, TopLevelItemVisibility::Public)
 }
 
-fn find_private_top_level_item_starts(tree: &Tree, source: &str) -> Vec<PubItemInfo> {
+fn find_private_top_level_item_starts<'a>(tree: &'a Tree, source: &str) -> Vec<PubItemInfo<'a>> {
     find_top_level_item_starts(tree, source, TopLevelItemVisibility::Private)
 }
 
@@ -526,11 +574,11 @@ enum TopLevelItemVisibility {
     Private,
 }
 
-fn find_top_level_item_starts(
-    tree: &Tree,
+fn find_top_level_item_starts<'a>(
+    tree: &'a Tree,
     source: &str,
     visibility_filter: TopLevelItemVisibility,
-) -> Vec<PubItemInfo> {
+) -> Vec<PubItemInfo<'a>> {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
@@ -551,6 +599,7 @@ fn find_top_level_item_starts(
         };
         let start_line = child.start_position().row + 1;
         out.push(PubItemInfo {
+            node: child,
             start_line,
             kind,
             surface: ApiSurface {
@@ -569,11 +618,39 @@ fn is_entrypoint_file(path: &Path) -> bool {
         .is_some_and(|n| matches!(n, "lib.rs" | "main.rs" | "mod.rs"))
 }
 
-fn is_private_entry_item_file(path: &Path, ctx: &WalkCtx) -> bool {
-    path.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| n == "main.rs")
-        && is_example_source_path(ctx.root(), path)
+fn should_emit_private_entry_item(
+    node: Node,
+    source: &str,
+    example_main_entry: bool,
+    src_main_entry: bool,
+) -> bool {
+    if example_main_entry {
+        return true;
+    }
+    matches!(item_kind_of(node), Some(ItemKind::Fn))
+        && (has_async_main_attribute(node, source)
+            || (src_main_entry && name_of(node, source) == Some("main")))
+}
+
+fn is_src_main_file(path: &Path) -> bool {
+    is_main_rs(path)
+        && path
+            .parent()
+            .and_then(|p| p.file_name())
+            .and_then(|n| n.to_str())
+            == Some("src")
+}
+
+fn is_main_rs(path: &Path) -> bool {
+    path.file_name().and_then(|n| n.to_str()) == Some("main.rs")
+}
+
+fn has_async_main_attribute(node: Node, source: &str) -> bool {
+    any_outer_attribute(node, |attr| {
+        let text = &source[attr.start_byte()..attr.end_byte()];
+        let compact: String = text.chars().filter(|c| !c.is_whitespace()).collect();
+        compact.starts_with("tokio::main") || compact.starts_with("async_std::main")
+    })
 }
 
 fn is_workspace_member_source_file(file: &Path, ctx: &WalkCtx) -> bool {
@@ -659,6 +736,19 @@ fn pub_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCt
     mix_signals(cat, fu, 0.65 * s, rust_depth_factor(file, ctx))
 }
 
+fn pub_item_body_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
+    let k = kind.kind_weight();
+    let s = effective_surface(surface, ctx, file).factor();
+    let body_axis = if matches!(kind, ItemKind::Fn) {
+        0.95
+    } else {
+        0.75
+    };
+    let cat = (0.45 * k * body_axis * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.80 * k * body_axis * s).min(1.0);
+    mix_signals(cat, fu, 0.70 * body_axis * s, rust_depth_factor(file, ctx))
+}
+
 fn entry_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
     let k = kind.kind_weight();
     let s = if surface.doc_hidden { 0.4 } else { 1.0 };
@@ -673,6 +763,20 @@ fn entry_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &Walk
     let fu = (0.75 * k * body_axis * s).min(1.0);
     let depth = depth_factor(ctx.depth_from_root(file).min(1));
     mix_signals(cat, fu, 0.70 * body_axis * s, depth)
+}
+
+fn entry_item_body_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
+    let k = kind.kind_weight();
+    let s = if surface.doc_hidden { 0.4 } else { 1.0 };
+    let body_axis = if matches!(kind, ItemKind::Fn) {
+        1.0
+    } else {
+        0.75
+    };
+    let cat = (0.55 * k * body_axis * s * entrypoint_boost(file)).min(1.0);
+    let fu = (0.85 * k * body_axis * s).min(1.0);
+    let depth = depth_factor(ctx.depth_from_root(file).min(1));
+    mix_signals(cat, fu, 0.75 * body_axis * s, depth)
 }
 
 fn pub_item_doc_lede_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {
@@ -1166,11 +1270,10 @@ fn collect_mod_use(tree: &Tree, _source: &str) -> FileLines {
 /// Header lines for every top-level pub item (name + first line only, with
 /// an ellipsis marker where the body would be). Surface listing — see
 /// `PubItemNames`.
-fn collect_pub_item_names(tree: &Tree, source: &str) -> FileLines {
-    let items = find_pub_item_starts(tree, source);
+fn collect_pub_item_names(items: &[PubItemInfo<'_>]) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
-    for item in &items {
+    for item in items {
         full.push(item.start_line);
         ellipses.push(item.start_line + 1);
     }
@@ -1181,54 +1284,47 @@ fn collect_pub_item_names(tree: &Tree, source: &str) -> FileLines {
 /// trait/union: whole item (fields/variants/method sigs). For fn:
 /// signature with body-elision marker. No outer rustdoc — that's
 /// `PubItemDocLede` and `PubItemDocBody`.
-fn collect_pub_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    if let Some(child) = top_level_item_at_start_line(tree, start_line) {
-        if item_visibility(child, source).is_none() {
-            return FileLines::new(Vec::new());
-        }
-        let mut full = Vec::new();
-        let mut ellipses = Vec::new();
-        match child.kind() {
-            "function_item" | "function_signature_item" => {
-                let sig_end = signature_end_row(child);
-                push_rows(&mut full, child.start_position().row, sig_end);
-                if child.child_by_field_name("body").is_some() {
-                    ellipses.push(sig_end + 2);
-                }
-            }
-            "struct_item" | "enum_item" | "trait_item" | "union_item" | "type_item"
-            | "const_item" | "static_item" => {
-                extend_span(&mut full, child, source);
-            }
-            _ => {}
-        }
-        return FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses));
+fn collect_pub_item(child: Node, source: &str) -> FileLines {
+    if item_visibility(child, source).is_none() {
+        return FileLines::new(Vec::new());
     }
-    FileLines::new(Vec::new())
+    collect_item_lines(child, source, false)
 }
 
-fn collect_private_entry_item(tree: &Tree, source: &str, start_line: usize) -> FileLines {
-    if let Some(child) = top_level_item_at_start_line(tree, start_line) {
-        if item_kind_of(child).is_none() || item_visibility(child, source).is_some() {
-            return FileLines::new(Vec::new());
-        }
+fn collect_private_entry_item(child: Node, source: &str, whole: bool) -> FileLines {
+    if item_kind_of(child).is_none() || item_visibility(child, source).is_some() {
+        return FileLines::new(Vec::new());
+    }
+    collect_item_lines(child, source, whole)
+}
+
+fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
+    if whole {
         let mut full = Vec::new();
         extend_span(&mut full, child, source);
         return FileLines::new(dedup_sorted(full));
     }
-    FileLines::new(Vec::new())
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    match child.kind() {
+        "function_item" | "function_signature_item" => {
+            let sig_end = signature_end_row(child);
+            push_rows(&mut full, child.start_position().row, sig_end);
+            if child.child_by_field_name("body").is_some() {
+                ellipses.push(sig_end + 2);
+            }
+        }
+        "struct_item" | "enum_item" | "trait_item" | "union_item" | "type_item" | "const_item"
+        | "static_item" => {
+            extend_span(&mut full, child, source);
+        }
+        _ => {}
+    }
+    FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-fn top_level_item_at_start_line(tree: &Tree, start_line: usize) -> Option<Node<'_>> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        return Some(child);
-    }
-    None
+fn body_parts_for_item(child: Node, src_lines: &[&str]) -> Vec<BodyPart> {
+    statement_block_parts(child.child_by_field_name("body"), src_lines, "block")
 }
 
 /// Lines of the lede or body section of the outer rustdoc preceding
@@ -1238,28 +1334,14 @@ fn top_level_item_at_start_line(tree: &Tree, start_line: usize) -> Option<Node<'
 /// heading. Returns empty when the requested section is empty (note that
 /// `expand` filters out empty Lede/Body candidates pre-emission, so a
 /// scheduled key always produces at least one line in practice).
-fn collect_pub_item_doc_section(
-    tree: &Tree,
-    source: &str,
-    start_line: usize,
-    section: DocSection,
-) -> FileLines {
-    let raw = collect_pub_item_doc_raw(tree, source, start_line);
+fn collect_pub_item_doc_section(raw: Vec<usize>, source: &str, section: DocSection) -> FileLines {
     FileLines::new(split_doc_lines_at_first_heading(raw, source, section))
 }
 
-fn collect_pub_item_doc_raw(tree: &Tree, source: &str, start_line: usize) -> Vec<usize> {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.start_position().row + 1 != start_line {
-            continue;
-        }
-        let mut out = Vec::new();
-        collect_outer_docs_above(child, source, &mut out);
-        return dedup_sorted(out);
-    }
-    Vec::new()
+fn collect_pub_item_doc_raw(child: Node, source: &str) -> Vec<usize> {
+    let mut out = Vec::new();
+    collect_outer_docs_above(child, source, &mut out);
+    dedup_sorted(out)
 }
 
 fn collect_method_sigs(tree: &Tree, _source: &str) -> FileLines {
@@ -2680,12 +2762,13 @@ pub fn anchor() {}
 
     fn collect_doc_section_lines(src: &str, section: DocSection) -> Vec<String> {
         let tree = parse(src);
-        let item_start = tree
+        let item_node = tree
             .root_node()
             .children(&mut tree.root_node().walk())
-            .find_map(|c| (item_visibility(c, src).is_some()).then(|| c.start_position().row + 1))
+            .find(|c| item_visibility(*c, src).is_some())
             .expect("test source must contain a pub item");
-        let lines = collect_pub_item_doc_section(&tree, src, item_start, section);
+        let raw = collect_pub_item_doc_raw(item_node, src);
+        let lines = collect_pub_item_doc_section(raw, src, section);
         let src_lines: Vec<&str> = src.lines().collect();
         lines
             .full

@@ -51,8 +51,7 @@ Candidate hint kinds: scheduled bbox=13, unscheduled bbox=25, fs-only=1
 | scheduled bbox | late | full | 2 |
 | scheduled bbox | missing | low | 3 |
 | scheduled bbox | partial | low | 5 |
-| unscheduled bbox | missing | none | 1 |
-| unscheduled bbox | missing | low | 9 |
+| unscheduled bbox | missing | low | 10 |
 | unscheduled bbox | missing | high | 10 |
 | unscheduled bbox | missing | full | 5 |
 
@@ -89,15 +88,15 @@ Candidate hint kinds: scheduled bbox=13, unscheduled bbox=25, fs-only=1
 | 2.1 | 1737 | — | — | 0.00 | missing | MCPServerConfig — struct definition (the central config type) | [unscheduled bbox exact=15/19] go decl at internal/config/config.go:17 (15 atoms, predecessor not scheduled: go decl names surface in internal/config/config.go) |
 | 2.5 | 3154 | — | — | 0.00 | missing | Builtin server registry — names + factory dispatch | [unscheduled bbox exact=10/14] go decl body at internal/builtin/registry.go:42 (10 atoms, predecessor not scheduled: go decl at internal/builtin/registry.go:42) |
 | 2.8 | 4183 | — | — | 0.03 | missing | Subcommand cobra Use/Short — auth / hooks / script (locations) | [scheduled bbox exact=4/19] go decl names surface in cmd/auth.go (t=3739, 7 atoms) |
-| 2.9 | 4519 | — | — | 0.00 | missing | Agent — type + GenerateWithLoopAndStreaming signature | [unscheduled bbox exact=0/21] go decl body at internal/agent/agent.go:81 (33 atoms, predecessor not scheduled: go decl at internal/agent/agent.go:81) |
+| 2.9 | 4519 | — | — | 0.00 | missing | Agent — type + GenerateWithLoopAndStreaming signature | [unscheduled bbox exact=9/21] go decl at internal/agent/agent.go:67 (9 atoms, predecessor not scheduled: go decl names surface in internal/agent/agent.go) |
 | 3.2 | 5506 | — | — | 0.00 | missing | MCPToolManager — type | [unscheduled bbox exact=9/29] go decl at internal/tools/mcp.go:27 (9 atoms, predecessor not scheduled: go decl names surface in internal/tools/mcp.go) |
-| 3.3 | 5811 | — | — | 0.00 | missing | MCPToolManager.LoadTools + tool prefixing rule | [unscheduled bbox exact=2/22] go decl body at internal/tools/mcp.go:178 (57 atoms, predecessor not scheduled: go decl at internal/tools/mcp.go:178) |
+| 3.3 | 5811 | — | — | 0.00 | missing | MCPToolManager.LoadTools + tool prefixing rule | [unscheduled bbox exact=16/22] go decl body at internal/tools/mcp.go:149 (21 atoms, predecessor not scheduled: go decl at internal/tools/mcp.go:149) |
 | 3.4 | 6037 | — | — | 0.00 | missing | Connection pool — type + DefaultConnectionPoolConfig | [unscheduled bbox exact=7/16] go decl body at internal/tools/connection_pool.go:32 (7 atoms, predecessor not scheduled: go decl at internal/tools/connection_pool.go:32) |
 | 3.5 | 6266 | — | — | 0.00 | missing | Connection pool — createMCPClient transport switch | [unscheduled bbox exact=13/17] go decl body at internal/tools/connection_pool.go:262 (13 atoms, predecessor not scheduled: go decl at internal/tools/connection_pool.go:262) |
 | 3.6 | 6549 | — | — | 0.06 | missing | Streaming aggregator — StreamWithCallback signature + provider note | [scheduled bbox exact=2/17] go decl names surface in internal/agent/streaming.go (t=756, 2 atoms); better unscheduled exact=8/17: go decl doc at internal/agent/streaming.go:19 (8 atoms, too expensive at final margin) |
 | 4.2 | 7225 | — | — | 0.59 | partial | HookEvent constants + RequiresMatcher rule | [scheduled bbox exact=10/17] go decl names surface in internal/hooks/events.go (t=5210, 12 atoms) |
 | 4.3 | 7736 | — | — | 0.77 | partial | Hook input/output JSON schemas | [scheduled bbox exact=10/34] go decl names surface in internal/hooks/schemas.go (t=2721, 12 atoms) |
-| 4.5 | 8222 | — | — | 0.00 | missing | Hook executor — ExecuteHooks signature | [unscheduled bbox exact=1/11] go decl body at internal/hooks/executor.go:77 (34 atoms, predecessor not scheduled: go decl at internal/hooks/executor.go:77) |
+| 4.5 | 8222 | — | — | 0.00 | missing | Hook executor — ExecuteHooks signature | [unscheduled bbox exact=4/11] go decl body at internal/hooks/executor.go:122 (16 atoms, predecessor not scheduled: go decl at internal/hooks/executor.go:122) |
 | 4.8 | 8752 | — | — | 0.00 | missing | Session.Message + Builtin tool inventory (locations) | [unscheduled bbox exact=4/11] go decl body at internal/builtin/http.go:36 (47 atoms, predecessor not scheduled: go decl at internal/builtin/http.go:36) |
 | 5.5 | 9719 | — | — | 0.00 | missing | InitConfig — config search order | [unscheduled bbox exact=8/11] go decl body at cmd/root.go:143 (8 atoms, predecessor not scheduled: go decl at cmd/root.go:143) |
 

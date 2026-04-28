@@ -4,10 +4,10 @@ scores: Sim=0.575 Reached=14/40 Early=3 Late=8 Partial=1 Missing=25 Used=9492/10
 
 Verdict: budget-pressure bound
 Likely primary lever: free final budget / demote late low-value spend
-Evidence: 2 ranking-recoverable (w×gap=0.82), 23 wrong-slice/granularity (w×gap=0.81), 1 no-discovered (w×gap=0.60)
-Secondary intervention: split wrong-slice batches for 23 rows
-Loss reasons: 0 predecessor-gated, 1 too-expensive, 1 discovered-unscheduled
-Top rows: 3.5, 3.7, 3.4, 4.1, 4.2, ...
+Evidence: 4 ranking-recoverable (w×gap=0.93), 21 wrong-slice/granularity (w×gap=0.70), 1 no-discovered (w×gap=0.60)
+Secondary intervention: promote predecessors for 2 gated candidates
+Loss reasons: 2 predecessor-gated, 1 too-expensive, 1 discovered-unscheduled
+Top rows: 3.5, 3.7, 3.4, 4.3, 4.4, ...
 Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
 
 ## Top opportunities
@@ -16,10 +16,11 @@ _`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit)
 
 | intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
 |:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| split wrong-slice walker batches | 23 | 0.81 | 0/7/23 | nearby candidates have low exact atom overlap | 3.5, 3.7, 3.4, 4.1, 4.2, ... |
+| split wrong-slice walker batches | 21 | 0.70 | 0/5/21 | nearby candidates have low exact atom overlap | 3.5, 3.7, 3.4, 4.3, 4.4, ... |
 | free final budget / demote late waste | 1 | 0.69 | 1/1/1 | high-overlap candidates exceed final remaining budget, exact total=9/9 | 2.3 |
 | add walker candidates for no-discovered rows | 1 | 0.60 | 1/1/1 | NS rows have no discovered line candidate | 2.4 |
 | tune ranking for discovered unscheduled candidates | 1 | 0.13 | 0/1/1 | high-overlap candidates fit but did not win, exact total=14/17 | 3.6 |
+| promote export names surface in classes/semver.js | 1 | 0.06 | 0/1/1 | 0 files, exact total=9/9 | 4.1 |
 
 Tiers: 1=5/5 reached, 0 partial, 0 missing, avg=0.96; 2=4/6 reached, 0 partial, 2 missing, avg=0.64; 3=4/9 reached, 1 partial, 4 missing, avg=0.49; 4=0/5 reached, 0 partial, 5 missing, avg=0.00; 5=0/5 reached, 0 partial, 5 missing, avg=0.00; 6=0/4 reached, 0 partial, 4 missing, avg=0.00; 7=1/6 reached, 0 partial, 5 missing, avg=0.15
 
@@ -27,8 +28,8 @@ Tiers: 1=5/5 reached, 0 partial, 0 missing, avg=0.96; 2=4/6 reached, 0 partial, 
 
 | diagnosis | rows | missing | partial | timing | likely lever |
 |:----------|-----:|--------:|--------:|-------:|:-------------|
-| ranking-recoverable | 2 | 2 | 0 | 0 | value/ranking |
-| wrong-slice / granularity | 23 | 22 | 1 | 0 | walker granularity / wrong slice |
+| ranking-recoverable | 4 | 4 | 0 | 0 | value/ranking |
+| wrong-slice / granularity | 21 | 20 | 1 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 1 | 1 | 0 | 0 | walker coverage or predecessor-gated emit |
 | timing-only | 12 | 0 | 0 | 12 | usually no code change |
 
@@ -36,6 +37,7 @@ Tiers: 1=5/5 reached, 0 partial, 0 missing, avg=0.96; 2=4/6 reached, 0 partial, 
 
 | loss reason | rows | w(t)×gap | likely lever |
 |:------------|-----:|---------:|:-------------|
+| predecessor not scheduled | 2 | 0.11 | promote predecessor |
 | too expensive at final margin | 1 | 0.69 | free final budget |
 | discovered unscheduled | 1 | 0.13 | tune ranking |
 
@@ -53,10 +55,10 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 | scheduled bbox | late | full | 1 |
 | scheduled bbox | missing | low | 1 |
 | scheduled bbox | partial | low | 1 |
-| unscheduled bbox | missing | none | 5 |
-| unscheduled bbox | missing | low | 14 |
+| unscheduled bbox | missing | none | 2 |
+| unscheduled bbox | missing | low | 15 |
 | unscheduled bbox | missing | high | 1 |
-| unscheduled bbox | missing | full | 1 |
+| unscheduled bbox | missing | full | 3 |
 
 ## Arrival ledger by diagnosis
 
@@ -66,6 +68,8 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 |----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
 | 2.3 | 750 | — | — | 0.00 | missing | README — Usage example (calls into the public API) | [unscheduled bbox exact=9/9] README.md section #2 (9 atoms, too expensive at final margin) |
 | 3.6 | 4025 | — | — | 0.00 | missing | README — Tilde Ranges desugaring | [unscheduled bbox exact=14/17] README.md section #16 (14 atoms, discovered unscheduled) |
+| 4.1 | 5749 | — | — | 0.00 | missing | SemVer class — method signatures (locations) | [unscheduled bbox exact=9/9] export at classes/semver.js:9 (16 atoms, predecessor not scheduled: export names surface in classes/semver.js) |
+| 4.2 | 5809 | — | — | 0.00 | missing | Range class — method signatures (locations) | [unscheduled bbox exact=8/8] export at classes/range.js:6 (14 atoms, predecessor not scheduled: export names surface in classes/range.js) |
 
 ### wrong-slice / granularity
 
@@ -75,10 +79,8 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 | 3.5 | 3533 | — | — | 0.00 | missing | README — X-Ranges desugaring | [unscheduled bbox exact=13/18] README.md section #15 (13 atoms, discovered unscheduled) |
 | 3.7 | 4873 | — | — | 0.00 | missing | README — Caret Ranges desugaring (the most complex) | [unscheduled bbox exact=34/43] README.md section #17 (34 atoms, too expensive at final margin) |
 | 3.9 | 5681 | — | — | 0.42 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4509, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, discovered unscheduled) |
-| 4.1 | 5749 | — | — | 0.00 | missing | SemVer class — method signatures (locations) | [unscheduled bbox exact=0/9] export body at classes/semver.js:9 body 11 (143 atoms, predecessor not scheduled: export at classes/semver.js:9) |
-| 4.2 | 5809 | — | — | 0.00 | missing | Range class — method signatures (locations) | [unscheduled bbox exact=0/8] export body at classes/range.js:6 body 8 (149 atoms, predecessor not scheduled: export at classes/range.js:6) |
 | 4.3 | 5992 | — | — | 0.00 | missing | Range module — internal helpers (locations) | [unscheduled same-file] export body at classes/range.js:6 body 8 (165 atoms, predecessor not scheduled: export at classes/range.js:6) |
-| 4.4 | 6069 | — | — | 0.00 | missing | Comparator class — method signatures (locations) | [unscheduled bbox exact=0/9] export body at classes/comparator.js:5 body 7 (48 atoms, predecessor not scheduled: export at classes/comparator.js:5) |
+| 4.4 | 6069 | — | — | 0.00 | missing | Comparator class — method signatures (locations) | [unscheduled bbox exact=7/9] export at classes/comparator.js:5 (12 atoms, predecessor not scheduled: export names surface in classes/comparator.js) |
 | 4.5 | 6460 | — | — | 0.00 | missing | internal/constants.js — full file | [unscheduled bbox exact=10/37] export at internal/constants.js:28 (10 atoms, predecessor not scheduled: export names surface in internal/constants.js) |
 | 5.1 | 7003 | — | — | 0.00 | missing | internal/re.js — every token name (locations) | [unscheduled bbox exact=0/42] export names surface in internal/re.js (6 atoms, discovered unscheduled) |
 | 5.2 | 7475 | — | — | 0.00 | missing | internal/re.js — section comments and exports header | [unscheduled bbox exact=7/38] imports in internal/re.js (7 atoms, discovered unscheduled) |
@@ -91,7 +93,7 @@ Candidate hint kinds: scheduled bbox=12, unscheduled bbox=21, unscheduled same-f
 | 6.4 | 9449 | — | — | 0.00 | missing | functions/diff.js — release-type comparison body | [unscheduled bbox exact=37/49] export body at functions/diff.js:5 body 6 (42 atoms, predecessor not scheduled: export at functions/diff.js:5) |
 | 7.1 | 9601 | — | — | 0.00 | missing | internal/parse-options.js — full file | [unscheduled bbox exact=7/17] export body at internal/parse-options.js:6 body 7 (7 atoms, predecessor not scheduled: export at internal/parse-options.js:6) |
 | 7.2 | 9711 | — | — | 0.00 | missing | internal/debug.js — full file | [unscheduled bbox exact=1/11] export at internal/debug.js:11 (1 atoms, predecessor not scheduled: export names surface in internal/debug.js) |
-| 7.3 | 9778 | — | — | 0.00 | missing | internal/lrucache.js — class signature + max constant | [unscheduled bbox exact=2/8] export body at internal/lrucache.js:3 body 5 (12 atoms, predecessor not scheduled: export at internal/lrucache.js:3) |
+| 7.3 | 9778 | — | — | 0.00 | missing | internal/lrucache.js — class signature + max constant | [unscheduled bbox exact=6/8] export at internal/lrucache.js:3 (8 atoms, predecessor not scheduled: export names surface in internal/lrucache.js) |
 | 7.4 | 9852 | — | — | 0.00 | missing | ranges/min-version.js — function signature + 0.0.0 fast path | [unscheduled bbox exact=4/6] export body at ranges/min-version.js:7 body 8 (4 atoms, predecessor not scheduled: export at ranges/min-version.js:7) |
 | 7.6 | 9977 | — | — | 0.00 | missing | bin/semver.js — entry skeleton (shebang, version load, main call) | [unscheduled bbox exact=0/5] imports in bin/semver.js (1 atoms, discovered unscheduled) |
 

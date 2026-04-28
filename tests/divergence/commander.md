@@ -2,12 +2,12 @@ scores: Sim=0.411 Reached=11/41 Early=2 Late=4 Partial=6 Missing=24 Used=9824/10
 
 ## Verdict
 
-Verdict: wrong-slice bound
-Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 15 ranking-recoverable (w×gap=1.28), 11 wrong-slice/granularity (w×gap=1.96), 2 no-discovered (w×gap=1.13)
-Secondary intervention: free final budget for 7 too-expensive candidates
-Loss reasons: 8 predecessor-gated, 7 too-expensive, 0 discovered-unscheduled
-Top rows: 1.5, 3.5, 1.1, 3.7, 2.4, ...
+Verdict: budget-pressure bound
+Likely primary lever: free final budget / demote late low-value spend
+Evidence: 17 ranking-recoverable (w×gap=1.78), 9 wrong-slice/granularity (w×gap=1.46), 2 no-discovered (w×gap=1.13)
+Secondary intervention: promote predecessors for 8 gated candidates
+Loss reasons: 8 predecessor-gated, 9 too-expensive, 0 discovered-unscheduled
+Top rows: 3.4, 3.5, 3.7, 3.6, 3.8, ...
 Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
 
 ## Top opportunities
@@ -16,9 +16,9 @@ _`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit)
 
 | intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
 |:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| split wrong-slice walker batches | 11 | 1.96 | 7/10/11 | nearby candidates have low exact atom overlap | 1.5, 3.5, 1.1, 3.7, 2.4, ... |
+| free final budget / demote late waste | 9 | 1.47 | 4/7/9 | high-overlap candidates exceed final remaining budget, exact total=158/170 | 3.4, 3.5, 3.7, 3.6, 3.8, ... |
+| split wrong-slice walker batches | 9 | 1.46 | 5/8/9 | nearby candidates have low exact atom overlap | 1.5, 1.1, 2.4, 2.3, 3.1, ... |
 | add walker candidates for no-discovered rows | 2 | 1.13 | 2/2/2 | NS rows have no discovered line candidate | 2.5, 2.6 |
-| free final budget / demote late waste | 7 | 0.97 | 2/5/7 | high-overlap candidates exceed final remaining budget, exact total=121/133 | 3.4, 3.6, 3.8, 4.1, 4.3, ... |
 | promote export batches | 8 | 0.31 | 0/2/8 | 2 files, exact total=284/322 | 5.2, 5.2b, 5.3, 5.3b, 5.4, ... |
 
 Tiers: 1=3/5 reached, 1 partial, 1 missing, avg=0.84; 2=4/8 reached, 2 partial, 2 missing, avg=0.65; 3=2/8 reached, 1 partial, 5 missing, avg=0.36; 4=0/4 reached, 1 partial, 3 missing, avg=0.17; 5=0/7 reached, 1 partial, 6 missing, avg=0.11; 6=0/2 reached, 0 partial, 2 missing, avg=0.00; 7=2/7 reached, 0 partial, 5 missing, avg=0.30
@@ -27,8 +27,8 @@ Tiers: 1=3/5 reached, 1 partial, 1 missing, avg=0.84; 2=4/8 reached, 2 partial, 
 
 | diagnosis | rows | missing | partial | timing | likely lever |
 |:----------|-----:|--------:|--------:|-------:|:-------------|
-| ranking-recoverable | 15 | 15 | 0 | 0 | value/ranking |
-| wrong-slice / granularity | 11 | 5 | 6 | 0 | walker granularity / wrong slice |
+| ranking-recoverable | 17 | 17 | 0 | 0 | value/ranking |
+| wrong-slice / granularity | 9 | 3 | 6 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 2 | 2 | 0 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 2 | 2 | 0 | 0 | filesystem/listing value |
 | timing-only | 7 | 0 | 0 | 7 | usually no code change |
@@ -38,7 +38,7 @@ Tiers: 1=3/5 reached, 1 partial, 1 missing, avg=0.84; 2=4/8 reached, 2 partial, 
 | loss reason | rows | w(t)×gap | likely lever |
 |:------------|-----:|---------:|:-------------|
 | predecessor not scheduled | 8 | 0.31 | promote predecessor |
-| too expensive at final margin | 7 | 0.97 | free final budget |
+| too expensive at final margin | 9 | 1.47 | free final budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-file=1, fs-only=3, no discovered candidate=2
@@ -54,10 +54,9 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 | scheduled bbox | missing | none | 1 |
 | scheduled bbox | missing | low | 5 |
 | scheduled bbox | partial | low | 6 |
-| unscheduled bbox | missing | none | 2 |
 | unscheduled bbox | missing | low | 1 |
 | unscheduled bbox | missing | high | 8 |
-| unscheduled bbox | missing | full | 2 |
+| unscheduled bbox | missing | full | 4 |
 
 ## Arrival ledger by diagnosis
 
@@ -68,7 +67,9 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 | group | 5020 | — | — | 0.00 | predecessor-gated | 6 children of `export at lib/command.js:13` | exact total=209/238; rows: 5.2, 5.2b, 5.3, 5.3b, 5.4, 5.4b |
 | group | 7964 | — | — | 0.00 | predecessor-gated | 2 children of `export at lib/help.js:12` | exact total=75/84; rows: 6.1, 6.1b |
 | 3.4 | 2477 | — | — | 0.07 | missing | Command class — registration & options method names | [scheduled bbox exact=1/15] export names surface in lib/command.js (t=3393, 2 atoms); better unscheduled exact=15/15: export at lib/command.js:13 (60 atoms, too expensive at final margin) |
+| 3.5 | 2641 | — | — | 0.00 | missing | Command class — config & option-value method names | [unscheduled bbox exact=17/17] export at lib/command.js:13 (119 atoms, too expensive at final margin) |
 | 3.6 | 2751 | — | — | 0.18 | missing | Command class — parsing & action method names | [scheduled bbox exact=0/11] export doc at lib/command.js:2752 (t=7983, 4 atoms); better unscheduled exact=9/11: export at lib/command.js:13 (162 atoms, too expensive at final margin) |
+| 3.7 | 2925 | — | — | 0.00 | missing | Command class — help/usage/info method names | [unscheduled bbox exact=20/20] export at lib/command.js:13 (165 atoms, too expensive at final margin) |
 | 3.8 | 3205 | — | — | 0.12 | missing | Help class — public method names | [scheduled bbox exact=5/33] export names surface in lib/help.js (t=2488, 6 atoms); better unscheduled exact=30/33: export at lib/help.js:12 (83 atoms, too expensive at final margin) |
 | 4.1 | 3497 | — | — | 0.04 | missing | Argument constructor body | [scheduled bbox exact=2/28] export at lib/argument.js:3 (t=4916, 2 atoms); better unscheduled exact=24/28: export body at lib/argument.js:3 body 14 (24 atoms, too expensive at final margin) |
 | 4.3 | 3964 | — | — | 0.04 | missing | Option constructor body | [scheduled bbox exact=2/27] export at lib/option.js:3 (t=7252, 2 atoms); better unscheduled exact=24/27: export body at lib/option.js:3 body 12 (24 atoms, too expensive at final margin) |
@@ -84,12 +85,10 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 | 2.3 | 710 | — | — | 0.73 | partial | Terminology doc — definitions | [scheduled bbox exact=8/11] docs/terminology.md section #0 (t=7949, 8 atoms) |
 | 2.4 | 791 | — | — | 0.71 | partial | Terminology doc — example | [scheduled bbox exact=5/7] docs/terminology.md section #0 (t=7949, 5 atoms) |
 | 3.1 | 2067 | — | — | 0.60 | partial | CommanderError + InvalidArgumentError class shapes | [scheduled bbox exact=7/39] export body at lib/error.js:4 body 12 (t=5688, 7 atoms) |
-| 3.5 | 2641 | — | — | 0.00 | missing | Command class — config & option-value method names | [unscheduled bbox exact=0/17] export body at lib/command.js:13 body 21 (932 atoms, predecessor not scheduled: export at lib/command.js:13) |
-| 3.7 | 2925 | — | — | 0.00 | missing | Command class — help/usage/info method names | [unscheduled bbox exact=0/20] export body at lib/command.js:13 body 21 (1215 atoms, predecessor not scheduled: export at lib/command.js:13) |
 | 4.2 | 3559 | — | — | 0.60 | partial | humanReadableArgName | [scheduled bbox exact=2/5] export body at lib/argument.js:143 body 144 (t=4964, 2 atoms) |
 | 4.4 | 4284 | — | — | 0.00 | missing | splitOptionFlags — flag-parser core | [scheduled same-file] export at lib/option.js:3 (t=7252, 33 atoms) |
 | 5.1 | 4569 | — | — | 0.78 | partial | parsing-and-hooks doc | [scheduled bbox exact=18/23] docs/parsing-and-hooks.md section #0 (t=8243, 18 atoms) |
-| 7.5 | 9802 | — | — | 0.00 | missing | Readme Commands + Automated help sub-headings | [unscheduled bbox exact=4/13] Readme.md section #5 (140 atoms, too expensive at final margin) |
+| 7.5 | 9802 | — | — | 0.00 | missing | Readme Commands + Automated help sub-headings | [unscheduled bbox exact=9/13] Readme.md section #6 (126 atoms, too expensive at final margin) |
 
 ### no discovered candidate
 

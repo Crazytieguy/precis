@@ -297,9 +297,10 @@ pub(super) fn candidate_hint(
         };
     }
 
-    if let Some((cr, count)) = best_unscheduled_candidate_bbox(candidate_rows, &ns_box) {
+    if let Some((cr, count, exact_overlap)) =
+        best_unscheduled_bbox_by_exact(candidate_rows, &ns_box, &ns_line_atoms)
+    {
         let desc = strip_fixture_root(&cr.batch.descriptor, fixture_root);
-        let exact_overlap = exact_overlap(&cr.atoms, &ns_line_atoms);
         let loss = candidate_loss(
             cr,
             candidate_rows,
@@ -464,19 +465,9 @@ fn best_scheduled_bbox<'a>(
     best_by_count(rows.iter(), |row| bbox_overlap_count(&row.atoms, ns_box))
 }
 
-fn best_unscheduled_candidate_bbox<'a>(
-    rows: &'a [CandidateRow<'a>],
-    ns_box: &BTreeMap<PathBuf, (usize, usize)>,
-) -> Option<(&'a CandidateRow<'a>, usize)> {
-    best_by_count(rows.iter().filter(|row| !row.scheduled), |row| {
-        bbox_overlap_count(&row.atoms, ns_box)
-    })
-}
-
-/// `best_unscheduled_candidate_bbox` ranks by raw bbox overlap count;
-/// this variant ranks by exact-atom overlap (then count) so we pick the
-/// candidate that best matches NS's specific atoms, not just the one with
-/// the most lines in the bounding box.
+/// Rank unscheduled bbox candidates by exact-atom overlap (then bbox count)
+/// so multi-span NS rows pick the candidate that matches their specific
+/// atoms, not just the one with the most lines in the collapsed bbox.
 fn best_unscheduled_bbox_by_exact<'a>(
     rows: &'a [CandidateRow<'a>],
     ns_box: &BTreeMap<PathBuf, (usize, usize)>,

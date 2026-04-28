@@ -71,6 +71,8 @@ crates/
                 1→//! Utility to compare the output of two different versions of mdbook.
                 3→use std::path::Path;
                 4→use std::process::Command;
+                14→fn main() {
+                …
     mdbook-core/
         Cargo.toml
         README.md
@@ -173,7 +175,7 @@ crates/
                 …
                 81→/// Parses the input given to a preprocessor.
                 82→pub fn parse_input<R: Read>(reader: R) -> Result<(PreprocessorContext, Book)> {
-                …
+                83→    serde_json::from_reader(reader).with_context(|| "Unable to parse the input")
     mdbook-renderer/
         Cargo.toml
         README.md
@@ -220,7 +222,8 @@ crates/
                 4→//! [`SUMMARY.md`](https://rust-lang.github.io/mdBook/format/summary.html)
                 5→//! file structure for [mdBook](https://rust-lang.github.io/mdBook/).
                 59→pub fn parse_summary(summary: &str) -> Result<Summary> {
-                …
+                60→    let parser = SummaryParser::new(summary);
+                61→    parser.parse()
                 64→/// The parsed `SUMMARY.md`, specifying how the book should be laid out.
                 67→pub struct Summary {
                 68→    /// An optional title for the `SUMMARY.md`, currently just ignored.
@@ -265,5 +268,7 @@ src/
     cmd/
     main.rs
         1→//! The mdbook CLI.
+        18→fn main() {
+        …
 tests/
 triagebot.toml

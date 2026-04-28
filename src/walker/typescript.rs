@@ -49,10 +49,11 @@ use crate::value::{
 };
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_nonblank_rows, extend_span,
-    file_depth_factor,
+    BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
+    extend_span, file_depth_factor,
     fs::{files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
+    statement_block_parts,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -171,6 +172,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     let parts = item.body_parts.clone();
                     let part_value_factor = body_part_value_factor(parts.len());
                     for part in parts {
+                        let Some(body_start_line) = part.start_line() else {
+                            continue;
+                        };
                         let Some(content) =
                             single_file_lines_content(file, &source, FileLines::new(part.lines))
                         else {
@@ -180,7 +184,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             key: TsKey::ExportBody {
                                 file: file.clone(),
                                 start_line: item.start_line,
-                                body_start_line: part.start_line,
+                                body_start_line,
                             }
                             .into(),
                             predecessor: Some(export_predecessor.clone()),
@@ -217,6 +221,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 let parts = item.body_parts;
                 let part_value_factor = body_part_value_factor(parts.len());
                 for part in parts {
+                    let Some(body_start_line) = part.start_line() else {
+                        continue;
+                    };
                     let Some(content) =
                         single_file_lines_content(file, &source, FileLines::new(part.lines))
                     else {
@@ -226,7 +233,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         key: TsKey::ModuleItemBody {
                             file: file.clone(),
                             start_line: item.start_line,
-                            body_start_line: part.start_line,
+                            body_start_line,
                         }
                         .into(),
                         predecessor: Some(item_predecessor.clone()),
@@ -241,14 +248,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     }
 
     out
-}
-
-fn body_part_value_factor(part_count: usize) -> f64 {
-    if part_count <= 1 {
-        1.0
-    } else {
-        1.0 / part_count as f64
-    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -315,12 +314,6 @@ struct ModuleItemInfo {
     kind: ItemKind,
     lines: FileLines,
     body_parts: Vec<BodyPart>,
-}
-
-#[derive(Debug, Clone)]
-struct BodyPart {
-    start_line: usize,
-    lines: Vec<usize>,
 }
 
 /// Top-level exports in a file. Walks `program` children, looking for
@@ -1485,14 +1478,18 @@ fn export_body_parts_for_start(tree: &Tree, source: &str, start_line: usize) -> 
 /// For classes, each method body is considered independently.
 fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
     match kind {
-        ItemKind::Function => statement_block_parts(decl.child_by_field_name("body"), src_lines),
+        ItemKind::Function => statement_block_parts(
+            decl.child_by_field_name("body"),
+            src_lines,
+            "statement_block",
+        ),
         ItemKind::Class => class_method_body_parts(decl, src_lines),
         ItemKind::Const => {
             // Const fn-init: arrow / function expression direct, or wrapped
             // through `forwardRef(props => {...})` / `memo(...)`. Pure-data
             // consts (object/array/primitive) yield no body.
             if let Some(body) = find_fn_init_body(decl) {
-                statement_block_parts(Some(body), src_lines)
+                statement_block_parts(Some(body), src_lines, "statement_block")
             } else {
                 Vec::new()
             }
@@ -1501,16 +1498,18 @@ fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
             "function_declaration"
             | "function_expression"
             | "arrow_function"
-            | "generator_function" => {
-                statement_block_parts(decl.child_by_field_name("body"), src_lines)
-            }
+            | "generator_function" => statement_block_parts(
+                decl.child_by_field_name("body"),
+                src_lines,
+                "statement_block",
+            ),
             "class" | "class_declaration" | "abstract_class_declaration" => {
                 class_method_body_parts(decl, src_lines)
             }
             "call_expression" | "parenthesized_expression" => {
                 // `export default forwardRef(props => {...})` etc.
                 if let Some(body) = descend_for_fn_body(decl, FN_BODY_DESCEND_DEPTH) {
-                    statement_block_parts(Some(body), src_lines)
+                    statement_block_parts(Some(body), src_lines, "statement_block")
                 } else {
                     Vec::new()
                 }
@@ -1523,83 +1522,12 @@ fn body_parts(decl: Node, kind: ItemKind, src_lines: &[&str]) -> Vec<BodyPart> {
 
 fn merged_body_parts(parts: Vec<BodyPart>) -> Vec<BodyPart> {
     let lines = dedup_sorted(parts.into_iter().flat_map(|part| part.lines).collect());
-    if let Some(start_line) = lines.first().copied() {
-        vec![BodyPart { start_line, lines }]
-    } else {
+    if lines.is_empty() {
         Vec::new()
-    }
-}
-
-/// Push the interior rows (1-based) of `body` if it's a multi-line
-/// `statement_block`. Skips blank source lines so the count matches the
-/// post-`build_file_spans` emit count exactly.
-fn push_statement_block_interior(out: &mut Vec<usize>, body: Option<Node>, src_lines: &[&str]) {
-    let Some(b) = body else { return };
-    if b.kind() != "statement_block" {
-        return;
-    }
-    let s = b.start_position().row;
-    let e = b.end_position().row;
-    if e <= s + 1 {
-        return;
-    }
-    extend_nonblank_rows(out, src_lines, s + 1, e - 1);
-}
-
-fn statement_block_parts(body: Option<Node>, src_lines: &[&str]) -> Vec<BodyPart> {
-    let Some(b) = body else { return Vec::new() };
-    if b.kind() != "statement_block" {
-        return Vec::new();
-    }
-    let mut parts = Vec::new();
-    let body_start = b.start_position().row;
-    let body_end = b.end_position().row;
-    if body_end <= body_start + 1 {
-        return Vec::new();
-    }
-    let mut interior = Vec::new();
-    push_statement_block_interior(&mut interior, Some(b), src_lines);
-    let interior = dedup_sorted(interior);
-    if interior.is_empty() {
-        return Vec::new();
-    }
-    if interior.len() <= BODY_SPLIT_MIN_LINES {
-        return vec![BodyPart {
-            start_line: interior[0],
-            lines: interior,
-        }];
-    }
-
-    let mut cursor = b.walk();
-    for child in b.named_children(&mut cursor) {
-        let start_row = child.start_position().row.max(body_start + 1);
-        let end_row = child.end_position().row.min(body_end - 1);
-        if end_row < start_row {
-            continue;
-        }
-        let mut lines = Vec::new();
-        extend_nonblank_rows(&mut lines, src_lines, start_row, end_row);
-        let lines = dedup_sorted(lines);
-        if let Some(start_line) = lines.first().copied() {
-            parts.push(BodyPart { start_line, lines });
-        }
-    }
-    if parts.len() <= 1 {
-        // Named children omit comment-only/interstitial content. Preserve the
-        // complete block when there is nothing meaningful to split.
-        vec![BodyPart {
-            start_line: interior[0],
-            lines: interior,
-        }]
     } else {
-        parts
+        vec![BodyPart { lines }]
     }
 }
-
-// Below roughly a dozen emitted atoms, splitting usually costs more scheduling
-// surface than it saves: descendants are tiny and the parent body batch is
-// already cheap enough to carry as a single region.
-const BODY_SPLIT_MIN_LINES: usize = 12;
 
 /// Walk `class_decl`'s body, accumulating body slices for every
 /// `method_definition` member's `statement_block` body. Field
@@ -1617,6 +1545,7 @@ fn class_method_body_parts(class_decl: Node, src_lines: &[&str]) -> Vec<BodyPart
             out.extend(statement_block_parts(
                 member.child_by_field_name("body"),
                 src_lines,
+                "statement_block",
             ));
         }
     }

@@ -66,20 +66,7 @@ crates/
         Cargo.toml
         src/
             lib.rs
-                1→pub mod num;
-                2→pub mod option;
-                3→pub mod result;
-                4→pub mod slice;
-                5→pub mod str;
-                7→pub mod prelude {
-                …
             num.rs
-                1→pub trait NumUtil: PartialOrd + Ord + Eq {
-                2→    fn is_even(&self) -> bool;
-                4→    fn is_odd(&self) -> bool {
-                5→        !self.is_even()
-                6→    }
-                7→}
             option.rs
             result.rs
             slice.rs
@@ -148,9 +135,13 @@ crates/
                 2→mod schema;
                 4→use proc_macro2::TokenStream;
                 6→pub fn generate_model(input: TokenStream) -> syn::Result<TokenStream> {
-                …
+                7→    let item: syn::ItemStruct = syn::parse2(input)?;
+                8→    let model = schema::Model::from_ast(&item, false)?;
+                10→    Ok(expand::root_model(&model))
                 13→pub fn generate_embed(input: TokenStream) -> syn::Result<TokenStream> {
-                …
+                14→    let item: syn::ItemStruct = syn::parse2(input)?;
+                15→    let model = schema::Model::from_ast(&item, true)?;
+                17→    Ok(expand::embedded_model(&model))
             schema/
             schema.rs
     toasty-core/
@@ -185,19 +176,6 @@ crates/
     toasty-driver-integration-suite-macros/
         Cargo.toml
         src/
-            driver_test.rs
-            lib.rs
-                11→pub fn driver_test(attr: TokenStream, item: TokenStream) -> TokenStream {
-                …
-                16→pub fn generate_test_registry(input: TokenStream) -> TokenStream {
-                …
-                21→pub fn generate_driver_test_variants(input: TokenStream) -> TokenStream {
-                …
-                28→pub fn driver_test_cfg(_input: TokenStream) -> TokenStream {
-                …
-            parse.rs
-            test_registry.rs
-            test_variants.rs
     toasty-driver-mysql/
         Cargo.toml
         src/
@@ -258,15 +236,21 @@ crates/
                 3→use proc_macro::TokenStream;
                 4→use quote::quote;
                 10→pub fn derive_model(input: TokenStream) -> TokenStream {
-                …
+                11→    match toasty_codegen::generate_model(input.into()) {
+                12→        Ok(output) => output.into(),
+                13→        Err(e) => e.to_compile_error().into(),
+                14→    }
                 18→pub fn derive_embed(input: TokenStream) -> TokenStream {
-                …
+                19→    match toasty_codegen::generate_embed(input.into()) {
+                20→        Ok(output) => output.into(),
+                21→        Err(e) => e.to_compile_error().into(),
+                22→    }
                 26→pub fn include_schema(_input: TokenStream) -> TokenStream {
-                …
+                27→    todo!()
                 31→pub fn query(_input: TokenStream) -> TokenStream {
-                …
+                32→    quote!(println!("TODO")).into()
                 36→pub fn create(_input: TokenStream) -> TokenStream {
-                …
+                37→    quote!(println!("TODO")).into()
     toasty-sql/
         CONTEXT.md
         Cargo.toml

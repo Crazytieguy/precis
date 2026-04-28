@@ -51,6 +51,8 @@ sps/
             53→    Upgrade(UpgradeArgs),
             54→}
         main.rs
+            57→async fn main() -> spResult<()> {
+            …
         pipeline/
             downloader.rs
                 21→pub(crate) struct DownloadCoordinator {
@@ -80,7 +82,7 @@ sps-common/
             21→    pub github_api_token: Option<String>,
             22→}
             199→pub fn load_config() -> Result<Config> {
-            …
+            200→    Config::load()
         dependency/
             definition.rs
                 31→pub struct Dependency {
@@ -190,16 +192,18 @@ sps-core/
                     34→}
                     36→/// Returns the path to the cask's version directory in the private store.
                     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    …
+                    38→    let version = cask.version.clone().unwrap_or_else(|| "latest".to_string());
+                    39→    config.cask_store_version_path(&cask.token, &version)
                     42→/// Returns the path to the cask's token directory in the private store.
                     43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    …
+                    44→    config.cask_store_token_path(&cask.token)
                     47→/// Returns the path to the main app bundle for a cask in the private store.
                     48→/// This assumes the primary app bundle is named as specified in the cask's artifacts.
                     49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
                     …
+                    70→    None
                     73→pub async fn download_cask(cask: &Cask, cache: &Cache) -> Result<PathBuf> {
-                    …
+                    74→    download_cask_with_progress(cask, cache, None).await
                     77→pub async fn download_cask_with_progress(
                     78→    cask: &Cask,
                     79→    cache: &Cache,
@@ -241,7 +245,8 @@ sps-core/
                 13→pub mod devtools;
                 14→pub mod extract;
                 17→pub fn get_formula_opt_path(formula: &Formula, config: &Config) -> PathBuf {
-                …
+                18→    // Use new Config method
+                19→    config.formula_opt_path(formula.name())
         lib.rs
             4→pub mod build;
             5→pub mod check;
