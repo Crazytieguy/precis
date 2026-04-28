@@ -33,8 +33,8 @@
 //! (`export type { X }` / `export { type X }`) are excluded — they
 //! don't expose the runtime value.
 //!
-//! `.ts` and `.tsx` are both handled; the grammar is dispatched by
-//! extension. Parse trees are cached in [`WalkCtx`].
+//! `.ts`, `.tsx`, `.js`, `.mjs`, and `.cjs` are handled through the
+//! TypeScript grammar family. Parse trees are cached in [`WalkCtx`].
 
 use std::collections::HashSet;
 use std::path::Path;
@@ -50,19 +50,21 @@ use crate::value::{
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_nonblank_rows, extend_span,
-    file_depth_factor, fs::files_with_any_extension, name_of, node_end_row_trimmed, push_rows,
-    signature_end_row, single_file_lines_content,
+    file_depth_factor,
+    fs::{files_with_any_extension, is_source_dir},
+    name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
-    let ts_files = files_with_any_extension(dir, &["ts", "tsx"]);
-    if ts_files.is_empty() {
+    let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
+    if js_like_files.is_empty() {
         return Vec::new();
     }
 
     let mut out = Vec::new();
-    for file in &ts_files {
+    for file in &js_like_files {
         let ep = is_entrypoint_file(file);
+        let js_factor = js_value_factor(file, ctx);
 
         if ep
             && let Some(content) =
@@ -72,7 +74,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TsKey::ModuleDocLede { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: module_doc_lede_value(file, ctx),
+                value: module_doc_lede_value(file, ctx, js_factor),
             });
         }
 
@@ -81,7 +83,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: TsKey::Imports { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: imports_value(file, ctx),
+                value: imports_value(file, ctx, js_factor),
             });
         }
 
@@ -118,7 +120,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: names_predecessors[chunk_index].clone(),
                     predecessor: None,
                     content,
-                    value: export_names_value(file, ctx, chunk_index, chunk_count),
+                    value: export_names_value(file, ctx, chunk_index, chunk_count, js_factor),
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
@@ -137,7 +139,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         key: export_key.clone().into(),
                         predecessor: Some(names_predecessor.clone()),
                         content,
-                        value: export_value(file, item.kind, ctx) * per_export_factor,
+                        value: export_value(file, item.kind, ctx, js_factor) * per_export_factor,
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
@@ -161,7 +163,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .into(),
                         predecessor: Some(export_predecessor.clone()),
                         content,
-                        value: export_doc_value(file, item.kind, ctx) * per_export_factor,
+                        value: export_doc_value(file, item.kind, ctx, js_factor)
+                            * per_export_factor,
                     });
                 }
                 if !item.body_parts.is_empty() {
@@ -182,7 +185,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             .into(),
                             predecessor: Some(export_predecessor.clone()),
                             content,
-                            value: export_body_value(file, item.kind, ctx)
+                            value: export_body_value(file, item.kind, ctx, js_factor)
                                 * per_export_factor
                                 * part_value_factor,
                         });
@@ -191,7 +194,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
         let module_items = find_module_items(&tree, &source, &src_lines, &export_start_lines);
-        let emit_private_nonclass = is_entrypoint_file(file) && is_tsx_file(file);
+        let emit_private_nonclass =
+            is_entrypoint_file(file) && (is_tsx_file(file) || is_js_file(file));
         for item in module_items {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
@@ -205,7 +209,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: item_key.clone().into(),
                     predecessor: None,
                     content,
-                    value: module_item_value(file, item.kind, ctx) * per_export_factor,
+                    value: module_item_value(file, item.kind, ctx, js_factor) * per_export_factor,
                 });
             }
             if !item.body_parts.is_empty() {
@@ -227,7 +231,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         .into(),
                         predecessor: Some(item_predecessor.clone()),
                         content,
-                        value: module_item_body_value(file, item.kind, ctx)
+                        value: module_item_body_value(file, item.kind, ctx, js_factor)
                             * per_export_factor
                             * part_value_factor,
                     });
@@ -335,50 +339,71 @@ fn find_export_starts<'a>(tree: &'a Tree, source: &str, src_lines: &[&str]) -> V
     let mut out = Vec::new();
     let mut real_lines: HashSet<usize> = HashSet::new();
     for child in root.children(&mut cursor) {
-        let Some((kind, decl_node)) = classify_export(child, source) else {
+        let Some((kind, decl_node)) =
+            classify_export(child, source).or_else(|| classify_commonjs_export(child, source))
+        else {
             continue;
         };
         let start_line = child.start_position().row + 1;
         real_lines.insert(start_line);
         let is_type_only = is_export_type_only(kind, child, source);
-        out.push(ExportInfo {
+        out.push(make_export_info(
             start_line,
             kind,
-            anchor: child,
-            decl: decl_node,
-            body_parts: merged_body_parts(body_parts(decl_node, kind, src_lines)),
+            child,
+            decl_node,
+            src_lines,
             is_type_only,
-        });
+        ));
     }
 
     let reexports = collect_local_value_reexports(tree, source);
-    if !reexports.is_empty() {
+    let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+    if !reexports.is_empty() || !commonjs_reexports.is_empty() {
+        let mut emitted_lines = real_lines.clone();
         let mut cursor = root.walk();
         for child in root.children(&mut cursor) {
-            if !matches!(child.kind(), "lexical_declaration" | "variable_declaration") {
-                continue;
-            }
             let start_line = child.start_position().row + 1;
-            if real_lines.contains(&start_line) {
+            if emitted_lines.contains(&start_line) {
                 continue;
             }
-            if synthetic_export_name(child, source, &reexports).is_none() {
-                continue;
-            }
-            let kind = ItemKind::Const;
-            out.push(ExportInfo {
-                start_line,
-                kind,
-                anchor: child,
-                decl: child,
-                body_parts: merged_body_parts(body_parts(child, kind, src_lines)),
-                is_type_only: false,
-            });
+
+            let kind = if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
+                && synthetic_export_name(child, source, &reexports).is_some()
+            {
+                Some(ItemKind::Const)
+            } else {
+                synthetic_commonjs_export_kind(child, source, &commonjs_reexports)
+            };
+
+            let Some(kind) = kind else { continue };
+            out.push(make_export_info(
+                start_line, kind, child, child, src_lines, false,
+            ));
+            emitted_lines.insert(start_line);
         }
         out.sort_by_key(|e| e.start_line);
     }
 
     out
+}
+
+fn make_export_info<'a>(
+    start_line: usize,
+    kind: ItemKind,
+    anchor: Node<'a>,
+    decl: Node<'a>,
+    src_lines: &[&str],
+    is_type_only: bool,
+) -> ExportInfo<'a> {
+    ExportInfo {
+        start_line,
+        kind,
+        anchor,
+        decl,
+        body_parts: merged_body_parts(body_parts(decl, kind, src_lines)),
+        is_type_only,
+    }
 }
 
 /// Top-level declarations that are not already represented by public export
@@ -398,6 +423,9 @@ fn find_module_items(
             continue;
         };
         if is_private_props_type(child, kind, source) {
+            continue;
+        }
+        if is_require_declaration(child, source) {
             continue;
         }
         let start_line = child.start_position().row + 1;
@@ -530,6 +558,51 @@ fn collect_local_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
     out
 }
 
+/// Local identifier names that appear on the right-hand side of top-level
+/// CommonJS export assignments (`exports.Foo = Foo`,
+/// `module.exports.Foo = Foo`, or `module.exports = { Foo }`). These mirror
+/// ESM value re-exports for JS packages that keep declarations local and
+/// publish them at the bottom of the module.
+fn collect_commonjs_value_reexports(tree: &Tree, source: &str) -> HashSet<String> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut out = HashSet::new();
+    for stmt in root.children(&mut cursor) {
+        let Some((left, right)) = commonjs_assignment_sides(stmt, source) else {
+            continue;
+        };
+        if matches!(
+            commonjs_export_target(left, source),
+            Some(CommonJsExportTarget::Namespace)
+        ) && right.kind() == "object"
+        {
+            collect_object_export_names(right, source, &mut out);
+        } else if let Some(name) = identifier_text(right, source) {
+            out.insert(name.to_string());
+        }
+    }
+    out
+}
+
+fn collect_object_export_names(node: Node, source: &str, out: &mut HashSet<String>) {
+    let mut cursor = node.walk();
+    for child in node.named_children(&mut cursor) {
+        match child.kind() {
+            "shorthand_property_identifier" | "identifier" => {
+                out.insert(source[child.start_byte()..child.end_byte()].to_string());
+            }
+            "pair" => {
+                if let Some(value) = child.child_by_field_name("value")
+                    && let Some(name) = identifier_text(value, source)
+                {
+                    out.insert(name.to_string());
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
 /// True when `export_statement` carries a statement-level `type`
 /// keyword: `export type { X }` / `export type * as N from '…'` etc.
 fn has_export_type_keyword(stmt: Node, source: &str) -> bool {
@@ -551,6 +624,27 @@ fn first_identifier_child(node: Node) -> Option<Node> {
     let mut cursor = node.walk();
     node.children(&mut cursor)
         .find(|c| c.kind() == "identifier")
+}
+
+/// Returns the exported local declaration kind when `decl` is named by a
+/// top-level CommonJS value export. Function and class declarations are
+/// keyed directly by their declared name; const/let declarations keep the
+/// narrower fn-init rule used for ESM re-export synthesis.
+fn synthetic_commonjs_export_kind(
+    decl: Node,
+    source: &str,
+    reexport_set: &HashSet<String>,
+) -> Option<ItemKind> {
+    let kind = decl_kind(decl)?;
+    match kind {
+        ItemKind::Function | ItemKind::Class => {
+            let name = name_of(decl, source)?;
+            reexport_set.contains(name).then_some(kind)
+        }
+        ItemKind::Const => synthetic_export_name(decl, source, reexport_set).map(|_| kind),
+        ItemKind::Interface | ItemKind::TypeAlias | ItemKind::Enum => None,
+        ItemKind::Default | ItemKind::NamedReexport => None,
+    }
 }
 
 /// Returns the local declared name when `decl` is a single-binding
@@ -706,8 +800,12 @@ fn locate_export_decl<'a>(
     let root = tree.root_node();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
-        if child.kind() == "export_statement" && child.start_position().row + 1 == start_line {
-            let (kind, decl) = classify_export(child, source)?;
+        if child.start_position().row + 1 == start_line {
+            let Some((kind, decl)) =
+                classify_export(child, source).or_else(|| classify_commonjs_export(child, source))
+            else {
+                continue;
+            };
             return Some(LocatedExport::Real {
                 export_stmt: child,
                 decl,
@@ -717,22 +815,26 @@ fn locate_export_decl<'a>(
     }
 
     let reexports = collect_local_value_reexports(tree, source);
-    if reexports.is_empty() {
+    let commonjs_reexports = collect_commonjs_value_reexports(tree, source);
+    if reexports.is_empty() && commonjs_reexports.is_empty() {
         return None;
     }
+
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
         if child.start_position().row + 1 != start_line {
             continue;
         }
-        if !matches!(child.kind(), "lexical_declaration" | "variable_declaration") {
-            continue;
-        }
-        if synthetic_export_name(child, source, &reexports).is_some() {
+        if matches!(child.kind(), "lexical_declaration" | "variable_declaration")
+            && synthetic_export_name(child, source, &reexports).is_some()
+        {
             return Some(LocatedExport::Synthetic {
                 decl: child,
                 kind: ItemKind::Const,
             });
+        }
+        if let Some(kind) = synthetic_commonjs_export_kind(child, source, &commonjs_reexports) {
+            return Some(LocatedExport::Synthetic { decl: child, kind });
         }
     }
     None
@@ -763,6 +865,118 @@ fn classify_export<'a>(node: Node<'a>, source: &str) -> Option<(ItemKind, Node<'
         return Some((ItemKind::NamedReexport, node));
     }
     None
+}
+
+/// Recognize a top-level CommonJS export assignment as an export-bearing
+/// surface. Local declarations assigned by name are also synthesized by
+/// `synthetic_export_kind`; keeping this assignment batch is still useful
+/// for entrypoint files where the export line itself is the public factory
+/// or alias (`exports.createCommand = ...`, `exports.Command = Command`).
+fn classify_commonjs_export<'a>(node: Node<'a>, source: &str) -> Option<(ItemKind, Node<'a>)> {
+    let (_, right) = commonjs_assignment_sides(node, source)?;
+    Some(match right.kind() {
+        "function_expression"
+        | "arrow_function"
+        | "generator_function"
+        | "generator_function_declaration"
+        | "function_declaration" => (ItemKind::Function, right),
+        "class" | "class_declaration" | "abstract_class_declaration" => (ItemKind::Class, right),
+        _ => (ItemKind::Const, node),
+    })
+}
+
+fn commonjs_assignment_sides<'a>(node: Node<'a>, source: &str) -> Option<(Node<'a>, Node<'a>)> {
+    if node.kind() != "expression_statement" {
+        return None;
+    }
+    let expr = node.named_child(0)?;
+    if expr.kind() != "assignment_expression" {
+        return None;
+    }
+    let (left, right) = assignment_sides(expr)?;
+    commonjs_export_target(left, source).map(|_| (left, right))
+}
+
+fn assignment_sides<'a>(assignment: Node<'a>) -> Option<(Node<'a>, Node<'a>)> {
+    if let (Some(left), Some(right)) = (
+        assignment.child_by_field_name("left"),
+        assignment.child_by_field_name("right"),
+    ) {
+        return Some((left, right));
+    }
+    let mut cursor = assignment.walk();
+    let mut named = assignment.named_children(&mut cursor);
+    Some((named.next()?, named.next()?))
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum CommonJsExportTarget {
+    Namespace,
+    Property,
+}
+
+fn commonjs_export_target(node: Node, source: &str) -> Option<CommonJsExportTarget> {
+    match node.kind() {
+        "member_expression" => {
+            let (object, property) = member_object_property(node)?;
+            if identifier_eq(object, source, "exports") {
+                Some(CommonJsExportTarget::Property)
+            } else if identifier_eq(object, source, "module")
+                && identifier_eq(property, source, "exports")
+            {
+                Some(CommonJsExportTarget::Namespace)
+            } else if is_module_exports_member(object, source) {
+                Some(CommonJsExportTarget::Property)
+            } else {
+                None
+            }
+        }
+        "subscript_expression" => {
+            let object = subscript_object(node)?;
+            (identifier_eq(object, source, "exports") || is_module_exports_member(object, source))
+                .then_some(CommonJsExportTarget::Property)
+        }
+        _ => None,
+    }
+}
+
+fn is_module_exports_member(node: Node, source: &str) -> bool {
+    if node.kind() != "member_expression" {
+        return false;
+    }
+    let Some((object, property)) = member_object_property(node) else {
+        return false;
+    };
+    identifier_eq(object, source, "module") && identifier_eq(property, source, "exports")
+}
+
+fn member_object_property(node: Node) -> Option<(Node, Node)> {
+    if let (Some(object), Some(property)) = (
+        node.child_by_field_name("object"),
+        node.child_by_field_name("property"),
+    ) {
+        return Some((object, property));
+    }
+    let mut cursor = node.walk();
+    let mut named = node.named_children(&mut cursor);
+    Some((named.next()?, named.next()?))
+}
+
+fn subscript_object(node: Node) -> Option<Node> {
+    node.child_by_field_name("object")
+        .or_else(|| node.named_child(0))
+}
+
+fn identifier_eq(node: Node, source: &str, expected: &str) -> bool {
+    matches!(
+        node.kind(),
+        "identifier" | "property_identifier" | "shorthand_property_identifier"
+    ) && &source[node.start_byte()..node.end_byte()] == expected
+}
+
+fn identifier_text<'a>(node: Node, source: &'a str) -> Option<&'a str> {
+    matches!(node.kind(), "identifier" | "shorthand_property_identifier")
+        .then_some(&source[node.start_byte()..node.end_byte()])
 }
 
 /// Direct decl child of an `export_statement`, transparently unwrapping the
@@ -838,15 +1052,40 @@ fn has_default_keyword(node: Node, source: &str) -> bool {
 
 /// Files whose name signals "module entrypoint / public surface".
 fn is_entrypoint_file(path: &Path) -> bool {
-    path.file_name()
-        .and_then(|n| n.to_str())
-        .is_some_and(|n| matches!(n, "index.ts" | "index.tsx" | "main.ts" | "mod.ts"))
+    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        matches!(
+            n,
+            "index.ts"
+                | "index.tsx"
+                | "index.js"
+                | "index.mjs"
+                | "index.cjs"
+                | "main.ts"
+                | "main.js"
+                | "main.mjs"
+                | "main.cjs"
+                | "mod.ts"
+                | "mod.js"
+                | "mod.mjs"
+                | "mod.cjs"
+                | "esm.js"
+                | "esm.mjs"
+        )
+    })
 }
 
 fn is_tsx_file(path: &Path) -> bool {
     path.extension()
         .and_then(|e| e.to_str())
         .is_some_and(|e| e.eq_ignore_ascii_case("tsx"))
+}
+
+fn is_js_file(path: &Path) -> bool {
+    path.extension().and_then(|e| e.to_str()).is_some_and(|e| {
+        e.eq_ignore_ascii_case("js")
+            || e.eq_ignore_ascii_case("mjs")
+            || e.eq_ignore_ascii_case("cjs")
+    })
 }
 
 fn entrypoint_boost(path: &Path) -> f64 {
@@ -857,37 +1096,107 @@ fn ts_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
     file_depth_factor(path, ctx, is_entrypoint_file(path))
 }
 
-fn module_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
+const PRIMARY_JS_VALUE_FACTOR: f64 = 0.50;
+const SECONDARY_JS_VALUE_FACTOR: f64 = 0.05;
+
+fn js_value_factor(path: &Path, ctx: &WalkCtx) -> f64 {
+    if is_js_config_file(path) {
+        // Dev-tooling JS should remain discoverable without taking budget
+        // from source files in TS-first packages.
+        JS_CONFIG_VALUE_FACTOR
+    } else if is_primary_js_source_path(path, ctx) {
+        // Package JS/MJS/CJS entrypoints are often the whole public API, but
+        // still need to rank below equivalent TS so TS fixtures stay stable.
+        PRIMARY_JS_VALUE_FACTOR
+    } else if is_js_file(path) {
+        // Secondary JS helpers/scripts are useful fallback context, not the
+        // primary surface when source files exist elsewhere.
+        SECONDARY_JS_VALUE_FACTOR
+    } else {
+        1.0
+    }
+}
+
+fn is_primary_js_source_path(path: &Path, ctx: &WalkCtx) -> bool {
+    if !is_js_file(path) {
+        return false;
+    }
+    let Ok(rel) = path.strip_prefix(ctx.root()) else {
+        return false;
+    };
+    let mut component_count = 0;
+    for component in rel.components() {
+        component_count += 1;
+        if is_source_dir(Path::new(component.as_os_str())) {
+            return true;
+        }
+    }
+    component_count == 1
+}
+
+fn is_js_config_file(path: &Path) -> bool {
+    let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+        return false;
+    };
+    is_js_file(path)
+        && (name.starts_with('.')
+            || ends_with_ignore_ascii_case(name, ".config.js")
+            || ends_with_ignore_ascii_case(name, ".config.cjs")
+            || ends_with_ignore_ascii_case(name, ".config.mjs")
+            || ends_with_ignore_ascii_case(name, "rc.js")
+            || ends_with_ignore_ascii_case(name, "rc.cjs")
+            || ends_with_ignore_ascii_case(name, "rc.mjs"))
+}
+
+fn ends_with_ignore_ascii_case(value: &str, suffix: &str) -> bool {
+    let value = value.as_bytes();
+    let suffix = suffix.as_bytes();
+    value.len() >= suffix.len()
+        && value[value.len() - suffix.len()..]
+            .iter()
+            .zip(suffix)
+            .all(|(a, b)| a.eq_ignore_ascii_case(b))
+}
+
+fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx))
+    mix_signals(cat, 0.5, 0.9, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.3 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx))
+    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn export_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn export_names_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    js_factor: f64,
+) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
+        * js_factor
 }
 
-fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
+fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.85 * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
+fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.6 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
+fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let class_boost = if matches!(kind, ItemKind::Class) {
         1.5
@@ -896,24 +1205,24 @@ fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
     };
     let cat = (0.38 * class_boost * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.7 * class_boost * k).min(1.0);
-    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
-fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
+fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.30 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.82 * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 
 // Strictly below `Export.catastrophic` (0.70) — `Export`'s signature already
 // hedges existence; the body is a refinement. Strictly above
 // `Export.follow_up` (0.85) — body is the prime "don't go grep" signal.
-fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx) -> f64 {
+fn export_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.45 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.9 * k).min(1.0);
-    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
 }
 
 // --- parser ---
@@ -967,6 +1276,11 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
                 extend_span(&mut lines, child, source)
             }
             "import_statement" => extend_span(&mut lines, child, source),
+            "lexical_declaration" | "variable_declaration"
+                if is_require_declaration(child, source) =>
+            {
+                extend_span(&mut lines, child, source)
+            }
             "export_statement" => {
                 if is_bare_reexport(child) {
                     extend_span(&mut lines, child, source);
@@ -979,6 +1293,31 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
         }
     }
     FileLines::new(dedup_sorted(lines))
+}
+
+fn is_require_declaration(node: Node, source: &str) -> bool {
+    if !matches!(node.kind(), "lexical_declaration" | "variable_declaration") {
+        return false;
+    }
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .filter(|child| matches!(child.kind(), "variable_declarator" | "lexical_binding"))
+        .any(|decl| {
+            decl.child_by_field_name("value")
+                .is_some_and(|value| is_require_call(value, source))
+        })
+}
+
+fn is_require_call(node: Node, source: &str) -> bool {
+    if node.kind() != "call_expression" {
+        return false;
+    }
+    node.child_by_field_name("function")
+        .or_else(|| node.named_child(0))
+        .is_some_and(|callee| {
+            callee.kind() == "identifier"
+                && &source[callee.start_byte()..callee.end_byte()] == "require"
+        })
 }
 
 fn is_string_directive(node: Node) -> bool {
@@ -1637,6 +1976,116 @@ export { a, b };
         let tree = parse(src);
         let exports = export_infos(&tree, src);
         assert!(exports.iter().all(|e| e.start_line != 1));
+    }
+
+    #[test]
+    fn walker_typescript_esm_function_reexport_does_not_synthesize_local_function() {
+        let src = "\
+function composeRefs() {
+  return null;
+}
+function useComposedRefs() {
+  return composeRefs();
+}
+export { composeRefs, useComposedRefs };
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert_eq!(exports.len(), 1);
+        assert_eq!(exports[0].start_line, 7);
+        assert!(matches!(exports[0].kind, ItemKind::NamedReexport));
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_synthesizes_exported_class_and_function() {
+        let src = "\
+class Command {
+  parse() {
+    return this;
+  }
+}
+function createCommand() {
+  return new Command();
+}
+exports.Command = Command;
+exports.createCommand = createCommand;
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        let class_export = exports.iter().find(|e| e.start_line == 1).unwrap();
+        let function_export = exports.iter().find(|e| e.start_line == 6).unwrap();
+        assert!(matches!(class_export.kind, ItemKind::Class));
+        assert!(matches!(function_export.kind, ItemKind::Function));
+        assert_eq!(class_export.body_parts[0].lines, vec![3]);
+        assert_eq!(function_export.body_parts[0].lines, vec![7]);
+        assert!(
+            exports.iter().any(|e| e.start_line == 9),
+            "CommonJS assignment line should remain as an export surface"
+        );
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_direct_assignment_is_export_surface() {
+        let src = "\
+const { Command } = require('./command.js');
+exports.program = new Command();
+exports.createCommand = (name) => new Command(name);
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert_eq!(exports.len(), 2);
+        assert!(
+            exports
+                .iter()
+                .any(|e| { e.start_line == 2 && matches!(e.kind, ItemKind::Const) })
+        );
+        assert!(
+            exports
+                .iter()
+                .any(|e| { e.start_line == 3 && matches!(e.kind, ItemKind::Function) })
+        );
+        let lines = collect_export_lines(&tree, src, 3);
+        assert_eq!(lines.full, vec![3]);
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_ignores_exports_prefixed_identifier() {
+        let src = "\
+function Command() {
+  return null;
+}
+exportsNotReally.Command = Command;
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert!(exports.is_empty());
+    }
+
+    #[test]
+    fn walker_typescript_commonjs_module_exports_object_names_locals() {
+        let src = "\
+class Help {}
+function stripColor() {
+  return '';
+}
+module.exports = { Help, stripColor };
+";
+        let tree = parse(src);
+        let exports = export_infos(&tree, src);
+        assert!(
+            exports
+                .iter()
+                .any(|e| { e.start_line == 1 && matches!(e.kind, ItemKind::Class) })
+        );
+        assert!(
+            exports
+                .iter()
+                .any(|e| { e.start_line == 2 && matches!(e.kind, ItemKind::Function) })
+        );
+        assert!(
+            exports.iter().any(|e| e.start_line == 5),
+            "module.exports assignment should also be a direct export surface"
+        );
     }
 
     #[test]

@@ -38,18 +38,12 @@ CHANGELOG.md
     1→# Changelog
     255→## 6.3.0
     257→* Expose the token enum on the exports
-    264→## 6.1.3
-    266→* Handle X-ranges properly in includePrerelease mode
-    268→## 6.1.2
-    270→* Do not throw when testing invalid version strings
     290→## 5.7
     292→* Add `minVersion` method
     301→## 5.5
     303→* Add version coercion capabilities
     305→## 5.4
     307→* Add intersection checking
-    309→## 5.3
-    311→* Add `minSatisfying` method
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
     3→# Contributing
@@ -98,21 +92,6 @@ README.md
     …
     184→### Prerelease Tags
     …
-    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
-    187→it will only be allowed to satisfy comparator sets if at least one
-    188→comparator with the same `[major, minor, patch]` tuple also has a
-    189→prerelease tag.
-    199→The purpose of this behavior is twofold.  First, prerelease versions
-    200→frequently are updated very quickly, and contain many breaking changes
-    201→that are (by the author's design) not yet fit for public consumption.
-    202→Therefore, by default, they are excluded from range-matching
-    203→semantics.
-    212→Note that this behavior can be suppressed (treating all prerelease
-    213→versions as if they were normal versions, for range-matching)
-    214→by setting the `includePrerelease` flag on the options
-    215→object to any
-    216→[functions](https://github.com/npm/node-semver#functions) that do
-    217→range matching.
     279→### Advanced Range Syntax
     …
     281→Advanced range syntax desugars to primitive comparators in
@@ -133,10 +112,6 @@ README.md
     460→  even if they're not the same string.  You already know how to
     461→  compare strings.
     462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
-    463→* `cmp(v1, comparator, v2)`: Pass in a comparison string, and it'll call
-    464→  the corresponding function above.  `"==="` and `"!=="` do simple
-    465→  string comparison, but are included for completeness.  Throws if an
-    466→  invalid comparison string is provided.
     467→* `compare(v1, v2)`: Return `0` if `v1 == v2`, or `1` if `v1` is greater, or `-1` if
     468→  `v2` is greater.  Sorts in ascending order if passed to `Array.sort()`.
     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
@@ -225,6 +200,53 @@ functions/
     sort.js
     valid.js
 index.js
+    45→module.exports = {
+    46→  parse,
+    47→  valid,
+    48→  clean,
+    49→  inc,
+    50→  diff,
+    51→  major,
+    52→  minor,
+    53→  patch,
+    54→  prerelease,
+    55→  compare,
+    56→  rcompare,
+    57→  compareLoose,
+    58→  compareBuild,
+    59→  sort,
+    60→  rsort,
+    61→  gt,
+    62→  lt,
+    63→  eq,
+    64→  neq,
+    65→  gte,
+    66→  lte,
+    67→  cmp,
+    68→  coerce,
+    69→  Comparator,
+    70→  Range,
+    71→  satisfies,
+    72→  toComparators,
+    73→  maxSatisfying,
+    74→  minSatisfying,
+    75→  minVersion,
+    76→  validRange,
+    77→  outside,
+    78→  gtr,
+    79→  ltr,
+    80→  intersects,
+    81→  simplifyRange,
+    82→  subset,
+    83→  SemVer,
+    84→  re: internalRe.re,
+    85→  src: internalRe.src,
+    86→  tokens: internalRe.t,
+    87→  SEMVER_SPEC_VERSION: constants.SEMVER_SPEC_VERSION,
+    88→  RELEASE_TYPES: constants.RELEASE_TYPES,
+    89→  compareIdentifiers: identifiers.compareIdentifiers,
+    90→  rcompareIdentifiers: identifiers.rcompareIdentifiers,
+    91→}
 internal/
     constants.js
     debug.js
@@ -233,6 +255,8 @@ internal/
     parse-options.js
     re.js
 map.js
+    1→'use strict'
+    3→module.exports = testFile => testFile.replace(/test\//, '')
 package.json
     2→  "name": "semver",
     3→  "version": "7.7.4",
@@ -278,6 +302,8 @@ package.json
     51→  },
     52→  "author": "GitHub Inc.",
 preload.js
+    1→'use strict'
+    4→module.exports = require('./index.js')
 range.bnf
 ranges/
     gtr.js

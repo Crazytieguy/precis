@@ -132,7 +132,7 @@ fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, fu, ztu, path_depth_factor(dir, ctx))
 }
 
-fn is_source_dir(dir: &Path) -> bool {
+pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|name| matches!(name, "src" | "lib"))

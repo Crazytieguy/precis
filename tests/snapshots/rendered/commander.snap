@@ -47,13 +47,6 @@ Readme.md
     63→```sh
     64→npm install commander
     65→```
-    956→## Custom event listeners
-    958→You can execute custom actions by listening to `command` and `option` events.
-    960→```js
-    961→program.on('option:verbose', function () {
-    962→  process.env.VERBOSE = this.opts().verbose;
-    963→});
-    964→```
 Readme_zh-CN.md
     59→## 安装
     61→```sh
@@ -140,16 +133,66 @@ docs/
         术语表.md
 eslint.config.js
 esm.mjs
+    1→import commander from './index.js';
+    4→export const {
+    5→  program,
+    6→  createCommand,
+    7→  createArgument,
+    8→  createOption,
+    9→  CommanderError,
+    10→  InvalidArgumentError,
+    11→  InvalidOptionArgumentError, // deprecated old name
+    12→  Command,
+    13→  Argument,
+    14→  Option,
+    15→  Help,
+    16→} = commander;
 examples/
 index.js
+    7→exports.program = new Command();
+    …
+    9→exports.createCommand = (name) => new Command(name);
+    10→exports.createOption = (flags, description) => new Option(flags, description);
+    11→exports.createArgument = (name, description) => new Argument(name, description);
+    …
+    13→/**
+    14→ * Expose classes
+    15→ */
+    17→exports.Command = Command;
+    18→exports.Option = Option;
+    19→exports.Argument = Argument;
+    20→exports.Help = Help;
+    …
+    22→exports.CommanderError = CommanderError;
+    23→exports.InvalidArgumentError = InvalidArgumentError;
+    24→exports.InvalidOptionArgumentError = InvalidArgumentError; // Deprecated
 jest.config.js
 lib/
     argument.js
     command.js
     error.js
     help.js
+        12→class Help {
+        …
+        740→function stripColor(str) {
+        …
+        746→exports.Help = Help;
+        747→exports.stripColor = stripColor;
     option.js
+        3→class Option {
+        …
+        268→class DualOptions {
+        …
+        272→  constructor(options) {
+        …
+        297→  valueFromOption(value, option) {
+        …
+        379→exports.Option = Option;
+        380→exports.DualOptions = DualOptions;
     suggestSimilar.js
+        56→function suggestSimilar(word, candidates) {
+        …
+        101→exports.suggestSimilar = suggestSimilar;
 package-lock.json
 package-support.json
 package.json
@@ -213,25 +256,7 @@ package.json
     59→      "import": "./esm.mjs"
     60→    }
     61→  },
-    62→  "devDependencies": {
-    63→    "@eslint/js": "^9.4.0",
-    64→    "@types/jest": "^30.0.0",
-    65→    "@types/node": "^22.7.4",
-    66→    "eslint": "^9.17.0",
-    67→    "eslint-config-prettier": "^10.0.1",
-    68→    "eslint-plugin-jest": "^29.0.1",
-    69→    "globals": "^16.0.0",
-    70→    "jest": "^30.0.3",
-    71→    "prettier": "^3.2.5",
-    72→    "ts-jest": "^29.0.3",
-    73→    "tsd": "^0.33.0",
-    74→    "typescript": "^5.0.4",
-    75→    "typescript-eslint": "^8.12.2"
-    76→  },
     77→  "types": "typings/index.d.ts",
-    78→  "engines": {
-    79→    "node": ">=20"
-    80→  },
 tests/
 tsconfig.js.json
 tsconfig.json
@@ -258,20 +283,7 @@ typings/
         45→  exitCode?: number;
         46→}
         48→export class Argument {
-        49→  description: string;
-        50→  required: boolean;
-        51→  variadic: boolean;
-        52→  defaultValue?: any;
-        53→  defaultValueDescription?: string;
-        54→  parseArg?: <T>(value: string, previous: T) => T;
-        55→  argChoices?: string[];
-        62→  constructor(arg: string, description?: string);
-        67→  name(): string;
-        72→  default(value: unknown, description?: string): this;
-        77→  argParser<T>(fn: (value: string, previous: T) => T): this;
-        82→  choices(values: readonly string[]): this;
-        87→  argRequired(): this;
-        92→  argOptional(): this;
+        …
         95→export class Option {
         …
         210→export class Help {
