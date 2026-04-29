@@ -121,18 +121,37 @@ for further calibration. Open sub-symptoms:
 - **Prefix-stop tail effects on calibration tweaks**: any change that
   shifts a big batch's rank can leave it stuck near the budget tail
   where it no longer fits. The scheduler's prefix-monotone stop then
-  truncates the schedule, dropping `Used/budget` even when Sim
-  improves. Saw this on the per-key concavity bump: cmdk dropped from
-  Used=9484/10K to 7302/10K. At typical user budgets (3–4K) this is
-  invisible (the prefix is identical), but anyone running at large
-  budgets sees thinner output. Mitigation lever exists if needed —
-  walker-side filter on absolute-cost — but it's a separate change.
+  truncates the schedule, dropping the trailing `walker_used`. Saw
+  this on the per-key concavity bump: cmdk dropped from
+  `walker_used`=9484 to 7302 at B=10K. Score(3000) is invisible to
+  this (the prefix is identical at small budgets), but Score(9000)
+  and the `walker_used` column at high B get thinner. Mitigation
+  lever exists if needed — walker-side filter on absolute-cost — but
+  it's a separate change.
 
 Explicit experimentation territory — different exponents per key,
 richer sibling/density signals, NS-author updates that rank
 `PubItemNames`-style location hints as first-class. Calibration drives
 divergence; expect to iterate against the metric across the fixture
 set rather than land it on the first try.
+
+## Un-shipping candidates from Sim-era iterations
+
+Walker / value commits up through `38f63e3` were calibrated against
+the old `Sim` metric, and may not be paying their own complexity
+cost under `Score(3000)`. The retrospective in
+`ignore/retro/FINDINGS.md` has the per-fixture deltas. Candidates:
+
+- Commits whose targeted fixtures landed flat or negative on
+  `Score(3000)` over the full sequence: thiserror, tomli,
+  microbootstrap, bareiron, typeguard, anyhow, log, vaul, tock,
+  go-multierror.
+- `#20 d4d479b` pyproject `[project]` Identity (single-fixture
+  target).
+- Long-tail-targeted parts of `#1 302b0b5` and `#6 029f13e`.
+
+Drop entries as candidates resolve; the doc shouldn't accumulate
+post-hoc verdicts.
 
 ## Divergence diagnostic — deferred architectural items
 
