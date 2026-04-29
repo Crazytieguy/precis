@@ -96,13 +96,6 @@ packages/
         package.json
         src/
             d2.ts
-                10→export class D2 implements ID2 {
-                …
-                73→export class StreamBuilder<T> implements IStreamBuilder<T> {
-                …
-                146→export class RootStreamBuilder<T> extends StreamBuilder<T> {
-                147→  sendData(collection: MultiSet<T> | MultiSetArray<T>): void {
-                148→    this.writer.sendData(collection)
             graph.ts
             index.ts
                 1→export * from './d2.js'
@@ -113,11 +106,6 @@ packages/
                 9→export class Index<K, V> {
                 …
             multiset.ts
-                8→export type MultiSetArray<T> = [T, number][]
-                9→export type KeyedData<T> = [key: string, value: T]
-                …
-                14→export class MultiSet<T> {
-                …
             operators/
                 concat.ts
                 consolidate.ts
@@ -275,9 +263,6 @@ packages/
             order.ts
             sqlite/
                 context.ts
-                    65→export function withSQLite(db: SQLiteDb) {
-                    …
-                    93→export { SQLiteContext }
                 database.ts
                 index.ts
                     1→export * from './version-index.js'
@@ -288,6 +273,36 @@ packages/
                     60→export class SQLIndex<K, V> {
                     …
             types.ts
+                5→export type KeyValue<K, V> = [K, V]
+                …
+                7→export const MessageType = {
+                …
+                12→export type MessageType = (typeof MessageType)[keyof typeof MessageType]
+                …
+                14→export type Message<T> =
+                …
+                24→export type DataMessage<T> = {
+                25→  version: Version
+                26→  collection: MultiSet<T>
+                27→}
+                29→export type FrontierMessage = Version | Antichain
+                …
+                31→export interface IOperator<_T> {
+                32→  run(): void
+                33→  hasPendingWork(): boolean
+                34→  frontiers(): [Antichain[], Antichain]
+                35→}
+                37→export interface IDifferenceStreamReader<T> {
+                …
+                43→export interface IDifferenceStreamWriter<T> {
+                …
+                52→export interface ID2 {
+                …
+                64→export interface IStreamBuilder<T> {
+                …
+                117→export type PipedOperator<I, O> = (
+                118→  stream: IStreamBuilder<I>,
+                119→) => IStreamBuilder<O>
             utils.ts
             version-index.ts
         tests/

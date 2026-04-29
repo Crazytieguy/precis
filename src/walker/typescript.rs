@@ -527,7 +527,7 @@ fn has_ambient_declaration(stmt: Node) -> bool {
 /// exports in these files are implicitly ambient — the file emits no
 /// runtime code, so per-export batches are deprioritized like other
 /// type-machinery files.
-fn is_declaration_file(path: &Path) -> bool {
+pub(crate) fn is_declaration_file(path: &Path) -> bool {
     path.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.ends_with(".d.ts") || n.ends_with(".d.tsx"))
@@ -1110,6 +1110,12 @@ fn is_entrypoint_file(path: &Path) -> bool {
                 | "esm.mjs"
         )
     })
+}
+
+pub(crate) fn is_ts_or_tsx_file(path: &Path) -> bool {
+    path.extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|e| e.eq_ignore_ascii_case("ts") || e.eq_ignore_ascii_case("tsx"))
 }
 
 fn is_tsx_file(path: &Path) -> bool {

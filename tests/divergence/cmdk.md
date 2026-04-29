@@ -6,7 +6,7 @@ scores: Score(3000)=0.587 ns_rows≤3K=19/42 (reached=11 partial=0 missing=8)
 |--:|----:|-----:|-----:|---------:|------------:|
 | 1000 | 112 | 0.709 | 0.196 | 0.373 | 960 |
 | 1442 | 144 | 0.701 | 0.153 | 0.327 | 1308 |
-| 2080 | 185 | 0.690 | 0.335 | 0.481 | 1931 |
+| 2080 | 185 | 0.731 | 0.357 | 0.510 | 2070 |
 | 3000 | 254 | 0.731 | 0.472 | 0.587 | 2864 |
 | 4327 | 345 | 0.724 | 0.387 | 0.529 | 3828 |
 | 6240 | 521 | 0.821 | 0.393 | 0.568 | 6227 |
@@ -84,7 +84,7 @@ Candidate hint kinds: scheduled bbox=19, unscheduled bbox=3, scheduled same-file
 | 10.1 | 9027 | 0.20 | 0.01 | missing | Architecture — Discarded approaches (rejected alternatives) | [scheduled bbox exact=2/10] headings outline in ARCHITECTURE.md (t=736, 2 atoms); better unscheduled exact=5/10: ARCHITECTURE.md section #1 (5 atoms, too expensive at final margin) |
 | 10.2 | 9480 | 0.00 | 0.00 | missing | test/pages/group — fixture for the group.test specs | [scheduled bbox exact=1/42] export at test/pages/group.tsx:42 (t=8075, 1 atoms); better unscheduled exact=2/42: imports in test/pages/group.tsx (2 atoms, discovered unscheduled) |
 | 10.3 | 9603 | 0.71 | 0.36 | missing | Architecture — Performance + Groups bodies | [scheduled bbox exact=4/7] headings outline in ARCHITECTURE.md (t=736, 4 atoms) |
-| 10.7 | 9996 | 0.45 | 0.48 | missing | index.tsx — Empty body | [scheduled bbox exact=3/9] export doc at cmdk/src/index.tsx:899 (t=1726, 3 atoms) |
+| 10.7 | 9996 | 0.45 | 0.48 | missing | index.tsx — Empty body | [scheduled bbox exact=3/9] export doc at cmdk/src/index.tsx:899 (t=2070, 3 atoms) |
 
 ### fs/listing
 
@@ -116,11 +116,11 @@ Candidate hint kinds: scheduled bbox=19, unscheduled bbox=3, scheduled same-file
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 135 | 1.00 | 135 | 2341 | module item at cmdk/src/index.tsx:1081 |
+| 135 | 1.00 | 135 | 1652 | module item at cmdk/src/index.tsx:1081 |
 | 80 | 0.28 | 290 | 2760 | headings outline in README.md |
-| 66 | 1.00 | 66 | 2172 | export doc at cmdk/src/index.tsx:664 |
+| 66 | 1.00 | 66 | 2341 | export doc at cmdk/src/index.tsx:664 |
 | 65 | 1.00 | 65 | 960 | module item at cmdk/src/index.tsx:1071 |
-| 52 | 1.00 | 52 | 1931 | export doc at cmdk/src/index.tsx:833 |
+| 52 | 1.00 | 52 | 2275 | export doc at cmdk/src/index.tsx:833 |
 
 ## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 

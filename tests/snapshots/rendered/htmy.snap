@@ -73,6 +73,8 @@ README.md
     …
     361→## Development
     …
+    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -182,7 +184,11 @@ htmy/
         21→    """
         23→    __slots__ = ("_children", "_errors", "_fallback")
         25→    def __init__(
-        …
+        26→        self,
+        27→        *children: ComponentType,
+        28→        fallback: Component = None,
+        29→        errors: Container[type[Exception]] | None = None,
+        30→    ) -> None:
         45→    async def htmy(self, context: Context) -> Component:
         …
         56→    def _fallback_component(self, error: Exception) -> ComponentType:
@@ -207,6 +213,16 @@ htmy/
         29→    __slots__ = ("_fallback", "_path")
         31→    _root_keys: ClassVar[frozenset[str]] = frozenset(("", "."))
         32→    """Special keys that represent the "root" object, i.e. the entire translation resource file."""
+        34→    def __init__(self, path: str | Path, fallback: str | Path | None = None) -> None:
+        …
+        45→    @overload
+        …
+        48→    @overload
+        …
+        51→    async def get(self, dotted_path: str, key: str, **kwargs: Any) -> Any:
+        …
+        79→    @classmethod
+        …
         115→@alru_cache()
         116→async def load_translation_resource(path: Path) -> TranslationResource:
         147→def resolve_json_path(root: Path, dotted_subpath: str) -> Path:
@@ -234,13 +250,6 @@ htmy/
             100→        "_renderer",
             101→    )
         typing.py
-            11→MarkdownMetadataDict: TypeAlias = dict[str, Any]
-            14→class ParsedMarkdown(TypedDict):
-            15→    """Type definition for parsed markdown data."""
-            17→    content: str
-            18→    metadata: NotRequired[MarkdownMetadataDict | None]
-            21→MarkdownParserFunction: TypeAlias = Callable[[str], ParsedMarkdown]
-            24→MarkdownRenderFunction: TypeAlias = Callable[[Component, MarkdownMetadataDict | None], Component]
     py.typed
     renderer/
         __init__.py
@@ -256,6 +265,8 @@ htmy/
             …
             28→    __slots__ = ("_default_context", "_string_formatter")
         context.py
+            1→from htmy.typing import Context
+            3→from .typing import RendererType, is_renderer
             6→class RendererContext:
             7→    """
             8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
@@ -265,6 +276,7 @@ htmy/
         default.py
             20→class _Node:
             …
+            23→    __slots__ = ("component", "next")
             50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
             53→class _ComponentRenderer:
             …
@@ -274,14 +286,6 @@ htmy/
             …
             236→    __slots__ = ("_default_context", "_string_formatter")
         typing.py
-            12→class RendererType(Protocol):
-            13→    """Protocol definition for renderers."""
-            29→def is_renderer(obj: Any | None) -> TypeGuard[RendererType]:
-            30→    """Type guard that checks if the given object is a renderer."""
-            36→class StreamingRendererType(RendererType, Protocol):
-            37→    """Protocol definition for streaming renderers."""
-            53→def is_streaming_renderer(obj: Any | None) -> TypeGuard[StreamingRendererType]:
-            54→    """Type guard that checks if the given object is a streaming renderer."""
     snippet.py
         27→class Slots:
         …

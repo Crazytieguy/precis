@@ -469,10 +469,50 @@ kind = "full"
 
 [[batches]]
 position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream'"
+cost_tokens = 43
+cum_tokens = 455
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream"
+entries = [".gitignore", "README.md", "conda.sh", "datasette.sh", "devpi.sh", "hatch.sh", "pytest.sh", "python-lsp-server.sh", "tox.sh"]
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md", section_index: 0 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md section #0"
+cost_tokens = 29
+cum_tokens = 484
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py"
 cost_tokens = 22
-cum_tokens = 434
+cum_tokens = 506
 
 [batches.content]
 kind = "lines"
@@ -510,11 +550,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 22
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py:4"
 cost_tokens = 0
-cum_tokens = 434
+cum_tokens = 506
 
 [batches.content]
 kind = "lines"
@@ -528,11 +568,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 21
+position = 23
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py:10"
 cost_tokens = 14
-cum_tokens = 448
+cum_tokens = 520
 
 [batches.content]
 kind = "lines"
@@ -546,11 +586,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 22
+position = 24
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py", start_line: 4 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py:4"
 cost_tokens = 13
-cum_tokens = 461
+cum_tokens = 533
 
 [batches.content]
 kind = "lines"
@@ -564,11 +604,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 23
+position = 25
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py", start_line: 10 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py:10"
 cost_tokens = 13
-cum_tokens = 474
+cum_tokens = 546
 
 [batches.content]
 kind = "lines"
@@ -577,46 +617,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_warnings.py"
 start = 27
 end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream'"
-cost_tokens = 43
-cum_tokens = 517
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream"
-entries = [".gitignore", "README.md", "conda.sh", "datasette.sh", "devpi.sh", "hatch.sh", "pytest.sh", "python-lsp-server.sh", "tox.sh"]
-
-[[batches]]
-position = 25
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md", section_index: 0 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md section #0"
-cost_tokens = 29
-cum_tokens = 546
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/SECURITY.md"
-start = 3
-end = 3
 
 [batches.content.spans.render]
 kind = "full"
@@ -769,10 +769,72 @@ kind = "full"
 
 [[batches]]
 position = 33
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
+cost_tokens = 316
+cum_tokens = 1003
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
+start = 1
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py", start_line: 7 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py:7"
+cost_tokens = 54
+cum_tokens = 1057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
+start = 7
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
+cost_tokens = 30
+cum_tokens = 1087
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
 cost_tokens = 84
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -858,11 +920,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 37
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 15 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:15"
 cost_tokens = 0
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -876,11 +938,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 35
+position = 38
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 30 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:30"
 cost_tokens = 0
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -894,11 +956,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 36
+position = 39
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 39 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:39"
 cost_tokens = 0
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -912,11 +974,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 37
+position = 40
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 50 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:50"
 cost_tokens = 0
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -930,11 +992,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 59 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:59"
 cost_tokens = 0
-cum_tokens = 771
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -948,11 +1010,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 39
+position = 42
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 15 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:15"
 cost_tokens = 12
-cum_tokens = 783
+cum_tokens = 1183
 
 [batches.content]
 kind = "lines"
@@ -966,11 +1028,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 40
+position = 43
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 30 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:30"
 cost_tokens = 15
-cum_tokens = 798
+cum_tokens = 1198
 
 [batches.content]
 kind = "lines"
@@ -984,11 +1046,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 41
+position = 44
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 39 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:39"
 cost_tokens = 17
-cum_tokens = 815
+cum_tokens = 1215
 
 [batches.content]
 kind = "lines"
@@ -1002,73 +1064,37 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 42
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
-cost_tokens = 316
-cum_tokens = 1131
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
-start = 1
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py", start_line: 7 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py:7"
-cost_tokens = 54
-cum_tokens = 1185
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
-start = 7
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
-cost_tokens = 30
-cum_tokens = 1215
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 45
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
+cost_tokens = 40
+cum_tokens = 1255
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py"
 cost_tokens = 55
-cum_tokens = 1270
+cum_tokens = 1310
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1140,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 12 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:12"
 cost_tokens = 0
-cum_tokens = 1270
+cum_tokens = 1310
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1158,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 13 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:13"
 cost_tokens = 0
-cum_tokens = 1270
+cum_tokens = 1310
 
 [batches.content]
 kind = "lines"
@@ -1150,11 +1176,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:16"
 cost_tokens = 0
-cum_tokens = 1270
+cum_tokens = 1310
 
 [batches.content]
 kind = "lines"
@@ -1168,11 +1194,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 59 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:59"
 cost_tokens = 0
-cum_tokens = 1270
+cum_tokens = 1310
 
 [batches.content]
 kind = "lines"
@@ -1186,37 +1212,73 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 50
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
-cost_tokens = 40
-cum_tokens = 1310
+position = 51
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py", start_line: 32, body_start_line: 33 })'
+descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py:32 body 33"
+cost_tokens = 56
+cum_tokens = 1366
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
-start = 1
-end = 2
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
+start = 33
+end = 34
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
-start = 5
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
+start = 38
+end = 38
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples'"
+cost_tokens = 15
+cum_tokens = 1381
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples"
+entries = ["eggsample", "eggsample-spam", "toy-example.py"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample'"
+cost_tokens = 8
+cum_tokens = 1389
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample"
+entries = ["eggsample", "setup.py"]
+
+[[batches]]
+position = 54
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
 cost_tokens = 68
-cum_tokens = 1378
+cum_tokens = 1457
 
 [batches.content]
 kind = "lines"
@@ -1294,11 +1356,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 55
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 24 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:24"
 cost_tokens = 0
-cum_tokens = 1378
+cum_tokens = 1457
 
 [batches.content]
 kind = "lines"
@@ -1312,11 +1374,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 53
+position = 56
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 27 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:27"
 cost_tokens = 29
-cum_tokens = 1407
+cum_tokens = 1486
 
 [batches.content]
 kind = "lines"
@@ -1330,11 +1392,29 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 54
+position = 57
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 27 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:27"
+cost_tokens = 31
+cum_tokens = 1517
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
+start = 30
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
 cost_tokens = 69
-cum_tokens = 1476
+cum_tokens = 1586
 
 [batches.content]
 kind = "lines"
@@ -1388,11 +1468,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 59
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:16"
 cost_tokens = 0
-cum_tokens = 1476
+cum_tokens = 1586
 
 [batches.content]
 kind = "lines"
@@ -1406,11 +1486,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 56
+position = 60
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 17 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:17"
 cost_tokens = 0
-cum_tokens = 1476
+cum_tokens = 1586
 
 [batches.content]
 kind = "lines"
@@ -1424,11 +1504,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 57
+position = 61
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 20 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:20"
 cost_tokens = 0
-cum_tokens = 1476
+cum_tokens = 1586
 
 [batches.content]
 kind = "lines"
@@ -1442,11 +1522,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 58
+position = 62
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 107 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:107"
 cost_tokens = 0
-cum_tokens = 1476
+cum_tokens = 1586
 
 [batches.content]
 kind = "lines"
@@ -1460,11 +1540,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 59
+position = 63
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 24 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:24"
 cost_tokens = 9
-cum_tokens = 1485
+cum_tokens = 1595
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1558,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 60
+position = 64
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 20 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:20"
 cost_tokens = 9
-cum_tokens = 1494
+cum_tokens = 1604
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1576,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 61
+position = 65
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 24 })'
 descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:24"
 cost_tokens = 20
-cum_tokens = 1514
+cum_tokens = 1624
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1594,29 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 62
+position = 66
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 24 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:24"
+cost_tokens = 34
+cum_tokens = 1658
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py"
 cost_tokens = 129
-cum_tokens = 1643
+cum_tokens = 1787
 
 [batches.content]
 kind = "lines"
@@ -1628,11 +1726,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 68
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 16 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:16"
 cost_tokens = 0
-cum_tokens = 1643
+cum_tokens = 1787
 
 [batches.content]
 kind = "lines"
@@ -1646,11 +1744,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 64
+position = 69
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 17 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:17"
 cost_tokens = 0
-cum_tokens = 1643
+cum_tokens = 1787
 
 [batches.content]
 kind = "lines"
@@ -1664,11 +1762,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 65
+position = 70
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 40 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:40"
 cost_tokens = 0
-cum_tokens = 1643
+cum_tokens = 1787
 
 [batches.content]
 kind = "lines"
@@ -1682,11 +1780,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 66
+position = 71
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 20 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:20"
 cost_tokens = 13
-cum_tokens = 1656
+cum_tokens = 1800
 
 [batches.content]
 kind = "lines"
@@ -1700,11 +1798,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 67
+position = 72
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 25 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:25"
 cost_tokens = 13
-cum_tokens = 1669
+cum_tokens = 1813
 
 [batches.content]
 kind = "lines"
@@ -1718,11 +1816,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 68
+position = 73
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 30 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:30"
 cost_tokens = 13
-cum_tokens = 1682
+cum_tokens = 1826
 
 [batches.content]
 kind = "lines"
@@ -1736,11 +1834,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 69
+position = 74
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 35 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:35"
 cost_tokens = 13
-cum_tokens = 1695
+cum_tokens = 1839
 
 [batches.content]
 kind = "lines"
@@ -1754,11 +1852,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 70
+position = 75
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 25, body_start_line: 27 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:25 body 27"
 cost_tokens = 9
-cum_tokens = 1704
+cum_tokens = 1848
 
 [batches.content]
 kind = "lines"
@@ -1772,11 +1870,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 71
+position = 76
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 20, body_start_line: 22 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:20 body 22"
 cost_tokens = 15
-cum_tokens = 1719
+cum_tokens = 1863
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +1888,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 72
+position = 77
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 30, body_start_line: 32 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:30 body 32"
 cost_tokens = 15
-cum_tokens = 1734
+cum_tokens = 1878
 
 [batches.content]
 kind = "lines"
@@ -1808,11 +1906,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 73
+position = 78
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 35, body_start_line: 37 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:35 body 37"
 cost_tokens = 15
-cum_tokens = 1749
+cum_tokens = 1893
 
 [batches.content]
 kind = "lines"
@@ -1821,104 +1919,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py"
 start = 37
 end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py", start_line: 32, body_start_line: 33 })'
-descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py:32 body 33"
-cost_tokens = 56
-cum_tokens = 1805
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
-start = 33
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/__init__.py"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples'"
-cost_tokens = 15
-cum_tokens = 1820
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples"
-entries = ["eggsample", "eggsample-spam", "toy-example.py"]
-
-[[batches]]
-position = 76
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample'"
-cost_tokens = 8
-cum_tokens = 1828
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample"
-entries = ["eggsample", "setup.py"]
-
-[[batches]]
-position = 77
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 24 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:24"
-cost_tokens = 34
-cum_tokens = 1862
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 26
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 27 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:27"
-cost_tokens = 31
-cum_tokens = 1893
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
-start = 30
-end = 32
 
 [batches.content.spans.render]
 kind = "full"
@@ -1943,10 +1943,138 @@ kind = "full"
 
 [[batches]]
 position = 80
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample" })'
+descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample'"
+cost_tokens = 20
+cum_tokens = 1977
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample"
+entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
+
+[[batches]]
+position = 81
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 1 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #1"
+cost_tokens = 45
+cum_tokens = 2022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 70 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:70"
+cost_tokens = 27
+cum_tokens = 2049
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
+start = 70
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
+cost_tokens = 8
+cum_tokens = 2057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py", start_line: 5, body_start_line: 11 })'
+descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py:5 body 11"
+cost_tokens = 48
+cum_tokens = 2105
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py" })'
+descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+cost_tokens = 79
+cum_tokens = 2184
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", chunk_index: 0 })'
 descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
 cost_tokens = 135
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2032,11 +2160,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 81
+position = 87
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 18 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:18"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2050,11 +2178,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 82
+position = 88
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 20 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:20"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +2196,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 83
+position = 89
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 23 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:23"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +2214,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 84
+position = 90
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 27 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:27"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2232,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 85
+position = 91
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 28 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:28"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2250,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 86
+position = 92
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 29 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:29"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2268,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 87
+position = 93
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 31 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:31"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2158,11 +2286,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 88
+position = 94
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 33 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:33"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2176,11 +2304,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 89
+position = 95
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 36 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:36"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2322,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 90
+position = 96
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 38 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:38"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2212,11 +2340,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 91
+position = 97
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 40 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:40"
 cost_tokens = 0
-cum_tokens = 2092
+cum_tokens = 2319
 
 [batches.content]
 kind = "lines"
@@ -2230,11 +2358,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 92
+position = 98
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 9 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:9"
 cost_tokens = 68
-cum_tokens = 2160
+cum_tokens = 2387
 
 [batches.content]
 kind = "lines"
@@ -2248,389 +2376,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 93
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample'"
-cost_tokens = 20
-cum_tokens = 2180
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample"
-entries = ["__init__.py", "hookspecs.py", "host.py", "lib.py"]
-
-[[batches]]
-position = 94
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 1 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #1"
-cost_tokens = 45
-cum_tokens = 2225
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 7
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 95
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 70 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:70"
-cost_tokens = 27
-cum_tokens = 2252
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
-start = 70
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", chunk_index: 0 })'
-descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-cost_tokens = 116
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 525
-end = 525
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 526
-end = 526
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 97
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 36 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:36"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 42 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:42"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 99
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 52 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:52"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 65 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:65"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 83 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:83"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 525 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:525"
-cost_tokens = 0
-cum_tokens = 2368
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 525
-end = 525
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 65 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:65"
-cost_tokens = 11
-cum_tokens = 2379
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 52 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:52"
-cost_tokens = 41
-cum_tokens = 2420
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
-start = 55
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
-cost_tokens = 8
-cum_tokens = 2428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py", start_line: 5, body_start_line: 11 })'
-descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py:5 body 11"
-cost_tokens = 48
-cum_tokens = 2476
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/towncrier-draft-to-file.py"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py" })'
-descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-cost_tokens = 79
-cum_tokens = 2555
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-start = 5
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-start = 9
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 60 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:60"
 cost_tokens = 32
-cum_tokens = 2587
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -2644,11 +2394,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 109
+position = 100
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", chunk_index: 0 })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
 cost_tokens = 97
-cum_tokens = 2684
+cum_tokens = 2516
 
 [batches.content]
 kind = "lines"
@@ -2766,11 +2516,11 @@ end = 92
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 101
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 67 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:67"
 cost_tokens = 0
-cum_tokens = 2684
+cum_tokens = 2516
 
 [batches.content]
 kind = "lines"
@@ -2784,11 +2534,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 111
+position = 102
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 80 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:80"
 cost_tokens = 0
-cum_tokens = 2684
+cum_tokens = 2516
 
 [batches.content]
 kind = "lines"
@@ -2802,11 +2552,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 112
+position = 103
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 91 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:91"
 cost_tokens = 0
-cum_tokens = 2684
+cum_tokens = 2516
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +2570,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 113
+position = 104
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 51 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:51"
 cost_tokens = 13
-cum_tokens = 2697
+cum_tokens = 2529
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2588,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 114
+position = 105
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 42 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:42"
 cost_tokens = 15
-cum_tokens = 2712
+cum_tokens = 2544
 
 [batches.content]
 kind = "lines"
@@ -2856,11 +2606,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 115
+position = 106
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 56 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:56"
 cost_tokens = 22
-cum_tokens = 2734
+cum_tokens = 2566
 
 [batches.content]
 kind = "lines"
@@ -2874,11 +2624,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 116
+position = 107
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 42 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:42"
 cost_tokens = 12
-cum_tokens = 2746
+cum_tokens = 2578
 
 [batches.content]
 kind = "lines"
@@ -2892,11 +2642,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 117
+position = 108
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 51 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:51"
 cost_tokens = 12
-cum_tokens = 2758
+cum_tokens = 2590
 
 [batches.content]
 kind = "lines"
@@ -2910,11 +2660,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 118
+position = 109
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 56 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:56"
 cost_tokens = 12
-cum_tokens = 2770
+cum_tokens = 2602
 
 [batches.content]
 kind = "lines"
@@ -2928,11 +2678,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 119
+position = 110
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 51, body_start_line: 54 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:51 body 54"
 cost_tokens = 10
-cum_tokens = 2780
+cum_tokens = 2612
 
 [batches.content]
 kind = "lines"
@@ -2946,11 +2696,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 120
+position = 111
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 31 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:31"
 cost_tokens = 38
-cum_tokens = 2818
+cum_tokens = 2650
 
 [batches.content]
 kind = "lines"
@@ -2964,11 +2714,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 121
+position = 112
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 31 })'
 descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:31"
 cost_tokens = 12
-cum_tokens = 2830
+cum_tokens = 2662
 
 [batches.content]
 kind = "lines"
@@ -2977,6 +2727,256 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
 start = 36
 end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", chunk_index: 0 })'
+descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+cost_tokens = 116
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 525
+end = 525
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 526
+end = 526
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 114
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 36 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:36"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 42 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:42"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 52 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:52"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 65 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:65"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 83 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:83"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 525 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:525"
+cost_tokens = 0
+cum_tokens = 2778
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 525
+end = 525
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 65 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:65"
+cost_tokens = 11
+cum_tokens = 2789
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py", start_line: 52 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py:52"
+cost_tokens = 41
+cum_tokens = 2830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_manager.py"
+start = 55
+end = 57
 
 [batches.content.spans.render]
 kind = "full"
@@ -3113,10 +3113,222 @@ kind = "full"
 
 [[batches]]
 position = 127
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 7 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #7"
+cost_tokens = 26
+cum_tokens = 3131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 50, body_start_line: 51 })'
+descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:50 body 51"
+cost_tokens = 78
+cum_tokens = 3209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+start = 51
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 80 })'
+descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:80"
+cost_tokens = 49
+cum_tokens = 3258
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 85
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 5 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #5"
+cost_tokens = 27
+cum_tokens = 3285
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 54 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:54"
+cost_tokens = 201
+cum_tokens = 3486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py"
+start = 54
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 3 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #3"
+cost_tokens = 87
+cum_tokens = 3573
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 24
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 6 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #6"
+cost_tokens = 28
+cum_tokens = 3601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 4 })'
+descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #4"
+cost_tokens = 29
+cum_tokens = 3630
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 91 })'
+descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:91"
+cost_tokens = 56
+cum_tokens = 3686
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
+start = 94
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 30, body_start_line: 36 })'
+descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:30 body 36"
+cost_tokens = 19
+cum_tokens = 3705
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py"
 cost_tokens = 149
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3430,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 138
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 57 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:57"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3236,11 +3448,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 129
+position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 61 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:61"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3254,11 +3466,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 130
+position = 140
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 63 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:63"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3272,11 +3484,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 131
+position = 141
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 65 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:65"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3502,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 132
+position = 142
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 106 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:106"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3308,11 +3520,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 133
+position = 143
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 130 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:130"
 cost_tokens = 0
-cum_tokens = 3254
+cum_tokens = 3854
 
 [batches.content]
 kind = "lines"
@@ -3326,11 +3538,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 134
+position = 144
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 130, body_start_line: 131 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:130 body 131"
 cost_tokens = 7
-cum_tokens = 3261
+cum_tokens = 3861
 
 [batches.content]
 kind = "lines"
@@ -3344,11 +3556,11 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 135
+position = 145
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 106 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:106"
 cost_tokens = 18
-cum_tokens = 3279
+cum_tokens = 3879
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3574,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 136
+position = 146
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 54 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:54"
 cost_tokens = 30
-cum_tokens = 3309
+cum_tokens = 3909
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3592,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 137
+position = 147
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 83 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:83"
 cost_tokens = 81
-cum_tokens = 3390
+cum_tokens = 3990
 
 [batches.content]
 kind = "lines"
@@ -3398,11 +3610,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 138
+position = 148
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 96 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:96"
 cost_tokens = 136
-cum_tokens = 3526
+cum_tokens = 4126
 
 [batches.content]
 kind = "lines"
@@ -3416,771 +3628,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 139
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 7 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #7"
-cost_tokens = 26
-cum_tokens = 3552
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 140
-key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 50, body_start_line: 51 })'
-descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:50 body 51"
-cost_tokens = 78
-cum_tokens = 3630
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-start = 51
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 80 })'
-descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:80"
-cost_tokens = 49
-cum_tokens = 3679
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 85
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 142
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 0 })'
-descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-cost_tokens = 181
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 28
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 31
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 281
-end = 281
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 290
-end = 290
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 165
-end = 165
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 282
-end = 282
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 143
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 28 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:28"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 144
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 29 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:29"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 145
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 31 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:31"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 32 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:32"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 37 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:37"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 149
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 56 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:56"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 281 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:281"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 281
-end = 281
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 290 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:290"
-cost_tokens = 0
-cum_tokens = 3860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 290
-end = 290
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 152
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
-cost_tokens = 7
-cum_tokens = 3867
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 77
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
-cost_tokens = 7
-cum_tokens = 3874
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 164
-end = 165
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
-cost_tokens = 10
-cum_tokens = 3884
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 56 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:56"
-cost_tokens = 10
-cum_tokens = 3894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
-cost_tokens = 14
-cum_tokens = 3908
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 157
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
-cost_tokens = 14
-cum_tokens = 3922
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
-cost_tokens = 77
-cum_tokens = 3999
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 168
-end = 171
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
-cost_tokens = 78
-cum_tokens = 4077
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 81
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 0 })'
-descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-cost_tokens = 134
-cum_tokens = 4211
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 101
-end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 178
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 190
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 202
-end = 202
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 102
-end = 102
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 191
-end = 191
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 203
-end = 203
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 161
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 88 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:88"
-cost_tokens = 0
-cum_tokens = 4211
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 162
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 175 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:175"
-cost_tokens = 0
-cum_tokens = 4211
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 88, body_start_line: 89 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:88 body 89"
-cost_tokens = 12
-cum_tokens = 4223
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 175, body_start_line: 176 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:175 body 176"
-cost_tokens = 12
-cum_tokens = 4235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 165
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 33 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:33"
-cost_tokens = 36
-cum_tokens = 4271
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 33
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 166
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 5 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #5"
-cost_tokens = 27
-cum_tokens = 4298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 167
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 41 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:41"
 cost_tokens = 146
-cum_tokens = 4444
+cum_tokens = 4272
 
 [batches.content]
 kind = "lines"
@@ -4194,153 +3646,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 168
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py", start_line: 54 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py:54"
-cost_tokens = 201
-cum_tokens = 4645
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/benchmark.py"
-start = 54
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 169
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 91 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:91"
-cost_tokens = 82
-cum_tokens = 4727
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 91
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 170
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 91, body_start_line: 99 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:91 body 99"
-cost_tokens = 11
-cum_tokens = 4738
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 171
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 3 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #3"
-cost_tokens = 87
-cum_tokens = 4825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 24
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 6 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #6"
-cost_tokens = 28
-cum_tokens = 4853
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 173
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 4 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #4"
-cost_tokens = 29
-cum_tokens = 4882
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 174
-key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py", start_line: 91 })'
-descriptor = "python method doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py:91"
-cost_tokens = 56
-cum_tokens = 4938
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
-start = 94
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 175
+position = 150
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py", start_line: 66 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/conf.py:66"
 cost_tokens = 158
-cum_tokens = 5096
+cum_tokens = 4430
 
 [batches.content]
 kind = "lines"
@@ -4354,29 +3664,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 176
-key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py", start_line: 30, body_start_line: 36 })'
-descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py:30 body 36"
-cost_tokens = 19
-cum_tokens = 5115
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/scripts/release.py"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
+position = 151
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py", start_line: 7, body_start_line: 12 })'
 descriptor = "python decl body at /Users/yoav/projects/precis/tests/fixtures/pluggy/testing/conftest.py:7 body 12"
 cost_tokens = 89
-cum_tokens = 5204
+cum_tokens = 4519
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +3698,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 178
+position = 152
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 8 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #8"
 cost_tokens = 30
-cum_tokens = 5234
+cum_tokens = 4549
 
 [batches.content]
 kind = "lines"
@@ -4424,559 +3716,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 179
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 1 })'
-descriptor = "python decl names surface #1 in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-cost_tokens = 113
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 293
-end = 293
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 358
-end = 358
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 374
-end = 374
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 377
-end = 377
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 382
-end = 382
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 590
-end = 590
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 593
-end = 593
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 638
-end = 638
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 696
-end = 696
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 294
-end = 294
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 359
-end = 359
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 383
-end = 383
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 594
-end = 594
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 639
-end = 639
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 697
-end = 697
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 180
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 293 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:293"
-cost_tokens = 0
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 293
-end = 293
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 181
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 374 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:374"
-cost_tokens = 0
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 374
-end = 374
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
-cost_tokens = 0
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 382
-end = 382
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 590 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:590"
-cost_tokens = 0
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 590
-end = 590
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 184
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 593 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:593"
-cost_tokens = 0
-cum_tokens = 5347
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 593
-end = 593
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
-cost_tokens = 6
-cum_tokens = 5353
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 358
-end = 359
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
-cost_tokens = 6
-cum_tokens = 5359
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 638
-end = 639
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 696 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:696"
-cost_tokens = 6
-cum_tokens = 5365
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 696
-end = 697
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
-cost_tokens = 15
-cum_tokens = 5380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 383
-end = 383
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
-cost_tokens = 18
-cum_tokens = 5398
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 640
-end = 640
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
-cost_tokens = 31
-cum_tokens = 5429
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 360
-end = 361
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 191
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
-cost_tokens = 45
-cum_tokens = 5474
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 363
-end = 363
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 368
-end = 368
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 370
-end = 370
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 192
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 377 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:377"
-cost_tokens = 26
-cum_tokens = 5500
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 377
-end = 379
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 193
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
-cost_tokens = 88
-cum_tokens = 5588
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 385
-end = 391
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 419
-end = 419
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 423
-end = 423
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 194
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 696 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:696"
-cost_tokens = 88
-cum_tokens = 5676
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 698
-end = 707
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 195
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 593 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:593"
-cost_tokens = 30
-cum_tokens = 5706
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 594
-end = 595
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 196
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
-cost_tokens = 112
-cum_tokens = 5818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 642
-end = 654
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 197
-key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 293 })'
-descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:293"
-cost_tokens = 72
-cum_tokens = 5890
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 294
-end = 295
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 297
-end = 299
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 198
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 101 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:101"
-cost_tokens = 90
-cum_tokens = 5980
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 101
-end = 108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 199
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 101, body_start_line: 109 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:101 body 109"
-cost_tokens = 16
-cum_tokens = 5996
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 109
-end = 109
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 200
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
-descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
-cost_tokens = 164
-cum_tokens = 6160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 43
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
+position = 153
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 82 })'
 descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:82"
 cost_tokens = 57
-cum_tokens = 6217
+cum_tokens = 4606
 
 [batches.content]
 kind = "lines"
@@ -4990,11 +3734,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 202
+position = 154
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md", section_index: 2 })'
 descriptor = "/Users/yoav/projects/precis/tests/fixtures/pluggy/CLAUDE.md section #2"
 cost_tokens = 99
-cum_tokens = 6316
+cum_tokens = 4705
 
 [batches.content]
 kind = "lines"
@@ -5032,11 +3776,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 203
+position = 155
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_result.py"
 cost_tokens = 101
-cum_tokens = 6417
+cum_tokens = 4806
 
 [batches.content]
 kind = "lines"
@@ -5066,65 +3810,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 204
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 111 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:111"
-cost_tokens = 95
-cum_tokens = 6512
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 111
-end = 118
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 205
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 178 })'
-descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:178"
-cost_tokens = 97
-cum_tokens = 6609
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 178
-end = 187
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 206
-key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 178, body_start_line: 188 })'
-descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:178 body 188"
-cost_tokens = 11
-cum_tokens = 6620
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 207
+position = 156
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", chunk_index: 0 })'
 descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py"
 cost_tokens = 210
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5274,11 +3964,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 208
+position = 157
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 17 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:17"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5292,11 +3982,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 209
+position = 158
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 22 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:22"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5310,11 +4000,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 210
+position = 159
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 25 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:25"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5328,11 +4018,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 211
+position = 160
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 42 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:42"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5346,11 +4036,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 212
+position = 161
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 48 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:48"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5364,11 +4054,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 213
+position = 162
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 51 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:51"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5382,11 +4072,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 214
+position = 163
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 60 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:60"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5400,11 +4090,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 215
+position = 164
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 64 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:64"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5418,11 +4108,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 216
+position = 165
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 67 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:67"
 cost_tokens = 0
-cum_tokens = 6830
+cum_tokens = 5016
 
 [batches.content]
 kind = "lines"
@@ -5436,11 +4126,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 217
+position = 166
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 48, body_start_line: 49 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:48 body 49"
 cost_tokens = 9
-cum_tokens = 6839
+cum_tokens = 5025
 
 [batches.content]
 kind = "lines"
@@ -5454,11 +4144,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 218
+position = 167
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 22, body_start_line: 23 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:22 body 23"
 cost_tokens = 12
-cum_tokens = 6851
+cum_tokens = 5037
 
 [batches.content]
 kind = "lines"
@@ -5472,11 +4162,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 219
+position = 168
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 64, body_start_line: 65 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:64 body 65"
 cost_tokens = 13
-cum_tokens = 6864
+cum_tokens = 5050
 
 [batches.content]
 kind = "lines"
@@ -5490,11 +4180,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 220
+position = 169
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 67, body_start_line: 68 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:67 body 68"
 cost_tokens = 17
-cum_tokens = 6881
+cum_tokens = 5067
 
 [batches.content]
 kind = "lines"
@@ -5508,11 +4198,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 221
+position = 170
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 60, body_start_line: 61 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:60 body 61"
 cost_tokens = 18
-cum_tokens = 6899
+cum_tokens = 5085
 
 [batches.content]
 kind = "lines"
@@ -5526,11 +4216,827 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 222
+position = 171
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 0 })'
+descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+cost_tokens = 181
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 28
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 31
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 282
+end = 282
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 172
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 28 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:28"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 29 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:29"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 31 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:31"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 32 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:32"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 37 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:37"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 56 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:56"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 281 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:281"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 290 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:290"
+cost_tokens = 0
+cum_tokens = 5266
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
+cost_tokens = 7
+cum_tokens = 5273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 77
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
+cost_tokens = 7
+cum_tokens = 5280
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 164
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
+cost_tokens = 10
+cum_tokens = 5290
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 56 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:56"
+cost_tokens = 10
+cum_tokens = 5300
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
+cost_tokens = 14
+cum_tokens = 5314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
+cost_tokens = 14
+cum_tokens = 5328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 164 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:164"
+cost_tokens = 77
+cum_tokens = 5405
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 168
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 77 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:77"
+cost_tokens = 78
+cum_tokens = 5483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 81
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 0 })'
+descriptor = "python method sigs in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+cost_tokens = 134
+cum_tokens = 5617
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 191
+end = 191
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 190
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 88 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:88"
+cost_tokens = 0
+cum_tokens = 5617
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 175 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:175"
+cost_tokens = 0
+cum_tokens = 5617
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 88, body_start_line: 89 })'
+descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:88 body 89"
+cost_tokens = 12
+cum_tokens = 5629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 175, body_start_line: 176 })'
+descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:175 body 176"
+cost_tokens = 12
+cum_tokens = 5641
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 33 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:33"
+cost_tokens = 36
+cum_tokens = 5677
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 91 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:91"
+cost_tokens = 82
+cum_tokens = 5759
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 91
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 91, body_start_line: 99 })'
+descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:91 body 99"
+cost_tokens = 11
+cum_tokens = 5770
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 99
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 101 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:101"
+cost_tokens = 90
+cum_tokens = 5860
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 101
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 101, body_start_line: 109 })'
+descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:101 body 109"
+cost_tokens = 16
+cum_tokens = 5876
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 40 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:40"
+cost_tokens = 164
+cum_tokens = 6040
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 43
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 200
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 111 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:111"
+cost_tokens = 95
+cum_tokens = 6135
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 111
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 178 })'
+descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:178"
+cost_tokens = 97
+cum_tokens = 6232
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 178
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 178, body_start_line: 188 })'
+descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:178 body 188"
+cost_tokens = 11
+cum_tokens = 6243
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/downstream/.gitignore" })'
 descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/pluggy/downstream/.gitignore"
 cost_tokens = 46
-cum_tokens = 6945
+cum_tokens = 6289
 
 [batches.content]
 kind = "lines"
@@ -5544,11 +5050,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 223
+position = 204
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py", start_line: 82 })'
 descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py:82"
 cost_tokens = 51
-cum_tokens = 6996
+cum_tokens = 6340
 
 [batches.content]
 kind = "lines"
@@ -5570,11 +5076,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 224
+position = 205
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 190 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:190"
 cost_tokens = 105
-cum_tokens = 7101
+cum_tokens = 6445
 
 [batches.content]
 kind = "lines"
@@ -5588,11 +5094,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 225
+position = 206
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 190, body_start_line: 200 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:190 body 200"
 cost_tokens = 16
-cum_tokens = 7117
+cum_tokens = 6461
 
 [batches.content]
 kind = "lines"
@@ -5606,11 +5112,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 226
+position = 207
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 202 })'
 descriptor = "python method at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:202"
 cost_tokens = 110
-cum_tokens = 7227
+cum_tokens = 6571
 
 [batches.content]
 kind = "lines"
@@ -5619,6 +5125,500 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
 start = 202
 end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", chunk_index: 1 })'
+descriptor = "python decl names surface #1 in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+cost_tokens = 113
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 377
+end = 377
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 382
+end = 382
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 590
+end = 590
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 593
+end = 593
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 638
+end = 638
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 696
+end = 696
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 294
+end = 294
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 359
+end = 359
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 383
+end = 383
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 594
+end = 594
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 639
+end = 639
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 697
+end = 697
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 209
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 293 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:293"
+cost_tokens = 0
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 293
+end = 293
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 374 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:374"
+cost_tokens = 0
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
+cost_tokens = 0
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 382
+end = 382
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 590 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:590"
+cost_tokens = 0
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 590
+end = 590
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 213
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 593 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:593"
+cost_tokens = 0
+cum_tokens = 6684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 593
+end = 593
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 214
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
+cost_tokens = 6
+cum_tokens = 6690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 358
+end = 359
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
+cost_tokens = 6
+cum_tokens = 6696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 638
+end = 639
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 216
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 696 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:696"
+cost_tokens = 6
+cum_tokens = 6702
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 696
+end = 697
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
+cost_tokens = 15
+cum_tokens = 6717
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 383
+end = 383
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 218
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
+cost_tokens = 18
+cum_tokens = 6735
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 640
+end = 640
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 219
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
+cost_tokens = 31
+cum_tokens = 6766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 360
+end = 361
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 220
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 358 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:358"
+cost_tokens = 45
+cum_tokens = 6811
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 363
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 368
+end = 368
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 370
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 377 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:377"
+cost_tokens = 26
+cum_tokens = 6837
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 377
+end = 379
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 222
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 382 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:382"
+cost_tokens = 88
+cum_tokens = 6925
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 385
+end = 391
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 419
+end = 419
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 423
+end = 423
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 223
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 696 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:696"
+cost_tokens = 88
+cum_tokens = 7013
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 698
+end = 707
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 224
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 593 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:593"
+cost_tokens = 30
+cum_tokens = 7043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 594
+end = 595
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 225
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 638 })'
+descriptor = "python class body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:638"
+cost_tokens = 112
+cum_tokens = 7155
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 642
+end = 654
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py", start_line: 293 })'
+descriptor = "python decl doc at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py:293"
+cost_tokens = 72
+cum_tokens = 7227
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 294
+end = 295
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_hooks.py"
+start = 297
+end = 299
 
 [batches.content.spans.render]
 kind = "full"
@@ -5813,46 +5813,10 @@ kind = "full"
 
 [[batches]]
 position = 233
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py", chunk_index: 0 })'
-descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
-cost_tokens = 18
-cum_tokens = 8090
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 234
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py", start_line: 4 })'
-descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py:4"
-cost_tokens = 0
-cum_tokens = 8090
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 235
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py" })'
 descriptor = "python imports in /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_callers.py"
 cost_tokens = 161
-cum_tokens = 8251
+cum_tokens = 8233
 
 [batches.content]
 kind = "lines"
@@ -5890,11 +5854,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 236
+position = 234
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json" })'
 descriptor = "json config /Users/yoav/projects/precis/tests/fixtures/pluggy/.claude/settings.json"
 cost_tokens = 97
-cum_tokens = 8348
+cum_tokens = 8330
 
 [batches.content]
 kind = "lines"
@@ -5916,11 +5880,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 237
+position = 235
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py", start_line: 17, body_start_line: 18 })'
 descriptor = "python method body at /Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py:17 body 18"
 cost_tokens = 49
-cum_tokens = 8397
+cum_tokens = 8379
 
 [batches.content]
 kind = "lines"
@@ -5929,6 +5893,42 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/src/pluggy/_tracing.py"
 start = 18
 end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
+cost_tokens = 18
+cum_tokens = 8397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py", start_line: 4 })'
+descriptor = "python decl at /Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py:4"
+cost_tokens = 0
+cum_tokens = 8397
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/pluggy/docs/examples/eggsample/eggsample/__init__.py"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "full"

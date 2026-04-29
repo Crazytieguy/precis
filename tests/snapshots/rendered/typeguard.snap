@@ -15,6 +15,8 @@ expression: rendered
         …
         13→## Reporting a Vulnerability
         …
+        15→See the [security](https://github.com/agronholm/typeguard/security)
+        16→section to view existing security advisories or to report a new vulnerability.
     dependabot.yml
     pull_request_template.md
         2→## Changes
@@ -122,6 +124,12 @@ src/
             …
             62→@dataclass
             63→class TypeCheckConfiguration:
+            98→    forward_ref_policy: ForwardRefPolicy = ForwardRefPolicy.WARN
+            99→    typecheck_fail_callback: TypeCheckFailCallback | None = None
+            100→    collection_check_strategy: CollectionCheckStrategy = (
+            101→        CollectionCheckStrategy.FIRST_ITEM
+            102→    )
+            103→    debug_instrumentation: bool = False
             106→global_config = TypeCheckConfiguration()
         _decorators.py
             19→T_CallableOrType = TypeVar("T_CallableOrType", bound=Callable[..., Any])
@@ -133,7 +141,13 @@ src/
             56→def instrument(f: T_CallableOrType) -> FunctionType | str:
             …
             136→@overload
-            …
+            137→def typechecked(
+            138→    *,
+            139→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+            140→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+            141→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+            142→    debug_instrumentation: bool | Unset = unset,
+            143→) -> Callable[[T_CallableOrType], T_CallableOrType]: ...
             146→@overload
             147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
             150→def typechecked(
@@ -170,14 +184,7 @@ src/
             28→@overload
             …
             39→@overload
-            40→def check_type(
-            41→    value: object,
-            42→    expected_type: Any,
-            43→    *,
-            44→    forward_ref_policy: ForwardRefPolicy = ...,
-            45→    typecheck_fail_callback: TypeCheckFailCallback | None = ...,
-            46→    collection_check_strategy: CollectionCheckStrategy = ...,
-            47→) -> Any: ...
+            …
             50→def check_type(
             …
             118→def check_argument_types(
@@ -186,31 +193,15 @@ src/
             121→    memo: TypeCheckMemo,
             122→) -> Literal[True]:
             149→def check_return_type(
-            150→    func_name: str,
-            151→    retval: T,
-            152→    annotation: Any,
-            153→    memo: TypeCheckMemo,
-            154→) -> T:
+            …
             185→def check_send_type(
-            186→    func_name: str,
-            187→    sendval: T,
-            188→    annotation: Any,
-            189→    memo: TypeCheckMemo,
-            190→) -> T:
+            …
             216→def check_yield_type(
-            217→    func_name: str,
-            218→    yieldval: T,
-            219→    annotation: Any,
-            220→    memo: TypeCheckMemo,
-            221→) -> T:
+            …
             245→def check_variable_assignment(
-            246→    value: Any,
-            247→    groups: Sequence[list[tuple[str, Any]] | tuple[str, Any]],
-            248→    memo: TypeCheckMemo,
-            249→) -> Any:
+            …
             291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
             …
-            299→    warnings.warn(TypeCheckWarning(str(exc)), stacklevel=get_stacklevel())
         _importhook.py
             40→P = ParamSpec("P")
             41→T = TypeVar("T")
@@ -266,9 +257,17 @@ src/
             66→def get_type_name(type_: Any) -> str:
             …
             104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
-            …
+            105→    """
+            106→    Return the qualified name (e.g. package.module.Type) for the given object.
+            108→    Builtins and types from the :mod:`typing` package get special treatment by having
+            109→    the module name stripped from the generated name.
+            111→    """
             127→def function_name(func: Callable[..., Any]) -> str:
-            …
+            128→    """
+            129→    Return the qualified name of the given function.
+            131→    Builtins and types from the :mod:`typing` package get special treatment by having
+            132→    the module name stripped from the generated name.
+            134→    """
             142→def resolve_reference(reference: str) -> Any:
             …
             154→def is_method_of(obj: object, cls: type) -> bool:

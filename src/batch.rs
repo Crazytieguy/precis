@@ -573,10 +573,10 @@ impl WalkerKey for BatchKey {
             BatchKey::Json(k) => k.concavity_exponent(),
             BatchKey::Python(k) => k.concavity_exponent(),
             BatchKey::Rust(k) => k.concavity_exponent(),
-            BatchKey::Fs(_)
-            | BatchKey::Toml(_)
-            | BatchKey::Typescript(_)
-            | BatchKey::Plaintext(_) => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+            BatchKey::Typescript(k) => k.concavity_exponent(),
+            BatchKey::Fs(_) | BatchKey::Toml(_) | BatchKey::Plaintext(_) => {
+                crate::value::DEFAULT_CONCAVITY_EXPONENT
+            }
         }
     }
 
@@ -707,14 +707,29 @@ impl MarkdownKey {
 }
 
 impl TsKey {
+    /// TypeScript / TSX implementation export-name catalogs carry a mild
+    /// `0.38` concavity: flatter than coherent anchors, but not as steep as
+    /// prose bodies or tiny per-decl batches. Declaration files keep the
+    /// default because their names surface is often the useful API anchor.
+    /// JavaScript runtime export gates also keep the default; treating them
+    /// as flat catalogs demotes load-bearing anchors.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            TsKey::ExportNames { file, .. }
+                if crate::walker::typescript::is_ts_or_tsx_file(file)
+                    && !crate::walker::typescript::is_declaration_file(file) =>
+            {
+                0.38
+            }
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
     pub fn gated_descendant_value_weight(&self) -> f64 {
         // Broad, mostly type-only export-name surfaces are real gates:
         // individual exports can be high-value descendants, but none can
         // compete until the names surface lands. Runtime-heavy catalogs and
         // tiny type files keep their normal standalone rank.
-        const MIN_EXPORT_SURFACE_COUNT: usize = 10;
-        const MIN_TYPE_ONLY_EXPORT_RATIO: f64 = 0.75;
-
         let TsKey::ExportNames {
             export_count,
             type_only_export_count,
@@ -723,11 +738,11 @@ impl TsKey {
         else {
             return 0.0;
         };
-        if *export_count < MIN_EXPORT_SURFACE_COUNT {
+        if *export_count < 10 {
             0.0
         } else {
             let type_only_ratio = *type_only_export_count as f64 / *export_count as f64;
-            if type_only_ratio >= MIN_TYPE_ONLY_EXPORT_RATIO {
+            if type_only_ratio >= 0.75 {
                 type_only_ratio
             } else {
                 0.0
@@ -867,7 +882,9 @@ impl GoKey {
 }
 
 impl PythonKey {
-    /// Per-decl / per-method batches carry the same 0.45 concavity as
+    /// `DeclNames` is the broad predecessor names surface and carries a
+    /// milder tuned `0.37` concavity. Per-decl / per-method batches carry
+    /// the same 0.45 concavity as
     /// the C / Go walkers — Python decls are short (a single `def
     /// name(...):`, a single `class X(Base):` line), source files
     /// emit dozens of them, and the default 0.35 lets every tiny one
@@ -875,6 +892,7 @@ impl PythonKey {
     /// field listings have a structural tie to the class.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
+            PythonKey::DeclNames { .. } => 0.37,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
             | PythonKey::Method { .. }

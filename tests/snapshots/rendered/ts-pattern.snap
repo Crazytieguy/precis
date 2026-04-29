@@ -85,25 +85,6 @@ src/
         …
     internals/
         helpers.ts
-            12→export const isObject = (value: unknown): value is Object =>
-            13→  Boolean(value && typeof value === 'object');
-            16→export const isMatcher = (
-            17→  x: unknown
-            18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
-            19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-            20→  return pattern && !!pattern[symbols.matcher];
-            32→export const matchPattern = (
-            33→  pattern: any,
-            34→  value: any,
-            35→  select: (key: string, value: unknown) => void
-            36→): boolean => {
-            …
-            120→export const getSelectionKeys = (pattern: any): string[] => {
-            …
-            132→export const flatMap = <a, b>(
-            133→  xs: readonly a[],
-            134→  f: (v: a) => readonly b[]
-            135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
         symbols.ts
     is-matching.ts
         32→export function isMatching<const p extends Pattern<unknown>>(
@@ -187,7 +168,10 @@ src/
             94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
             …
             96→export type RecordP<input, pkey, pvalue> = Matcher<
-            …
+            97→  input,
+            98→  [pkey, pvalue],
+            99→  'record'
+            100→>;
             102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
             …
             104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
@@ -203,7 +187,12 @@ src/
             114→export type GuardP<input, narrowed> = Matcher<input, narrowed>;
             …
             116→export type GuardExcludeP<input, narrowed, excluded> = Matcher<
-            …
+            117→  input,
+            118→  narrowed,
+            119→  'default',
+            120→  None,
+            121→  excluded
+            122→>;
             124→export type SelectP<
             …
             130→export type AnonymousSelectP = SelectP<symbols.anonymousSelectKey>;
@@ -219,6 +208,27 @@ src/
             158→  ? UnknownValuePattern
             159→  : KnownPattern<a>;
             190→export type UnknownPattern = Chainable<GuardP<unknown, unknown>, never>;
+            191→export type StringPattern = StringChainable<GuardP<unknown, string>, never>;
+            192→export type NumberPattern = NumberChainable<GuardP<unknown, number>, never>;
+            193→export type BooleanPattern = Chainable<GuardP<unknown, boolean>, never>;
+            194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
+            195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
+            196→export type NullishPattern = Chainable<
+            197→  GuardP<unknown, null | undefined>,
+            198→  never
+            199→>;
+            201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
+            …
+            210→export type Chainable<p, omitted extends string = never> = p &
+            …
+            276→export type StringChainable<
+            …
+            391→export type NumberChainable<p, omitted extends string = never> = Chainable<
+            …
+            530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
+            …
+            643→export type Variadic<pattern> = pattern & Iterable<pattern>;
+            …
         helpers.ts
             1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
             …
@@ -237,7 +247,10 @@ src/
             42→export type Flatten<
             …
             49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
-            …
+            50→  T
+            51→>() => T extends b ? 1 : 2
+            52→  ? true
+            53→  : false;
             55→export type Expect<a extends true> = a;
             …
             57→export type IsAny<a> = 0 extends 1 & a ? true : false;
@@ -247,7 +260,9 @@ src/
             61→export type Length<it extends readonly any[]> = it['length'];
             …
             63→export type Iterator<
-            …
+            64→  n extends number,
+            65→  it extends any[] = []
+            66→> = it['length'] extends n ? it : Iterator<n, [any, ...it]>;
             68→export type Next<it extends any[]> = [any, ...it];
             69→export type Prev<it extends any[]> = it extends readonly [any, ...infer tail]
             70→  ? tail

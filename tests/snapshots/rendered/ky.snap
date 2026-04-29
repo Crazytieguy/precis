@@ -7,6 +7,8 @@ expression: rendered
 .github/
     funding.yml
     security.md
+        1→# Security Policy
+        3→To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security). Tidelift will coordinate the fix and disclosure.
     workflows/
         main.yml
 .gitignore
@@ -82,6 +84,13 @@ readme.md
     31→- TypeScript niceties (e.g. `.json()` supports generics and defaults to `unknown`, not `any`)
     33→## Install
     …
+    35→```sh
+    36→npm install ky
+    37→```
+    39→###### CDN
+    41→- [jsdelivr](https://cdn.jsdelivr.net/npm/ky/+esm)
+    42→- [unpkg](https://unpkg.com/ky)
+    43→- [esm.sh](https://esm.sh/ky)
     45→## Usage
     …
     85→## API
@@ -95,14 +104,20 @@ readme.md
     126→### ky.head(input, options?)
     127→### ky.delete(input, options?)
     …
+    129→Sets `options.method` to the method name and makes a request.
     745→### ky.extend(defaultOptions)
     …
+    747→Create a new `ky` instance with some defaults overridden with your own.
+    751→You can pass headers as a `Headers` instance or a plain object.
     811→### ky.create(defaultOptions)
     …
+    829→#### defaultOptions
+    831→Type: `object`
     833→### ky.stop
     …
     864→### ky.retry(options?)
     …
+    866→Force a retry from an `afterResponse` hook.
     1000→### HTTPError
     …
     1046→### TimeoutError
@@ -127,8 +142,10 @@ readme.md
     …
     1339→## Browser support
     …
+    1341→The latest version of Chrome, Firefox, and Safari.
     1343→## Node.js support
     …
+    1345→Node.js 18 and later.
     1347→## Related
     …
     1352→## Maintainers
@@ -235,12 +252,6 @@ source/
             …
     utils/
         body.ts
-            5→export const getBodySize = (body?: BodyInit | null): number => {
-            …
-            90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
-            …
-            119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
-            …
         delay.ts
             3→import {type InternalOptions} from '../types/options.js';
             5→export type DelayOptions = {
@@ -281,14 +292,6 @@ source/
             14→): Promise<Response> {
             …
         type-guards.ts
-            27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
-            28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
-            49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
-            50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
-            71→export function isTimeoutError(error: unknown): error is TimeoutError {
-            72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
-            98→export function isForceRetryError(error: unknown): error is ForceRetryError {
-            99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
         types.ts
             1→export type Mutable<T> = {
             2→	-readonly[P in keyof T]: T[P]

@@ -159,8 +159,6 @@ packages/
                     errors/
                         errors.test.ts
                         errors.ts
-                            4→export { createError, createErrorFactory, isCustomError };
-                            …
                     logger/
                     utils/
                         random.ts
@@ -215,7 +213,9 @@ packages/
                     …
                 config.usecases.ts
                     3→export const {
-                    …
+                    4→  get: getInstanceUrl,
+                    5→  set: setInstanceUrl,
+                    6→} = createConfigBindings({ key: 'instance-url' });
             create-note/
             files/
                 files.services.test.ts

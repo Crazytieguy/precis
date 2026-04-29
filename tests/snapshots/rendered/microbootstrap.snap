@@ -139,6 +139,12 @@ microbootstrap/
             13→@dataclasses.dataclass
             14→class LitestarConfig(AppConfig):
     console_writer.py
+        1→from __future__ import annotations
+        2→import dataclasses
+        3→import typing
+        5→from rich.console import Console
+        6→from rich.rule import Rule
+        7→from rich.table import Table
         10→@dataclasses.dataclass
         11→class ConsoleWriter:
         12→    writer_enabled: bool = True
@@ -169,20 +175,6 @@ microbootstrap/
         30→    **granian_options: typing.Any,  # noqa: ANN401
         31→) -> GranianServer[typing.Any]:
     helpers.py
-        15→PydanticConfigT = typing.TypeVar("PydanticConfigT", bound="BaseModel")
-        16→VALID_PATH_PATTERN: typing.Final = r"^(/[a-zA-Z0-9_-]+)+/?$"
-        19→def dataclass_to_dict_no_defaults(dataclass_to_convert: "_DataclassT") -> dict[str, typing.Any]:
-        …
-        35→def merge_pydantic_configs(
-        …
-        48→def merge_dataclasses_configs(
-        …
-        60→def merge_dict_configs(
-        …
-        96→def is_valid_path(maybe_path: str) -> bool:
-        …
-        100→def optimize_exclude_paths(
-        …
     instruments/
         __init__.py
         base.py
@@ -226,6 +218,8 @@ microbootstrap/
         instrument_box.py
             9→@dataclasses.dataclass
             10→class InstrumentBox:
+            11→    __instruments__: list[type[Instrument[typing.Any]]] = dataclasses.field(default_factory=list)
+            12→    __initialized_instruments__: list[Instrument[typing.Any]] = dataclasses.field(default_factory=list)
             14→    def initialize(self, settings: SettingsT) -> None:
             …
             21→    def configure_instrument(
@@ -233,9 +227,12 @@ microbootstrap/
             23→        instrument_config: InstrumentConfigT,
             24→    ) -> None:
             34→    def extend_instruments(
-            …
+            35→        self,
+            36→        instrument_class: type[Instrument[InstrumentConfigT]],
+            37→    ) -> type[Instrument[InstrumentConfigT]]:
             48→    @property
             49→    def instruments(self) -> list[Instrument[typing.Any]]:
+            50→        return self.__initialized_instruments__
         logging_instrument.py
         opentelemetry_instrument.py
         prometheus_instrument.py
