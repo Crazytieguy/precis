@@ -65,70 +65,146 @@ crates/
     std-util/
         Cargo.toml
         src/
-            lib.rs
-            num.rs
-            option.rs
-            result.rs
-            slice.rs
-            str.rs
     toasty/
         CONTEXT.md
         Cargo.toml
         src/
+            apply_update.rs
+            batch/
+                create.rs
+            batch.rs
+            cursor.rs
+            db/
+                builder.rs
+                    17→pub struct Builder {
+                    …
+                connect.rs
+                    14→pub struct Connect {
+                    …
+                pool.rs
+            db.rs
+                18→pub struct Db {
+                …
+            engine/
+                eval/
+                    as_expr.rs
+                eval.rs
+                exec/
+                    action.rs
+                    delete_by_key.rs
+                    eval.rs
+                    exec_statement.rs
+                    filter.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    nested_merge.rs
+                    output.rs
+                    plan.rs
+                    project.rs
+                    query_pk.rs
+                    rmw.rs
+                    set_var.rs
+                    update_by_key.rs
+                    var.rs
+                exec.rs
+                hir.rs
+                index/
+                    index_match.rs
+                    index_plan.rs
+                index.rs
+                kv.rs
+                lower/
+                    insert.rs
+                    paginate.rs
+                    relation.rs
+                    returning.rs
+                lower.rs
+                mir/
+                    const.rs
+                    delete_by_key.rs
+                    eval.rs
+                    exec_statement.rs
+                    filter.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    logical_plan.rs
+                    nested_merge.rs
+                    node.rs
+                    operation.rs
+                    project.rs
+                    query_pk.rs
+                    read_modify_write.rs
+                    store.rs
+                    update_by_key.rs
+                mir.rs
+                plan/
+                    execution.rs
+                    nested_merge.rs
+                    statement.rs
+                plan.rs
+                simplify/
+                simplify.rs
+                ty.rs
+                verify.rs
+            engine.rs
+                38→pub(crate) struct Engine {
+                …
+            lib.rs
+            model.rs
+            page.rs
+                10→pub struct Page<M> {
+                …
+            relation/
+                belongs_to.rs
+                has_many.rs
+                has_one.rs
+                option.rs
+            relation.rs
+                16→pub trait Relation {
+                …
+            schema.rs
+            stmt/
+                association.rs
+                delete.rs
+                expr.rs
+                insert.rs
+                into_expr.rs
+                into_insert.rs
+                    4→pub trait IntoInsert {
+                    …
+                into_select.rs
+                    4→pub trait IntoSelect {
+                    …
+                paginate.rs
+                path.rs
+                primitive.rs
+                primitive_jiff.rs
+                select.rs
+                to_statement.rs
+                    3→pub trait ToStatement {
+                    …
+                update.rs
+            stmt.rs
+                51→pub struct Statement<M> {
+                …
         tests/
     toasty-cli/
         Cargo.toml
         src/
-            config.rs
-                9→pub struct Config {
-                10→    /// Migration-related configuration
-                11→    pub migration: MigrationConfig,
-                12→}
-            lib.rs
-                1→mod config;
-                2→mod migration;
-                3→mod theme;
-                5→pub use config::*;
-                6→pub use migration::*;
-                8→use anyhow::Result;
-                9→use clap::Parser;
-                10→use toasty::Db;
-                12→/// Toasty CLI library for building custom command-line tools
-                13→pub struct ToastyCli {
-                14→    db: Db,
-                15→    config: Config,
-                16→}
-                18→impl ToastyCli {
-                20→    pub fn new(db: Db) -> Self {
-                …
-                28→    pub fn with_config(db: Db, config: Config) -> Self {
-                …
-                33→    pub fn config(&self) -> &Config {
-                …
-                38→    pub async fn parse_and_run(&self) -> Result<()> {
-                …
-                44→    pub async fn parse_from<I, T>(&self, args: I) -> Result<()>
-                45→    where
-                46→        I: IntoIterator<Item = T>,
-                47→        T: Into<std::ffi::OsString> + Clone,
-                48→    {
-                …
-                53→    async fn run(&self, cli: Cli) -> Result<()> {
-                …
-            migration/
-            migration.rs
-                25→pub struct MigrationCommand {
-                26→    #[command(subcommand)]
-                27→    subcommand: MigrationSubcommand,
-                28→}
-            theme.rs
-                5→pub fn dialoguer_theme() -> ColorfulTheme {
-                …
     toasty-codegen/
         CONTEXT.md
         Cargo.toml
         src/
             expand/
+                create.rs
+                fields.rs
+                filters.rs
+                model.rs
+                query.rs
+                relation.rs
+                schema.rs
+                update.rs
+                util.rs
             expand.rs
             lib.rs
                 1→mod expand;
@@ -143,33 +219,82 @@ crates/
                 15→    let model = schema::Model::from_ast(&item, true)?;
                 17→    Ok(expand::embedded_model(&model))
             schema/
+                auto.rs
+                belongs_to.rs
+                column.rs
+                error.rs
+                field.rs
+                fk.rs
+                has_many.rs
+                has_one.rs
+                index.rs
+                key_attr.rs
+                model.rs
+                model_attr.rs
+                name.rs
+                pk.rs
             schema.rs
     toasty-core/
         CONTEXT.md
         Cargo.toml
         src/
+            driver/
+                capability.rs
+                operation/
+                    delete_by_key.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    insert.rs
+                    query_pk.rs
+                    query_sql.rs
+                    transaction.rs
+                    update_by_key.rs
+                operation.rs
+                response.rs
+            driver.rs
+            error/
+            error.rs
+            lib.rs
+                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+                …
+            macros.rs
+                2→macro_rules! path {
+                …
+            schema/
+                app/
+                app.rs
+                builder/
+                    table.rs
+                builder.rs
+                db/
+                    column.rs
+                    diff.rs
+                    index.rs
+                    migration.rs
+                    pk.rs
+                    schema.rs
+                    table.rs
+                    ty.rs
+                db.rs
+                mapping/
+                    field.rs
+                    model.rs
+                mapping.rs
+                name.rs
+                verify/
+                    relations_are_indexed.rs
+                verify.rs
+            schema.rs
+                22→pub struct Schema {
+                …
+            stmt/
+            stmt.rs
+                253→pub enum Statement {
+                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
         src/
-            lib.rs
-                30→pub struct DynamoDb {
-                31→    url: String,
-                32→}
-                96→pub struct Connection {
-                97→    /// Handle to the AWS SDK client
-                98→    client: Client,
-                99→}
-            op/
-            op.rs
-            type.rs
-                4→pub trait TypeExt {
-                5→    /// Converts a Toasty type to a DynamoDB scalar type.
-                6→    fn to_ddb_type(&self) -> ScalarAttributeType;
-                7→}
-            value.rs
-                5→pub struct Value(CoreValue);
-                …
     toasty-driver-integration-suite/
         Cargo.toml
         src/
@@ -193,27 +318,6 @@ crates/
     toasty-driver-postgresql/
         Cargo.toml
         src/
-            lib.rs
-                24→pub struct PostgreSQL {
-                25→    url: String,
-                26→    config: Config,
-                27→}
-                178→pub struct Connection {
-                179→    client: Client,
-                180→    statement_cache: StatementCache,
-                181→}
-            statement_cache.rs
-                9→pub struct StatementCache {
-                10→    inner: LruCache<Key<'static>, Statement>,
-                11→}
-            type.rs
-                4→pub trait TypeExt {
-                5→    /// Converts a Toasty type to a PostgreSQL type.
-                6→    fn to_postgres_type(&self) -> Type;
-                7→}
-            value.rs
-                8→pub struct Value(pub(crate) CoreValue);
-                …
     toasty-driver-sqlite/
         CONTEXT.md
         Cargo.toml
@@ -252,28 +356,6 @@ crates/
                 36→pub fn create(_input: TokenStream) -> TokenStream {
                 37→    quote!(println!("TODO")).into()
     toasty-sql/
-        CONTEXT.md
-        Cargo.toml
-        src/
-            lib.rs
-                1→pub mod migration;
-                2→pub use migration::*;
-                4→pub mod serializer;
-                5→pub use serializer::{Params, Serializer, TypedValue};
-                7→pub mod stmt;
-                8→pub use stmt::Statement;
-            migration.rs
-                12→pub struct MigrationStatement<'a> {
-                13→    statement: Statement,
-                14→    schema: Cow<'a, Schema>,
-                15→}
-            serializer/
-            serializer.rs
-            stmt/
-            stmt.rs
-                46→pub enum Statement {
-                …
-        tests/
 docs/
     ARCHITECTURE.md
     CHANGE_GUIDE.md

@@ -6,7 +6,7 @@
 
 use std::{
     cell::RefCell,
-    collections::HashMap,
+    collections::{BTreeMap, HashMap},
     path::{Path, PathBuf},
 };
 
@@ -110,7 +110,7 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
     if children.is_empty() {
         return None;
     }
-    let value = dir_listing_value(&dir, ctx);
+    let value = dir_listing_value(&dir, &children, ctx);
     let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
     Some(Batch {
         key: FsKey::DirListing { dir: dir.clone() }.into(),
@@ -125,9 +125,16 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
     })
 }
 
-fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
-    let module_source_dir = is_module_source_dir(dir);
+fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &WalkCtx) -> f64 {
+    let sibling_module_dir = is_sibling_module_source_dir(dir, has_module_sibling_file(dir));
+    let module_source_dir = is_module_source_dir(dir, sibling_module_dir);
     let source_dir = is_source_dir(dir);
+    let src_of_sibling_modules = source_dir
+        && module_sibling_child_dir_count(
+            dir,
+            children,
+            MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT,
+        ) >= MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT;
     let non_essential = ctx.non_essential_factor(dir);
     // Inventory promotion is only for supporting corpora. Source/module dirs
     // inside those corpora already qualify structurally, so they get the
@@ -139,6 +146,8 @@ fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
         && is_source_inventory_dir(dir, ctx);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
+    } else if src_of_sibling_modules || sibling_module_dir {
+        (0.75, 0.55, 0.35)
     } else if source_dir || module_source_dir || source_inventory_dir {
         (0.6, 0.5, 0.3)
     } else {
@@ -146,7 +155,7 @@ fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
     };
     let depth = if supporting_source_dir || source_inventory_dir {
         inventory_depth_factor(dir, ctx, non_essential)
-    } else if module_source_dir {
+    } else if module_source_dir || src_of_sibling_modules {
         file_depth_factor(dir, ctx, true)
     } else {
         path_depth_factor(dir, ctx)
@@ -162,6 +171,8 @@ pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[
     "index.cjs",
 ];
 const NON_JS_MODULE_ENTRYPOINT_FILES: &[&str] = &["mod.rs", "__init__.py"];
+const MODULE_SIBLING_EXTS: &[&str] = &["rs", "ts", "tsx", "py"];
+const MIN_SIBLING_MODULE_CHILD_DIRS_FOR_SRC_ROOT: usize = 2;
 
 pub(crate) fn is_source_dir(dir: &Path) -> bool {
     dir.file_name()
@@ -176,11 +187,13 @@ fn has_module_entrypoint(dir: &Path) -> bool {
         .any(|name| dir.join(name).is_file())
 }
 
-fn is_module_source_dir(dir: &Path) -> bool {
-    has_module_entrypoint(dir)
-        // type/types/typings index files are type surfaces, not module-group public APIs.
-        && !is_type_surface_dir(dir)
-        && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir))
+fn is_module_source_dir(dir: &Path, sibling_module_dir: bool) -> bool {
+    if is_type_surface_dir(dir) {
+        return false;
+    }
+    let entrypoint_module = has_module_entrypoint(dir)
+        && (dir.parent().is_some_and(is_source_dir) || has_python_module_entrypoint(dir));
+    entrypoint_module || sibling_module_dir
 }
 
 fn is_type_surface_dir(dir: &Path) -> bool {
@@ -191,6 +204,39 @@ fn is_type_surface_dir(dir: &Path) -> bool {
 
 fn has_python_module_entrypoint(dir: &Path) -> bool {
     dir.join("__init__.py").is_file()
+}
+
+fn is_sibling_module_source_dir(dir: &Path, has_module_sibling_file: bool) -> bool {
+    has_module_sibling_file && !is_type_surface_dir(dir)
+}
+
+fn has_module_sibling_file(dir: &Path) -> bool {
+    // The filesystem root has no stem to attach a sibling extension to.
+    if dir.file_name().is_none() {
+        return false;
+    }
+    let mut sibling = dir.to_path_buf();
+    MODULE_SIBLING_EXTS.iter().any(|ext| {
+        sibling.set_extension(ext);
+        sibling.is_file()
+    })
+}
+
+fn module_sibling_child_dir_count(
+    dir: &Path,
+    children: &BTreeMap<String, EntryKind>,
+    target: usize,
+) -> usize {
+    let mut count = 0;
+    for (name, kind) in children {
+        if matches!(kind, EntryKind::Directory) && has_module_sibling_file(&dir.join(name)) {
+            count += 1;
+            if count >= target {
+                break;
+            }
+        }
+    }
+    count
 }
 
 #[derive(Default)]

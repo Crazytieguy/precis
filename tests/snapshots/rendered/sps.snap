@@ -32,6 +32,37 @@ sps/
     Cargo.toml
     src/
         cli/
+            info.rs
+                14→pub struct Info {
+                …
+            init.rs
+                16→pub struct InitArgs {
+                17→    /// Force initialization even if /opt/sps appears to be an sps root already.
+                18→    #[arg(long)]
+                19→    pub force: bool,
+                20→}
+            install.rs
+                16→pub struct InstallArgs {
+                …
+            list.rs
+                16→pub struct List {
+                …
+            reinstall.rs
+                12→pub struct ReinstallArgs {
+                …
+            search.rs
+            status.rs
+                399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
+                …
+            uninstall.rs
+                17→pub struct Uninstall {
+                …
+            update.rs
+                11→pub struct Update;
+                …
+            upgrade.rs
+                12→pub struct UpgradeArgs {
+                …
         cli.rs
             35→pub struct CliArgs {
             36→    #[arg(short, long, action = ArgAction::Count, global = true)]
@@ -208,8 +239,7 @@ sps-core/
                     25→pub struct CaskInstallManifest {
                     …
                     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    38→    let version = cask.version.clone().unwrap_or_else(|| "latest".to_string());
-                    39→    config.cask_store_version_path(&cask.token, &version)
+                    …
                     43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
                     44→    config.cask_store_token_path(&cask.token)
                     49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
@@ -223,11 +253,6 @@ sps-core/
                     81→) -> Result<PathBuf> {
                     …
                     232→pub fn install_cask(
-                    233→    cask: &Cask,
-                    234→    download_path: &Path,
-                    235→    config: &Config,
-                    236→    job_action: &JobAction,
-                    237→) -> Result<()> {
                     …
                     580→pub fn write_receipt(
                     581→    cask: &Cask,
