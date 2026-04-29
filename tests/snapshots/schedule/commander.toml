@@ -1,7 +1,7 @@
 fixture = "commander"
 budget = 10000
-cumulative_tokens = 9824
-batch_count = 136
+cumulative_tokens = 9788
+batch_count = 135
 
 [[batches]]
 position = 1
@@ -5241,32 +5241,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/release-policy.md"
 start = 12
 end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 136
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md", section_index: 23 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md section #23"
-cost_tokens = 36
-cum_tokens = 9824
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
-start = 397
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/CHANGELOG.md"
-start = 399
-end = 399
 
 [batches.content.spans.render]
 kind = "full"

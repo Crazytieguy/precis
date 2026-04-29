@@ -103,6 +103,8 @@ pub struct WalkCtx {
     /// Per-run state owned by `walker::rust` — module visibility,
     /// workspace membership, exported-macro names per dir.
     rust_state: rust::RustState,
+    /// Per-run state owned by `walker::fs` — cached filesystem-shape probes.
+    fs_state: fs::FsState,
     /// Per-run state owned by `walker::json` — npm/yarn/pnpm
     /// workspace-member resolution.
     json_state: json::JsonState,
@@ -119,6 +121,7 @@ impl WalkCtx {
             source_cache,
             tree_cache: RefCell::new(HashMap::new()),
             rust_state: rust::RustState::new(),
+            fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
         }
     }
@@ -174,6 +177,10 @@ impl WalkCtx {
 
     pub(in crate::walker) fn rust_state(&self) -> &rust::RustState {
         &self.rust_state
+    }
+
+    pub(in crate::walker) fn fs_state(&self) -> &fs::FsState {
+        &self.fs_state
     }
 
     /// `true` iff `file` is a `Cargo.toml` declared (or auto-promoted) as

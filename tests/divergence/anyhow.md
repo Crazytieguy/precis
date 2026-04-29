@@ -1,4 +1,4 @@
-scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=8 partial=2 missing=8)
+scores: Score(3000)=0.625 ns_rows≤3K=18/44 (reached=9 partial=2 missing=7)
 
 ## Per-budget scores
 
@@ -7,9 +7,9 @@ scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=8 partial=2 missing=8)
 | 1000 | 102 | 0.759 | 0.319 | 0.492 | 860 |
 | 1442 | 139 | 0.781 | 0.394 | 0.554 | 1400 |
 | 2080 | 195 | 0.774 | 0.409 | 0.562 | 1940 |
-| 3000 | 246 | 0.761 | 0.395 | 0.548 | 2992 |
-| 4327 | 380 | 0.718 | 0.270 | 0.441 | 3706 |
-| 6240 | 557 | 0.681 | 0.230 | 0.396 | 6228 |
+| 3000 | 246 | 0.834 | 0.468 | 0.625 | 2985 |
+| 4327 | 380 | 0.789 | 0.318 | 0.501 | 3878 |
+| 6240 | 557 | 0.749 | 0.252 | 0.435 | 6192 |
 | 9000 | 794 | 0.716 | 0.231 | 0.407 | 7854 |
 
 ## Verdict
@@ -37,7 +37,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | ranking-recoverable | 4 | 4 | 0 | value/ranking |
 | wrong-slice / granularity | 20 | 19 | 1 | walker granularity / wrong slice |
 | no discovered candidate | 9 | 9 | 0 | walker coverage or predecessor-gated emit |
-| fs/listing | 2 | 2 | 0 | filesystem/listing value |
+| fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 1 | 0 | 1 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
@@ -47,7 +47,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | too expensive at final margin | 3 | 0.35 | tune ranking |
 | discovered unscheduled | 1 | 0.03 | tune ranking |
 
-Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file=4, fs-only=2, no discovered candidate=9 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file=4, fs-only=1, no discovered candidate=9 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -78,22 +78,22 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file
 | 2.1 | 424 | 0.58 | 0.52 | missing | lib.rs module declarations | [scheduled bbox exact=11/19] mod/use plumbing in src/lib.rs (t=1372, 11 atoms) |
 | 2.2 | 458 | 0.75 | 0.69 | partial | Error struct definition | [scheduled bbox exact=3/4] pub item at src/lib.rs:390 (t=561, 3 atoms) |
 | 2.4 | 541 | 0.60 | 0.47 | missing | Chain struct | [scheduled bbox exact=3/5] pub item at src/lib.rs:415 (t=580, 3 atoms) |
-| 2.6 | 858 | 0.00 | 0.00 | missing | Error::* method signatures (locations) | [scheduled same-file] pub item at src/error.rs:934 (t=3218, 7 atoms) |
+| 2.6 | 858 | 0.00 | 0.00 | missing | Error::* method signatures (locations) | [scheduled same-file] pub item at src/error.rs:934 (t=3308, 7 atoms) |
 | 2.8 | 1130 | 0.33 | 0.45 | missing | Crate-level public items (locations) | [scheduled bbox exact=0/9] pub-item doc body at src/lib.rs:616 (t=9014, 102 atoms) |
 | 2.9 | 1302 | 0.13 | 0.10 | missing | Macro export locations | [scheduled bbox exact=1/15] macro_export body at src/macros.rs:58 (t=1536, 11 atoms) |
-| 3.1 | 3672 | 0.11 | 0.12 | missing | error.rs item locations | [scheduled bbox exact=1/19] pub item at src/error.rs:934 (t=3218, 7 atoms) |
-| 3.3 | 4232 | 0.16 | 0.14 | missing | chain.rs item locations | [scheduled bbox exact=9/25] pub item at src/chain.rs:16 (t=3511, 9 atoms) |
-| 3.4 | 4770 | 0.00 | 0.00 | missing | kind.rs tagged-dispatch types | [scheduled bbox exact=9/51] pub-item names surface in src/kind.rs (t=3584, 12 atoms) |
-| 3.5 | 4950 | 0.00 | 0.00 | missing | wrapper.rs: MessageError / DisplayError / BoxedError | [scheduled bbox exact=3/14] pub-item names surface in src/wrapper.rs (t=3145, 6 atoms) |
-| 3.7 | 5548 | 0.34 | 0.29 | missing | ptr.rs internal pointer newtypes | [scheduled bbox exact=8/34] pub-item names surface in src/ptr.rs (t=2945, 8 atoms) |
+| 3.1 | 3672 | 0.11 | 0.12 | missing | error.rs item locations | [scheduled bbox exact=1/19] pub item at src/error.rs:934 (t=3308, 7 atoms) |
+| 3.3 | 4232 | 0.16 | 0.14 | missing | chain.rs item locations | [scheduled bbox exact=9/25] pub item at src/chain.rs:16 (t=3601, 9 atoms) |
+| 3.4 | 4770 | 0.00 | 0.00 | missing | kind.rs tagged-dispatch types | [scheduled bbox exact=9/51] pub-item names surface in src/kind.rs (t=3674, 12 atoms) |
+| 3.5 | 4950 | 0.00 | 0.00 | missing | wrapper.rs: MessageError / DisplayError / BoxedError | [scheduled bbox exact=3/14] pub-item names surface in src/wrapper.rs (t=3235, 6 atoms) |
+| 3.7 | 5548 | 0.00 | 0.00 | missing | ptr.rs internal pointer newtypes | [scheduled bbox exact=8/34] pub-item names surface in src/ptr.rs (t=3035, 8 atoms) |
 | 3.8 | 6006 | 0.03 | 0.02 | missing | backtrace.rs cfg landscape (locations) | [scheduled bbox exact=1/38] pub-item names surface in src/backtrace.rs (t=1400, 2 atoms) |
-| 3.9 | 6235 | 0.00 | 0.00 | missing | nightly.rs locations + signatures | [scheduled bbox exact=6/16] pub-item names surface in src/nightly.rs (t=3673, 6 atoms) |
+| 3.9 | 6235 | 0.00 | 0.00 | missing | nightly.rs locations + signatures | [scheduled bbox exact=6/16] pub-item names surface in src/nightly.rs (t=3763, 6 atoms) |
 | 3.10 | 6577 | 0.17 | 0.19 | missing | ensure.rs orientation header (locations) | [scheduled bbox exact=3/29] macro_export names across src (t=819, 5 atoms) |
-| 4.1 | 6817 | 0.00 | 0.00 | missing | tests/common + drop helpers | [scheduled bbox exact=3/25] impl method sigs in tests/drop/mod.rs (t=7746, 12 atoms) |
-| 4.6 | 7952 | 0.00 | 0.00 | missing | test_autotrait + test_boxed + test_ffi + test_backtrace | [scheduled bbox exact=3/25] pub-item names surface in tests/test_ffi.rs (t=7550, 5 atoms) |
-| 5.1 | 8313 | 0.06 | 0.05 | missing | ErrorImpl<E> layout + vtable() reader | [scheduled bbox exact=7/18] pub item at src/error.rs:934 (t=3218, 7 atoms) |
-| 5.2 | 8514 | 0.00 | 0.00 | missing | Chain DoubleEndedIterator buffering | [scheduled same-file] pub item at src/chain.rs:16 (t=3511, 9 atoms) |
-| 5.3 | 8742 | 0.00 | 0.00 | missing | kind.rs autoref-precedence note | [scheduled same-file] pub-item names surface in src/kind.rs (t=3584, 12 atoms) |
+| 4.1 | 6817 | 0.00 | 0.00 | missing | tests/common + drop helpers | [scheduled bbox exact=3/25] impl method sigs in tests/drop/mod.rs (t=7587, 12 atoms) |
+| 4.6 | 7952 | 0.00 | 0.00 | missing | test_autotrait + test_boxed + test_ffi + test_backtrace | [scheduled bbox exact=3/25] pub-item names surface in tests/test_ffi.rs (t=6971, 5 atoms) |
+| 5.1 | 8313 | 0.06 | 0.05 | missing | ErrorImpl<E> layout + vtable() reader | [scheduled bbox exact=7/18] pub item at src/error.rs:934 (t=3308, 7 atoms) |
+| 5.2 | 8514 | 0.00 | 0.00 | missing | Chain DoubleEndedIterator buffering | [scheduled same-file] pub item at src/chain.rs:16 (t=3601, 9 atoms) |
+| 5.3 | 8742 | 0.00 | 0.00 | missing | kind.rs autoref-precedence note | [scheduled same-file] pub-item names surface in src/kind.rs (t=3674, 12 atoms) |
 | 5.6 | 9798 | 0.00 | 0.00 | missing | ensure!: render `{msg} ({lhs} vs {rhs})` | [scheduled same-file] macro_export names across src (t=819, 6 atoms) |
 
 ### no discovered candidate
@@ -114,7 +114,6 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 1.5 | 285 | 0.00 | 0.00 | missing | tests/ listing | fs-only |
 | 4.7 | 8056 | 0.00 | 0.00 | missing | tests/ui + tests/crate listings | fs-only |
 
 ### mixed/unknown
@@ -150,14 +149,14 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 1564 | 1.00 | 1564 | 5270 | crate-doc body in src/lib.rs |
+| 1564 | 1.00 | 1564 | 5442 | crate-doc body in src/lib.rs |
 | 1160 | 1.00 | 1160 | 9014 | pub-item doc body at src/lib.rs:616 |
-| 259 | 1.00 | 259 | 5529 | README.md section #9 |
-| 241 | 1.00 | 241 | 7088 | README.md section #2 |
-| 215 | 1.00 | 215 | 6847 | README.md section #4 |
-| 205 | 1.00 | 205 | 6632 | README.md section #5 |
-| 200 | 1.00 | 200 | 3418 | README.md section #7 |
-| 199 | 1.00 | 199 | 6427 | README.md section #1 |
-| 151 | 1.00 | 151 | 5728 | pub-item doc body at src/lib.rs:415 |
-| 138 | 1.00 | 138 | 6148 | README.md section #3 |
+| 259 | 1.00 | 259 | 5759 | README.md section #9 |
+| 241 | 1.00 | 241 | 7828 | README.md section #2 |
+| 215 | 1.00 | 215 | 7463 | README.md section #4 |
+| 205 | 1.00 | 205 | 7208 | README.md section #5 |
+| 200 | 1.00 | 200 | 3508 | README.md section #7 |
+| 199 | 1.00 | 199 | 6902 | README.md section #1 |
+| 151 | 1.00 | 151 | 6068 | pub-item doc body at src/lib.rs:415 |
+| 138 | 1.00 | 138 | 6488 | README.md section #3 |
 | 461 | — | — | — | +5 more rows |

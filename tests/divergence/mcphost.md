@@ -4,13 +4,13 @@ scores: Score(3000)=0.551 ns_rows≤3K=13/40 (reached=5 partial=1 missing=7)
 
 | B | A_B | I(B) | C(B) | Score(B) | walker_used |
 |--:|----:|-----:|-----:|---------:|------------:|
-| 1000 | 86 | 0.807 | 0.422 | 0.584 | 984 |
-| 1442 | 125 | 0.765 | 0.336 | 0.507 | 1403 |
-| 2080 | 173 | 0.730 | 0.265 | 0.440 | 1999 |
-| 3000 | 208 | 0.786 | 0.387 | 0.551 | 2973 |
-| 4327 | 333 | 0.730 | 0.242 | 0.420 | 4298 |
-| 6240 | 468 | 0.698 | 0.172 | 0.346 | 6231 |
-| 9000 | 652 | 0.669 | 0.172 | 0.339 | 8975 |
+| 1000 | 86 | 0.807 | 0.422 | 0.584 | 990 |
+| 1442 | 125 | 0.765 | 0.336 | 0.507 | 1409 |
+| 2080 | 173 | 0.730 | 0.265 | 0.440 | 2005 |
+| 3000 | 208 | 0.786 | 0.387 | 0.551 | 2979 |
+| 4327 | 333 | 0.730 | 0.242 | 0.420 | 4304 |
+| 6240 | 468 | 0.698 | 0.172 | 0.346 | 6237 |
+| 9000 | 652 | 0.669 | 0.172 | 0.339 | 8981 |
 
 ## Verdict
 
@@ -84,24 +84,24 @@ Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25 _(candidates are wa
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.2 | 135 | 0.50 | 0.99 | missing | README lede | [scheduled bbox exact=2/6] README headline in README.md (t=99, 2 atoms) |
-| 1.4 | 257 | 0.50 | 0.95 | missing | go.mod — module declaration | [scheduled bbox exact=3/6] go module file go.mod (t=2556, 3 atoms) |
-| 1.5 | 353 | 0.75 | 0.98 | partial | main.go — package + imports + version literal | [scheduled bbox exact=8/12] go package + imports in main.go (t=2627, 8 atoms) |
+| 1.4 | 257 | 0.50 | 0.95 | missing | go.mod — module declaration | [scheduled bbox exact=3/6] go module file go.mod (t=2562, 3 atoms) |
+| 1.5 | 353 | 0.75 | 0.98 | partial | main.go — package + imports + version literal | [scheduled bbox exact=8/12] go package + imports in main.go (t=2633, 8 atoms) |
 | 1.6 | 498 | 0.14 | 0.05 | missing | main.go — version-flag short-circuit + fang.Execute | [scheduled bbox exact=3/14] go decl names surface in main.go (t=145, 3 atoms); better unscheduled exact=10/14: go decl body at main.go:14 (10 atoms, too expensive at final margin) |
 | 2.1 | 1737 | 0.00 | 0.00 | missing | MCPServerConfig — struct definition (the central config type) | [unscheduled bbox exact=15/19] go decl at internal/config/config.go:17 (15 atoms, predecessor not scheduled: go decl names surface in internal/config/config.go) |
 | 2.5 | 3154 | 0.00 | 0.00 | missing | Builtin server registry — names + factory dispatch | [unscheduled bbox exact=10/14] go decl body at internal/builtin/registry.go:42 (10 atoms, predecessor not scheduled: go decl at internal/builtin/registry.go:42) |
-| 2.8 | 4183 | 0.01 | 0.01 | missing | Subcommand cobra Use/Short — auth / hooks / script (locations) | [scheduled bbox exact=4/19] go decl names surface in cmd/auth.go (t=3739, 7 atoms) |
+| 2.8 | 4183 | 0.01 | 0.01 | missing | Subcommand cobra Use/Short — auth / hooks / script (locations) | [scheduled bbox exact=4/19] go decl names surface in cmd/auth.go (t=3745, 7 atoms) |
 | 2.9 | 4519 | 0.00 | 0.00 | missing | Agent — type + GenerateWithLoopAndStreaming signature | [unscheduled bbox exact=9/21] go decl at internal/agent/agent.go:67 (9 atoms, predecessor not scheduled: go decl names surface in internal/agent/agent.go) |
 | 3.2 | 5506 | 0.00 | 0.00 | missing | MCPToolManager — type | [unscheduled bbox exact=9/29] go decl at internal/tools/mcp.go:27 (9 atoms, predecessor not scheduled: go decl names surface in internal/tools/mcp.go) |
 | 3.3 | 5811 | 0.00 | 0.00 | missing | MCPToolManager.LoadTools + tool prefixing rule | [unscheduled bbox exact=16/22] go decl body at internal/tools/mcp.go:149 (21 atoms, predecessor not scheduled: go decl at internal/tools/mcp.go:149) |
 | 3.4 | 6037 | 0.00 | 0.00 | missing | Connection pool — type + DefaultConnectionPoolConfig | [unscheduled bbox exact=7/16] go decl body at internal/tools/connection_pool.go:32 (7 atoms, predecessor not scheduled: go decl at internal/tools/connection_pool.go:32) |
 | 3.5 | 6266 | 0.00 | 0.00 | missing | Connection pool — createMCPClient transport switch | [unscheduled bbox exact=13/17] go decl body at internal/tools/connection_pool.go:262 (13 atoms, predecessor not scheduled: go decl at internal/tools/connection_pool.go:262) |
-| 3.6 | 6549 | 0.06 | 0.13 | missing | Streaming aggregator — StreamWithCallback signature + provider note | [scheduled bbox exact=2/17] go decl names surface in internal/agent/streaming.go (t=756, 2 atoms); better unscheduled exact=8/17: go decl doc at internal/agent/streaming.go:19 (8 atoms, too expensive at final margin) |
-| 4.2 | 7225 | 0.00 | 0.00 | missing | HookEvent constants + RequiresMatcher rule | [scheduled bbox exact=10/17] go decl names surface in internal/hooks/events.go (t=5210, 12 atoms) |
-| 4.3 | 7736 | 0.42 | 0.25 | missing | Hook input/output JSON schemas | [scheduled bbox exact=10/34] go decl names surface in internal/hooks/schemas.go (t=2721, 12 atoms) |
-| 4.4 | 8045 | 0.00 | 0.00 | missing | Hook config — HookConfig / HookMatcher / HookEntry | [scheduled bbox exact=6/22] go decl names surface in internal/hooks/config.go (t=3411, 6 atoms) |
+| 3.6 | 6549 | 0.06 | 0.13 | missing | Streaming aggregator — StreamWithCallback signature + provider note | [scheduled bbox exact=2/17] go decl names surface in internal/agent/streaming.go (t=762, 2 atoms); better unscheduled exact=8/17: go decl doc at internal/agent/streaming.go:19 (8 atoms, too expensive at final margin) |
+| 4.2 | 7225 | 0.00 | 0.00 | missing | HookEvent constants + RequiresMatcher rule | [scheduled bbox exact=10/17] go decl names surface in internal/hooks/events.go (t=5216, 12 atoms) |
+| 4.3 | 7736 | 0.42 | 0.25 | missing | Hook input/output JSON schemas | [scheduled bbox exact=10/34] go decl names surface in internal/hooks/schemas.go (t=2727, 12 atoms) |
+| 4.4 | 8045 | 0.00 | 0.00 | missing | Hook config — HookConfig / HookMatcher / HookEntry | [scheduled bbox exact=6/22] go decl names surface in internal/hooks/config.go (t=3417, 6 atoms) |
 | 4.5 | 8222 | 0.00 | 0.00 | missing | Hook executor — ExecuteHooks signature | [unscheduled bbox exact=4/11] go decl body at internal/hooks/executor.go:122 (16 atoms, predecessor not scheduled: go decl at internal/hooks/executor.go:122) |
 | 4.8 | 8752 | 0.00 | 0.00 | missing | Session.Message + Builtin tool inventory (locations) | [unscheduled bbox exact=4/11] go decl body at internal/builtin/http.go:36 (47 atoms, predecessor not scheduled: go decl at internal/builtin/http.go:36) |
-| 5.3 | 9466 | 0.00 | 0.00 | missing | SDK — Options struct + entry signatures | [scheduled bbox exact=9/20] go decl names surface in sdk/mcphost.go (t=5650, 19 atoms) |
+| 5.3 | 9466 | 0.00 | 0.00 | missing | SDK — Options struct + entry signatures | [scheduled bbox exact=9/20] go decl names surface in sdk/mcphost.go (t=5656, 19 atoms) |
 | 5.5 | 9719 | 0.00 | 0.00 | missing | InitConfig — config search order | [unscheduled bbox exact=8/11] go decl body at cmd/root.go:143 (8 atoms, predecessor not scheduled: go decl at cmd/root.go:143) |
 
 ## Walker waste rollup (by descriptor pattern)
@@ -114,15 +114,15 @@ Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25 _(candidates are wa
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 116 | 1.00 | 116 | 1632 | headings outline in sdk/README.md |
-| 84 | 0.15 | 557 | 2556 | go module file go.mod |
-| 78 | 1.00 | 78 | 3051 | go decl names surface in internal/agent/factory.go |
-| 74 | 1.00 | 74 | 2859 | go decl names surface in internal/models/generate_models.go |
-| 63 | 1.00 | 63 | 837 | go decl names surface in sdk/types.go |
-| 61 | 0.88 | 69 | 984 | go decl names surface in cmd/hooks.go |
-| 59 | 1.00 | 59 | 1786 | go decl names surface in internal/models/models_data.go |
-| 55 | 1.00 | 55 | 2914 | go decl at internal/models/generate_models.go:50 |
-| 55 | 1.00 | 55 | 1727 | go decl names surface in internal/config/merger.go |
+| 116 | 1.00 | 116 | 1638 | headings outline in sdk/README.md |
+| 84 | 0.15 | 557 | 2562 | go module file go.mod |
+| 78 | 1.00 | 78 | 3057 | go decl names surface in internal/agent/factory.go |
+| 74 | 1.00 | 74 | 2865 | go decl names surface in internal/models/generate_models.go |
+| 63 | 1.00 | 63 | 843 | go decl names surface in sdk/types.go |
+| 61 | 0.88 | 69 | 990 | go decl names surface in cmd/hooks.go |
+| 59 | 1.00 | 59 | 1792 | go decl names surface in internal/models/models_data.go |
+| 55 | 1.00 | 55 | 2920 | go decl at internal/models/generate_models.go:50 |
+| 55 | 1.00 | 55 | 1733 | go decl names surface in internal/config/merger.go |
 | 53 | 1.00 | 53 | 229 | headings outline in AGENTS.md |
 | 50 | — | — | — | +1 more rows |
 
@@ -130,14 +130,14 @@ Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25 _(candidates are wa
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 276 | 0.99 | 278 | 8609 | go decl names surface in cmd/script.go |
-| 175 | 1.00 | 175 | 7927 | AGENTS.md section #0 |
-| 160 | 1.00 | 160 | 9379 | go decl names surface in internal/ui/spinner.go |
-| 150 | 0.95 | 158 | 3739 | go decl names surface in cmd/auth.go |
-| 145 | 1.00 | 145 | 7568 | go decl names surface in internal/hooks/validator.go |
-| 140 | 1.00 | 140 | 7351 | go decl names surface in internal/builtin/bash.go |
-| 136 | 1.00 | 136 | 7111 | go decl names surface in internal/ui/styles.go |
-| 102 | 1.00 | 102 | 4706 | go decl names surface in internal/ui/tool_approval_input.go |
-| 98 | 1.00 | 98 | 6692 | README.md section #29 |
-| 91 | 1.00 | 91 | 3868 | go decl names surface in internal/tools/buffered_logger.go |
+| 276 | 0.99 | 278 | 8615 | go decl names surface in cmd/script.go |
+| 175 | 1.00 | 175 | 7933 | AGENTS.md section #0 |
+| 160 | 1.00 | 160 | 9385 | go decl names surface in internal/ui/spinner.go |
+| 150 | 0.95 | 158 | 3745 | go decl names surface in cmd/auth.go |
+| 145 | 1.00 | 145 | 7574 | go decl names surface in internal/hooks/validator.go |
+| 140 | 1.00 | 140 | 7357 | go decl names surface in internal/builtin/bash.go |
+| 136 | 1.00 | 136 | 7117 | go decl names surface in internal/ui/styles.go |
+| 102 | 1.00 | 102 | 4712 | go decl names surface in internal/ui/tool_approval_input.go |
+| 98 | 1.00 | 98 | 6698 | README.md section #29 |
+| 91 | 1.00 | 91 | 3874 | go decl names surface in internal/tools/buffered_logger.go |
 | 2297 | — | — | — | +37 more rows |

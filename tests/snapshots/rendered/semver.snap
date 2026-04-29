@@ -38,8 +38,6 @@ CHANGELOG.md
     1→# Changelog
     255→## 6.3.0
     257→* Expose the token enum on the exports
-    268→## 6.1.2
-    270→* Do not throw when testing invalid version strings
     290→## 5.7
     292→* Add `minVersion` method
     301→## 5.5
@@ -114,16 +112,11 @@ README.md
     460→  even if they're not the same string.  You already know how to
     461→  compare strings.
     462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
-    467→* `compare(v1, v2)`: Return `0` if `v1 == v2`, or `1` if `v1` is greater, or `-1` if
-    468→  `v2` is greater.  Sorts in ascending order if passed to `Array.sort()`.
     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
     470→  in descending order when passed to `Array.sort()`.
     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
     472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
     473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
-    474→* `diff(v1, v2)`: Returns the difference between two versions by the release type
-    475→  (`major`, `premajor`, `minor`, `preminor`, `patch`, `prepatch`, or `prerelease`),
-    476→  or null if the versions are the same.
     478→### Sorting
     …
     485→### Comparators
@@ -169,6 +162,12 @@ README.md
     …
 SECURITY.md
 benchmarks/
+    bench-compare.js
+    bench-diff.js
+    bench-parse-options.js
+    bench-parse.js
+    bench-satisfies.js
+    bench-subset.js
 bin/
     semver.js
 classes/
@@ -320,3 +319,34 @@ tap-snapshots/
     test/
         bin/
 test/
+    bin/
+    classes/
+        comparator.js
+        index.js
+        range.js
+        semver.js
+    fixtures/
+    functions/
+    index.js
+    integration/
+    internal/
+        constants.js
+        debug.js
+        identifiers.js
+        lrucache.js
+        parse-options.js
+        re.js
+    map.js
+    preload.js
+    ranges/
+        gtr.js
+        intersects.js
+        ltr.js
+        max-satisfying.js
+        min-satisfying.js
+        min-version.js
+        outside.js
+        simplify.js
+        subset.js
+        to-comparators.js
+        valid.js

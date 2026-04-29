@@ -9,8 +9,8 @@ scores: Score(3000)=0.418 ns_rows≤3K=21/41 (reached=6 partial=2 missing=13)
 | 2080 | 204 | 0.637 | 0.193 | 0.350 | 2067 |
 | 3000 | 264 | 0.685 | 0.255 | 0.418 | 2863 |
 | 4327 | 354 | 0.735 | 0.343 | 0.502 | 4306 |
-| 6240 | 517 | 0.702 | 0.245 | 0.415 | 6180 |
-| 9000 | 787 | 0.669 | 0.237 | 0.398 | 8907 |
+| 6240 | 517 | 0.703 | 0.245 | 0.415 | 6215 |
+| 9000 | 787 | 0.670 | 0.237 | 0.399 | 8942 |
 
 ## Verdict
 
@@ -45,8 +45,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.12 | promote predecessor |
-| too expensive at final margin | 1 | 0.12 | tune ranking |
-| discovered unscheduled | 2 | 0.26 | tune ranking |
+| too expensive at final margin | 2 | 0.21 | tune ranking |
+| discovered unscheduled | 1 | 0.17 | tune ranking |
 
 Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
@@ -70,7 +70,7 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candid
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.7 | 1259 | 0.00 | 0.00 | missing | operators/index.ts (operator re-exports) | [unscheduled bbox exact=20/20] imports in packages/d2ts/src/operators/index.ts (20 atoms, discovered unscheduled) |
 | 2.8 | 1382 | 0.00 | 0.00 | missing | MultiSet method names (full catalog) | [scheduled bbox exact=1/16] export names surface in packages/d2ts/src/multiset.ts (t=3361, 2 atoms); better unscheduled exact=16/16: export at packages/d2ts/src/multiset.ts:9 (39 atoms, too expensive at final margin) |
-| 2.12 | 2436 | 0.00 | 0.00 | missing | Top-level README — operator catalog with descriptions | [scheduled bbox exact=1/19] README.md section #4 (t=4306, 1 atoms); better unscheduled exact=16/19: README.md section #3 (16 atoms, discovered unscheduled) |
+| 2.12 | 2436 | 0.00 | 0.00 | missing | Top-level README — operator catalog with descriptions | [scheduled bbox exact=1/19] README.md section #4 (t=4306, 1 atoms); better unscheduled exact=16/19: README.md section #3 (16 atoms, too expensive at final margin) |
 | 3.9 | 6080 | 0.00 | 0.00 | missing | ReduceOperator: finished-versions + delta computation | [unscheduled bbox exact=48/57] export body at packages/d2ts/src/operators/reduce.ts:15 body 28 (48 atoms, predecessor not scheduled: export at packages/d2ts/src/operators/reduce.ts:15) |
 | 3.13 | 7651 | 0.00 | 0.00 | missing | iterate.ts class names | [unscheduled bbox exact=3/3] export names surface in packages/d2ts/src/operators/iterate.ts (5 atoms, predecessor not scheduled: imports in packages/d2ts/src/operators/index.ts) |
 
@@ -88,7 +88,7 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candid
 | 2.10 | 1760 | 0.00 | 0.00 | missing | Operator interfaces: IOperator, IDifferenceStreamReader/Writer | [scheduled bbox exact=8/20] export at packages/d2ts/src/types.ts:43 (t=3447, 8 atoms) |
 | 2.11 | 2056 | 0.00 | 0.00 | missing | ID2 + IStreamBuilder shape | [scheduled bbox exact=11/22] export at packages/d2ts/src/types.ts:52 (t=4425, 11 atoms) |
 | 3.1 | 2667 | 0.00 | 0.00 | missing | Antichain.create polymorphic constructor | [unscheduled bbox exact=15/19] export body at packages/d2ts/src/order.ts:138 body 142 (15 atoms, predecessor not scheduled: export at packages/d2ts/src/order.ts:138) |
-| 3.2 | 2908 | 0.00 | 0.00 | missing | graph.ts class hierarchy (signatures only) | [scheduled bbox exact=4/22] export at packages/d2ts/src/graph.ts:144 (t=7931, 14 atoms); better unscheduled exact=7/22: export at packages/d2ts/src/graph.ts:171 (20 atoms, discovered unscheduled) |
+| 3.2 | 2908 | 0.00 | 0.00 | missing | graph.ts class hierarchy (signatures only) | [scheduled bbox exact=4/22] export at packages/d2ts/src/graph.ts:144 (t=7966, 14 atoms); better unscheduled exact=7/22: export at packages/d2ts/src/graph.ts:171 (20 atoms, discovered unscheduled) |
 | 3.3 | 3322 | 0.00 | 0.00 | missing | LinearUnaryOperator base class (operators/base.ts) | [unscheduled bbox exact=19/34] export body at packages/d2ts/src/operators/base.ts:9 body 13 (19 atoms, predecessor not scheduled: export at packages/d2ts/src/operators/base.ts:9) |
 | 3.4 | 3747 | 0.00 | 0.00 | missing | Keying operators (keyBy/unkey/rekey) | [unscheduled bbox exact=8/34] export names surface in packages/d2ts/src/operators/keying.ts (8 atoms, predecessor not scheduled: imports in packages/d2ts/src/operators/index.ts) |
 | 3.5 | 3988 | 0.00 | 0.00 | missing | map() operator: canonical factory pattern | [unscheduled bbox exact=16/22] export body at packages/d2ts/src/operators/map.ts:34 body 35 (16 atoms, predecessor not scheduled: export at packages/d2ts/src/operators/map.ts:34) |
@@ -99,8 +99,8 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candid
 | 3.12 | 7601 | 0.00 | 0.00 | missing | iterate(): scope/feedback wiring | [unscheduled bbox exact=23/33] export body at packages/d2ts/src/operators/iterate.ts:225 body 228 (23 atoms, predecessor not scheduled: export at packages/d2ts/src/operators/iterate.ts:225) |
 | 3.14 | 8104 | 0.00 | 0.00 | missing | groupBy + aggregate function names | [unscheduled bbox exact=17/33] export names surface in packages/d2ts/src/operators/groupBy.ts (18 atoms, predecessor not scheduled: imports in packages/d2ts/src/operators/index.ts) |
 | 3.15 | 8641 | 0.00 | 0.00 | missing | topK + orderBy + indexed variants (signatures) | [unscheduled bbox exact=8/42] export at packages/d2ts/src/operators/orderBy.ts:76 (10 atoms, predecessor not scheduled: export names surface in packages/d2ts/src/operators/orderBy.ts) |
-| 5.1 | 9394 | 0.00 | 0.00 | missing | d2ql Query interface + compileQuery signature | [scheduled bbox exact=7/28] export names surface #2 in packages/d2ql/src/schema.ts (t=6675, 8 atoms); better unscheduled exact=12/28: export at packages/d2ql/src/schema.ts:207 (16 atoms, discovered unscheduled) |
-| 5.2 | 9687 | 0.00 | 0.00 | missing | d2ql function + aggregate + comparator names | [scheduled bbox exact=4/31] export names surface in packages/d2ql/src/schema.ts (t=4862, 10 atoms); better unscheduled exact=13/31: export at packages/d2ql/src/schema.ts:105 (13 atoms, discovered unscheduled) |
+| 5.1 | 9394 | 0.00 | 0.00 | missing | d2ql Query interface + compileQuery signature | [scheduled bbox exact=7/28] export names surface #2 in packages/d2ql/src/schema.ts (t=6710, 8 atoms); better unscheduled exact=12/28: export at packages/d2ql/src/schema.ts:207 (16 atoms, discovered unscheduled) |
+| 5.2 | 9687 | 0.00 | 0.00 | missing | d2ql function + aggregate + comparator names | [scheduled bbox exact=4/31] export names surface in packages/d2ql/src/schema.ts (t=4897, 10 atoms); better unscheduled exact=13/31: export at packages/d2ql/src/schema.ts:105 (13 atoms, discovered unscheduled) |
 
 ### fs/listing
 
@@ -115,7 +115,7 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candid
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.4 | 744 | 0.00 | 0.00 | missing | Version + Antichain class names + factory `v(…)` | [scheduled bbox exact=4/4] export names surface in packages/d2ts/src/order.ts (t=3289, 7 atoms) |
-| 3.7 | 4670 | 0.00 | 0.00 | missing | Index<K,V> trace: signatures + interface | [scheduled bbox exact=10/11] export at packages/d2ts/src/version-index.ts:8 (t=9061, 10 atoms) |
+| 3.7 | 4670 | 0.00 | 0.00 | missing | Index<K,V> trace: signatures + interface | [scheduled bbox exact=10/11] export at packages/d2ts/src/version-index.ts:8 (t=9096, 10 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 
@@ -149,14 +149,14 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candid
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 216 | 1.00 | 216 | 8315 | package dependencies in package.json |
-| 201 | 1.00 | 201 | 5063 | export names surface in packages/d2ql/src/types.ts |
-| 183 | 0.95 | 193 | 5336 | export names surface #1 in packages/d2ql/src/schema.ts |
-| 164 | 0.87 | 188 | 4862 | export names surface in packages/d2ql/src/schema.ts |
+| 216 | 1.00 | 216 | 8350 | package dependencies in package.json |
+| 201 | 1.00 | 201 | 5098 | export names surface in packages/d2ql/src/types.ts |
+| 183 | 0.95 | 193 | 5371 | export names surface #1 in packages/d2ql/src/schema.ts |
+| 164 | 0.87 | 188 | 4897 | export names surface in packages/d2ql/src/schema.ts |
 | 118 | 1.00 | 118 | 3940 | imports in packages/d2ts-benchmark/src/index.ts |
-| 106 | 1.00 | 106 | 9504 | export names surface in packages/d2mini/src/types.ts |
-| 97 | 1.00 | 97 | 8444 | export names surface in packages/d2mini/src/utils.ts |
-| 97 | 1.00 | 97 | 8721 | export names surface in packages/d2ql/src/store.ts |
-| 96 | 1.00 | 96 | 7611 | export at packages/d2ts/src/sqlite/database.ts:32 |
-| 92 | 1.00 | 92 | 7348 | export names surface in packages/d2ts/src/utils.ts |
+| 106 | 1.00 | 106 | 9539 | export names surface in packages/d2mini/src/types.ts |
+| 97 | 1.00 | 97 | 8479 | export names surface in packages/d2mini/src/utils.ts |
+| 97 | 1.00 | 97 | 8756 | export names surface in packages/d2ql/src/store.ts |
+| 96 | 1.00 | 96 | 7646 | export at packages/d2ts/src/sqlite/database.ts:32 |
+| 92 | 1.00 | 92 | 7383 | export names surface in packages/d2ts/src/utils.ts |
 | 1903 | — | — | — | +28 more rows |

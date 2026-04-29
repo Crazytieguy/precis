@@ -4,7 +4,11 @@
 //! this module holds walker-specific policy (heavy-directory skip,
 //! per-language file enumeration).
 
-use std::path::{Path, PathBuf};
+use std::{
+    cell::RefCell,
+    collections::HashMap,
+    path::{Path, PathBuf},
+};
 
 use crate::batch::{Batch, BatchKey, FsKey};
 use crate::content::{BatchContent, FsEntries, FsGroup};
@@ -106,8 +110,8 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
     if children.is_empty() {
         return None;
     }
-    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
     let value = dir_listing_value(&dir, ctx);
+    let paths: Vec<PathBuf> = children.into_keys().map(PathBuf::from).collect();
     Some(Batch {
         key: FsKey::DirListing { dir: dir.clone() }.into(),
         predecessor: None,
@@ -123,14 +127,26 @@ fn dir_listing_batch(dir: PathBuf, ctx: &WalkCtx) -> Option<Batch<BatchKey>> {
 
 fn dir_listing_value(dir: &Path, ctx: &WalkCtx) -> f64 {
     let module_source_dir = is_module_source_dir(dir);
+    let source_dir = is_source_dir(dir);
+    let non_essential = ctx.non_essential_factor(dir);
+    // Inventory promotion is only for supporting corpora. Source/module dirs
+    // inside those corpora already qualify structurally, so they get the
+    // supporting-inventory depth treatment without a recursive probe.
+    let supporting_source_dir = non_essential < 1.0 && (source_dir || module_source_dir);
+    let source_inventory_dir = non_essential < 1.0
+        && !source_dir
+        && !module_source_dir
+        && is_source_inventory_dir(dir, ctx);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
-    } else if is_source_dir(dir) || module_source_dir {
+    } else if source_dir || module_source_dir || source_inventory_dir {
         (0.6, 0.5, 0.3)
     } else {
         (0.5, 0.45, 0.25)
     };
-    let depth = if module_source_dir {
+    let depth = if supporting_source_dir || source_inventory_dir {
+        inventory_depth_factor(dir, ctx, non_essential)
+    } else if module_source_dir {
         file_depth_factor(dir, ctx, true)
     } else {
         path_depth_factor(dir, ctx)
@@ -175,6 +191,80 @@ fn is_type_surface_dir(dir: &Path) -> bool {
 
 fn has_python_module_entrypoint(dir: &Path) -> bool {
     dir.join("__init__.py").is_file()
+}
+
+#[derive(Default)]
+pub(in crate::walker) struct FsState {
+    source_inventory_counts: RefCell<HashMap<PathBuf, usize>>,
+}
+
+impl FsState {
+    pub(in crate::walker) fn source_inventory_count(&self, dir: &Path, target: usize) -> usize {
+        if let Some(count) = self.source_inventory_counts.borrow().get(dir).copied() {
+            return count;
+        }
+        let count = source_inventory_count_uncached(self, dir, target);
+        self.source_inventory_counts
+            .borrow_mut()
+            .insert(dir.to_path_buf(), count);
+        count
+    }
+}
+
+fn is_source_inventory_dir(dir: &Path, ctx: &WalkCtx) -> bool {
+    const MIN_SOURCE_FILES: usize = 3;
+    ctx.fs_state().source_inventory_count(dir, MIN_SOURCE_FILES) >= MIN_SOURCE_FILES
+}
+
+fn source_inventory_count_uncached(state: &FsState, dir: &Path, target: usize) -> usize {
+    let Ok(read_dir) = std::fs::read_dir(dir) else {
+        return 0;
+    };
+    let mut count = 0;
+    for entry in read_dir.flatten() {
+        let Ok(file_type) = entry.file_type() else {
+            continue;
+        };
+        let path = entry.path();
+        if file_type.is_dir() {
+            let name = entry.file_name();
+            if !should_skip_dir(&name.to_string_lossy()) {
+                let child_count = state.source_inventory_count(&path, target);
+                count += child_count.min(target.saturating_sub(count));
+            }
+        } else if file_type.is_file() && is_source_inventory_file(&path) {
+            count += 1;
+        }
+        if count >= target {
+            break;
+        }
+    }
+    count.min(target)
+}
+
+fn is_source_inventory_file(path: &Path) -> bool {
+    // Markdown files count here because docs directories are inventories too:
+    // a listing of pages often carries the orientation value.
+    const SOURCE_INVENTORY_EXTS: &[&str] = &[
+        "c", "cc", "cjs", "cpp", "cxx", "go", "h", "hpp", "js", "jsx", "md", "mdx", "mjs", "py",
+        "rs", "ts", "tsx",
+    ];
+    path.extension()
+        .and_then(|e| e.to_str())
+        .is_some_and(|ext| {
+            SOURCE_INVENTORY_EXTS
+                .iter()
+                .any(|candidate| ext.eq_ignore_ascii_case(candidate))
+        })
+}
+
+fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 {
+    // Supporting inventories are useful orientation even below real source
+    // content; keep the discount, but not the full 0.2 suppression.
+    // Clamp at depth 2 so nested examples/docs don't behave like root
+    // entrypoints, but also don't disappear solely because of layout depth.
+    let depth = ctx.depth_from_root(dir).min(2);
+    crate::value::depth_factor(depth) * non_essential.max(0.5)
 }
 
 /// Directories the walker never recurses into. Matches common

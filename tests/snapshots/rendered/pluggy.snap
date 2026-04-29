@@ -84,6 +84,16 @@ docs/
         38→pygments_style = "sphinx"
         40→html_theme = "alabaster"
     examples/
+        eggsample/
+            eggsample/
+                __init__.py
+                    1→import pluggy
+                hookspecs.py
+                host.py
+                lib.py
+            setup.py
+        eggsample-spam/
+        toy-example.py
     index.rst
     requirements.txt
 downstream/
@@ -237,13 +247,6 @@ src/
             …
             107→_Result = Result
         _tracing.py
-            1→"""
-            2→Tracing utils
-            3→"""
-            5→from __future__ import annotations
-            7→from collections.abc import Callable
-            8→from collections.abc import Sequence
-            9→from typing import Any
             12→_Writer = Callable[[str], object]
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:

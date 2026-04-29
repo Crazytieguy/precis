@@ -249,18 +249,23 @@ src/
         …
     nightly.rs
     ptr.rs
-        6→pub struct Own<T>
-        7→where
-        8→    T: ?Sized,
-        9→{
-        10→    pub ptr: NonNull<T>,
-        11→}
-        64→pub struct Ref<'a, T>
-        …
-        125→pub struct Mut<'a, T>
-        …
-        181→pub trait CastTo {
-        182→    type Target;
-        183→}
     wrapper.rs
 tests/
+    common/
+    compiletest.rs
+    crate/
+    drop/
+    test_autotrait.rs
+    test_backtrace.rs
+    test_boxed.rs
+    test_chain.rs
+    test_context.rs
+    test_convert.rs
+    test_downcast.rs
+    test_ensure.rs
+    test_ffi.rs
+    test_fmt.rs
+    test_macros.rs
+    test_repr.rs
+    test_source.rs
+    ui/

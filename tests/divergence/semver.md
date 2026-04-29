@@ -5,12 +5,12 @@ scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
 | B | A_B | I(B) | C(B) | Score(B) | walker_used |
 |--:|----:|-----:|-----:|---------:|------------:|
 | 1000 | 100 | 0.692 | 0.539 | 0.611 | 963 |
-| 1442 | 163 | 0.730 | 0.552 | 0.635 | 1427 |
-| 2080 | 194 | 0.715 | 0.547 | 0.625 | 2040 |
-| 3000 | 263 | 0.735 | 0.582 | 0.654 | 2967 |
-| 4327 | 317 | 0.724 | 0.535 | 0.622 | 4281 |
-| 6240 | 446 | 0.688 | 0.391 | 0.519 | 5740 |
-| 9000 | 701 | 0.685 | 0.350 | 0.489 | 8839 |
+| 1442 | 163 | 0.730 | 0.552 | 0.635 | 1435 |
+| 2080 | 194 | 0.715 | 0.547 | 0.625 | 2050 |
+| 3000 | 263 | 0.735 | 0.582 | 0.654 | 2969 |
+| 4327 | 317 | 0.724 | 0.535 | 0.622 | 4272 |
+| 6240 | 446 | 0.688 | 0.391 | 0.519 | 6109 |
+| 9000 | 701 | 0.677 | 0.330 | 0.473 | 8856 |
 
 ## Verdict
 
@@ -26,7 +26,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 27 | 2.41 | 2.41 | 2.04 | nearby candidates have low exact atom overlap | 1.1, 3.2, 3.3, 3.7, 5.1, ... |
+| split wrong-slice walker batches | 27 | 2.41 | 2.41 | 2.10 | nearby candidates have low exact atom overlap | 1.1, 3.2, 3.3, 3.7, 5.1, ... |
 | tune ranking for high-overlap unscheduled candidates | 2 | 0.15 | 0.15 | 0.15 | high-overlap candidates not in the schedule by T_max, exact total=23/26 | 2.3, 3.6 |
 | add walker candidates for no-discovered rows | 1 | 0.15 | 0.15 | 0.15 | NS rows have no discovered line candidate | 2.4 |
 | promote export names surface in classes/semver.js | 1 | 0.02 | 0.02 | 0.02 | 0 files, exact total=9/9 | 4.1 |
@@ -45,8 +45,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.04 | promote predecessor |
-| too expensive at final margin | 1 | 0.09 | tune ranking |
-| discovered unscheduled | 1 | 0.06 | tune ranking |
+| too expensive at final margin | 2 | 0.15 | tune ranking |
 
 Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-file=2, no discovered candidate=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
@@ -68,7 +67,7 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.3 | 750 | 0.00 | 0.00 | missing | README — Usage example (calls into the public API) | [unscheduled bbox exact=9/9] README.md section #2 (9 atoms, too expensive at final margin) |
-| 3.6 | 4025 | 0.00 | 0.00 | missing | README — Tilde Ranges desugaring | [unscheduled bbox exact=14/17] README.md section #16 (14 atoms, discovered unscheduled) |
+| 3.6 | 4025 | 0.00 | 0.00 | missing | README — Tilde Ranges desugaring | [unscheduled bbox exact=14/17] README.md section #16 (14 atoms, too expensive at final margin) |
 | 4.1 | 5749 | 0.00 | 0.00 | missing | SemVer class — method signatures (locations) | [unscheduled bbox exact=9/9] export at classes/semver.js:9 (16 atoms, predecessor not scheduled: export names surface in classes/semver.js) |
 | 4.2 | 5809 | 0.00 | 0.00 | missing | Range class — method signatures (locations) | [unscheduled bbox exact=8/8] export at classes/range.js:6 (14 atoms, predecessor not scheduled: export names surface in classes/range.js) |
 
@@ -77,14 +76,14 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.1 | 61 | 0.80 | 0.99 | partial | package.json — name, description, main | [scheduled bbox exact=3/5] package identity in package.json (t=268, 3 atoms) |
-| 2.6 | 1667 | 0.74 | 0.54 | missing | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8332, 40 atoms) |
-| 3.2 | 2375 | 0.06 | 0.01 | missing | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6300, 27 atoms) |
-| 3.3 | 2947 | 0.06 | 0.01 | missing | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=6659, 7 atoms) |
-| 3.4 | 3219 | 0.00 | 0.00 | missing | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=8839, 12 atoms) |
-| 3.5 | 3533 | 0.00 | 0.00 | missing | README — X-Ranges desugaring | [unscheduled bbox exact=13/18] README.md section #15 (13 atoms, discovered unscheduled) |
+| 2.6 | 1667 | 0.74 | 0.54 | missing | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8642, 40 atoms) |
+| 3.2 | 2375 | 0.06 | 0.01 | missing | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6669, 27 atoms) |
+| 3.3 | 2947 | 0.06 | 0.01 | missing | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=7028, 7 atoms) |
+| 3.4 | 3219 | 0.00 | 0.00 | missing | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=9111, 12 atoms) |
+| 3.5 | 3533 | 0.00 | 0.00 | missing | README — X-Ranges desugaring | [unscheduled bbox exact=13/18] README.md section #15 (13 atoms, too expensive at final margin) |
 | 3.7 | 4873 | 0.00 | 0.00 | missing | README — Caret Ranges desugaring (the most complex) | [unscheduled bbox exact=34/43] README.md section #17 (34 atoms, too expensive at final margin) |
-| 3.8 | 5124 | 0.11 | 0.02 | missing | README — Functions section preface (options doc) | [scheduled bbox exact=15/19] README.md section #19 (t=8332, 15 atoms) |
-| 3.9 | 5681 | 0.12 | 0.05 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4462, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, discovered unscheduled) |
+| 3.8 | 5124 | 0.11 | 0.02 | missing | README — Functions section preface (options doc) | [scheduled bbox exact=15/19] README.md section #19 (t=8642, 15 atoms) |
+| 3.9 | 5681 | 0.12 | 0.05 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4831, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, too expensive at final margin) |
 | 4.3 | 5992 | 0.00 | 0.00 | missing | Range module — internal helpers (locations) | [unscheduled same-file] export body at classes/range.js:6 body 8 (165 atoms, predecessor not scheduled: export at classes/range.js:6) |
 | 4.4 | 6069 | 0.00 | 0.00 | missing | Comparator class — method signatures (locations) | [unscheduled bbox exact=7/9] export at classes/comparator.js:5 (12 atoms, predecessor not scheduled: export names surface in classes/comparator.js) |
 | 4.5 | 6460 | 0.00 | 0.00 | missing | internal/constants.js — full file | [unscheduled bbox exact=10/37] export at internal/constants.js:28 (10 atoms, predecessor not scheduled: export names surface in internal/constants.js) |
@@ -101,7 +100,7 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | 7.2 | 9711 | 0.00 | 0.00 | missing | internal/debug.js — full file | [unscheduled bbox exact=1/11] export at internal/debug.js:11 (1 atoms, predecessor not scheduled: export names surface in internal/debug.js) |
 | 7.3 | 9778 | 0.00 | 0.00 | missing | internal/lrucache.js — class signature + max constant | [unscheduled bbox exact=6/8] export at internal/lrucache.js:3 (8 atoms, predecessor not scheduled: export names surface in internal/lrucache.js) |
 | 7.4 | 9852 | 0.00 | 0.00 | missing | ranges/min-version.js — function signature + 0.0.0 fast path | [unscheduled bbox exact=4/6] export body at ranges/min-version.js:7 body 8 (4 atoms, predecessor not scheduled: export at ranges/min-version.js:7) |
-| 7.5 | 9924 | 0.88 | 0.90 | partial | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9169, 14 atoms) |
+| 7.5 | 9924 | 0.88 | 0.90 | partial | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9441, 14 atoms) |
 | 7.6 | 9977 | 0.00 | 0.00 | missing | bin/semver.js — entry skeleton (shebang, version load, main call) | [unscheduled bbox exact=0/5] imports in bin/semver.js (1 atoms, discovered unscheduled) |
 
 ### no discovered candidate
@@ -125,24 +124,24 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | 144 | 1.00 | 144 | 1107 | package scripts in package.json |
 | 92 | 0.68 | 135 | 922 | package entrypoints in package.json |
 | 84 | 0.75 | 112 | 1219 | package dependencies in package.json |
-| 72 | 1.00 | 72 | 2941 | README.md section #31 |
-| 71 | 1.00 | 71 | 2869 | README.md section #27 |
-| 63 | 1.00 | 63 | 1998 | CONTRIBUTING.md section #2 |
-| 57 | 1.00 | 57 | 2707 | README.md section #24 |
-| 52 | 1.00 | 52 | 2270 | README.md section #29 |
+| 71 | 1.00 | 71 | 3040 | README.md section #27 |
+| 63 | 1.00 | 63 | 2113 | CONTRIBUTING.md section #2 |
+| 57 | 1.00 | 57 | 2878 | README.md section #24 |
+| 56 | 1.00 | 56 | 2441 | listing of 'test/ranges' |
+| 52 | 1.00 | 52 | 2385 | README.md section #29 |
 
 ## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 499 | 0.68 | 730 | 8332 | README.md section #19 |
-| 373 | 1.00 | 373 | 5740 | plaintext config .gitignore |
-| 350 | 1.00 | 350 | 5232 | json config release-please-config.json |
-| 330 | 1.00 | 330 | 9169 | CONTRIBUTING.md section #3 |
-| 316 | 1.00 | 316 | 7034 | CHANGELOG.md section #2 |
-| 265 | 0.96 | 276 | 9445 | README.md section #10 |
-| 224 | 1.00 | 224 | 7452 | README.md section #53 |
-| 214 | 1.00 | 214 | 8546 | CHANGELOG.md section #6 |
-| 172 | 1.00 | 172 | 6472 | README.md section #45 |
-| 157 | 1.00 | 157 | 4882 | README.md section #43 |
-| 1329 | — | — | — | +16 more rows |
+| 499 | 0.68 | 730 | 8642 | README.md section #19 |
+| 373 | 1.00 | 373 | 6109 | plaintext config .gitignore |
+| 350 | 1.00 | 350 | 5601 | json config release-please-config.json |
+| 330 | 1.00 | 330 | 9441 | CONTRIBUTING.md section #3 |
+| 316 | 1.00 | 316 | 7403 | CHANGELOG.md section #2 |
+| 265 | 0.96 | 276 | 9717 | README.md section #10 |
+| 224 | 1.00 | 224 | 7779 | README.md section #53 |
+| 214 | 1.00 | 214 | 8856 | CHANGELOG.md section #6 |
+| 172 | 1.00 | 172 | 6841 | README.md section #45 |
+| 157 | 1.00 | 157 | 5251 | README.md section #43 |
+| 1590 | — | — | — | +19 more rows |

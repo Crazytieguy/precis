@@ -20,11 +20,18 @@ README.md
     46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
     51→- **Typesafe**, with helpful [type inference](#type-inference).
 benchmarks/
+    always-last-digit.ts
+    nested-objects.ts
+    package-lock.json
+    package.json
+    random-digit.ts
 docs/
     roadmap.md
     v3-to-v4-migration-guide.md
     v4-to-v5-migration-guide.md
 examples/
+    gif-fetcher/
+    one-file-demo/
 jest.config.cjs
 jsr.json
 package-lock.json
@@ -212,25 +219,6 @@ src/
             158→  ? UnknownValuePattern
             159→  : KnownPattern<a>;
             190→export type UnknownPattern = Chainable<GuardP<unknown, unknown>, never>;
-            191→export type StringPattern = StringChainable<GuardP<unknown, string>, never>;
-            192→export type NumberPattern = NumberChainable<GuardP<unknown, number>, never>;
-            193→export type BooleanPattern = Chainable<GuardP<unknown, boolean>, never>;
-            194→export type BigIntPattern = BigIntChainable<GuardP<unknown, bigint>, never>;
-            195→export type SymbolPattern = Chainable<GuardP<unknown, symbol>, never>;
-            196→export type NullishPattern = Chainable<
-            …
-            201→export type NonNullablePattern = Chainable<GuardP<unknown, {}>, never>;
-            …
-            210→export type Chainable<p, omitted extends string = never> = p &
-            …
-            276→export type StringChainable<
-            …
-            391→export type NumberChainable<p, omitted extends string = never> = Chainable<
-            …
-            530→export type BigIntChainable<p, omitted extends string = never> = Chainable<
-            …
-            643→export type Variadic<pattern> = pattern & Iterable<pattern>;
-            …
         helpers.ts
             1→export type ValueOf<a> = a extends readonly any[] ? a[number] : a[keyof a];
             …

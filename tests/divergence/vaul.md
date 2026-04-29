@@ -10,7 +10,7 @@ scores: Score(3000)=0.582 ns_rows≤3K=14/33 (reached=7 partial=1 missing=6)
 | 3000 | 237 | 0.692 | 0.489 | 0.582 | 2550 |
 | 4327 | 332 | 0.666 | 0.417 | 0.527 | 4299 |
 | 6240 | 468 | 0.718 | 0.549 | 0.628 | 6236 |
-| 9000 | 662 | 0.705 | 0.425 | 0.547 | 8916 |
+| 9000 | 662 | 0.707 | 0.425 | 0.548 | 8979 |
 
 ## Verdict
 
@@ -80,7 +80,7 @@ Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no disco
 | 3.5 | 5171 | 0.00 | 0.00 | missing | context.ts — DrawerContextValue interface (parent/child contract) | [scheduled bbox exact=2/35] imports in src/context.ts (t=3111, 2 atoms) |
 | 3.8 | 6394 | 0.00 | 0.00 | missing | helpers.ts — dampenValue, getTranslate, isVertical bodies | [scheduled bbox exact=10/34] export body at src/helpers.ts:59 body 60 (t=4135, 10 atoms); better unscheduled exact=15/34: export body at src/helpers.ts:72 body 73 (15 atoms, discovered unscheduled) |
 | 3.10 | 7585 | 0.45 | 0.68 | missing | browser.ts — every UA-detection function (full file) | [scheduled bbox exact=14/36] export names surface in src/browser.ts (t=2057, 14 atoms) |
-| 3.11 | 8357 | 0.02 | 0.02 | missing | useScaleBackground — wrapper-scale effect (full hook) | [scheduled bbox exact=45/60] export body at src/use-scale-background.ts:8 body 9 (t=9549, 45 atoms) |
+| 3.11 | 8357 | 0.02 | 0.02 | missing | useScaleBackground — wrapper-scale effect (full hook) | [scheduled bbox exact=45/60] export body at src/use-scale-background.ts:8 body 9 (t=9612, 45 atoms) |
 | 3.12 | 9050 | 0.15 | 0.11 | missing | use-prevent-scroll — exports + the six mobile-Safari quirks | [scheduled bbox exact=0/33] export body at src/use-prevent-scroll.ts:68 body 69 (t=4870, 18 atoms) |
 | 4.4 | 9693 | 0.00 | 0.00 | missing | Landing page + Playwright device profiles | [scheduled bbox exact=11/33] export at playwright.config.ts:12 (t=3062, 11 atoms) |
 
@@ -104,7 +104,7 @@ Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no disco
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 1.6 | 503 | 0.00 | 0.00 | missing | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | [scheduled bbox exact=8/8] package dependencies in package.json (t=7308, 8 atoms) |
+| 1.6 | 503 | 0.00 | 0.00 | missing | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | [scheduled bbox exact=8/8] package dependencies in package.json (t=7363, 8 atoms) |
 | 2.4 | 1393 | 0.00 | 0.00 | missing | DialogProps — every prop name (signatures only, no JSDoc) | [scheduled bbox exact=28/28] export at src/index.tsx:50 (t=6040, 87 atoms) |
 | 2.7 | 2405 | 0.00 | 0.00 | missing | DialogProps — JSDoc for the high-traffic props | [scheduled bbox exact=30/30] export at src/index.tsx:50 (t=6040, 50 atoms) |
 | 2.8 | 2810 | 0.00 | 0.00 | missing | DialogProps — JSDoc for the lower-traffic props | [scheduled bbox exact=29/29] export at src/index.tsx:50 (t=6040, 73 atoms) |
@@ -126,14 +126,14 @@ Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no disco
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
-| 1039 | 1.00 | 1039 | 8658 | export body at src/index.tsx:996 body 1000 |
-| 327 | 1.00 | 327 | 6808 | export at src/context.ts:37 |
-| 311 | 1.00 | 311 | 7619 | imports in src/index.tsx |
+| 1039 | 1.00 | 1039 | 8713 | export body at src/index.tsx:996 body 1000 |
+| 327 | 1.00 | 327 | 6863 | export at src/context.ts:37 |
+| 311 | 1.00 | 311 | 7674 | imports in src/index.tsx |
 | 245 | 1.00 | 245 | 6481 | export body at src/use-controllable-state.ts:39 body 40 |
-| 209 | 0.59 | 357 | 7308 | package dependencies in package.json |
+| 209 | 0.59 | 357 | 7363 | package dependencies in package.json |
 | 174 | 1.00 | 174 | 3308 | package entrypoints in package.json |
 | 170 | 1.00 | 170 | 4870 | export body at src/use-prevent-scroll.ts:68 body 69 |
 | 156 | 0.51 | 305 | 3748 | export body at src/index.tsx:803 body 805 |
 | 152 | 1.00 | 152 | 4451 | export body at src/helpers.ts:23 body 24 |
-| 147 | 1.00 | 147 | 8805 | export doc at src/use-position-fixed.ts:15 |
+| 147 | 1.00 | 147 | 8860 | export doc at src/use-position-fixed.ts:15 |
 | 727 | — | — | — | +7 more rows |
