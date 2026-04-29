@@ -26,7 +26,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 15 | 1.80 | 1.41 | 1.14 | nearby candidates have low exact atom overlap | 5.2, 5.1, 3.2, 6.2, 3.1, ... |
-| finish partially-delivered NS batches | 4 | 0.86 | 0.47 | 0.26 | avg batch completion=0.63 | 3.2, 3.1, 2.5, 4.1 |
 
 ## Diagnosis rollup
 
@@ -36,8 +35,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | fs/listing | 2 | 2 | 0 | filesystem/listing value |
 | mixed/unknown | 6 | 5 | 1 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=17, scheduled same-file=4, fs-only=2
+Candidate hint kinds: scheduled bbox=17, scheduled same-file=4, fs-only=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -95,18 +93,31 @@ Candidate hint kinds: scheduled bbox=17, scheduled same-file=4, fs-only=2
 |--:|-----------------:|:--------|
 | 9 | 1334 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 267 | 1.00 | 267 | 726 | crate-doc lede in src/lib.rs |
+| 102 | 1.00 | 102 | 3021 | mod/use plumbing in impl/src/unraw.rs |
+| 101 | 1.00 | 101 | 2919 | mod/use plumbing in impl/src/generics.rs |
+| 75 | 0.70 | 107 | 1900 | [dependencies] in Cargo.toml |
+| 75 | 1.00 | 75 | 2818 | mod/use plumbing in impl/src/scan_expr.rs |
+| 64 | 1.00 | 64 | 230 | README.md section #0 |
+| 54 | 1.00 | 54 | 2545 | mod/use plumbing in impl/src/fallback.rs |
+| 51 | 1.00 | 51 | 2491 | mod/use plumbing in impl/src/prop.rs |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 1476 | 0.59 | 2481 | 6917 | crate-doc body in src/lib.rs |
 | 493 | 1.00 | 493 | 9461 | impl method sigs in impl/src/unraw.rs |
 | 272 | 1.00 | 272 | 4347 | README.md section #12 |
-| 267 | 1.00 | 267 | 726 | crate-doc lede in src/lib.rs |
 | 222 | 1.00 | 222 | 8968 | README.md section #6 |
 | 194 | 1.00 | 194 | 4010 | mod/use plumbing in impl/src/fmt.rs |
 | 193 | 1.00 | 193 | 8746 | README.md section #8 |
 | 170 | 1.00 | 170 | 8487 | README.md section #5 |
 | 160 | 1.00 | 160 | 7596 | README.md section #7 |
 | 127 | 1.00 | 127 | 7436 | README.md section #9 |
-| 1274 | — | — | — | +17 more rows |
+| 124 | 0.37 | 331 | 8317 | impl method sigs in impl/src/ast.rs |
+| 628 | — | — | — | +9 more rows |

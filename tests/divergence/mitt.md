@@ -27,7 +27,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 23 | 1.79 | 1.65 | 1.13 | nearby candidates have low exact atom overlap | 2.3, 3.6, 3.7, 4.7, 5.3, ... |
-| finish partially-delivered NS batches | 5 | 0.32 | 0.31 | 0.12 | avg batch completion=0.52 | 1.4, 2.6, 2.5, 5.8, 5.11 |
 | add walker candidates for no-discovered rows | 2 | 0.13 | 0.13 | 0.13 | NS rows have no discovered line candidate | 4.4, 4.1 |
 
 ## Diagnosis rollup
@@ -39,8 +38,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 2 | 2 | 0 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, scheduled same-file=9, fs-only=1, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=16, scheduled same-file=9, fs-only=1, no discovered candidate=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -107,12 +105,17 @@ Candidate hint kinds: scheduled bbox=16, scheduled same-file=9, fs-only=1, no di
 |--:|-----------------:|:--------|
 | 2 | 212 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 126 | 0.73 | 173 | 225 | package identity in package.json |
+| 120 | 0.57 | 212 | 1439 | package entrypoints in package.json |
+| 80 | 1.00 | 80 | 1179 | README.md section #1 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 268 | 0.93 | 289 | 5881 | plaintext config LICENSE |
 | 132 | 1.00 | 132 | 3509 | README.md section #5 |
-| 126 | 0.73 | 173 | 225 | package identity in package.json |
-| 120 | 0.57 | 212 | 1439 | package entrypoints in package.json |
-| 80 | 1.00 | 80 | 1179 | README.md section #1 |

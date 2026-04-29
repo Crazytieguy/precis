@@ -17,7 +17,7 @@ scores: Score(3000)=0.582 ns_rows≤3K=14/33 (reached=7 partial=1 missing=6)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 3 ranking-recoverable (gap@3k=0.26), 9 wrong-slice/granularity (gap@3k=1.67), 3 no-discovered (gap@3k=0.23)
-Secondary intervention: free T_max budget for 3 too-expensive candidates
+Secondary intervention: investigate 3 no-discovered rows
 Top rows: 1.1, 2.9, 2.6, 3.11, 3.5, ...
 
 ## Top opportunities
@@ -27,9 +27,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 9 | 1.69 | 1.67 | 1.63 | nearby candidates have low exact atom overlap | 1.1, 2.9, 2.6, 3.11, 3.5, ... |
-| free T_max budget / demote late waste | 3 | 0.26 | 0.26 | 0.26 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=102/122 | 3.9, 3.7, 3.4 |
+| tune ranking for high-overlap unscheduled candidates | 3 | 0.26 | 0.26 | 0.26 | high-overlap candidates not in the schedule by T_max, exact total=102/122 | 3.9, 3.7, 3.4 |
 | add walker candidates for no-discovered rows | 3 | 0.23 | 0.23 | 0.23 | NS rows have no discovered line candidate | 2.10, 1.3, 2.11 |
-| finish partially-delivered NS batches | 1 | 0.06 | 0.04 | 0.04 | avg batch completion=0.68 | 3.10 |
 
 ## Diagnosis rollup
 
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 3 | 0.26 | free T_max budget |
+| too expensive at final margin | 3 | 0.26 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no discovered candidate=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -113,18 +111,29 @@ Candidate hint kinds: scheduled bbox=15, unscheduled bbox=3, fs-only=3, no disco
 | 3.3 | 4502 | 0.00 | 0.00 | missing | helpers.ts — every exported function (signature heads only) | [scheduled bbox exact=8/8] export names surface in src/helpers.ts (t=3919, 15 atoms) |
 | 3.6 | 5503 | 0.04 | 0.04 | missing | useSnapPoints — full parameter shape | [scheduled bbox exact=24/28] export at src/use-snap-points.ts:7 (t=4700, 24 atoms) |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 407 | 0.79 | 512 | 3062 | export at playwright.config.ts:12 |
+| 189 | 0.82 | 230 | 314 | package identity in package.json |
+| 124 | 1.00 | 124 | 2223 | export at src/use-position-fixed.ts:15 |
+| 80 | 1.00 | 80 | 2303 | export body at src/use-prevent-scroll.ts:34 body 35 |
+| 60 | 1.00 | 60 | 1849 | export body at src/use-prevent-scroll.ts:294 body 295 |
+| 57 | 1.00 | 57 | 1945 | export body at src/context.ts:69 body 70 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 1039 | 1.00 | 1039 | 8658 | export body at src/index.tsx:996 body 1000 |
-| 407 | 0.79 | 512 | 3062 | export at playwright.config.ts:12 |
 | 327 | 1.00 | 327 | 6808 | export at src/context.ts:37 |
 | 311 | 1.00 | 311 | 7619 | imports in src/index.tsx |
 | 245 | 1.00 | 245 | 6481 | export body at src/use-controllable-state.ts:39 body 40 |
 | 209 | 0.59 | 357 | 7308 | package dependencies in package.json |
-| 189 | 0.82 | 230 | 314 | package identity in package.json |
 | 174 | 1.00 | 174 | 3308 | package entrypoints in package.json |
 | 170 | 1.00 | 170 | 4870 | export body at src/use-prevent-scroll.ts:68 body 69 |
 | 156 | 0.51 | 305 | 3748 | export body at src/index.tsx:803 body 805 |
-| 1347 | — | — | — | +13 more rows |
+| 152 | 1.00 | 152 | 4451 | export body at src/helpers.ts:23 body 24 |
+| 147 | 1.00 | 147 | 8805 | export doc at src/use-position-fixed.ts:15 |
+| 727 | — | — | — | +7 more rows |

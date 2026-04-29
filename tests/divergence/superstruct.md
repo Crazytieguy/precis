@@ -17,7 +17,7 @@ scores: Score(3000)=0.549 ns_rows≤3K=21/39 (reached=9 partial=3 missing=9)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.32), 16 wrong-slice/granularity (gap@3k=2.17), 4 no-discovered (gap@3k=0.29)
-Secondary intervention: free T_max budget for 2 too-expensive candidates
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 1.1, 3.1, 5.1, 5.3, 4.5, ...
 
 ## Top opportunities
@@ -29,8 +29,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | split wrong-slice walker batches | 16 | 2.38 | 2.17 | 1.78 | nearby candidates have low exact atom overlap | 1.1, 3.1, 5.1, 5.3, 4.5, ... |
 | add walker candidates for no-discovered rows | 4 | 0.29 | 0.29 | 0.29 | NS rows have no discovered line candidate | 4.3, 6.4, 6.3, 6.6 |
 | promote export batches | 2 | 0.17 | 0.17 | 0.17 | 1 file, exact total=80/95 | 5.4, 5.5 |
-| finish partially-delivered NS batches | 3 | 0.21 | 0.15 | 0.10 | avg batch completion=0.40 | 5.7, 4.2, 5.6 |
-| free T_max budget / demote late waste | 2 | 0.15 | 0.15 | 0.15 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=37/39 | 4.1, 4.4 |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.15 | 0.15 | 0.15 | high-overlap candidates not in the schedule by T_max, exact total=37/39 | 4.1, 4.4 |
 
 ## Diagnosis rollup
 
@@ -47,10 +46,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.17 | promote predecessor |
-| too expensive at final margin | 2 | 0.15 | free T_max budget |
+| too expensive at final margin | 2 | 0.15 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=14, unscheduled bbox=5, scheduled same-file=2, fs-only=3, no discovered candidate=4
+Candidate hint kinds: scheduled bbox=14, unscheduled bbox=5, scheduled same-file=2, fs-only=3, no discovered candidate=4 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -128,7 +126,17 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=5, scheduled same-file
 | 2 | 166 | export doc at src/struct.ts:<n> |
 | 2 | 115 | export doc at src/utils.ts:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 249 | 0.65 | 381 | 886 | package identity in package.json |
+| 72 | 1.00 | 72 | 2720 | export body at src/structs/refinements.ts:77 body 81 |
+| 62 | 1.00 | 62 | 2607 | export at src/structs/refinements.ts:109 |
+| 57 | 1.00 | 57 | 2488 | export at src/structs/refinements.ts:33 |
+| 57 | 1.00 | 57 | 2545 | export at src/structs/refinements.ts:55 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -136,10 +144,10 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=5, scheduled same-file
 | 422 | 1.00 | 422 | 7709 | export at src/utils.ts:334 |
 | 324 | 1.00 | 324 | 7028 | package scripts in package.json |
 | 269 | 0.89 | 301 | 8541 | package dependencies in package.json |
-| 249 | 0.65 | 381 | 886 | package identity in package.json |
 | 222 | 0.94 | 236 | 5877 | export names surface in src/utils.ts |
 | 182 | 1.00 | 182 | 9867 | export at src/structs/utilities.ts:44 |
 | 150 | 1.00 | 150 | 9685 | export at src/structs/utilities.ts:30 |
 | 119 | 1.00 | 119 | 9986 | export body at src/structs/utilities.ts:80 body 84 |
 | 109 | 1.00 | 109 | 8842 | export doc at src/error.ts:25 |
-| 1789 | — | — | — | +25 more rows |
+| 107 | 1.00 | 107 | 4107 | export body at src/structs/refinements.ts:33 body 40 |
+| 1434 | — | — | — | +20 more rows |

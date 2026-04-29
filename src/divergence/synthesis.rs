@@ -82,22 +82,23 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
         .get(&CandidateLossReason::PredecessorNotScheduled)
         .copied()
         .unwrap_or(0);
-    let budget_count = losses
-        .get(&CandidateLossReason::TooExpensiveAtFinalMargin)
-        .copied()
-        .unwrap_or(0);
     let pred_weight = loss_weights
         .get(&CandidateLossReason::PredecessorNotScheduled)
         .copied()
         .unwrap_or(0.0);
-    let budget_weight = loss_weights
-        .get(&CandidateLossReason::TooExpensiveAtFinalMargin)
-        .copied()
-        .unwrap_or(0.0);
+    // `DiscoveredUnscheduled` + `TooExpensiveAtFinalMargin` collapse
+    // into one ranking-race bucket. Rationale on the module-level
+    // doc; the short version is that `TooExpensive` is a post-hoc
+    // label conflating two cases that share the same `tune ranking`
+    // lever.
     let race_weight = loss_weights
         .get(&CandidateLossReason::DiscoveredUnscheduled)
         .copied()
-        .unwrap_or(0.0);
+        .unwrap_or(0.0)
+        + loss_weights
+            .get(&CandidateLossReason::TooExpensiveAtFinalMargin)
+            .copied()
+            .unwrap_or(0.0);
     let ranking_weight = diagnosis_weights
         .get(&DiagnosisKind::RankingRecoverable)
         .copied()
@@ -122,10 +123,8 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
     .map(|(diagnosis, _)| diagnosis);
 
     let primary_loss = if primary_diagnosis == Some(DiagnosisKind::RankingRecoverable) {
-        if pred_weight > 0.0 && pred_weight >= budget_weight && pred_weight >= race_weight {
+        if pred_weight > 0.0 && pred_weight >= race_weight {
             Some(CandidateLossReason::PredecessorNotScheduled)
-        } else if budget_weight > 0.0 && budget_weight >= race_weight {
-            Some(CandidateLossReason::TooExpensiveAtFinalMargin)
         } else if race_weight > 0.0 {
             Some(CandidateLossReason::DiscoveredUnscheduled)
         } else {
@@ -177,11 +176,6 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
                 format!("promote predecessor candidates for {pred_count} gated rows"),
             )
         }
-    } else if primary_loss == Some(CandidateLossReason::TooExpensiveAtFinalMargin) {
-        (
-            "budget-pressure bound".to_string(),
-            "free T_max budget / demote late low-value spend".to_string(),
-        )
     } else if primary_loss == Some(CandidateLossReason::DiscoveredUnscheduled) {
         (
             "ranking-race bound".to_string(),
@@ -196,18 +190,13 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
 
     // Secondary intervention only fires when it's distinct from the
     // primary diagnosis — e.g. a wrong-slice fixture with a few
-    // too-expensive candidates surfaces both. If the candidate
+    // gated predecessors surfaces both. If the candidate
     // intervention overlaps with the verdict's primary lever, drop
     // it; restating the same recommendation is noise.
     let secondary_intervention = if primary_loss
-        != Some(CandidateLossReason::TooExpensiveAtFinalMargin)
-        && budget_count > 0
+        != Some(CandidateLossReason::PredecessorNotScheduled)
+        && pred_count > 0
     {
-        Some(format!(
-            "free T_max budget for {budget_count} too-expensive candidate{}",
-            plural(budget_count)
-        ))
-    } else if primary_loss != Some(CandidateLossReason::PredecessorNotScheduled) && pred_count > 0 {
         Some(format!(
             "promote predecessors for {pred_count} gated candidate{}",
             plural(pred_count)
@@ -264,7 +253,7 @@ fn diagnosis_counts(rows: &[ReportRow<'_>]) -> BTreeMap<DiagnosisKind, usize> {
     counts
 }
 
-fn loss_reason_counts(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, usize> {
+pub(super) fn loss_reason_counts(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, usize> {
     let mut counts = BTreeMap::new();
     for row in rows {
         if row.diagnosis != DiagnosisKind::RankingRecoverable {
@@ -277,7 +266,7 @@ fn loss_reason_counts(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, u
     counts
 }
 
-fn loss_reason_weights(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, f64> {
+pub(super) fn loss_reason_weights(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, f64> {
     let mut weights = BTreeMap::new();
     for row in rows {
         if row.diagnosis != DiagnosisKind::RankingRecoverable {
@@ -480,19 +469,22 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
         });
     }
 
+    // One ranking-race opportunity covers both
+    // `DiscoveredUnscheduled` (genuinely lost the rank race) and
+    // `TooExpensiveAtFinalMargin` (post-hoc — see module doc; the
+    // rank-race subset is recoverable, the never-fit subset is not).
+    // The intervention text doesn't claim rank-race for these rows;
+    // the per-row loss tag in the arrival ledger preserves which is
+    // which.
     push_loss_opportunity(
         &mut opportunities,
         rows,
-        CandidateLossReason::TooExpensiveAtFinalMargin,
-        "free T_max budget / demote late waste",
-        "high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below)",
-    );
-    push_loss_opportunity(
-        &mut opportunities,
-        rows,
-        CandidateLossReason::DiscoveredUnscheduled,
-        "tune ranking for discovered unscheduled candidates",
-        "high-overlap candidates fit but did not win",
+        &[
+            CandidateLossReason::DiscoveredUnscheduled,
+            CandidateLossReason::TooExpensiveAtFinalMargin,
+        ],
+        "tune ranking for high-overlap unscheduled candidates",
+        "high-overlap candidates not in the schedule by T_max",
     );
     push_diagnosis_opportunity(
         &mut opportunities,
@@ -508,7 +500,6 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
         "split wrong-slice walker batches",
         "nearby candidates have low exact atom overlap",
     );
-    push_completion_opportunity(&mut opportunities, rows);
 
     // Drop opportunities with zero `gap_at_primary` — under the new
     // sort contract these can't move `Score(3000)`. They were
@@ -534,13 +525,13 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
 fn push_loss_opportunity(
     opportunities: &mut Vec<Opportunity>,
     rows: &[ReportRow<'_>],
-    reason: CandidateLossReason,
+    reasons: &[CandidateLossReason],
     intervention: &str,
     evidence: &str,
 ) {
     let matching: Vec<&ReportRow<'_>> = rows
         .iter()
-        .filter(|row| ranking_loss(row).is_some_and(|loss| loss.reason == reason))
+        .filter(|row| ranking_loss(row).is_some_and(|loss| reasons.contains(&loss.reason)))
         .collect();
     if matching.is_empty() {
         return;
@@ -559,38 +550,6 @@ fn push_loss_opportunity(
         gap_at_primary,
         gap_at_high,
         evidence: format!("{evidence}, exact total={}/{}", exact.0, exact.1),
-        top_row_ids: row_ids(&matching, 5),
-    });
-}
-
-/// Surface NS batches the walker started but didn't finish — the
-/// `damped_credit` factor punishes mid-progress, so closing these gaps
-/// is high-leverage on Score(B). Filter band `(COMPLETION_LO,
-/// COMPLETION_HI)` excludes "barely touched" (already captured under
-/// the row's diagnosis) and "essentially reached" (no actionable gap).
-fn push_completion_opportunity(opportunities: &mut Vec<Opportunity>, rows: &[ReportRow<'_>]) {
-    const COMPLETION_LO: f64 = 0.2;
-    const COMPLETION_HI: f64 = 0.8;
-    let matching: Vec<&ReportRow<'_>> = rows
-        .iter()
-        .filter(|row| {
-            let c = row.arrival.completion;
-            c > COMPLETION_LO && c < COMPLETION_HI
-        })
-        .collect();
-    if matching.is_empty() {
-        return;
-    }
-    let (gap_at_low, gap_at_primary, gap_at_high) = sum_gap_vector(&matching);
-    let avg_completion =
-        matching.iter().map(|r| r.arrival.completion).sum::<f64>() / matching.len() as f64;
-    opportunities.push(Opportunity {
-        intervention: "finish partially-delivered NS batches".to_string(),
-        rows: matching.len(),
-        gap_at_low,
-        gap_at_primary,
-        gap_at_high,
-        evidence: format!("avg batch completion={avg_completion:.2}"),
         top_row_ids: row_ids(&matching, 5),
     });
 }

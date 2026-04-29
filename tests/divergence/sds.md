@@ -14,8 +14,8 @@ scores: Score(3000)=0.647 ns_rows≤3K=18/34 (reached=11 partial=0 missing=7)
 
 ## Verdict
 
-Verdict: budget-pressure bound
-Likely primary lever: free T_max budget / demote late low-value spend
+Verdict: ranking-race bound
+Likely primary lever: raise high-overlap discovered candidates over competing batches
 Evidence: 8 ranking-recoverable (gap@3k=1.29), 12 wrong-slice/granularity (gap@3k=1.15), 1 no-discovered (gap@3k=0.03)
 Secondary intervention: split wrong-slice batches for 12 rows
 Top rows: 1.4, 2.4, 3.4, 4.2, 3.5, ...
@@ -26,9 +26,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| free T_max budget / demote late waste | 8 | 1.29 | 1.29 | 1.29 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=203/232 | 1.4, 2.4, 3.4, 4.2, 3.5, ... |
+| tune ranking for high-overlap unscheduled candidates | 8 | 1.29 | 1.29 | 1.29 | high-overlap candidates not in the schedule by T_max, exact total=203/232 | 1.4, 2.4, 3.4, 4.2, 3.5, ... |
 | split wrong-slice walker batches | 12 | 1.16 | 1.15 | 0.93 | nearby candidates have low exact atom overlap | 2.10, 2.11, 2.6, 3.8, 4.1, ... |
-| finish partially-delivered NS batches | 1 | 0.15 | 0.13 | 0.13 | avg batch completion=0.38 | 2.6 |
 | add walker candidates for no-discovered rows | 1 | 0.03 | 0.03 | 0.03 | NS rows have no discovered line candidate | 5.4 |
 
 ## Diagnosis rollup
@@ -44,10 +43,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 8 | 1.29 | free T_max budget |
+| too expensive at final margin | 8 | 1.29 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file=1, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file=1, no discovered candidate=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -102,13 +100,20 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 4.3 | 7067 | 0.00 | 0.00 | missing | sdscatfmt — fast subset of printf, format spec list | [scheduled bbox exact=16/16] c decl doc at sds.c:616 (t=9880, 16 atoms) |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 534 | 1.00 | 534 | 3388 | c header banner in testhelp.h |
+| 493 | 1.00 | 493 | 2854 | c header banner in sds.h |
+| 129 | 0.32 | 399 | 815 | headings outline in README.md |
+| 99 | 0.09 | 1104 | 1919 | c decl names surface in sds.h |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 668 | 0.73 | 914 | 6220 | c decl names surface in sds.c |
-| 534 | 1.00 | 534 | 3388 | c header banner in testhelp.h |
-| 493 | 1.00 | 493 | 2854 | c header banner in sds.h |
 | 493 | 0.85 | 579 | 4050 | c header banner in sdsalloc.h |
 | 250 | 1.00 | 250 | 5306 | c decl body at sds.h:154 |
 | 235 | 1.00 | 235 | 4814 | c decl body at sds.h:130 |
@@ -116,4 +121,6 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 | 211 | 1.00 | 211 | 9450 | c decl doc at sds.c:89 |
 | 209 | 1.00 | 209 | 9239 | c decl doc at sds.c:835 |
 | 203 | 1.00 | 203 | 4579 | c decl body at sds.h:197 |
-| 2164 | — | — | — | +19 more rows |
+| 198 | 1.00 | 198 | 9030 | c decl doc at sds.c:184 |
+| 190 | 1.00 | 190 | 8832 | c decl doc at sds.c:756 |
+| 1548 | — | — | — | +15 more rows |

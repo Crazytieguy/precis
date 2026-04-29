@@ -27,7 +27,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 29 | 2.26 | 2.09 | 1.70 | nearby candidates have low exact atom overlap | 1.2, 2.5, 2.3, 1.11, 1.3, ... |
-| finish partially-delivered NS batches | 9 | 1.25 | 1.16 | 1.07 | avg batch completion=0.41 | 1.13, 1.2, 2.5, 2.9, 2.10, ... |
 | add walker candidates for no-discovered rows | 1 | 0.02 | 0.02 | 0.02 | NS rows have no discovered line candidate | 4.3 |
 
 ## Diagnosis rollup
@@ -39,8 +38,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 5 | 5 | 0 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no discovered candidate=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -116,12 +114,24 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 |--:|-----------------:|:--------|
 | 5 | 426 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 204 | 0.95 | 214 | 1123 | headings outline in README.md |
+| 88 | 1.00 | 88 | 517 | python imports in htmy/md/__init__.py |
+| 70 | 1.00 | 70 | 2531 | python decl names surface in htmy/md/typing.py |
+| 69 | 1.00 | 69 | 2691 | README.md section #16 |
+| 66 | 1.00 | 66 | 2418 | python class body at htmy/i18n.py:24 |
+| 59 | 1.00 | 59 | 719 | headings outline in docs/function-components.md |
+| 53 | 1.00 | 53 | 660 | headings outline in docs/components-guide.md |
+| 52 | 0.85 | 61 | 2306 | python decl names surface in htmy/renderer/default.py |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 215 | 1.00 | 215 | 4906 | headings outline in docs/index.md |
-| 204 | 0.95 | 214 | 1123 | headings outline in README.md |
 | 187 | 0.90 | 208 | 5339 | python decl names surface in htmy/function_component.py |
 | 118 | 1.00 | 118 | 8510 | README.md section #17 |
 | 106 | 1.00 | 106 | 8616 | python decl doc at htmy/i18n.py:147 |
@@ -130,4 +140,5 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 | 94 | 1.00 | 94 | 7655 | python decl doc at htmy/i18n.py:115 |
 | 94 | 1.00 | 94 | 8207 | python imports in htmy/error_boundary.py |
 | 89 | 1.00 | 89 | 8296 | README.md section #45 |
-| 1650 | — | — | — | +24 more rows |
+| 88 | 1.00 | 88 | 7534 | README.md section #43 |
+| 1105 | — | — | — | +16 more rows |

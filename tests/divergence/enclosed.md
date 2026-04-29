@@ -17,7 +17,7 @@ scores: Score(3000)=0.542 ns_rows≤3K=23/45 (reached=10 partial=0 missing=13)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 7 ranking-recoverable (gap@3k=0.59), 14 wrong-slice/granularity (gap@3k=1.24), 11 no-discovered (gap@3k=0.67)
-Secondary intervention: free T_max budget for 6 too-expensive candidates
+Secondary intervention: promote predecessors for 1 gated candidate
 Top rows: 1.2, 2.3, 2.7, 3.4, 1.9, ...
 
 ## Top opportunities
@@ -28,8 +28,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 14 | 1.33 | 1.24 | 1.04 | nearby candidates have low exact atom overlap | 1.2, 2.3, 2.7, 3.4, 1.9, ... |
 | add walker candidates for no-discovered rows | 11 | 0.67 | 0.67 | 0.67 | NS rows have no discovered line candidate | 3.7, 3.6, 5.2, 5.1, 3.5, ... |
-| free T_max budget / demote late waste | 6 | 0.56 | 0.56 | 0.56 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/97 | 1.7, 1.11, 4.2, 1.4, 1.12, ... |
-| finish partially-delivered NS batches | 5 | 0.64 | 0.53 | 0.30 | avg batch completion=0.45 | 2.3, 2.7, 3.2, 1.10, 6.5 |
+| tune ranking for high-overlap unscheduled candidates | 6 | 0.56 | 0.56 | 0.56 | high-overlap candidates not in the schedule by T_max, exact total=95/97 | 1.7, 1.11, 4.2, 1.4, 1.12, ... |
 | promote package scripts in packages/lib/package.json | 1 | 0.04 | 0.04 | 0.04 | 0 files, exact total=8/8 | 2.8 |
 
 ## Diagnosis rollup
@@ -46,10 +45,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 1 | 0.04 | promote predecessor |
-| too expensive at final margin | 6 | 0.56 | free T_max budget |
+| too expensive at final margin | 6 | 0.56 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file=2, unscheduled same-file=2, fs-only=3, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file=2, unscheduled same-file=2, fs-only=3, no discovered candidate=11 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -122,18 +120,32 @@ Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file
 |--:|-----------------:|:--------|
 | 3 | 324 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 171 | 1.00 | 171 | 1599 | headings outline in CONTRIBUTING.md |
+| 165 | 0.85 | 195 | 2168 | headings outline in README.md |
+| 98 | 1.00 | 98 | 2266 | README.md section #0 |
+| 92 | 1.00 | 92 | 1172 | export at packages/crypto/build.config.ts:3 |
+| 81 | 1.00 | 81 | 815 | export at packages/lib/build.config.ts:3 |
+| 67 | 1.00 | 67 | 2560 | export at packages/docs/src/data/i18n.data.ts:59 |
+| 64 | 1.00 | 64 | 1049 | README headline in packages/crypto/README.md |
+| 62 | 1.00 | 62 | 1370 | export at packages/cli/build.config.ts:3 |
+| 50 | 1.00 | 50 | 1308 | README headline in packages/cli/README.md |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 545 | 1.00 | 545 | 8393 | export at packages/app-client/playwright.config.ts:12 |
 | 254 | 1.00 | 254 | 3826 | export at packages/app-client/vite.config.ts:8 |
-| 171 | 1.00 | 171 | 1599 | headings outline in CONTRIBUTING.md |
 | 166 | 1.00 | 166 | 5041 | imports in packages/app-client/src/index.tsx |
-| 165 | 0.85 | 195 | 2168 | headings outline in README.md |
 | 137 | 1.00 | 137 | 7076 | export at packages/crypto/src/index.node.ts:8 |
 | 137 | 1.00 | 137 | 7213 | export at packages/crypto/src/index.web.ts:8 |
 | 114 | 1.00 | 114 | 9615 | README.md section #26 |
 | 112 | 1.00 | 112 | 8660 | README.md section #24 |
 | 112 | 1.00 | 112 | 4346 | headings outline in packages/app-client/README.md |
-| 2239 | — | — | — | +32 more rows |
+| 104 | 1.00 | 104 | 9346 | headings outline in packages/docs/src/resources/brand-kit.md |
+| 102 | 1.00 | 102 | 3967 | headings outline in packages/cli/README.md |
+| 1519 | — | — | — | +23 more rows |

@@ -17,7 +17,6 @@ scores: Score(3000)=0.424 ns_rows≤3K=18/40 (reached=4 partial=3 missing=11)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.31), 26 wrong-slice/granularity (gap@3k=1.76), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 4 too-expensive candidates
 Top rows: 2.3, 2.7, 3.7, 2.9, 3.4, ...
 
 ## Top opportunities
@@ -27,8 +26,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 26 | 1.81 | 1.76 | 1.11 | nearby candidates have low exact atom overlap | 2.3, 2.7, 3.7, 2.9, 3.4, ... |
-| free T_max budget / demote late waste | 4 | 0.31 | 0.31 | 0.31 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=79/88 | 2.8, 3.5, 5.1, 4.5 |
-| finish partially-delivered NS batches | 4 | 0.21 | 0.16 | 0.04 | avg batch completion=0.53 | 2.9, 3.12, 5.3, 5.4 |
+| tune ranking for high-overlap unscheduled candidates | 4 | 0.31 | 0.31 | 0.31 | high-overlap candidates not in the schedule by T_max, exact total=79/88 | 2.8, 3.5, 5.1, 4.5 |
 
 ## Diagnosis rollup
 
@@ -43,10 +41,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 4 | 0.31 | free T_max budget |
+| too expensive at final margin | 4 | 0.31 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3
+Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -125,18 +122,34 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3
 | 5 | 457 | tomllib.md section #<n> |
 | 4 | 274 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 189 | 0.50 | 379 | 946 | headings outline in README.md |
+| 162 | 1.00 | 162 | 1896 | tomllib.md section #0 |
+| 83 | 1.00 | 83 | 2795 | python imports in src/tomli/_re.py |
+| 75 | 1.00 | 75 | 1444 | README.md section #25 |
+| 75 | 1.00 | 75 | 1734 | python imports in scripts/use_setuptools.py |
+| 70 | 1.00 | 70 | 1628 | python imports in profiler/profiler_script.py |
+| 60 | 1.00 | 60 | 471 | python decl names surface in fuzzer/fuzz.py |
+| 59 | 1.00 | 59 | 2712 | CHANGELOG.md section #3 |
+| 57 | 1.00 | 57 | 2325 | python decl body at fuzzer/fuzz.py:53 body 54 |
+| 56 | 1.00 | 56 | 2394 | CHANGELOG.md section #2 |
+| 161 | — | — | — | +3 more rows |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 251 | 1.00 | 251 | 3539 | python decl names surface in src/tomli/_parser.py |
 | 239 | 1.00 | 239 | 6832 | python decl at src/tomli/_re.py:26 |
-| 189 | 0.50 | 379 | 946 | headings outline in README.md |
 | 164 | 1.00 | 164 | 9607 | CHANGELOG.md section #7 |
-| 162 | 1.00 | 162 | 1896 | tomllib.md section #0 |
 | 161 | 1.00 | 161 | 4646 | python decl at src/tomli/_re.py:46 |
 | 158 | 1.00 | 158 | 5956 | python decl at src/tomli/_parser.py:57 |
 | 150 | 1.00 | 150 | 8066 | python decl body at src/tomli/_parser.py:447 body 450 |
 | 150 | 1.00 | 150 | 4241 | python imports in src/tomli/_parser.py |
 | 148 | 1.00 | 148 | 8715 | python decl body at src/tomli/_parser.py:599 body 600 |
-| 2569 | — | — | — | +33 more rows |
+| 130 | 1.00 | 130 | 9737 | CHANGELOG.md section #11 |
+| 127 | 1.00 | 127 | 9392 | CHANGELOG.md section #10 |
+| 1616 | — | — | — | +20 more rows |

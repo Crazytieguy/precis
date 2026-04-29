@@ -28,7 +28,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 17 | 1.36 | 1.19 | 0.71 | nearby candidates have low exact atom overlap | 4.3, 4.4, 6.6, 6.4, 4.2, ... |
 | add walker candidates for no-discovered rows | 2 | 0.08 | 0.08 | 0.08 | NS rows have no discovered line candidate | 6.8, 6.9 |
-| finish partially-delivered NS batches | 1 | 0.01 | 0.01 | 0.01 | avg batch completion=0.34 | 6.10 |
 
 ## Diagnosis rollup
 
@@ -38,8 +37,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | no discovered candidate | 2 | 2 | 0 | walker coverage or predecessor-gated emit |
 | mixed/unknown | 4 | 4 | 0 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=21, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=21, no discovered candidate=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -96,10 +94,15 @@ Candidate hint kinds: scheduled bbox=21, no discovered candidate=2
 |--:|-----------------:|:--------|
 | 2 | 313 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 72 | 1.00 | 72 | 1557 | go decl doc at multierror.go:31 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 166 | 0.18 | 898 | 4648 | README.md section #1 |
 | 147 | 0.53 | 276 | 3447 | README.md section #2 |
-| 72 | 1.00 | 72 | 1557 | go decl doc at multierror.go:31 |

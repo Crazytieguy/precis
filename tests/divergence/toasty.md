@@ -17,7 +17,7 @@ scores: Score(3000)=0.387 ns_rows≤3K=19/55 (reached=4 partial=3 missing=12)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 9 ranking-recoverable (gap@3k=0.58), 29 wrong-slice/granularity (gap@3k=2.45), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 3 too-expensive candidates
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 1.1, 4.1, 5.1, 3.2, 3.5, ...
 
 ## Top opportunities
@@ -27,10 +27,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 29 | 2.48 | 2.45 | 2.30 | nearby candidates have low exact atom overlap | 1.1, 4.1, 5.1, 3.2, 3.5, ... |
-| free T_max budget / demote late waste | 3 | 0.39 | 0.39 | 0.39 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=35/38 | 2.3, 2.5, 2.4 |
-| tune ranking for discovered unscheduled candidates | 4 | 0.14 | 0.14 | 0.14 | high-overlap candidates fit but did not win, exact total=50/57 | 4.2, 6.1, 7.7, 7.6 |
+| tune ranking for high-overlap unscheduled candidates | 7 | 0.53 | 0.53 | 0.53 | high-overlap candidates not in the schedule by T_max, exact total=85/95 | 2.3, 2.5, 2.4, 4.2, 6.1, ... |
 | promote headings outline in docs/architecture/query-engine.md | 1 | 0.03 | 0.03 | 0.03 | 0 files, exact total=18/19 | 6.6 |
-| finish partially-delivered NS batches | 2 | 0.04 | 0.03 | 0.03 | avg batch completion=0.73 | 10.4, 8.1 |
+| promote headings outline in docs/CHANGE_GUIDE.md | 1 | 0.01 | 0.01 | 0.01 | 0 files, exact total=10/12 | 8.5 |
 
 ## Diagnosis rollup
 
@@ -45,11 +44,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.05 | promote predecessor |
-| too expensive at final margin | 3 | 0.39 | free T_max budget |
+| too expensive at final margin | 3 | 0.39 | tune ranking |
 | discovered unscheduled | 4 | 0.14 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-file=1, fs-only=12
+Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-file=1, fs-only=12 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -135,18 +133,29 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-fil
 | 2 | 144 | pub item at crates/toasty-driver-integration-suite/src/logging_driver.rs:<n> |
 | 2 | 108 | pub item at crates/toasty-driver-integration-suite/src/helpers.rs:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 323 | 1.00 | 323 | 1231 | [package] in Cargo.toml |
+| 177 | 1.00 | 177 | 2957 | impl method sigs in crates/toasty-cli/src/lib.rs |
+| 68 | 1.00 | 68 | 730 | headings outline in README.md |
+| 65 | 1.00 | 65 | 2464 | mod/use plumbing in crates/toasty-cli/src/lib.rs |
+| 58 | 0.60 | 96 | 1581 | pub-item names surface in crates/toasty-macros/src/lib.rs |
+| 51 | 1.00 | 51 | 3032 | mod/use plumbing in crates/std-util/src/lib.rs |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 414 | 1.00 | 414 | 7140 | impl method sigs in crates/toasty-driver-mysql/src/lib.rs |
 | 398 | 0.84 | 473 | 9531 | impl method sigs in crates/toasty-driver-sqlite/src/lib.rs |
-| 323 | 1.00 | 323 | 1231 | [package] in Cargo.toml |
 | 289 | 1.00 | 289 | 9058 | mod/use plumbing in crates/toasty-driver-dynamodb/src/lib.rs |
 | 282 | 1.00 | 282 | 7436 | entry item at examples/user-has-one-profile/src/main.rs:27 |
 | 225 | 0.88 | 255 | 5035 | headings outline in CLAUDE.md |
 | 209 | 1.00 | 209 | 5420 | mod/use plumbing in crates/toasty-driver-postgresql/src/lib.rs |
 | 186 | 1.00 | 186 | 4303 | mod/use plumbing in crates/toasty-driver-sqlite/src/lib.rs |
-| 177 | 1.00 | 177 | 2957 | impl method sigs in crates/toasty-cli/src/lib.rs |
 | 173 | 1.00 | 173 | 6103 | mod/use plumbing in crates/toasty-driver-integration-suite/src/lib.rs |
-| 1929 | — | — | — | +26 more rows |
+| 172 | 1.00 | 172 | 3826 | mod/use plumbing in crates/toasty-driver-mysql/src/lib.rs |
+| 106 | 1.00 | 106 | 6573 | pub item at crates/toasty-driver-integration-suite/src/stmt.rs:28 |
+| 1409 | — | — | — | +20 more rows |

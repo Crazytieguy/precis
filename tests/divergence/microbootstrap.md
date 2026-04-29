@@ -17,7 +17,7 @@ scores: Score(3000)=0.408 ns_rows≤3K=23/50 (reached=7 partial=0 missing=16)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 2 ranking-recoverable (gap@3k=0.06), 29 wrong-slice/granularity (gap@3k=3.48), 3 no-discovered (gap@3k=0.11)
-Secondary intervention: free T_max budget for 1 too-expensive candidate
+Secondary intervention: promote predecessors for 1 gated candidate
 Top rows: 1.1, 1.3, 1.4, 1.8, 2.9, ...
 
 ## Top opportunities
@@ -27,10 +27,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 29 | 3.51 | 3.48 | 2.85 | nearby candidates have low exact atom overlap | 1.1, 1.3, 1.4, 1.8, 2.9, ... |
-| finish partially-delivered NS batches | 5 | 0.27 | 0.24 | 0.13 | avg batch completion=0.39 | 4.2, 4.1, 4.3, 4.4, 5.6 |
 | add walker candidates for no-discovered rows | 3 | 0.11 | 0.11 | 0.11 | NS rows have no discovered line candidate | 5.1, 5.2, 5.3 |
 | promote python decl at microbootstrap/instruments/opentelemetry_instrument.py:48 | 1 | 0.03 | 0.03 | 0.03 | 0 files, exact total=20/22 | 4.9 |
-| free T_max budget / demote late waste | 1 | 0.02 | 0.02 | 0.02 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=12/14 | 4.7 |
+| tune ranking for high-overlap unscheduled candidates | 1 | 0.02 | 0.02 | 0.02 | high-overlap candidates not in the schedule by T_max, exact total=12/14 | 4.7 |
 
 ## Diagnosis rollup
 
@@ -47,10 +46,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 1 | 0.03 | promote predecessor |
-| too expensive at final margin | 1 | 0.02 | free T_max budget |
+| too expensive at final margin | 1 | 0.02 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, scheduled same-file=4, fs-only=1, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, scheduled same-file=4, fs-only=1, no discovered candidate=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -138,18 +136,28 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, scheduled same-file
 |--:|-----------------:|:--------|
 | 2 | 263 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 277 | 0.58 | 477 | 2589 | python imports in microbootstrap/__init__.py |
 | 242 | 1.00 | 242 | 1655 | headings outline in README.md |
+| 136 | 1.00 | 136 | 1901 | package dependencies in package.json |
+| 83 | 1.00 | 83 | 951 | package scripts in package.json |
+| 68 | 1.00 | 68 | 104 | package identity in package.json |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
 | 201 | 0.94 | 214 | 8141 | python decl names surface in microbootstrap/instruments/logging_instrument.py |
 | 170 | 1.00 | 170 | 7601 | README.md section #1 |
 | 154 | 0.84 | 184 | 7006 | python decl names surface in microbootstrap/instruments/sentry_instrument.py |
 | 146 | 0.90 | 163 | 9639 | python method sigs in microbootstrap/instruments/logging_instrument.py |
-| 136 | 1.00 | 136 | 1901 | package dependencies in package.json |
 | 97 | 1.00 | 97 | 5819 | python imports in microbootstrap/granian_server.py |
 | 93 | 1.00 | 93 | 5489 | README.md section #7 |
 | 92 | 1.00 | 92 | 5390 | python method sigs #1 in microbootstrap/instruments/opentelemetry_instrument.py |
-| 1344 | — | — | — | +19 more rows |
+| 84 | 1.00 | 84 | 5672 | python class body at microbootstrap/config/litestar.py:13 |
+| 83 | 1.00 | 83 | 9783 | python decl body at microbootstrap/helpers.py:48 body 52 |
+| 82 | 1.00 | 82 | 5298 | python imports in microbootstrap/helpers.py |
+| 944 | — | — | — | +14 more rows |

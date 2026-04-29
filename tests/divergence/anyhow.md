@@ -17,7 +17,7 @@ scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=8 partial=2 missing=8)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.38), 20 wrong-slice/granularity (gap@3k=1.30), 9 no-discovered (gap@3k=0.55)
-Secondary intervention: free T_max budget for 3 too-expensive candidates
+Secondary intervention: investigate 9 no-discovered rows
 Top rows: 2.1, 2.6, 3.4, 2.9, 3.8, ...
 
 ## Top opportunities
@@ -28,9 +28,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 20 | 1.41 | 1.30 | 1.21 | nearby candidates have low exact atom overlap | 2.1, 2.6, 3.4, 2.9, 3.8, ... |
 | add walker candidates for no-discovered rows | 9 | 0.55 | 0.55 | 0.55 | NS rows have no discovered line candidate | 2.13, 3.2, 5.4, 3.6, 4.2, ... |
-| finish partially-delivered NS batches | 5 | 0.54 | 0.43 | 0.41 | avg batch completion=0.48 | 2.1, 2.8, 3.7, 2.4, 2.2 |
-| free T_max budget / demote late waste | 3 | 0.35 | 0.35 | 0.35 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=83/86 | 2.14, 2.15, 2.11 |
-| tune ranking for discovered unscheduled candidates | 1 | 0.03 | 0.03 | 0.03 | high-overlap candidates fit but did not win, exact total=23/25 | 5.5 |
+| tune ranking for high-overlap unscheduled candidates | 4 | 0.38 | 0.38 | 0.38 | high-overlap candidates not in the schedule by T_max, exact total=106/111 | 2.14, 2.15, 2.11, 5.5 |
 
 ## Diagnosis rollup
 
@@ -46,11 +44,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 3 | 0.35 | free T_max budget |
+| too expensive at final margin | 3 | 0.35 | tune ranking |
 | discovered unscheduled | 1 | 0.03 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file=4, fs-only=2, no discovered candidate=9
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file=4, fs-only=2, no discovered candidate=9 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -134,18 +131,33 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file
 | 3 | 1435 | pub-item doc body at src/lib.rs:<n> |
 | 3 | 573 | pub-item doc lede at src/lib.rs:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 286 | 1.00 | 286 | 2771 | pub-item doc lede at src/lib.rs:650 |
+| 229 | 0.84 | 274 | 1134 | crate-doc lede in src/lib.rs |
+| 222 | 1.00 | 222 | 2428 | pub-item doc lede at src/lib.rs:468 |
+| 136 | 1.00 | 136 | 1536 | macro_export body at src/macros.rs:58 |
+| 124 | 1.00 | 124 | 2895 | README.md section #8 |
+| 100 | 0.60 | 167 | 343 | [package] in Cargo.toml |
+| 75 | 0.43 | 173 | 1372 | mod/use plumbing in src/lib.rs |
+| 66 | 1.00 | 66 | 409 | README.md section #0 |
+| 65 | 1.00 | 65 | 1199 | pub-item doc lede at src/lib.rs:616 |
+| 63 | 1.00 | 63 | 132 | README headline in README.md |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 1564 | 1.00 | 1564 | 5270 | crate-doc body in src/lib.rs |
 | 1160 | 1.00 | 1160 | 9014 | pub-item doc body at src/lib.rs:616 |
-| 286 | 1.00 | 286 | 2771 | pub-item doc lede at src/lib.rs:650 |
 | 259 | 1.00 | 259 | 5529 | README.md section #9 |
 | 241 | 1.00 | 241 | 7088 | README.md section #2 |
-| 229 | 0.84 | 274 | 1134 | crate-doc lede in src/lib.rs |
-| 222 | 1.00 | 222 | 2428 | pub-item doc lede at src/lib.rs:468 |
 | 215 | 1.00 | 215 | 6847 | README.md section #4 |
 | 205 | 1.00 | 205 | 6632 | README.md section #5 |
 | 200 | 1.00 | 200 | 3418 | README.md section #7 |
-| 1578 | — | — | — | +15 more rows |
+| 199 | 1.00 | 199 | 6427 | README.md section #1 |
+| 151 | 1.00 | 151 | 5728 | pub-item doc body at src/lib.rs:415 |
+| 138 | 1.00 | 138 | 6148 | README.md section #3 |
+| 461 | — | — | — | +5 more rows |

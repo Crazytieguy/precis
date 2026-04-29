@@ -17,7 +17,7 @@ scores: Score(3000)=0.587 ns_rows≤3K=19/42 (reached=11 partial=0 missing=8)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 3 ranking-recoverable (gap@3k=0.31), 13 wrong-slice/granularity (gap@3k=0.56), 3 no-discovered (gap@3k=0.16)
-Secondary intervention: free T_max budget for 2 too-expensive candidates
+Secondary intervention: investigate 3 no-discovered rows
 Top rows: 5.1, 5.5, 7.3, 9.4, 5.2, ...
 
 ## Top opportunities
@@ -27,10 +27,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 13 | 0.58 | 0.56 | 0.30 | nearby candidates have low exact atom overlap | 5.1, 5.5, 7.3, 9.4, 5.2, ... |
-| free T_max budget / demote late waste | 2 | 0.30 | 0.30 | 0.30 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=110/121 | 6.1, 6.2 |
+| tune ranking for high-overlap unscheduled candidates | 3 | 0.31 | 0.31 | 0.31 | high-overlap candidates not in the schedule by T_max, exact total=111/122 | 6.1, 6.2, 3.1 |
 | add walker candidates for no-discovered rows | 3 | 0.16 | 0.16 | 0.16 | NS rows have no discovered line candidate | 8.3, 10.2, 8.1 |
-| finish partially-delivered NS batches | 3 | 0.08 | 0.07 | 0.06 | avg batch completion=0.35 | 9.4, 10.7, 10.3 |
-| tune ranking for discovered unscheduled candidates | 1 | 0.01 | 0.01 | 0.01 | high-overlap candidates fit but did not win, exact total=1/1 | 3.1 |
 
 ## Diagnosis rollup
 
@@ -46,11 +44,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.30 | free T_max budget |
+| too expensive at final margin | 2 | 0.30 | tune ranking |
 | discovered unscheduled | 1 | 0.01 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file=3, fs-only=2, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file=3, fs-only=2, no discovered candidate=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -124,7 +121,17 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 | 13 | 1452 | README.md section #<n> |
 | 2 | 118 | export doc at cmdk/src/index.tsx:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 135 | 1.00 | 135 | 2341 | module item at cmdk/src/index.tsx:1081 |
+| 80 | 0.28 | 290 | 2760 | headings outline in README.md |
+| 66 | 1.00 | 66 | 2172 | export doc at cmdk/src/index.tsx:664 |
+| 65 | 1.00 | 65 | 960 | module item at cmdk/src/index.tsx:1071 |
+| 52 | 1.00 | 52 | 1931 | export doc at cmdk/src/index.tsx:833 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -136,6 +143,6 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 | 146 | 1.00 | 146 | 8209 | README.md section #12 |
 | 145 | 1.00 | 145 | 6563 | package entrypoints in cmdk/package.json |
 | 143 | 1.00 | 143 | 5002 | README.md section #36 |
-| 135 | 1.00 | 135 | 2341 | module item at cmdk/src/index.tsx:1081 |
 | 133 | 1.00 | 133 | 3199 | package dependencies in package.json |
-| 1414 | — | — | — | +16 more rows |
+| 123 | 1.00 | 123 | 7354 | README.md section #6 |
+| 1028 | — | — | — | +11 more rows |

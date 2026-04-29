@@ -26,7 +26,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 33 | 2.58 | 2.18 | 1.93 | nearby candidates have low exact atom overlap | 2.8, 2.9, 2.4, 3.2, 3.3, ... |
-| finish partially-delivered NS batches | 6 | 0.29 | 0.23 | 0.21 | avg batch completion=0.49 | 3.3, 3.9, 5.5, 5.6, 5.7, ... |
 
 ## Diagnosis rollup
 
@@ -36,8 +35,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 6 | 6 | 0 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=28, scheduled same-file=11, fs-only=1
+Candidate hint kinds: scheduled bbox=28, scheduled same-file=11, fs-only=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -114,7 +112,13 @@ Candidate hint kinds: scheduled bbox=28, scheduled same-file=11, fs-only=1
 | 5 | 483 | README.md section #<n> |
 | 2 | 182 | docs/changelog.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 58 | 1.00 | 58 | 1897 | pub item at src/live_reload.rs:16 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -128,4 +132,4 @@ Candidate hint kinds: scheduled bbox=28, scheduled same-file=11, fs-only=1
 | 165 | 0.51 | 321 | 6933 | headings outline in docs/changelog.md |
 | 159 | 0.61 | 259 | 6291 | pub item at src/config/colors.rs:78 |
 | 149 | 0.70 | 213 | 4406 | mod/use plumbing in src/main.rs |
-| 1527 | — | — | — | +17 more rows |
+| 1469 | — | — | — | +16 more rows |

@@ -1,5 +1,5 @@
 use super::*;
-use crate::divergence::synthesis::priority_at_budget;
+use crate::divergence::synthesis::{loss_reason_counts, loss_reason_weights};
 
 pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx, arrivals: &[Arrival]) -> String {
     let mut out = String::new();
@@ -96,10 +96,9 @@ fn format_candidate_coverage_note(out: &mut String, rows: &[ReportRow<'_>]) {
         .map(|(kind, count)| format!("{}={count}", kind.label()))
         .collect::<Vec<_>>()
         .join(", ");
-    out.push_str(
-        "\n_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._\n",
-    );
-    out.push_str(&format!("Candidate hint kinds: {coverage}\n"));
+    out.push_str(&format!(
+        "\nCandidate hint kinds: {coverage} _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._\n"
+    ));
 }
 
 fn format_diagnosis_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
@@ -142,18 +141,8 @@ fn format_diagnosis_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
 }
 
 fn format_loss_reason_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
-    let mut counts: BTreeMap<CandidateLossReason, usize> = BTreeMap::new();
-    let mut weights: BTreeMap<CandidateLossReason, f64> = BTreeMap::new();
-    for row in rows {
-        if row.diagnosis != DiagnosisKind::RankingRecoverable {
-            continue;
-        }
-        if let Some(loss) = ranking_loss(row) {
-            *counts.entry(loss.reason).or_default() += 1;
-            *weights.entry(loss.reason).or_default() +=
-                priority_at_budget(row, PRIMARY_BUDGET_INDEX);
-        }
-    }
+    let counts = loss_reason_counts(rows);
+    let weights = loss_reason_weights(rows);
     if counts.is_empty() {
         return;
     }
@@ -308,6 +297,20 @@ pub(super) fn off_ns_attribution(
     Some((off_marginal as f64 / total_marginal as f64, off_marginal))
 }
 
+struct WalkerWasteRow<'a> {
+    wr: &'a WalkerRow<'a>,
+    descriptor_rel: String,
+    off_ratio: f64,
+    off_tokens: usize,
+    /// Walker `cum_tokens` *before* this batch was applied —
+    /// `seen_t - cost_tokens`. Lets the primary-vs-late split
+    /// classify boundary-crossing batches correctly: a batch with
+    /// `prev_t ≤ B < seen_t` is what *stopped* the B-prefix
+    /// (no-fallback scheduler), so demoting it can let the next-
+    /// best candidate fit and lift `Score(B)`.
+    prev_t: usize,
+}
+
 fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     let ns_atom_set: BTreeSet<Atom> = ctx
         .ns_rows
@@ -323,13 +326,7 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     // reflects true marginal share, not uniform-across-atoms.
     // Sort by off_tokens descending so the biggest calibration targets
     // are at row 1.
-    struct Row<'a> {
-        wr: &'a WalkerRow<'a>,
-        descriptor_rel: String,
-        off_ratio: f64,
-        off_tokens: usize,
-    }
-    let mut rows: Vec<Row<'_>> = ctx
+    let mut rows: Vec<WalkerWasteRow<'_>> = ctx
         .walker_rows
         .iter()
         .filter(|wr| wr.batch.cost_tokens >= UNMAPPED_COST_THRESHOLD)
@@ -340,11 +337,13 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
                 return None;
             }
             let descriptor_rel = strip_fixture_root(&wr.batch.descriptor, &ctx.fixture_root);
-            Some(Row {
+            let prev_t = wr.seen_t.saturating_sub(wr.batch.cost_tokens);
+            Some(WalkerWasteRow {
                 wr,
                 descriptor_rel,
                 off_ratio,
                 off_tokens,
+                prev_t,
             })
         })
         .collect();
@@ -363,9 +362,35 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
             .map(|r| (r.descriptor_rel.as_str(), r.off_tokens)),
     );
 
-    out.push_str(&format!(
-        "\n## Walker waste (off-NS token spend ≥ {UNMAPPED_COST_THRESHOLD})\n\n"
-    ));
+    // Use `prev_t` (cumulative before the batch was applied) rather
+    // than `seen_t` (after) so a boundary-crossing batch — the one
+    // that stopped the 3K prefix under the scheduler's no-fallback
+    // rule — counts as primary-actionable. Demoting that batch can
+    // let the next-best candidate fit and lift `Score(3000)`.
+    let (early, late): (Vec<&WalkerWasteRow<'_>>, Vec<&WalkerWasteRow<'_>>) = rows
+        .iter()
+        .partition(|r| r.prev_t <= PRIMARY_BUDGET);
+    format_walker_waste_table(
+        out,
+        &format!(
+            "Walker waste, primary-actionable (first_t ≤ {PRIMARY_BUDGET}, off-NS spend ≥ {UNMAPPED_COST_THRESHOLD})"
+        ),
+        &early,
+    );
+    format_walker_waste_table(
+        out,
+        &format!(
+            "Walker waste, late (first_t > {PRIMARY_BUDGET}, off-NS spend ≥ {UNMAPPED_COST_THRESHOLD}) — higher-budget calibration only"
+        ),
+        &late,
+    );
+}
+
+fn format_walker_waste_table(out: &mut String, header: &str, rows: &[&WalkerWasteRow<'_>]) {
+    if rows.is_empty() {
+        return;
+    }
+    out.push_str(&format!("\n## {header}\n\n"));
     out.push_str("| off_tokens | off_ratio | cost | first_t | batch |\n");
     out.push_str("|-----------:|----------:|-----:|--------:|:------|\n");
     for r in rows.iter().take(WASTE_DETAIL_LIMIT) {

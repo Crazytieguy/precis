@@ -17,7 +17,7 @@ scores: Score(3000)=0.507 ns_rows≤3K=22/49 (reached=9 partial=2 missing=11)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 6 ranking-recoverable (gap@3k=0.36), 27 wrong-slice/granularity (gap@3k=1.72), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 4 too-expensive candidates
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 1.1, 2.2, 3.4, 3.9, 3.1, ...
 
 ## Top opportunities
@@ -27,8 +27,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 27 | 1.86 | 1.72 | 1.45 | nearby candidates have low exact atom overlap | 1.1, 2.2, 3.4, 3.9, 3.1, ... |
-| finish partially-delivered NS batches | 6 | 0.31 | 0.23 | 0.22 | avg batch completion=0.49 | 1.5, 3.5, 3.15, 6.4, 6.2, ... |
-| free T_max budget / demote late waste | 4 | 0.21 | 0.21 | 0.21 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=36/38 | 1.8, 3.3, 3.8, 4.2 |
+| tune ranking for high-overlap unscheduled candidates | 4 | 0.21 | 0.21 | 0.21 | high-overlap candidates not in the schedule by T_max, exact total=36/38 | 1.8, 3.3, 3.8, 4.2 |
 | promote pub-item names surfaces | 2 | 0.14 | 0.14 | 0.14 | 1 file, exact total=65/70 | 3.12, 3.10 |
 
 ## Diagnosis rollup
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.14 | promote predecessor |
-| too expensive at final margin | 4 | 0.21 | free T_max budget |
+| too expensive at final margin | 4 | 0.21 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=19, unscheduled bbox=12, scheduled same-file=2, unscheduled same-file=1, fs-only=5
+Candidate hint kinds: scheduled bbox=19, unscheduled bbox=12, scheduled same-file=2, unscheduled same-file=1, fs-only=5 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -122,7 +120,13 @@ Candidate hint kinds: scheduled bbox=19, unscheduled bbox=12, scheduled same-fil
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.1 | 882 | 0.00 | 0.00 | missing | mdbook-driver crate role | [scheduled bbox exact=10/10] crate-doc lede in crates/mdbook-driver/src/lib.rs (t=7343, 10 atoms) |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 176 | 0.50 | 349 | 944 | [package] in Cargo.toml |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -130,10 +134,10 @@ Candidate hint kinds: scheduled bbox=19, unscheduled bbox=12, scheduled same-fil
 | 257 | 1.00 | 257 | 8560 | [features] in Cargo.toml |
 | 192 | 1.00 | 192 | 9268 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49 |
 | 183 | 1.00 | 183 | 8917 | entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10 |
-| 176 | 0.50 | 349 | 944 | [package] in Cargo.toml |
 | 159 | 1.00 | 159 | 5874 | headings outline in CONTRIBUTING.md |
 | 145 | 1.00 | 145 | 5668 | macro_export body at crates/mdbook-core/src/utils/mod.rs:17 |
 | 137 | 1.00 | 137 | 6667 | mod/use plumbing in crates/mdbook-summary/src/lib.rs |
 | 131 | 1.00 | 131 | 7760 | mod/use plumbing in crates/mdbook-driver/src/lib.rs |
 | 111 | 1.00 | 111 | 9881 | README headline in guide/src/for_developers/README.md |
-| 2260 | — | — | — | +31 more rows |
+| 106 | 0.68 | 156 | 8303 | mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs |
+| 2154 | — | — | — | +30 more rows |

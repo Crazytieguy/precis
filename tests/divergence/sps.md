@@ -17,7 +17,7 @@ scores: Score(3000)=0.455 ns_rows≤3K=19/49 (reached=5 partial=1 missing=13)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 8 ranking-recoverable (gap@3k=0.58), 26 wrong-slice/granularity (gap@3k=2.34), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 7 too-expensive candidates
+Secondary intervention: promote predecessors for 1 gated candidate
 Top rows: 1.2, 1.5, 1.6, 1.8, 2.4, ...
 
 ## Top opportunities
@@ -27,8 +27,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 26 | 2.45 | 2.34 | 1.96 | nearby candidates have low exact atom overlap | 1.2, 1.5, 1.6, 1.8, 2.4, ... |
-| free T_max budget / demote late waste | 7 | 0.44 | 0.44 | 0.44 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=125/136 | 1.10, 1.7, 3.5, 3.4, 3.2, ... |
-| finish partially-delivered NS batches | 9 | 0.49 | 0.38 | 0.35 | avg batch completion=0.43 | 2.3, 2.7, 2.2, 2.5, 2.15, ... |
+| tune ranking for high-overlap unscheduled candidates | 7 | 0.44 | 0.44 | 0.44 | high-overlap candidates not in the schedule by T_max, exact total=125/136 | 1.10, 1.7, 3.5, 3.4, 3.2, ... |
 | promote listing of 'sps-core/src/install/cask/artifacts' | 1 | 0.14 | 0.14 | 0.14 | 0 files, exact total=45/47 | 2.10 |
 
 ## Diagnosis rollup
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 1 | 0.14 | promote predecessor |
-| too expensive at final margin | 7 | 0.44 | free T_max budget |
+| too expensive at final margin | 7 | 0.44 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=25, unscheduled bbox=11, fs-only=4
+Candidate hint kinds: scheduled bbox=25, unscheduled bbox=11, fs-only=4 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -134,18 +132,30 @@ Candidate hint kinds: scheduled bbox=25, unscheduled bbox=11, fs-only=4
 | 2 | 147 | pub item at sps-common/src/model/formula.rs:<n> |
 | 2 | 117 | pub item at sps/src/cli/search.rs:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 206 | 0.94 | 218 | 2622 | pub-item names surface in sps-core/src/install/cask/mod.rs |
+| 118 | 1.00 | 118 | 3003 | pub item at sps-core/src/install/cask/mod.rs:25 |
+| 73 | 1.00 | 73 | 1368 | mod/use plumbing in sps-core/src/uninstall/mod.rs |
+| 71 | 1.00 | 71 | 1262 | mod/use plumbing in sps-core/src/upgrade/mod.rs |
+| 70 | 1.00 | 70 | 2149 | pub-item names surface in sps-net/src/validation.rs |
+| 60 | 1.00 | 60 | 2389 | pub item at sps-core/src/check/update.rs:23 |
+| 56 | 1.00 | 56 | 1498 | pub item at sps/src/cli.rs:35 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 503 | 0.95 | 530 | 3675 | README headline in README.md |
 | 272 | 1.00 | 272 | 6109 | headings outline in CONTRIBUTING.md |
 | 209 | 1.00 | 209 | 5029 | mod/use plumbing in sps/src/main.rs |
-| 206 | 0.94 | 218 | 2622 | pub-item names surface in sps-core/src/install/cask/mod.rs |
 | 152 | 1.00 | 152 | 5709 | mod/use plumbing in sps-core/src/install/bottle/mod.rs |
 | 123 | 1.00 | 123 | 7321 | pub-item names surface in sps-net/src/oci.rs |
-| 118 | 1.00 | 118 | 3003 | pub item at sps-core/src/install/cask/mod.rs:25 |
 | 115 | 1.00 | 115 | 4448 | pub item body at sps-core/src/install/bottle/mod.rs:34 body 35 |
 | 113 | 1.00 | 113 | 3788 | headings outline in README.md |
 | 109 | 1.00 | 109 | 9668 | pub item at sps/src/cli/list.rs:16 |
-| 2900 | — | — | — | +43 more rows |
+| 101 | 1.00 | 101 | 9119 | pub item at sps-common/src/model/tap.rs:10 |
+| 97 | 1.00 | 97 | 8322 | pub item at sps-common/src/model/formula.rs:360 |
+| 2372 | — | — | — | +36 more rows |

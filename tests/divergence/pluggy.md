@@ -17,7 +17,7 @@ scores: Score(3000)=0.454 ns_rows≤3K=15/40 (reached=5 partial=0 missing=10)
 Verdict: coverage-gap bound
 Likely primary lever: add walker candidates for no-discovered NS rows
 Evidence: 2 ranking-recoverable (gap@3k=0.27), 16 wrong-slice/granularity (gap@3k=1.05), 11 no-discovered (gap@3k=1.43)
-Secondary intervention: free T_max budget for 2 too-expensive candidates
+Secondary intervention: split wrong-slice batches for 16 rows
 Top rows: 2.1, 1.2, 2.2, 3.2, 6.4, ...
 
 ## Top opportunities
@@ -28,8 +28,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | add walker candidates for no-discovered rows | 11 | 1.43 | 1.43 | 1.43 | NS rows have no discovered line candidate | 2.1, 1.2, 2.2, 3.2, 6.4, ... |
 | split wrong-slice walker batches | 16 | 1.06 | 1.05 | 0.54 | nearby candidates have low exact atom overlap | 4.2, 4.5, 5.3, 5.6, 5.5, ... |
-| free T_max budget / demote late waste | 2 | 0.28 | 0.27 | 0.27 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=61/66 | 4.1, 7.3 |
-| finish partially-delivered NS batches | 4 | 0.20 | 0.18 | 0.07 | avg batch completion=0.45 | 4.5, 4.3, 7.2, 7.12 |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.28 | 0.27 | 0.27 | high-overlap candidates not in the schedule by T_max, exact total=61/66 | 4.1, 7.3 |
 
 ## Diagnosis rollup
 
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.27 | free T_max budget |
+| too expensive at final margin | 2 | 0.27 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=14, unscheduled bbox=4, unscheduled same-file=1, fs-only=1, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=14, unscheduled bbox=4, unscheduled same-file=1, fs-only=1, no discovered candidate=11 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -124,7 +122,23 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=4, unscheduled same-fi
 |--:|-----------------:|:--------|
 | 3 | 258 | CLAUDE.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 135 | 1.00 | 135 | 2069 | python decl names surface in docs/conf.py |
+| 129 | 1.00 | 129 | 1643 | python decl names surface in testing/benchmark.py |
+| 101 | 1.00 | 101 | 392 | headings outline in CLAUDE.md |
+| 100 | 1.00 | 100 | 2895 | python imports in testing/benchmark.py |
+| 84 | 1.00 | 84 | 771 | python decl names surface in scripts/release.py |
+| 79 | 1.00 | 79 | 2504 | python imports in scripts/release.py |
+| 72 | 1.00 | 72 | 3054 | CLAUDE.md section #10 |
+| 68 | 1.00 | 68 | 2137 | python decl at docs/conf.py:9 |
+| 64 | 1.00 | 64 | 1934 | python decl doc at scripts/towncrier-draft-to-file.py:5 |
+| 59 | 1.00 | 59 | 2982 | python imports in src/pluggy/_tracing.py |
+| 113 | — | — | — | +2 more rows |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -136,6 +150,6 @@ Candidate hint kinds: scheduled bbox=14, unscheduled bbox=4, unscheduled same-fi
 | 149 | 1.00 | 149 | 3203 | python decl names surface #1 in docs/conf.py |
 | 146 | 1.00 | 146 | 4393 | python decl at docs/conf.py:41 |
 | 136 | 1.00 | 136 | 3475 | python decl at docs/conf.py:96 |
-| 135 | 1.00 | 135 | 2069 | python decl names surface in docs/conf.py |
 | 131 | 0.72 | 181 | 3809 | python decl names surface in src/pluggy/_hooks.py |
-| 2980 | — | — | — | +37 more rows |
+| 117 | 1.00 | 117 | 7462 | python decl body at scripts/release.py:59 body 60 |
+| 1994 | — | — | — | +25 more rows |

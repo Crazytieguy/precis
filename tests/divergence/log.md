@@ -17,7 +17,7 @@ scores: Score(3000)=0.607 ns_rows≤3K=17/44 (reached=9 partial=0 missing=8)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 11 ranking-recoverable (gap@3k=0.51), 18 wrong-slice/granularity (gap@3k=1.19), 1 no-discovered (gap@3k=0.03)
-Secondary intervention: free T_max budget for 9 too-expensive candidates
+Secondary intervention: investigate 1 no-discovered row
 Top rows: 3.1, 3.8, 2.2, 2.6, 3.5, ...
 
 ## Top opportunities
@@ -27,9 +27,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 18 | 1.21 | 1.19 | 0.92 | nearby candidates have low exact atom overlap | 3.1, 3.8, 2.2, 2.6, 3.5, ... |
-| free T_max budget / demote late waste | 9 | 0.40 | 0.40 | 0.40 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/98 | 1.6, 5.8, 5.2, 3.3, 3.4, ... |
-| finish partially-delivered NS batches | 5 | 0.38 | 0.36 | 0.28 | avg batch completion=0.33 | 3.1, 2.6, 3.2, 4.6, 4.4 |
-| tune ranking for discovered unscheduled candidates | 2 | 0.11 | 0.11 | 0.11 | high-overlap candidates fit but did not win, exact total=33/35 | 3.7, 5.14 |
+| tune ranking for high-overlap unscheduled candidates | 11 | 0.51 | 0.51 | 0.51 | high-overlap candidates not in the schedule by T_max, exact total=128/133 | 1.6, 3.7, 5.8, 5.2, 3.3, ... |
 | add walker candidates for no-discovered rows | 1 | 0.03 | 0.03 | 0.03 | NS rows have no discovered line candidate | 5.11 |
 
 ## Diagnosis rollup
@@ -46,11 +44,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 9 | 0.40 | free T_max budget |
+| too expensive at final margin | 9 | 0.40 | tune ranking |
 | discovered unscheduled | 2 | 0.11 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-file=4, fs-only=1, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-file=4, fs-only=1, no discovered candidate=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -131,18 +128,30 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-fil
 | 12 | 1301 | pub-item doc lede at src/lib.rs:<n> |
 | 4 | 402 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 349 | 0.87 | 401 | 2551 | pub item at src/lib.rs:1249 |
+| 147 | 1.00 | 147 | 2715 | pub item body at src/lib.rs:1529 body 1530 |
+| 128 | 0.70 | 184 | 486 | [package] in Cargo.toml |
+| 90 | 1.00 | 90 | 2064 | pub item body at src/lib.rs:1375 body 1376 |
+| 67 | 1.00 | 67 | 1036 | macro_export names across src/kv |
+| 63 | 1.00 | 63 | 3054 | pub-item doc lede at src/lib.rs:1566 |
+| 53 | 1.00 | 53 | 293 | headings outline in README.md |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 544 | 0.65 | 840 | 8999 | pub item at src/kv/value.rs:462 |
 | 397 | 1.00 | 397 | 6842 | [dependencies] in Cargo.toml |
 | 359 | 0.84 | 425 | 6445 | pub item at src/kv/source.rs:51 |
-| 349 | 0.87 | 401 | 2551 | pub item at src/lib.rs:1249 |
 | 318 | 1.00 | 318 | 7160 | macro_export body at src/macros.rs:391 |
 | 213 | 1.00 | 213 | 6020 | pub-item doc lede at src/lib.rs:1396 |
 | 198 | 1.00 | 198 | 3542 | README.md section #0 |
 | 156 | 0.61 | 256 | 4332 | macro_export names across src |
-| 147 | 1.00 | 147 | 2715 | pub item body at src/lib.rs:1529 body 1530 |
-| 128 | 0.70 | 184 | 486 | [package] in Cargo.toml |
-| 1772 | — | — | — | +20 more rows |
+| 126 | 1.00 | 126 | 5770 | pub-item doc lede at src/lib.rs:1611 |
+| 125 | 1.00 | 125 | 5623 | pub-item doc lede at src/lib.rs:1478 |
+| 122 | 1.00 | 122 | 4697 | pub-item doc lede at src/lib.rs:636 |
+| 1126 | — | — | — | +13 more rows |

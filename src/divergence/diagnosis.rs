@@ -73,11 +73,14 @@ impl CandidateLossReason {
         }
     }
 
+    /// `TooExpensiveAtFinalMargin` shares `tune ranking` with
+    /// `DiscoveredUnscheduled` — see the divergence module doc on
+    /// the ranking-race bucket for why.
     pub(super) fn intervention_label(self) -> &'static str {
         match self {
             CandidateLossReason::PredecessorNotScheduled => "promote predecessor",
-            CandidateLossReason::TooExpensiveAtFinalMargin => "free T_max budget",
-            CandidateLossReason::DiscoveredUnscheduled => "tune ranking",
+            CandidateLossReason::TooExpensiveAtFinalMargin
+            | CandidateLossReason::DiscoveredUnscheduled => "tune ranking",
         }
     }
 }

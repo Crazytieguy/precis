@@ -17,7 +17,7 @@ scores: Score(3000)=0.398 ns_rows≤3K=20/41 (reached=5 partial=1 missing=14)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 17 ranking-recoverable (gap@3k=1.04), 13 wrong-slice/granularity (gap@3k=2.04), 2 no-discovered (gap@3k=0.36)
-Secondary intervention: free T_max budget for 9 too-expensive candidates
+Secondary intervention: promote predecessors for 8 gated candidates
 Top rows: 1.1, 3.1, 1.5, 2.3, 2.2, ...
 
 ## Top opportunities
@@ -28,9 +28,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 13 | 2.10 | 2.04 | 1.49 | nearby candidates have low exact atom overlap | 1.1, 3.1, 1.5, 2.3, 2.2, ... |
 | promote export batches | 8 | 0.54 | 0.54 | 0.54 | 2 files, exact total=284/322 | 5.3b, 5.3, 5.2, 6.1b, 5.2b, ... |
-| free T_max budget / demote late waste | 9 | 0.50 | 0.50 | 0.49 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=158/170 | 3.8, 4.1, 4.3, 3.7, 3.5, ... |
+| tune ranking for high-overlap unscheduled candidates | 9 | 0.50 | 0.50 | 0.49 | high-overlap candidates not in the schedule by T_max, exact total=158/170 | 3.8, 4.1, 4.3, 3.7, 3.5, ... |
 | add walker candidates for no-discovered rows | 2 | 0.36 | 0.36 | 0.36 | NS rows have no discovered line candidate | 2.5, 2.6 |
-| finish partially-delivered NS batches | 5 | 0.35 | 0.29 | 0.04 | avg batch completion=0.47 | 2.2, 3.3, 3.2, 4.2, 7.3 |
 
 ## Diagnosis rollup
 
@@ -47,10 +46,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 8 | 0.54 | promote predecessor |
-| too expensive at final margin | 9 | 0.50 | free T_max budget |
+| too expensive at final margin | 9 | 0.50 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-file=1, fs-only=2, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-file=1, fs-only=2, no discovered candidate=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -130,7 +128,23 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 | 4 | 1363 | Readme.md section #<n> |
 | 4 | 338 | CHANGELOG.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 259 | 1.00 | 259 | 2264 | package scripts in package.json |
+| 256 | 1.00 | 256 | 2923 | package dependencies in package.json |
+| 190 | 0.96 | 197 | 1723 | headings outline in docs/deprecated.md |
+| 162 | 0.74 | 220 | 548 | package identity in package.json |
+| 152 | 1.00 | 152 | 1146 | export names surface in typings/index.d.ts |
+| 127 | 1.00 | 127 | 2498 | headings outline in docs/zh-CN/可变参数的选项.md |
+| 121 | 1.00 | 121 | 1483 | export at typings/index.d.ts:354 |
+| 106 | 1.00 | 106 | 831 | CHANGELOG.md section #0 |
+| 73 | 1.00 | 73 | 939 | SECURITY.md section #0 |
+| 69 | 0.88 | 78 | 3049 | Readme.md section #7 |
+| 176 | — | — | — | +3 more rows |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -138,10 +152,10 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 | 759 | 1.00 | 759 | 9246 | export at typings/index.d.ts:210 |
 | 410 | 1.00 | 410 | 6284 | export at typings/index.d.ts:95 |
 | 303 | 0.97 | 311 | 9788 | docs/release-policy.md section #0 |
-| 259 | 1.00 | 259 | 2264 | package scripts in package.json |
-| 256 | 1.00 | 256 | 2923 | package dependencies in package.json |
 | 246 | 0.95 | 258 | 7725 | Readme.md section #3 |
 | 239 | 1.00 | 239 | 5857 | json config tsconfig.ts.json |
 | 223 | 0.97 | 231 | 9477 | Readme.md section #9 |
 | 200 | 1.00 | 200 | 5047 | export names surface #1 in typings/index.d.ts |
-| 2879 | — | — | — | +26 more rows |
+| 192 | 1.00 | 192 | 6792 | docs/help-in-depth.md section #0 |
+| 176 | 1.00 | 176 | 3225 | export at typings/index.d.ts:48 |
+| 1335 | — | — | — | +13 more rows |

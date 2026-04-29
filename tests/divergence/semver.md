@@ -17,7 +17,7 @@ scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.19), 27 wrong-slice/granularity (gap@3k=2.41), 1 no-discovered (gap@3k=0.15)
-Secondary intervention: free T_max budget for 1 too-expensive candidate
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 1.1, 3.2, 3.3, 3.7, 5.1, ...
 
 ## Top opportunities
@@ -27,10 +27,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 27 | 2.41 | 2.41 | 2.04 | nearby candidates have low exact atom overlap | 1.1, 3.2, 3.3, 3.7, 5.1, ... |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.15 | 0.15 | 0.15 | high-overlap candidates not in the schedule by T_max, exact total=23/26 | 2.3, 3.6 |
 | add walker candidates for no-discovered rows | 1 | 0.15 | 0.15 | 0.15 | NS rows have no discovered line candidate | 2.4 |
-| free T_max budget / demote late waste | 1 | 0.09 | 0.09 | 0.09 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=9/9 | 2.3 |
-| finish partially-delivered NS batches | 1 | 0.08 | 0.08 | 0.07 | avg batch completion=0.54 | 2.6 |
-| tune ranking for discovered unscheduled candidates | 1 | 0.06 | 0.06 | 0.06 | high-overlap candidates fit but did not win, exact total=14/17 | 3.6 |
+| promote export names surface in classes/semver.js | 1 | 0.02 | 0.02 | 0.02 | 0 files, exact total=9/9 | 4.1 |
+| promote export names surface in classes/range.js | 1 | 0.02 | 0.02 | 0.02 | 0 files, exact total=8/8 | 4.2 |
 
 ## Diagnosis rollup
 
@@ -45,11 +45,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.04 | promote predecessor |
-| too expensive at final margin | 1 | 0.09 | free T_max budget |
+| too expensive at final margin | 1 | 0.09 | tune ranking |
 | discovered unscheduled | 1 | 0.06 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-file=2, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-file=2, no discovered candidate=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -119,7 +118,20 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | 13 | 1430 | CHANGELOG.md section #<n> |
 | 3 | 523 | CONTRIBUTING.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 144 | 1.00 | 144 | 1107 | package scripts in package.json |
+| 92 | 0.68 | 135 | 922 | package entrypoints in package.json |
+| 84 | 0.75 | 112 | 1219 | package dependencies in package.json |
+| 72 | 1.00 | 72 | 2941 | README.md section #31 |
+| 71 | 1.00 | 71 | 2869 | README.md section #27 |
+| 63 | 1.00 | 63 | 1998 | CONTRIBUTING.md section #2 |
+| 57 | 1.00 | 57 | 2707 | README.md section #24 |
+| 52 | 1.00 | 52 | 2270 | README.md section #29 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -133,4 +145,4 @@ Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-fi
 | 214 | 1.00 | 214 | 8546 | CHANGELOG.md section #6 |
 | 172 | 1.00 | 172 | 6472 | README.md section #45 |
 | 157 | 1.00 | 157 | 4882 | README.md section #43 |
-| 1964 | — | — | — | +24 more rows |
+| 1329 | — | — | — | +16 more rows |

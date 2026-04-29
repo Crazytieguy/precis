@@ -28,7 +28,6 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 17 | 1.29 | 1.06 | 0.61 | nearby candidates have low exact atom overlap | 1.3, 3.4, 4.5, 3.2, 5.4, ... |
 | add walker candidates for no-discovered rows | 6 | 0.49 | 0.49 | 0.49 | NS rows have no discovered line candidate | 3.5, 5.5, 5.7, 5.6, 3.3, ... |
-| finish partially-delivered NS batches | 8 | 0.51 | 0.44 | 0.28 | avg batch completion=0.50 | 1.3, 4.9, 2.5, 4.7, 4.2, ... |
 
 ## Diagnosis rollup
 
@@ -38,8 +37,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | no discovered candidate | 6 | 6 | 0 | walker coverage or predecessor-gated emit |
 | mixed/unknown | 7 | 6 | 1 | inspect row |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=24, no discovered candidate=6
+Candidate hint kinds: scheduled bbox=24, no discovered candidate=6 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -98,15 +96,20 @@ Candidate hint kinds: scheduled bbox=24, no discovered candidate=6
 | 4.11 | 5355 | 0.08 | 0.13 | missing | Pure-Go writeBlocks body | [scheduled bbox exact=11/13] go decl body at xxhash_other.go:64 (t=4621, 11 atoms) |
 | 5.1 | 6391 | 0.10 | 0.02 | missing | README — Benchmarks section (perf table) | [scheduled bbox exact=16/20] README.md section #2 (t=3782, 16 atoms) |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 133 | 1.00 | 133 | 900 | go module file xxhashbench/go.mod |
+| 55 | 1.00 | 55 | 1491 | go package + imports in dynamic/plugin.go |
+| 54 | 1.00 | 54 | 1682 | go decl body at dynamic/plugin.go:19 |
+| 52 | 0.67 | 78 | 978 | go decl names surface in dynamic/plugin.go |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 292 | 1.00 | 292 | 6732 | plaintext config LICENSE.txt |
 | 274 | 1.00 | 274 | 5339 | go decl body at dynamic/plugin.go:26 |
 | 144 | 1.00 | 144 | 3297 | README.md section #3 |
-| 133 | 1.00 | 133 | 900 | go module file xxhashbench/go.mod |
 | 73 | 1.00 | 73 | 4057 | go decl body at xxhsum/xxhsum.go:43 |
-| 55 | 1.00 | 55 | 1491 | go package + imports in dynamic/plugin.go |
-| 54 | 1.00 | 54 | 1682 | go decl body at dynamic/plugin.go:19 |
-| 52 | 0.67 | 78 | 978 | go decl names surface in dynamic/plugin.go |

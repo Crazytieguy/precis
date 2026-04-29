@@ -17,7 +17,7 @@ scores: Score(3000)=0.551 ns_rows≤3K=13/40 (reached=5 partial=1 missing=7)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 15 ranking-recoverable (gap@3k=1.21), 20 wrong-slice/granularity (gap@3k=1.28), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 4 too-expensive candidates
+Secondary intervention: promote predecessors for 11 gated candidates
 Top rows: 1.6, 1.2, 2.1, 1.4, 3.2, ...
 
 ## Top opportunities
@@ -28,9 +28,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 20 | 1.53 | 1.28 | 1.20 | nearby candidates have low exact atom overlap | 1.6, 1.2, 2.1, 1.4, 3.2, ... |
 | promote go decl signature batches | 7 | 0.49 | 0.49 | 0.49 | 5 files, exact total=147/159 | 2.2, 2.7, 2.10, 4.1, 3.1, ... |
-| free T_max budget / demote late waste | 4 | 0.39 | 0.39 | 0.39 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=84/93 | 1.8, 2.6, 5.1, 5.4 |
+| tune ranking for high-overlap unscheduled candidates | 4 | 0.39 | 0.39 | 0.39 | high-overlap candidates not in the schedule by T_max, exact total=84/93 | 1.8, 2.6, 5.1, 5.4 |
 | promote go decl names surfaces | 4 | 0.33 | 0.33 | 0.33 | 4 files, exact total=66/75 | 2.3, 2.4, 4.6, 5.2 |
-| finish partially-delivered NS batches | 1 | 0.06 | 0.05 | 0.04 | avg batch completion=0.25 | 4.3 |
 
 ## Diagnosis rollup
 
@@ -44,10 +43,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 11 | 0.82 | promote predecessor |
-| too expensive at final margin | 4 | 0.39 | free T_max budget |
+| too expensive at final margin | 4 | 0.39 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25
+Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -112,7 +110,23 @@ Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25
 |--:|-----------------:|:--------|
 | 4 | 296 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 116 | 1.00 | 116 | 1632 | headings outline in sdk/README.md |
+| 84 | 0.15 | 557 | 2556 | go module file go.mod |
+| 78 | 1.00 | 78 | 3051 | go decl names surface in internal/agent/factory.go |
+| 74 | 1.00 | 74 | 2859 | go decl names surface in internal/models/generate_models.go |
+| 63 | 1.00 | 63 | 837 | go decl names surface in sdk/types.go |
+| 61 | 0.88 | 69 | 984 | go decl names surface in cmd/hooks.go |
+| 59 | 1.00 | 59 | 1786 | go decl names surface in internal/models/models_data.go |
+| 55 | 1.00 | 55 | 2914 | go decl at internal/models/generate_models.go:50 |
+| 55 | 1.00 | 55 | 1727 | go decl names surface in internal/config/merger.go |
+| 53 | 1.00 | 53 | 229 | headings outline in AGENTS.md |
+| 50 | — | — | — | +1 more rows |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -123,7 +137,7 @@ Candidate hint kinds: scheduled bbox=10, unscheduled bbox=25
 | 145 | 1.00 | 145 | 7568 | go decl names surface in internal/hooks/validator.go |
 | 140 | 1.00 | 140 | 7351 | go decl names surface in internal/builtin/bash.go |
 | 136 | 1.00 | 136 | 7111 | go decl names surface in internal/ui/styles.go |
-| 116 | 1.00 | 116 | 1632 | headings outline in sdk/README.md |
 | 102 | 1.00 | 102 | 4706 | go decl names surface in internal/ui/tool_approval_input.go |
 | 98 | 1.00 | 98 | 6692 | README.md section #29 |
-| 3020 | — | — | — | +48 more rows |
+| 91 | 1.00 | 91 | 3868 | go decl names surface in internal/tools/buffered_logger.go |
+| 2297 | — | — | — | +37 more rows |

@@ -17,7 +17,7 @@ scores: Score(3000)=0.418 ns_rows≤3K=21/41 (reached=6 partial=2 missing=13)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 5 ranking-recoverable (gap@3k=0.49), 23 wrong-slice/granularity (gap@3k=2.50), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 1 too-expensive candidate
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 1.1, 2.5, 1.7, 3.8, 3.3, ...
 
 ## Top opportunities
@@ -27,10 +27,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 23 | 2.50 | 2.50 | 1.95 | nearby candidates have low exact atom overlap | 1.1, 2.5, 1.7, 3.8, 3.3, ... |
-| tune ranking for discovered unscheduled candidates | 2 | 0.26 | 0.26 | 0.25 | high-overlap candidates fit but did not win, exact total=36/39 | 2.7, 2.12 |
+| tune ranking for high-overlap unscheduled candidates | 3 | 0.37 | 0.37 | 0.37 | high-overlap candidates not in the schedule by T_max, exact total=52/55 | 2.7, 2.8, 2.12 |
 | promote export batches | 1 | 0.12 | 0.12 | 0.12 | 1 file, exact total=48/57 | 3.9 |
-| free T_max budget / demote late waste | 1 | 0.12 | 0.12 | 0.12 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=16/16 | 2.8 |
-| finish partially-delivered NS batches | 1 | 0.02 | 0.02 | 0.02 | avg batch completion=0.33 | 4.1 |
+| promote imports in packages/d2ts/src/operators/index.ts | 1 | 0.00 | 0.00 | 0.00 | 0 files, exact total=3/3 | 3.13 |
 
 ## Diagnosis rollup
 
@@ -46,11 +45,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.12 | promote predecessor |
-| too expensive at final margin | 1 | 0.12 | free T_max budget |
+| too expensive at final margin | 1 | 0.12 | tune ranking |
 | discovered unscheduled | 2 | 0.26 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3
+Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -131,18 +129,34 @@ Candidate hint kinds: scheduled bbox=16, unscheduled bbox=14, fs-only=3
 | 2 | 122 | export at packages/d2ql/src/evaluators.ts:<n> |
 | 2 | 104 | export at packages/d2ql/src/extractors.ts:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 167 | 1.00 | 167 | 799 | headings outline in README.md |
+| 165 | 0.88 | 188 | 2599 | export body at packages/d2ts/src/electric/index.ts:328 body 333 |
+| 160 | 1.00 | 160 | 2067 | export at packages/d2ts/src/electric/index.ts:222 |
+| 136 | 1.00 | 136 | 1428 | package scripts in package.json |
+| 121 | 1.00 | 121 | 1907 | export at packages/d2ts/src/electric/index.ts:103 |
+| 113 | 0.45 | 249 | 2316 | export at packages/d2ts/src/electric/index.ts:40 |
+| 87 | 1.00 | 87 | 353 | README headline in .changeset/README.md |
+| 71 | 1.00 | 71 | 2768 | export doc at packages/d2ts/src/electric/index.ts:222 |
+| 69 | 1.00 | 69 | 1094 | README headline in packages/d2ts/README.md |
+| 54 | 1.00 | 54 | 1564 | export names surface in packages/d2mini/src/multiset.ts |
+| 105 | — | — | — | +2 more rows |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 216 | 1.00 | 216 | 8315 | package dependencies in package.json |
 | 201 | 1.00 | 201 | 5063 | export names surface in packages/d2ql/src/types.ts |
 | 183 | 0.95 | 193 | 5336 | export names surface #1 in packages/d2ql/src/schema.ts |
-| 167 | 1.00 | 167 | 799 | headings outline in README.md |
-| 165 | 0.88 | 188 | 2599 | export body at packages/d2ts/src/electric/index.ts:328 body 333 |
 | 164 | 0.87 | 188 | 4862 | export names surface in packages/d2ql/src/schema.ts |
-| 160 | 1.00 | 160 | 2067 | export at packages/d2ts/src/electric/index.ts:222 |
-| 136 | 1.00 | 136 | 1428 | package scripts in package.json |
-| 121 | 1.00 | 121 | 1907 | export at packages/d2ts/src/electric/index.ts:103 |
 | 118 | 1.00 | 118 | 3940 | imports in packages/d2ts-benchmark/src/index.ts |
-| 2890 | — | — | — | +40 more rows |
+| 106 | 1.00 | 106 | 9504 | export names surface in packages/d2mini/src/types.ts |
+| 97 | 1.00 | 97 | 8444 | export names surface in packages/d2mini/src/utils.ts |
+| 97 | 1.00 | 97 | 8721 | export names surface in packages/d2ql/src/store.ts |
+| 96 | 1.00 | 96 | 7611 | export at packages/d2ts/src/sqlite/database.ts:32 |
+| 92 | 1.00 | 92 | 7348 | export names surface in packages/d2ts/src/utils.ts |
+| 1903 | — | — | — | +28 more rows |

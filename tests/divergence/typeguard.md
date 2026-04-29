@@ -17,7 +17,7 @@ scores: Score(3000)=0.461 ns_rows≤3K=14/39 (reached=5 partial=0 missing=9)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 1 ranking-recoverable (gap@3k=0.08), 19 wrong-slice/granularity (gap@3k=1.55), 11 no-discovered (gap@3k=0.81)
-Secondary intervention: free T_max budget for 1 too-expensive candidate
+Secondary intervention: investigate 11 no-discovered rows
 Top rows: 2.2, 2.3, 1.10, 2.6, 2.5, ...
 
 ## Top opportunities
@@ -28,8 +28,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 19 | 1.69 | 1.55 | 1.02 | nearby candidates have low exact atom overlap | 2.2, 2.3, 1.10, 2.6, 2.5, ... |
 | add walker candidates for no-discovered rows | 11 | 0.81 | 0.81 | 0.81 | NS rows have no discovered line candidate | 1.6, 1.7, 1.5, 3.8, 4.2, ... |
-| finish partially-delivered NS batches | 7 | 0.72 | 0.61 | 0.33 | avg batch completion=0.43 | 1.10, 2.5, 2.1, 2.7, 2.4, ... |
-| free T_max budget / demote late waste | 1 | 0.08 | 0.08 | 0.08 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=41/45 | 3.2 |
+| tune ranking for high-overlap unscheduled candidates | 1 | 0.08 | 0.08 | 0.08 | high-overlap candidates not in the schedule by T_max, exact total=41/45 | 3.2 |
 
 ## Diagnosis rollup
 
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 1 | 0.08 | free T_max budget |
+| too expensive at final margin | 1 | 0.08 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=21, fs-only=1, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=21, fs-only=1, no discovered candidate=11 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -118,7 +116,19 @@ Candidate hint kinds: scheduled bbox=21, fs-only=1, no discovered candidate=11
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 3.4 | 7148 | 0.17 | 0.19 | missing | _transformer.py — class locations | [scheduled bbox exact=5/6] python decl names surface in src/typeguard/_transformer.py (t=3501, 8 atoms) |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 126 | 1.00 | 126 | 1447 | python decl names surface in docs/conf.py |
+| 101 | 1.00 | 101 | 2384 | python decl names surface #1 in docs/conf.py |
+| 81 | 1.00 | 81 | 3007 | python decl at src/typeguard/_functions.py:28 |
+| 80 | 1.00 | 80 | 2917 | python decl at src/typeguard/_functions.py:39 |
+| 76 | 0.67 | 113 | 1863 | python decl names surface in src/typeguard/_importhook.py |
+| 60 | 1.00 | 60 | 2444 | python decl at docs/conf.py:28 |
+| 55 | 0.38 | 146 | 2590 | python decl names surface in src/typeguard/_functions.py |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -129,7 +139,7 @@ Candidate hint kinds: scheduled bbox=21, fs-only=1, no discovered candidate=11
 | 158 | 1.00 | 158 | 7544 | python decl at src/typeguard/_transformer.py:100 |
 | 137 | 0.35 | 391 | 9882 | python method sigs #1 in src/typeguard/_transformer.py |
 | 127 | 1.00 | 127 | 6663 | python imports in src/typeguard/_pytest_plugin.py |
-| 126 | 1.00 | 126 | 1447 | python decl names surface in docs/conf.py |
 | 122 | 1.00 | 122 | 7183 | plaintext config .gitignore |
 | 112 | 1.00 | 112 | 4452 | python class body at src/typeguard/_transformer.py:338 |
-| 1686 | — | — | — | +23 more rows |
+| 103 | 0.69 | 149 | 4695 | python method sigs in src/typeguard/_importhook.py |
+| 1130 | — | — | — | +16 more rows |

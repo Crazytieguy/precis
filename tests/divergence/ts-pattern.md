@@ -17,7 +17,6 @@ scores: Score(3000)=0.288 ns_rows≤3K=19/45 (reached=4 partial=2 missing=13)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 2 ranking-recoverable (gap@3k=0.24), 35 wrong-slice/granularity (gap@3k=4.92), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 2 too-expensive candidates
 Top rows: 1.1, 1.2, 1.3, 2.8, 2.11, ...
 
 ## Top opportunities
@@ -27,8 +26,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 35 | 4.96 | 4.92 | 4.37 | nearby candidates have low exact atom overlap | 1.1, 1.2, 1.3, 2.8, 2.11, ... |
-| finish partially-delivered NS batches | 8 | 0.99 | 0.95 | 0.57 | avg batch completion=0.44 | 1.2, 1.3, 2.9, 2.5, 2.10, ... |
-| free T_max budget / demote late waste | 2 | 0.24 | 0.24 | 0.24 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=65/71 | 2.4, 4.7 |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.24 | 0.24 | 0.24 | high-overlap candidates not in the schedule by T_max, exact total=65/71 | 2.4, 4.7 |
 
 ## Diagnosis rollup
 
@@ -43,10 +41,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.24 | free T_max budget |
+| too expensive at final margin | 2 | 0.24 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=29, unscheduled bbox=6, scheduled same-file=4, fs-only=1
+Candidate hint kinds: scheduled bbox=29, unscheduled bbox=6, scheduled same-file=4, fs-only=1 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -132,7 +129,20 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=6, scheduled same-file
 | 2 | 198 | export at src/types/InvertPattern.ts:<n> |
 | 3 | 196 | export at src/types/FindSelected.ts:<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 259 | 1.00 | 259 | 2006 | export names surface in src/types/helpers.ts |
+| 217 | 0.79 | 273 | 566 | package identity in package.json |
+| 212 | 0.91 | 233 | 1747 | export names surface in src/types/Pattern.ts |
+| 205 | 1.00 | 205 | 2289 | export names surface #1 in src/types/helpers.ts |
+| 177 | 0.78 | 228 | 2530 | export names surface #1 in src/types/Pattern.ts |
+| 104 | 1.00 | 104 | 823 | README.md section #0 |
+| 102 | 0.41 | 249 | 2979 | export names surface #2 in src/types/Pattern.ts |
+| 63 | 1.00 | 63 | 126 | README headline in README.md |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -141,9 +151,9 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=6, scheduled same-file
 | 271 | 1.00 | 271 | 7387 | package scripts in package.json |
 | 270 | 1.00 | 270 | 3273 | export names surface #2 in src/types/helpers.ts |
 | 267 | 1.00 | 267 | 3998 | export names surface #3 in src/types/helpers.ts |
-| 259 | 1.00 | 259 | 2006 | export names surface in src/types/helpers.ts |
 | 235 | 1.00 | 235 | 7834 | export body at src/patterns.ts:187 body 193 |
-| 217 | 0.79 | 273 | 566 | package identity in package.json |
-| 212 | 0.91 | 233 | 1747 | export names surface in src/types/Pattern.ts |
-| 205 | 1.00 | 205 | 2289 | export names surface #1 in src/types/helpers.ts |
-| 3080 | — | — | — | +33 more rows |
+| 154 | 1.00 | 154 | 9940 | json config tsconfig.json |
+| 145 | 1.00 | 145 | 5362 | export at src/patterns.ts:48 |
+| 144 | 1.00 | 144 | 5807 | export names surface in src/types/FindSelected.ts |
+| 144 | 1.00 | 144 | 4446 | headings outline in docs/v4-to-v5-migration-guide.md |
+| 2047 | — | — | — | +25 more rows |

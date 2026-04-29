@@ -17,7 +17,7 @@ scores: Score(3000)=0.521 ns_rows≤3K=17/38 (reached=5 partial=1 missing=11)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 2 ranking-recoverable (gap@3k=0.12), 24 wrong-slice/granularity (gap@3k=1.81), 3 no-discovered (gap@3k=0.08)
-Secondary intervention: free T_max budget for 2 too-expensive candidates
+Secondary intervention: investigate 3 no-discovered rows
 Top rows: 2.4, 2.10, 4.2, 2.8, 2.1, ...
 
 ## Top opportunities
@@ -27,8 +27,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 24 | 1.88 | 1.81 | 1.30 | nearby candidates have low exact atom overlap | 2.4, 2.10, 4.2, 2.8, 2.1, ... |
-| finish partially-delivered NS batches | 6 | 0.32 | 0.28 | 0.13 | avg batch completion=0.49 | 3.5, 2.5, 5.3, 5.2, 6.3, ... |
-| free T_max budget / demote late waste | 2 | 0.12 | 0.12 | 0.12 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=26/26 | 2.3, 3.1 |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.12 | 0.12 | 0.12 | high-overlap candidates not in the schedule by T_max, exact total=26/26 | 2.3, 3.1 |
 | add walker candidates for no-discovered rows | 3 | 0.08 | 0.08 | 0.08 | NS rows have no discovered line candidate | 7.1, 7.2, 7.3 |
 
 ## Diagnosis rollup
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.12 | free T_max budget |
+| too expensive at final margin | 2 | 0.12 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file=4, fs-only=1, no discovered candidate=3
+Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file=4, fs-only=1, no discovered candidate=3 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -124,12 +122,20 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file
 | 4 | 347 | export at source/types/hooks.ts:<n> |
 | 5 | 332 | readme.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 312 | 0.85 | 366 | 791 | package identity in package.json |
+| 131 | 0.39 | 335 | 2992 | headings outline in readme.md |
+| 103 | 1.00 | 103 | 1097 | package scripts in package.json |
+| 82 | 1.00 | 82 | 2640 | json config tsconfig.json |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 371 | 0.93 | 400 | 7209 | package dependencies in package.json |
-| 312 | 0.85 | 366 | 791 | package identity in package.json |
 | 255 | 1.00 | 255 | 9580 | export body at source/utils/options.ts:4 body 8 |
 | 229 | 1.00 | 229 | 9325 | export body at source/utils/normalize.ts:28 body 29 |
 | 212 | 1.00 | 212 | 9032 | export body at source/utils/body.ts:90 body 91 |
@@ -137,5 +143,6 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file
 | 155 | 1.00 | 155 | 3866 | export body at source/utils/delay.ts:9 body 13 |
 | 148 | 0.92 | 161 | 5120 | export body at source/errors/NonError.ts:6 body 11 |
 | 140 | 1.00 | 140 | 6763 | export body at source/utils/merge.ts:16 body 17 |
-| 131 | 0.39 | 335 | 2992 | headings outline in readme.md |
-| 1719 | — | — | — | +23 more rows |
+| 123 | 1.00 | 123 | 6032 | export body at source/utils/body.ts:119 body 120 |
+| 112 | 1.00 | 112 | 4044 | json config tsconfig.dist.json |
+| 1299 | — | — | — | +19 more rows |

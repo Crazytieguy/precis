@@ -91,11 +91,30 @@
 //!
 //! The agent brief — first ~7 lines after the score line. Names the
 //! likely primary lever for this fixture and the rows that prove it.
-//! Lever options: `parent-gating bound`, `budget-pressure bound`,
-//! `wrong-slice bound`, `coverage-gap bound`, `ranking-race bound`,
-//! `timing-only / low-action`. Selection is heuristic: pick the
-//! diagnosis with the largest `gap@3k` weight (see Top
-//! opportunities), break ties toward more-actionable interventions.
+//! Lever options: `parent-gating bound`, `wrong-slice bound`,
+//! `coverage-gap bound`, `ranking-race bound`, `timing-only /
+//! low-action`. Selection is heuristic: pick the diagnosis with the
+//! largest `gap@3k` weight (see Top opportunities), break ties toward
+//! more-actionable interventions.
+//!
+//! `DiscoveredUnscheduled` and `TooExpensiveAtFinalMargin` rows
+//! collapse into one ranking-race bucket for verdict + Top
+//! opportunities. The `TooExpensive` label is post-hoc — it
+//! conflates "fit at eligibility, lost rank race" with "never fit";
+//! we can't disambiguate without scheduler instrumentation, so the
+//! report names the lever both subsets share — rank tuning — and
+//! suppresses the specific `free T_max budget` intervention, which
+//! by prefix-monotonicity can't move `Score(B < T_max)`. Per-row
+//! loss labels remain visible in the arrival ledger.
+//!
+//! **Caveat for agents reading the verdict:** on a fixture whose
+//! `RankingRecoverable` rows are dominated by `TooExpensive`, the
+//! `ranking-race bound` verdict is honest direction but partial
+//! coverage: rank tuning helps the lost-rank-race subset and is a
+//! no-op for the genuinely-too-big subset. Expect rank tuning to
+//! close some but not all of the headline `gap@3k`; the residual
+//! is unactionable until eligibility instrumentation lands (see
+//! `docs/design-notes.md`).
 //!
 //! Block fields: `Verdict` (lever label), `Likely primary lever`
 //! (one-line action), `Evidence` (bucket counts with `gap@3k`
@@ -113,9 +132,9 @@
 //! the rows it would address.
 //!
 //! - `intervention` — what to change (e.g. `promote go decl signature
-//!   batches`, `free T_max budget / demote late waste`, `split
-//!   wrong-slice walker batches`, `add walker candidates for
-//!   no-discovered rows`, `finish partially-delivered NS batches`).
+//!   batches`, `split wrong-slice walker batches`, `add walker
+//!   candidates for no-discovered rows`, `tune ranking for
+//!   high-overlap unscheduled candidates`).
 //! - `rows` — count of NS rows the intervention would help.
 //! - `gap@1k` / `gap@3k` / `gap@9k` — `Σ over atoms in row: (1 −
 //!   damped_credit(a)) / rank(a)` evaluated at each budget's
@@ -224,6 +243,20 @@
 //! and mixed-intersection batches (some on-NS atoms but most spend
 //! off-script).
 //!
+//! Split into two tables by `first_t` against the primary budget: the
+//! **primary-actionable** table (`first_t ≤ 3K`) lists batches whose
+//! demotion or removal could free budget within the 3K prefix
+//! (whether that lifts `Score(3000)` depends on what wins the freed
+//! slot); the **late** table (`first_t > 3K`) lists waste outside
+//! the 3K prefix, which by scheduler prefix-monotonicity cannot
+//! move `Score(B ≤ 3K)` and is a calibration target for higher-
+//! budget `Score(B)` only. Each table caps at `WASTE_DETAIL_LIMIT`
+//! rows independently, so the split can surface up to 2× the prior
+//! row count — by design, since early waste was previously buried
+//! under late noise. The pattern rollup is unsplit on purpose: a
+//! noisy descriptor pattern is a structural walker signal
+//! regardless of where its instances land in the schedule.
+//!
 //! Off-NS attribution is **per-atom marginal**: each atom carries the
 //! token delta it actually contributed to the batch's marginal cost
 //! (refinement-over-ancestor lines pay the truncated delta;
@@ -271,7 +304,7 @@ use render::format_report;
 #[cfg(test)]
 use render::off_ns_attribution;
 use synthesis::{
-    ReportRow, predecessor_groups_from_refs, ranking_loss, report_rows, report_summary, row_ids,
+    ReportRow, predecessor_groups_from_refs, report_rows, report_summary, row_ids,
     top_opportunities,
 };
 

@@ -17,7 +17,7 @@ scores: Score(3000)=0.436 ns_rows≤3K=15/39 (reached=5 partial=1 missing=9)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.51), 22 wrong-slice/granularity (gap@3k=1.86), 2 no-discovered (gap@3k=0.06)
-Secondary intervention: free T_max budget for 4 too-expensive candidates
+Secondary intervention: investigate 2 no-discovered rows
 Top rows: 2.4, 1.5, 2.7, 2.2, 1.6, ...
 
 ## Top opportunities
@@ -27,8 +27,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 22 | 2.23 | 1.86 | 0.64 | nearby candidates have low exact atom overlap | 2.4, 1.5, 2.7, 2.2, 1.6, ... |
-| free T_max budget / demote late waste | 4 | 0.51 | 0.51 | 0.51 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=151/173 | 3.3, 3.2, 3.4, 5.8 |
-| finish partially-delivered NS batches | 4 | 0.62 | 0.39 | 0.01 | avg batch completion=0.51 | 1.5, 1.6, 5.2, 6.2 |
+| tune ranking for high-overlap unscheduled candidates | 4 | 0.51 | 0.51 | 0.51 | high-overlap candidates not in the schedule by T_max, exact total=151/173 | 3.3, 3.2, 3.4, 5.8 |
 | add walker candidates for no-discovered rows | 2 | 0.06 | 0.06 | 0.06 | NS rows have no discovered line candidate | 7.2, 7.3 |
 
 ## Diagnosis rollup
@@ -45,10 +44,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 4 | 0.51 | free T_max budget |
+| too expensive at final margin | 4 | 0.51 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=23, unscheduled bbox=1, scheduled same-file=6, fs-only=1, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=23, unscheduled bbox=1, scheduled same-file=6, fs-only=1, no discovered candidate=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -126,18 +124,28 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=1, scheduled same-file
 |--:|-----------------:|:--------|
 | 5 | 734 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
 | 340 | 0.33 | 1025 | 3421 | c decl names surface in krep.h |
+| 258 | 0.92 | 279 | 864 | headings outline in README.md |
+| 114 | 1.00 | 114 | 2003 | README.md section #1 |
+| 77 | 0.44 | 175 | 1657 | c decl names surface in aho_corasick.c |
+| 61 | 1.00 | 61 | 1253 | README.md section #16 |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
 | 333 | 1.00 | 333 | 9505 | c includes in krep.c |
 | 259 | 1.00 | 259 | 9172 | README.md section #41 |
-| 258 | 0.92 | 279 | 864 | headings outline in README.md |
 | 239 | 1.00 | 239 | 8717 | README.md section #22 |
 | 206 | 0.22 | 929 | 7317 | c decl names surface in krep.c |
 | 156 | 1.00 | 156 | 9799 | c decl body at krep.c:401 |
 | 138 | 1.00 | 138 | 9643 | c decl body at krep.c:4313 |
-| 114 | 1.00 | 114 | 2003 | README.md section #1 |
 | 114 | 1.00 | 114 | 6256 | c includes in aho_corasick.c |
-| 1089 | — | — | — | +15 more rows |
+| 104 | 1.00 | 104 | 4640 | c decl doc at krep.h:288 |
+| 100 | 1.00 | 100 | 8864 | c decl body at krep.c:1125 |
+| 97 | 1.00 | 97 | 4270 | c decl doc at krep.h:278 |
+| 650 | — | — | — | +10 more rows |

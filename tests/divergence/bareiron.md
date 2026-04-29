@@ -17,7 +17,7 @@ scores: Score(3000)=0.588 ns_rows≤3K=21/42 (reached=9 partial=4 missing=8)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 4 ranking-recoverable (gap@3k=0.14), 16 wrong-slice/granularity (gap@3k=1.04), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 1 too-expensive candidate
+Secondary intervention: promote predecessors for 2 gated candidates
 Top rows: 3.7, 3.4, 4.7, 3.5, 4.9, ...
 
 ## Top opportunities
@@ -27,10 +27,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 16 | 1.16 | 1.04 | 0.99 | nearby candidates have low exact atom overlap | 3.7, 3.4, 4.7, 3.5, 4.9, ... |
-| finish partially-delivered NS batches | 6 | 0.46 | 0.36 | 0.34 | avg batch completion=0.50 | 3.4, 4.9, 3.14, 4.10, 5.7, ... |
-| tune ranking for discovered unscheduled candidates | 1 | 0.06 | 0.06 | 0.06 | high-overlap candidates fit but did not win, exact total=25/31 | 4.13 |
+| tune ranking for high-overlap unscheduled candidates | 2 | 0.09 | 0.09 | 0.09 | high-overlap candidates not in the schedule by T_max, exact total=49/55 | 4.13, 4.15 |
 | promote c decl signature batches | 2 | 0.05 | 0.05 | 0.05 | 1 file, exact total=28/33 | 5.5, 5.2 |
-| free T_max budget / demote late waste | 1 | 0.04 | 0.04 | 0.04 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=24/24 | 4.15 |
 
 ## Diagnosis rollup
 
@@ -45,11 +43,10 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 2 | 0.05 | promote predecessor |
-| too expensive at final margin | 1 | 0.04 | free T_max budget |
+| too expensive at final margin | 1 | 0.04 | tune ranking |
 | discovered unscheduled | 1 | 0.06 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=24, unscheduled bbox=5, scheduled same-file=2
+Candidate hint kinds: scheduled bbox=24, unscheduled bbox=5, scheduled same-file=2 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -118,7 +115,15 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=5, scheduled same-file
 |--:|-----------------:|:--------|
 | 2 | 374 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 65 | 1.00 | 65 | 1619 | c decl names surface in src/crafting.c |
+| 56 | 1.00 | 56 | 1540 | c decl names surface in src/varnum.c |
+| 53 | 0.08 | 650 | 2269 | c decl names surface in include/globals.h |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -132,4 +137,4 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=5, scheduled same-file
 | 90 | 1.00 | 90 | 9016 | c decl body at src/varnum.c:43 |
 | 78 | 1.00 | 78 | 8398 | c decl body at src/worldgen.c:117 |
 | 78 | 1.00 | 78 | 8320 | c decl body at src/worldgen.c:13 |
-| 591 | — | — | — | +10 more rows |
+| 417 | — | — | — | +7 more rows |

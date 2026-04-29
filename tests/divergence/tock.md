@@ -17,7 +17,6 @@ scores: Score(3000)=0.624 ns_rows≤3K=18/43 (reached=5 partial=4 missing=9)
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
 Evidence: 7 ranking-recoverable (gap@3k=0.35), 25 wrong-slice/granularity (gap@3k=1.84), 0 no-discovered (gap@3k=0.00)
-Secondary intervention: free T_max budget for 7 too-expensive candidates
 Top rows: 1.3, 2.3, 4.2, 2.5, 5.1, ...
 
 ## Top opportunities
@@ -27,8 +26,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
 | split wrong-slice walker batches | 25 | 2.31 | 1.84 | 1.03 | nearby candidates have low exact atom overlap | 1.3, 2.3, 4.2, 2.5, 5.1, ... |
-| free T_max budget / demote late waste | 7 | 0.35 | 0.35 | 0.35 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=160/184 | 3.4, 7.3, 6.7, 7.5, 5.2, ... |
-| finish partially-delivered NS batches | 4 | 0.43 | 0.35 | 0.12 | avg batch completion=0.48 | 5.1, 2.6, 2.4, 3.3 |
+| tune ranking for high-overlap unscheduled candidates | 7 | 0.35 | 0.35 | 0.35 | high-overlap candidates not in the schedule by T_max, exact total=160/184 | 3.4, 7.3, 6.7, 7.5, 5.2, ... |
 
 ## Diagnosis rollup
 
@@ -42,10 +40,9 @@ _`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 7 | 0.35 | free T_max budget |
+| too expensive at final margin | 7 | 0.35 | tune ranking |
 
-_Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8
+Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8 _(candidates are walker batches discovered this run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` isn't proof that no emit path exists)._
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -119,7 +116,20 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8
 |--:|-----------------:|:--------|
 | 3 | 274 | README.md section #<n> |
 
-## Walker waste (off-NS token spend ≥ 50)
+## Walker waste, primary-actionable (first_t ≤ 3000, off-NS spend ≥ 50)
+
+| off_tokens | off_ratio | cost | first_t | batch |
+|-----------:|----------:|-----:|--------:|:------|
+| 182 | 1.00 | 182 | 970 | headings outline in docs/commands.md |
+| 85 | 1.00 | 85 | 1976 | README.md section #10 |
+| 84 | 0.52 | 163 | 2139 | go decl names surface in internal/config/config.go |
+| 80 | 0.86 | 93 | 3027 | go decl names surface in internal/adapters/cli/remove.go |
+| 79 | 0.91 | 87 | 165 | README headline in README.md |
+| 79 | 1.00 | 79 | 1631 | README.md section #6 |
+| 57 | 0.81 | 70 | 2934 | go decl names surface in internal/adapters/cli/analyze.go |
+| 51 | 0.80 | 64 | 2832 | go decl names surface in internal/adapters/cli/current.go |
+
+## Walker waste, late (first_t > 3000, off-NS spend ≥ 50) — higher-budget calibration only
 
 | off_tokens | off_ratio | cost | first_t | batch |
 |-----------:|----------:|-----:|--------:|:------|
@@ -127,10 +137,10 @@ Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8
 | 258 | 1.00 | 258 | 8023 | docs/commands.md section #0 |
 | 214 | 0.57 | 375 | 9885 | go decl names surface in internal/adapters/cli/interactive.go |
 | 195 | 0.94 | 208 | 6253 | go decl names surface in internal/adapters/cli/list_gui.go |
-| 182 | 1.00 | 182 | 970 | headings outline in docs/commands.md |
 | 157 | 0.59 | 264 | 7518 | go decl names surface in internal/adapters/cli/root.go |
 | 154 | 0.92 | 168 | 5657 | go decl names surface in internal/adapters/cli/ical.go |
 | 153 | 1.00 | 153 | 7231 | go decl at internal/adapters/cli/analyze.go:70 |
 | 152 | 0.92 | 165 | 5467 | go decl names surface in internal/adapters/cli/watch.go |
 | 114 | 0.68 | 168 | 6944 | go decl names surface in internal/adapters/repositories/file/repository.go |
-| 1650 | — | — | — | +22 more rows |
+| 110 | 1.00 | 110 | 4058 | README.md section #7 |
+| 1025 | — | — | — | +14 more rows |
