@@ -76,7 +76,7 @@ impl CandidateLossReason {
     pub(super) fn intervention_label(self) -> &'static str {
         match self {
             CandidateLossReason::PredecessorNotScheduled => "promote predecessor",
-            CandidateLossReason::TooExpensiveAtFinalMargin => "free final budget",
+            CandidateLossReason::TooExpensiveAtFinalMargin => "free T_max budget",
             CandidateLossReason::DiscoveredUnscheduled => "tune ranking",
         }
     }
@@ -88,7 +88,6 @@ pub(super) enum DiagnosisKind {
     WrongSlice,
     NoDiscoveredCandidate,
     FsListing,
-    TimingOnly,
     MixedUnknown,
 }
 
@@ -99,7 +98,6 @@ impl DiagnosisKind {
             DiagnosisKind::WrongSlice => "wrong-slice / granularity",
             DiagnosisKind::NoDiscoveredCandidate => "no discovered candidate",
             DiagnosisKind::FsListing => "fs/listing",
-            DiagnosisKind::TimingOnly => "timing-only",
             DiagnosisKind::MixedUnknown => "mixed/unknown",
         }
     }
@@ -110,7 +108,6 @@ impl DiagnosisKind {
             DiagnosisKind::WrongSlice => "walker granularity / wrong slice",
             DiagnosisKind::NoDiscoveredCandidate => "walker coverage or predecessor-gated emit",
             DiagnosisKind::FsListing => "filesystem/listing value",
-            DiagnosisKind::TimingOnly => "usually no code change",
             DiagnosisKind::MixedUnknown => "inspect row",
         }
     }
@@ -174,15 +171,7 @@ pub(super) fn candidate_hint_for_ctx(ns_row: &NsRow, ctx: &BuildCtx) -> Candidat
     )
 }
 
-pub(super) fn diagnose_row(arrival: &Arrival, hint: &CandidateHint) -> DiagnosisKind {
-    if matches!(
-        arrival.status,
-        ArrivalStatus::Aligned | ArrivalStatus::Early | ArrivalStatus::Late
-    ) && arrival.credit >= REACH_THRESHOLD
-    {
-        return DiagnosisKind::TimingOnly;
-    }
-
+pub(super) fn diagnose_row(hint: &CandidateHint) -> DiagnosisKind {
     if hint
         .better_unscheduled
         .as_ref()

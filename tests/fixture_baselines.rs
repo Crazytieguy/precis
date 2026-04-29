@@ -24,14 +24,15 @@
 //! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
 
-use std::collections::BTreeMap;
 use std::fs;
 use std::path::{Path, PathBuf};
-use std::sync::{Mutex, OnceLock};
+use std::sync::OnceLock;
 
 use precis::{
-    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked, render_schedule,
-    render_with_schedule,
+    Schedule,
+    divergence::{BUDGETS, PRIMARY_BUDGET_INDEX, generate_divergence_report},
+    ns_loader::load_ns_checked,
+    render_schedule, render_with_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -237,22 +238,47 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
 #[derive(Clone)]
 struct DivergenceSummaryRow {
     fixture: String,
-    score: String,
+    /// `Score(B)` for each B in [`BUDGETS`], formatted to 3 decimals. `"—"`
+    /// when the report didn't expose that budget (defensive — should
+    /// never happen with the current renderer).
+    scores: [String; BUDGETS.len()],
     verdict: String,
     primary: String,
     evidence: String,
-    losses: String,
 }
 
-fn divergence_summaries() -> &'static Mutex<BTreeMap<String, DivergenceSummaryRow>> {
-    static CELL: OnceLock<Mutex<BTreeMap<String, DivergenceSummaryRow>>> = OnceLock::new();
-    CELL.get_or_init(|| Mutex::new(BTreeMap::new()))
+/// Rebuild OVERVIEW.md from the on-disk per-fixture reports. Under
+/// nextest's process-per-test model each test runs in its own
+/// process, so we can't accumulate summaries through a static mutex.
+/// Instead, every per-fixture test re-reads the full set of reports
+/// and writes OVERVIEW iff every fixture's report is present —
+/// guarantees `OVERVIEW.md` is only ever written from a complete
+/// snapshot, regardless of which process finishes last.
+fn record_divergence_summary(_fixture: &str, _report: &str) {
+    let div_dir = manifest_dir().join(DIVERGENCE_DIR);
+    let expected = fixtures_with_north_stars();
+    let rows: Vec<DivergenceSummaryRow> = expected
+        .iter()
+        .filter_map(|fixture| {
+            let path = div_dir.join(format!("{fixture}.md"));
+            let report = fs::read_to_string(&path).ok()?;
+            Some(summary_row_from_report(fixture, &report))
+        })
+        .collect();
+    if rows.len() != expected.len() {
+        // Not all fixtures have a report on disk yet — another process
+        // (or a later test in this process) will write the complete
+        // OVERVIEW.
+        return;
+    }
+    check_divergence_overview(rows);
 }
 
-fn record_divergence_summary(fixture: &str, report: &str) {
-    let row = DivergenceSummaryRow {
+fn summary_row_from_report(fixture: &str, report: &str) -> DivergenceSummaryRow {
+    DivergenceSummaryRow {
         fixture: fixture.to_string(),
-        score: extract_sim(report).unwrap_or("—").to_string(),
+        scores: extract_score_vector(report)
+            .unwrap_or_else(|| std::array::from_fn(|_| "—".to_string())),
         verdict: extract_prefixed_line(report, "Verdict: ")
             .unwrap_or("—")
             .to_string(),
@@ -262,26 +288,17 @@ fn record_divergence_summary(fixture: &str, report: &str) {
         evidence: extract_prefixed_line(report, "Evidence: ")
             .unwrap_or("—")
             .to_string(),
-        losses: extract_prefixed_line(report, "Loss reasons: ")
-            .unwrap_or("—")
-            .to_string(),
-    };
-    let expected = fixtures_with_north_stars().len();
-    let mut rows = divergence_summaries()
-        .lock()
-        .expect("divergence summary mutex poisoned");
-    rows.insert(fixture.to_string(), row);
-    if rows.len() == expected {
-        let snapshot = rows.values().cloned().collect::<Vec<_>>();
-        drop(rows);
-        check_divergence_overview(snapshot);
     }
 }
 
 fn check_divergence_overview(mut rows: Vec<DivergenceSummaryRow>) {
     rows.sort_by(|a, b| {
-        let score_a = a.score.parse::<f64>().unwrap_or(f64::INFINITY);
-        let score_b = b.score.parse::<f64>().unwrap_or(f64::INFINITY);
+        let score_a = a.scores[PRIMARY_BUDGET_INDEX]
+            .parse::<f64>()
+            .unwrap_or(f64::INFINITY);
+        let score_b = b.scores[PRIMARY_BUDGET_INDEX]
+            .parse::<f64>()
+            .unwrap_or(f64::INFINITY);
         score_a
             .partial_cmp(&score_b)
             .unwrap_or(std::cmp::Ordering::Equal)
@@ -289,14 +306,25 @@ fn check_divergence_overview(mut rows: Vec<DivergenceSummaryRow>) {
     });
     let mut index = String::new();
     index.push_str("# Divergence Summary\n\n");
-    index
-        .push_str("| fixture | Sim | verdict | likely primary lever | evidence | loss reasons |\n");
-    index
-        .push_str("|:--------|----:|:--------|:---------------------|:---------|:-------------|\n");
+    index.push_str("Sorted by `Score(3000)` ascending. Score columns are `√(Importance × Coverage)` evaluated at each budget on the geometric grid `[1000, 9000]` with ratio ⁶√9 ≈ 1.442.\n\n");
+    let mut header = String::from("| fixture |");
+    let mut sep = String::from("|:--------|");
+    for &b in BUDGETS.iter() {
+        header.push_str(&format!(" s@{b} |"));
+        sep.push_str("-----:|");
+    }
+    header.push_str(" verdict | likely primary lever | evidence |\n");
+    sep.push_str(":--------|:---------------------|:---------|\n");
+    index.push_str(&header);
+    index.push_str(&sep);
     for row in rows {
+        index.push_str(&format!("| {} |", row.fixture));
+        for s in &row.scores {
+            index.push_str(&format!(" {s} |"));
+        }
         index.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} |\n",
-            row.fixture, row.score, row.verdict, row.primary, row.evidence, row.losses
+            " {} | {} | {} |\n",
+            row.verdict, row.primary, row.evidence
         ));
     }
 
@@ -326,10 +354,38 @@ fn fixtures_with_north_stars() -> Vec<String> {
     fixtures
 }
 
-fn extract_sim(report: &str) -> Option<&str> {
-    let first = report.lines().next()?;
-    let after = first.split_once("Sim=")?.1;
-    after.split_whitespace().next()
+/// Parse the per-budget table emitted by `format_score_vector`.
+/// Each `BUDGETS[i]` row has shape `| <B> | <A_B> | <I> | <C> |
+/// <Score> | <walker_used> |`; the 5th pipe-separated cell holds the
+/// score string we want, formatted to 3 decimals already by the
+/// renderer. We pass that through verbatim so OVERVIEW.md doesn't
+/// re-round.
+fn extract_score_vector(report: &str) -> Option<[String; BUDGETS.len()]> {
+    let mut out: [Option<String>; BUDGETS.len()] = std::array::from_fn(|_| None);
+    for line in report.lines() {
+        if out.iter().all(Option::is_some) {
+            break;
+        }
+        let stripped = line.trim();
+        if !stripped.starts_with("| ") {
+            continue;
+        }
+        let parts: Vec<&str> = stripped.split('|').map(|s| s.trim()).collect();
+        // ["", "B", "A_B", "I(B)", "C(B)", "Score(B)", "walker_used", ""]
+        if parts.len() < 7 {
+            continue;
+        }
+        let Ok(budget) = parts[1].parse::<usize>() else {
+            continue;
+        };
+        let Some(idx) = BUDGETS.iter().position(|&b| b == budget) else {
+            continue;
+        };
+        out[idx] = Some(parts[5].to_string());
+    }
+    out.into_iter()
+        .collect::<Option<Vec<_>>>()
+        .and_then(|v| v.try_into().ok())
 }
 
 fn extract_prefixed_line<'a>(report: &'a str, prefix: &str) -> Option<&'a str> {

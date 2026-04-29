@@ -1,105 +1,104 @@
-scores: Sim=0.565 Reached=21/43 Early=5 Late=7 Partial=9 Missing=13 Used=5881/10000
+scores: Score(3000)=0.677 ns_rows≤3K=22/43 (reached=14 partial=3 missing=5)
+
+## Per-budget scores
+
+| B | A_B | I(B) | C(B) | Score(B) | walker_used |
+|--:|----:|-----:|-----:|---------:|------------:|
+| 1000 | 90 | 0.821 | 0.560 | 0.678 | 877 |
+| 1442 | 133 | 0.818 | 0.493 | 0.635 | 1439 |
+| 2080 | 180 | 0.776 | 0.364 | 0.532 | 1439 |
+| 3000 | 261 | 0.828 | 0.554 | 0.677 | 2906 |
+| 4327 | 386 | 0.827 | 0.463 | 0.619 | 4275 |
+| 6240 | 543 | 0.853 | 0.433 | 0.607 | 5881 |
+| 9000 | 787 | 0.809 | 0.490 | 0.630 | 5881 |
 
 ## Verdict
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (w×gap=0.00), 20 wrong-slice/granularity (w×gap=2.14), 2 no-discovered (w×gap=0.41)
-Secondary intervention: split wrong-slice batches for 20 rows
-Loss reasons: 0 predecessor-gated, 0 too-expensive, 0 discovered-unscheduled
-Top rows: 1.2, 3.7, 4.2, 2.3, 2.6, ...
-Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 22 wrong-slice/granularity (gap@3k=0.78), 2 no-discovered (gap@3k=0.05)
+Secondary intervention: investigate 2 no-discovered rows
+Top rows: 2.3, 3.6, 3.7, 1.2, 2.6, ...
 
 ## Top opportunities
 
-_`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit) per row, τ=2000. Same time weighting and credit gap as Sim, but rows can overlap between opportunities — sums across rows are an upper bound on Sim impact, not an additive estimate._
+_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
-| intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
-|:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| split wrong-slice walker batches | 20 | 2.14 | 6/15/20 | nearby candidates have low exact atom overlap | 1.2, 3.7, 4.2, 2.3, 2.6, ... |
-| add walker candidates for no-discovered rows | 2 | 0.41 | 1/2/2 | NS rows have no discovered line candidate | 4.1, 4.4 |
-
-Tiers: 1=5/6 reached, 1 partial, 0 missing, avg=0.92; 2=4/7 reached, 3 partial, 0 missing, avg=0.85; 3=6/8 reached, 1 partial, 1 missing, avg=0.81; 4=2/10 reached, 0 partial, 8 missing, avg=0.22; 5=4/12 reached, 4 partial, 4 missing, avg=0.52
+| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
+|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
+| split wrong-slice walker batches | 22 | 0.46 | 0.78 | 1.11 | nearby candidates have low exact atom overlap | 2.3, 3.6, 3.7, 1.2, 2.6, ... |
+| finish partially-delivered NS batches | 5 | 0.19 | 0.25 | 0.12 | avg batch completion=0.52 | 1.4, 2.6, 2.5, 5.8, 5.11 |
+| add walker candidates for no-discovered rows | 2 | 0.00 | 0.05 | 0.13 | NS rows have no discovered line candidate | 4.1, 4.4 |
 
 ## Diagnosis rollup
 
-| diagnosis | rows | missing | partial | timing | likely lever |
-|:----------|-----:|--------:|--------:|-------:|:-------------|
-| wrong-slice / granularity | 20 | 11 | 9 | 0 | walker granularity / wrong slice |
-| no discovered candidate | 2 | 2 | 0 | 0 | walker coverage or predecessor-gated emit |
-| timing-only | 15 | 0 | 0 | 15 | usually no code change |
+| diagnosis | rows | missing | partial | likely lever |
+|:----------|-----:|--------:|--------:|:-------------|
+| wrong-slice / granularity | 22 | 18 | 4 | walker granularity / wrong slice |
+| no discovered candidate | 2 | 2 | 0 | walker coverage or predecessor-gated emit |
+| fs/listing | 1 | 1 | 0 | filesystem/listing value |
+| mixed/unknown | 2 | 2 | 0 | inspect row |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=25, scheduled same-file=9, fs-only=1, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=15, scheduled same-file=9, fs-only=1, no discovered candidate=2
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | aligned | low | 1 |
-| scheduled bbox | aligned | high | 2 |
-| scheduled bbox | early | low | 2 |
-| scheduled bbox | early | full | 3 |
-| scheduled bbox | late | low | 1 |
-| scheduled bbox | late | high | 2 |
-| scheduled bbox | late | full | 3 |
-| scheduled bbox | missing | low | 2 |
-| scheduled bbox | partial | none | 1 |
-| scheduled bbox | partial | low | 8 |
+| scheduled bbox | missing | none | 1 |
+| scheduled bbox | missing | low | 8 |
+| scheduled bbox | missing | full | 2 |
+| scheduled bbox | partial | low | 4 |
 
 ## Arrival ledger by diagnosis
 
 ### wrong-slice / granularity
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.2 | 57 | — | — | 0.67 | partial | README title + tagline | [scheduled bbox exact=2/3] README headline in README.md (t=393, 2 atoms) |
-| 2.3 | 889 | — | — | 0.73 | partial | README quickstart code example | [scheduled bbox exact=16/22] README.md section #3 (t=4839, 16 atoms) |
-| 2.5 | 989 | — | — | 0.75 | partial | Handler / WildcardHandler type aliases | [scheduled bbox exact=4/8] export names surface in src/index.ts (t=553, 5 atoms) |
-| 2.6 | 1096 | — | — | 0.73 | partial | EventHandlerMap type | [scheduled bbox exact=5/11] export names surface in src/index.ts (t=553, 5 atoms) |
-| 3.6 | 2294 | — | — | 0.71 | partial | README TypeScript usage section | [scheduled bbox exact=21/31] README.md section #3 (t=4839, 21 atoms) |
-| 3.7 | 2626 | — | — | 0.00 | missing | test/index_test.ts test labels — all describe + it titles | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 4.2 | 3089 | — | — | 0.00 | missing | package.json mocha + prettier blocks | [scheduled same-file] package dependencies in package.json (t=3272, 23 atoms) |
-| 4.6 | 3890 | — | — | 0.05 | missing | test-types-compilation.ts preamble — Events type + handler decls | [scheduled bbox exact=1/20] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
-| 4.7 | 4287 | — | — | 0.00 | missing | test-types-compilation.ts on()/off() blocks | [scheduled same-file] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
-| 4.8 | 4485 | — | — | 0.00 | missing | test-types-compilation.ts emit() block | [scheduled same-file] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
-| 4.9 | 4724 | — | — | 0.17 | missing | test/index_test.ts imports + outer-block tests | [scheduled bbox exact=4/23] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 4.10 | 4955 | — | — | 0.00 | missing | test/index_test.ts mitt# Events type + beforeEach | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 5.1 | 5244 | — | — | 0.72 | partial | README install section | [scheduled bbox exact=17/25] README.md section #2 (t=4002, 17 atoms) |
-| 5.2 | 5401 | — | — | 0.00 | missing | Test body: wildcard '*' invocation | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 5.3 | 5926 | — | — | 0.00 | missing | Test bodies: on() registration semantics | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 5.4 | 6411 | — | — | 0.00 | missing | Test bodies: off() removal semantics | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 5.5 | 6664 | — | — | 0.00 | missing | Test bodies: emit() typed dispatch + case sensitivity | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
-| 5.6 | 7020 | — | — | 0.60 | partial | README API parameter tables | [scheduled bbox exact=0/15] headings outline in README.md (t=1023, 4 atoms) |
-| 5.11 | 8837 | — | — | 0.58 | partial | .github/PULL_REQUEST_TEMPLATE.md | [scheduled bbox exact=8/19] .github/PULL_REQUEST_TEMPLATE.md section #0 (t=3377, 8 atoms) |
-| 5.12 | 8863 | — | — | 0.67 | partial | LICENSE — MIT preamble | [scheduled bbox exact=2/3] plaintext config LICENSE (t=5881, 2 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.2 | 57 | 0.67 | 0.98 | partial | README title + tagline | [scheduled bbox exact=2/3] README headline in README.md (t=393, 2 atoms) |
+| 2.3 | 889 | 0.00 | 0.00 | missing | README quickstart code example | [scheduled bbox exact=16/22] README.md section #3 (t=4839, 16 atoms) |
+| 2.5 | 989 | 0.75 | 0.69 | partial | Handler / WildcardHandler type aliases | [scheduled bbox exact=4/8] export names surface in src/index.ts (t=553, 5 atoms) |
+| 2.6 | 1096 | 0.73 | 0.72 | partial | EventHandlerMap type | [scheduled bbox exact=5/11] export names surface in src/index.ts (t=553, 5 atoms) |
+| 3.6 | 2294 | 0.06 | 0.02 | missing | README TypeScript usage section | [scheduled bbox exact=21/31] README.md section #3 (t=4839, 21 atoms) |
+| 3.7 | 2626 | 0.00 | 0.00 | missing | test/index_test.ts test labels — all describe + it titles | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 4.2 | 3089 | 0.00 | 0.00 | missing | package.json mocha + prettier blocks | [scheduled same-file] package dependencies in package.json (t=3272, 23 atoms) |
+| 4.6 | 3890 | 0.00 | 0.00 | missing | test-types-compilation.ts preamble — Events type + handler decls | [scheduled bbox exact=1/20] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
+| 4.7 | 4287 | 0.00 | 0.00 | missing | test-types-compilation.ts on()/off() blocks | [scheduled same-file] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
+| 4.8 | 4485 | 0.00 | 0.00 | missing | test-types-compilation.ts emit() block | [scheduled same-file] imports in test/test-types-compilation.ts (t=5348, 1 atoms) |
+| 4.9 | 4724 | 0.00 | 0.00 | missing | test/index_test.ts imports + outer-block tests | [scheduled bbox exact=4/23] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 4.10 | 4955 | 0.00 | 0.00 | missing | test/index_test.ts mitt# Events type + beforeEach | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 5.1 | 5244 | 0.08 | 0.02 | missing | README install section | [scheduled bbox exact=17/25] README.md section #2 (t=4002, 17 atoms) |
+| 5.2 | 5401 | 0.00 | 0.00 | missing | Test body: wildcard '*' invocation | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 5.3 | 5926 | 0.00 | 0.00 | missing | Test bodies: on() registration semantics | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 5.4 | 6411 | 0.00 | 0.00 | missing | Test bodies: off() removal semantics | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 5.5 | 6664 | 0.00 | 0.00 | missing | Test bodies: emit() typed dispatch + case sensitivity | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
+| 5.6 | 7020 | 0.00 | 0.00 | missing | README API parameter tables | [scheduled bbox exact=0/15] headings outline in README.md (t=1023, 4 atoms) |
+| 5.8 | 8020 | 0.51 | 0.39 | partial | README Examples / Contribute / License sections | [scheduled bbox exact=10/37] headings outline in README.md (t=1023, 22 atoms) |
+| 5.10 | 8625 | 0.00 | 0.00 | missing | .editorconfig + .gitignore | [scheduled bbox exact=15/27] plaintext config .editorconfig (t=3760, 15 atoms) |
+| 5.11 | 8837 | 0.16 | 0.45 | missing | .github/PULL_REQUEST_TEMPLATE.md | [scheduled bbox exact=8/19] .github/PULL_REQUEST_TEMPLATE.md section #0 (t=3377, 8 atoms) |
+| 5.12 | 8863 | 0.00 | 0.00 | missing | LICENSE — MIT preamble | [scheduled bbox exact=2/3] plaintext config LICENSE (t=5881, 2 atoms) |
 
 ### no discovered candidate
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 4.1 | 2949 | — | — | 0.00 | missing | compressed-size CI workflow | no discovered line candidate |
-| 4.4 | 3455 | — | — | 0.00 | missing | CI workflow (main.yml) | no discovered line candidate |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 4.1 | 2949 | 0.00 | 0.00 | missing | compressed-size CI workflow | no discovered line candidate |
+| 4.4 | 3455 | 0.00 | 0.00 | missing | CI workflow (main.yml) | no discovered line candidate |
 
-### timing-only
+### fs/listing
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.3 | 104 | 225 | +121 | 1.00 | late | package.json name + version + description | [scheduled bbox exact=3/3] package identity in package.json (t=225, 3 atoms) |
-| 1.4 | 120 | 4110 | +3990 | 1.00 | late | src/ and test/ listings | fs-only |
-| 1.5 | 212 | 1439 | +1227 | 1.00 | late | package.json entrypoint + source fields | [scheduled bbox exact=6/6] package entrypoints in package.json (t=1439, 6 atoms) |
-| 1.6 | 362 | 393 | +31 | 0.86 | aligned | README feature bullets | [scheduled bbox exact=6/7] README headline in README.md (t=393, 6 atoms) |
-| 2.1 | 470 | 553 | +83 | 1.00 | aligned+over | src/index.ts public exports — name-only locations | [scheduled bbox exact=1/8] export at src/index.ts:23 (t=829, 14 atoms) |
-| 2.2 | 667 | 829 | +162 | 0.82 | aligned | Emitter<Events> interface — full | [scheduled bbox exact=14/17] export at src/index.ts:23 (t=829, 14 atoms) |
-| 2.4 | 912 | 588 | -324 | 1.00 | early | mitt() default-export signature | [scheduled bbox exact=3/3] export at src/index.ts:46 (t=588, 3 atoms) |
-| 2.7 | 1302 | 2906 | +1604 | 0.90 | late | README API one-line method descriptions | [scheduled bbox exact=10/21] headings outline in README.md (t=1023, 10 atoms) |
-| 3.1 | 1401 | 2310 | +909 | 0.82 | late | mitt() body — Map default + return-shape skeleton | [scheduled bbox exact=9/11] export body at src/index.ts:46 body 49 (t=2310, 9 atoms) |
-| 3.2 | 1606 | 2310 | +704 | 0.95 | late | emit() body — the only non-trivial method | [scheduled bbox exact=18/19] export body at src/index.ts:46 body 49 (t=2310, 18 atoms) |
-| 3.3 | 1717 | 2310 | +593 | 1.00 | late | on() body | [scheduled bbox exact=8/8] export body at src/index.ts:46 body 49 (t=2310, 8 atoms) |
-| 4.5 | 3690 | 2545 | -1145 | 1.00 | early | package.json scripts | [scheduled bbox exact=12/12] package scripts in package.json (t=2545, 12 atoms) |
-| 5.8 | 8020 | 5532 | -2488 | 0.84 | early | README Examples / Contribute / License sections | [scheduled bbox exact=10/37] headings outline in README.md (t=1023, 22 atoms) |
-| 5.9 | 8386 | 3272 | -5114 | 1.00 | early | package.json devDependencies | [scheduled bbox exact=23/23] package dependencies in package.json (t=3272, 23 atoms) |
-| 5.10 | 8625 | 3760 | -4865 | 0.89 | early | .editorconfig + .gitignore | [scheduled bbox exact=15/27] plaintext config .editorconfig (t=3760, 15 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.4 | 120 | 0.33 | 0.33 | missing | src/ and test/ listings | fs-only |
+
+### mixed/unknown
+
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 5.7 | 7520 | 0.00 | 0.00 | missing | .eslintrc — full | [scheduled bbox exact=52/52] plaintext config .eslintrc (t=5339, 52 atoms) |
+| 5.9 | 8386 | 0.00 | 0.00 | missing | package.json devDependencies | [scheduled bbox exact=23/23] package dependencies in package.json (t=3272, 23 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 

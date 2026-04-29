@@ -1,6 +1,6 @@
 ---
 name: iterate-divergence
-description: Iterate walker / value changes against the divergence reports. Use when calibrating output quality on existing fixtures, deciding which lever to work on next, or any walker / value change whose effect is judged by `Sim` and the per-fixture report. Pair with `Skill(add-fixture)` only when bringing a new fixture into the corpus; this skill assumes the corpus exists.
+description: Iterate walker / value changes against the divergence reports. Use when calibrating output quality on existing fixtures, deciding which lever to work on next, or any walker / value change whose effect is judged by `Score(3000)` and the per-fixture report. Pair with `Skill(add-fixture)` only when bringing a new fixture into the corpus; this skill assumes the corpus exists.
 ---
 
 # iterate-divergence
@@ -10,8 +10,8 @@ The divergence reports are the calibration loop's instrument.
 live alongside it. The reports are designed to answer "what should I
 change next?" at the top — read them in that spirit. The verdict
 block and Top opportunities table on each fixture report are the
-brief; lower sections (rollups, ledger, walker waste) are reference
-to consult as needed.
+brief; lower sections (per-budget table, rollups, ledger, walker
+waste) are reference to consult as needed.
 
 For column semantics, scoring formulas, status labels, and threshold
 constants, read the module-level `//!` doc at the top of
@@ -19,14 +19,21 @@ constants, read the module-level `//!` doc at the top of
 
 ## 1. Survey the corpus
 
-Start at `tests/divergence/OVERVIEW.md`. Rows are sorted by `Sim`
-ascending. Each row carries `verdict`, `likely primary lever`,
-`evidence` (bucket counts with `w(t)×gap`), and `loss reasons`.
+Start at `tests/divergence/OVERVIEW.md`. Rows are sorted by
+`Score(3000)` ascending. Each row carries the full per-budget
+`Score(B)` vector across the seven-budget grid `[1000, 1442, 2080,
+3000, 4327, 6240, 9000]`, plus `verdict`, `likely primary lever`,
+`evidence` (bucket counts with `rank×gap`), and `loss reasons`. The
+vector exposes walker-shape signal a scalar would hide: front-loader
+walkers score high at 1k and crash at 9k; trailing-loader walkers do
+the reverse. `Score(3000)` is the primary objective (auto-injection
+budget every session hits) but watch the rest — accepting a regression
+at 1k or 9k while moving 3k is a calibration tradeoff, not free win.
 
 Patterns across fixtures are the strongest signal. Scan for:
 
-- A verdict label that recurs across many low-Sim fixtures (e.g.
-  `wrong-slice bound` dominating most of the corpus).
+- A verdict label that recurs across many low-`Score(3000)` fixtures
+  (e.g. `wrong-slice bound` dominating most of the corpus).
 - A loss reason that recurs across `parent-gating bound` fixtures
   (e.g. `predecessor not scheduled` showing up consistently with
   `go decl at <file>` predecessors).
@@ -49,13 +56,20 @@ that exemplify it (one is enough if it's clear; 2–4 if you want to
 check the pattern generalizes). For each:
 
 1. **Verdict block**. Confirms the pattern fits the fixture.
-2. **Top opportunities** table. The `bands ≤3k/≤6k/total` column
+2. **Per-budget table**. Where on the budget axis does the walker
+   fall off? A walker that scores 0.6 at 3k but 0.3 at 9k has a
+   different problem than one that scores 0.3 at 3k and climbs to
+   0.6 at 9k.
+3. **Top opportunities** table. The `bands ≤3k/≤6k/total` column
    shows how much of the impact lands under the default 3k product
    budget vs. higher tiers. A change that only helps `>6k` rows
    doesn't move the default user experience.
-3. **Arrival ledger**, only the section for the diagnosis you're
+4. **Arrival ledger**, only the section for the diagnosis you're
    working on, and only the rows you need as evidence — usually 3–5
-   per fixture. Other ledger sections and the rollups below are
+   per fixture. The `comp` column shows byte-weighted batch
+   completion: `comp ∈ (0.2, 0.8)` is "started but not finished",
+   the band the `finish partially-delivered NS batches` opportunity
+   surfaces. Other ledger sections and the rollups below are
    reference; read them if the verdict or opportunities seem off.
 
 The goal at this step is to verify the corpus-level pattern holds in
@@ -91,30 +105,34 @@ corpus-wide diff is the cheap signal.
 
 Success criteria, in order of importance:
 
-1. **`Sim` actually moved** in the right direction on the targeted
-   fixture(s), with no material regressions elsewhere.
-2. **The targeted opportunity's `w(t)×gap` dropped** on the fixtures
+1. **`Score(3000)` actually moved** in the right direction on the
+   targeted fixture(s), with no material regressions elsewhere on the
+   primary budget. Watch the rest of the per-budget vector too — a 3k
+   win that comes with a big 1k or 9k regression is a tradeoff, not a
+   free win.
+2. **The targeted opportunity's `rank×gap` dropped** on the fixtures
    you targeted. If it didn't, the change didn't address what you
    thought.
 3. **The verdict label may shift** on individual fixtures — that's
    fine when the change genuinely fixed one bucket and another now
    dominates.
 
-Bucket counts and `w(t)×gap` are heuristic-derived attention
+Bucket counts and `rank×gap` are heuristic-derived attention
 directors, not the optimization target. A change that drops a bucket
-count without moving `Sim` means the metric was overstating headroom
-on those rows; the intervention didn't recover what you thought.
+count without moving `Score(3000)` means the metric was overstating
+headroom on those rows; the intervention didn't recover what you
+thought.
 
 After non-trivial changes, run `/simplify`.
 
 ## 6. Commit each coherent improvement
 
 A coherent improvement is one walker / value change with measurable
-positive `Sim` impact on the targeted fixture(s), no material
-regressions elsewhere, and an explainable mechanism. Each gets its
-own commit; commit messages should focus on *why* the change makes
-the walker better in general, not on which specific fixture rows it
-helped.
+positive `Score(3000)` impact on the targeted fixture(s), no material
+regressions elsewhere on the primary budget or the rest of the
+vector, and an explainable mechanism. Each gets its own commit;
+commit messages should focus on *why* the change makes the walker
+better in general, not on which specific fixture rows it helped.
 
 How many improvements to attempt in a session is the user's call —
 this skill drives one improvement at a time. After each commit, the
@@ -142,15 +160,19 @@ perspectives.
 
 ## Anti-Goodhart discipline
 
-The reports are heuristic dashboards over a single scalar (`Sim`).
-They direct attention; they don't define success.
+The reports are heuristic dashboards over the per-budget Score
+vector with `Score(3000)` as the primary objective. They direct
+attention; they don't define success.
 
-- **Don't optimize `w(t)×gap` directly.** It's a non-additive priority
-  score, not a Sim delta. A change that drops `w(t)×gap` without
-  moving `Sim` is suspect.
+- **Don't optimize `rank×gap` directly.** It's a non-additive
+  priority score, not a Score(3000) delta. A change that drops
+  `rank×gap` without moving `Score(3000)` is suspect.
 - **Always check the full `git diff tests/divergence/` after each
   iteration.** A change that helps the targeted fixture(s) may
-  regress others; the corpus-wide diff is the cheap signal.
+  regress others; the corpus-wide diff is the cheap signal. Pay
+  attention to the whole vector — accepting a 3k win that comes with
+  a 1k or 9k regression is a tradeoff worth flagging in the commit
+  message.
 - **Don't change North Star files to match the walker.** That's
   moving the goalpost. Frozen NSs are the calibration target; the
   walker has to come to them.
@@ -165,8 +187,9 @@ They direct attention; they don't define success.
   without a plausible generalization. The change should be a walker
   / value rule that applies whenever the relevant condition holds —
   the evidence can be one fixture if the rule is general.
-- Don't optimize bucket counts or `w(t)×gap` as a goal. They direct
-  attention. `Sim` is the metric.
+- Don't optimize bucket counts or `rank×gap` as a goal. They direct
+  attention. `Score(3000)` is the primary metric and the rest of the
+  vector is the watch list.
 - Don't make fixture-specific patches; pursue general walker / value
   changes.
 - Don't commit a "set of improvements" — each coherent improvement

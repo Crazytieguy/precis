@@ -1,24 +1,22 @@
 use super::*;
+use crate::divergence::synthesis::priority_at_budget;
 
 pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx, arrivals: &[Arrival]) -> String {
     let mut out = String::new();
     let report_rows = report_rows(ctx, arrivals);
     out.push_str(&format!(
-        "scores: Sim={:.3} Reached={}/{} Early={} Late={} Partial={} Missing={} Used={}/{}\n",
-        scores.sim,
-        scores.reached,
+        "scores: Score(3000)={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={})\n",
+        scores.primary(),
+        scores.rows_in_primary,
         scores.total_ns,
-        scores.early,
-        scores.late,
+        scores.reached,
         scores.partial,
         scores.missing,
-        ctx.schedule.cumulative_tokens,
-        ctx.schedule.budget,
     ));
 
+    format_score_vector(&mut out, scores);
     format_verdict_block(&mut out, &report_rows);
     format_top_opportunities(&mut out, &report_rows);
-    format_tier_summary(&mut out, ctx, arrivals);
     format_diagnosis_rollup(&mut out, &report_rows);
     format_loss_reason_rollup(&mut out, &report_rows);
     format_candidate_coverage_note(&mut out, &report_rows);
@@ -29,43 +27,16 @@ pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx, arrivals: &[Arrival
     out
 }
 
-fn format_tier_summary(out: &mut String, ctx: &BuildCtx, arrivals: &[Arrival]) {
-    struct TierAgg {
-        batches: usize,
-        reached: usize,
-        partial: usize,
-        missing: usize,
-        credit_sum: f64,
-    }
-    let mut by_tier: BTreeMap<usize, TierAgg> = BTreeMap::new();
-    for (row, arrival) in ctx.ns_rows.iter().zip(arrivals) {
-        let agg = by_tier.entry(row.tier).or_insert(TierAgg {
-            batches: 0,
-            reached: 0,
-            partial: 0,
-            missing: 0,
-            credit_sum: 0.0,
-        });
-        agg.batches += 1;
-        match arrival.status {
-            ArrivalStatus::Missing => agg.missing += 1,
-            ArrivalStatus::Partial => agg.partial += 1,
-            _ => agg.reached += 1,
-        }
-        agg.credit_sum += arrival.credit;
-    }
-    if by_tier.is_empty() {
-        return;
-    }
-    let mut parts = Vec::new();
-    for (tier, agg) in &by_tier {
-        let avg = agg.credit_sum / agg.batches as f64;
-        parts.push(format!(
-            "{tier}={}/{} reached, {} partial, {} missing, avg={avg:.2}",
-            agg.reached, agg.batches, agg.partial, agg.missing
+fn format_score_vector(out: &mut String, scores: &Scores) {
+    out.push_str("\n## Per-budget scores\n\n");
+    out.push_str("| B | A_B | I(B) | C(B) | Score(B) | walker_used |\n");
+    out.push_str("|--:|----:|-----:|-----:|---------:|------------:|\n");
+    for s in scores.vector.iter() {
+        out.push_str(&format!(
+            "| {} | {} | {:.3} | {:.3} | {:.3} | {} |\n",
+            s.budget, s.a_b_atoms, s.importance, s.coverage, s.score, s.walker_used,
         ));
     }
-    out.push_str(&format!("\nTiers: {}\n", parts.join("; ")));
 }
 
 fn format_verdict_block(out: &mut String, rows: &[ReportRow<'_>]) {
@@ -84,9 +55,7 @@ fn format_verdict_block(out: &mut String, rows: &[ReportRow<'_>]) {
     if let Some(secondary) = summary.secondary_intervention {
         out.push_str(&format!("Secondary intervention: {secondary}\n"));
     }
-    out.push_str(&format!("Loss reasons: {}\n", summary.loss_reason_line));
     out.push_str(&format!("Top rows: {}\n", summary.top_rows));
-    out.push_str("Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.\n");
 }
 
 fn format_top_opportunities(out: &mut String, rows: &[ReportRow<'_>]) {
@@ -96,20 +65,17 @@ fn format_top_opportunities(out: &mut String, rows: &[ReportRow<'_>]) {
     }
 
     out.push_str("\n## Top opportunities\n\n");
-    out.push_str("_`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit) per row, τ=2000. Same time weighting and credit gap as Sim, but rows can overlap between opportunities — sums across rows are an upper bound on Sim impact, not an additive estimate._\n\n");
-    out.push_str(
-        "| intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |\n",
-    );
-    out.push_str(
-        "|:-------------|-----:|---------:|:----------------------|:---------|:------------|\n",
-    );
+    out.push_str("_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._\n\n");
+    out.push_str("| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |\n");
+    out.push_str("|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|\n");
     for opp in opportunities {
         out.push_str(&format!(
-            "| {} | {} | {:.2} | {} | {} | {} |\n",
+            "| {} | {} | {:.2} | {:.2} | {:.2} | {} | {} |\n",
             opp.intervention,
             opp.rows,
-            opp.gap_weight,
-            opp.bands.label(),
+            opp.gap_at_low,
+            opp.gap_at_primary,
+            opp.gap_at_high,
             opp.evidence,
             opp.top_row_ids
         ));
@@ -141,7 +107,6 @@ fn format_diagnosis_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
         rows: usize,
         missing: usize,
         partial: usize,
-        reached_timing: usize,
     }
     let mut counts: BTreeMap<DiagnosisKind, Agg> = BTreeMap::new();
     for row in rows {
@@ -149,13 +114,12 @@ fn format_diagnosis_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
             rows: 0,
             missing: 0,
             partial: 0,
-            reached_timing: 0,
         });
         agg.rows += 1;
         match row.arrival.status {
             ArrivalStatus::Missing => agg.missing += 1,
             ArrivalStatus::Partial => agg.partial += 1,
-            _ => agg.reached_timing += 1,
+            ArrivalStatus::Reached => debug_assert!(false, "reached rows are filtered out"),
         }
     }
     if counts.is_empty() {
@@ -163,16 +127,15 @@ fn format_diagnosis_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
     }
 
     out.push_str("\n## Diagnosis rollup\n\n");
-    out.push_str("| diagnosis | rows | missing | partial | timing | likely lever |\n");
-    out.push_str("|:----------|-----:|--------:|--------:|-------:|:-------------|\n");
+    out.push_str("| diagnosis | rows | missing | partial | likely lever |\n");
+    out.push_str("|:----------|-----:|--------:|--------:|:-------------|\n");
     for (diagnosis, agg) in counts {
         out.push_str(&format!(
-            "| {} | {} | {} | {} | {} | {} |\n",
+            "| {} | {} | {} | {} | {} |\n",
             diagnosis.label(),
             agg.rows,
             agg.missing,
             agg.partial,
-            agg.reached_timing,
             diagnosis.likely_lever()
         ));
     }
@@ -187,7 +150,8 @@ fn format_loss_reason_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
         }
         if let Some(loss) = ranking_loss(row) {
             *counts.entry(loss.reason).or_default() += 1;
-            *weights.entry(loss.reason).or_default() += sim_gap_weight(row);
+            *weights.entry(loss.reason).or_default() +=
+                priority_at_budget(row, PRIMARY_BUDGET_INDEX);
         }
     }
     if counts.is_empty() {
@@ -195,8 +159,8 @@ fn format_loss_reason_rollup(out: &mut String, rows: &[ReportRow<'_>]) {
     }
 
     out.push_str("\n## Loss reason rollup (ranking-recoverable rows)\n\n");
-    out.push_str("| loss reason | rows | w(t)×gap | likely lever |\n");
-    out.push_str("|:------------|-----:|---------:|:-------------|\n");
+    out.push_str("| loss reason | rows | gap@3k | likely lever |\n");
+    out.push_str("|:------------|-----:|-------:|:-------------|\n");
     for (reason, count) in counts {
         out.push_str(&format!(
             "| {} | {} | {:.2} | {} |\n",
@@ -246,7 +210,6 @@ fn format_arrival_ledger(out: &mut String, rows: &[ReportRow<'_>]) {
         DiagnosisKind::NoDiscoveredCandidate,
         DiagnosisKind::FsListing,
         DiagnosisKind::MixedUnknown,
-        DiagnosisKind::TimingOnly,
     ];
     for diagnosis in order {
         let mut group: Vec<&ReportRow<'_>> =
@@ -256,11 +219,9 @@ fn format_arrival_ledger(out: &mut String, rows: &[ReportRow<'_>]) {
         }
         group.sort_by_key(|r| r.exp_t);
         out.push_str(&format!("\n### {}\n\n", diagnosis.label()));
+        out.push_str("| id | exp_t | credit | comp | status | descriptor | candidate hint |\n");
         out.push_str(
-            "| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |\n",
-        );
-        out.push_str(
-            "|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|\n",
+            "|----|------:|-------:|-----:|:-------|:-----------|:--------------------|\n",
         );
         let grouped_ids = if diagnosis == DiagnosisKind::RankingRecoverable {
             format_parent_gated_groups(out, &group)
@@ -290,8 +251,14 @@ fn format_parent_gated_groups(out: &mut String, rows: &[&ReportRow<'_>]) -> BTre
         let exp_t = group.rows.iter().map(|row| row.exp_t).min().unwrap_or(0);
         let avg_credit =
             group.rows.iter().map(|row| row.arrival.credit).sum::<f64>() / group.rows.len() as f64;
+        let avg_completion = group
+            .rows
+            .iter()
+            .map(|row| row.arrival.completion)
+            .sum::<f64>()
+            / group.rows.len() as f64;
         out.push_str(&format!(
-            "| group | {exp_t} | — | — | {avg_credit:.2} | predecessor-gated | {} children of `{}` | exact total={}/{}; rows: {ids} |\n",
+            "| group | {exp_t} | {avg_credit:.2} | {avg_completion:.2} | predecessor-gated | {} children of `{}` | exact total={}/{}; rows: {ids} |\n",
             group.rows.len(),
             group.predecessor,
             group.hits,
@@ -302,22 +269,15 @@ fn format_parent_gated_groups(out: &mut String, rows: &[&ReportRow<'_>]) -> BTre
 }
 
 fn format_arrival_row(out: &mut String, r: &ReportRow<'_>) {
-    let (reached_cell, delta_cell) = match r.arrival.reached_t {
-        Some(t) => {
-            let delta = t as isize - r.exp_t as isize;
-            let sign = if delta > 0 { "+" } else { "" };
-            (format!("{t}"), format!("{sign}{delta}"))
-        }
-        None => ("—".to_string(), "—".to_string()),
-    };
-    let status_cell = if r.arrival.over && r.arrival.status == ArrivalStatus::Aligned {
-        format!("{}+over", r.arrival.status.label())
-    } else {
-        r.arrival.status.label().to_string()
-    };
     out.push_str(&format!(
-        "| {} | {} | {reached_cell} | {delta_cell} | {:.2} | {status_cell} | {} | {} |\n",
-        r.id, r.exp_t, r.arrival.credit, r.descriptor, r.hint.cell,
+        "| {} | {} | {:.2} | {:.2} | {} | {} | {} |\n",
+        r.id,
+        r.exp_t,
+        r.arrival.credit,
+        r.arrival.completion,
+        r.arrival.status.label(),
+        r.descriptor,
+        r.hint.cell,
     ));
 }
 

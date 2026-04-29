@@ -1,88 +1,91 @@
-scores: Sim=0.524 Reached=13/27 Early=1 Late=8 Partial=4 Missing=10 Used=9882/10000
+scores: Score(3000)=0.609 ns_rows≤3K=12/27 (reached=5 partial=2 missing=5)
+
+## Per-budget scores
+
+| B | A_B | I(B) | C(B) | Score(B) | walker_used |
+|--:|----:|-----:|-----:|---------:|------------:|
+| 1000 | 109 | 0.815 | 0.540 | 0.663 | 988 |
+| 1442 | 130 | 0.814 | 0.557 | 0.673 | 1416 |
+| 2080 | 168 | 0.812 | 0.455 | 0.608 | 2075 |
+| 3000 | 220 | 0.794 | 0.467 | 0.609 | 2919 |
+| 4327 | 370 | 0.823 | 0.538 | 0.665 | 4075 |
+| 6240 | 506 | 0.785 | 0.393 | 0.556 | 4436 |
+| 9000 | 709 | 0.814 | 0.384 | 0.559 | 8968 |
 
 ## Verdict
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (w×gap=0.00), 13 wrong-slice/granularity (w×gap=0.67), 0 no-discovered (w×gap=0.00)
-Secondary intervention: split wrong-slice batches for 13 rows
-Loss reasons: 0 predecessor-gated, 0 too-expensive, 0 discovered-unscheduled
-Top rows: 2.5, 4.3, 4.2, 4.4, 4.1, ...
-Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 15 wrong-slice/granularity (gap@3k=0.23), 0 no-discovered (gap@3k=0.00)
+Top rows: 3.1, 2.5, 3.2, 3.3, 4.1, ...
 
 ## Top opportunities
 
-_`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit) per row, τ=2000. Same time weighting and credit gap as Sim, but rows can overlap between opportunities — sums across rows are an upper bound on Sim impact, not an additive estimate._
+_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
-| intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
-|:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| split wrong-slice walker batches | 13 | 0.67 | 1/7/13 | nearby candidates have low exact atom overlap | 2.5, 4.3, 4.2, 4.4, 4.1, ... |
-
-Tiers: 1=3/3 reached, 0 partial, 0 missing, avg=0.93; 2=7/8 reached, 1 partial, 0 missing, avg=0.92; 3=2/3 reached, 1 partial, 0 missing, avg=0.82; 4=0/4 reached, 1 partial, 3 missing, avg=0.22; 5=0/3 reached, 0 partial, 3 missing, avg=0.03; 6=0/2 reached, 0 partial, 2 missing, avg=0.02; 7=0/2 reached, 0 partial, 2 missing, avg=0.20; 8=1/2 reached, 1 partial, 0 missing, avg=0.79
+| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
+|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
+| split wrong-slice walker batches | 15 | 0.23 | 0.23 | 0.91 | nearby candidates have low exact atom overlap | 3.1, 2.5, 3.2, 3.3, 4.1, ... |
+| finish partially-delivered NS batches | 4 | 0.23 | 0.23 | 0.26 | avg batch completion=0.63 | 3.1, 2.5, 3.2, 4.1 |
 
 ## Diagnosis rollup
 
-| diagnosis | rows | missing | partial | timing | likely lever |
-|:----------|-----:|--------:|--------:|-------:|:-------------|
-| wrong-slice / granularity | 13 | 9 | 4 | 0 | walker granularity / wrong slice |
-| fs/listing | 1 | 1 | 0 | 0 | filesystem/listing value |
-| timing-only | 11 | 0 | 0 | 11 | usually no code change |
+| diagnosis | rows | missing | partial | likely lever |
+|:----------|-----:|--------:|--------:|:-------------|
+| wrong-slice / granularity | 15 | 12 | 3 | walker granularity / wrong slice |
+| fs/listing | 2 | 2 | 0 | filesystem/listing value |
+| mixed/unknown | 5 | 5 | 0 | inspect row |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=18, scheduled same-file=4, fs-only=3
+Candidate hint kinds: scheduled bbox=16, scheduled same-file=4, fs-only=2
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | aligned | low | 2 |
-| scheduled bbox | late | low | 1 |
-| scheduled bbox | late | high | 3 |
-| scheduled bbox | late | full | 3 |
-| scheduled bbox | missing | low | 5 |
-| scheduled bbox | partial | low | 4 |
+| scheduled bbox | missing | low | 8 |
+| scheduled bbox | missing | high | 2 |
+| scheduled bbox | missing | full | 3 |
+| scheduled bbox | partial | low | 3 |
 
 ## Arrival ledger by diagnosis
 
 ### wrong-slice / granularity
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 2.5 | 961 | — | — | 0.74 | partial | Macro entry point — derive_error in impl/src/lib.rs | [scheduled bbox exact=14/23] mod/use plumbing in impl/src/lib.rs (t=1367, 14 atoms) |
-| 3.3 | 3478 | — | — | 0.79 | partial | ast/attr/prop — public fn name locator | [scheduled bbox exact=13/28] impl method sigs in impl/src/prop.rs (t=7915, 29 atoms) |
-| 4.1 | 3848 | — | — | 0.62 | partial | expand.rs — derive entry + try_expand | [scheduled bbox exact=10/29] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
-| 4.2 | 4095 | — | — | 0.27 | missing | expand.rs / fmt.rs / generics.rs — public fn locator | [scheduled bbox exact=5/26] impl method sigs in impl/src/generics.rs (t=7281, 10 atoms) |
-| 4.3 | 4579 | — | — | 0.00 | missing | expand.rs — impl_struct source/transparent branches | [scheduled same-file] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
-| 4.4 | 4854 | — | — | 0.00 | missing | expand.rs — from_initializer (#[from] body) | [scheduled same-file] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
-| 5.1 | 5637 | — | — | 0.08 | missing | valid.rs — Struct + Enum + Variant validate (the rejection rules) | [scheduled bbox exact=9/76] impl method sigs in impl/src/valid.rs (t=7147, 9 atoms) |
-| 5.2 | 6828 | — | — | 0.00 | missing | valid.rs — check_non_field_attrs / check_field_attrs (cross-field rules) | [scheduled same-file] impl method sigs in impl/src/valid.rs (t=7147, 15 atoms) |
-| 6.1 | 7693 | — | — | 0.04 | missing | fmt.rs — expand_shorthand entry + state setup | [scheduled bbox exact=2/26] impl method sigs in impl/src/fmt.rs (t=3516, 2 atoms) |
-| 6.2 | 9072 | — | — | 0.00 | missing | fmt.rs — placeholder loop ({var}/{0}/{:?} mechanic) | [scheduled same-file] mod/use plumbing in impl/src/fmt.rs (t=4010, 13 atoms) |
-| 7.1 | 9392 | — | — | 0.19 | missing | src/lib.rs — module decls + cfg gates + private include! | [scheduled bbox exact=6/31] mod/use plumbing in src/lib.rs (t=276, 6 atoms) |
-| 7.2 | 9711 | — | — | 0.21 | missing | src/provide.rs + var.rs — runtime helpers | [scheduled bbox exact=4/29] pub-item names surface in src/provide.rs (t=2688, 4 atoms) |
-| 8.2 | 9966 | — | — | 0.58 | partial | test_source.rs — three source-shape examples | [scheduled bbox exact=6/19] pub-item names surface in tests/test_source.rs (t=9688, 6 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.5 | 961 | 0.74 | 0.80 | partial | Macro entry point — derive_error in impl/src/lib.rs | [scheduled bbox exact=14/23] mod/use plumbing in impl/src/lib.rs (t=1367, 14 atoms) |
+| 3.1 | 2515 | 0.71 | 0.71 | partial | ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind type defs | [scheduled bbox exact=12/52] pub-item names surface in impl/src/ast.rs (t=1492, 12 atoms) |
+| 3.2 | 3231 | 0.67 | 0.63 | partial | attr.rs — Attrs / Display / Source / From / Transparent / Fmt / Trait type defs | [scheduled bbox exact=14/67] pub-item names surface in impl/src/attr.rs (t=2025, 14 atoms) |
+| 3.3 | 3478 | 0.04 | 0.03 | missing | ast/attr/prop — public fn name locator | [scheduled bbox exact=13/28] impl method sigs in impl/src/prop.rs (t=7915, 29 atoms) |
+| 4.1 | 3848 | 0.28 | 0.36 | missing | expand.rs — derive entry + try_expand | [scheduled bbox exact=10/29] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
+| 4.2 | 4095 | 0.04 | 0.01 | missing | expand.rs / fmt.rs / generics.rs — public fn locator | [scheduled bbox exact=5/26] impl method sigs in impl/src/generics.rs (t=7281, 10 atoms) |
+| 4.3 | 4579 | 0.00 | 0.00 | missing | expand.rs — impl_struct source/transparent branches | [scheduled same-file] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
+| 4.4 | 4854 | 0.00 | 0.00 | missing | expand.rs — from_initializer (#[from] body) | [scheduled same-file] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
+| 5.1 | 5637 | 0.00 | 0.00 | missing | valid.rs — Struct + Enum + Variant validate (the rejection rules) | [scheduled bbox exact=9/76] impl method sigs in impl/src/valid.rs (t=7147, 9 atoms) |
+| 5.2 | 6828 | 0.00 | 0.00 | missing | valid.rs — check_non_field_attrs / check_field_attrs (cross-field rules) | [scheduled same-file] impl method sigs in impl/src/valid.rs (t=7147, 15 atoms) |
+| 6.1 | 7693 | 0.00 | 0.00 | missing | fmt.rs — expand_shorthand entry + state setup | [scheduled bbox exact=2/26] impl method sigs in impl/src/fmt.rs (t=3516, 2 atoms) |
+| 6.2 | 9072 | 0.00 | 0.00 | missing | fmt.rs — placeholder loop ({var}/{0}/{:?} mechanic) | [scheduled same-file] mod/use plumbing in impl/src/fmt.rs (t=4010, 13 atoms) |
+| 7.1 | 9392 | 0.19 | 0.11 | missing | src/lib.rs — module decls + cfg gates + private include! | [scheduled bbox exact=6/31] mod/use plumbing in src/lib.rs (t=276, 6 atoms) |
+| 7.2 | 9711 | 0.14 | 0.15 | missing | src/provide.rs + var.rs — runtime helpers | [scheduled bbox exact=4/29] pub-item names surface in src/provide.rs (t=2688, 4 atoms) |
+| 8.2 | 9966 | 0.00 | 0.00 | missing | test_source.rs — three source-shape examples | [scheduled bbox exact=6/19] pub-item names surface in tests/test_source.rs (t=9688, 6 atoms) |
 
 ### fs/listing
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 5.3 | 7356 | — | — | 0.00 | missing | tests/ui/ — trybuild compile-fail test listing | fs-only |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 5.3 | 7356 | 0.00 | 0.00 | missing | tests/ui/ — trybuild compile-fail test listing | fs-only |
+| 8.1 | 9792 | 0.00 | 0.00 | missing | tests/ listing | fs-only |
 
-### timing-only
+### mixed/unknown
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.1 | 48 | 81 | +33 | 0.80 | late | Crate-doc lede | [scheduled bbox exact=4/5] README headline in README.md (t=81, 4 atoms) |
-| 1.2 | 86 | 38 | -48 | 1.00 | early | Top-level repo listing | fs-only |
-| 1.3 | 158 | 934 | +776 | 1.00 | late | src/ + impl/src/ listings | fs-only |
-| 2.1 | 245 | 3318 | +3073 | 0.88 | late | README example — enum head + first variant | [scheduled bbox exact=7/8] README.md section #1 (t=3318, 7 atoms) |
-| 2.2 | 339 | 3318 | +2979 | 1.00 | late | README example — remaining variants | [scheduled bbox exact=10/10] README.md section #1 (t=3318, 10 atoms) |
-| 2.4 | 735 | 1900 | +1165 | 0.82 | late | Cargo.toml — std/no_std feature + workspace | [scheduled bbox exact=14/22] [features] in Cargo.toml (t=887, 14 atoms) |
-| 2.6 | 1319 | 6917 | +5598 | 1.00 | late | Crate-doc bullets — Display + format-shorthand summary | [scheduled bbox exact=21/21] crate-doc body in src/lib.rs (t=6917, 21 atoms) |
-| 2.7 | 1606 | 6917 | +5311 | 1.00 | late | Crate-doc bullets — From + source headlines | [scheduled bbox exact=17/17] crate-doc body in src/lib.rs (t=6917, 26 atoms) |
-| 2.8 | 1983 | 6917 | +4934 | 0.95 | late | Crate-doc bullets — Backtrace + transparent headlines | [scheduled bbox exact=20/21] crate-doc body in src/lib.rs (t=6917, 50 atoms) |
-| 3.1 | 2515 | 3135 | +620 | 0.87 | aligned | ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind type defs | [scheduled bbox exact=12/52] pub-item names surface in impl/src/ast.rs (t=1492, 12 atoms) |
-| 3.2 | 3231 | 3816 | +585 | 0.81 | aligned | attr.rs — Attrs / Display / Source / From / Transparent / Fmt / Trait type defs | [scheduled bbox exact=14/67] pub-item names surface in impl/src/attr.rs (t=2025, 14 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.1 | 245 | 0.00 | 0.00 | missing | README example — enum head + first variant | [scheduled bbox exact=7/8] README.md section #1 (t=3318, 7 atoms) |
+| 2.2 | 339 | 0.00 | 0.00 | missing | README example — remaining variants | [scheduled bbox exact=10/10] README.md section #1 (t=3318, 10 atoms) |
+| 2.6 | 1319 | 0.00 | 0.00 | missing | Crate-doc bullets — Display + format-shorthand summary | [scheduled bbox exact=21/21] crate-doc body in src/lib.rs (t=6917, 21 atoms) |
+| 2.7 | 1606 | 0.00 | 0.00 | missing | Crate-doc bullets — From + source headlines | [scheduled bbox exact=17/17] crate-doc body in src/lib.rs (t=6917, 26 atoms) |
+| 2.8 | 1983 | 0.00 | 0.00 | missing | Crate-doc bullets — Backtrace + transparent headlines | [scheduled bbox exact=20/21] crate-doc body in src/lib.rs (t=6917, 50 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 

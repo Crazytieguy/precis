@@ -15,11 +15,15 @@ pub(super) fn report_rows<'a>(ctx: &'a BuildCtx, arrivals: &'a [Arrival]) -> Vec
         .enumerate()
         .zip(arrivals)
         .filter_map(|((i, ns_row), arrival)| {
-            if arrival.status == ArrivalStatus::Aligned && arrival.credit >= 1.0 && !arrival.over {
+            // Reached rows (primary-budget credit ≥ REACH_THRESHOLD)
+            // are reached at the optimization target — no actionable
+            // gap on `Score(3000)`. Drop them so the ledger and
+            // rollups stay partial-or-missing only.
+            if arrival.status == ArrivalStatus::Reached {
                 return None;
             }
             let hint = candidate_hint_for_ctx(ns_row, ctx);
-            let diagnosis = diagnose_row(arrival, &hint);
+            let diagnosis = diagnose_row(&hint);
             Some(ReportRow {
                 id: &ns_row.id,
                 exp_t: ns_row.exp_t,
@@ -37,47 +41,23 @@ pub(super) struct ReportSummary {
     pub(super) primary_intervention: String,
     pub(super) secondary_intervention: Option<String>,
     pub(super) evidence: String,
-    pub(super) loss_reason_line: String,
     pub(super) top_rows: String,
 }
 
 pub(super) struct Opportunity {
     pub(super) intervention: String,
     pub(super) rows: usize,
-    pub(super) gap_weight: f64,
-    pub(super) bands: BudgetBands,
+    /// Σ priority over the opportunity's rows at B=[`BUDGETS[LOW_BUDGET_INDEX]`].
+    pub(super) gap_at_low: f64,
+    /// Σ priority at B=[`PRIMARY_BUDGET`]. Direct proxy for
+    /// `Score(3000)` headroom and the primary sort key for
+    /// opportunities, so iterators land on interventions that move the
+    /// optimization target rather than future-budget rows.
+    pub(super) gap_at_primary: f64,
+    /// Σ priority at B=[`BUDGETS[HIGH_BUDGET_INDEX]`].
+    pub(super) gap_at_high: f64,
     pub(super) evidence: String,
     pub(super) top_row_ids: String,
-}
-
-/// Default-budget canonical (3k) and a moderately-common higher tier (6k).
-/// These bound the bands shown in the opportunities table — exp_t past
-/// `BAND_HI` contributes nothing extractable to default-user output, so
-/// it lands in `total` only.
-const BAND_DEFAULT: usize = 3_000;
-const BAND_HI: usize = 6_000;
-
-#[derive(Debug, Clone, Copy, Default)]
-pub(super) struct BudgetBands {
-    le3k: usize,
-    le6k: usize,
-    total: usize,
-}
-
-impl BudgetBands {
-    fn add(&mut self, exp_t: usize) {
-        if exp_t <= BAND_DEFAULT {
-            self.le3k += 1;
-        }
-        if exp_t <= BAND_HI {
-            self.le6k += 1;
-        }
-        self.total += 1;
-    }
-
-    pub(super) fn label(self) -> String {
-        format!("{}/{}/{}", self.le3k, self.le6k, self.total)
-    }
 }
 
 pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
@@ -200,7 +180,7 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
     } else if primary_loss == Some(CandidateLossReason::TooExpensiveAtFinalMargin) {
         (
             "budget-pressure bound".to_string(),
-            "free final budget / demote late low-value spend".to_string(),
+            "free T_max budget / demote late low-value spend".to_string(),
         )
     } else if primary_loss == Some(CandidateLossReason::DiscoveredUnscheduled) {
         (
@@ -214,12 +194,17 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
         )
     };
 
+    // Secondary intervention only fires when it's distinct from the
+    // primary diagnosis — e.g. a wrong-slice fixture with a few
+    // too-expensive candidates surfaces both. If the candidate
+    // intervention overlaps with the verdict's primary lever, drop
+    // it; restating the same recommendation is noise.
     let secondary_intervention = if primary_loss
         != Some(CandidateLossReason::TooExpensiveAtFinalMargin)
         && budget_count > 0
     {
         Some(format!(
-            "free final budget for {budget_count} too-expensive candidate{}",
+            "free T_max budget for {budget_count} too-expensive candidate{}",
             plural(budget_count)
         ))
     } else if primary_loss != Some(CandidateLossReason::PredecessorNotScheduled) && pred_count > 0 {
@@ -227,12 +212,15 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
             "promote predecessors for {pred_count} gated candidate{}",
             plural(pred_count)
         ))
-    } else if wrong_slice > ranking && wrong_slice > 0 {
+    } else if primary_diagnosis != Some(DiagnosisKind::WrongSlice)
+        && wrong_slice > ranking
+        && wrong_slice > 0
+    {
         Some(format!(
             "split wrong-slice batches for {wrong_slice} row{}",
             plural(wrong_slice)
         ))
-    } else if no_discovered > 0 {
+    } else if primary_diagnosis != Some(DiagnosisKind::NoDiscoveredCandidate) && no_discovered > 0 {
         Some(format!(
             "investigate {no_discovered} no-discovered row{}",
             plural(no_discovered)
@@ -242,15 +230,13 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
     };
 
     let evidence = format!(
-        "{ranking} ranking-recoverable (w×gap={ranking_weight:.2}), {wrong_slice} wrong-slice/granularity (w×gap={wrong_slice_weight:.2}), {no_discovered} no-discovered (w×gap={no_discovered_weight:.2})"
+        "{ranking} ranking-recoverable (gap@3k={ranking_weight:.2}), {wrong_slice} wrong-slice/granularity (gap@3k={wrong_slice_weight:.2}), {no_discovered} no-discovered (gap@3k={no_discovered_weight:.2})"
     );
-    let loss_reason_line = format_loss_reason_line(&losses);
     let top_rows = top_opportunities(rows, 1)
         .first()
         .map(|opp| opp.top_row_ids.clone())
         .unwrap_or_else(|| {
             rows.iter()
-                .filter(|r| r.diagnosis != DiagnosisKind::TimingOnly)
                 .take(5)
                 .map(|r| r.id)
                 .collect::<Vec<_>>()
@@ -262,7 +248,6 @@ pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
         primary_intervention,
         secondary_intervention,
         evidence,
-        loss_reason_line,
         top_rows: if top_rows.is_empty() {
             "none".to_string()
         } else {
@@ -299,7 +284,8 @@ fn loss_reason_weights(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, 
             continue;
         }
         if let Some(loss) = ranking_loss(row) {
-            *weights.entry(loss.reason).or_default() += sim_gap_weight(row);
+            *weights.entry(loss.reason).or_default() +=
+                priority_at_budget(row, PRIMARY_BUDGET_INDEX);
         }
     }
     weights
@@ -308,33 +294,20 @@ fn loss_reason_weights(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, 
 fn diagnosis_weights(rows: &[ReportRow<'_>]) -> BTreeMap<DiagnosisKind, f64> {
     let mut weights = BTreeMap::new();
     for row in rows {
-        *weights.entry(row.diagnosis).or_default() += sim_gap_weight(row);
+        *weights.entry(row.diagnosis).or_default() += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
     }
     weights
 }
 
-pub(super) fn sim_weight(exp_t: usize) -> f64 {
-    (-(exp_t as f64) / TAU).exp()
-}
-
-pub(super) fn sim_gap_weight(row: &ReportRow<'_>) -> f64 {
-    sim_weight(row.exp_t) * (1.0 - row.arrival.credit).clamp(0.0, 1.0)
-}
-
-fn format_loss_reason_line(counts: &BTreeMap<CandidateLossReason, usize>) -> String {
-    let pred = counts
-        .get(&CandidateLossReason::PredecessorNotScheduled)
-        .copied()
-        .unwrap_or(0);
-    let budget = counts
-        .get(&CandidateLossReason::TooExpensiveAtFinalMargin)
-        .copied()
-        .unwrap_or(0);
-    let race = counts
-        .get(&CandidateLossReason::DiscoveredUnscheduled)
-        .copied()
-        .unwrap_or(0);
-    format!("{pred} predecessor-gated, {budget} too-expensive, {race} discovered-unscheduled")
+/// Per-row priority weight at a specific budget index in
+/// [`BUDGETS`]: `Σ over atoms with rank ≤ |A_B|: (1 −
+/// damped_credit(a)) / rank(a)` evaluated at that budget's walker
+/// snapshot. Slot [`PRIMARY_BUDGET_INDEX`] is the sort key throughout
+/// opportunity / loss / diagnosis rollups; [`LOW_BUDGET_INDEX`] and
+/// [`HIGH_BUDGET_INDEX`] surface the per-budget shape in the
+/// opportunity table.
+pub(super) fn priority_at_budget(row: &ReportRow<'_>, b_index: usize) -> f64 {
+    row.arrival.priority_at_b[b_index]
 }
 
 pub(super) struct PredecessorGroup<'a> {
@@ -342,8 +315,9 @@ pub(super) struct PredecessorGroup<'a> {
     pub(super) rows: Vec<&'a ReportRow<'a>>,
     pub(super) hits: usize,
     pub(super) total: usize,
-    gap_weight: f64,
-    bands: BudgetBands,
+    gap_at_low: f64,
+    gap_at_primary: f64,
+    gap_at_high: f64,
 }
 
 struct PredecessorKindGroup<'a> {
@@ -352,8 +326,27 @@ struct PredecessorKindGroup<'a> {
     files: BTreeSet<String>,
     hits: usize,
     total: usize,
-    gap_weight: f64,
-    bands: BudgetBands,
+    gap_at_low: f64,
+    gap_at_primary: f64,
+    gap_at_high: f64,
+}
+
+/// Sum each row's per-budget priority at the three display indices
+/// (`LOW_BUDGET_INDEX`, `PRIMARY_BUDGET_INDEX`, `HIGH_BUDGET_INDEX`).
+fn sum_gap_vector(rows: &[&ReportRow<'_>]) -> (f64, f64, f64) {
+    let low: f64 = rows
+        .iter()
+        .map(|r| priority_at_budget(r, LOW_BUDGET_INDEX))
+        .sum();
+    let primary: f64 = rows
+        .iter()
+        .map(|r| priority_at_budget(r, PRIMARY_BUDGET_INDEX))
+        .sum();
+    let high: f64 = rows
+        .iter()
+        .map(|r| priority_at_budget(r, HIGH_BUDGET_INDEX))
+        .sum();
+    (low, primary, high)
 }
 
 fn predecessor_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorGroup<'a>> {
@@ -381,12 +374,14 @@ fn predecessor_kind_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorKind
             files: BTreeSet::new(),
             hits: 0,
             total: 0,
-            gap_weight: 0.0,
-            bands: BudgetBands::default(),
+            gap_at_low: 0.0,
+            gap_at_primary: 0.0,
+            gap_at_high: 0.0,
         });
         group.rows.push(row);
-        group.gap_weight += sim_gap_weight(row);
-        group.bands.add(row.exp_t);
+        group.gap_at_low += priority_at_budget(row, LOW_BUDGET_INDEX);
+        group.gap_at_primary += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
+        group.gap_at_high += priority_at_budget(row, HIGH_BUDGET_INDEX);
         if let Some(file) = predecessor_file(predecessor) {
             group.files.insert(file);
         }
@@ -397,9 +392,14 @@ fn predecessor_kind_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorKind
     }
     let mut out: Vec<_> = groups.into_values().collect();
     out.sort_by(|a, b| {
-        b.gap_weight
-            .partial_cmp(&a.gap_weight)
+        b.gap_at_primary
+            .partial_cmp(&a.gap_at_primary)
             .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                b.gap_at_high
+                    .partial_cmp(&a.gap_at_high)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
             .then_with(|| b.rows.len().cmp(&a.rows.len()))
             .then_with(|| b.hits.cmp(&a.hits))
             .then_with(|| a.kind.cmp(&b.kind))
@@ -466,8 +466,9 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
         opportunities.push(Opportunity {
             intervention: format!("promote {}", group.kind),
             rows: group.rows.len(),
-            gap_weight: group.gap_weight,
-            bands: group.bands,
+            gap_at_low: group.gap_at_low,
+            gap_at_primary: group.gap_at_primary,
+            gap_at_high: group.gap_at_high,
             evidence: format!(
                 "{} file{}, exact total={}/{}",
                 group.files.len(),
@@ -483,8 +484,8 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
         &mut opportunities,
         rows,
         CandidateLossReason::TooExpensiveAtFinalMargin,
-        "free final budget / demote late waste",
-        "high-overlap candidates exceed final remaining budget",
+        "free T_max budget / demote late waste",
+        "high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below)",
     );
     push_loss_opportunity(
         &mut opportunities,
@@ -507,11 +508,22 @@ pub(super) fn top_opportunities(rows: &[ReportRow<'_>], limit: usize) -> Vec<Opp
         "split wrong-slice walker batches",
         "nearby candidates have low exact atom overlap",
     );
+    push_completion_opportunity(&mut opportunities, rows);
 
+    // Drop opportunities with zero `gap_at_primary` — under the new
+    // sort contract these can't move `Score(3000)`. They were
+    // surfacing as `0.00` rows that violated "Top opportunities = what
+    // to fix at the primary budget."
+    opportunities.retain(|o| o.gap_at_primary > 0.0);
     opportunities.sort_by(|a, b| {
-        b.gap_weight
-            .partial_cmp(&a.gap_weight)
+        b.gap_at_primary
+            .partial_cmp(&a.gap_at_primary)
             .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                b.gap_at_high
+                    .partial_cmp(&a.gap_at_high)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
             .then_with(|| b.rows.cmp(&a.rows))
             .then_with(|| a.intervention.cmp(&b.intervention))
     });
@@ -539,14 +551,46 @@ fn push_loss_opportunity(
         .fold((0usize, 0usize), |(hits, total), overlap| {
             (hits + overlap.hits, total + overlap.total)
         });
-    let gap_weight: f64 = matching.iter().map(|row| sim_gap_weight(row)).sum();
-    let bands = budget_bands(&matching);
+    let (gap_at_low, gap_at_primary, gap_at_high) = sum_gap_vector(&matching);
     opportunities.push(Opportunity {
         intervention: intervention.to_string(),
         rows: matching.len(),
-        gap_weight,
-        bands,
+        gap_at_low,
+        gap_at_primary,
+        gap_at_high,
         evidence: format!("{evidence}, exact total={}/{}", exact.0, exact.1),
+        top_row_ids: row_ids(&matching, 5),
+    });
+}
+
+/// Surface NS batches the walker started but didn't finish — the
+/// `damped_credit` factor punishes mid-progress, so closing these gaps
+/// is high-leverage on Score(B). Filter band `(COMPLETION_LO,
+/// COMPLETION_HI)` excludes "barely touched" (already captured under
+/// the row's diagnosis) and "essentially reached" (no actionable gap).
+fn push_completion_opportunity(opportunities: &mut Vec<Opportunity>, rows: &[ReportRow<'_>]) {
+    const COMPLETION_LO: f64 = 0.2;
+    const COMPLETION_HI: f64 = 0.8;
+    let matching: Vec<&ReportRow<'_>> = rows
+        .iter()
+        .filter(|row| {
+            let c = row.arrival.completion;
+            c > COMPLETION_LO && c < COMPLETION_HI
+        })
+        .collect();
+    if matching.is_empty() {
+        return;
+    }
+    let (gap_at_low, gap_at_primary, gap_at_high) = sum_gap_vector(&matching);
+    let avg_completion =
+        matching.iter().map(|r| r.arrival.completion).sum::<f64>() / matching.len() as f64;
+    opportunities.push(Opportunity {
+        intervention: "finish partially-delivered NS batches".to_string(),
+        rows: matching.len(),
+        gap_at_low,
+        gap_at_primary,
+        gap_at_high,
+        evidence: format!("avg batch completion={avg_completion:.2}"),
         top_row_ids: row_ids(&matching, 5),
     });
 }
@@ -565,13 +609,13 @@ fn push_diagnosis_opportunity(
     if matching.is_empty() {
         return;
     }
-    let gap_weight: f64 = matching.iter().map(|row| sim_gap_weight(row)).sum();
-    let bands = budget_bands(&matching);
+    let (gap_at_low, gap_at_primary, gap_at_high) = sum_gap_vector(&matching);
     opportunities.push(Opportunity {
         intervention: intervention.to_string(),
         rows: matching.len(),
-        gap_weight,
-        bands,
+        gap_at_low,
+        gap_at_primary,
+        gap_at_high,
         evidence: evidence.to_string(),
         top_row_ids: row_ids(&matching, 5),
     });
@@ -580,8 +624,8 @@ fn push_diagnosis_opportunity(
 pub(super) fn row_ids(rows: &[&ReportRow<'_>], limit: usize) -> String {
     let mut weighted_rows = rows.to_vec();
     weighted_rows.sort_by(|a, b| {
-        sim_gap_weight(b)
-            .partial_cmp(&sim_gap_weight(a))
+        priority_at_budget(b, PRIMARY_BUDGET_INDEX)
+            .partial_cmp(&priority_at_budget(a, PRIMARY_BUDGET_INDEX))
             .unwrap_or(std::cmp::Ordering::Equal)
             .then_with(|| a.exp_t.cmp(&b.exp_t))
             .then_with(|| a.id.cmp(b.id))
@@ -595,14 +639,6 @@ pub(super) fn row_ids(rows: &[&ReportRow<'_>], limit: usize) -> String {
         ids.push("...");
     }
     ids.join(", ")
-}
-
-fn budget_bands(rows: &[&ReportRow<'_>]) -> BudgetBands {
-    let mut bands = BudgetBands::default();
-    for row in rows {
-        bands.add(row.exp_t);
-    }
-    bands
 }
 
 pub(super) fn ranking_loss<'a>(row: &'a ReportRow<'_>) -> Option<&'a CandidateLoss> {
@@ -662,12 +698,14 @@ pub(super) fn predecessor_groups_from_refs<'a>(
                 rows: Vec::new(),
                 hits: 0,
                 total: 0,
-                gap_weight: 0.0,
-                bands: BudgetBands::default(),
+                gap_at_low: 0.0,
+                gap_at_primary: 0.0,
+                gap_at_high: 0.0,
             });
         group.rows.push(row);
-        group.gap_weight += sim_gap_weight(row);
-        group.bands.add(row.exp_t);
+        group.gap_at_low += priority_at_budget(row, LOW_BUDGET_INDEX);
+        group.gap_at_primary += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
+        group.gap_at_high += priority_at_budget(row, HIGH_BUDGET_INDEX);
         if let Some(overlap) = overlap {
             group.hits += overlap.hits;
             group.total += overlap.total;
@@ -675,9 +713,14 @@ pub(super) fn predecessor_groups_from_refs<'a>(
     }
     let mut out: Vec<_> = groups.into_values().collect();
     out.sort_by(|a, b| {
-        b.gap_weight
-            .partial_cmp(&a.gap_weight)
+        b.gap_at_primary
+            .partial_cmp(&a.gap_at_primary)
             .unwrap_or(std::cmp::Ordering::Equal)
+            .then_with(|| {
+                b.gap_at_high
+                    .partial_cmp(&a.gap_at_high)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
             .then_with(|| b.rows.len().cmp(&a.rows.len()))
             .then_with(|| b.hits.cmp(&a.hits))
             .then_with(|| a.predecessor.cmp(&b.predecessor))

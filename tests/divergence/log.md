@@ -1,59 +1,63 @@
-scores: Sim=0.518 Reached=15/44 Early=1 Late=9 Partial=3 Missing=26 Used=9067/10000
+scores: Score(3000)=0.607 ns_rows≤3K=17/44 (reached=9 partial=0 missing=8)
+
+## Per-budget scores
+
+| B | A_B | I(B) | C(B) | Score(B) | walker_used |
+|--:|----:|-----:|-----:|---------:|------------:|
+| 1000 | 83 | 0.868 | 0.506 | 0.663 | 969 |
+| 1442 | 120 | 0.858 | 0.480 | 0.642 | 1436 |
+| 2080 | 174 | 0.869 | 0.547 | 0.690 | 2064 |
+| 3000 | 234 | 0.843 | 0.437 | 0.607 | 2991 |
+| 4327 | 297 | 0.830 | 0.428 | 0.596 | 4076 |
+| 6240 | 476 | 0.800 | 0.317 | 0.504 | 6020 |
+| 9000 | 674 | 0.804 | 0.363 | 0.540 | 8999 |
 
 ## Verdict
 
-Verdict: budget-pressure bound
-Likely primary lever: free final budget / demote late low-value spend
-Evidence: 11 ranking-recoverable (w×gap=1.59), 16 wrong-slice/granularity (w×gap=1.14), 1 no-discovered (w×gap=0.01)
-Secondary intervention: split wrong-slice batches for 16 rows
-Loss reasons: 0 predecessor-gated, 9 too-expensive, 2 discovered-unscheduled
-Top rows: 1.6, 3.3, 3.4, 4.3, 5.2, ...
-Note: likely lever is heuristic; verify `Sim` moves, not just bucket counts.
+Verdict: wrong-slice bound
+Likely primary lever: split walker batches to match NS semantic slices
+Evidence: 11 ranking-recoverable (gap@3k=0.26), 18 wrong-slice/granularity (gap@3k=0.47), 1 no-discovered (gap@3k=0.00)
+Secondary intervention: free T_max budget for 9 too-expensive candidates
+Top rows: 3.1, 2.2, 2.6, 3.2, 3.5, ...
 
 ## Top opportunities
 
-_`w(t)×gap` is a non-additive priority score: Σ exp(-exp_t/τ) × (1 - credit) per row, τ=2000. Same time weighting and credit gap as Sim, but rows can overlap between opportunities — sums across rows are an upper bound on Sim impact, not an additive estimate._
+_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
-| intervention | rows | w(t)×gap | bands ≤3k/≤6k/total | evidence | top row ids |
-|:-------------|-----:|---------:|:----------------------|:---------|:------------|
-| free final budget / demote late waste | 9 | 1.43 | 3/4/9 | high-overlap candidates exceed final remaining budget, exact total=95/98 | 1.6, 3.3, 3.4, 4.3, 5.2, ... |
-| split wrong-slice walker batches | 16 | 1.14 | 3/9/16 | nearby candidates have low exact atom overlap | 3.1, 3.5, 3.2, 2.6, 3.9, ... |
-| tune ranking for discovered unscheduled candidates | 2 | 0.15 | 0/1/2 | high-overlap candidates fit but did not win, exact total=33/35 | 3.7, 5.14 |
-| add walker candidates for no-discovered rows | 1 | 0.01 | 0/0/1 | NS rows have no discovered line candidate | 5.11 |
-
-Tiers: 1=5/6 reached, 0 partial, 1 missing, avg=0.83; 2=6/7 reached, 1 partial, 0 missing, avg=0.95; 3=1/9 reached, 0 partial, 8 missing, avg=0.22; 4=2/8 reached, 2 partial, 4 missing, avg=0.46; 5=1/14 reached, 0 partial, 13 missing, avg=0.10
+| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
+|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
+| split wrong-slice walker batches | 18 | 0.13 | 0.47 | 0.85 | nearby candidates have low exact atom overlap | 3.1, 2.2, 2.6, 3.2, 3.5, ... |
+| finish partially-delivered NS batches | 5 | 0.00 | 0.33 | 0.28 | avg batch completion=0.33 | 3.1, 2.6, 3.2, 4.4, 4.6 |
+| free T_max budget / demote late waste | 9 | 0.21 | 0.26 | 0.40 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/98 | 1.6, 3.3, 3.4, 4.3, 5.2, ... |
 
 ## Diagnosis rollup
 
-| diagnosis | rows | missing | partial | timing | likely lever |
-|:----------|-----:|--------:|--------:|-------:|:-------------|
-| ranking-recoverable | 11 | 11 | 0 | 0 | value/ranking |
-| wrong-slice / granularity | 16 | 13 | 3 | 0 | walker granularity / wrong slice |
-| no discovered candidate | 1 | 1 | 0 | 0 | walker coverage or predecessor-gated emit |
-| fs/listing | 1 | 1 | 0 | 0 | filesystem/listing value |
-| timing-only | 11 | 0 | 0 | 11 | usually no code change |
+| diagnosis | rows | missing | partial | likely lever |
+|:----------|-----:|--------:|--------:|:-------------|
+| ranking-recoverable | 11 | 11 | 0 | value/ranking |
+| wrong-slice / granularity | 18 | 16 | 2 | walker granularity / wrong slice |
+| no discovered candidate | 1 | 1 | 0 | walker coverage or predecessor-gated emit |
+| fs/listing | 1 | 1 | 0 | filesystem/listing value |
+| mixed/unknown | 3 | 3 | 0 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
-| loss reason | rows | w(t)×gap | likely lever |
-|:------------|-----:|---------:|:-------------|
-| too expensive at final margin | 9 | 1.43 | free final budget |
-| discovered unscheduled | 2 | 0.15 | tune ranking |
+| loss reason | rows | gap@3k | likely lever |
+|:------------|-----:|-------:|:-------------|
+| too expensive at final margin | 9 | 0.26 | free T_max budget |
+| discovered unscheduled | 2 | 0.00 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=23, unscheduled bbox=10, scheduled same-file=4, fs-only=2, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-file=4, fs-only=1, no discovered candidate=1
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | aligned | high | 1 |
-| scheduled bbox | late | low | 1 |
-| scheduled bbox | late | high | 2 |
-| scheduled bbox | late | full | 6 |
-| scheduled bbox | missing | none | 2 |
-| scheduled bbox | missing | low | 8 |
-| scheduled bbox | partial | none | 1 |
+| scheduled bbox | missing | none | 3 |
+| scheduled bbox | missing | low | 10 |
+| scheduled bbox | missing | high | 2 |
+| scheduled bbox | missing | full | 1 |
 | scheduled bbox | partial | low | 2 |
 | unscheduled bbox | missing | high | 2 |
 | unscheduled bbox | missing | full | 8 |
@@ -62,68 +66,62 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=10, scheduled same-fil
 
 ### ranking-recoverable
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.6 | 545 | — | — | 0.00 | missing | Five-macro user-facing summary | [unscheduled bbox exact=10/10] crate-doc body in src/lib.rs (18 atoms, too expensive at final margin) |
-| 3.3 | 2682 | — | — | 0.00 | missing | Level public-method index | [unscheduled bbox exact=6/6] impl method sigs in src/lib.rs (11 atoms, too expensive at final margin) |
-| 3.4 | 2779 | — | — | 0.00 | missing | LevelFilter public-method index | [unscheduled bbox exact=6/6] impl method sigs in src/lib.rs (11 atoms, too expensive at final margin) |
-| 3.7 | 3856 | — | — | 0.00 | missing | __log internal-macro body (the actual gate) | [scheduled bbox exact=1/28] macro_export names across src (t=4332, 1 atoms); better unscheduled exact=27/28: macro_export body at src/macros.rs:119 (27 atoms, discovered unscheduled) |
-| 4.3 | 5477 | — | — | 0.00 | missing | kv capture-modifier table | [unscheduled bbox exact=10/10] crate-doc body in src/kv/mod.rs (10 atoms, too expensive at final margin) |
-| 5.2 | 7149 | — | — | 0.00 | missing | Implementing-a-Logger doc snippet | [unscheduled bbox exact=18/18] crate-doc body in src/lib.rs (18 atoms, too expensive at final margin) |
-| 5.3 | 7366 | — | — | 0.00 | missing | Default-Off warning + STATIC_MAX_LEVEL note | [unscheduled bbox exact=11/11] crate-doc body in src/lib.rs (11 atoms, too expensive at final margin) |
-| 5.6 | 8318 | — | — | 0.00 | missing | RecordBuilder method index | [unscheduled bbox exact=12/12] impl method sigs in src/lib.rs (23 atoms, too expensive at final margin) |
-| 5.7 | 8407 | — | — | 0.00 | missing | MetadataBuilder method index | [unscheduled bbox exact=4/4] impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
-| 5.8 | 8659 | — | — | 0.00 | missing | Logger blanket impls (&T, Box, Arc) | [unscheduled bbox exact=18/21] impl method sigs in src/lib.rs (26 atoms, too expensive at final margin) |
-| 5.14 | 9861 | — | — | 0.00 | missing | logger() global accessor | [unscheduled bbox exact=6/7] pub item body at src/lib.rs:1581 body 1590 (6 atoms, discovered unscheduled) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.6 | 545 | 0.00 | 0.00 | missing | Five-macro user-facing summary | [unscheduled bbox exact=10/10] crate-doc body in src/lib.rs (18 atoms, too expensive at final margin) |
+| 3.3 | 2682 | 0.00 | 0.00 | missing | Level public-method index | [unscheduled bbox exact=6/6] impl method sigs in src/lib.rs (11 atoms, too expensive at final margin) |
+| 3.4 | 2779 | 0.00 | 0.00 | missing | LevelFilter public-method index | [unscheduled bbox exact=6/6] impl method sigs in src/lib.rs (11 atoms, too expensive at final margin) |
+| 3.7 | 3856 | 0.00 | 0.00 | missing | __log internal-macro body (the actual gate) | [scheduled bbox exact=1/28] macro_export names across src (t=4332, 1 atoms); better unscheduled exact=27/28: macro_export body at src/macros.rs:119 (27 atoms, discovered unscheduled) |
+| 4.3 | 5477 | 0.00 | 0.00 | missing | kv capture-modifier table | [unscheduled bbox exact=10/10] crate-doc body in src/kv/mod.rs (10 atoms, too expensive at final margin) |
+| 5.2 | 7149 | 0.00 | 0.00 | missing | Implementing-a-Logger doc snippet | [unscheduled bbox exact=18/18] crate-doc body in src/lib.rs (18 atoms, too expensive at final margin) |
+| 5.3 | 7366 | 0.00 | 0.00 | missing | Default-Off warning + STATIC_MAX_LEVEL note | [unscheduled bbox exact=11/11] crate-doc body in src/lib.rs (11 atoms, too expensive at final margin) |
+| 5.6 | 8318 | 0.00 | 0.00 | missing | RecordBuilder method index | [unscheduled bbox exact=12/12] impl method sigs in src/lib.rs (23 atoms, too expensive at final margin) |
+| 5.7 | 8407 | 0.00 | 0.00 | missing | MetadataBuilder method index | [unscheduled bbox exact=4/4] impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
+| 5.8 | 8659 | 0.00 | 0.00 | missing | Logger blanket impls (&T, Box, Arc) | [unscheduled bbox exact=18/21] impl method sigs in src/lib.rs (26 atoms, too expensive at final margin) |
+| 5.14 | 9861 | 0.00 | 0.00 | missing | logger() global accessor | [unscheduled bbox exact=6/7] pub item body at src/lib.rs:1581 body 1590 (6 atoms, discovered unscheduled) |
 
 ### wrong-slice / granularity
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 2.6 | 1531 | — | — | 0.71 | partial | Logger installation entry-point signatures | [scheduled bbox exact=0/14] pub-item doc lede at src/lib.rs:1396 (t=6020, 13 atoms) |
-| 3.1 | 2481 | — | — | 0.24 | missing | Record struct + accessor signatures | [scheduled bbox exact=9/38] pub item at src/lib.rs:842 (t=1530, 9 atoms); better unscheduled exact=20/38: impl method sigs in src/lib.rs (26 atoms, too expensive at final margin) |
-| 3.2 | 2587 | — | — | 0.40 | missing | Metadata struct + accessors | [scheduled bbox exact=4/10] pub item at src/lib.rs:1158 (t=1394, 4 atoms); better unscheduled exact=6/10: impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
-| 3.5 | 3082 | — | — | 0.00 | missing | Global state + ordering constants | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
-| 3.8 | 4415 | — | — | 0.38 | missing | __private_api log dispatcher | [scheduled bbox exact=11/55] pub item at src/__private_api.rs:84 (t=7383, 11 atoms) |
-| 3.9 | 4715 | — | — | 0.00 | missing | set_logger_inner state transitions | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
-| 4.1 | 5085 | — | — | 0.33 | missing | kv module concept | [scheduled bbox exact=10/30] crate-doc lede in src/kv/mod.rs (t=240, 10 atoms); better unscheduled exact=19/30: crate-doc body in src/kv/mod.rs (19 atoms, too expensive at final margin) |
-| 4.2 | 5290 | — | — | 0.55 | partial | kv module re-exports | [scheduled bbox exact=11/20] mod/use plumbing in src/kv/mod.rs (t=3785, 11 atoms) |
-| 4.5 | 5889 | — | — | 0.18 | missing | kv::Value capture constructors | [scheduled bbox exact=3/17] pub item at src/kv/value.rs:119 (t=940, 3 atoms) |
-| 4.6 | 6053 | — | — | 0.58 | partial | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=596, 4 atoms) |
-| 4.8 | 6552 | — | — | 0.00 | missing | kv::Value to_* primitive accessors | [scheduled same-file] pub item at src/kv/value.rs:462 (t=8999, 63 atoms) |
-| 5.4 | 7693 | — | — | 0.00 | missing | Compile-time max_level_* conflict guards | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
-| 5.5 | 7986 | — | — | 0.00 | missing | FromStr impls for Level/LevelFilter | [scheduled bbox exact=0/24] pub item at src/lib.rs:636 (t=1669, 14 atoms); better unscheduled exact=6/24: impl method sigs in src/lib.rs (30 atoms, too expensive at final margin) |
-| 5.9 | 8977 | — | — | 0.07 | missing | non-atomic AtomicUsize fallback | [scheduled bbox exact=2/29] mod/use plumbing in src/lib.rs (t=3344, 2 atoms); better unscheduled exact=7/29: impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
-| 5.12 | 9640 | — | — | 0.00 | missing | kv::Source impl matrix | [scheduled bbox exact=0/37] pub item at src/kv/source.rs:235 (t=642, 4 atoms) |
-| 5.13 | 9784 | — | — | 0.27 | missing | kv::Error variants | [scheduled bbox exact=3/15] pub item at src/kv/error.rs:5 (t=151, 3 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.2 | 831 | 0.00 | 0.00 | missing | Macro names (src/macros.rs) | [scheduled bbox exact=1/10] macro_export body at src/macros.rs:75 (t=8159, 38 atoms) |
+| 2.6 | 1531 | 0.22 | 0.22 | missing | Logger installation entry-point signatures | [scheduled bbox exact=0/14] pub-item doc lede at src/lib.rs:1396 (t=6020, 13 atoms) |
+| 3.1 | 2481 | 0.24 | 0.23 | missing | Record struct + accessor signatures | [scheduled bbox exact=9/38] pub item at src/lib.rs:842 (t=1530, 9 atoms); better unscheduled exact=20/38: impl method sigs in src/lib.rs (26 atoms, too expensive at final margin) |
+| 3.2 | 2587 | 0.40 | 0.26 | missing | Metadata struct + accessors | [scheduled bbox exact=4/10] pub item at src/lib.rs:1158 (t=1394, 4 atoms); better unscheduled exact=6/10: impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
+| 3.5 | 3082 | 0.00 | 0.00 | missing | Global state + ordering constants | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
+| 3.8 | 4415 | 0.00 | 0.00 | missing | __private_api log dispatcher | [scheduled bbox exact=11/55] pub item at src/__private_api.rs:84 (t=7383, 11 atoms) |
+| 3.9 | 4715 | 0.00 | 0.00 | missing | set_logger_inner state transitions | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
+| 4.1 | 5085 | 0.33 | 0.16 | missing | kv module concept | [scheduled bbox exact=10/30] crate-doc lede in src/kv/mod.rs (t=240, 10 atoms); better unscheduled exact=19/30: crate-doc body in src/kv/mod.rs (19 atoms, too expensive at final margin) |
+| 4.2 | 5290 | 0.00 | 0.00 | missing | kv module re-exports | [scheduled bbox exact=11/20] mod/use plumbing in src/kv/mod.rs (t=3785, 11 atoms) |
+| 4.4 | 5612 | 0.62 | 0.49 | partial | kv::Source trait surface | [scheduled bbox exact=4/8] pub item at src/kv/source.rs:51 (t=6445, 36 atoms) |
+| 4.5 | 5889 | 0.18 | 0.08 | missing | kv::Value capture constructors | [scheduled bbox exact=3/17] pub item at src/kv/value.rs:119 (t=940, 3 atoms) |
+| 4.6 | 6053 | 0.58 | 0.45 | partial | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=596, 4 atoms) |
+| 4.8 | 6552 | 0.00 | 0.00 | missing | kv::Value to_* primitive accessors | [scheduled same-file] pub item at src/kv/value.rs:462 (t=8999, 63 atoms) |
+| 5.4 | 7693 | 0.00 | 0.00 | missing | Compile-time max_level_* conflict guards | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
+| 5.5 | 7986 | 0.00 | 0.00 | missing | FromStr impls for Level/LevelFilter | [scheduled bbox exact=0/24] pub item at src/lib.rs:636 (t=1669, 14 atoms); better unscheduled exact=6/24: impl method sigs in src/lib.rs (30 atoms, too expensive at final margin) |
+| 5.9 | 8977 | 0.00 | 0.00 | missing | non-atomic AtomicUsize fallback | [scheduled bbox exact=2/29] mod/use plumbing in src/lib.rs (t=3344, 2 atoms); better unscheduled exact=7/29: impl method sigs in src/lib.rs (7 atoms, too expensive at final margin) |
+| 5.12 | 9640 | 0.00 | 0.00 | missing | kv::Source impl matrix | [scheduled bbox exact=0/37] pub item at src/kv/source.rs:235 (t=642, 4 atoms) |
+| 5.13 | 9784 | 0.20 | 0.12 | missing | kv::Error variants | [scheduled bbox exact=3/15] pub item at src/kv/error.rs:5 (t=151, 3 atoms) |
 
 ### no discovered candidate
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 5.11 | 9234 | — | — | 0.00 | missing | Macro test-fn names (tests/macros.rs) | no discovered line candidate |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 5.11 | 9234 | 0.00 | 0.00 | missing | Macro test-fn names (tests/macros.rs) | no discovered line candidate |
 
 ### fs/listing
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 5.10 | 8998 | — | — | 0.20 | missing | tests/ + benches/ + harness listings | fs-only |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 5.10 | 8998 | 0.00 | 0.00 | missing | tests/ + benches/ + harness listings | fs-only |
 
-### timing-only
+### mixed/unknown
 
-| id | exp_t | reached_t | delta_t | credit | status | descriptor | candidate hint |
-|----|------:|----------:|--------:|-------:|:-------|:-----------|:--------------------|
-| 1.2 | 102 | 486 | +384 | 1.00 | late | Cargo name + description | [scheduled bbox exact=4/4] [package] in Cargo.toml (t=486, 9 atoms) |
-| 1.3 | 190 | 886 | +696 | 1.00 | late | Crate-doc one-liner | [scheduled bbox exact=6/6] crate-doc lede in src/lib.rs (t=886, 6 atoms) |
-| 1.4 | 231 | 129 | -102 | 1.00 | early | src/ + src/kv/ listing | fs-only |
-| 1.5 | 381 | 886 | +505 | 1.00 | late | Crate-doc target/level/body model | [scheduled bbox exact=9/9] crate-doc lede in src/lib.rs (t=886, 9 atoms) |
-| 2.1 | 735 | 1336 | +601 | 1.00 | late | Public-item map of lib.rs | [scheduled bbox exact=16/17] pub-item names surface in src/lib.rs (t=1336, 31 atoms) |
-| 2.2 | 831 | 4332 | +3501 | 1.00 | late | Macro names (src/macros.rs) | [scheduled bbox exact=1/10] macro_export body at src/macros.rs:75 (t=8159, 38 atoms) |
-| 2.3 | 883 | 2551 | +1668 | 1.00 | late | Log trait method signatures | [scheduled bbox exact=4/4] pub item at src/lib.rs:1249 (t=2551, 17 atoms) |
-| 2.4 | 1153 | 1974 | +821 | 1.00 | late | Level enum body | [scheduled bbox exact=24/24] pub item at src/lib.rs:475 (t=1974, 24 atoms) |
-| 2.7 | 2033 | 8159 | +6126 | 0.93 | late | log! macro shapes (4 forms) | [scheduled bbox exact=37/40] macro_export body at src/macros.rs:75 (t=8159, 37 atoms) |
-| 4.7 | 6361 | 8999 | +2638 | 1.00 | late | VisitValue trait method index | [scheduled bbox exact=14/14] pub item at src/kv/value.rs:462 (t=8999, 57 atoms) |
-| 5.1 | 6964 | 5403 | -1561 | 0.85 | aligned | Cargo features list | [scheduled bbox exact=28/33] [features] in Cargo.toml (t=5403, 28 atoms) |
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.7 | 2033 | 0.00 | 0.00 | missing | log! macro shapes (4 forms) | [scheduled bbox exact=37/40] macro_export body at src/macros.rs:75 (t=8159, 37 atoms) |
+| 4.7 | 6361 | 0.07 | 0.03 | missing | VisitValue trait method index | [scheduled bbox exact=14/14] pub item at src/kv/value.rs:462 (t=8999, 57 atoms) |
+| 5.1 | 6964 | 0.00 | 0.00 | missing | Cargo features list | [scheduled bbox exact=28/33] [features] in Cargo.toml (t=5403, 28 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 

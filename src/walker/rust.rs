@@ -530,7 +530,7 @@ pub(super) enum Visibility {
 
 impl ApiSurface {
     /// Multiplier applied to all three value channels for non-API items.
-    /// Calibrated against the divergence Sim metric across the 10
+    /// Calibrated against the divergence score metric across the 10
     /// fixtures: 0.4 per axis (visibility, doc_hidden) demotes
     /// non-API items meaningfully without dropping load-bearing
     /// internal types out of the schedule entirely. 0.16 stacks for

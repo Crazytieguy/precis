@@ -1,47 +1,91 @@
 //! Divergence metric + report generator. Compares a walker `Schedule`
 //! run at `T_max` to a frozen `NorthStar`. Three artifacts:
 //!
-//! - `Scores`: `sim` (integral similarity scalar) + per-NS-batch
-//!   buckets `reached + partial + missing == total_ns` and
-//!   `early` / `late` within `reached`.
+//! - `Scores`: per-budget `Score(B)` vector across a 7-budget grid +
+//!   `A_3K`-gated bucket counts `reached + partial + missing ==
+//!   ns_rows≤3K`. Primary objective is `Score(3000)` — the auto-
+//!   injection budget every session hits.
 //! - Per-fixture Markdown report (`tests/divergence/<fixture>.md`):
-//!   answer-at-the-top format. Score line, then Verdict block, Top
-//!   opportunities, compressed tier line, diagnosis / loss-reason /
+//!   answer-at-the-top format. Score line + per-budget table, then
+//!   Verdict block, Top opportunities, diagnosis / loss-reason /
 //!   exact-overlap rollups, arrival ledger grouped by diagnosis, and
-//!   walker waste at the bottom. Stable ordering; perfect alignment ⇒
-//!   very short file.
+//!   walker waste at the bottom. Reached rows (credit ≥ 0.8) are
+//!   filtered out of every rollup — under per-budget the optimization
+//!   target only depends on partial / missing rows, so reaching is
+//!   the absence of an opportunity, not a category. Stable ordering;
+//!   perfect alignment ⇒ very short file.
 //! - Corpus index (`tests/divergence/OVERVIEW.md`): one row per
-//!   fixture sorted by `Sim` ascending. Mirrors each fixture's verdict
-//!   line so an agent picks where to focus from a single file.
+//!   fixture sorted by `Score(3000)` ascending, with the full 7-vector
+//!   exposed so front-loader / trailing-loader walker shapes are
+//!   visible at a glance. Mirrors each fixture's verdict line so an
+//!   agent picks where to focus from a single file.
 //!
 //! NS `exp_t` is the cumulative marginal cost of applying NS batches in
 //! rank order to one shared `RenderedTree` — same accounting as
 //! `simulate_ns`, so predecessor refinements over ellipsis lines cost
 //! only their delta. Under scheduler prefix-monotonicity, walker
 //! sub-budget behavior is the prefix of the T_max schedule with
-//! `cum_tokens ≤ t`, so we run the walker once.
+//! `cum_tokens ≤ t`, so we run the walker once and slice it for each
+//! budget in the grid.
 //!
-//! ## Score line
+//! ## Score line + per-budget table
 //!
-//! `Sim=X.XXX Reached=R/T Early=E Late=L Partial=P Missing=M Used=U/B`
+//! Headline: `Score(3000)=X.XXX ns_rows≤3K=N/T (reached=R partial=P
+//! missing=M)`. `N` is the number of NS *rows* (batches) with
+//! `exp_t ≤ 3000`; `T` is total NS rows. Bucket counts are gated to
+//! those rows — under per-budget the optimization target only
+//! depends on rows in `A_3K`. (Distinct from `A_B` in the per-budget
+//! table, which counts NS *atoms* in `A_B`, not rows.)
 //!
-//! - `Sim ∈ [0,1]` — `∫ w(t)·overlap(t) dt / ∫ w(t) dt`,
-//!   `w(t) = exp(−t/τ)`, `τ=2000`. `overlap(t)` averages graded credit
-//!   over NS atoms *reachable at t* (denominator excludes
-//!   unreachable-by-construction NS atoms, so low-t is meaningful).
-//! - `R/T` reached / total NS batches; `E`, `L`, `P`, `M` are subsets.
-//! - `U/B` walker tokens consumed / token budget. Gap = budget the
-//!   prefix-monotone scheduler left on the table.
+//! Followed by a 7-row table:
+//! `| B | A_B | I(B) | C(B) | Score(B) | walker_used |`
 //!
-//! ## Atoms + credit
+//! - `B ∈ {1000, 1442, 2080, 3000, 4327, 6240, 9000}` — geometric grid
+//!   on `[1000, 9000]` with ratio ⁶√9 ≈ 1.442, symmetric around 3000
+//!   on the log scale.
+//! - `A_B` — number of NS atoms in batches with `cum_tokens ≤ B`.
+//! - `I(B)` — Importance, rank-weighted recall: `min(1, Σ r(rank(a)) ·
+//!   damped_credit(a) / Σ_{rank ≤ |A_B|} r(rank))`. Atoms past `A_B`
+//!   contribute to the numerator (with their NS rank) but the
+//!   denominator is fixed to A_B and the result caps at 1 — perfect is
+//!   "delivered all of A_B".
+//! - `C(B)` — Coverage, rank-uniform recall over A_B: `Σ_{rank ≤ |A_B|}
+//!   damped_credit(a) / |A_B|`.
+//! - `Score(B) = √(I(B) · C(B))`.
+//! - `walker_used` — walker `cum_tokens` at the last batch fitting in B.
+//!
+//! ## Atoms + credit + completion
 //!
 //! Atoms are `Line(path, line)` or `Fs(parent, entry)`. Each has a
 //! `bytes` footprint per render (Full = source-line length, Truncated =
 //! regex match end, Ellipsis = 1, Fs = 1; floored at 1 so "rendered" is
 //! distinguishable from "absent"). Credit between matched walker + NS
-//! atoms is `min(walker, ns) / max(ns, 1)`, capped at 1.0. Walker
-//! showing strictly more bytes than NS asked → fully credited but
-//! flagged via the `+over` row annotation.
+//! atoms is `min(walker, ns) / max(ns, 1)`, capped at 1.0.
+//!
+//! NS atoms carry a 1-indexed `rank` from a flat traversal of NS
+//! batches in schedule order, and `r(rank) = 1/rank` (α = 1) is the
+//! per-atom Importance weight.
+//!
+//! `completion(B_i) = Σ_{a ∈ B_i} min(walker_bytes(a), ns_bytes(a)) /
+//! Σ_{a ∈ B_i} ns_bytes(a)` — byte-weighted fraction of NS batch `B_i`
+//! the walker delivered. Per-atom `damped_credit(a) = credit(a) ·
+//! completion(B(a))` gates each atom by the completeness of its
+//! enclosing NS batch — a walker covering 50% of every batch scores
+//! worse than one completing fewer batches fully ("finish what you
+//! start", with no thresholds).
+//!
+//! ## Primary-budget anchor
+//!
+//! Every per-row signal in the report — `credit`, `comp`, `status`,
+//! the headline counts, and the diagnosis bucketing — is computed
+//! against the walker state at the **primary budget** (`B = 3000`),
+//! not at T_max. This is the contract that makes the report honest:
+//! a row expected before 3K but first delivered at t=8000 contributes
+//! 0 to `Score(3000)`, so it must show as `missing` (not `reached`)
+//! and remain visible to the iterator. Per-budget priority weights
+//! `priority_at_b[i]` use each budget's own `walker_cum`, so the
+//! vector context (`gap@1k`, `gap@9k`) is honestly per-budget rather
+//! than collapsing to final-state.
 //!
 //! ## Verdict block
 //!
@@ -50,39 +94,40 @@
 //! Lever options: `parent-gating bound`, `budget-pressure bound`,
 //! `wrong-slice bound`, `coverage-gap bound`, `ranking-race bound`,
 //! `timing-only / low-action`. Selection is heuristic: pick the
-//! diagnosis with the largest `w(t)×gap` weight (see Top
+//! diagnosis with the largest `gap@3k` weight (see Top
 //! opportunities), break ties toward more-actionable interventions.
 //!
 //! Block fields: `Verdict` (lever label), `Likely primary lever`
-//! (one-line action), `Evidence` (bucket counts with weights),
-//! `Secondary intervention` (next-best lever, optional), `Loss reasons`
-//! (for ranking-recoverable rows: predecessor-gated /
-//! too-expensive-at-final-margin / discovered-unscheduled), `Top rows`
-//! (highest-leverage row ids by w(t)×gap), and an anti-Goodhart
-//! reminder. **Wording is heuristic-derived** — verify `Sim` actually
-//! moves after a calibration change, not just bucket counts.
+//! (one-line action), `Evidence` (bucket counts with `gap@3k`
+//! weights), `Secondary intervention` (next-best lever, optional —
+//! suppressed when it would restate the primary), `Top rows`
+//! (highest-leverage row ids by `gap@3k`). The detailed loss-reason
+//! breakdown for ranking-recoverable rows lives in its own rollup
+//! table below the verdict.
 //!
 //! ## Top opportunities
 //!
-//! Capped at 5 rows, sorted by `w(t)×gap` descending. Each row is one
-//! intervention with the rows it would address.
+//! Capped at 5 rows, sorted by `gap@3k` descending; opportunities
+//! with `gap@3k = 0` (no headroom on the primary objective) are
+//! filtered out entirely. Each surviving row is one intervention with
+//! the rows it would address.
 //!
 //! - `intervention` — what to change (e.g. `promote go decl signature
-//!   batches`, `free final budget / demote late waste`, `split
+//!   batches`, `free T_max budget / demote late waste`, `split
 //!   wrong-slice walker batches`, `add walker candidates for
-//!   no-discovered rows`).
+//!   no-discovered rows`, `finish partially-delivered NS batches`).
 //! - `rows` — count of NS rows the intervention would help.
-//! - `w(t)×gap` — `Σ exp(-exp_t/τ) × (1 - credit)` over those rows,
-//!   τ=2000, same time weighting and credit-gap as headline `Sim`.
-//!   **Non-additive across opportunities** (rows can overlap between
-//!   opportunities); sum is an upper bound on Sim impact, not an
-//!   additive estimate.
-//! - `bands ≤3k/≤6k/total` — count of rows with `exp_t` ≤ 3000 / ≤
-//!   6000 / overall. Default product budget is 3k, so the first band
-//!   is the most user-relevant.
+//! - `gap@1k` / `gap@3k` / `gap@9k` — `Σ over atoms in row with rank
+//!   ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the
+//!   primary sort key (proxy for `Score(3000)` headroom); `gap@1k`
+//!   and `gap@9k` show how the same intervention scales across the
+//!   budget vector — useful for spotting when a 3K-targeted change
+//!   would silently regress another budget. **Non-additive across
+//!   opportunities** (rows can overlap); sums are upper bounds on
+//!   Score(B) impact, not additive estimates.
 //! - `evidence` — short rationale (file count for predecessor-kind
-//!   groups; exact-atom totals; etc.).
-//! - `top row ids` — up to 5 row ids sorted by `w(t)×gap` descending
+//!   groups; exact-atom totals; avg batch completion; etc.).
+//! - `top row ids` — up to 5 row ids sorted by `gap@3k` descending
 //!   (lowest exp_t first), with `...` suffix when more exist.
 //!
 //! Predecessor-kind grouping collapses parent-gated rows by walker-key
@@ -91,29 +136,25 @@
 //! frame, since `value.rs` is tuned by walker-key class rather than
 //! per-batch.
 //!
-//! ## Tier line
-//!
-//! One-line summary per major-id prefix (`1.x`, `2.x`, …) with reached
-//! / partial / missing counts and `avg_credit`. Quick view of where
-//! the walker falls off across tiers. Decompressed from the older
-//! tier rollup table.
-//!
 //! ## Diagnosis rollup
 //!
 //! Counts of arrival-ledger rows by diagnosis bucket: `ranking-
 //! recoverable` (unscheduled high/full exact overlap), `wrong-slice /
 //! granularity` (scheduled or near-bbox at low/none exact),
 //! `no discovered candidate` (walker emits nothing covering NS lines),
-//! `fs/listing`, `timing-only`, `mixed/unknown`. Each bucket carries
-//! `missing / partial / timing` sub-counts and a `likely lever` label.
-//! The diagnosis is the audit trail behind the verdict block — a way
-//! to spot-check that the verdict's primary lever matches the data.
+//! `fs/listing`, `mixed/unknown`. Each bucket carries `missing /
+//! partial` sub-counts and a `likely lever` label. The diagnosis is
+//! the audit trail behind the verdict block — a way to spot-check
+//! that the verdict's primary lever matches the data. Reached rows
+//! (final-state credit ≥ 0.8) are filtered out of all rollups before
+//! diagnosis runs, so every reported row has a partial-or-missing
+//! credit and a corresponding actionable lever.
 //!
 //! ## Loss reason rollup (ranking-recoverable rows only)
 //!
 //! Splits the ranking-recoverable bucket by why the candidate didn't
 //! schedule: `predecessor not scheduled`, `too expensive at final
-//! margin`, `discovered unscheduled`. Each carries a `w(t)×gap` and a
+//! margin`, `discovered unscheduled`. Each carries a `gap@3k` and a
 //! per-loss intervention label. **Note**: loss reasons are computed
 //! against the *final* render-tree state, not the candidate's state at
 //! first eligibility — see `docs/design-notes.md` for the post-hoc
@@ -150,24 +191,22 @@
 //!
 //! One section per diagnosis bucket, in fixed order
 //! (`ranking-recoverable` first, then `wrong-slice`, then
-//! `no discovered candidate`, then `fs/listing`, `mixed/unknown`,
-//! `timing-only`). Within each section, rows sort by `exp_t`
-//! ascending. Per-row columns:
-//! `id | exp_t | reached_t | delta_t | credit | status | descriptor |
+//! `no discovered candidate`, then `fs/listing`, `mixed/unknown`).
+//! Within each section, rows sort by `exp_t` ascending. Per-row
+//! columns: `id | exp_t | credit | comp | status | descriptor |
 //! candidate hint`.
 //!
 //! - `exp_t` — NS-cumulative tokens at that batch (when NS expects it).
-//! - `reached_t` — walker `cum_tokens` at the batch where this NS
-//!   batch's credit first reaches `REACH_THRESHOLD = 0.8`. `—` if
-//!   never reached.
-//! - `delta_t` — `reached_t - exp_t` with sign. Negative = early,
-//!   positive = late.
-//! - `credit` — final-state byte-range credit averaged over NS atoms.
-//! - `status` ∈ `{aligned, early, late, partial, missing}` with
-//!   optional `+over` annotation (only on `aligned` rows). Bands:
-//!   `credit < 0.5` → missing, `< 0.8` → partial, else reached;
-//!   within reached, timing classifies via `EARLY_FACTOR = 0.7` /
-//!   `LATE_FACTOR = 1.3` on `delta_t / exp_t`.
+//! - `credit` — final-state byte-range credit averaged over NS atoms
+//!   (atom-count weighted).
+//! - `comp` — final-state byte-weighted batch completion (the
+//!   completion factor that dampens this row's atoms in
+//!   `damped_credit`). Equals `credit` when atoms have uniform
+//!   `ns_bytes`; differs when one big line dominates the batch.
+//! - `status` ∈ `{partial, missing}`. Bands: `credit < 0.5` → missing,
+//!   `< 0.8` → partial. (Reached rows — credit ≥ 0.8 — are filtered
+//!   out; under the per-budget metric, "delivered with credit ≥
+//!   threshold" carries no actionable signal regardless of timing.)
 //! - `candidate hint` — see above.
 //!
 //! Within `ranking-recoverable`, predecessor-gated children that share
@@ -230,12 +269,28 @@ use render::format_report;
 use render::off_ns_attribution;
 use synthesis::{
     ReportRow, predecessor_groups_from_refs, ranking_loss, report_rows, report_summary, row_ids,
-    sim_gap_weight, top_opportunities,
+    top_opportunities,
 };
 
-/// Time-weight half-life (tokens). `w(t) = exp(−t / τ)`. First 2000
-/// tokens carry ~63% of the mass; first 6000 ~95%.
-const TAU: f64 = 2000.0;
+/// Per-budget Score grid: geometric on `[1000, 9000]` with ratio
+/// `⁶√9 ≈ 1.442`, symmetric around 3000 on the log scale. The vector
+/// at these budgets is the headline; `Score(3000)` is the primary
+/// objective (auto-injection budget every session hits).
+pub const BUDGETS: [usize; 7] = [1000, 1442, 2080, 3000, 4327, 6240, 9000];
+
+/// Index of the primary budget within [`BUDGETS`]. `Score(3000)` is
+/// the single number that drives sort order and verdict heuristics.
+pub const PRIMARY_BUDGET_INDEX: usize = 3;
+
+/// Low-end budget shown alongside the primary in opportunity tables —
+/// surfaces the "front-loaded vs. trailing" walker shape directly in
+/// the priority columns rather than only the headline vector.
+pub(crate) const LOW_BUDGET_INDEX: usize = 0;
+
+/// High-end budget shown alongside the primary in opportunity tables.
+/// `|A_9K|` covers nearly all NS atoms in practice, so this approximates
+/// the "all atoms" total we previously surfaced as `rank×gap`.
+pub(crate) const HIGH_BUDGET_INDEX: usize = BUDGETS.len() - 1;
 
 /// Credit threshold: NS batch counted as `reached` iff final-state
 /// credit ≥ this.
@@ -246,39 +301,67 @@ const REACH_THRESHOLD: f64 = 0.8;
 /// `partial` everywhere (headline + row label).
 const MISSING_FLOOR: f64 = 0.5;
 
-/// Timing classification within the `reached` bucket: a reached batch
-/// is `early` / `late` when `(seen_t - exp_t) / exp_t` passes these
-/// thresholds. Otherwise `aligned`.
-const EARLY_FACTOR: f64 = 0.7;
-const LATE_FACTOR: f64 = 1.3;
-
 /// Report threshold: walker-waste rows elide batches below this cost.
 const UNMAPPED_COST_THRESHOLD: usize = 50;
 const WASTE_DETAIL_LIMIT: usize = 10;
 
-/// Headline scores. `reached + partial + missing == total_ns`.
+/// One row of the per-budget score table.
 #[derive(Debug, Clone, Copy)]
+pub struct ScoreAtBudget {
+    /// Token budget this row evaluates at (one of [`BUDGETS`]).
+    pub budget: usize,
+    /// `|A_B|` — NS atoms in batches with `cum_tokens ≤ budget`.
+    pub a_b_atoms: usize,
+    /// Importance — rank-weighted recall, capped at 1.
+    pub importance: f64,
+    /// Coverage — rank-uniform recall over A_B.
+    pub coverage: f64,
+    /// `√(importance × coverage)`.
+    pub score: f64,
+    /// Walker `cum_tokens` at the last batch fitting in `budget`.
+    pub walker_used: usize,
+}
+
+/// Headline scores. Bucket counts are gated to atoms reachable at the
+/// primary budget (`A_3K`) — they describe the rows the optimization
+/// target actually depends on, not whole-NS noise.
+/// `reached + partial + missing == rows_in_a_primary`.
+#[derive(Debug, Clone)]
 pub struct Scores {
-    pub sim: f64,
+    /// Per-budget vector, one entry per [`BUDGETS`] slot.
+    pub vector: [ScoreAtBudget; BUDGETS.len()],
+    /// Total NS batches across the whole NS (all budgets). For "X of Y"
+    /// framing where Y captures the full ground truth.
     pub total_ns: usize,
-    /// Final credit ≥ [`REACH_THRESHOLD`].
+    /// NS batches with `exp_t ≤ PRIMARY_BUDGET` — the rows whose status
+    /// drives `Score(3000)`. Equal to `reached + partial + missing`.
+    pub rows_in_primary: usize,
+    /// In `A_3K`: final credit ≥ [`REACH_THRESHOLD`].
     pub reached: usize,
-    /// Reached and walker delivered meaningfully earlier than expected.
-    pub early: usize,
-    /// Reached and walker delivered meaningfully later than expected.
-    pub late: usize,
-    /// Final credit in `[MISSING_FLOOR, REACH_THRESHOLD)` — present but
-    /// diluted.
+    /// In `A_3K`: final credit in `[MISSING_FLOOR, REACH_THRESHOLD)` —
+    /// present but diluted.
     pub partial: usize,
-    /// Final credit < [`MISSING_FLOOR`].
+    /// In `A_3K`: final credit < [`MISSING_FLOOR`].
     pub missing: usize,
 }
+
+impl Scores {
+    /// `Score(3000)` — the primary objective.
+    pub fn primary(&self) -> f64 {
+        self.vector[PRIMARY_BUDGET_INDEX].score
+    }
+}
+
+/// Primary budget for headline counts and per-row attention direction.
+/// Sourced from [`BUDGETS`] at [`PRIMARY_BUDGET_INDEX`].
+pub(crate) const PRIMARY_BUDGET: usize = BUDGETS[PRIMARY_BUDGET_INDEX];
 
 /// Compute scores. `schedule` is expected to be a full-cap walker run.
 pub fn score(ns: &NorthStar, schedule: &Schedule, fixture_root: &Path) -> Result<Scores> {
     let ctx = BuildCtx::new(ns, schedule, fixture_root)?;
-    let arrivals = arrival_infos(&ctx);
-    Ok(compute_scores(&ctx, &arrivals))
+    let walker = WalkerSnapshots::build(&ctx);
+    let arrivals = arrival_infos(&ctx, &walker);
+    Ok(build_scores(&ctx, &arrivals, &walker))
 }
 
 /// Generate the markdown divergence report (one per fixture).
@@ -288,8 +371,9 @@ pub fn generate_divergence_report(
     fixture_root: &Path,
 ) -> Result<String> {
     let ctx = BuildCtx::new(ns, schedule, fixture_root)?;
-    let arrivals = arrival_infos(&ctx);
-    let scores = compute_scores(&ctx, &arrivals);
+    let walker = WalkerSnapshots::build(&ctx);
+    let arrivals = arrival_infos(&ctx, &walker);
+    let scores = build_scores(&ctx, &arrivals, &walker);
     Ok(format_report(&scores, &ctx, &arrivals))
 }
 
@@ -403,13 +487,16 @@ struct BuildCtx<'a> {
 
 struct NsRow {
     id: String,
-    /// Major id prefix, parsed from `id`. Used for the per-tier rollup.
-    tier: usize,
     atoms: Vec<GradedAtom>,
     /// Cumulative token cost up through this batch, computed as the
     /// marginal cost of applying each batch in order to a shared
     /// `RenderedTree` — same accounting as `simulate_ns`.
     exp_t: usize,
+    /// 1-indexed rank of this row's first atom in the flat NS schedule
+    /// order. `r(rank_start + i) = 1 / (rank_start + i)` is atom `i`'s
+    /// Importance weight. NS batches arrive in rank order so atoms in
+    /// `A_B` are exactly ranks `1..=|A_B|`.
+    rank_start: usize,
 }
 
 struct WalkerRow<'a> {
@@ -441,6 +528,7 @@ impl<'a> BuildCtx<'a> {
 
         let mut ns_rows = Vec::with_capacity(ns.batches.len());
         let mut cum = 0usize;
+        let mut next_rank = 1usize;
         for (pos, b) in ns.batches.iter().enumerate() {
             let content = resolve_content(&b.content, fixture_root)?;
             let atoms = atoms_from_content(&content, &source_cache, fixture_root);
@@ -451,11 +539,13 @@ impl<'a> BuildCtx<'a> {
             // here — that's `simulate_ns`'s job. `|_| true` accepts any
             // existing owner so the tree evolves faithfully regardless.
             let _ = tree.apply(&content, batch_id, |_| true);
+            let rank_start = next_rank;
+            next_rank += atoms.len();
             ns_rows.push(NsRow {
                 id: b.id.clone(),
-                tier: parse_tier(&b.id),
                 atoms,
                 exp_t: cum,
+                rank_start,
             });
         }
 
@@ -513,71 +603,171 @@ impl<'a> BuildCtx<'a> {
     }
 }
 
-/// Numeric components of a major.minor NS id (`"2.10"` → `[2, 10]`).
-fn id_components(id: &str) -> Vec<usize> {
-    id.split('.').filter_map(|s| s.parse().ok()).collect()
-}
-
-/// Major id prefix: `"1.10"` → `1`. Used for tier rollup; falls back to
-/// 0 for non-numeric prefixes.
-fn parse_tier(id: &str) -> usize {
-    id_components(id).first().copied().unwrap_or(0)
-}
-
 // ---- scoring -----------------------------------------------------------
 
-fn compute_scores(ctx: &BuildCtx, arrivals: &[Arrival]) -> Scores {
-    let t_max = ctx.schedule.budget.max(ctx.schedule.cumulative_tokens);
-    let sim = compute_sim(ctx, t_max);
+/// Per-budget walker state shared across `arrival_infos` and
+/// `build_scores`. Building once removes the redundant 7× walker-row
+/// passes the previous structure had, and shifts every credit /
+/// completion / priority computation onto borrowed `&Atom` keys (the
+/// owned-key version cloned the embedded `PathBuf` on every insert).
+struct WalkerSnapshots<'a> {
+    /// Per-budget byte-max maps, indexed by [`BUDGETS`].
+    cums: [BTreeMap<&'a Atom, usize>; BUDGETS.len()],
+    /// Per-budget atom counts of `A_B` (NS atoms in batches with
+    /// `exp_t ≤ B`).
+    a_b_atoms: [usize; BUDGETS.len()],
+    /// Per-budget walker `cum_tokens` at the last batch fitting in B.
+    walker_used: [usize; BUDGETS.len()],
+}
+
+impl<'a> WalkerSnapshots<'a> {
+    fn build(ctx: &'a BuildCtx<'_>) -> Self {
+        let cums = BUDGETS.map(|budget| walker_cum_at(ctx, budget));
+        let a_b_atoms = BUDGETS.map(|budget| {
+            ctx.ns_rows
+                .iter()
+                .filter(|r| r.exp_t <= budget)
+                .map(|r| r.atoms.len())
+                .sum::<usize>()
+        });
+        let walker_used = BUDGETS.map(|budget| {
+            ctx.walker_rows
+                .iter()
+                .filter(|wr| wr.seen_t <= budget)
+                .map(|wr| wr.seen_t)
+                .max()
+                .unwrap_or(0)
+        });
+        Self {
+            cums,
+            a_b_atoms,
+            walker_used,
+        }
+    }
+}
+
+fn build_scores(ctx: &BuildCtx, arrivals: &[Arrival], walker: &WalkerSnapshots) -> Scores {
+    let vector: [ScoreAtBudget; BUDGETS.len()] =
+        std::array::from_fn(|i| compute_score_at(ctx, i, walker));
 
     let mut reached = 0;
-    let mut early = 0;
-    let mut late = 0;
     let mut partial = 0;
     let mut missing = 0;
+    let mut rows_in_primary = 0;
 
-    for arrival in arrivals {
+    for (row, arrival) in ctx.ns_rows.iter().zip(arrivals) {
+        if row.exp_t > PRIMARY_BUDGET {
+            continue;
+        }
+        rows_in_primary += 1;
         match arrival.status {
-            ArrivalStatus::Missing => missing += 1,
+            ArrivalStatus::Reached => reached += 1,
             ArrivalStatus::Partial => partial += 1,
-            ArrivalStatus::Aligned => reached += 1,
-            ArrivalStatus::Early => {
-                reached += 1;
-                early += 1;
-            }
-            ArrivalStatus::Late => {
-                reached += 1;
-                late += 1;
-            }
+            ArrivalStatus::Missing => missing += 1,
         }
     }
 
     Scores {
-        sim,
+        vector,
         total_ns: ctx.ns_rows.len(),
+        rows_in_primary,
         reached,
-        early,
-        late,
         partial,
         missing,
     }
 }
 
+fn compute_score_at(ctx: &BuildCtx, budget_idx: usize, walker: &WalkerSnapshots) -> ScoreAtBudget {
+    let budget = BUDGETS[budget_idx];
+    let walker_cum = &walker.cums[budget_idx];
+    let a_b_atoms = walker.a_b_atoms[budget_idx];
+    let walker_used = walker.walker_used[budget_idx];
+
+    if a_b_atoms == 0 {
+        return ScoreAtBudget {
+            budget,
+            a_b_atoms: 0,
+            importance: 0.0,
+            coverage: 0.0,
+            score: 0.0,
+            walker_used,
+        };
+    }
+
+    let ideal_denom: f64 = (1..=a_b_atoms).map(|k| 1.0 / k as f64).sum();
+
+    let mut importance_num = 0.0;
+    let mut coverage_sum = 0.0;
+    for row in &ctx.ns_rows {
+        let completion = completion_for_row(&row.atoms, walker_cum);
+        if completion == 0.0 {
+            continue;
+        }
+        for (i, atom) in row.atoms.iter().enumerate() {
+            let rank = row.rank_start + i;
+            let damped = atom_credit(atom, walker_cum) * completion;
+            importance_num += damped / rank as f64;
+            if rank <= a_b_atoms {
+                coverage_sum += damped;
+            }
+        }
+    }
+
+    let importance = (importance_num / ideal_denom).min(1.0);
+    let coverage = coverage_sum / a_b_atoms as f64;
+    let score = (importance * coverage).sqrt();
+    ScoreAtBudget {
+        budget,
+        a_b_atoms,
+        importance,
+        coverage,
+        score,
+        walker_used,
+    }
+}
+
+/// Byte-weighted completion of an NS batch under a walker state.
+/// `Σ min(walker, ns) / Σ ns` over the batch's atoms — the
+/// `completion(B_i)` factor in `damped_credit`. Returns 0 when nothing
+/// is delivered, 1 when the batch is fully covered.
+fn completion_for_row(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
+    if ns_atoms.is_empty() {
+        return 0.0;
+    }
+    let mut delivered = 0usize;
+    let mut total = 0usize;
+    for atom in ns_atoms {
+        let walker_bytes = walker_cum.get(&atom.atom).copied().unwrap_or(0);
+        let ns_bytes = atom.bytes.max(1);
+        delivered += walker_bytes.min(ns_bytes);
+        total += ns_bytes;
+    }
+    if total == 0 {
+        return 0.0;
+    }
+    delivered as f64 / total as f64
+}
+
+fn atom_credit(atom: &GradedAtom, walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
+    let walker_bytes = walker_cum.get(&atom.atom).copied().unwrap_or(0);
+    let ns_bytes = atom.bytes.max(1);
+    ((walker_bytes.min(ns_bytes) as f64) / (ns_bytes as f64)).min(1.0)
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ArrivalStatus {
-    Aligned,
-    Early,
-    Late,
+    /// Final-state credit ≥ [`REACH_THRESHOLD`].
+    Reached,
+    /// Final-state credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
     Partial,
+    /// Final-state credit < [`MISSING_FLOOR`].
     Missing,
 }
 
 impl ArrivalStatus {
     fn label(self) -> &'static str {
         match self {
-            ArrivalStatus::Aligned => "aligned",
-            ArrivalStatus::Early => "early",
-            ArrivalStatus::Late => "late",
+            ArrivalStatus::Reached => "reached",
             ArrivalStatus::Partial => "partial",
             ArrivalStatus::Missing => "missing",
         }
@@ -585,32 +775,61 @@ impl ArrivalStatus {
 }
 
 struct Arrival {
-    reached_t: Option<usize>,
+    /// Primary-budget byte-credit averaged over NS atoms (atom-count
+    /// weighted). Uses `walker_cum` at `PRIMARY_BUDGET` — describes
+    /// the row's state at the optimization target, not at T_max. A
+    /// row delivered late (after 3K but before T_max) reports a low
+    /// `credit` here, the `Reached` filter keeps it visible, and the
+    /// iterator can act on the `Score(3000)` headroom.
     credit: f64,
-    over: bool,
+    /// Status derived from the primary-budget `credit` — same banding
+    /// (`Missing` / `Partial` / `Reached`) but anchored to the
+    /// optimization target. Past-`A_3K` rows show their state at 3K
+    /// here too; their `priority_at_b` slots above 3K capture the
+    /// "but the walker did get there eventually" signal.
     status: ArrivalStatus,
+    /// Primary-budget byte-weighted batch completion — the dampening
+    /// factor applied to this row's atoms in `damped_credit` at the
+    /// primary budget. Surfaced as the `comp` ledger column.
+    completion: f64,
+    /// Per-budget priority weight: `priority_at_b[i]` = `Σ over atoms
+    /// in row with rank ≤ |A_BUDGETS[i]|: r(rank(a)) × (1 −
+    /// damped_credit(a))` evaluated at `walker_cum` for budget `i`.
+    /// Slot `[PRIMARY_BUDGET_INDEX]` is the primary sort key
+    /// throughout opportunity / verdict / row-id rollups; slots `[0]`
+    /// (1K) and `[6]` (9K) are surfaced as `gap@1k` / `gap@9k`
+    /// columns. Each slot's `damped_credit` uses that budget's
+    /// completion, so the vector honestly tracks per-budget headroom
+    /// rather than collapsing to final-state.
+    priority_at_b: [f64; BUDGETS.len()],
 }
 
-fn arrival_infos(ctx: &BuildCtx) -> Vec<Arrival> {
+fn arrival_infos(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Vec<Arrival> {
+    let primary_cum = &walker.cums[PRIMARY_BUDGET_INDEX];
     ctx.ns_rows
         .iter()
         .map(|row| {
-            let reached_t = first_reach_t(ctx, &row.atoms);
-            let (credit, over) = credit_for_ns_atoms(ctx, &row.atoms);
-            let status = classify(reached_t, row.exp_t, credit);
+            let credit = credit_for_ns_atoms(&row.atoms, primary_cum);
+            let completion = completion_for_row(&row.atoms, primary_cum);
+            let status = classify(credit);
+            let priority_at_b: [f64; BUDGETS.len()] = std::array::from_fn(|i| {
+                let cum = &walker.cums[i];
+                let row_completion = completion_for_row(&row.atoms, cum);
+                priority_for_row(row, cum, row_completion, walker.a_b_atoms[i])
+            });
             Arrival {
-                reached_t,
                 credit,
-                over,
                 status,
+                completion,
+                priority_at_b,
             }
         })
         .collect()
 }
 
 /// Walker cumulative byte-max map up to (and including) walker batches
-/// with `seen_t ≤ t_max`. Pass `usize::MAX` for the full final state.
-/// Single shared helper for `credit_for_ns_atoms` and `overlap_at`.
+/// with `seen_t ≤ t_max`. Borrowed `&Atom` keys — keys live in
+/// `ctx.walker_rows`, so the returned map can't outlive `ctx`.
 fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> BTreeMap<&'a Atom, usize> {
     let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
     for wr in &ctx.walker_rows {
@@ -618,133 +837,46 @@ fn walker_cum_at<'a>(ctx: &'a BuildCtx<'_>, t_max: usize) -> BTreeMap<&'a Atom, 
             break;
         }
         for wa in &wr.atoms {
-            let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
-            if wa.bytes > prev {
-                cumulative.insert(&wa.atom, wa.bytes);
+            let entry = cumulative.entry(&wa.atom).or_insert(0);
+            if wa.bytes > *entry {
+                *entry = wa.bytes;
             }
         }
     }
     cumulative
 }
 
-/// Cumulative walker tokens at the first walker batch after which this
-/// NS batch's credit reaches [`REACH_THRESHOLD`]. `None` if the batch
-/// is never reached.
-fn first_reach_t(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> Option<usize> {
+fn credit_for_ns_atoms(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
     if ns_atoms.is_empty() {
-        return None;
+        return 0.0;
     }
-    let mut cumulative: BTreeMap<&Atom, usize> = BTreeMap::new();
-    for wr in &ctx.walker_rows {
-        for wa in &wr.atoms {
-            let prev = cumulative.get(&wa.atom).copied().unwrap_or(0);
-            if wa.bytes > prev {
-                cumulative.insert(&wa.atom, wa.bytes);
-            }
-        }
-        let (credit, _over) = credit_against_cum_map(ns_atoms, &cumulative);
-        if credit >= REACH_THRESHOLD {
-            return Some(wr.seen_t);
-        }
-    }
-    None
+    let total: f64 = ns_atoms.iter().map(|na| atom_credit(na, walker_cum)).sum();
+    total / ns_atoms.len() as f64
 }
 
-fn credit_for_ns_atoms(ctx: &BuildCtx, ns_atoms: &[GradedAtom]) -> (f64, bool) {
-    let cumulative = walker_cum_at(ctx, usize::MAX);
-    credit_against_cum_map(ns_atoms, &cumulative)
-}
-
-fn credit_against_cum_map(
-    ns_atoms: &[GradedAtom],
+/// Per-row priority = `Σ over atoms with rank ≤ rank_cap: r(rank(a)) ×
+/// (1 − damped_credit(a))`. Per-budget version: pass that budget's
+/// `walker_cum`, `completion`, and `|A_B|` cap. Atoms past `rank_cap`
+/// contribute nothing — the cap restricts the sum to the budget's
+/// addressable atoms.
+fn priority_for_row(
+    row: &NsRow,
     walker_cum: &BTreeMap<&Atom, usize>,
-) -> (f64, bool) {
-    if ns_atoms.is_empty() {
-        return (0.0, false);
-    }
-    let mut total = 0.0;
-    let mut over = false;
-    for na in ns_atoms {
-        let walker_bytes = walker_cum.get(&na.atom).copied().unwrap_or(0);
-        let ns_bytes = na.bytes.max(1);
-        let c = (walker_bytes.min(ns_bytes) as f64) / (ns_bytes as f64);
-        total += c.min(1.0);
-        if walker_bytes > na.bytes {
-            over = true;
-        }
-    }
-    (total / ns_atoms.len() as f64, over)
-}
-
-// ---- Sim (integral) ----------------------------------------------------
-
-/// Sim = ∫ w(t)·overlap(t) dt / ∫ w(t) dt over t ∈ [0, T_max], with
-/// `w(t) = exp(−t/τ)`. `overlap(t)` averages credit over NS atoms
-/// *reachable at t* (ns batch `exp_t ≤ t`) — unreachable-by-construction
-/// atoms don't inflate the denominator at low `t`. Eval is at the
-/// *left* endpoint of each boundary segment: overlap is a right-
-/// continuous step function, constant on `[a, b)` after any jump at
-/// `a`, so the left endpoint captures the right integrand for `(a, b)`.
-fn compute_sim(ctx: &BuildCtx, t_max: usize) -> f64 {
-    let mut boundaries: BTreeSet<usize> = BTreeSet::new();
-    boundaries.insert(0);
-    boundaries.insert(t_max);
-    for row in &ctx.ns_rows {
-        if row.exp_t <= t_max {
-            boundaries.insert(row.exp_t);
-        }
-    }
-    for wr in &ctx.walker_rows {
-        if wr.seen_t <= t_max {
-            boundaries.insert(wr.seen_t);
-        }
-    }
-    let bs: Vec<usize> = boundaries.into_iter().collect();
-
-    let mut num = 0.0;
-    let mut den = 0.0;
-    for pair in bs.windows(2) {
-        let a = pair[0] as f64;
-        let b = pair[1] as f64;
-        let overlap = overlap_at(ctx, pair[0]);
-        let w = weighted_segment(a, b);
-        num += w * overlap;
-        den += w;
-    }
-    if den > 0.0 { num / den } else { 0.0 }
-}
-
-/// `overlap(t)` has jumps at both walker batch boundaries (numerator
-/// grows as walker delivers atoms) and NS batch boundaries (denominator
-/// grows as atoms become reachable). It's right-continuous at both —
-/// the left-endpoint eval in `compute_sim` captures the correct
-/// piecewise-constant value for `(a, b]`.
-fn overlap_at(ctx: &BuildCtx, t: usize) -> f64 {
-    let cumulative = walker_cum_at(ctx, t);
-    let mut total_atoms = 0.0;
-    let mut total_credit = 0.0;
-    for row in &ctx.ns_rows {
-        if row.exp_t > t {
-            continue;
-        }
-        for na in &row.atoms {
-            total_atoms += 1.0;
-            let walker_bytes = cumulative.get(&na.atom).copied().unwrap_or(0);
-            let ns_bytes = na.bytes.max(1);
-            let c = (walker_bytes.min(ns_bytes) as f64) / (ns_bytes as f64);
-            total_credit += c.min(1.0);
-        }
-    }
-    if total_atoms == 0.0 {
-        0.0
-    } else {
-        total_credit / total_atoms
-    }
-}
-
-/// ∫_a^b exp(−t/τ) dt = τ · (e^(−a/τ) − e^(−b/τ))
-fn weighted_segment(a: f64, b: f64) -> f64 {
-    TAU * ((-a / TAU).exp() - (-b / TAU).exp())
+    completion: f64,
+    rank_cap: usize,
+) -> f64 {
+    row.atoms
+        .iter()
+        .enumerate()
+        .map(|(i, atom)| {
+            let rank = row.rank_start + i;
+            if rank > rank_cap {
+                return 0.0;
+            }
+            let damped = atom_credit(atom, walker_cum) * completion;
+            (1.0 - damped).max(0.0) / rank as f64
+        })
+        .sum()
 }
 
 // ---- report ------------------------------------------------------------
@@ -797,26 +929,13 @@ fn strip_fixture_root(descriptor: &str, fixture_root: &Path) -> String {
     descriptor.replace(&prefix, "")
 }
 
-fn classify(reached_t: Option<usize>, exp_t: usize, credit: f64) -> ArrivalStatus {
+fn classify(credit: f64) -> ArrivalStatus {
     if credit < MISSING_FLOOR {
-        return ArrivalStatus::Missing;
-    }
-    if credit < REACH_THRESHOLD {
-        return ArrivalStatus::Partial;
-    }
-    let Some(seen) = reached_t else {
-        // Unreachable in practice: credit ≥ 0.8 means at least one walker
-        // batch crossed the threshold, so `first_reach_t` returns Some.
-        return ArrivalStatus::Aligned;
-    };
-    let exp = exp_t.max(1) as f64;
-    let ratio = (seen as f64 - exp_t as f64) / exp;
-    if ratio <= EARLY_FACTOR - 1.0 {
-        ArrivalStatus::Early
-    } else if ratio >= LATE_FACTOR - 1.0 {
-        ArrivalStatus::Late
+        ArrivalStatus::Missing
+    } else if credit < REACH_THRESHOLD {
+        ArrivalStatus::Partial
     } else {
-        ArrivalStatus::Aligned
+        ArrivalStatus::Reached
     }
 }
 
@@ -867,9 +986,9 @@ mod tests {
     fn ns_row(atoms: Vec<GradedAtom>) -> NsRow {
         NsRow {
             id: "1.1".to_string(),
-            tier: 1,
             atoms,
             exp_t: 1,
+            rank_start: 1,
         }
     }
 
