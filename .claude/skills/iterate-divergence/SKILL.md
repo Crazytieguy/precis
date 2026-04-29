@@ -30,30 +30,28 @@ auto-rejected. Make a judgment call on whether it's net beneficial
 to the long-term health of the project, and flag the tradeoff in
 the commit.
 
-Complexity is a cost. A change that moves the targeted score by
-less than ~0.005 corpus mean is usually not worth the code it adds;
-net code-removing changes at flat metric are still a ship.
+Complexity is a cost. A small score gain may not be worth the code
+it adds — judgment call. Net code-removing changes at flat metric
+are still a ship.
 
 ## 1. Survey the corpus
 
 Start at `tests/divergence/OVERVIEW.md`. Rows are sorted by
-`Score(3000)` ascending. Each row exposes the full per-budget
-`Score(B)` vector plus the verdict, likely primary lever, and
-`gap@3k`-weighted evidence. The vector reveals walker shape (front-
-loaded vs. trailing vs. flat); the verdict + evidence direct
-attention. For column semantics, see the module-level `//!` doc on
-`src/divergence.rs`.
+`Score(3000)` ascending. Each row exposes the per-budget `Score(B)`
+vector plus the verdict, likely primary lever, and a corpus-level
+evidence string (diagnosis-bucketed `gap@3k` totals — this is *not*
+the same as a per-fixture Top-opportunity `gap@3k`; the OVERVIEW
+field aggregates by diagnosis kind, the per-fixture table by
+intervention). The vector reveals walker shape; the verdict +
+evidence direct attention. For column semantics, see the module-
+level `//!` doc on `src/divergence.rs`.
 
 Patterns across fixtures are the strongest signal. Scan for:
 
-- A verdict label that recurs across many low-`Score(3000)` fixtures
-  (e.g. `wrong-slice bound` dominating most of the corpus).
-- A loss reason that recurs across `parent-gating bound` fixtures
-  (e.g. `predecessor not scheduled` showing up consistently with
-  `go decl at <file>` predecessors).
-- A descriptor pattern that appears in many fixtures' Top
-  opportunities (e.g. `promote pub-item names surfaces` showing up in
-  multiple Rust fixtures).
+- A verdict label recurring across many low-`Score(3000)` fixtures.
+- A loss reason recurring across fixtures of one verdict.
+- A descriptor pattern appearing in many fixtures' Top
+  opportunities.
 
 A pattern visible in only one fixture is still actionable if the
 underlying issue would plausibly show up in other real-world
@@ -75,11 +73,11 @@ check the pattern generalizes). For each:
    different problem than one that scores 0.3 at 3k and climbs to
    0.6 at 9k.
 3. **Top opportunities** table. `gap@1k` / `gap@3k` / `gap@9k`
-   show how the same intervention scales across the budget vector.
-   `gap@3k` is the sort key; a row with high `gap@9k` but low
-   `gap@3k` has its headroom outside the highest-priority budget —
-   pursue once 3K is saturated, otherwise look for higher-`gap@3k`
-   rows first.
+   show how an intervention's headroom decays across budgets — gap
+   is monotone non-increasing in B (walker has more budget at
+   higher B). A wide spread (high `gap@1k`, low `gap@9k`) means
+   closing the row helps low-budget runs disproportionately; a flat
+   profile means it helps everywhere. `gap@3k` is the sort key.
 4. **Arrival ledger**, only the section for the diagnosis you're
    working on, and only the rows you need as evidence — usually 3–5
    per fixture. The `comp` column flags partially-delivered batches.
@@ -130,9 +128,10 @@ Success criteria, in order of importance:
 3. **`gap@3k` dropped on the targeted opportunity** on the fixtures
    you targeted. If it didn't, the change didn't address what you
    thought.
-4. **Complexity paid for itself.** Δ Score ≤ ~0.005 corpus mean
-   without code reduction is usually a no-ship. A code-removing or
-   heuristic-simplifying change at flat metric is a ship.
+4. **Complexity paid for itself.** A small score gain may not be
+   worth the code added — judgment call on whether the rule earns
+   its complexity. A code-removing or heuristic-simplifying change
+   at flat metric is a ship.
 5. **The verdict label may shift** on individual fixtures — that's
    fine when the change genuinely fixed one bucket and another now
    dominates.
@@ -162,18 +161,21 @@ user decides whether to continue iterating or stop.
 
 When an attempt wins on the target but regresses elsewhere, the
 structural insight is usually correct and the magnitudes just need
-calibration. Tune values before reverting. Reverting is for
-fundamentally misaligned changes, not for first-pass numbers.
+calibration. Tune values before reverting. Reverting *the current
+attempt* is for fundamentally misaligned changes, not for first-pass
+numbers. (This is about polishing the change you're working on now;
+un-shipping past commits is a separate avenue, below.)
 
 ## Un-shipping as an iteration avenue
 
-Reverting prior commits is a valid iteration. The corpus inherits
-walker / value complexity from earlier iterations; some of it may
-not be paying for itself under the current metric. Try reverting a
-candidate commit, regenerating baselines, checking whether
-`Score(3000)` stays flat or improves. If it does, un-ship — code
-reduction at flat metric is a ship. Same success criteria, same
-commit hygiene as forward changes.
+Distinct from tuning the change you're currently working on:
+reverting a *prior* commit is a valid forward iteration in its own
+right. The corpus inherits walker / value complexity from earlier
+iterations; some of it may not be paying for itself under the
+current metric. Try reverting a candidate commit, regenerating
+baselines, checking whether `Score(3000)` stays flat or improves.
+If it does, un-ship — code reduction at flat metric is a ship.
+Same success criteria, same commit hygiene as forward changes.
 
 ## When stuck
 
