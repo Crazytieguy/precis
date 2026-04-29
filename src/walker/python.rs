@@ -49,9 +49,13 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, PythonKey};
 use crate::value::{
     NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index,
+    names_surface_chunk_index, reexport_import_chunk_factor,
 };
 
+use super::import_chunks::{
+    ImportGroup, REEXPORT_IMPORT_MAX_OTHER_LINES, REEXPORT_IMPORT_MAX_OTHER_STATEMENTS,
+    groups_to_file_lines, node_line_count, push_import_group, should_chunk_import_groups,
+};
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
     extend_span, file_depth_factor, fs::files_with_extension, name_of, push_rows,
@@ -108,7 +112,24 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         let src_lines: Vec<&str> = source.lines().collect();
         let decls = find_top_level_decls(&tree, &source);
 
-        if let Some(content) =
+        if let Some(chunks) = collect_reexport_import_chunks(file, &tree, &source) {
+            let chunk_count = chunks.len();
+            for (chunk_index, lines) in chunks.into_iter().enumerate() {
+                let Some(content) = single_file_lines_content(file, &source, lines) else {
+                    continue;
+                };
+                out.push(Batch {
+                    key: PythonKey::ImportChunk {
+                        file: file.clone(),
+                        chunk_index,
+                    }
+                    .into(),
+                    predecessor: None,
+                    content,
+                    value: imports_chunk_value(file, ctx, chunk_index, chunk_count),
+                });
+            }
+        } else if let Some(content) =
             single_file_lines_content(file, &source, collect_imports(&tree, &source))
         {
             out.push(Batch {
@@ -542,6 +563,123 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(lines))
 }
 
+fn collect_reexport_import_chunks(
+    file: &Path,
+    tree: &Tree,
+    source: &str,
+) -> Option<Vec<FileLines>> {
+    // `__init__.py` is the canonical Python package export surface. Other
+    // aggregator-shaped modules keep ordinary import behavior to avoid
+    // over-classifying implementation files as package entrypoints.
+    if !is_init_py(file) {
+        return None;
+    }
+    let mut groups = collect_import_groups(tree, source)?;
+    if !should_chunk_import_groups(&groups) {
+        return None;
+    }
+    prioritize_public_manifest_groups(&mut groups);
+    Some(groups_to_file_lines(groups))
+}
+
+fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut groups = Vec::new();
+    let mut first_real_statement_seen = false;
+    let mut other_statements = 0usize;
+    let mut other_lines = 0usize;
+    for child in root.children(&mut cursor) {
+        match child.kind() {
+            "import_statement" | "import_from_statement" | "future_import_statement" => {
+                push_import_group(
+                    &mut groups,
+                    import_source_key(child, source),
+                    true,
+                    child,
+                    source,
+                );
+                first_real_statement_seen = true;
+            }
+            "expression_statement" => {
+                if !first_real_statement_seen && is_docstring_statement(child) {
+                    push_import_group(&mut groups, "__doc__".to_string(), false, child, source);
+                } else if let Some(target) = const_assignment_target(child, source)
+                    && is_dunder(target)
+                {
+                    push_import_group(&mut groups, target.to_string(), false, child, source);
+                } else if !tolerate_reexport_wall_other(
+                    child,
+                    &mut other_statements,
+                    &mut other_lines,
+                ) {
+                    return None;
+                }
+                first_real_statement_seen = true;
+            }
+            "if_statement" => {
+                if is_type_checking_import_block(child, source) {
+                    push_import_group(
+                        &mut groups,
+                        "TYPE_CHECKING".to_string(),
+                        false,
+                        child,
+                        source,
+                    );
+                } else {
+                    return None;
+                }
+                first_real_statement_seen = true;
+            }
+            "comment" => {}
+            _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
+                return None;
+            }
+            _ => {}
+        }
+    }
+    Some(groups)
+}
+
+fn prioritize_public_manifest_groups(groups: &mut [ImportGroup]) {
+    // `__all__` is the explicit public manifest, so keep it ahead of lower
+    // value tail imports when a wall cannot fully fit at small budgets.
+    groups.sort_by_key(|group| group.source != "__all__");
+}
+
+fn tolerate_reexport_wall_other(
+    node: Node,
+    other_statements: &mut usize,
+    other_lines: &mut usize,
+) -> bool {
+    *other_statements += 1;
+    *other_lines += node_line_count(node);
+    *other_statements <= REEXPORT_IMPORT_MAX_OTHER_STATEMENTS
+        && *other_lines <= REEXPORT_IMPORT_MAX_OTHER_LINES
+}
+
+fn import_source_key(node: Node, source: &str) -> String {
+    let text = source[node.start_byte()..node.end_byte()].trim();
+    if node.kind() == "import_from_statement"
+        && let Some(rest) = text.strip_prefix("from ")
+        && let Some((module, _)) = rest.split_once(" import")
+    {
+        return module.trim().to_string();
+    }
+    if let Some(rest) = text.strip_prefix("import ") {
+        let first = rest.lines().next().unwrap_or(rest).trim();
+        if !first.contains(',') {
+            return first
+                .split(" as ")
+                .next()
+                .unwrap_or(first)
+                .trim()
+                .to_string();
+        }
+    }
+    text.lines().next().unwrap_or(text).trim().to_string()
+}
+
 /// True iff `if_stmt` is shaped like `if TYPE_CHECKING: <imports only>`
 /// with no `elif` / `else` branch — the canonical Python idiom for
 /// importing types only available to type-checkers. Restricting to this
@@ -854,6 +992,10 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
         (0.35, 0.55)
     };
     mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
+}
+
+fn imports_chunk_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+    imports_value(file, ctx) * reexport_import_chunk_factor(chunk_index, chunk_count)
 }
 
 fn is_init_py(file: &Path) -> bool {

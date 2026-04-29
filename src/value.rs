@@ -52,6 +52,18 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
     }
 }
 
+/// Value multiplier for import/re-export-wall chunks. The first chunk keeps
+/// full import-batch value because it unlocks the package surface; later
+/// source groups fall off faster than names surfaces so tail plumbing does
+/// not crowd more precise semantic anchors at small budgets.
+pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
+    if chunk_count <= 1 {
+        1.0
+    } else {
+        1.0 / (1.0 + chunk_index as f64 * 0.5)
+    }
+}
+
 /// Down-weight a batch by filesystem depth. Depth 0 (root) and depth 1
 /// (files directly in root, e.g. Cargo.toml, README.md) are unpenalized;
 /// penalty grows for deeper content. First-pass placeholder; calibrate

@@ -224,6 +224,9 @@ pub enum TsKey {
     /// `import` + side-effect imports + bare `export … from` re-exports at
     /// the top of the file. Plumbing batch. Priority 2.x.
     Imports { file: PathBuf },
+    /// Chunked `Imports` for entrypoint files that are mostly re-export walls.
+    /// Each chunk groups consecutive imports/re-exports from the same source.
+    ImportChunk { file: PathBuf, chunk_index: usize },
     /// Surface listing of every top-level export's first line — a
     /// catastrophic-omission hedge when individual decls don't all fit.
     /// Priority 1.x.
@@ -442,6 +445,9 @@ pub enum PythonKey {
     /// assignments (`__version__`, `__author__`). Plumbing batch.
     /// Priority 2.x.
     Imports { file: PathBuf },
+    /// Chunked `Imports` for large `__init__.py` re-export walls. Each chunk
+    /// groups consecutive imports/re-exports from the same source.
+    ImportChunk { file: PathBuf, chunk_index: usize },
     /// Surface listing of every top-level class, def (sync or async),
     /// and non-dunder simple-assignment first line.
     /// Catastrophic-omission hedge. Priority 1.x.
@@ -712,10 +718,17 @@ impl TsKey {
     /// prose bodies or tiny per-decl batches. Declaration files keep the
     /// default because their names surface is often the useful API anchor.
     /// JavaScript runtime export gates also keep the default; treating them
-    /// as flat catalogs demotes load-bearing anchors.
+    /// as flat catalogs demotes load-bearing anchors. Large TS/TSX
+    /// re-export-wall import chunks use the same catalog-shaped exponent.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
             TsKey::ExportNames { file, .. }
+                if crate::walker::typescript::is_ts_or_tsx_file(file)
+                    && !crate::walker::typescript::is_declaration_file(file) =>
+            {
+                0.38
+            }
+            TsKey::ImportChunk { file, .. }
                 if crate::walker::typescript::is_ts_or_tsx_file(file)
                     && !crate::walker::typescript::is_declaration_file(file) =>
             {
@@ -754,6 +767,9 @@ impl TsKey {
         match self {
             TsKey::ModuleDocLede { file } => format!("module-doc lede in {}", display_path(file)),
             TsKey::Imports { file } => format!("imports in {}", display_path(file)),
+            TsKey::ImportChunk { file, chunk_index } => {
+                describe_chunked_surface("imports", file, *chunk_index)
+            }
             TsKey::ExportNames {
                 file, chunk_index, ..
             } => describe_chunked_surface("export names surface", file, *chunk_index),
@@ -883,7 +899,8 @@ impl GoKey {
 
 impl PythonKey {
     /// `DeclNames` is the broad predecessor names surface and carries a
-    /// milder tuned `0.37` concavity. Per-decl / per-method batches carry
+    /// milder tuned `0.37` concavity; large re-export-wall import chunks use
+    /// the same catalog-shaped exponent. Per-decl / per-method batches carry
     /// the same 0.45 concavity as
     /// the C / Go walkers — Python decls are short (a single `def
     /// name(...):`, a single `class X(Base):` line), source files
@@ -892,6 +909,7 @@ impl PythonKey {
     /// field listings have a structural tie to the class.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
+            PythonKey::ImportChunk { .. } => 0.37,
             PythonKey::DeclNames { .. } => 0.37,
             PythonKey::Decl { .. }
             | PythonKey::DeclBody { .. }
@@ -904,6 +922,9 @@ impl PythonKey {
     pub fn describe(&self) -> String {
         match self {
             PythonKey::Imports { file } => format!("python imports in {}", display_path(file)),
+            PythonKey::ImportChunk { file, chunk_index } => {
+                describe_chunked_surface("python imports", file, *chunk_index)
+            }
             PythonKey::DeclNames { file, chunk_index } => {
                 describe_chunked_surface("python decl names surface", file, *chunk_index)
             }

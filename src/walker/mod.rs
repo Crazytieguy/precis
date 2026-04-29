@@ -24,6 +24,7 @@ use crate::render::SourceCache;
 pub mod c;
 pub mod fs;
 pub mod go;
+pub(crate) mod import_chunks;
 pub mod json;
 pub mod markdown;
 pub mod plaintext;

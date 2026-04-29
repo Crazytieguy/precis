@@ -45,9 +45,13 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, TsKey};
 use crate::value::{
     NAMES_SURFACE_CHUNK_SIZE, mix_signals, names_surface_chunk_count, names_surface_chunk_factor,
-    names_surface_chunk_index,
+    names_surface_chunk_index, reexport_import_chunk_factor,
 };
 
+use super::import_chunks::{
+    ImportGroup, REEXPORT_IMPORT_MAX_OTHER_LINES, REEXPORT_IMPORT_MAX_OTHER_STATEMENTS,
+    groups_to_file_lines, node_line_count, push_import_group, should_chunk_import_groups,
+};
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
     extend_span, file_depth_factor,
@@ -75,7 +79,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         .flatten();
     let module_entrypoint_gate = module_entrypoint
         .as_ref()
-        .map(|file| BatchKey::Typescript(TsKey::Imports { file: file.clone() }));
+        .map(|file| import_gate_for_file(file, ctx));
 
     let mut out = Vec::new();
     for file in &js_like_files {
@@ -98,7 +102,35 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             });
         }
 
-        if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
+        if let Some((source, tree)) = parse_ts(ctx, file) {
+            if let Some(chunks) = collect_reexport_import_chunks(file, &tree, &source) {
+                let chunk_count = chunks.len();
+                for (chunk_index, lines) in chunks.into_iter().enumerate() {
+                    let Some(content) = single_file_lines_content(file, &source, lines) else {
+                        continue;
+                    };
+                    out.push(Batch {
+                        key: TsKey::ImportChunk {
+                            file: file.clone(),
+                            chunk_index,
+                        }
+                        .into(),
+                        predecessor: module_predecessor.clone(),
+                        content,
+                        value: imports_chunk_value(file, ctx, chunk_index, chunk_count, js_factor),
+                    });
+                }
+            } else if let Some(content) =
+                single_file_lines_content(file, &source, collect_imports(&tree, &source))
+            {
+                out.push(Batch {
+                    key: TsKey::Imports { file: file.clone() }.into(),
+                    predecessor: module_predecessor.clone(),
+                    content,
+                    value: imports_value(file, ctx, js_factor),
+                });
+            }
+        } else if let Some(content) = build_per_file_content(file, ctx, parse_ts, collect_imports) {
             out.push(Batch {
                 key: TsKey::Imports { file: file.clone() }.into(),
                 predecessor: module_predecessor.clone(),
@@ -272,6 +304,26 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     }
 
     out
+}
+
+fn import_gate_for_file(file: &Path, ctx: &WalkCtx) -> BatchKey {
+    if would_chunk_reexport_imports(file, ctx) {
+        BatchKey::Typescript(TsKey::ImportChunk {
+            file: file.to_path_buf(),
+            chunk_index: 0,
+        })
+    } else {
+        BatchKey::Typescript(TsKey::Imports {
+            file: file.to_path_buf(),
+        })
+    }
+}
+
+fn would_chunk_reexport_imports(file: &Path, ctx: &WalkCtx) -> bool {
+    is_entrypoint_file(file)
+        && parse_ts(ctx, file)
+            .and_then(|(source, tree)| collect_reexport_import_groups(&tree, &source))
+            .is_some_and(|groups| should_chunk_import_groups(&groups))
 }
 
 fn body_segment_value_factor(body_segment_index: usize) -> f64 {
@@ -1213,6 +1265,16 @@ fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
 }
 
+fn imports_chunk_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    js_factor: f64,
+) -> f64 {
+    imports_value(file, ctx, js_factor) * reexport_import_chunk_factor(chunk_index, chunk_count)
+}
+
 fn export_names_value(
     file: &Path,
     ctx: &WalkCtx,
@@ -1337,6 +1399,101 @@ fn collect_imports(tree: &Tree, source: &str) -> FileLines {
         }
     }
     FileLines::new(dedup_sorted(lines))
+}
+
+fn collect_reexport_import_chunks(
+    file: &Path,
+    tree: &Tree,
+    source: &str,
+) -> Option<Vec<FileLines>> {
+    if !is_entrypoint_file(file) {
+        return None;
+    }
+    let groups = collect_reexport_import_groups(tree, source)?;
+    if !should_chunk_import_groups(&groups) {
+        return None;
+    }
+    Some(groups_to_file_lines(groups))
+}
+
+fn collect_reexport_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    let mut groups = Vec::new();
+    let mut other_statements = 0usize;
+    let mut other_lines = 0usize;
+    for child in root.children(&mut cursor) {
+        match child.kind() {
+            "expression_statement" if is_string_directive(child) => {
+                push_import_group(
+                    &mut groups,
+                    "__directive__".to_string(),
+                    false,
+                    child,
+                    source,
+                );
+            }
+            "import_statement" => {
+                push_import_group(
+                    &mut groups,
+                    source_literal(child, source).unwrap_or_else(|| {
+                        source[child.start_byte()..child.end_byte()].to_string()
+                    }),
+                    true,
+                    child,
+                    source,
+                );
+            }
+            "lexical_declaration" | "variable_declaration"
+                if is_require_declaration(child, source) =>
+            {
+                push_import_group(
+                    &mut groups,
+                    source_literal(child, source).unwrap_or_else(|| {
+                        source[child.start_byte()..child.end_byte()].to_string()
+                    }),
+                    true,
+                    child,
+                    source,
+                );
+            }
+            "export_statement" if is_bare_reexport(child) => {
+                push_import_group(
+                    &mut groups,
+                    source_literal(child, source).unwrap_or_else(|| {
+                        source[child.start_byte()..child.end_byte()].to_string()
+                    }),
+                    true,
+                    child,
+                    source,
+                );
+            }
+            "comment" | "hash_bang_line" => {}
+            _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
+                return None;
+            }
+            _ => {}
+        }
+    }
+    Some(groups)
+}
+
+fn tolerate_reexport_wall_other(
+    node: Node,
+    other_statements: &mut usize,
+    other_lines: &mut usize,
+) -> bool {
+    *other_statements += 1;
+    *other_lines += node_line_count(node);
+    *other_statements <= REEXPORT_IMPORT_MAX_OTHER_STATEMENTS
+        && *other_lines <= REEXPORT_IMPORT_MAX_OTHER_LINES
+}
+
+fn source_literal(node: Node, source: &str) -> Option<String> {
+    let mut cursor = node.walk();
+    node.children(&mut cursor)
+        .find(|child| child.kind() == "string")
+        .map(|child| source[child.start_byte()..child.end_byte()].to_string())
 }
 
 fn is_require_declaration(node: Node, source: &str) -> bool {

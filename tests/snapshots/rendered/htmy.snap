@@ -73,8 +73,6 @@ README.md
     …
     361→## Development
     …
-    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
-    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -141,6 +139,18 @@ examples/
     snippet-slots-fastapi/
 htmy/
     __init__.py
+        1→__version__ = "0.10.2"
+        3→from .core import ContextAware as ContextAware
+        4→from .core import Formatter as Formatter
+        5→from .core import Fragment as Fragment
+        6→from .core import SafeStr as SafeStr
+        7→from .core import SkipProperty as SkipProperty
+        8→from .core import Text as Text
+        9→from .core import WithContext as WithContext
+        10→from .core import XBool as XBool
+        11→from .core import xml_format_string as xml_format_string
+        12→from .error_boundary import ErrorBoundary as ErrorBoundary
+        13→from .function_component import component as component
         46→join_classes = join
         48→HTMY = Renderer
     core.py
@@ -184,11 +194,7 @@ htmy/
         21→    """
         23→    __slots__ = ("_children", "_errors", "_fallback")
         25→    def __init__(
-        26→        self,
-        27→        *children: ComponentType,
-        28→        fallback: Component = None,
-        29→        errors: Container[type[Exception]] | None = None,
-        30→    ) -> None:
+        …
         45→    async def htmy(self, context: Context) -> Component:
         …
         56→    def _fallback_component(self, error: Exception) -> ComponentType:
@@ -276,7 +282,6 @@ htmy/
         default.py
             20→class _Node:
             …
-            23→    __slots__ = ("component", "next")
             50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
             53→class _ComponentRenderer:
             …
