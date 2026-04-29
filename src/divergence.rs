@@ -9,11 +9,11 @@
 //!   answer-at-the-top format. Score line + per-budget table, then
 //!   Verdict block, Top opportunities, diagnosis / loss-reason /
 //!   exact-overlap rollups, arrival ledger grouped by diagnosis, and
-//!   walker waste at the bottom. Reached rows (credit ≥ 0.8) are
-//!   filtered out of every rollup — under per-budget the optimization
-//!   target only depends on partial / missing rows, so reaching is
-//!   the absence of an opportunity, not a category. Stable ordering;
-//!   perfect alignment ⇒ very short file.
+//!   walker waste at the bottom. Reached rows (damped credit ≥ 0.8
+//!   at the primary budget) are filtered out of every rollup —
+//!   under per-budget the optimization target only depends on
+//!   partial / missing rows. Stable ordering; perfect alignment ⇒
+//!   very short file.
 //! - Corpus index (`tests/divergence/OVERVIEW.md`): one row per
 //!   fixture sorted by `Score(3000)` ascending, with the full 7-vector
 //!   exposed so front-loader / trailing-loader walker shapes are
@@ -117,14 +117,16 @@
 //!   wrong-slice walker batches`, `add walker candidates for
 //!   no-discovered rows`, `finish partially-delivered NS batches`).
 //! - `rows` — count of NS rows the intervention would help.
-//! - `gap@1k` / `gap@3k` / `gap@9k` — `Σ over atoms in row with rank
-//!   ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the
-//!   primary sort key (proxy for `Score(3000)` headroom); `gap@1k`
-//!   and `gap@9k` show how the same intervention scales across the
-//!   budget vector — useful for spotting when a 3K-targeted change
-//!   would silently regress another budget. **Non-additive across
-//!   opportunities** (rows can overlap); sums are upper bounds on
-//!   Score(B) impact, not additive estimates.
+//! - `gap@1k` / `gap@3k` / `gap@9k` — `Σ over atoms in row: (1 −
+//!   damped_credit(a)) / rank(a)` evaluated at each budget's
+//!   `walker_cum`. Approximates the row's headroom on `Score(B)` via
+//!   the Importance numerator (`compute_score_at` adds every atom's
+//!   `damped/rank` to Importance with no rank cap, so atoms past
+//!   `|A_B|` contribute too — `1/rank` fades them naturally).
+//!   `gap@3k` is the primary sort key. Gap is monotone non-
+//!   increasing in B (walker has more budget at higher B). **Non-
+//!   additive across opportunities** (rows can overlap); sums are
+//!   upper bounds on Score(B) impact, not exact deltas.
 //! - `evidence` — short rationale (file count for predecessor-kind
 //!   groups; exact-atom totals; avg batch completion; etc.).
 //! - `top row ids` — up to 5 row ids sorted by `gap@3k` descending
@@ -197,16 +199,17 @@
 //! candidate hint`.
 //!
 //! - `exp_t` — NS-cumulative tokens at that batch (when NS expects it).
-//! - `credit` — final-state byte-range credit averaged over NS atoms
-//!   (atom-count weighted).
-//! - `comp` — final-state byte-weighted batch completion (the
-//!   completion factor that dampens this row's atoms in
-//!   `damped_credit`). Equals `credit` when atoms have uniform
-//!   `ns_bytes`; differs when one big line dominates the batch.
-//! - `status` ∈ `{partial, missing}`. Bands: `credit < 0.5` → missing,
-//!   `< 0.8` → partial. (Reached rows — credit ≥ 0.8 — are filtered
-//!   out; under the per-budget metric, "delivered with credit ≥
-//!   threshold" carries no actionable signal regardless of timing.)
+//! - `credit` — primary-budget byte-range credit averaged over NS
+//!   atoms (atom-count weighted).
+//! - `comp` — primary-budget byte-weighted batch completion (the
+//!   `completion(B_i)` factor in `damped_credit`). Equals `credit`
+//!   when atoms have uniform `ns_bytes`; differs when one big line
+//!   dominates the batch.
+//! - `status` ∈ `{partial, missing}` — banded on `credit × comp`
+//!   (the row's average damped credit, what `Score(B)` actually
+//!   consumes): `< 0.5` → missing, `< 0.8` → partial. Reached rows
+//!   (damped credit ≥ 0.8) are filtered out — they carry no
+//!   actionable gap on `Score(3000)`.
 //! - `candidate hint` — see above.
 //!
 //! Within `ranking-recoverable`, predecessor-gated children that share
@@ -292,13 +295,15 @@ pub(crate) const LOW_BUDGET_INDEX: usize = 0;
 /// the "all atoms" total we previously surfaced as `rank×gap`.
 pub(crate) const HIGH_BUDGET_INDEX: usize = BUDGETS.len() - 1;
 
-/// Credit threshold: NS batch counted as `reached` iff final-state
-/// credit ≥ this.
+/// Damped-credit threshold: NS batch counted as `reached` iff
+/// `credit × completion` at the primary budget ≥ this. Same
+/// quantity Score(B) consumes per atom, so the bucketing reflects
+/// what the metric rewards.
 const REACH_THRESHOLD: f64 = 0.8;
 
-/// Credit threshold: NS batch counted as `missing` iff final-state
-/// credit < this. Rows in `[MISSING_FLOOR, REACH_THRESHOLD)` are
-/// `partial` everywhere (headline + row label).
+/// Damped-credit threshold: NS batch counted as `missing` iff
+/// `credit × completion` at the primary budget < this. Rows in
+/// `[MISSING_FLOOR, REACH_THRESHOLD)` are `partial`.
 const MISSING_FLOOR: f64 = 0.5;
 
 /// Report threshold: walker-waste rows elide batches below this cost.
@@ -756,11 +761,11 @@ fn atom_credit(atom: &GradedAtom, walker_cum: &BTreeMap<&Atom, usize>) -> f64 {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ArrivalStatus {
-    /// Final-state credit ≥ [`REACH_THRESHOLD`].
+    /// Primary-budget damped credit ≥ [`REACH_THRESHOLD`].
     Reached,
-    /// Final-state credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
+    /// Primary-budget damped credit in `[MISSING_FLOOR, REACH_THRESHOLD)`.
     Partial,
-    /// Final-state credit < [`MISSING_FLOOR`].
+    /// Primary-budget damped credit < [`MISSING_FLOOR`].
     Missing,
 }
 
@@ -793,14 +798,13 @@ struct Arrival {
     /// primary budget. Surfaced as the `comp` ledger column.
     completion: f64,
     /// Per-budget priority weight: `priority_at_b[i]` = `Σ over atoms
-    /// in row with rank ≤ |A_BUDGETS[i]|: r(rank(a)) × (1 −
-    /// damped_credit(a))` evaluated at `walker_cum` for budget `i`.
-    /// Slot `[PRIMARY_BUDGET_INDEX]` is the primary sort key
-    /// throughout opportunity / verdict / row-id rollups; slots `[0]`
-    /// (1K) and `[6]` (9K) are surfaced as `gap@1k` / `gap@9k`
-    /// columns. Each slot's `damped_credit` uses that budget's
-    /// completion, so the vector honestly tracks per-budget headroom
-    /// rather than collapsing to final-state.
+    /// in row: r(rank(a)) × (1 − damped_credit(a))` at budget `i`'s
+    /// `walker_cum` and `completion`. No rank cap — atoms past
+    /// `|A_B|` enter via `1/rank`, matching the Importance numerator
+    /// in `compute_score_at` which also has no cap. Slot
+    /// `[PRIMARY_BUDGET_INDEX]` is the sort key throughout
+    /// opportunity / verdict / row-id rollups; slots `[0]` (1K) and
+    /// `[6]` (9K) surface as `gap@1k` / `gap@9k` columns.
     priority_at_b: [f64; BUDGETS.len()],
 }
 
@@ -811,11 +815,17 @@ fn arrival_infos(ctx: &BuildCtx, walker: &WalkerSnapshots) -> Vec<Arrival> {
         .map(|row| {
             let credit = credit_for_ns_atoms(&row.atoms, primary_cum);
             let completion = completion_for_row(&row.atoms, primary_cum);
-            let status = classify(credit);
+            // Status anchors on damped credit (= credit × completion),
+            // matching what `Score(B)` actually consumes. A row with
+            // many small atoms covered but one large atom missing has
+            // high `credit` and low `completion`; classifying on
+            // `credit` alone called it `Reached` and dropped it from
+            // every rollup despite Score depressing it heavily.
+            let status = classify(credit * completion);
             let priority_at_b: [f64; BUDGETS.len()] = std::array::from_fn(|i| {
                 let cum = &walker.cums[i];
                 let row_completion = completion_for_row(&row.atoms, cum);
-                priority_for_row(row, cum, row_completion, walker.a_b_atoms[i])
+                priority_for_row(row, cum, row_completion)
             });
             Arrival {
                 credit,
@@ -854,25 +864,20 @@ fn credit_for_ns_atoms(ns_atoms: &[GradedAtom], walker_cum: &BTreeMap<&Atom, usi
     total / ns_atoms.len() as f64
 }
 
-/// Per-row priority = `Σ over atoms with rank ≤ rank_cap: r(rank(a)) ×
-/// (1 − damped_credit(a))`. Per-budget version: pass that budget's
-/// `walker_cum`, `completion`, and `|A_B|` cap. Atoms past `rank_cap`
-/// contribute nothing — the cap restricts the sum to the budget's
-/// addressable atoms.
-fn priority_for_row(
-    row: &NsRow,
-    walker_cum: &BTreeMap<&Atom, usize>,
-    completion: f64,
-    rank_cap: usize,
-) -> f64 {
+/// Per-row priority = `Σ over atoms in row: r(rank(a)) × (1 −
+/// damped_credit(a))` evaluated at the given budget's `walker_cum`
+/// and `completion`. No rank cap: every atom contributes via
+/// `1/rank`, including atoms past `|A_B|` — they enter `Score(B)`
+/// through the Importance numerator (which `compute_score_at` does
+/// **not** rank-cap), so closing their gap can still lift `Score(B)`
+/// until Importance saturates at 1. The `1/rank` weighting fades
+/// late-atom contributions naturally.
+fn priority_for_row(row: &NsRow, walker_cum: &BTreeMap<&Atom, usize>, completion: f64) -> f64 {
     row.atoms
         .iter()
         .enumerate()
         .map(|(i, atom)| {
             let rank = row.rank_start + i;
-            if rank > rank_cap {
-                return 0.0;
-            }
             let damped = atom_credit(atom, walker_cum) * completion;
             (1.0 - damped).max(0.0) / rank as f64
         })

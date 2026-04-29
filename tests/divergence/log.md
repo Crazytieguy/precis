@@ -16,26 +16,28 @@ scores: Score(3000)=0.607 ns_rows≤3K=17/44 (reached=9 partial=0 missing=8)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 11 ranking-recoverable (gap@3k=0.26), 18 wrong-slice/granularity (gap@3k=0.47), 1 no-discovered (gap@3k=0.00)
+Evidence: 11 ranking-recoverable (gap@3k=0.51), 18 wrong-slice/granularity (gap@3k=1.19), 1 no-discovered (gap@3k=0.03)
 Secondary intervention: free T_max budget for 9 too-expensive candidates
-Top rows: 3.1, 2.2, 2.6, 3.2, 3.5, ...
+Top rows: 3.1, 3.8, 2.2, 2.6, 3.5, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 18 | 0.13 | 0.47 | 0.85 | nearby candidates have low exact atom overlap | 3.1, 2.2, 2.6, 3.2, 3.5, ... |
-| finish partially-delivered NS batches | 5 | 0.00 | 0.33 | 0.28 | avg batch completion=0.33 | 3.1, 2.6, 3.2, 4.4, 4.6 |
-| free T_max budget / demote late waste | 9 | 0.21 | 0.26 | 0.40 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/98 | 1.6, 3.3, 3.4, 4.3, 5.2, ... |
+| split wrong-slice walker batches | 18 | 1.21 | 1.19 | 0.92 | nearby candidates have low exact atom overlap | 3.1, 3.8, 2.2, 2.6, 3.5, ... |
+| free T_max budget / demote late waste | 9 | 0.40 | 0.40 | 0.40 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/98 | 1.6, 5.8, 5.2, 3.3, 3.4, ... |
+| finish partially-delivered NS batches | 5 | 0.38 | 0.36 | 0.28 | avg batch completion=0.33 | 3.1, 2.6, 3.2, 4.6, 4.4 |
+| tune ranking for discovered unscheduled candidates | 2 | 0.11 | 0.11 | 0.11 | high-overlap candidates fit but did not win, exact total=33/35 | 3.7, 5.14 |
+| add walker candidates for no-discovered rows | 1 | 0.03 | 0.03 | 0.03 | NS rows have no discovered line candidate | 5.11 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 11 | 11 | 0 | value/ranking |
-| wrong-slice / granularity | 18 | 16 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 18 | 18 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 1 | 1 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 3 | 3 | 0 | inspect row |
@@ -44,8 +46,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 9 | 0.26 | free T_max budget |
-| discovered unscheduled | 2 | 0.00 | tune ranking |
+| too expensive at final margin | 9 | 0.40 | free T_max budget |
+| discovered unscheduled | 2 | 0.11 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-file=4, fs-only=1, no discovered candidate=1
@@ -55,10 +57,9 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-fil
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 3 |
-| scheduled bbox | missing | low | 10 |
+| scheduled bbox | missing | low | 12 |
 | scheduled bbox | missing | high | 2 |
 | scheduled bbox | missing | full | 1 |
-| scheduled bbox | partial | low | 2 |
 | unscheduled bbox | missing | high | 2 |
 | unscheduled bbox | missing | full | 8 |
 
@@ -93,9 +94,9 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=10, scheduled same-fil
 | 3.9 | 4715 | 0.00 | 0.00 | missing | set_logger_inner state transitions | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
 | 4.1 | 5085 | 0.33 | 0.16 | missing | kv module concept | [scheduled bbox exact=10/30] crate-doc lede in src/kv/mod.rs (t=240, 10 atoms); better unscheduled exact=19/30: crate-doc body in src/kv/mod.rs (19 atoms, too expensive at final margin) |
 | 4.2 | 5290 | 0.00 | 0.00 | missing | kv module re-exports | [scheduled bbox exact=11/20] mod/use plumbing in src/kv/mod.rs (t=3785, 11 atoms) |
-| 4.4 | 5612 | 0.62 | 0.49 | partial | kv::Source trait surface | [scheduled bbox exact=4/8] pub item at src/kv/source.rs:51 (t=6445, 36 atoms) |
+| 4.4 | 5612 | 0.62 | 0.49 | missing | kv::Source trait surface | [scheduled bbox exact=4/8] pub item at src/kv/source.rs:51 (t=6445, 36 atoms) |
 | 4.5 | 5889 | 0.18 | 0.08 | missing | kv::Value capture constructors | [scheduled bbox exact=3/17] pub item at src/kv/value.rs:119 (t=940, 3 atoms) |
-| 4.6 | 6053 | 0.58 | 0.45 | partial | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=596, 4 atoms) |
+| 4.6 | 6053 | 0.58 | 0.45 | missing | kv::Key surface | [scheduled bbox exact=4/12] pub item at src/kv/key.rs:37 (t=596, 4 atoms) |
 | 4.8 | 6552 | 0.00 | 0.00 | missing | kv::Value to_* primitive accessors | [scheduled same-file] pub item at src/kv/value.rs:462 (t=8999, 63 atoms) |
 | 5.4 | 7693 | 0.00 | 0.00 | missing | Compile-time max_level_* conflict guards | [scheduled same-file] pub-item names surface in src/lib.rs (t=1336, 34 atoms) |
 | 5.5 | 7986 | 0.00 | 0.00 | missing | FromStr impls for Level/LevelFilter | [scheduled bbox exact=0/24] pub item at src/lib.rs:636 (t=1669, 14 atoms); better unscheduled exact=6/24: impl method sigs in src/lib.rs (30 atoms, too expensive at final margin) |

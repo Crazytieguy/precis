@@ -1,4 +1,4 @@
-scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=9 partial=1 missing=4)
+scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
 
 ## Per-budget scores
 
@@ -16,46 +16,47 @@ scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=9 partial=1 missing=4)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 4 ranking-recoverable (gap@3k=0.09), 25 wrong-slice/granularity (gap@3k=0.38), 1 no-discovered (gap@3k=0.15)
+Evidence: 4 ranking-recoverable (gap@3k=0.19), 27 wrong-slice/granularity (gap@3k=2.41), 1 no-discovered (gap@3k=0.15)
 Secondary intervention: free T_max budget for 1 too-expensive candidate
-Top rows: 3.2, 3.3, 2.6, 3.4, 3.5, ...
+Top rows: 1.1, 3.2, 3.3, 3.7, 5.1, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 25 | 0.00 | 0.38 | 0.90 | nearby candidates have low exact atom overlap | 3.2, 3.3, 2.6, 3.4, 3.5, ... |
-| add walker candidates for no-discovered rows | 1 | 0.00 | 0.15 | 0.15 | NS rows have no discovered line candidate | 2.4 |
+| split wrong-slice walker batches | 27 | 2.41 | 2.41 | 2.04 | nearby candidates have low exact atom overlap | 1.1, 3.2, 3.3, 3.7, 5.1, ... |
+| add walker candidates for no-discovered rows | 1 | 0.15 | 0.15 | 0.15 | NS rows have no discovered line candidate | 2.4 |
 | free T_max budget / demote late waste | 1 | 0.09 | 0.09 | 0.09 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=9/9 | 2.3 |
-| finish partially-delivered NS batches | 1 | 0.00 | 0.08 | 0.07 | avg batch completion=0.54 | 2.6 |
+| finish partially-delivered NS batches | 1 | 0.08 | 0.08 | 0.07 | avg batch completion=0.54 | 2.6 |
+| tune ranking for discovered unscheduled candidates | 1 | 0.06 | 0.06 | 0.06 | high-overlap candidates fit but did not win, exact total=14/17 | 3.6 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 4 | 4 | 0 | value/ranking |
-| wrong-slice / granularity | 25 | 24 | 1 | walker granularity / wrong slice |
+| wrong-slice / granularity | 27 | 25 | 2 | walker granularity / wrong slice |
 | no discovered candidate | 1 | 1 | 0 | walker coverage or predecessor-gated emit |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 2 | 0.00 | promote predecessor |
+| predecessor not scheduled | 2 | 0.04 | promote predecessor |
 | too expensive at final margin | 1 | 0.09 | free T_max budget |
-| discovered unscheduled | 1 | 0.00 | tune ranking |
+| discovered unscheduled | 1 | 0.06 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=6, unscheduled bbox=21, unscheduled same-file=2, no discovered candidate=1
+Candidate hint kinds: scheduled bbox=8, unscheduled bbox=21, unscheduled same-file=2, no discovered candidate=1
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 5 |
-| scheduled bbox | partial | low | 1 |
+| scheduled bbox | missing | low | 6 |
+| scheduled bbox | partial | low | 2 |
 | unscheduled bbox | missing | none | 2 |
 | unscheduled bbox | missing | low | 15 |
 | unscheduled bbox | missing | high | 1 |
@@ -76,7 +77,8 @@ Candidate hint kinds: scheduled bbox=6, unscheduled bbox=21, unscheduled same-fi
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 2.6 | 1667 | 0.74 | 0.54 | partial | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8332, 40 atoms) |
+| 1.1 | 61 | 0.80 | 0.99 | partial | package.json — name, description, main | [scheduled bbox exact=3/5] package identity in package.json (t=268, 3 atoms) |
+| 2.6 | 1667 | 0.74 | 0.54 | missing | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8332, 40 atoms) |
 | 3.2 | 2375 | 0.06 | 0.01 | missing | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6300, 27 atoms) |
 | 3.3 | 2947 | 0.06 | 0.01 | missing | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=6659, 7 atoms) |
 | 3.4 | 3219 | 0.00 | 0.00 | missing | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=8839, 12 atoms) |
@@ -100,6 +102,7 @@ Candidate hint kinds: scheduled bbox=6, unscheduled bbox=21, unscheduled same-fi
 | 7.2 | 9711 | 0.00 | 0.00 | missing | internal/debug.js — full file | [unscheduled bbox exact=1/11] export at internal/debug.js:11 (1 atoms, predecessor not scheduled: export names surface in internal/debug.js) |
 | 7.3 | 9778 | 0.00 | 0.00 | missing | internal/lrucache.js — class signature + max constant | [unscheduled bbox exact=6/8] export at internal/lrucache.js:3 (8 atoms, predecessor not scheduled: export names surface in internal/lrucache.js) |
 | 7.4 | 9852 | 0.00 | 0.00 | missing | ranges/min-version.js — function signature + 0.0.0 fast path | [unscheduled bbox exact=4/6] export body at ranges/min-version.js:7 body 8 (4 atoms, predecessor not scheduled: export at ranges/min-version.js:7) |
+| 7.5 | 9924 | 0.88 | 0.90 | partial | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9169, 14 atoms) |
 | 7.6 | 9977 | 0.00 | 0.00 | missing | bin/semver.js — entry skeleton (shebang, version load, main call) | [unscheduled bbox exact=0/5] imports in bin/semver.js (1 atoms, discovered unscheduled) |
 
 ### no discovered candidate

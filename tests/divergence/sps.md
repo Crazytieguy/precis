@@ -1,4 +1,4 @@
-scores: Score(3000)=0.455 ns_rows≤3K=19/49 (reached=6 partial=2 missing=11)
+scores: Score(3000)=0.455 ns_rows≤3K=19/49 (reached=5 partial=1 missing=13)
 
 ## Per-budget scores
 
@@ -16,47 +16,48 @@ scores: Score(3000)=0.455 ns_rows≤3K=19/49 (reached=6 partial=2 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 8 ranking-recoverable (gap@3k=0.24), 26 wrong-slice/granularity (gap@3k=1.75), 0 no-discovered (gap@3k=0.00)
+Evidence: 8 ranking-recoverable (gap@3k=0.58), 26 wrong-slice/granularity (gap@3k=2.34), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 7 too-expensive candidates
 Top rows: 1.2, 1.5, 1.6, 1.8, 2.4, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 26 | 1.22 | 1.75 | 1.89 | nearby candidates have low exact atom overlap | 1.2, 1.5, 1.6, 1.8, 2.4, ... |
-| finish partially-delivered NS batches | 9 | 0.00 | 0.27 | 0.33 | avg batch completion=0.43 | 2.3, 2.7, 2.2, 2.5, 2.15, ... |
-| free T_max budget / demote late waste | 7 | 0.06 | 0.24 | 0.43 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=125/136 | 1.10, 1.7, 3.2, 3.4, 3.5, ... |
+| split wrong-slice walker batches | 26 | 2.45 | 2.34 | 1.96 | nearby candidates have low exact atom overlap | 1.2, 1.5, 1.6, 1.8, 2.4, ... |
+| free T_max budget / demote late waste | 7 | 0.44 | 0.44 | 0.44 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=125/136 | 1.10, 1.7, 3.5, 3.4, 3.2, ... |
+| finish partially-delivered NS batches | 9 | 0.49 | 0.38 | 0.35 | avg batch completion=0.43 | 2.3, 2.7, 2.2, 2.5, 2.15, ... |
+| promote listing of 'sps-core/src/install/cask/artifacts' | 1 | 0.14 | 0.14 | 0.14 | 0 files, exact total=45/47 | 2.10 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 8 | 8 | 0 | value/ranking |
-| wrong-slice / granularity | 26 | 24 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 26 | 26 | 0 | walker granularity / wrong slice |
 | fs/listing | 4 | 4 | 0 | filesystem/listing value |
-| mixed/unknown | 1 | 1 | 0 | inspect row |
+| mixed/unknown | 2 | 1 | 1 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 1 | 0.00 | promote predecessor |
-| too expensive at final margin | 7 | 0.24 | free T_max budget |
+| predecessor not scheduled | 1 | 0.14 | promote predecessor |
+| too expensive at final margin | 7 | 0.44 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=24, unscheduled bbox=11, fs-only=4
+Candidate hint kinds: scheduled bbox=25, unscheduled bbox=11, fs-only=4
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 2 |
-| scheduled bbox | missing | low | 19 |
+| scheduled bbox | missing | low | 21 |
 | scheduled bbox | missing | high | 1 |
-| scheduled bbox | partial | low | 2 |
+| scheduled bbox | partial | high | 1 |
 | unscheduled bbox | missing | low | 6 |
 | unscheduled bbox | missing | high | 3 |
 | unscheduled bbox | missing | full | 2 |
@@ -85,10 +86,10 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=11, fs-only=4
 | 1.6 | 678 | 0.06 | 0.08 | missing | main.rs — Tokio entry signature + Init early-out | [scheduled bbox exact=2/16] entry item at sps/src/main.rs:57 (t=227, 2 atoms); better unscheduled exact=11/16: entry item body at sps/src/main.rs:57 body 60 (11 atoms, too expensive at final margin) |
 | 1.8 | 936 | 0.00 | 0.00 | missing | main.rs — auto-update gate | [unscheduled bbox exact=11/16] entry item body at sps/src/main.rs:57 body 146 (11 atoms, too expensive at final margin) |
 | 1.9 | 1105 | 0.00 | 0.00 | missing | main.rs — Cache + Command::run dispatch | [unscheduled bbox exact=7/13] entry item body at sps/src/main.rs:57 body 159 (7 atoms, too expensive at final margin) |
-| 2.2 | 1651 | 0.71 | 0.57 | partial | sps-common lib.rs — module tree + re-exports | [scheduled bbox exact=12/17] mod/use plumbing in sps-common/src/lib.rs (t=1616, 12 atoms) |
+| 2.2 | 1651 | 0.71 | 0.57 | missing | sps-common lib.rs — module tree + re-exports | [scheduled bbox exact=12/17] mod/use plumbing in sps-common/src/lib.rs (t=1616, 12 atoms) |
 | 2.3 | 1859 | 0.40 | 0.31 | missing | sps-core lib.rs — module tree | [scheduled bbox exact=8/20] mod/use plumbing in sps-core/src/lib.rs (t=670, 8 atoms) |
 | 2.4 | 2220 | 0.00 | 0.00 | missing | sps-net lib.rs — re-exports + dependency on sps-common | [scheduled bbox exact=23/29] mod/use plumbing in sps-net/src/lib.rs (t=6973, 23 atoms) |
-| 2.5 | 2402 | 0.65 | 0.70 | partial | sps-common — model module exports | [scheduled bbox exact=9/20] mod/use plumbing in sps-common/src/model/mod.rs (t=1701, 9 atoms) |
+| 2.5 | 2402 | 0.65 | 0.70 | missing | sps-common — model module exports | [scheduled bbox exact=9/20] mod/use plumbing in sps-common/src/model/mod.rs (t=1701, 9 atoms) |
 | 2.7 | 2744 | 0.45 | 0.56 | missing | sps-core/install — module roster | [scheduled bbox exact=7/22] mod/use plumbing in sps-core/src/install/mod.rs (t=1442, 7 atoms) |
 | 2.16 | 4161 | 0.00 | 0.00 | missing | Per-crate Cargo manifest signatures (name + deps highlights) | [unscheduled bbox exact=11/38] [package] in sps/Cargo.toml (11 atoms, too expensive at final margin) |
 | 3.3 | 5074 | 0.00 | 0.00 | missing | Config — sps_root resolution + cellar/cask path bodies | [scheduled bbox exact=0/36] pub item at sps-common/src/config.rs:15 (t=2329, 8 atoms); better unscheduled exact=2/36: impl method sigs in sps-common/src/config.rs (3 atoms, too expensive at final margin) |
@@ -120,6 +121,7 @@ Candidate hint kinds: scheduled bbox=24, unscheduled bbox=11, fs-only=4
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.6 | 2517 | 0.80 | 0.89 | partial | sps-common — dependency module exports | [scheduled bbox exact=8/10] mod/use plumbing in sps-common/src/dependency/mod.rs (t=1958, 8 atoms) |
 | 4.8 | 9433 | 0.11 | 0.08 | missing | core worker pool — start_worker_pool_manager | [scheduled bbox exact=9/10] pub item at sps-core/src/pipeline/engine.rs:16 (t=9226, 9 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)

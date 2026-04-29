@@ -1,4 +1,4 @@
-scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=9 partial=3 missing=6)
+scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=8 partial=2 missing=8)
 
 ## Per-budget scores
 
@@ -16,47 +16,50 @@ scores: Score(3000)=0.548 ns_rows≤3K=18/44 (reached=9 partial=3 missing=6)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 4 ranking-recoverable (gap@3k=0.10), 20 wrong-slice/granularity (gap@3k=0.63), 9 no-discovered (gap@3k=0.23)
+Evidence: 4 ranking-recoverable (gap@3k=0.38), 20 wrong-slice/granularity (gap@3k=1.30), 9 no-discovered (gap@3k=0.55)
 Secondary intervention: free T_max budget for 3 too-expensive candidates
-Top rows: 2.1, 2.6, 2.9, 2.8, 2.4, ...
+Top rows: 2.1, 2.6, 3.4, 2.9, 3.8, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 20 | 0.55 | 0.63 | 1.18 | nearby candidates have low exact atom overlap | 2.1, 2.6, 2.9, 2.8, 2.4, ... |
-| finish partially-delivered NS batches | 5 | 0.40 | 0.37 | 0.41 | avg batch completion=0.48 | 2.1, 2.8, 2.4, 2.2, 3.7 |
-| add walker candidates for no-discovered rows | 9 | 0.00 | 0.23 | 0.48 | NS rows have no discovered line candidate | 2.13, 3.2, 3.6, 4.2, 4.3, ... |
-| free T_max budget / demote late waste | 3 | 0.00 | 0.10 | 0.35 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=83/86 | 2.11, 2.14, 2.15 |
+| split wrong-slice walker batches | 20 | 1.41 | 1.30 | 1.21 | nearby candidates have low exact atom overlap | 2.1, 2.6, 3.4, 2.9, 3.8, ... |
+| add walker candidates for no-discovered rows | 9 | 0.55 | 0.55 | 0.55 | NS rows have no discovered line candidate | 2.13, 3.2, 5.4, 3.6, 4.2, ... |
+| finish partially-delivered NS batches | 5 | 0.54 | 0.43 | 0.41 | avg batch completion=0.48 | 2.1, 2.8, 3.7, 2.4, 2.2 |
+| free T_max budget / demote late waste | 3 | 0.35 | 0.35 | 0.35 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=83/86 | 2.14, 2.15, 2.11 |
+| tune ranking for discovered unscheduled candidates | 1 | 0.03 | 0.03 | 0.03 | high-overlap candidates fit but did not win, exact total=23/25 | 5.5 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 4 | 4 | 0 | value/ranking |
-| wrong-slice / granularity | 20 | 17 | 3 | walker granularity / wrong slice |
+| wrong-slice / granularity | 20 | 19 | 1 | walker granularity / wrong slice |
 | no discovered candidate | 9 | 9 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 2 | 2 | 0 | filesystem/listing value |
+| mixed/unknown | 1 | 0 | 1 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 3 | 0.10 | free T_max budget |
-| discovered unscheduled | 1 | 0.00 | tune ranking |
+| too expensive at final margin | 3 | 0.35 | free T_max budget |
+| discovered unscheduled | 1 | 0.03 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file=4, fs-only=2, no discovered candidate=9
+Candidate hint kinds: scheduled bbox=18, unscheduled bbox=3, scheduled same-file=4, fs-only=2, no discovered candidate=9
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 1 |
-| scheduled bbox | missing | low | 13 |
-| scheduled bbox | partial | low | 3 |
+| scheduled bbox | missing | low | 15 |
+| scheduled bbox | partial | low | 1 |
+| scheduled bbox | partial | high | 1 |
 | unscheduled bbox | missing | high | 1 |
 | unscheduled bbox | missing | full | 2 |
 
@@ -75,9 +78,9 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 2.1 | 424 | 0.58 | 0.52 | partial | lib.rs module declarations | [scheduled bbox exact=11/19] mod/use plumbing in src/lib.rs (t=1372, 11 atoms) |
+| 2.1 | 424 | 0.58 | 0.52 | missing | lib.rs module declarations | [scheduled bbox exact=11/19] mod/use plumbing in src/lib.rs (t=1372, 11 atoms) |
 | 2.2 | 458 | 0.75 | 0.69 | partial | Error struct definition | [scheduled bbox exact=3/4] pub item at src/lib.rs:390 (t=561, 3 atoms) |
-| 2.4 | 541 | 0.60 | 0.47 | partial | Chain struct | [scheduled bbox exact=3/5] pub item at src/lib.rs:415 (t=580, 3 atoms) |
+| 2.4 | 541 | 0.60 | 0.47 | missing | Chain struct | [scheduled bbox exact=3/5] pub item at src/lib.rs:415 (t=580, 3 atoms) |
 | 2.6 | 858 | 0.00 | 0.00 | missing | Error::* method signatures (locations) | [scheduled same-file] pub item at src/error.rs:934 (t=3218, 7 atoms) |
 | 2.8 | 1130 | 0.33 | 0.45 | missing | Crate-level public items (locations) | [scheduled bbox exact=0/9] pub-item doc body at src/lib.rs:616 (t=9014, 102 atoms) |
 | 2.9 | 1302 | 0.13 | 0.10 | missing | Macro export locations | [scheduled bbox exact=1/15] macro_export body at src/macros.rs:58 (t=1536, 11 atoms) |
@@ -116,6 +119,12 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=3, scheduled same-file
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.5 | 285 | 0.00 | 0.00 | missing | tests/ listing | fs-only |
 | 4.7 | 8056 | 0.00 | 0.00 | missing | tests/ui + tests/crate listings | fs-only |
+
+### mixed/unknown
+
+| id | exp_t | credit | comp | status | descriptor | candidate hint |
+|----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.12 | 1979 | 0.91 | 0.87 | partial | anyhow! macro body | [scheduled bbox exact=20/22] macro_export body at src/macros.rs:204 (t=2160, 20 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)
 

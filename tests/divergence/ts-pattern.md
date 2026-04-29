@@ -1,4 +1,4 @@
-scores: Score(3000)=0.288 ns_rows≤3K=19/45 (reached=5 partial=2 missing=12)
+scores: Score(3000)=0.288 ns_rows≤3K=19/45 (reached=4 partial=2 missing=13)
 
 ## Per-budget scores
 
@@ -16,46 +16,47 @@ scores: Score(3000)=0.288 ns_rows≤3K=19/45 (reached=5 partial=2 missing=12)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 2 ranking-recoverable (gap@3k=0.18), 35 wrong-slice/granularity (gap@3k=3.94), 0 no-discovered (gap@3k=0.00)
+Evidence: 2 ranking-recoverable (gap@3k=0.24), 35 wrong-slice/granularity (gap@3k=4.92), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 2 too-expensive candidates
 Top rows: 1.1, 1.2, 1.3, 2.8, 2.11, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 35 | 2.96 | 3.94 | 4.32 | nearby candidates have low exact atom overlap | 1.1, 1.2, 1.3, 2.8, 2.11, ... |
-| finish partially-delivered NS batches | 8 | 0.59 | 0.89 | 0.56 | avg batch completion=0.44 | 1.2, 1.3, 2.9, 2.5, 2.10, ... |
-| free T_max budget / demote late waste | 2 | 0.18 | 0.18 | 0.18 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=65/71 | 2.4, 4.7 |
+| split wrong-slice walker batches | 35 | 4.96 | 4.92 | 4.37 | nearby candidates have low exact atom overlap | 1.1, 1.2, 1.3, 2.8, 2.11, ... |
+| finish partially-delivered NS batches | 8 | 0.99 | 0.95 | 0.57 | avg batch completion=0.44 | 1.2, 1.3, 2.9, 2.5, 2.10, ... |
+| free T_max budget / demote late waste | 2 | 0.24 | 0.24 | 0.24 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=65/71 | 2.4, 4.7 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 2 | 2 | 0 | value/ranking |
-| wrong-slice / granularity | 35 | 33 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 35 | 34 | 1 | walker granularity / wrong slice |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
-| mixed/unknown | 1 | 1 | 0 | inspect row |
+| mixed/unknown | 2 | 1 | 1 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.18 | free T_max budget |
+| too expensive at final margin | 2 | 0.24 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=28, unscheduled bbox=6, scheduled same-file=4, fs-only=1
+Candidate hint kinds: scheduled bbox=29, unscheduled bbox=6, scheduled same-file=4, fs-only=1
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 4 |
-| scheduled bbox | missing | low | 21 |
+| scheduled bbox | missing | low | 22 |
 | scheduled bbox | missing | full | 1 |
-| scheduled bbox | partial | low | 2 |
+| scheduled bbox | partial | low | 1 |
+| scheduled bbox | partial | high | 1 |
 | unscheduled bbox | missing | low | 4 |
 | unscheduled bbox | missing | high | 1 |
 | unscheduled bbox | missing | full | 1 |
@@ -74,7 +75,7 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=6, scheduled same-file
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.1 | 71 | 0.00 | 0.00 | missing | README lede + tagline | [scheduled same-file] README.md section #0 (t=823, 2 atoms) |
-| 1.2 | 151 | 0.67 | 0.74 | partial | package.json identity fields | [scheduled bbox exact=4/6] package identity in package.json (t=566, 4 atoms) |
+| 1.2 | 151 | 0.67 | 0.74 | missing | package.json identity fields | [scheduled bbox exact=4/6] package identity in package.json (t=566, 4 atoms) |
 | 1.3 | 223 | 0.67 | 0.76 | partial | src/index.ts — full public re-export surface | [scheduled bbox exact=3/6] imports in src/index.ts (t=862, 3 atoms) |
 | 1.6 | 434 | 0.33 | 0.26 | missing | README features — data structures + typesafety | [scheduled bbox exact=1/3] README.md section #3 (t=6581, 1 atoms) |
 | 1.7 | 546 | 0.00 | 0.00 | missing | README features — patterns, wildcards, predicates, bundle | [scheduled bbox exact=1/5] README.md section #4 (t=5663, 1 atoms) |
@@ -119,6 +120,7 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=6, scheduled same-file
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 2.1 | 603 | 0.80 | 0.99 | partial | match() exported signature | [scheduled bbox exact=4/5] export at src/match.ts:32 (t=235, 4 atoms) |
 | 4.5 | 8816 | 0.00 | 0.00 | missing | internals/symbols.ts — core matcher / unset / isVariadic brands | [scheduled bbox exact=8/8] export names surface in src/internals/symbols.ts (t=6306, 8 atoms) |
 
 ## Walker waste rollup (by descriptor pattern)

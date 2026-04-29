@@ -65,7 +65,7 @@ fn format_top_opportunities(out: &mut String, rows: &[ReportRow<'_>]) {
     }
 
     out.push_str("\n## Top opportunities\n\n");
-    out.push_str("_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._\n\n");
+    out.push_str("_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._\n\n");
     out.push_str("| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |\n");
     out.push_str("|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|\n");
     for opp in opportunities {

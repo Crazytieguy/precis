@@ -15,10 +15,10 @@ pub(super) fn report_rows<'a>(ctx: &'a BuildCtx, arrivals: &'a [Arrival]) -> Vec
         .enumerate()
         .zip(arrivals)
         .filter_map(|((i, ns_row), arrival)| {
-            // Reached rows (primary-budget credit ≥ REACH_THRESHOLD)
-            // are reached at the optimization target — no actionable
-            // gap on `Score(3000)`. Drop them so the ledger and
-            // rollups stay partial-or-missing only.
+            // Reached rows (primary-budget damped credit ≥
+            // REACH_THRESHOLD) are reached at the optimization
+            // target — no actionable gap on `Score(3000)`. Drop them
+            // so the ledger and rollups stay partial-or-missing only.
             if arrival.status == ArrivalStatus::Reached {
                 return None;
             }

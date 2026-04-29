@@ -1,4 +1,4 @@
-scores: Score(3000)=0.609 ns_rows≤3K=12/27 (reached=5 partial=2 missing=5)
+scores: Score(3000)=0.609 ns_rows≤3K=12/27 (reached=4 partial=3 missing=5)
 
 ## Per-budget scores
 
@@ -16,37 +16,38 @@ scores: Score(3000)=0.609 ns_rows≤3K=12/27 (reached=5 partial=2 missing=5)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (gap@3k=0.00), 15 wrong-slice/granularity (gap@3k=0.23), 0 no-discovered (gap@3k=0.00)
-Top rows: 3.1, 2.5, 3.2, 3.3, 4.1, ...
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 15 wrong-slice/granularity (gap@3k=1.41), 0 no-discovered (gap@3k=0.00)
+Top rows: 5.2, 5.1, 3.2, 6.2, 3.1, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 15 | 0.23 | 0.23 | 0.91 | nearby candidates have low exact atom overlap | 3.1, 2.5, 3.2, 3.3, 4.1, ... |
-| finish partially-delivered NS batches | 4 | 0.23 | 0.23 | 0.26 | avg batch completion=0.63 | 3.1, 2.5, 3.2, 4.1 |
+| split wrong-slice walker batches | 15 | 1.80 | 1.41 | 1.14 | nearby candidates have low exact atom overlap | 5.2, 5.1, 3.2, 6.2, 3.1, ... |
+| finish partially-delivered NS batches | 4 | 0.86 | 0.47 | 0.26 | avg batch completion=0.63 | 3.2, 3.1, 2.5, 4.1 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
-| wrong-slice / granularity | 15 | 12 | 3 | walker granularity / wrong slice |
+| wrong-slice / granularity | 15 | 13 | 2 | walker granularity / wrong slice |
 | fs/listing | 2 | 2 | 0 | filesystem/listing value |
-| mixed/unknown | 5 | 5 | 0 | inspect row |
+| mixed/unknown | 6 | 5 | 1 | inspect row |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=16, scheduled same-file=4, fs-only=2
+Candidate hint kinds: scheduled bbox=17, scheduled same-file=4, fs-only=2
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 8 |
+| scheduled bbox | missing | low | 9 |
 | scheduled bbox | missing | high | 2 |
 | scheduled bbox | missing | full | 3 |
-| scheduled bbox | partial | low | 3 |
+| scheduled bbox | partial | low | 2 |
+| scheduled bbox | partial | high | 1 |
 
 ## Arrival ledger by diagnosis
 
@@ -56,7 +57,7 @@ Candidate hint kinds: scheduled bbox=16, scheduled same-file=4, fs-only=2
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.5 | 961 | 0.74 | 0.80 | partial | Macro entry point — derive_error in impl/src/lib.rs | [scheduled bbox exact=14/23] mod/use plumbing in impl/src/lib.rs (t=1367, 14 atoms) |
 | 3.1 | 2515 | 0.71 | 0.71 | partial | ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind type defs | [scheduled bbox exact=12/52] pub-item names surface in impl/src/ast.rs (t=1492, 12 atoms) |
-| 3.2 | 3231 | 0.67 | 0.63 | partial | attr.rs — Attrs / Display / Source / From / Transparent / Fmt / Trait type defs | [scheduled bbox exact=14/67] pub-item names surface in impl/src/attr.rs (t=2025, 14 atoms) |
+| 3.2 | 3231 | 0.67 | 0.63 | missing | attr.rs — Attrs / Display / Source / From / Transparent / Fmt / Trait type defs | [scheduled bbox exact=14/67] pub-item names surface in impl/src/attr.rs (t=2025, 14 atoms) |
 | 3.3 | 3478 | 0.04 | 0.03 | missing | ast/attr/prop — public fn name locator | [scheduled bbox exact=13/28] impl method sigs in impl/src/prop.rs (t=7915, 29 atoms) |
 | 4.1 | 3848 | 0.28 | 0.36 | missing | expand.rs — derive entry + try_expand | [scheduled bbox exact=10/29] mod/use plumbing in impl/src/expand.rs (t=3663, 10 atoms) |
 | 4.2 | 4095 | 0.04 | 0.01 | missing | expand.rs / fmt.rs / generics.rs — public fn locator | [scheduled bbox exact=5/26] impl method sigs in impl/src/generics.rs (t=7281, 10 atoms) |
@@ -81,6 +82,7 @@ Candidate hint kinds: scheduled bbox=16, scheduled same-file=4, fs-only=2
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.1 | 48 | 0.80 | 0.99 | partial | Crate-doc lede | [scheduled bbox exact=4/5] README headline in README.md (t=81, 4 atoms) |
 | 2.1 | 245 | 0.00 | 0.00 | missing | README example — enum head + first variant | [scheduled bbox exact=7/8] README.md section #1 (t=3318, 7 atoms) |
 | 2.2 | 339 | 0.00 | 0.00 | missing | README example — remaining variants | [scheduled bbox exact=10/10] README.md section #1 (t=3318, 10 atoms) |
 | 2.6 | 1319 | 0.00 | 0.00 | missing | Crate-doc bullets — Display + format-shorthand summary | [scheduled bbox exact=21/21] crate-doc body in src/lib.rs (t=6917, 21 atoms) |

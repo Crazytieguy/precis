@@ -1,4 +1,4 @@
-scores: Score(3000)=0.391 ns_rows≤3K=17/40 (reached=4 partial=2 missing=11)
+scores: Score(3000)=0.391 ns_rows≤3K=17/40 (reached=4 partial=1 missing=12)
 
 ## Per-budget scores
 
@@ -16,24 +16,25 @@ scores: Score(3000)=0.391 ns_rows≤3K=17/40 (reached=4 partial=2 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (gap@3k=0.00), 29 wrong-slice/granularity (gap@3k=0.93), 1 no-discovered (gap@3k=0.00)
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 29 wrong-slice/granularity (gap@3k=2.09), 1 no-discovered (gap@3k=0.02)
 Secondary intervention: investigate 1 no-discovered row
-Top rows: 1.2, 2.3, 1.11, 1.3, 2.4, ...
+Top rows: 1.2, 2.5, 2.3, 1.11, 1.3, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 29 | 0.48 | 0.93 | 1.65 | nearby candidates have low exact atom overlap | 1.2, 2.3, 1.11, 1.3, 2.4, ... |
-| finish partially-delivered NS batches | 9 | 0.25 | 0.66 | 1.07 | avg batch completion=0.41 | 1.13, 1.2, 2.5, 2.6, 2.9, ... |
+| split wrong-slice walker batches | 29 | 2.26 | 2.09 | 1.70 | nearby candidates have low exact atom overlap | 1.2, 2.5, 2.3, 1.11, 1.3, ... |
+| finish partially-delivered NS batches | 9 | 1.25 | 1.16 | 1.07 | avg batch completion=0.41 | 1.13, 1.2, 2.5, 2.9, 2.10, ... |
+| add walker candidates for no-discovered rows | 1 | 0.02 | 0.02 | 0.02 | NS rows have no discovered line candidate | 4.3 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
-| wrong-slice / granularity | 29 | 25 | 4 | walker granularity / wrong slice |
+| wrong-slice / granularity | 29 | 28 | 1 | walker granularity / wrong slice |
 | no discovered candidate | 1 | 1 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 5 | 5 | 0 | inspect row |
@@ -46,9 +47,9 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 2 |
-| scheduled bbox | missing | low | 20 |
+| scheduled bbox | missing | low | 23 |
 | scheduled bbox | missing | full | 5 |
-| scheduled bbox | partial | low | 4 |
+| scheduled bbox | partial | low | 1 |
 | unscheduled bbox | missing | low | 3 |
 
 ## Arrival ledger by diagnosis
@@ -57,7 +58,7 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 1.2 | 100 | 0.60 | 0.50 | partial | Project name + description (pyproject lede) | [scheduled bbox exact=3/5] [package] in pyproject.toml (t=120, 3 atoms) |
+| 1.2 | 100 | 0.60 | 0.50 | missing | Project name + description (pyproject lede) | [scheduled bbox exact=3/5] [package] in pyproject.toml (t=120, 3 atoms) |
 | 1.3 | 168 | 0.60 | 0.99 | partial | README H1 + tagline | [scheduled bbox exact=2/5] README headline in README.md (t=59, 2 atoms) |
 | 1.11 | 1115 | 0.17 | 0.07 | missing | Public exports — utility helpers + HTMY alias | [scheduled bbox exact=7/12] python imports in htmy/__init__.py (t=4409, 7 atoms) |
 | 2.1 | 1694 | 0.00 | 0.00 | missing | Component protocol heart (SyncComponent / AsyncComponent) | [scheduled bbox exact=5/17] python decl names surface in htmy/typing.py (t=6947, 5 atoms) |
@@ -65,7 +66,7 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 | 2.3 | 2190 | 0.06 | 0.16 | missing | Context / Properties / PropertyValue type aliases | [scheduled bbox exact=8/33] python decl names surface in htmy/typing.py (t=6947, 8 atoms) |
 | 2.4 | 2429 | 0.00 | 0.00 | missing | Context provider protocols | [unscheduled bbox exact=5/26] python decl names surface #1 in htmy/typing.py (5 atoms, too expensive at final margin) |
 | 2.5 | 3034 | 0.13 | 0.28 | missing | RendererType + StreamingRendererType protocols | [scheduled bbox exact=8/60] python decl names surface in htmy/renderer/typing.py (t=2798, 8 atoms) |
-| 2.6 | 3169 | 0.54 | 0.77 | partial | Default renderer wiring (renderer/__init__.py) | [scheduled bbox exact=4/13] python imports in htmy/renderer/__init__.py (t=371, 4 atoms) |
+| 2.6 | 3169 | 0.54 | 0.77 | missing | Default renderer wiring (renderer/__init__.py) | [scheduled bbox exact=4/13] python imports in htmy/renderer/__init__.py (t=371, 4 atoms) |
 | 2.7 | 3325 | 0.08 | 0.04 | missing | Renderer.__init__ + render signatures | [scheduled bbox exact=5/14] python decl doc at htmy/renderer/default.py:228 (t=6306, 5 atoms); better unscheduled exact=6/14: python method at htmy/renderer/default.py:238 (6 atoms, predecessor not scheduled: python method sigs in htmy/renderer/default.py) |
 | 2.8 | 3558 | 0.07 | 0.02 | missing | BaselineRenderer (streaming) signatures | [scheduled bbox exact=2/17] python decl names surface in htmy/renderer/baseline.py (t=380, 2 atoms); better unscheduled exact=7/17: python decl doc at htmy/renderer/baseline.py:18 (7 atoms, too expensive at final margin) |
 | 2.9 | 4044 | 0.39 | 0.35 | missing | Tag / TagWithProps / wildcard_tag signatures | [scheduled bbox exact=9/41] python decl doc at htmy/tag.py:84 (t=9890, 9 atoms) |
@@ -76,7 +77,7 @@ Candidate hint kinds: scheduled bbox=31, unscheduled bbox=3, fs-only=1, no disco
 | 2.14 | 5669 | 0.08 | 0.04 | missing | Snippet / Slots class signatures | [scheduled bbox exact=6/26] python method sigs in htmy/snippet.py (t=5552, 9 atoms) |
 | 2.15 | 5899 | 0.12 | 0.08 | missing | MD / MarkdownParser class signatures | [scheduled bbox exact=6/19] python method sigs in htmy/md/core.py (t=8746, 10 atoms); better unscheduled exact=9/19: python method at htmy/md/core.py:103 (9 atoms, too expensive at final margin) |
 | 2.16 | 6141 | 0.40 | 0.32 | missing | I18n class signature | [scheduled bbox exact=8/20] python decl names surface in htmy/i18n.py (t=2208, 9 atoms) |
-| 2.17 | 6275 | 0.54 | 0.61 | partial | ErrorBoundary class signature | [scheduled bbox exact=6/13] python method at htmy/error_boundary.py:25 (t=3456, 6 atoms) |
+| 2.17 | 6275 | 0.54 | 0.61 | missing | ErrorBoundary class signature | [scheduled bbox exact=6/13] python method at htmy/error_boundary.py:25 (t=3456, 6 atoms) |
 | 2.18 | 6542 | 0.06 | 0.02 | missing | ETreeConverter class signature | [scheduled bbox exact=0/18] python class body at htmy/etree.py:23 (t=3714, 6 atoms); better unscheduled exact=11/18: python decl doc at htmy/etree.py:23 (11 atoms, too expensive at final margin) |
 | 2.19 | 6703 | 0.10 | 0.07 | missing | Formatter class signature | [scheduled bbox exact=2/12] python decl names surface in htmy/core.py (t=1668, 2 atoms); better unscheduled exact=6/12: python method sigs in htmy/core.py (9 atoms, too expensive at final margin) |
 | 2.20 | 7214 | 0.32 | 0.34 | missing | SafeStr / Text / XBool / SkipProperty + xml_format_string | [scheduled bbox exact=10/45] python decl names surface in htmy/core.py (t=1668, 10 atoms) |

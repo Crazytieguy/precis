@@ -1,4 +1,4 @@
-scores: Score(3000)=0.658 ns_rows≤3K=20/40 (reached=10 partial=5 missing=5)
+scores: Score(3000)=0.658 ns_rows≤3K=20/40 (reached=9 partial=4 missing=7)
 
 ## Per-budget scores
 
@@ -16,39 +16,40 @@ scores: Score(3000)=0.658 ns_rows≤3K=20/40 (reached=10 partial=5 missing=5)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (gap@3k=0.00), 17 wrong-slice/granularity (gap@3k=0.65), 6 no-discovered (gap@3k=0.21)
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 17 wrong-slice/granularity (gap@3k=1.06), 6 no-discovered (gap@3k=0.49)
 Secondary intervention: investigate 6 no-discovered rows
-Top rows: 1.3, 3.4, 3.2, 2.2, 2.5, ...
+Top rows: 1.3, 3.4, 4.5, 3.2, 5.4, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 17 | 0.37 | 0.65 | 0.61 | nearby candidates have low exact atom overlap | 1.3, 3.4, 3.2, 2.2, 2.5, ... |
-| finish partially-delivered NS batches | 8 | 0.21 | 0.30 | 0.28 | avg batch completion=0.50 | 1.3, 2.5, 4.2, 4.1, 4.7, ... |
-| add walker candidates for no-discovered rows | 6 | 0.00 | 0.21 | 0.36 | NS rows have no discovered line candidate | 3.5, 3.3, 5.5, 5.6, 5.7, ... |
+| split wrong-slice walker batches | 17 | 1.29 | 1.06 | 0.61 | nearby candidates have low exact atom overlap | 1.3, 3.4, 4.5, 3.2, 5.4, ... |
+| add walker candidates for no-discovered rows | 6 | 0.49 | 0.49 | 0.49 | NS rows have no discovered line candidate | 3.5, 5.5, 5.7, 5.6, 3.3, ... |
+| finish partially-delivered NS batches | 8 | 0.51 | 0.44 | 0.28 | avg batch completion=0.50 | 1.3, 4.9, 2.5, 4.7, 4.2, ... |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
-| wrong-slice / granularity | 17 | 10 | 7 | walker granularity / wrong slice |
+| wrong-slice / granularity | 17 | 12 | 5 | walker granularity / wrong slice |
 | no discovered candidate | 6 | 6 | 0 | walker coverage or predecessor-gated emit |
-| mixed/unknown | 6 | 6 | 0 | inspect row |
+| mixed/unknown | 7 | 6 | 1 | inspect row |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=23, no discovered candidate=6
+Candidate hint kinds: scheduled bbox=24, no discovered candidate=6
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 10 |
+| scheduled bbox | missing | low | 12 |
 | scheduled bbox | missing | high | 6 |
 | scheduled bbox | partial | none | 1 |
-| scheduled bbox | partial | low | 6 |
+| scheduled bbox | partial | low | 4 |
+| scheduled bbox | partial | high | 1 |
 
 ## Arrival ledger by diagnosis
 
@@ -56,13 +57,13 @@ Candidate hint kinds: scheduled bbox=23, no discovered candidate=6
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| 1.3 | 221 | 0.50 | 0.35 | partial | Package doc + module path | [scheduled bbox exact=2/6] go module file go.mod (t=112, 2 atoms) |
+| 1.3 | 221 | 0.50 | 0.35 | missing | Package doc + module path | [scheduled bbox exact=2/6] go module file go.mod (t=112, 2 atoms) |
 | 2.2 | 712 | 0.73 | 0.99 | partial | Constructors — New and NewWithSeed | [scheduled bbox exact=4/11] go decl names surface in xxhash.go (t=2394, 4 atoms) |
 | 2.5 | 1196 | 0.78 | 0.67 | partial | Sum64 / writeBlocks signatures (asm build) | [scheduled bbox exact=3/9] go decl doc at xxhash_asm.go:12 (t=626, 3 atoms) |
 | 2.6 | 1341 | 0.75 | 0.90 | partial | Sum64String / WriteString signatures (unsafe build) | [scheduled bbox exact=0/8] go package + imports in xxhash_unsafe.go (t=653, 4 atoms) |
 | 3.2 | 1648 | 0.12 | 0.09 | missing | All test/benchmark function names across the repo | [scheduled bbox exact=5/16] go test names surface in xxhash_test.go (t=6440, 9 atoms) |
 | 3.4 | 2081 | 0.25 | 0.16 | missing | xxhsum CLI — main + usage | [scheduled bbox exact=20/32] go decl body at xxhsum/xxhsum.go:11 (t=6217, 20 atoms) |
-| 4.1 | 2592 | 0.62 | 0.61 | partial | Prime constants + primes array | [scheduled bbox exact=7/13] go decl at xxhash.go:11 (t=2421, 7 atoms) |
+| 4.1 | 2592 | 0.62 | 0.61 | missing | Prime constants + primes array | [scheduled bbox exact=7/13] go decl at xxhash.go:11 (t=2421, 7 atoms) |
 | 4.2 | 2716 | 0.47 | 0.67 | missing | round + mergeRound — the core mixer | [scheduled bbox exact=4/13] go decl body at xxhash.go:229 (t=3047, 4 atoms) |
 | 4.4 | 3084 | 0.69 | 0.99 | partial | Little-endian / append / consume byte helpers | [scheduled bbox exact=6/13] go decl names surface in xxhash.go (t=2394, 6 atoms) |
 | 4.5 | 3473 | 0.06 | 0.16 | missing | Write — streaming entry body | [scheduled bbox exact=28/37] go decl body at xxhash.go:75 (t=4409, 28 atoms) |
@@ -89,6 +90,7 @@ Candidate hint kinds: scheduled bbox=23, no discovered candidate=6
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.5 | 463 | 0.80 | 1.00 | partial | README — purego/asm note | [scheduled bbox exact=4/5] README.md section #0 (t=1209, 4 atoms) |
 | 4.6 | 3949 | 0.05 | 0.10 | missing | Digest.Sum64 — finalize body | [scheduled bbox exact=33/41] go decl body at xxhash.go:129 (t=5065, 33 atoms) |
 | 4.7 | 4062 | 0.14 | 0.43 | missing | Digest.Sum — append big-endian bytes | [scheduled bbox exact=12/15] go decl body at xxhash.go:113 (t=3153, 12 atoms) |
 | 4.9 | 4421 | 0.11 | 0.22 | missing | UnmarshalBinary body — validation + parse | [scheduled bbox exact=15/18] go decl body at xxhash.go:190 (t=3984, 15 atoms) |

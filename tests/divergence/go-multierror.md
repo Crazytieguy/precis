@@ -16,23 +16,25 @@ scores: Score(3000)=0.743 ns_rows≤3K=19/39 (reached=15 partial=0 missing=4)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (gap@3k=0.00), 17 wrong-slice/granularity (gap@3k=0.46), 2 no-discovered (gap@3k=0.00)
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 17 wrong-slice/granularity (gap@3k=1.19), 2 no-discovered (gap@3k=0.08)
 Secondary intervention: investigate 2 no-discovered rows
-Top rows: 4.3, 4.4, 4.2, 4.5, 5.2, ...
+Top rows: 4.3, 4.4, 6.6, 6.4, 4.2, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 17 | 0.00 | 0.46 | 0.70 | nearby candidates have low exact atom overlap | 4.3, 4.4, 4.2, 4.5, 5.2, ... |
+| split wrong-slice walker batches | 17 | 1.36 | 1.19 | 0.71 | nearby candidates have low exact atom overlap | 4.3, 4.4, 6.6, 6.4, 4.2, ... |
+| add walker candidates for no-discovered rows | 2 | 0.08 | 0.08 | 0.08 | NS rows have no discovered line candidate | 6.8, 6.9 |
+| finish partially-delivered NS batches | 1 | 0.01 | 0.01 | 0.01 | avg batch completion=0.34 | 6.10 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
-| wrong-slice / granularity | 17 | 11 | 6 | walker granularity / wrong slice |
+| wrong-slice / granularity | 17 | 12 | 5 | walker granularity / wrong slice |
 | no discovered candidate | 2 | 2 | 0 | walker coverage or predecessor-gated emit |
 | mixed/unknown | 4 | 4 | 0 | inspect row |
 
@@ -43,10 +45,10 @@ Candidate hint kinds: scheduled bbox=21, no discovered candidate=2
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 11 |
+| scheduled bbox | missing | low | 12 |
 | scheduled bbox | missing | high | 4 |
 | scheduled bbox | partial | none | 1 |
-| scheduled bbox | partial | low | 5 |
+| scheduled bbox | partial | low | 4 |
 
 ## Arrival ledger by diagnosis
 
@@ -70,7 +72,7 @@ Candidate hint kinds: scheduled bbox=21, no discovered candidate=2
 | 6.5 | 7458 | 0.00 | 0.00 | missing | TestFlatten + TestGroup bodies | [scheduled bbox exact=2/70] go test names surface in flatten_test.go (t=5674, 3 atoms) |
 | 6.6 | 8394 | 0.00 | 0.00 | missing | TestErrorIs + TestErrorAs bodies | [scheduled bbox exact=4/94] go test names surface in multierror_test.go (t=6038, 4 atoms) |
 | 6.7 | 8988 | 0.00 | 0.00 | missing | Remaining test bodies (sort + prefix) | [scheduled bbox exact=3/67] go test names surface in prefix_test.go (t=5794, 5 atoms) |
-| 6.10 | 9864 | 0.62 | 0.34 | partial | Boilerplate metadata | [scheduled bbox exact=8/13] headings outline in CHANGELOG.md (t=280, 8 atoms) |
+| 6.10 | 9864 | 0.62 | 0.34 | missing | Boilerplate metadata | [scheduled bbox exact=8/13] headings outline in CHANGELOG.md (t=280, 8 atoms) |
 
 ### no discovered candidate
 

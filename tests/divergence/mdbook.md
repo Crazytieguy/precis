@@ -1,4 +1,4 @@
-scores: Score(3000)=0.507 ns_rows≤3K=22/49 (reached=10 partial=1 missing=11)
+scores: Score(3000)=0.507 ns_rows≤3K=22/49 (reached=9 partial=2 missing=11)
 
 ## Per-budget scores
 
@@ -16,26 +16,27 @@ scores: Score(3000)=0.507 ns_rows≤3K=22/49 (reached=10 partial=1 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 6 ranking-recoverable (gap@3k=0.18), 25 wrong-slice/granularity (gap@3k=0.64), 0 no-discovered (gap@3k=0.00)
+Evidence: 6 ranking-recoverable (gap@3k=0.36), 27 wrong-slice/granularity (gap@3k=1.72), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 4 too-expensive candidates
-Top rows: 2.2, 3.4, 3.1, 1.5, 3.2, ...
+Top rows: 1.1, 2.2, 3.4, 3.9, 3.1, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 25 | 0.11 | 0.64 | 1.02 | nearby candidates have low exact atom overlap | 2.2, 3.4, 3.1, 1.5, 3.2, ... |
-| free T_max budget / demote late waste | 4 | 0.15 | 0.18 | 0.21 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=36/38 | 1.8, 3.3, 3.8, 4.2 |
-| finish partially-delivered NS batches | 6 | 0.11 | 0.11 | 0.19 | avg batch completion=0.49 | 1.5, 3.5, 3.15, 6.1, 6.2, ... |
+| split wrong-slice walker batches | 27 | 1.86 | 1.72 | 1.45 | nearby candidates have low exact atom overlap | 1.1, 2.2, 3.4, 3.9, 3.1, ... |
+| finish partially-delivered NS batches | 6 | 0.31 | 0.23 | 0.22 | avg batch completion=0.49 | 1.5, 3.5, 3.15, 6.4, 6.2, ... |
+| free T_max budget / demote late waste | 4 | 0.21 | 0.21 | 0.21 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=36/38 | 1.8, 3.3, 3.8, 4.2 |
+| promote pub-item names surfaces | 2 | 0.14 | 0.14 | 0.14 | 1 file, exact total=65/70 | 3.12, 3.10 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 6 | 6 | 0 | value/ranking |
-| wrong-slice / granularity | 25 | 23 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 27 | 23 | 4 | walker granularity / wrong slice |
 | fs/listing | 5 | 5 | 0 | filesystem/listing value |
 | mixed/unknown | 1 | 1 | 0 | inspect row |
 
@@ -43,11 +44,11 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 2 | 0.00 | promote predecessor |
-| too expensive at final margin | 4 | 0.18 | free T_max budget |
+| predecessor not scheduled | 2 | 0.14 | promote predecessor |
+| too expensive at final margin | 4 | 0.21 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=17, unscheduled bbox=12, scheduled same-file=2, unscheduled same-file=1, fs-only=5
+Candidate hint kinds: scheduled bbox=19, unscheduled bbox=12, scheduled same-file=2, unscheduled same-file=1, fs-only=5
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -56,7 +57,7 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=12, scheduled same-fil
 | scheduled bbox | missing | none | 3 |
 | scheduled bbox | missing | low | 11 |
 | scheduled bbox | missing | full | 1 |
-| scheduled bbox | partial | low | 2 |
+| scheduled bbox | partial | low | 4 |
 | unscheduled bbox | missing | low | 7 |
 | unscheduled bbox | missing | high | 2 |
 | unscheduled bbox | missing | full | 3 |
@@ -67,7 +68,7 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=12, scheduled same-fil
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| group | 5119 | 0.00 | 0.00 | predecessor-gated | 2 children of `pub-item names surface in crates/mdbook-core/src/config.rs` | exact total=65/70; rows: 3.10, 3.12 |
+| group | 5119 | 0.00 | 0.00 | predecessor-gated | 2 children of `pub-item names surface in crates/mdbook-core/src/config.rs` | exact total=65/70; rows: 3.12, 3.10 |
 | 1.8 | 741 | 0.08 | 0.03 | missing | CLI subcommand dispatch — match arms | [scheduled bbox exact=0/12] mod/use plumbing in src/main.rs (t=4810, 9 atoms); better unscheduled exact=11/12: entry item body at src/main.rs:18 body 24 (23 atoms, too expensive at final margin) |
 | 3.3 | 2246 | 0.00 | 0.00 | missing | Book impl method names | [unscheduled bbox exact=7/7] impl method sigs in crates/mdbook-core/src/book.rs (19 atoms, too expensive at final margin) |
 | 3.8 | 4133 | 0.00 | 0.00 | missing | Config method names + Config::set | [unscheduled bbox exact=8/8] impl method sigs in crates/mdbook-core/src/config.rs (15 atoms, too expensive at final margin) |
@@ -77,6 +78,7 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=12, scheduled same-fil
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
+| 1.1 | 75 | 0.80 | 1.00 | partial | README lede | [scheduled bbox exact=2/5] README.md section #0 (t=300, 2 atoms) |
 | 1.5 | 341 | 0.73 | 0.75 | partial | src/cmd module map | [scheduled bbox exact=7/11] mod/use plumbing in src/cmd/mod.rs (t=557, 7 atoms) |
 | 2.2 | 1047 | 0.00 | 0.00 | missing | mdbook-core lib + module map | [scheduled bbox exact=5/16] mod/use plumbing in crates/mdbook-core/src/lib.rs (t=3823, 5 atoms) |
 | 2.7 | 1496 | 0.00 | 0.00 | missing | mdbook-html crate lib + module map | [scheduled bbox exact=5/8] mod/use plumbing in crates/mdbook-html/src/lib.rs (t=4183, 5 atoms) |
@@ -88,6 +90,7 @@ Candidate hint kinds: scheduled bbox=17, unscheduled bbox=12, scheduled same-fil
 | 3.7 | 4011 | 0.00 | 0.00 | missing | Config struct (top-level book.toml shape) | [unscheduled bbox exact=16/22] pub item at crates/mdbook-core/src/config.rs:63 (16 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
 | 3.9 | 4753 | 0.00 | 0.00 | missing | BookConfig + BuildConfig + RustConfig + RustEdition fields | [unscheduled bbox exact=16/50] pub item at crates/mdbook-core/src/config.rs:318 (16 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
 | 3.11 | 5489 | 0.00 | 0.00 | missing | HTML config sub-tables — Print / Fold / Playground / Code field lines | [unscheduled bbox exact=13/31] pub item at crates/mdbook-core/src/config.rs:611 (13 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |
+| 3.14 | 6851 | 0.81 | 0.84 | partial | Summary / SummaryItem / Link types + parse_summary | [scheduled bbox exact=11/42] pub item at crates/mdbook-summary/src/lib.rs:84 (t=2554, 11 atoms) |
 | 3.15 | 6973 | 0.33 | 0.63 | missing | Preprocessor input parsing + MDBOOK_VERSION re-export | [scheduled bbox exact=0/9] pub item at crates/mdbook-preprocessor/src/lib.rs:51 (t=2904, 16 atoms) |
 | 3.16 | 7060 | 0.00 | 0.00 | missing | RenderContext impl methods (incl. from_json) | [scheduled bbox exact=0/7] pub item at crates/mdbook-renderer/src/lib.rs:40 (t=3496, 22 atoms) |
 | 3.17 | 7552 | 0.00 | 0.00 | missing | MDBOOK_* env-var override rules | [unscheduled same-file] pub item at crates/mdbook-core/src/config.rs:449 (73 atoms, predecessor not scheduled: pub-item names surface in crates/mdbook-core/src/config.rs) |

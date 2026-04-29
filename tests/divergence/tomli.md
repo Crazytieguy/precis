@@ -16,19 +16,19 @@ scores: Score(3000)=0.424 ns_rows≤3K=18/40 (reached=4 partial=3 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 4 ranking-recoverable (gap@3k=0.13), 26 wrong-slice/granularity (gap@3k=0.80), 0 no-discovered (gap@3k=0.00)
+Evidence: 4 ranking-recoverable (gap@3k=0.31), 26 wrong-slice/granularity (gap@3k=1.76), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 4 too-expensive candidates
-Top rows: 2.3, 2.7, 2.9, 3.3, 1.2, ...
+Top rows: 2.3, 2.7, 3.7, 2.9, 3.4, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 26 | 0.39 | 0.80 | 1.06 | nearby candidates have low exact atom overlap | 2.3, 2.7, 2.9, 3.3, 1.2, ... |
-| free T_max budget / demote late waste | 4 | 0.00 | 0.13 | 0.31 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=79/88 | 2.8, 3.5, 4.5, 5.1 |
-| finish partially-delivered NS batches | 4 | 0.00 | 0.11 | 0.04 | avg batch completion=0.53 | 2.9, 3.12, 5.3, 5.4 |
+| split wrong-slice walker batches | 26 | 1.81 | 1.76 | 1.11 | nearby candidates have low exact atom overlap | 2.3, 2.7, 3.7, 2.9, 3.4, ... |
+| free T_max budget / demote late waste | 4 | 0.31 | 0.31 | 0.31 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=79/88 | 2.8, 3.5, 5.1, 4.5 |
+| finish partially-delivered NS batches | 4 | 0.21 | 0.16 | 0.04 | avg batch completion=0.53 | 2.9, 3.12, 5.3, 5.4 |
 
 ## Diagnosis rollup
 
@@ -36,14 +36,14 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 4 | 4 | 0 | value/ranking |
 | wrong-slice / granularity | 26 | 23 | 3 | walker granularity / wrong slice |
-| fs/listing | 3 | 2 | 1 | filesystem/listing value |
+| fs/listing | 3 | 3 | 0 | filesystem/listing value |
 | mixed/unknown | 3 | 3 | 0 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 4 | 0.13 | free T_max budget |
+| too expensive at final margin | 4 | 0.31 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3
@@ -107,7 +107,7 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=6, fs-only=3
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.1 | 433 | 0.00 | 0.00 | missing | tests/ directory listing | fs-only |
 | 3.2 | 2746 | 0.00 | 0.00 | missing | tests/data/{valid,invalid}/ top listing | fs-only |
-| 5.4 | 9623 | 0.62 | 0.62 | partial | benchmark/, fuzzer/, profiler/, scripts/, .github/ listings | fs-only |
+| 5.4 | 9623 | 0.62 | 0.62 | missing | benchmark/, fuzzer/, profiler/, scripts/, .github/ listings | fs-only |
 
 ### mixed/unknown
 

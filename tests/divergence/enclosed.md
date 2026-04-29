@@ -1,4 +1,4 @@
-scores: Score(3000)=0.542 ns_rows≤3K=23/45 (reached=10 partial=2 missing=11)
+scores: Score(3000)=0.542 ns_rows≤3K=23/45 (reached=10 partial=0 missing=13)
 
 ## Per-budget scores
 
@@ -16,36 +16,37 @@ scores: Score(3000)=0.542 ns_rows≤3K=23/45 (reached=10 partial=2 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 7 ranking-recoverable (gap@3k=0.45), 14 wrong-slice/granularity (gap@3k=0.87), 11 no-discovered (gap@3k=0.00)
+Evidence: 7 ranking-recoverable (gap@3k=0.59), 14 wrong-slice/granularity (gap@3k=1.24), 11 no-discovered (gap@3k=0.67)
 Secondary intervention: free T_max budget for 6 too-expensive candidates
-Top rows: 1.2, 2.3, 2.7, 1.9, 1.10, ...
+Top rows: 1.2, 2.3, 2.7, 3.4, 1.9, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 14 | 0.46 | 0.87 | 0.93 | nearby candidates have low exact atom overlap | 1.2, 2.3, 2.7, 1.9, 1.10, ... |
-| finish partially-delivered NS batches | 5 | 0.00 | 0.52 | 0.30 | avg batch completion=0.45 | 2.3, 2.7, 3.2, 1.10, 6.5 |
-| free T_max budget / demote late waste | 6 | 0.25 | 0.41 | 0.56 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/97 | 1.7, 1.11, 1.4, 1.12, 4.1, ... |
-| promote package scripts in packages/lib/package.json | 1 | 0.00 | 0.04 | 0.04 | 0 files, exact total=8/8 | 2.8 |
+| split wrong-slice walker batches | 14 | 1.33 | 1.24 | 1.04 | nearby candidates have low exact atom overlap | 1.2, 2.3, 2.7, 3.4, 1.9, ... |
+| add walker candidates for no-discovered rows | 11 | 0.67 | 0.67 | 0.67 | NS rows have no discovered line candidate | 3.7, 3.6, 5.2, 5.1, 3.5, ... |
+| free T_max budget / demote late waste | 6 | 0.56 | 0.56 | 0.56 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=95/97 | 1.7, 1.11, 4.2, 1.4, 1.12, ... |
+| finish partially-delivered NS batches | 5 | 0.64 | 0.53 | 0.30 | avg batch completion=0.45 | 2.3, 2.7, 3.2, 1.10, 6.5 |
+| promote package scripts in packages/lib/package.json | 1 | 0.04 | 0.04 | 0.04 | 0 files, exact total=8/8 | 2.8 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 7 | 7 | 0 | value/ranking |
-| wrong-slice / granularity | 14 | 12 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 14 | 14 | 0 | walker granularity / wrong slice |
 | no discovered candidate | 11 | 11 | 0 | walker coverage or predecessor-gated emit |
-| fs/listing | 3 | 2 | 1 | filesystem/listing value |
+| fs/listing | 3 | 3 | 0 | filesystem/listing value |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
 | predecessor not scheduled | 1 | 0.04 | promote predecessor |
-| too expensive at final margin | 6 | 0.41 | free T_max budget |
+| too expensive at final margin | 6 | 0.56 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file=2, unscheduled same-file=2, fs-only=3, no discovered candidate=11
@@ -54,8 +55,7 @@ Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 9 |
-| scheduled bbox | partial | low | 2 |
+| scheduled bbox | missing | low | 11 |
 | unscheduled bbox | missing | high | 1 |
 | unscheduled bbox | missing | full | 5 |
 
@@ -79,8 +79,8 @@ Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.2 | 127 | 0.00 | 0.00 | missing | README h1 + tagline | [scheduled same-file] headings outline in README.md (t=2168, 38 atoms) |
 | 1.9 | 872 | 0.20 | 0.04 | missing | README — project structure (per-package one-liners) | [scheduled bbox exact=2/10] headings outline in README.md (t=2168, 2 atoms); better unscheduled exact=7/10: README.md section #23 (7 atoms, too expensive at final margin) |
-| 1.10 | 1225 | 0.75 | 0.61 | partial | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=2168, 2 atoms) |
-| 2.3 | 2101 | 0.68 | 0.35 | partial | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=601, 19 atoms) |
+| 1.10 | 1225 | 0.75 | 0.61 | missing | README — features list | [scheduled bbox exact=2/16] headings outline in README.md (t=2168, 2 atoms) |
+| 2.3 | 2101 | 0.68 | 0.35 | missing | @enclosed/lib public API — index.ts re-exports | [scheduled bbox exact=19/28] export at packages/lib/src/index.ts:10 (t=601, 19 atoms) |
 | 2.7 | 2545 | 0.19 | 0.40 | missing | @enclosed/lib README — install + usage example | [scheduled bbox exact=4/31] headings outline in packages/lib/README.md (t=1212, 4 atoms); better unscheduled exact=11/31: packages/lib/README.md section #2 (11 atoms, too expensive at final margin) |
 | 3.3 | 2947 | 0.12 | 0.07 | missing | Cloudflare Workers entrypoint (full) | [scheduled bbox exact=1/8] export at packages/app-server/src/index.cloudflare.ts:8 (t=844, 1 atoms); better unscheduled exact=2/8: imports in packages/app-server/src/index.cloudflare.ts (2 atoms, discovered unscheduled) |
 | 3.4 | 3451 | 0.00 | 0.00 | missing | Hono createServer factory + middleware stack | [scheduled bbox exact=2/41] export names surface in packages/app-server/src/modules/app/server.ts (t=5613, 2 atoms); better unscheduled exact=15/41: imports in packages/app-server/src/modules/app/server.ts (15 atoms, too expensive at final margin) |
@@ -114,7 +114,7 @@ Candidate hint kinds: scheduled bbox=11, unscheduled bbox=6, scheduled same-file
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 2.5 | 2187 | 0.00 | 0.00 | missing | Top-level app-client package contents | fs-only |
 | 3.2 | 2851 | 0.23 | 0.23 | missing | app-server/src/modules — module map | fs-only |
-| 6.5 | 9990 | 0.68 | 0.68 | partial | Docs site — page map (VitePress src layout) | fs-only |
+| 6.5 | 9990 | 0.68 | 0.68 | missing | Docs site — page map (VitePress src layout) | fs-only |
 
 ## Walker waste rollup (by descriptor pattern)
 

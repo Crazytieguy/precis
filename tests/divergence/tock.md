@@ -1,4 +1,4 @@
-scores: Score(3000)=0.624 ns_rows≤3K=18/43 (reached=6 partial=4 missing=8)
+scores: Score(3000)=0.624 ns_rows≤3K=18/43 (reached=5 partial=4 missing=9)
 
 ## Per-budget scores
 
@@ -16,42 +16,42 @@ scores: Score(3000)=0.624 ns_rows≤3K=18/43 (reached=6 partial=4 missing=8)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 7 ranking-recoverable (gap@3k=0.08), 24 wrong-slice/granularity (gap@3k=0.92), 0 no-discovered (gap@3k=0.00)
+Evidence: 7 ranking-recoverable (gap@3k=0.35), 25 wrong-slice/granularity (gap@3k=1.84), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 7 too-expensive candidates
-Top rows: 1.3, 2.3, 2.5, 2.6, 2.4, ...
+Top rows: 1.3, 2.3, 4.2, 2.5, 5.1, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 24 | 0.28 | 0.92 | 0.96 | nearby candidates have low exact atom overlap | 1.3, 2.3, 2.5, 2.6, 2.4, ... |
-| finish partially-delivered NS batches | 4 | 0.00 | 0.23 | 0.12 | avg batch completion=0.48 | 2.6, 2.4, 3.3, 5.1 |
-| free T_max budget / demote late waste | 7 | 0.00 | 0.08 | 0.34 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=160/184 | 3.4, 5.2, 6.7, 7.2, 7.3, ... |
+| split wrong-slice walker batches | 25 | 2.31 | 1.84 | 1.03 | nearby candidates have low exact atom overlap | 1.3, 2.3, 4.2, 2.5, 5.1, ... |
+| free T_max budget / demote late waste | 7 | 0.35 | 0.35 | 0.35 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=160/184 | 3.4, 7.3, 6.7, 7.5, 5.2, ... |
+| finish partially-delivered NS batches | 4 | 0.43 | 0.35 | 0.12 | avg batch completion=0.48 | 5.1, 2.6, 2.4, 3.3 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 7 | 7 | 0 | value/ranking |
-| wrong-slice / granularity | 24 | 19 | 5 | walker granularity / wrong slice |
+| wrong-slice / granularity | 25 | 20 | 5 | walker granularity / wrong slice |
 | mixed/unknown | 5 | 5 | 0 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 7 | 0.08 | free T_max budget |
+| too expensive at final margin | 7 | 0.35 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=28, unscheduled bbox=8
+Candidate hint kinds: scheduled bbox=29, unscheduled bbox=8
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 18 |
+| scheduled bbox | missing | low | 19 |
 | scheduled bbox | missing | high | 1 |
 | scheduled bbox | missing | full | 4 |
 | scheduled bbox | partial | low | 5 |
@@ -79,12 +79,13 @@ Candidate hint kinds: scheduled bbox=28, unscheduled bbox=8
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.3 | 134 | 0.00 | 0.00 | missing | README feature lede (first half) | [scheduled bbox exact=3/5] README.md section #1 (t=4924, 3 atoms) |
 | 1.6 | 435 | 0.75 | 0.99 | partial | go.mod module + Go version + UI deps | [scheduled bbox exact=6/8] go module file go.mod (t=653, 6 atoms) |
+| 2.1 | 690 | 0.80 | 0.99 | partial | Sentinel errors (whole file) | [scheduled bbox exact=6/10] go decl at internal/core/errors/errors.go:5 (t=1216, 6 atoms) |
 | 2.3 | 1062 | 0.05 | 0.04 | missing | ports.ActivityResolver interface | [scheduled bbox exact=10/20] go decl at internal/core/ports/ports.go:11 (t=7740, 10 atoms) |
 | 2.4 | 1217 | 0.46 | 0.50 | missing | ports.ActivityRepository + NotesRepository | [scheduled bbox exact=6/11] go decl at internal/core/ports/ports.go:22 (t=3200, 6 atoms) |
 | 2.5 | 1630 | 0.74 | 0.90 | partial | dto request/filter/report types | [scheduled bbox exact=12/50] go decl names surface in internal/core/dto/activity_dto.go (t=1292, 12 atoms) |
 | 2.6 | 1858 | 0.24 | 0.45 | missing | models.Activity helper methods | [scheduled bbox exact=6/21] go decl names surface in internal/core/models/activity.go (t=1786, 6 atoms); better unscheduled exact=7/21: go decl body at internal/core/models/activity.go:31 (7 atoms, too expensive at final margin) |
 | 3.1 | 1926 | 0.67 | 0.97 | partial | main.go — entry point | [scheduled bbox exact=4/9] go package + imports in cmd/tock/main.go (t=1871, 4 atoms) |
-| 3.3 | 2188 | 0.57 | 0.58 | partial | Cobra command factory locations across cli/ | [scheduled bbox exact=1/14] go decl at internal/adapters/cli/calendar.go:25 (t=8859, 1 atoms) |
+| 3.3 | 2188 | 0.57 | 0.58 | missing | Cobra command factory locations across cli/ | [scheduled bbox exact=1/14] go decl at internal/adapters/cli/calendar.go:25 (t=8859, 1 atoms) |
 | 4.1 | 2510 | 0.00 | 0.00 | missing | Activity service constructor | [scheduled bbox exact=4/8] go decl at internal/services/activity/service.go:15 (t=8530, 4 atoms) |
 | 4.2 | 3040 | 0.00 | 0.00 | missing | File-format ParseActivity | [scheduled bbox exact=7/50] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 7 atoms); better unscheduled exact=36/50: go decl body at internal/adapters/repositories/file/parser.go:20 (36 atoms, too expensive at final margin) |
 | 4.3 | 3173 | 0.00 | 0.00 | missing | File-format FormatActivity (writer side) | [scheduled bbox exact=2/10] go decl names surface in internal/adapters/repositories/file/parser.go (t=5770, 2 atoms); better unscheduled exact=6/10: go decl body at internal/adapters/repositories/file/parser.go:72 (6 atoms, too expensive at final margin) |

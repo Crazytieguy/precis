@@ -16,26 +16,27 @@ scores: Score(3000)=0.521 ns_rows≤3K=17/38 (reached=5 partial=1 missing=11)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 2 ranking-recoverable (gap@3k=0.08), 24 wrong-slice/granularity (gap@3k=0.95), 3 no-discovered (gap@3k=0.00)
+Evidence: 2 ranking-recoverable (gap@3k=0.12), 24 wrong-slice/granularity (gap@3k=1.81), 3 no-discovered (gap@3k=0.08)
 Secondary intervention: free T_max budget for 2 too-expensive candidates
-Top rows: 2.4, 2.8, 2.1, 1.4, 2.6, ...
+Top rows: 2.4, 2.10, 4.2, 2.8, 2.1, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 24 | 0.24 | 0.95 | 1.30 | nearby candidates have low exact atom overlap | 2.4, 2.8, 2.1, 1.4, 2.6, ... |
-| free T_max budget / demote late waste | 2 | 0.00 | 0.08 | 0.12 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=26/26 | 2.3, 3.1 |
-| finish partially-delivered NS batches | 6 | 0.00 | 0.06 | 0.13 | avg batch completion=0.49 | 2.5, 3.4, 3.5, 5.2, 5.3, ... |
+| split wrong-slice walker batches | 24 | 1.88 | 1.81 | 1.30 | nearby candidates have low exact atom overlap | 2.4, 2.10, 4.2, 2.8, 2.1, ... |
+| finish partially-delivered NS batches | 6 | 0.32 | 0.28 | 0.13 | avg batch completion=0.49 | 3.5, 2.5, 5.3, 5.2, 6.3, ... |
+| free T_max budget / demote late waste | 2 | 0.12 | 0.12 | 0.12 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=26/26 | 2.3, 3.1 |
+| add walker candidates for no-discovered rows | 3 | 0.08 | 0.08 | 0.08 | NS rows have no discovered line candidate | 7.1, 7.2, 7.3 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 2 | 2 | 0 | value/ranking |
-| wrong-slice / granularity | 24 | 21 | 3 | walker granularity / wrong slice |
+| wrong-slice / granularity | 24 | 22 | 2 | walker granularity / wrong slice |
 | no discovered candidate | 3 | 3 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 1 | 1 | 0 | inspect row |
@@ -44,7 +45,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.08 | free T_max budget |
+| too expensive at final margin | 2 | 0.12 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file=4, fs-only=1, no discovered candidate=3
@@ -53,9 +54,9 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 17 |
+| scheduled bbox | missing | low | 18 |
 | scheduled bbox | missing | high | 1 |
-| scheduled bbox | partial | low | 3 |
+| scheduled bbox | partial | low | 2 |
 | unscheduled bbox | missing | low | 2 |
 
 ## Arrival ledger by diagnosis
@@ -85,7 +86,7 @@ Candidate hint kinds: scheduled bbox=21, unscheduled bbox=2, scheduled same-file
 | 2.10 | 3658 | 0.00 | 0.00 | missing | kyOptionKeys + vendor/request option registries | [scheduled bbox exact=16/44] export at source/core/constants.ts:265 (t=4816, 16 atoms) |
 | 3.2 | 4024 | 0.14 | 0.13 | missing | RetryOptions: every field + ShouldRetryState (location batch) | [scheduled bbox exact=3/14] export at source/types/retry.ts:3 (t=4893, 10 atoms); better unscheduled exact=11/14: export at source/types/retry.ts:15 (117 atoms, too expensive at final margin) |
 | 3.3 | 4324 | 0.00 | 0.00 | missing | Hooks types: every state + hook type alias (location batch) | [scheduled bbox exact=11/23] export names surface in source/types/hooks.ts (t=4370, 18 atoms) |
-| 3.4 | 4587 | 0.50 | 0.76 | partial | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | [scheduled bbox exact=9/18] export names surface in source/types/options.ts (t=1521, 12 atoms) |
+| 3.4 | 4587 | 0.50 | 0.76 | missing | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | [scheduled bbox exact=9/18] export names surface in source/types/options.ts (t=1521, 12 atoms) |
 | 3.5 | 5127 | 0.09 | 0.31 | missing | Options interface (extends KyOptions + RequestInit) + InternalOptions + NormalizedOptions | [scheduled bbox exact=11/37] export at source/types/options.ts:358 (t=7628, 11 atoms) |
 | 3.6 | 5252 | 0.09 | 0.17 | missing | ResponsePromise type signature (no examples) | [scheduled bbox exact=2/12] export names surface in source/types/ResponsePromise.ts (t=1158, 2 atoms); better unscheduled exact=8/12: export at source/types/ResponsePromise.ts:6 (32 atoms, too expensive at final margin) |
 | 4.2 | 6709 | 0.00 | 0.00 | missing | #calculateRetryDelay — full retry-decision logic | [scheduled bbox exact=2/73] export at source/core/Ky.ts:33 (t=6545, 2 atoms); better unscheduled exact=57/73: export body at source/core/Ky.ts:33 body 35 (57 atoms, too expensive at final margin) |

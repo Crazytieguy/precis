@@ -1,4 +1,4 @@
-scores: Score(3000)=0.677 ns_rows≤3K=22/43 (reached=14 partial=3 missing=5)
+scores: Score(3000)=0.677 ns_rows≤3K=22/43 (reached=13 partial=4 missing=5)
 
 ## Per-budget scores
 
@@ -16,38 +16,38 @@ scores: Score(3000)=0.677 ns_rows≤3K=22/43 (reached=14 partial=3 missing=5)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 0 ranking-recoverable (gap@3k=0.00), 22 wrong-slice/granularity (gap@3k=0.78), 2 no-discovered (gap@3k=0.05)
+Evidence: 0 ranking-recoverable (gap@3k=0.00), 23 wrong-slice/granularity (gap@3k=1.65), 2 no-discovered (gap@3k=0.13)
 Secondary intervention: investigate 2 no-discovered rows
-Top rows: 2.3, 3.6, 3.7, 1.2, 2.6, ...
+Top rows: 2.3, 3.6, 3.7, 4.7, 5.3, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 22 | 0.46 | 0.78 | 1.11 | nearby candidates have low exact atom overlap | 2.3, 3.6, 3.7, 1.2, 2.6, ... |
-| finish partially-delivered NS batches | 5 | 0.19 | 0.25 | 0.12 | avg batch completion=0.52 | 1.4, 2.6, 2.5, 5.8, 5.11 |
-| add walker candidates for no-discovered rows | 2 | 0.00 | 0.05 | 0.13 | NS rows have no discovered line candidate | 4.1, 4.4 |
+| split wrong-slice walker batches | 23 | 1.79 | 1.65 | 1.13 | nearby candidates have low exact atom overlap | 2.3, 3.6, 3.7, 4.7, 5.3, ... |
+| finish partially-delivered NS batches | 5 | 0.32 | 0.31 | 0.12 | avg batch completion=0.52 | 1.4, 2.6, 2.5, 5.8, 5.11 |
+| add walker candidates for no-discovered rows | 2 | 0.13 | 0.13 | 0.13 | NS rows have no discovered line candidate | 4.4, 4.1 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
-| wrong-slice / granularity | 22 | 18 | 4 | walker granularity / wrong slice |
+| wrong-slice / granularity | 23 | 19 | 4 | walker granularity / wrong slice |
 | no discovered candidate | 2 | 2 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 2 | 2 | 0 | inspect row |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=15, scheduled same-file=9, fs-only=1, no discovered candidate=2
+Candidate hint kinds: scheduled bbox=16, scheduled same-file=9, fs-only=1, no discovered candidate=2
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
 | scheduled bbox | missing | none | 1 |
-| scheduled bbox | missing | low | 8 |
+| scheduled bbox | missing | low | 9 |
 | scheduled bbox | missing | full | 2 |
 | scheduled bbox | partial | low | 4 |
 
@@ -61,6 +61,7 @@ Candidate hint kinds: scheduled bbox=15, scheduled same-file=9, fs-only=1, no di
 | 2.3 | 889 | 0.00 | 0.00 | missing | README quickstart code example | [scheduled bbox exact=16/22] README.md section #3 (t=4839, 16 atoms) |
 | 2.5 | 989 | 0.75 | 0.69 | partial | Handler / WildcardHandler type aliases | [scheduled bbox exact=4/8] export names surface in src/index.ts (t=553, 5 atoms) |
 | 2.6 | 1096 | 0.73 | 0.72 | partial | EventHandlerMap type | [scheduled bbox exact=5/11] export names surface in src/index.ts (t=553, 5 atoms) |
+| 2.7 | 1302 | 0.81 | 0.85 | partial | README API one-line method descriptions | [scheduled bbox exact=10/21] headings outline in README.md (t=1023, 10 atoms) |
 | 3.6 | 2294 | 0.06 | 0.02 | missing | README TypeScript usage section | [scheduled bbox exact=21/31] README.md section #3 (t=4839, 21 atoms) |
 | 3.7 | 2626 | 0.00 | 0.00 | missing | test/index_test.ts test labels — all describe + it titles | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
 | 4.2 | 3089 | 0.00 | 0.00 | missing | package.json mocha + prettier blocks | [scheduled same-file] package dependencies in package.json (t=3272, 23 atoms) |
@@ -75,7 +76,7 @@ Candidate hint kinds: scheduled bbox=15, scheduled same-file=9, fs-only=1, no di
 | 5.4 | 6411 | 0.00 | 0.00 | missing | Test bodies: off() removal semantics | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
 | 5.5 | 6664 | 0.00 | 0.00 | missing | Test bodies: emit() typed dispatch + case sensitivity | [scheduled same-file] imports in test/index_test.ts (t=5592, 4 atoms) |
 | 5.6 | 7020 | 0.00 | 0.00 | missing | README API parameter tables | [scheduled bbox exact=0/15] headings outline in README.md (t=1023, 4 atoms) |
-| 5.8 | 8020 | 0.51 | 0.39 | partial | README Examples / Contribute / License sections | [scheduled bbox exact=10/37] headings outline in README.md (t=1023, 22 atoms) |
+| 5.8 | 8020 | 0.51 | 0.39 | missing | README Examples / Contribute / License sections | [scheduled bbox exact=10/37] headings outline in README.md (t=1023, 22 atoms) |
 | 5.10 | 8625 | 0.00 | 0.00 | missing | .editorconfig + .gitignore | [scheduled bbox exact=15/27] plaintext config .editorconfig (t=3760, 15 atoms) |
 | 5.11 | 8837 | 0.16 | 0.45 | missing | .github/PULL_REQUEST_TEMPLATE.md | [scheduled bbox exact=8/19] .github/PULL_REQUEST_TEMPLATE.md section #0 (t=3377, 8 atoms) |
 | 5.12 | 8863 | 0.00 | 0.00 | missing | LICENSE — MIT preamble | [scheduled bbox exact=2/3] plaintext config LICENSE (t=5881, 2 atoms) |

@@ -16,35 +16,37 @@ scores: Score(3000)=0.387 ns_rows≤3K=19/55 (reached=4 partial=3 missing=12)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 9 ranking-recoverable (gap@3k=0.45), 29 wrong-slice/granularity (gap@3k=1.66), 0 no-discovered (gap@3k=0.00)
+Evidence: 9 ranking-recoverable (gap@3k=0.58), 29 wrong-slice/granularity (gap@3k=2.45), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 3 too-expensive candidates
-Top rows: 1.1, 4.1, 3.2, 3.5, 2.1, ...
+Top rows: 1.1, 4.1, 5.1, 3.2, 3.5, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 29 | 0.92 | 1.66 | 2.25 | nearby candidates have low exact atom overlap | 1.1, 4.1, 3.2, 3.5, 2.1, ... |
-| free T_max budget / demote late waste | 3 | 0.25 | 0.39 | 0.39 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=35/38 | 2.3, 2.5, 2.4 |
-| tune ranking for discovered unscheduled candidates | 4 | 0.00 | 0.06 | 0.14 | high-overlap candidates fit but did not win, exact total=50/57 | 4.2, 6.1, 7.6, 7.7 |
+| split wrong-slice walker batches | 29 | 2.48 | 2.45 | 2.30 | nearby candidates have low exact atom overlap | 1.1, 4.1, 5.1, 3.2, 3.5, ... |
+| free T_max budget / demote late waste | 3 | 0.39 | 0.39 | 0.39 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=35/38 | 2.3, 2.5, 2.4 |
+| tune ranking for discovered unscheduled candidates | 4 | 0.14 | 0.14 | 0.14 | high-overlap candidates fit but did not win, exact total=50/57 | 4.2, 6.1, 7.7, 7.6 |
+| promote headings outline in docs/architecture/query-engine.md | 1 | 0.03 | 0.03 | 0.03 | 0 files, exact total=18/19 | 6.6 |
+| finish partially-delivered NS batches | 2 | 0.04 | 0.03 | 0.03 | avg batch completion=0.73 | 10.4, 8.1 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 9 | 9 | 0 | value/ranking |
-| wrong-slice / granularity | 29 | 21 | 8 | walker granularity / wrong slice |
+| wrong-slice / granularity | 29 | 23 | 6 | walker granularity / wrong slice |
 | fs/listing | 12 | 12 | 0 | filesystem/listing value |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 2 | 0.00 | promote predecessor |
+| predecessor not scheduled | 2 | 0.05 | promote predecessor |
 | too expensive at final margin | 3 | 0.39 | free T_max budget |
-| discovered unscheduled | 4 | 0.06 | tune ranking |
+| discovered unscheduled | 4 | 0.14 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-file=1, fs-only=12
@@ -53,8 +55,8 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-fil
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 19 |
-| scheduled bbox | partial | low | 8 |
+| scheduled bbox | missing | low | 21 |
+| scheduled bbox | partial | low | 6 |
 | unscheduled bbox | missing | low | 4 |
 | unscheduled bbox | missing | high | 4 |
 | unscheduled bbox | missing | full | 2 |
@@ -99,14 +101,14 @@ Candidate hint kinds: scheduled bbox=27, unscheduled bbox=10, scheduled same-fil
 | 6.2 | 5328 | 0.00 | 0.00 | missing | Engine: exec entrypoint with full phase invocation | [unscheduled bbox exact=7/39] impl method sigs in crates/toasty/src/engine.rs (7 atoms, discovered unscheduled) |
 | 7.1 | 5974 | 0.00 | 0.00 | missing | toasty-core lib.rs | [scheduled bbox exact=9/18] mod/use plumbing in crates/toasty-core/src/lib.rs (t=4081, 9 atoms) |
 | 7.5 | 6632 | 0.00 | 0.00 | missing | Statement enum: 4 variants | [scheduled bbox exact=10/15] pub item at crates/toasty-core/src/stmt.rs:253 (t=5507, 10 atoms) |
-| 8.1 | 7159 | 0.56 | 0.70 | partial | toasty-macros: derive entrypoints | [scheduled bbox exact=4/18] pub item body at crates/toasty-macros/src/lib.rs:18 body 19 (t=1705, 4 atoms) |
+| 8.1 | 7159 | 0.56 | 0.70 | missing | toasty-macros: derive entrypoints | [scheduled bbox exact=4/18] pub item body at crates/toasty-macros/src/lib.rs:18 body 19 (t=1705, 4 atoms) |
 | 8.2 | 7366 | 0.61 | 0.99 | partial | toasty-codegen lib.rs entrypoints | [scheduled bbox exact=4/18] pub-item names surface in crates/toasty-codegen/src/lib.rs (t=2167, 4 atoms) |
 | 8.4 | 7723 | 0.00 | 0.00 | missing | CLAUDE.md: layer-to-crate decision tree | [scheduled bbox exact=4/22] headings outline in CLAUDE.md (t=5035, 4 atoms); better unscheduled exact=9/22: CLAUDE.md section #4 (9 atoms, discovered unscheduled) |
 | 9.1 | 7984 | 0.75 | 0.99 | partial | toasty-sql lib.rs | [scheduled bbox exact=6/8] mod/use plumbing in crates/toasty-sql/src/lib.rs (t=2755, 6 atoms) |
 | 9.3 | 8457 | 0.11 | 0.05 | missing | SQLite driver: enum + Driver impl signatures | [scheduled bbox exact=8/36] impl method sigs in crates/toasty-driver-sqlite/src/lib.rs (t=9531, 12 atoms) |
 | 9.4 | 8694 | 0.00 | 0.00 | missing | Connect: URL scheme dispatch (sqlite/postgres/mysql/dynamodb) | [scheduled same-file] pub item at crates/toasty/src/db/connect.rs:14 (t=7954, 3 atoms) |
 | 10.3 | 9368 | 0.00 | 0.00 | missing | Per-driver test entry: sqlite.rs full | [unscheduled bbox exact=8/32] impl method sigs in tests/tests/sqlite.rs (8 atoms, predecessor not scheduled: Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/tests/tests" })) |
-| 10.4 | 9633 | 0.63 | 0.75 | partial | Examples: composite-key model | [scheduled bbox exact=10/30] entry item at examples/composite-key/src/main.rs:2 (t=275, 10 atoms) |
+| 10.4 | 9633 | 0.63 | 0.75 | missing | Examples: composite-key model | [scheduled bbox exact=10/30] entry item at examples/composite-key/src/main.rs:2 (t=275, 10 atoms) |
 | 10.5 | 9856 | 0.68 | 0.83 | partial | Examples: user-has-one-profile model | [scheduled bbox exact=9/25] entry item at examples/user-has-one-profile/src/main.rs:14 (t=463, 9 atoms) |
 
 ### fs/listing

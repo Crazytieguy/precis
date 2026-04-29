@@ -1,4 +1,4 @@
-scores: Score(3000)=0.588 ns_rows≤3K=21/42 (reached=10 partial=3 missing=8)
+scores: Score(3000)=0.588 ns_rows≤3K=21/42 (reached=9 partial=4 missing=8)
 
 ## Per-budget scores
 
@@ -16,18 +16,21 @@ scores: Score(3000)=0.588 ns_rows≤3K=21/42 (reached=10 partial=3 missing=8)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 4 ranking-recoverable (gap@3k=0.00), 16 wrong-slice/granularity (gap@3k=0.60), 0 no-discovered (gap@3k=0.00)
+Evidence: 4 ranking-recoverable (gap@3k=0.14), 16 wrong-slice/granularity (gap@3k=1.04), 0 no-discovered (gap@3k=0.00)
 Secondary intervention: free T_max budget for 1 too-expensive candidate
-Top rows: 3.7, 3.4, 3.5, 3.2, 3.6, ...
+Top rows: 3.7, 3.4, 4.7, 3.5, 4.9, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 16 | 0.44 | 0.60 | 0.93 | nearby candidates have low exact atom overlap | 3.7, 3.4, 3.5, 3.2, 3.6, ... |
-| finish partially-delivered NS batches | 5 | 0.17 | 0.17 | 0.28 | avg batch completion=0.44 | 3.4, 4.5, 4.9, 4.10, 5.7 |
+| split wrong-slice walker batches | 16 | 1.16 | 1.04 | 0.99 | nearby candidates have low exact atom overlap | 3.7, 3.4, 4.7, 3.5, 4.9, ... |
+| finish partially-delivered NS batches | 6 | 0.46 | 0.36 | 0.34 | avg batch completion=0.50 | 3.4, 4.9, 3.14, 4.10, 5.7, ... |
+| tune ranking for discovered unscheduled candidates | 1 | 0.06 | 0.06 | 0.06 | high-overlap candidates fit but did not win, exact total=25/31 | 4.13 |
+| promote c decl signature batches | 2 | 0.05 | 0.05 | 0.05 | 1 file, exact total=28/33 | 5.5, 5.2 |
+| free T_max budget / demote late waste | 1 | 0.04 | 0.04 | 0.04 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=24/24 | 4.15 |
 
 ## Diagnosis rollup
 
@@ -35,18 +38,18 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 4 | 4 | 0 | value/ranking |
 | wrong-slice / granularity | 16 | 12 | 4 | walker granularity / wrong slice |
-| mixed/unknown | 10 | 10 | 0 | inspect row |
+| mixed/unknown | 11 | 10 | 1 | inspect row |
 
 ## Loss reason rollup (ranking-recoverable rows)
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 2 | 0.00 | promote predecessor |
-| too expensive at final margin | 1 | 0.00 | free T_max budget |
-| discovered unscheduled | 1 | 0.00 | tune ranking |
+| predecessor not scheduled | 2 | 0.05 | promote predecessor |
+| too expensive at final margin | 1 | 0.04 | free T_max budget |
+| discovered unscheduled | 1 | 0.06 | tune ranking |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=23, unscheduled bbox=5, scheduled same-file=2
+Candidate hint kinds: scheduled bbox=24, unscheduled bbox=5, scheduled same-file=2
 
 ## Exact atom overlap rollup (bbox hints)
 
@@ -56,6 +59,7 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=5, scheduled same-file
 | scheduled bbox | missing | high | 6 |
 | scheduled bbox | missing | full | 4 |
 | scheduled bbox | partial | low | 4 |
+| scheduled bbox | partial | high | 1 |
 | unscheduled bbox | missing | low | 2 |
 | unscheduled bbox | missing | high | 2 |
 | unscheduled bbox | missing | full | 1 |
@@ -101,6 +105,7 @@ Candidate hint kinds: scheduled bbox=23, unscheduled bbox=5, scheduled same-file
 | 3.10 | 1712 | 0.00 | 0.00 | missing | packets.h — clientbound (sc_) function names, part 2 | [scheduled bbox exact=17/17] c decl names surface in include/packets.h (t=5244, 17 atoms) |
 | 3.11 | 1987 | 0.00 | 0.00 | missing | procedures.h — game-logic function names, part 1 | [scheduled bbox exact=26/26] c decl names surface in include/procedures.h (t=4078, 32 atoms) |
 | 3.12 | 2107 | 0.00 | 0.00 | missing | procedures.h — game-logic function names, part 2 | [scheduled bbox exact=13/13] c decl names surface in include/procedures.h (t=4078, 18 atoms) |
+| 3.14 | 2733 | 0.82 | 0.79 | partial | tools.h — I/O + RNG function names (rest) | [scheduled bbox exact=23/28] c decl names surface in include/tools.h (t=1393, 28 atoms) |
 | 4.2 | 3378 | 0.03 | 0.02 | missing | PlayerData struct — full | [scheduled bbox exact=39/41] c decl at include/globals.h:200 (t=6301, 39 atoms) |
 | 4.3 | 3526 | 0.09 | 0.05 | missing | MobData struct — full (data-byte bitfield comment) | [scheduled bbox exact=12/12] c decl at include/globals.h:240 (t=3020, 12 atoms) |
 | 4.6 | 4079 | 0.00 | 0.00 | missing | src/globals.c — runtime defaults + literal MOTD/brand | [scheduled bbox exact=21/26] c decl names surface in src/globals.c (t=5707, 21 atoms) |

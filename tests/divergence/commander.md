@@ -16,20 +16,21 @@ scores: Score(3000)=0.398 ns_rows≤3K=20/41 (reached=5 partial=1 missing=14)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 17 ranking-recoverable (gap@3k=0.23), 13 wrong-slice/granularity (gap@3k=1.91), 2 no-discovered (gap@3k=0.36)
+Evidence: 17 ranking-recoverable (gap@3k=1.04), 13 wrong-slice/granularity (gap@3k=2.04), 2 no-discovered (gap@3k=0.36)
 Secondary intervention: free T_max budget for 9 too-expensive candidates
 Top rows: 1.1, 3.1, 1.5, 2.3, 2.2, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 13 | 1.60 | 1.91 | 1.47 | nearby candidates have low exact atom overlap | 1.1, 3.1, 1.5, 2.3, 2.2, ... |
-| add walker candidates for no-discovered rows | 2 | 0.00 | 0.36 | 0.36 | NS rows have no discovered line candidate | 2.5, 2.6 |
-| finish partially-delivered NS batches | 5 | 0.17 | 0.27 | 0.04 | avg batch completion=0.47 | 2.2, 3.3, 3.2, 4.2, 7.3 |
-| free T_max budget / demote late waste | 9 | 0.00 | 0.23 | 0.47 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=158/170 | 3.7, 3.5, 3.4, 3.6, 3.8, ... |
+| split wrong-slice walker batches | 13 | 2.10 | 2.04 | 1.49 | nearby candidates have low exact atom overlap | 1.1, 3.1, 1.5, 2.3, 2.2, ... |
+| promote export batches | 8 | 0.54 | 0.54 | 0.54 | 2 files, exact total=284/322 | 5.3b, 5.3, 5.2, 6.1b, 5.2b, ... |
+| free T_max budget / demote late waste | 9 | 0.50 | 0.50 | 0.49 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=158/170 | 3.8, 4.1, 4.3, 3.7, 3.5, ... |
+| add walker candidates for no-discovered rows | 2 | 0.36 | 0.36 | 0.36 | NS rows have no discovered line candidate | 2.5, 2.6 |
+| finish partially-delivered NS batches | 5 | 0.35 | 0.29 | 0.04 | avg batch completion=0.47 | 2.2, 3.3, 3.2, 4.2, 7.3 |
 
 ## Diagnosis rollup
 
@@ -45,8 +46,8 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| predecessor not scheduled | 8 | 0.00 | promote predecessor |
-| too expensive at final margin | 9 | 0.23 | free T_max budget |
+| predecessor not scheduled | 8 | 0.54 | promote predecessor |
+| too expensive at final margin | 9 | 0.50 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-file=1, fs-only=2, no discovered candidate=2
@@ -70,8 +71,8 @@ Candidate hint kinds: scheduled bbox=18, unscheduled bbox=13, scheduled same-fil
 
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
-| group | 5020 | 0.00 | 0.00 | predecessor-gated | 6 children of `export at lib/command.js:13` | exact total=209/238; rows: 5.2, 5.2b, 5.3, 5.3b, 5.4, 5.4b |
-| group | 7964 | 0.00 | 0.00 | predecessor-gated | 2 children of `export at lib/help.js:12` | exact total=75/84; rows: 6.1, 6.1b |
+| group | 5020 | 0.00 | 0.00 | predecessor-gated | 6 children of `export at lib/command.js:13` | exact total=209/238; rows: 5.3b, 5.3, 5.2, 5.2b, 5.4, 5.4b |
+| group | 7964 | 0.00 | 0.00 | predecessor-gated | 2 children of `export at lib/help.js:12` | exact total=75/84; rows: 6.1b, 6.1 |
 | 3.4 | 2477 | 0.00 | 0.00 | missing | Command class — registration & options method names | [scheduled bbox exact=1/15] export names surface in lib/command.js (t=3276, 2 atoms); better unscheduled exact=15/15: export at lib/command.js:13 (60 atoms, too expensive at final margin) |
 | 3.5 | 2641 | 0.00 | 0.00 | missing | Command class — config & option-value method names | [unscheduled bbox exact=17/17] export at lib/command.js:13 (119 atoms, too expensive at final margin) |
 | 3.6 | 2751 | 0.00 | 0.00 | missing | Command class — parsing & action method names | [scheduled bbox exact=0/11] export doc at lib/command.js:2752 (t=7983, 4 atoms); better unscheduled exact=9/11: export at lib/command.js:13 (162 atoms, too expensive at final margin) |

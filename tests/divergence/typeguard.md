@@ -1,4 +1,4 @@
-scores: Score(3000)=0.461 ns_rows≤3K=14/39 (reached=5 partial=1 missing=8)
+scores: Score(3000)=0.461 ns_rows≤3K=14/39 (reached=5 partial=0 missing=9)
 
 ## Per-budget scores
 
@@ -16,26 +16,27 @@ scores: Score(3000)=0.461 ns_rows≤3K=14/39 (reached=5 partial=1 missing=8)
 
 Verdict: wrong-slice bound
 Likely primary lever: split walker batches to match NS semantic slices
-Evidence: 1 ranking-recoverable (gap@3k=0.00), 18 wrong-slice/granularity (gap@3k=0.75), 11 no-discovered (gap@3k=0.52)
+Evidence: 1 ranking-recoverable (gap@3k=0.08), 19 wrong-slice/granularity (gap@3k=1.55), 11 no-discovered (gap@3k=0.81)
 Secondary intervention: free T_max budget for 1 too-expensive candidate
-Top rows: 2.2, 2.3, 1.10, 2.1, 2.4, ...
+Top rows: 2.2, 2.3, 1.10, 2.6, 2.5, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 18 | 0.00 | 0.75 | 1.01 | nearby candidates have low exact atom overlap | 2.2, 2.3, 1.10, 2.1, 2.4, ... |
-| add walker candidates for no-discovered rows | 11 | 0.52 | 0.52 | 0.68 | NS rows have no discovered line candidate | 1.6, 1.7, 1.5, 3.8, 3.9, ... |
-| finish partially-delivered NS batches | 7 | 0.00 | 0.34 | 0.33 | avg batch completion=0.43 | 1.10, 2.1, 2.4, 2.5, 2.7, ... |
+| split wrong-slice walker batches | 19 | 1.69 | 1.55 | 1.02 | nearby candidates have low exact atom overlap | 2.2, 2.3, 1.10, 2.6, 2.5, ... |
+| add walker candidates for no-discovered rows | 11 | 0.81 | 0.81 | 0.81 | NS rows have no discovered line candidate | 1.6, 1.7, 1.5, 3.8, 4.2, ... |
+| finish partially-delivered NS batches | 7 | 0.72 | 0.61 | 0.33 | avg batch completion=0.43 | 1.10, 2.5, 2.1, 2.7, 2.4, ... |
+| free T_max budget / demote late waste | 1 | 0.08 | 0.08 | 0.08 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=41/45 | 3.2 |
 
 ## Diagnosis rollup
 
 | diagnosis | rows | missing | partial | likely lever |
 |:----------|-----:|--------:|--------:|:-------------|
 | ranking-recoverable | 1 | 1 | 0 | value/ranking |
-| wrong-slice / granularity | 18 | 16 | 2 | walker granularity / wrong slice |
+| wrong-slice / granularity | 19 | 17 | 2 | walker granularity / wrong slice |
 | no discovered candidate | 11 | 11 | 0 | walker coverage or predecessor-gated emit |
 | fs/listing | 1 | 1 | 0 | filesystem/listing value |
 | mixed/unknown | 1 | 1 | 0 | inspect row |
@@ -44,16 +45,16 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 1 | 0.00 | free T_max budget |
+| too expensive at final margin | 1 | 0.08 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
-Candidate hint kinds: scheduled bbox=20, fs-only=1, no discovered candidate=11
+Candidate hint kinds: scheduled bbox=21, fs-only=1, no discovered candidate=11
 
 ## Exact atom overlap rollup (bbox hints)
 
 | kind | status | exact_overlap | rows |
 |:-----|:-------|:--------------|-----:|
-| scheduled bbox | missing | low | 17 |
+| scheduled bbox | missing | low | 18 |
 | scheduled bbox | missing | high | 1 |
 | scheduled bbox | partial | low | 2 |
 
@@ -70,7 +71,7 @@ Candidate hint kinds: scheduled bbox=20, fs-only=1, no discovered candidate=11
 | id | exp_t | credit | comp | status | descriptor | candidate hint |
 |----|------:|-------:|-----:|:-------|:-----------|:--------------------|
 | 1.10 | 1351 | 0.29 | 0.39 | missing | typeguard/__init__.py — module rewrite, lazy `config`, autoload | [scheduled bbox exact=4/21] python decl body at src/typeguard/__init__.py:37 body 38 (t=1177, 4 atoms) |
-| 2.1 | 1663 | 0.61 | 0.74 | partial | _exceptions.py — class signatures + summary docstrings | [scheduled bbox exact=5/28] python method sigs in src/typeguard/_exceptions.py (t=2212, 10 atoms) |
+| 2.1 | 1663 | 0.61 | 0.74 | missing | _exceptions.py — class signatures + summary docstrings | [scheduled bbox exact=5/28] python method sigs in src/typeguard/_exceptions.py (t=2212, 10 atoms) |
 | 2.2 | 2249 | 0.03 | 0.01 | missing | check_type — primary entry-point signature | [scheduled bbox exact=12/42] python decl at src/typeguard/_functions.py:50 (t=5362, 12 atoms); better unscheduled exact=24/42: python decl doc at src/typeguard/_functions.py:50 (24 atoms, too expensive at final margin) |
 | 2.3 | 2766 | 0.11 | 0.07 | missing | @typechecked — overloaded signatures | [scheduled bbox exact=8/38] python decl at src/typeguard/_decorators.py:150 (t=4340, 8 atoms); better unscheduled exact=12/38: python decl doc at src/typeguard/_decorators.py:150 (12 atoms, too expensive at final margin) |
 | 2.4 | 2985 | 0.28 | 0.24 | missing | install_import_hook — signature + docstring | [scheduled bbox exact=9/18] python decl doc at src/typeguard/_importhook.py:183 (t=6985, 9 atoms) |
@@ -82,6 +83,7 @@ Candidate hint kinds: scheduled bbox=20, fs-only=1, no discovered candidate=11
 | 2.10 | 4926 | 0.17 | 0.16 | missing | TypeguardFinder + ImportHookManager — class + key methods | [scheduled bbox exact=6/31] python method sigs in src/typeguard/_importhook.py (t=4695, 14 atoms) |
 | 2.11 | 5177 | 0.11 | 0.20 | missing | warn_on_error + load_plugins — signatures | [scheduled bbox exact=7/19] python decl doc at src/typeguard/_checkers.py:1099 (t=9274, 7 atoms) |
 | 2.12 | 5358 | 0.00 | 0.00 | missing | check_type_internal — signature + docstring | [scheduled bbox exact=9/16] python decl doc at src/typeguard/_checkers.py:924 (t=9399, 9 atoms) |
+| 2.14 | 5813 | 0.80 | 0.99 | partial | Unset sentinel + small _utils helpers | [scheduled bbox exact=9/15] python decl names surface in src/typeguard/_utils.py (t=2086, 15 atoms) |
 | 3.1 | 6041 | 0.00 | 0.00 | missing | _checkers.py — every check_* function name (locations) | [scheduled bbox exact=11/25] python decl names surface #1 in src/typeguard/_checkers.py (t=5698, 24 atoms) |
 | 3.3 | 7082 | 0.00 | 0.00 | missing | _checkers.py — builtin_checker_lookup dispatch fallbacks | [scheduled bbox exact=3/36] python decl at src/typeguard/_checkers.py:1061 (t=8824, 3 atoms); better unscheduled exact=27/36: python decl body at src/typeguard/_checkers.py:1061 body 1065 (27 atoms, too expensive at final margin) |
 | 3.5 | 7354 | 0.00 | 0.00 | missing | _transformer.py — TypeguardTransformer visit_* methods (locations) | [scheduled bbox exact=14/20] python method sigs #1 in src/typeguard/_transformer.py (t=9882, 41 atoms) |

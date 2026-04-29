@@ -16,20 +16,20 @@ scores: Score(3000)=0.454 ns_rows≤3K=15/40 (reached=5 partial=0 missing=10)
 
 Verdict: coverage-gap bound
 Likely primary lever: add walker candidates for no-discovered NS rows
-Evidence: 2 ranking-recoverable (gap@3k=0.22), 16 wrong-slice/granularity (gap@3k=0.42), 11 no-discovered (gap@3k=1.00)
+Evidence: 2 ranking-recoverable (gap@3k=0.27), 16 wrong-slice/granularity (gap@3k=1.05), 11 no-discovered (gap@3k=1.43)
 Secondary intervention: free T_max budget for 2 too-expensive candidates
-Top rows: 2.1, 1.2, 2.2, 3.2, 5.7, ...
+Top rows: 2.1, 1.2, 2.2, 3.2, 6.4, ...
 
 ## Top opportunities
 
-_`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (1 − damped_credit(a)) / rank(a)`. `gap@3k` is the primary sort key — direct proxy for `Score(3000)` headroom. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector. Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
+_`gap@B` is a non-additive priority score: `Σ over atoms in row: (1 − damped_credit(a)) / rank(a)` evaluated at budget B's walker state. Approximates how much closing the row would lift `Score(B)` (via the Importance numerator); not an exact delta. `gap@3k` is the primary sort key. `gap@1k` and `gap@9k` show how the same intervention scales across the budget vector — gap is monotone non-increasing in B (walker has more budget at higher B). Rows can overlap between opportunities; sums are upper bounds on Score(B) impact, not additive estimates._
 
 | intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
 |:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| add walker candidates for no-discovered rows | 11 | 0.84 | 1.00 | 1.39 | NS rows have no discovered line candidate | 2.1, 1.2, 2.2, 3.2, 5.7, ... |
-| split wrong-slice walker batches | 16 | 0.00 | 0.42 | 0.48 | nearby candidates have low exact atom overlap | 4.2, 4.5, 5.1, 4.3, 5.2, ... |
-| free T_max budget / demote late waste | 2 | 0.00 | 0.22 | 0.27 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=61/66 | 4.1, 7.3 |
-| finish partially-delivered NS batches | 4 | 0.00 | 0.14 | 0.05 | avg batch completion=0.45 | 4.5, 4.3, 7.2, 7.12 |
+| add walker candidates for no-discovered rows | 11 | 1.43 | 1.43 | 1.43 | NS rows have no discovered line candidate | 2.1, 1.2, 2.2, 3.2, 6.4, ... |
+| split wrong-slice walker batches | 16 | 1.06 | 1.05 | 0.54 | nearby candidates have low exact atom overlap | 4.2, 4.5, 5.3, 5.6, 5.5, ... |
+| free T_max budget / demote late waste | 2 | 0.28 | 0.27 | 0.27 | high-overlap candidates exceed remaining budget at T_max (caveat: not 3K-budget — see below), exact total=61/66 | 4.1, 7.3 |
+| finish partially-delivered NS batches | 4 | 0.20 | 0.18 | 0.07 | avg batch completion=0.45 | 4.5, 4.3, 7.2, 7.12 |
 
 ## Diagnosis rollup
 
@@ -45,7 +45,7 @@ _`gap@B` is a non-additive priority score: `Σ over atoms with rank ≤ |A_B|: (
 
 | loss reason | rows | gap@3k | likely lever |
 |:------------|-----:|-------:|:-------------|
-| too expensive at final margin | 2 | 0.22 | free T_max budget |
+| too expensive at final margin | 2 | 0.27 | free T_max budget |
 
 _Candidate coverage note: candidates are the walker batches discovered during this scheduled run; descendants behind unscheduled predecessors may not be present, so `no discovered candidate` is not proof that no walker emit path exists._
 Candidate hint kinds: scheduled bbox=14, unscheduled bbox=4, unscheduled same-file=1, fs-only=1, no discovered candidate=11
