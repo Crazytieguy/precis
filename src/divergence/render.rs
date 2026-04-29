@@ -367,9 +367,8 @@ fn format_walker_waste(out: &mut String, ctx: &BuildCtx) {
     // that stopped the 3K prefix under the scheduler's no-fallback
     // rule — counts as primary-actionable. Demoting that batch can
     // let the next-best candidate fit and lift `Score(3000)`.
-    let (early, late): (Vec<&WalkerWasteRow<'_>>, Vec<&WalkerWasteRow<'_>>) = rows
-        .iter()
-        .partition(|r| r.prev_t <= PRIMARY_BUDGET);
+    let (early, late): (Vec<&WalkerWasteRow<'_>>, Vec<&WalkerWasteRow<'_>>) =
+        rows.iter().partition(|r| r.prev_t <= PRIMARY_BUDGET);
     format_walker_waste_table(
         out,
         &format!(
