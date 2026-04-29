@@ -120,6 +120,13 @@ How many improvements to attempt in a session is the user's call —
 this skill drives one improvement at a time. After each commit, the
 user decides whether to continue iterating or stop.
 
+### Tune mixed results before reverting
+
+When an attempt wins on the target but regresses elsewhere, the
+structural insight is usually correct and the magnitudes just need
+calibration. Tune values before reverting. Reverting is for
+fundamentally misaligned changes, not for first-pass numbers.
+
 ## When stuck
 
 A divergence that resists general fixes is a sign to consult more
