@@ -244,6 +244,15 @@ pub enum TsKey {
     /// JSDoc (`/** … */`) above a single export. Predecessor: the matching
     /// `Export` at the same `start_line`. Priority 3.x.
     ExportDoc { file: PathBuf, start_line: usize },
+    /// Surface for one member of an exported JavaScript class. Predecessor:
+    /// the matching class `Export` at the same `start_line`. Priority 2.x–3.x.
+    ExportMember {
+        file: PathBuf,
+        /// Parent export line.
+        start_line: usize,
+        /// First line of the class member surface.
+        member_start_line: usize,
+    },
     /// Body slice of an export with a `statement_block` body — function,
     /// generator, class methods, or `export default <fn|class>`. Brace-strip
     /// rule: outer `{` and `}` rows omitted, interior rows emitted.
@@ -734,6 +743,7 @@ impl TsKey {
             {
                 0.38
             }
+            TsKey::ExportMember { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -778,6 +788,18 @@ impl TsKey {
             }
             TsKey::ExportDoc { file, start_line } => {
                 format!("export doc at {}:{}", display_path(file), start_line)
+            }
+            TsKey::ExportMember {
+                file,
+                start_line,
+                member_start_line,
+            } => {
+                format!(
+                    "export member at {}:{} member {}",
+                    display_path(file),
+                    start_line,
+                    member_start_line
+                )
             }
             TsKey::ExportBody {
                 file,

@@ -15,6 +15,9 @@
 //!   signature / const-assignment line; no JSDoc)
 //! - `ExportDoc { file, start_line }`: JSDoc above that export,
 //!   predecessor = the matching `Export`
+//! - `ExportMember { file, start_line, member_start_line }`: one member
+//!   surface of an exported JavaScript class, predecessor = the matching
+//!   class `Export`.
 //! - `ExportBody { file, start_line, body_start_line }`: body slice
 //!   (brace-stripped) of a function, class, or `const X = <fn-init>`
 //!   export, predecessor = the matching `Export`.
@@ -67,6 +70,7 @@ const FULL_VALUE_BODY_SEGMENTS_PER_FILE: usize = 4;
 // Keep late body segments schedulable as last-resort detail, but make their
 // value/cost ratio lose to broader structural candidates in budget pressure.
 const LATE_BODY_SEGMENT_VALUE_FACTOR: f64 = 0.05;
+const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
@@ -143,7 +147,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
         let src_lines: Vec<&str> = source.lines().collect();
-        let exports = find_export_starts(&tree, &source, &src_lines);
+        let exports = find_export_starts(file, &tree, &source, &src_lines);
         let per_export_factor = type_machinery_factor(file, &exports);
         let export_start_lines: HashSet<_> = exports.iter().map(|item| item.start_line).collect();
         let mut body_segment_index = 0usize;
@@ -151,6 +155,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             let chunk_count = names_surface_chunk_count(exports.len());
             let export_count = exports.len();
             let type_only_export_count = exports.iter().filter(|item| item.is_type_only).count();
+            let has_split_js_class_export = is_js_file(file)
+                && exports
+                    .iter()
+                    .any(|item| should_split_js_class_export(file, item));
             let names_predecessors: Vec<_> = (0..chunk_count)
                 .map(|chunk_index| {
                     BatchKey::Typescript(TsKey::ExportNames {
@@ -173,7 +181,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     key: names_predecessors[chunk_index].clone(),
                     predecessor: module_predecessor.clone(),
                     content,
-                    value: export_names_value(file, ctx, chunk_index, chunk_count, js_factor),
+                    value: export_names_value(
+                        file,
+                        ctx,
+                        chunk_index,
+                        chunk_count,
+                        js_factor,
+                        has_split_js_class_export,
+                    ),
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {
@@ -183,10 +198,15 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
+                let split_js_class = should_split_js_class_export(file, item);
                 if let Some(content) = single_file_lines_content(
                     file,
                     &source,
-                    decl_surface_lines(item.kind, item.anchor, item.decl, &source),
+                    if split_js_class {
+                        class_header_surface_lines(item.anchor, item.decl, &source)
+                    } else {
+                        decl_surface_lines(item.kind, item.anchor, item.decl, &source)
+                    },
                 ) {
                     out.push(Batch {
                         key: export_key.clone().into(),
@@ -196,6 +216,42 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     });
                 }
                 let export_predecessor = BatchKey::Typescript(export_key);
+                if split_js_class {
+                    for member in &item.class_members {
+                        let member_key = TsKey::ExportMember {
+                            file: file.clone(),
+                            start_line: item.start_line,
+                            member_start_line: member.start_line,
+                        };
+                        if let Some(content) =
+                            single_file_lines_content(file, &source, member.lines.clone())
+                        {
+                            out.push(Batch {
+                                key: member_key.clone().into(),
+                                predecessor: Some(export_predecessor.clone()),
+                                content,
+                                value: export_member_value(file, item.kind, ctx, js_factor)
+                                    * per_export_factor,
+                            });
+                        }
+                        let member_predecessor = BatchKey::Typescript(member_key);
+                        let mut emit_ctx = ExportBodyEmitCtx {
+                            file,
+                            source: &source,
+                            ctx,
+                            js_factor,
+                            per_export_factor,
+                            body_segment_index: &mut body_segment_index,
+                        };
+                        emit_export_body_parts(
+                            &mut out,
+                            &mut emit_ctx,
+                            item,
+                            member.body_parts.clone(),
+                            &member_predecessor,
+                        );
+                    }
+                }
                 let mut doc_lines = Vec::new();
                 collect_jsdoc_above(
                     item.anchor,
@@ -220,34 +276,22 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             * per_export_factor,
                     });
                 }
-                if !item.body_parts.is_empty() {
-                    let parts = item.body_parts.clone();
-                    let part_value_factor = body_part_value_factor(parts.len());
-                    for part in parts {
-                        let Some(body_start_line) = part.start_line() else {
-                            continue;
-                        };
-                        let Some(content) =
-                            single_file_lines_content(file, &source, FileLines::new(part.lines))
-                        else {
-                            continue;
-                        };
-                        out.push(Batch {
-                            key: TsKey::ExportBody {
-                                file: file.clone(),
-                                start_line: item.start_line,
-                                body_start_line,
-                            }
-                            .into(),
-                            predecessor: Some(export_predecessor.clone()),
-                            content,
-                            value: export_body_value(file, item.kind, ctx, js_factor)
-                                * per_export_factor
-                                * part_value_factor
-                                * body_segment_value_factor(body_segment_index),
-                        });
-                        body_segment_index += 1;
-                    }
+                if !split_js_class && !item.body_parts.is_empty() {
+                    let mut emit_ctx = ExportBodyEmitCtx {
+                        file,
+                        source: &source,
+                        ctx,
+                        js_factor,
+                        per_export_factor,
+                        body_segment_index: &mut body_segment_index,
+                    };
+                    emit_export_body_parts(
+                        &mut out,
+                        &mut emit_ctx,
+                        item,
+                        item.body_parts.clone(),
+                        &export_predecessor,
+                    );
                 }
             }
         }
@@ -326,6 +370,50 @@ fn would_chunk_reexport_imports(file: &Path, ctx: &WalkCtx) -> bool {
             .is_some_and(|groups| should_chunk_import_groups(&groups))
 }
 
+struct ExportBodyEmitCtx<'a, 'b> {
+    file: &'b Path,
+    source: &'b str,
+    ctx: &'b WalkCtx,
+    js_factor: f64,
+    per_export_factor: f64,
+    body_segment_index: &'a mut usize,
+}
+
+fn emit_export_body_parts(
+    out: &mut Vec<Batch<BatchKey>>,
+    emit: &mut ExportBodyEmitCtx<'_, '_>,
+    item: &ExportInfo<'_>,
+    parts: Vec<BodyPart>,
+    predecessor: &BatchKey,
+) {
+    let part_value_factor = body_part_value_factor(parts.len());
+    for part in parts {
+        let Some(body_start_line) = part.start_line() else {
+            continue;
+        };
+        let Some(content) =
+            single_file_lines_content(emit.file, emit.source, FileLines::new(part.lines))
+        else {
+            continue;
+        };
+        out.push(Batch {
+            key: TsKey::ExportBody {
+                file: emit.file.to_path_buf(),
+                start_line: item.start_line,
+                body_start_line,
+            }
+            .into(),
+            predecessor: Some(predecessor.clone()),
+            content,
+            value: export_body_value(emit.file, item.kind, emit.ctx, emit.js_factor)
+                * emit.per_export_factor
+                * part_value_factor
+                * body_segment_value_factor(*emit.body_segment_index),
+        });
+        *emit.body_segment_index += 1;
+    }
+}
+
 fn body_segment_value_factor(body_segment_index: usize) -> f64 {
     if body_segment_index < FULL_VALUE_BODY_SEGMENTS_PER_FILE {
         1.0
@@ -382,6 +470,13 @@ impl ItemKind {
     }
 }
 
+fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
+    is_js_file(file)
+        && matches!(item.kind, ItemKind::Class | ItemKind::Default)
+        && is_class_node(item.decl)
+        && item.class_members.len() >= JS_CLASS_MEMBER_SPLIT_MIN
+}
+
 #[derive(Debug, Clone)]
 struct ExportInfo<'a> {
     /// 1-based line of either the wrapping `export_statement` (real export)
@@ -395,6 +490,7 @@ struct ExportInfo<'a> {
     anchor: Node<'a>,
     decl: Node<'a>,
     body_parts: Vec<BodyPart>,
+    class_members: Vec<ClassMemberInfo>,
     /// True when this export carries no runtime value: `Interface` /
     /// `TypeAlias`, or a `NamedReexport` whose `export_statement` has
     /// the statement-level `type` keyword (`export type { Foo }`). Used
@@ -403,6 +499,13 @@ struct ExportInfo<'a> {
     /// damped on those files. `Enum` is *not* type-only (TS enums emit
     /// runtime objects).
     is_type_only: bool,
+}
+
+#[derive(Debug, Clone)]
+struct ClassMemberInfo {
+    start_line: usize,
+    lines: FileLines,
+    body_parts: Vec<BodyPart>,
 }
 
 #[derive(Debug, Clone)]
@@ -423,7 +526,12 @@ struct ModuleItemInfo {
 /// (skipping any that share a start_line with a real `export_statement`,
 /// since `TsKey::Export` keys disambiguate only by start_line and the
 /// scheduler dedupes silently).
-fn find_export_starts<'a>(tree: &'a Tree, source: &str, src_lines: &[&str]) -> Vec<ExportInfo<'a>> {
+fn find_export_starts<'a>(
+    file: &Path,
+    tree: &'a Tree,
+    source: &str,
+    src_lines: &[&str],
+) -> Vec<ExportInfo<'a>> {
     let root = tree.root_node();
     let mut cursor = root.walk();
     let mut out = Vec::new();
@@ -442,6 +550,7 @@ fn find_export_starts<'a>(tree: &'a Tree, source: &str, src_lines: &[&str]) -> V
             kind,
             child,
             decl_node,
+            file,
             src_lines,
             is_type_only,
         ));
@@ -468,7 +577,7 @@ fn find_export_starts<'a>(tree: &'a Tree, source: &str, src_lines: &[&str]) -> V
 
             let Some(kind) = kind else { continue };
             out.push(make_export_info(
-                start_line, kind, child, child, src_lines, false,
+                start_line, kind, child, child, file, src_lines, false,
             ));
             emitted_lines.insert(start_line);
         }
@@ -483,15 +592,35 @@ fn make_export_info<'a>(
     kind: ItemKind,
     anchor: Node<'a>,
     decl: Node<'a>,
+    file: &Path,
     src_lines: &[&str],
     is_type_only: bool,
 ) -> ExportInfo<'a> {
+    let collect_class_members = is_js_file(file)
+        && matches!(kind, ItemKind::Class | ItemKind::Default)
+        && is_class_node(decl);
+    let class_members = if collect_class_members {
+        class_member_infos(decl, src_lines)
+    } else {
+        Vec::new()
+    };
+    let body_parts = if collect_class_members {
+        merged_body_parts(
+            class_members
+                .iter()
+                .flat_map(|member| member.body_parts.clone())
+                .collect(),
+        )
+    } else {
+        merged_body_parts(body_parts(decl, kind, src_lines))
+    };
     ExportInfo {
         start_line,
         kind,
         anchor,
         decl,
-        body_parts: merged_body_parts(body_parts(decl, kind, src_lines)),
+        body_parts,
+        class_members,
         is_type_only,
     }
 }
@@ -1281,11 +1410,14 @@ fn export_names_value(
     chunk_index: usize,
     chunk_count: usize,
     js_factor: f64,
+    has_split_js_class_export: bool,
 ) -> f64 {
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
+    let class_split_factor = if has_split_js_class_export { 1.12 } else { 1.0 };
     mix_signals(cat, 0.6, 0.35, ts_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
         * js_factor
+        * class_split_factor
 }
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1300,6 +1432,13 @@ fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) 
     let cat = (0.20 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.6 * k).min(1.0);
     mix_signals(cat, fu, 0.8, ts_depth_factor(file, ctx)) * js_factor
+}
+
+fn export_member_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
+    let k = kind.kind_weight();
+    let cat = (0.62 * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.95 * k).min(1.0);
+    mix_signals(cat, fu, 0.55, ts_depth_factor(file, ctx)) * js_factor
 }
 
 fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
@@ -1611,22 +1750,10 @@ fn decl_surface_lines(kind: ItemKind, anchor: Node, decl: Node, source: &str) ->
             if let Some(b) = body {
                 let mut bcur = b.walk();
                 for member in b.children(&mut bcur) {
-                    if matches!(
-                        member.kind(),
-                        "method_definition"
-                            | "method_signature"
-                            | "abstract_method_signature"
-                            | "public_field_definition"
-                            | "property_signature"
-                    ) {
-                        let m_sig_end = signature_end_row(member);
-                        push_rows(&mut full, member.start_position().row, m_sig_end);
-                        if member
-                            .child_by_field_name("body")
-                            .is_some_and(has_multiline_statement_block)
-                        {
-                            ellipses.push(m_sig_end + 2);
-                        }
+                    if class_surface_member_kind(member.kind()) {
+                        let member_lines = member_header_lines(member).0;
+                        full.extend(member_lines.full);
+                        ellipses.extend(member_lines.ellipses);
                     }
                 }
             }
@@ -1664,6 +1791,85 @@ fn decl_surface_lines(kind: ItemKind, anchor: Node, decl: Node, source: &str) ->
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+}
+
+fn class_header_surface_lines(anchor: Node, decl: Node, source: &str) -> FileLines {
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    let export_start_row = anchor.start_position().row;
+    let body = decl.child_by_field_name("body");
+    let header_end = body
+        .map(|body| body.start_position().row)
+        .unwrap_or_else(|| node_end_row_trimmed(decl, source));
+    push_rows(&mut full, export_start_row, header_end);
+    if body.is_some_and(|body| body.end_position().row > body.start_position().row + 1) {
+        ellipses.push(header_end + 2);
+    }
+    FileLines::new(dedup_sorted(full)).with_ellipses(ellipses)
+}
+
+fn class_member_infos(class_decl: Node, src_lines: &[&str]) -> Vec<ClassMemberInfo> {
+    if !is_class_node(class_decl) {
+        return Vec::new();
+    }
+    let Some(class_body) = class_decl.child_by_field_name("body") else {
+        return Vec::new();
+    };
+    let mut out = Vec::new();
+    let mut cursor = class_body.walk();
+    for member in class_body.children(&mut cursor) {
+        if !js_split_class_member_kind(member.kind()) {
+            continue;
+        }
+        let start_line = member.start_position().row + 1;
+        let (lines, body) = member_header_lines(member);
+        let body_parts = statement_block_parts(body, src_lines, "statement_block");
+        out.push(ClassMemberInfo {
+            start_line,
+            lines,
+            body_parts,
+        });
+    }
+    out
+}
+
+fn class_surface_member_kind(kind: &str) -> bool {
+    matches!(
+        kind,
+        "method_definition"
+            | "method_signature"
+            | "abstract_method_signature"
+            | "public_field_definition"
+            | "property_signature"
+    )
+}
+
+fn js_split_class_member_kind(kind: &str) -> bool {
+    // JS class splitting only sees concrete members; signature kinds are TS-only.
+    matches!(kind, "method_definition" | "public_field_definition")
+}
+
+fn member_header_lines(member: Node) -> (FileLines, Option<Node>) {
+    let sig_end = signature_end_row(member);
+    let start_row = member.start_position().row;
+    let body = member.child_by_field_name("body");
+    let mut full = Vec::new();
+    let mut ellipses = Vec::new();
+    push_rows(&mut full, start_row, sig_end);
+    if body.is_some_and(has_multiline_statement_block) {
+        ellipses.push(sig_end + 2);
+    }
+    (
+        FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses)),
+        body,
+    )
+}
+
+fn is_class_node(node: Node) -> bool {
+    matches!(
+        node.kind(),
+        "class" | "class_declaration" | "abstract_class_declaration"
+    )
 }
 
 fn has_multiline_statement_block(body: Node) -> bool {
@@ -1830,7 +2036,7 @@ mod tests {
 
     fn export_infos<'a>(tree: &'a Tree, source: &str) -> Vec<ExportInfo<'a>> {
         let src_lines: Vec<&str> = source.lines().collect();
-        find_export_starts(tree, source, &src_lines)
+        find_export_starts(Path::new("fixture.ts"), tree, source, &src_lines)
     }
 
     fn body_emit_rows_for(source: &str) -> Vec<usize> {

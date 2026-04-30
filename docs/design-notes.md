@@ -128,6 +128,11 @@ for further calibration. Open sub-symptoms:
   and the `walker_used` column at high B get thinner. Mitigation
   lever exists if needed — walker-side filter on absolute-cost — but
   it's a separate change.
+- **Uncalibrated v0.2 JavaScript class-member levers**: the first JS
+  class-member split pass introduced seed values that still need a
+  calibration sweep: `JS_CLASS_MEMBER_SPLIT_MIN = 12`,
+  `ExportMember` concavity `0.45`, split names factor `1.12`, and
+  `export_member_value` weights `0.62 / 0.95 / 0.55`.
 
 Explicit experimentation territory — different exponents per key,
 richer sibling/density signals, NS-author updates that rank
