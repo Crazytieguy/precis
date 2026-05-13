@@ -80,6 +80,27 @@ deliberate pressure on walker calibration (if a top batch consistently
 blocks small budgets, split it or lower its rank) and on NS authoring
 (the growth envelope keeps NS prefixes coherent at small budgets).
 
+## Auto-injected docs don't belong in precis output
+
+Files the host harness already loads into the model's context —
+top-level `AGENTS.md`, `CLAUDE.md`, and text files under
+`.claude/skills/`, `.agent/skills/`, `.cursor/rules/` — should not
+have their bodies scheduled by precis. The file paths *should*
+remain discoverable via fs listings (so the agent knows the file
+exists and can read it if not auto-injected), but the prose-body
+batches (`MarkdownKey::Section`, `MarkdownKey::SummaryWhole`) are
+walker-side suppressed. Residual structural batches
+(`HeadingsOutline`, `ReadmeHeadline`) carry a 0.1× value discount.
+
+User framing (verbatim): "precis isn't meant to guarantee that all
+content is reachable, it's meant to provide a value-per-token
+summary that lets follow up tool calls do the rest."
+
+If a future NS fixture surfaces these files' content as primary
+atoms (pluggy's `AGENTS.md`, toasty's `CLAUDE.md` historically),
+that's an NS-author error to flag — don't move the goalpost by
+un-suppressing the walker.
+
 ## Cross-language vs language-specific concerns
 
 Many concerns precis cares about are cross-language (value heuristics,

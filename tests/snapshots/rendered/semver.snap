@@ -14,40 +14,8 @@ expression: rendered
     3→}
 CHANGELOG.md
     1→# Changelog
-    255→## 6.3.0
-    257→* Expose the token enum on the exports
-    290→## 5.7
-    292→* Add `minVersion` method
-    301→## 5.5
-    303→* Add version coercion capabilities
-    305→## 5.4
-    307→* Add intersection checking
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
-    3→# Contributing
-    …
-    5→## Code of Conduct
-    …
-    7→All interactions in the **npm** organization on GitHub are considered to be covered by our standard [Code of Conduct](https://docs.npmjs.com/policies/conduct).
-    9→## Reporting Bugs
-    …
-    11→Before submitting a new bug report please search for an existing or similar report.
-    13→Use one of our existing issue templates if you believe you've come across a unique problem.
-    15→Duplicate issues, or issues that don't use one of our templates may get closed without a response.
-    17→## Pull Request Conventions
-    …
-    19→### Commits
-    …
-    30→### Test Coverage
-    …
-    36→### Linting
-    …
-    42→## What _not_ to contribute?
-    …
-    44→### Dependencies
-    …
-    48→### Tools/Automation
-    …
 LICENSE
 README.md
     1→semver(1) -- The semantic versioner for npm
@@ -70,6 +38,15 @@ README.md
     …
     184→### Prerelease Tags
     …
+    186→If a version has a prerelease tag (for example, `1.2.3-alpha.3`) then
+    187→it will only be allowed to satisfy comparator sets if at least one
+    188→comparator with the same `[major, minor, patch]` tuple also has a
+    189→prerelease tag.
+    199→The purpose of this behavior is twofold.  First, prerelease versions
+    200→frequently are updated very quickly, and contain many breaking changes
+    201→that are (by the author's design) not yet fit for public consumption.
+    202→Therefore, by default, they are excluded from range-matching
+    203→semantics.
     279→### Advanced Range Syntax
     …
     281→Advanced range syntax desugars to primitive comparators in
@@ -97,6 +74,9 @@ README.md
     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions
     472→  are equal.  Sorts in ascending order if passed to `Array.sort()`.
     473→* `compareLoose(v1, v2)`: Short for `compare(v1, v2, { loose: true })`.
+    474→* `diff(v1, v2)`: Returns the difference between two versions by the release type
+    475→  (`major`, `premajor`, `minor`, `preminor`, `patch`, `prepatch`, or `prerelease`),
+    476→  or null if the versions are the same.
     478→### Sorting
     …
     485→### Comparators
@@ -306,9 +286,24 @@ test/
         range.js
         semver.js
     fixtures/
+        comparator-intersection.js
+        comparisons.js
+        equality.js
+        increments.js
+        invalid-versions.js
+        range-exclude.js
+        range-include.js
+        range-intersection.js
+        range-parse.js
+        valid-versions.js
+        version-gt-range.js
+        version-lt-range.js
+        version-not-gt-range.js
+        version-not-lt-range.js
     functions/
     index.js
     integration/
+        whitespace.js
     internal/
         constants.js
         debug.js

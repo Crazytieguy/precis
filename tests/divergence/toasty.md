@@ -454,16 +454,18 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 9380 | 53 | pub-item names surface in crates/toasty-sql/src/serializer.rs |  |  | 0.387 |
 | walker |  | 9412 | 32 | pub item at crates/toasty-sql/src/serializer.rs:36 |  |  | 0.387 |
 | walker |  | 9424 | 12 | pub-item doc lede at crates/toasty-cli/src/config.rs:9 |  |  | 0.387 |
+| walker |  | 9468 | 44 | pub item at crates/toasty-cli/src/migration/snapshot_file.rs:13 |  |  | 0.387 |
+| walker |  | 9522 | 54 | pub-item names surface in crates/std-util/src/slice.rs |  |  | 0.387 |
+| walker |  | 9522 | 0 | pub item at crates/std-util/src/slice.rs:49 |  |  | 0.387 |
+| walker |  | 9522 | 0 | pub item at crates/std-util/src/slice.rs:61 |  |  | 0.387 |
+| walker |  | 9536 | 14 | pub item body at crates/std-util/src/slice.rs:61 body 62 |  |  | 0.387 |
+| walker |  | 9552 | 16 | pub-item doc lede at crates/toasty-core/src/error.rs:41 |  |  | 0.387 |
+| walker |  | 9577 | 25 | pub-item names surface in crates/toasty-core/src/schema/db/diff.rs |  |  | 0.387 |
 | ns | 9633 |  | 265 | Examples: composite-key model | 10.4 |  | 0.391 |
-| walker |  | 9679 | 255 | headings outline in CLAUDE.md |  |  | 0.391 |
-| walker |  | 9679 | 0 | CLAUDE.md section #0 |  |  | 0.391 |
-| walker |  | 9703 | 24 | CLAUDE.md section #2 |  |  | 0.391 |
-| walker |  | 9747 | 44 | pub item at crates/toasty-cli/src/migration/snapshot_file.rs:13 |  |  | 0.391 |
-| walker |  | 9801 | 54 | pub-item names surface in crates/std-util/src/slice.rs |  |  | 0.391 |
-| walker |  | 9801 | 0 | pub item at crates/std-util/src/slice.rs:49 |  |  | 0.391 |
-| walker |  | 9801 | 0 | pub item at crates/std-util/src/slice.rs:61 |  |  | 0.391 |
-| walker |  | 9815 | 14 | pub item body at crates/std-util/src/slice.rs:61 body 62 |  |  | 0.391 |
-| walker |  | 9831 | 16 | pub-item doc lede at crates/toasty-core/src/error.rs:41 |  |  | 0.391 |
-| walker |  | 9856 | 25 | pub-item names surface in crates/toasty-core/src/schema/db/diff.rs |  |  | 0.396 |
-| ns | 9856 |  | 223 | Examples: user-has-one-profile model | 10.5 |  | 0.396 |
-| walker |  | 9924 | 68 | pub item at crates/toasty-sql/src/serializer.rs:43 |  |  | 0.396 |
+| walker |  | 9645 | 68 | pub item at crates/toasty-sql/src/serializer.rs:43 |  |  | 0.391 |
+| walker |  | 9854 | 209 | mod/use plumbing in crates/toasty-driver-postgresql/src/lib.rs |  |  | 0.391 |
+| ns | 9856 |  | 223 | Examples: user-has-one-profile model | 10.5 |  | 0.395 |
+| walker |  | 9941 | 87 | pub item at crates/toasty-core/src/stmt.rs:253 |  |  | 0.402 |
+| walker |  | 9950 | 9 | mod/use plumbing in crates/toasty-core/src/driver/operation/transaction.rs |  |  | 0.402 |
+| walker |  | 9959 | 9 | mod/use plumbing in crates/toasty-core/src/schema/app/arg.rs |  |  | 0.402 |
+| walker |  | 9972 | 13 | mod/use plumbing in crates/toasty-codegen/src/schema/model_attr.rs |  |  | 0.402 |

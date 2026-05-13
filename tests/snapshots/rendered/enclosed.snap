@@ -8,39 +8,6 @@ expression: rendered
 .nvmrc
     1→22
 CONTRIBUTING.md
-    1→# Contributing to Enclosed
-    …
-    3→First off, thanks for taking the time to contribute to Enclosed! We welcome contributions of all types and encourage you to help make this project better for everyone.
-    5→## Code of Conduct
-    …
-    9→## How Can I Contribute?
-    …
-    11→### Reporting Issues
-    …
-    15→### Submitting Pull Requests
-    …
-    29→### Branching
-    …
-    34→### Commit Guidelines
-    …
-    38→## i18n
-    …
-    42→### Updating an Existing Language
-    …
-    46→## Development Setup
-    …
-    48→### Local Environment Setup
-    …
-    81→### Testing
-    …
-    99→## Writing Documentation
-    …
-    119→## Coding Style
-    …
-    125→## Issue Labels
-    …
-    129→## License
-    …
 Dockerfile
 Dockerfile.rootless
 LICENSE
@@ -273,7 +240,17 @@ packages/
                 8→export const {
                 …
             node/
+                crypto.node.usecases.test.ts
+                crypto.node.usecases.ts
+                    5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
+                    …
+                encryption-algorithms/
             web/
+                crypto.web.usecases.test.ts
+                crypto.web.usecases.ts
+                    1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
+                    …
+                encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
@@ -365,6 +342,15 @@ packages/
         package.json
         src/
             api/
+                api.client.ts
+                    4→export { apiClient };
+                    …
+                api.constants.ts
+                    1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
+                api.models.test.ts
+                api.models.ts
+                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
+                    …
             crypto/
             files/
                 files.models.ts

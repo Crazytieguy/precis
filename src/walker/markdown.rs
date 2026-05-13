@@ -120,7 +120,19 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             .file_name()
             .and_then(|n| n.to_str())
             .unwrap_or_default();
+        // Auto-injected agent docs (AGENTS.md / CLAUDE.md / skill
+        // files) are loaded into the model's context by the harness,
+        // so emitting their bodies is pure waste. Skip the prose-body
+        // batches (SummaryWhole + Section); the structural batches
+        // (HeadingsOutline + ReadmeHeadline) still emit so the file's
+        // shape stays discoverable at large budgets, riding the 0.1×
+        // value discount applied via `non_essential_factor`.
+        let suppress_body = ctx.is_auto_injected_doc_file(&file);
+
         if name.eq_ignore_ascii_case("SUMMARY.md") {
+            if suppress_body {
+                continue;
+            }
             if let Some(content) = build_summary_content(&file, ctx) {
                 out.push(Batch {
                     key: MarkdownKey::SummaryWhole { file: file.clone() }.into(),
@@ -173,6 +185,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         }
 
         let section_predecessor = outline_emitted.or(headline_emitted);
+
+        if suppress_body {
+            continue;
+        }
 
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
@@ -2163,6 +2179,66 @@ mod tests {
         assert_eq!(ranges.len(), 2);
         assert!(!ranges[0].synthetic_intro_present);
         assert_eq!(readme_index_decay(&ranges[0]), 1.0);
+    }
+
+    /// AGENTS.md / CLAUDE.md / skill bodies are already loaded into
+    /// the model's context by the harness, so emitting their per-H2
+    /// `Section` batches is pure waste. The walker must skip
+    /// `MarkdownKey::Section` and `MarkdownKey::SummaryWhole` for
+    /// these files while still emitting structural batches
+    /// (`HeadingsOutline`, `ReadmeHeadline`) so file shape stays
+    /// discoverable at large budgets.
+    #[test]
+    fn markdown_walker_suppresses_body_for_auto_injected_docs() {
+        use std::fs;
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        let body = "# Project AGENTS\n\n\
+                    Top-level instructions go here.\n\n\
+                    ## Setup\n\nrun `cargo build`.\n\n\
+                    ## Conventions\n\nuse rustfmt.\n";
+        fs::write(root.join("AGENTS.md"), body).unwrap();
+        fs::write(root.join("notes.md"), body).unwrap();
+        let ctx = WalkCtx::new(root.to_path_buf());
+        let batches = expand_in_dir(root, &ctx);
+
+        let agents_md = root.join("AGENTS.md");
+        let notes_md = root.join("notes.md");
+        let agents_keys: Vec<_> = batches
+            .iter()
+            .filter_map(|b| match &b.key {
+                BatchKey::Markdown(k) => match k {
+                    MarkdownKey::Section { file, .. } if file == &agents_md => Some("section"),
+                    MarkdownKey::SummaryWhole { file } if file == &agents_md => Some("summary"),
+                    MarkdownKey::HeadingsOutline { file } if file == &agents_md => Some("outline"),
+                    MarkdownKey::ReadmeHeadline { file } if file == &agents_md => Some("headline"),
+                    _ => None,
+                },
+                _ => None,
+            })
+            .collect();
+        assert!(
+            !agents_keys.contains(&"section"),
+            "AGENTS.md must not emit Section batches; got {agents_keys:?}",
+        );
+        assert!(
+            !agents_keys.contains(&"summary"),
+            "AGENTS.md must not emit SummaryWhole; got {agents_keys:?}",
+        );
+
+        // The companion notes.md (same content, normal filename) must
+        // still produce Section batches — the suppression is targeted,
+        // not blanket.
+        let notes_has_section = batches.iter().any(|b| {
+            matches!(
+                &b.key,
+                BatchKey::Markdown(MarkdownKey::Section { file, .. }) if file == &notes_md
+            )
+        });
+        assert!(
+            notes_has_section,
+            "control file notes.md should still emit Section batches",
+        );
     }
 
     /// cmdk shape: H1 with badge tail + 3 H2s. Headline truncates row

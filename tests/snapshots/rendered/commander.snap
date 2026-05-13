@@ -9,19 +9,7 @@ expression: rendered
 .prettierignore
 .prettierrc.js
 CHANGELOG.md
-    1→# Changelog
-    3→All notable changes to this project will be documented in this file.
-    5→The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
-    6→and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
-    8→<!-- markdownlint-disable MD024 -->
-    9→<!-- markdownlint-disable MD004 -->
 CONTRIBUTING.md
-    1→# Contributing
-    …
-    3→## Issues
-    …
-    13→## Pull Requests
-    …
 LICENSE
 Readme.md
     1→# Commander.js
@@ -31,16 +19,7 @@ Readme.md
     64→npm install commander
     65→```
 Readme_zh-CN.md
-    59→## 安装
-    61→```sh
-    62→npm install commander
-    63→```
 SECURITY.md
-    1→# Security Policy
-    3→To report a security vulnerability, please use the
-    4→[Tidelift security contact](https://tidelift.com/security).
-    5→Tidelift will coordinate the fix and disclosure.
-    7→Please do not report security vulnerabilities through public GitHub issues or pull requests.
 docs/
     deprecated.md
         1→# Deprecated
@@ -108,6 +87,38 @@ jest.config.js
 lib/
     argument.js
     command.js
+        13→class Command extends EventEmitter {
+        …
+        20→  constructor(name) {
+        …
+        192→  createCommand(name) {
+        …
+        203→  createHelp() {
+        …
+        215→  configureHelp(configuration) {
+        …
+        245→  configureOutput(configuration) {
+        …
+        359→  arguments(names) {
+        …
+        375→  addArgument(argument) {
+        …
+        508→  exitOverride(fn) {
+        …
+        556→  action(fn) {
+        …
+        670→  addOption(option) {
+        …
+        1902→  opts() {
+        …
+        2162→  unknownCommand() {
+        …
+        2234→  summary(str) {
+        …
+        2752→function useColor() {
+        …
+        2776→exports.Command = Command;
+        2777→exports.useColor = useColor; // exporting for tests
     error.js
     help.js
         12→class Help {
@@ -262,6 +273,20 @@ package.json
     18→    "type": "git",
     19→    "url": "git+https://github.com/tj/commander.js.git"
     20→  },
+    21→  "scripts": {
+    22→    "check": "npm run check:type && npm run check:lint && npm run check:format",
+    23→    "check:format": "prettier --check .",
+    24→    "check:lint": "eslint .",
+    25→    "check:type": "npm run check:type:js && npm run check:type:ts",
+    26→    "check:type:ts": "tsd && tsc -p tsconfig.ts.json",
+    27→    "check:type:js": "tsc -p tsconfig.js.json",
+    28→    "fix": "npm run fix:lint && npm run fix:format",
+    29→    "fix:format": "prettier --write .",
+    30→    "fix:lint": "eslint --fix .",
+    31→    "test": "jest && npm run check:type:ts",
+    32→    "test-all": "jest && npm run test-esm && npm run check",
+    33→    "test-esm": "node ./tests/esm-imports-test.mjs"
+    34→  },
     35→  "files": [
     36→    "index.js",
     37→    "lib/*.js",

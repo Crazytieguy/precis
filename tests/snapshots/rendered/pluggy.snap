@@ -10,40 +10,13 @@ expression: rendered
 .pre-commit-config.yaml
 .readthedocs.yml
 AGENTS.md
-    1→# AGENTS.md
-    3→See @CLAUDE.md for AI coding agent instructions.
 CHANGELOG.rst
 CLAUDE.md
-    1→# CLAUDE.md
-    …
-    3→This file provides guidance to AI coding agents when working with code in this repository.
-    5→## Project Overview
-    …
-    7→Pluggy is a minimalist production-ready plugin system that serves as the core framework for pytest, datasette and devpi.
-    8→It provides hook specification and implementation mechanisms through a plugin manager system.
-    10→## Development Commands
-    …
-    14→### Testing
-    …
-    18→### Code Quality
-    …
-    22→## Development Process
-    …
-    32→## Core Architecture
-    …
-    34→### Main Components
-    …
-    42→### Package Structure
-    …
-    48→## Configuration Files
-    …
 LICENSE
 MANIFEST.in
 README.rst
 RELEASING.rst
 SECURITY.md
-    1→# Security
-    3→Please report any security vulnerabilities at https://github.com/pytest-dev/pluggy/security.
 TIDELIFT.rst
 changelog/
     590.trivial.rst
@@ -122,7 +95,12 @@ scripts/
         39→def pre_release(version: str) -> None:
         40→    """Generates new docs, release announcements and creates a local tag."""
         50→def changelog(version: str, write_out: bool = False) -> None:
-        …
+        51→    if write_out:
+        52→        addopts = []
+        53→    else:
+        54→        addopts = ["--draft"]
+        55→    print(f"{Fore.CYAN}Generating CHANGELOG")
+        56→    check_call(["towncrier", "build", "--yes", "--version", version] + addopts)
         59→def main() -> int:
         …
     towncrier-draft-to-file.py
@@ -238,11 +216,21 @@ src/
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
-            …
+            81→        """Force the result to fail with ``exception``.
+            83→        This overrides any previous result or exception.
+            85→        .. versionadded:: 1.1.0
+            86→        """
             91→    def get_result(self) -> ResultType:
             …
             107→_Result = Result
         _tracing.py
+            1→"""
+            2→Tracing utils
+            3→"""
+            5→from __future__ import annotations
+            7→from collections.abc import Callable
+            8→from collections.abc import Sequence
+            9→from typing import Any
             12→_Writer = Callable[[str], object]
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:

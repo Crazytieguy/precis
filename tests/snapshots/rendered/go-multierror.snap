@@ -5,15 +5,6 @@ expression: rendered
 .github/
 .go-version
 CHANGELOG.md
-    1→## Unreleased
-    …
-    3→### Improvements
-    …
-    5→### Changes
-    …
-    7→### Fixed
-    …
-    9→### Security
 CODEOWNERS
 LICENSE
 Makefile
@@ -236,7 +227,23 @@ prefix.go
     14→// This is useful to use when appending multiple multierrors
     15→// together in order to give better scoping.
     16→func Prefix(err error, prefix string) error {
-    …
+    17→	if err == nil {
+    18→		return nil
+    19→	}
+    21→	switch err := err.(type) {
+    22→	case *Error:
+    23→		// Typed nils can reach here, so initialize if we are nil
+    24→		if err == nil {
+    25→			err = new(Error)
+    26→		}
+    28→		// Wrap each of the errors
+    29→		for i, e := range err.Errors {
+    30→			err.Errors[i] = fmt.Errorf("%s %s", prefix, e)
+    31→		}
+    33→		return err
+    34→	default:
+    35→		return fmt.Errorf("%s %s", prefix, err)
+    36→	}
 prefix_test.go
 sort.go
     4→package multierror

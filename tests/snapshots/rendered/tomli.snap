@@ -11,21 +11,6 @@ expression: rendered
 .pre-commit-config.yaml
 CHANGELOG.md
     1→# Changelog
-    3→## 2.4.0
-    5→- Added
-    6→  - TOML v1.1.0 compatibility
-    7→  - Binary wheels for Windows arm64
-    9→## 2.3.0
-    11→- Added
-    12→  - Binary wheels for Python 3.14 (also free-threaded)
-    13→- Performance
-    14→  - Reduced import time
-    16→## 2.2.1
-    18→- Fixed
-    19→  - Don't attempt to compile binary wheels for Python 3.8, 3.9 and 3.10 where cibuildwheel depends on a conflicting Tomli version
-    21→## 2.2.0
-    23→- Added
-    24→  - mypyc generated binary wheels for common platforms
 LICENSE
 LICENSE-HEADER
 MANIFEST.in
@@ -53,6 +38,19 @@ README.md
     30→<!-- mdformat-toc end -->
     32→## Intro<a name="intro"></a>
     …
+    34→Tomli is a Python library for parsing [TOML](https://toml.io).
+    35→Version 2.4.0 and later are compatible with [TOML v1.1.0](https://toml.io/en/v1.1.0).
+    36→Older versions are [TOML v1.0.0](https://toml.io/en/v1.0.0) compatible.
+    38→A version of Tomli, the `tomllib` module,
+    39→was added to the standard library in Python 3.11
+    40→via [PEP 680](https://www.python.org/dev/peps/pep-0680/).
+    41→Tomli continues to provide a backport on PyPI for Python versions
+    42→where the standard library module is not available
+    43→and that have not yet reached their end-of-life.
+    45→Tomli uses [mypyc](https://github.com/mypyc/mypyc)
+    46→to generate binary wheels for most of the widely used platforms,
+    47→so Python 3.11+ users may prefer it over `tomllib` for improved performance.
+    48→Pure Python wheels are available on any platform and should perform the same as `tomllib`.
     50→## Installation<a name="installation"></a>
     …
     52→```bash
