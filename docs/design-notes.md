@@ -142,24 +142,6 @@ richer sibling/density signals, NS-author updates that rank
 divergence; expect to iterate against the metric across the fixture
 set rather than land it on the first try.
 
-## Un-shipping candidates from Sim-era iterations
-
-Walker / value commits up through `38f63e3` were calibrated against
-the old `Sim` metric, and may not be paying their own complexity
-cost under `Score(3000)`. The retrospective in
-`ignore/retro/FINDINGS.md` has the per-fixture deltas. Candidates:
-
-- Commits whose targeted fixtures landed flat or negative on
-  `Score(3000)` over the full sequence: thiserror, tomli,
-  microbootstrap, bareiron, typeguard, anyhow, log, vaul, tock,
-  go-multierror.
-- `#20 d4d479b` pyproject `[project]` Identity (single-fixture
-  target).
-- Long-tail-targeted parts of `#1 302b0b5` and `#6 029f13e`.
-
-Drop entries as candidates resolve; the doc shouldn't accumulate
-post-hoc verdicts.
-
 ## Divergence open items
 
 - **`Schedule.candidates` is `#[serde(skip)]`.** The candidate pool
@@ -191,18 +173,6 @@ post-hoc verdicts.
   where partial delivery scores poorly. Investigate when chunking fires
   and whether the granularity is worth the cost. Walker / value tuning
   question, not a divergence-report one.
-
-- **0-cost C decl batches.** Visible in
-  `tests/divergence/bareiron.md` (e.g. four `c decl at
-  include/varnum.h:6/7/…` rows with `marginal=0` at the same
-  `walker_cum`, also in sds and krep). The C walker is emitting
-  separate batches for adjacent decls that render no marginal tokens —
-  presumably because the decl line was already rendered by a parent
-  batch (header banner, includes, or a prior decl). Plausible cause:
-  predecessor / parent edges keep the decl in the schedule (so a body
-  refinement can later attach), but the decl batch's content is fully
-  redundant. Either combine the redundant decl batches with their
-  parent, or skip emitting them when the marginal is 0.
 
 - **Schedule TOML `key` / `parent` / `path` fields still embed
   absolute paths.** The walker descriptor fix (2026-05) made the
