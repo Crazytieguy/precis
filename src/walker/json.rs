@@ -1,11 +1,11 @@
 //! JSON walker. `package.json` splits along the same ontology as
-//! `Cargo.toml` (identity / scripts ≈ features / dependencies) plus a
-//! JS-specific `Entry` batch for the entrypoint pointers
-//! (`main`/`module`/`exports`/…). Other small JSON configs
-//! (`tsconfig.json`, `.eslintrc.json`, `jsr.json`, `turbo.json`, …) get
-//! a single `Whole` batch; lockfiles and large generated JSONs are
-//! skipped. The full key→batch mapping lives in the `is_*_key`
-//! predicates below.
+//! `Cargo.toml` (identity / scripts ≈ features / dependencies) plus
+//! JS-specific `Entry` and `Runtime` batches for entrypoint pointers
+//! (`main`/`module`/`exports`/…) and runtime constraints. Other small
+//! JSON configs (`tsconfig.json`, `.eslintrc.json`, `jsr.json`,
+//! `turbo.json`, …) get a single `Whole` batch; lockfiles and large
+//! generated JSONs are skipped. The full key→batch mapping lives in the
+//! `is_*_key` predicates below.
 
 use std::cell::{OnceCell, RefCell};
 use std::collections::{HashMap, HashSet};
@@ -121,12 +121,13 @@ fn whole_json_batch(file: &Path, name: &str, ctx: &WalkCtx) -> Option<Batch<Batc
     })
 }
 
-/// Emit the four `package.json` batches chained as
-/// `Identity ← Entry ← Scripts ← Dependencies`. The chain exists so a
-/// compact one-line `package.json` (where all four key groups collapse
-/// onto the same source line) renders through the predecessor-override
-/// path instead of tripping a non-ancestor overlap. For typical
-/// multi-line files the spans are disjoint and the chain costs nothing.
+/// Emit the six `package.json` batches chained as
+/// `Identity ← IdentityMeta ← Entry ← Runtime ← Scripts ← Dependencies`.
+/// The chain exists so a compact one-line `package.json` (where all six
+/// key groups collapse onto the same source line) renders through the
+/// predecessor-override path instead of tripping a non-ancestor overlap.
+/// For typical multi-line files the spans are disjoint and the chain
+/// costs nothing.
 ///
 /// Predecessor advances only when the prior section actually emitted —
 /// a `package.json` missing identity keys still chains Entry → Scripts →
@@ -158,9 +159,19 @@ fn emit_package_json(file: &Path, ctx: &WalkCtx, out: &mut Vec<Batch<BatchKey>>)
         is_identity_key,
     );
     push(
+        JsonKey::IdentityMeta { file: f.clone() },
+        identity_meta_value(file, ctx),
+        is_identity_meta_key,
+    );
+    push(
         JsonKey::Entry { file: f.clone() },
         entry_value(file, ctx),
         is_entry_key,
+    );
+    push(
+        JsonKey::Runtime { file: f.clone() },
+        runtime_value(file, ctx),
+        is_runtime_key,
     );
     push(
         JsonKey::Scripts { file: f.clone() },
@@ -213,20 +224,20 @@ fn is_skipped_json(name: &str) -> bool {
 fn is_identity_key(k: &str) -> bool {
     matches!(
         k,
-        "name"
-            | "version"
-            | "description"
-            | "license"
-            | "licenses"
-            | "author"
+        "name" | "version" | "description" | "license" | "licenses" | "type" | "private"
+    )
+}
+
+fn is_identity_meta_key(k: &str) -> bool {
+    matches!(
+        k,
+        "author"
             | "authors"
             | "contributors"
             | "repository"
             | "homepage"
             | "bugs"
             | "keywords"
-            | "type"
-            | "private"
             | "publishConfig"
             | "funding"
     )
@@ -258,6 +269,10 @@ fn is_entry_key(k: &str) -> bool {
     )
 }
 
+fn is_runtime_key(k: &str) -> bool {
+    matches!(k, "engines" | "engineStrict" | "packageManager")
+}
+
 fn is_scripts_key(k: &str) -> bool {
     matches!(k, "scripts" | "bin-scripts")
 }
@@ -272,9 +287,6 @@ fn is_dependencies_key(k: &str) -> bool {
             | "optionalDependencies"
             | "bundledDependencies"
             | "bundleDependencies"
-            | "engines"
-            | "engineStrict"
-            | "packageManager"
             | "overrides"
             | "resolutions"
     )
@@ -291,6 +303,15 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
 }
 
+fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let m = if ctx.is_js_workspace_member(file) {
+        WORKSPACE_MEMBER_IDENTITY_FACTOR
+    } else {
+        1.0
+    };
+    mix_signals(0.6 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx))
+}
+
 fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // Lowered against ts-pattern + cmdk + d2ts divergence evidence:
     // the `exports` / `main` / `module` / `types` keys were arriving
@@ -300,6 +321,10 @@ fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // catastrophic-omission risk — `precis` users can re-read the
     // file at trivial cost.
     mix_signals(0.55, 0.55, 0.45, path_depth_factor(file, ctx))
+}
+
+fn runtime_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    mix_signals(0.53, 0.55, 0.48, path_depth_factor(file, ctx))
 }
 
 fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {

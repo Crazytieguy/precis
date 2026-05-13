@@ -6,25 +6,26 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 102 | 102 | listing of '.' |  |  | 0.000 |
 | walker |  | 132 | 30 | README headline in Readme.md |  |  | 0.000 |
 | ns | 153 |  | 102 | Top-level fs | 1.2 |  | 0.656 |
-| walker |  | 161 | 29 | headings outline in CONTRIBUTING.md |  |  | 0.656 |
-| walker |  | 161 | 0 | CONTRIBUTING.md section #0 |  |  | 0.656 |
-| walker |  | 186 | 25 | listing of 'lib' |  |  | 0.675 |
-| ns | 195 |  | 42 | lib/ + typings/ listings | 1.3 |  | 0.618 |
-| walker |  | 203 | 17 | listing of 'typings' |  |  | 0.687 |
-| ns | 225 |  | 30 | Readme title + tagline | 1.4 |  | 0.685 |
-| walker |  | 242 | 39 | module item at typings/index.test-d.ts:509 |  |  | 0.685 |
-| walker |  | 270 | 28 | Readme.md section #1 |  |  | 0.685 |
-| ns | 300 |  | 75 | Readme major H2 sections | 1.5 |  | 0.609 |
-| ns | 383 |  | 83 | index.js — class exports | 2.1 |  | 0.558 |
-| walker |  | 490 | 220 | package identity in package.json |  |  | 0.704 |
-| walker |  | 526 | 36 | listing of 'docs' |  |  | 0.704 |
+| ns | 195 |  | 42 | lib/ + typings/ listings | 1.3 |  | 0.561 |
+| walker |  | 201 | 69 | package identity in package.json |  |  | 0.733 |
+| ns | 225 |  | 30 | Readme title + tagline | 1.4 |  | 0.735 |
+| walker |  | 230 | 29 | headings outline in CONTRIBUTING.md |  |  | 0.735 |
+| walker |  | 230 | 0 | CONTRIBUTING.md section #0 |  |  | 0.735 |
+| walker |  | 255 | 25 | listing of 'lib' |  |  | 0.794 |
+| walker |  | 272 | 17 | listing of 'typings' |  |  | 0.865 |
+| ns | 300 |  | 75 | Readme major H2 sections | 1.5 |  | 0.768 |
+| walker |  | 311 | 39 | module item at typings/index.test-d.ts:509 |  |  | 0.768 |
+| walker |  | 339 | 28 | Readme.md section #1 |  |  | 0.769 |
+| walker |  | 375 | 36 | listing of 'docs' |  |  | 0.769 |
+| ns | 383 |  | 83 | index.js — class exports | 2.1 |  | 0.704 |
+| walker |  | 417 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.704 |
+| walker |  | 442 | 25 | listing of 'docs/zh-CN' |  |  | 0.704 |
+| walker |  | 509 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.704 |
+| walker |  | 516 | 7 | module item body at typings/index.test-d.ts:509 body 515 |  |  | 0.704 |
 | ns | 542 |  | 159 | index.js — imports, program, factories | 2.2 |  | 0.635 |
-| walker |  | 568 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.635 |
-| walker |  | 593 | 25 | listing of 'docs/zh-CN' |  |  | 0.635 |
-| walker |  | 660 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.635 |
-| walker |  | 667 | 7 | module item body at typings/index.test-d.ts:509 body 515 |  |  | 0.635 |
+| walker |  | 622 | 106 | CHANGELOG.md section #0 |  |  | 0.635 |
 | ns | 710 |  | 168 | Terminology doc — definitions | 2.3 |  | 0.582 |
-| walker |  | 773 | 106 | CHANGELOG.md section #0 |  |  | 0.582 |
+| walker |  | 773 | 151 | package identity metadata in package.json |  |  | 0.582 |
 | walker |  | 782 | 9 | module item body at typings/index.test-d.ts:509 body 511 |  |  | 0.582 |
 | ns | 791 |  | 81 | Terminology doc — example | 2.4 |  | 0.554 |
 | walker |  | 808 | 26 | imports in typings/index.test-d.ts |  |  | 0.554 |
@@ -114,122 +115,123 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | ns | 2641 |  | 164 | Command class — config & option-value method names | 3.5 |  | 0.351 |
 | walker |  | 2744 | 282 | package entrypoints in package.json |  |  | 0.433 |
 | ns | 2751 |  | 110 | Command class — parsing & action method names | 3.6 |  | 0.423 |
+| walker |  | 2772 | 28 | package runtime metadata in package.json |  |  | 0.423 |
 | ns | 2925 |  | 174 | Command class — help/usage/info method names | 3.7 |  | 0.407 |
-| walker |  | 3003 | 259 | package scripts in package.json |  |  | 0.407 |
-| walker |  | 3054 | 51 | export names surface in lib/command.js |  |  | 0.409 |
-| walker |  | 3054 | 0 | export at lib/command.js:13 |  |  | 0.409 |
-| walker |  | 3054 | 0 | export at lib/command.js:2752 |  |  | 0.409 |
-| walker |  | 3065 | 11 | export member at lib/command.js:13 member 20 |  |  | 0.410 |
-| walker |  | 3076 | 11 | export member at lib/command.js:13 member 203 |  |  | 0.410 |
-| walker |  | 3087 | 11 | export member at lib/command.js:13 member 359 |  |  | 0.411 |
-| walker |  | 3098 | 11 | export member at lib/command.js:13 member 556 |  |  | 0.412 |
-| walker |  | 3109 | 11 | export member at lib/command.js:13 member 1902 |  |  | 0.412 |
-| walker |  | 3121 | 12 | export member at lib/command.js:13 member 192 |  |  | 0.414 |
-| walker |  | 3133 | 12 | export member at lib/command.js:13 member 215 |  |  | 0.414 |
-| walker |  | 3145 | 12 | export member at lib/command.js:13 member 245 |  |  | 0.414 |
-| walker |  | 3157 | 12 | export member at lib/command.js:13 member 375 |  |  | 0.416 |
-| walker |  | 3169 | 12 | export member at lib/command.js:13 member 508 |  |  | 0.418 |
-| walker |  | 3181 | 12 | export member at lib/command.js:13 member 670 |  |  | 0.420 |
-| walker |  | 3193 | 12 | export member at lib/command.js:13 member 2162 |  |  | 0.420 |
-| walker |  | 3205 | 12 | export member at lib/command.js:13 member 2234 |  |  | 0.455 |
-| ns | 3205 |  | 280 | Help class — public method names | 3.8 |  | 0.455 |
-| walker |  | 3217 | 12 | export member at lib/command.js:13 member 2249 |  |  | 0.455 |
-| walker |  | 3229 | 12 | export member at lib/command.js:13 member 2304 |  |  | 0.455 |
-| walker |  | 3241 | 12 | export member at lib/command.js:13 member 2331 |  |  | 0.456 |
-| walker |  | 3254 | 13 | export member at lib/command.js:13 member 463 |  |  | 0.456 |
-| walker |  | 3267 | 13 | export member at lib/command.js:13 member 487 |  |  | 0.457 |
-| walker |  | 3280 | 13 | export member at lib/command.js:13 member 619 |  |  | 0.457 |
-| walker |  | 3293 | 13 | export member at lib/command.js:13 member 644 |  |  | 0.457 |
-| walker |  | 3306 | 13 | export member at lib/command.js:13 member 925 |  |  | 0.458 |
-| walker |  | 3319 | 13 | export member at lib/command.js:13 member 1428 |  |  | 0.458 |
-| walker |  | 3332 | 13 | export member at lib/command.js:13 member 1748 |  |  | 0.459 |
-| walker |  | 3345 | 13 | export member at lib/command.js:13 member 1924 |  |  | 0.460 |
-| walker |  | 3358 | 13 | export member at lib/command.js:13 member 2034 |  |  | 0.460 |
-| walker |  | 3371 | 13 | export member at lib/command.js:13 member 2114 |  |  | 0.460 |
-| walker |  | 3384 | 13 | export member at lib/command.js:13 member 2289 |  |  | 0.461 |
-| walker |  | 3397 | 13 | export member at lib/command.js:13 member 2437 |  |  | 0.462 |
-| walker |  | 3410 | 13 | export member at lib/command.js:13 member 2621 |  |  | 0.463 |
-| walker |  | 3424 | 14 | export member at lib/command.js:13 member 99 |  |  | 0.465 |
-| walker |  | 3438 | 14 | export member at lib/command.js:13 member 288 |  |  | 0.468 |
-| walker |  | 3452 | 14 | export member at lib/command.js:13 member 316 |  |  | 0.471 |
-| walker |  | 3466 | 14 | export member at lib/command.js:13 member 585 |  |  | 0.474 |
-| walker |  | 3480 | 14 | export member at lib/command.js:13 member 971 |  |  | 0.475 |
-| walker |  | 3494 | 14 | export member at lib/command.js:13 member 1127 |  |  | 0.477 |
-| ns | 3497 |  | 292 | Argument constructor body | 4.1 | 3.2 | 0.456 |
-| walker |  | 3508 | 14 | export member at lib/command.js:13 member 1141 |  |  | 0.458 |
-| walker |  | 3522 | 14 | export member at lib/command.js:13 member 1158 |  |  | 0.461 |
-| walker |  | 3536 | 14 | export member at lib/command.js:13 member 1649 |  |  | 0.461 |
-| walker |  | 3550 | 14 | export member at lib/command.js:13 member 1664 |  |  | 0.461 |
+| walker |  | 3031 | 259 | package scripts in package.json |  |  | 0.407 |
+| walker |  | 3082 | 51 | export names surface in lib/command.js |  |  | 0.409 |
+| walker |  | 3082 | 0 | export at lib/command.js:13 |  |  | 0.409 |
+| walker |  | 3082 | 0 | export at lib/command.js:2752 |  |  | 0.409 |
+| walker |  | 3093 | 11 | export member at lib/command.js:13 member 20 |  |  | 0.410 |
+| walker |  | 3104 | 11 | export member at lib/command.js:13 member 203 |  |  | 0.410 |
+| walker |  | 3115 | 11 | export member at lib/command.js:13 member 359 |  |  | 0.411 |
+| walker |  | 3126 | 11 | export member at lib/command.js:13 member 556 |  |  | 0.412 |
+| walker |  | 3137 | 11 | export member at lib/command.js:13 member 1902 |  |  | 0.412 |
+| walker |  | 3149 | 12 | export member at lib/command.js:13 member 192 |  |  | 0.414 |
+| walker |  | 3161 | 12 | export member at lib/command.js:13 member 215 |  |  | 0.414 |
+| walker |  | 3173 | 12 | export member at lib/command.js:13 member 245 |  |  | 0.414 |
+| walker |  | 3185 | 12 | export member at lib/command.js:13 member 375 |  |  | 0.416 |
+| walker |  | 3197 | 12 | export member at lib/command.js:13 member 508 |  |  | 0.418 |
+| ns | 3205 |  | 280 | Help class — public method names | 3.8 |  | 0.453 |
+| walker |  | 3209 | 12 | export member at lib/command.js:13 member 670 |  |  | 0.455 |
+| walker |  | 3221 | 12 | export member at lib/command.js:13 member 2162 |  |  | 0.455 |
+| walker |  | 3233 | 12 | export member at lib/command.js:13 member 2234 |  |  | 0.455 |
+| walker |  | 3245 | 12 | export member at lib/command.js:13 member 2249 |  |  | 0.455 |
+| walker |  | 3257 | 12 | export member at lib/command.js:13 member 2304 |  |  | 0.455 |
+| walker |  | 3269 | 12 | export member at lib/command.js:13 member 2331 |  |  | 0.456 |
+| walker |  | 3282 | 13 | export member at lib/command.js:13 member 463 |  |  | 0.456 |
+| walker |  | 3295 | 13 | export member at lib/command.js:13 member 487 |  |  | 0.457 |
+| walker |  | 3308 | 13 | export member at lib/command.js:13 member 619 |  |  | 0.457 |
+| walker |  | 3321 | 13 | export member at lib/command.js:13 member 644 |  |  | 0.457 |
+| walker |  | 3334 | 13 | export member at lib/command.js:13 member 925 |  |  | 0.458 |
+| walker |  | 3347 | 13 | export member at lib/command.js:13 member 1428 |  |  | 0.458 |
+| walker |  | 3360 | 13 | export member at lib/command.js:13 member 1748 |  |  | 0.459 |
+| walker |  | 3373 | 13 | export member at lib/command.js:13 member 1924 |  |  | 0.460 |
+| walker |  | 3386 | 13 | export member at lib/command.js:13 member 2034 |  |  | 0.460 |
+| walker |  | 3399 | 13 | export member at lib/command.js:13 member 2114 |  |  | 0.460 |
+| walker |  | 3412 | 13 | export member at lib/command.js:13 member 2289 |  |  | 0.461 |
+| walker |  | 3425 | 13 | export member at lib/command.js:13 member 2437 |  |  | 0.462 |
+| walker |  | 3438 | 13 | export member at lib/command.js:13 member 2621 |  |  | 0.463 |
+| walker |  | 3452 | 14 | export member at lib/command.js:13 member 99 |  |  | 0.465 |
+| walker |  | 3466 | 14 | export member at lib/command.js:13 member 288 |  |  | 0.468 |
+| walker |  | 3480 | 14 | export member at lib/command.js:13 member 316 |  |  | 0.471 |
+| walker |  | 3494 | 14 | export member at lib/command.js:13 member 585 |  |  | 0.474 |
+| ns | 3497 |  | 292 | Argument constructor body | 4.1 | 3.2 | 0.452 |
+| walker |  | 3508 | 14 | export member at lib/command.js:13 member 971 |  |  | 0.454 |
+| walker |  | 3522 | 14 | export member at lib/command.js:13 member 1127 |  |  | 0.456 |
+| walker |  | 3536 | 14 | export member at lib/command.js:13 member 1141 |  |  | 0.458 |
+| walker |  | 3550 | 14 | export member at lib/command.js:13 member 1158 |  |  | 0.461 |
 | ns | 3559 |  | 62 | humanReadableArgName | 4.2 | 3.2 | 0.458 |
-| walker |  | 3564 | 14 | export member at lib/command.js:13 member 1966 |  |  | 0.458 |
-| walker |  | 3578 | 14 | export member at lib/command.js:13 member 2046 |  |  | 0.458 |
-| walker |  | 3592 | 14 | export member at lib/command.js:13 member 2344 |  |  | 0.459 |
-| walker |  | 3606 | 14 | export member at lib/command.js:13 member 2363 |  |  | 0.461 |
-| walker |  | 3620 | 14 | export member at lib/command.js:13 member 2382 |  |  | 0.462 |
-| walker |  | 3634 | 14 | export member at lib/command.js:13 member 2419 |  |  | 0.465 |
-| walker |  | 3648 | 14 | export member at lib/command.js:13 member 2450 |  |  | 0.467 |
-| walker |  | 3662 | 14 | export member at lib/command.js:13 member 2505 |  |  | 0.470 |
-| walker |  | 3676 | 14 | export member at lib/command.js:13 member 2592 |  |  | 0.470 |
-| walker |  | 3690 | 14 | export member at lib/command.js:13 member 2607 |  |  | 0.472 |
-| walker |  | 3705 | 15 | export member at lib/command.js:13 member 121 |  |  | 0.472 |
-| walker |  | 3720 | 15 | export member at lib/command.js:13 member 885 |  |  | 0.472 |
-| walker |  | 3735 | 15 | export member at lib/command.js:13 member 940 |  |  | 0.473 |
-| walker |  | 3750 | 15 | export member at lib/command.js:13 member 1090 |  |  | 0.476 |
-| walker |  | 3765 | 15 | export member at lib/command.js:13 member 1403 |  |  | 0.476 |
-| walker |  | 3780 | 15 | export member at lib/command.js:13 member 1940 |  |  | 0.478 |
-| walker |  | 3795 | 15 | export member at lib/command.js:13 member 1996 |  |  | 0.478 |
-| walker |  | 3810 | 15 | export member at lib/command.js:13 member 2058 |  |  | 0.478 |
-| walker |  | 3825 | 15 | export member at lib/command.js:13 member 2218 |  |  | 0.481 |
-| walker |  | 3840 | 15 | export member at lib/command.js:13 member 2392 |  |  | 0.481 |
-| walker |  | 3855 | 15 | export member at lib/command.js:13 member 2401 |  |  | 0.481 |
-| walker |  | 3870 | 15 | export member at lib/command.js:13 member 2559 |  |  | 0.483 |
-| walker |  | 3886 | 16 | export member at lib/command.js:13 member 875 |  |  | 0.485 |
-| walker |  | 3902 | 16 | export member at lib/command.js:13 member 983 |  |  | 0.487 |
-| walker |  | 3918 | 16 | export member at lib/command.js:13 member 1675 |  |  | 0.487 |
-| walker |  | 3934 | 16 | export member at lib/command.js:13 member 1723 |  |  | 0.487 |
-| walker |  | 3950 | 16 | export member at lib/command.js:13 member 2195 |  |  | 0.490 |
-| ns | 3964 |  | 405 | Option constructor body | 4.3 | 3.3 | 0.470 |
-| walker |  | 3966 | 16 | export member at lib/command.js:13 member 2475 |  |  | 0.470 |
-| walker |  | 3982 | 16 | export member at lib/command.js:13 member 2656 |  |  | 0.474 |
-| walker |  | 3998 | 16 | export member at lib/command.js:13 member 2686 |  |  | 0.474 |
-| walker |  | 4015 | 17 | export member at lib/command.js:13 member 261 |  |  | 0.475 |
-| walker |  | 4032 | 17 | export member at lib/command.js:13 member 273 |  |  | 0.478 |
-| walker |  | 4049 | 17 | export member at lib/command.js:13 member 443 |  |  | 0.481 |
-| walker |  | 4066 | 17 | export member at lib/command.js:13 member 533 |  |  | 0.481 |
-| walker |  | 4083 | 17 | export member at lib/command.js:13 member 837 |  |  | 0.484 |
-| walker |  | 4100 | 17 | export member at lib/command.js:13 member 861 |  |  | 0.486 |
-| walker |  | 4117 | 17 | export member at lib/command.js:13 member 1119 |  |  | 0.490 |
-| walker |  | 4134 | 17 | export member at lib/command.js:13 member 1380 |  |  | 0.490 |
-| walker |  | 4151 | 17 | export member at lib/command.js:13 member 1694 |  |  | 0.490 |
-| walker |  | 4168 | 17 | export member at lib/command.js:13 member 2146 |  |  | 0.490 |
-| walker |  | 4186 | 18 | export member at lib/command.js:13 member 409 |  |  | 0.493 |
-| walker |  | 4204 | 18 | export member at lib/command.js:13 member 826 |  |  | 0.496 |
-| walker |  | 4222 | 18 | export member at lib/command.js:13 member 905 |  |  | 0.499 |
-| walker |  | 4240 | 18 | export member at lib/command.js:13 member 1001 |  |  | 0.499 |
-| walker |  | 4258 | 18 | export member at lib/command.js:13 member 1202 |  |  | 0.499 |
-| walker |  | 4276 | 18 | export member at lib/command.js:13 member 1481 |  |  | 0.499 |
+| walker |  | 3564 | 14 | export member at lib/command.js:13 member 1649 |  |  | 0.458 |
+| walker |  | 3578 | 14 | export member at lib/command.js:13 member 1664 |  |  | 0.458 |
+| walker |  | 3592 | 14 | export member at lib/command.js:13 member 1966 |  |  | 0.458 |
+| walker |  | 3606 | 14 | export member at lib/command.js:13 member 2046 |  |  | 0.458 |
+| walker |  | 3620 | 14 | export member at lib/command.js:13 member 2344 |  |  | 0.459 |
+| walker |  | 3634 | 14 | export member at lib/command.js:13 member 2363 |  |  | 0.461 |
+| walker |  | 3648 | 14 | export member at lib/command.js:13 member 2382 |  |  | 0.462 |
+| walker |  | 3662 | 14 | export member at lib/command.js:13 member 2419 |  |  | 0.465 |
+| walker |  | 3676 | 14 | export member at lib/command.js:13 member 2450 |  |  | 0.467 |
+| walker |  | 3690 | 14 | export member at lib/command.js:13 member 2505 |  |  | 0.470 |
+| walker |  | 3704 | 14 | export member at lib/command.js:13 member 2592 |  |  | 0.470 |
+| walker |  | 3718 | 14 | export member at lib/command.js:13 member 2607 |  |  | 0.472 |
+| walker |  | 3733 | 15 | export member at lib/command.js:13 member 121 |  |  | 0.472 |
+| walker |  | 3748 | 15 | export member at lib/command.js:13 member 885 |  |  | 0.472 |
+| walker |  | 3763 | 15 | export member at lib/command.js:13 member 940 |  |  | 0.473 |
+| walker |  | 3778 | 15 | export member at lib/command.js:13 member 1090 |  |  | 0.476 |
+| walker |  | 3793 | 15 | export member at lib/command.js:13 member 1403 |  |  | 0.476 |
+| walker |  | 3808 | 15 | export member at lib/command.js:13 member 1940 |  |  | 0.478 |
+| walker |  | 3823 | 15 | export member at lib/command.js:13 member 1996 |  |  | 0.478 |
+| walker |  | 3838 | 15 | export member at lib/command.js:13 member 2058 |  |  | 0.478 |
+| walker |  | 3853 | 15 | export member at lib/command.js:13 member 2218 |  |  | 0.481 |
+| walker |  | 3868 | 15 | export member at lib/command.js:13 member 2392 |  |  | 0.481 |
+| walker |  | 3883 | 15 | export member at lib/command.js:13 member 2401 |  |  | 0.481 |
+| walker |  | 3898 | 15 | export member at lib/command.js:13 member 2559 |  |  | 0.483 |
+| walker |  | 3914 | 16 | export member at lib/command.js:13 member 875 |  |  | 0.485 |
+| walker |  | 3930 | 16 | export member at lib/command.js:13 member 983 |  |  | 0.487 |
+| walker |  | 3946 | 16 | export member at lib/command.js:13 member 1675 |  |  | 0.487 |
+| walker |  | 3962 | 16 | export member at lib/command.js:13 member 1723 |  |  | 0.487 |
+| ns | 3964 |  | 405 | Option constructor body | 4.3 | 3.3 | 0.468 |
+| walker |  | 3978 | 16 | export member at lib/command.js:13 member 2195 |  |  | 0.470 |
+| walker |  | 3994 | 16 | export member at lib/command.js:13 member 2475 |  |  | 0.470 |
+| walker |  | 4010 | 16 | export member at lib/command.js:13 member 2656 |  |  | 0.474 |
+| walker |  | 4026 | 16 | export member at lib/command.js:13 member 2686 |  |  | 0.474 |
+| walker |  | 4043 | 17 | export member at lib/command.js:13 member 261 |  |  | 0.475 |
+| walker |  | 4060 | 17 | export member at lib/command.js:13 member 273 |  |  | 0.478 |
+| walker |  | 4077 | 17 | export member at lib/command.js:13 member 443 |  |  | 0.481 |
+| walker |  | 4094 | 17 | export member at lib/command.js:13 member 533 |  |  | 0.481 |
+| walker |  | 4111 | 17 | export member at lib/command.js:13 member 837 |  |  | 0.484 |
+| walker |  | 4128 | 17 | export member at lib/command.js:13 member 861 |  |  | 0.486 |
+| walker |  | 4145 | 17 | export member at lib/command.js:13 member 1119 |  |  | 0.490 |
+| walker |  | 4162 | 17 | export member at lib/command.js:13 member 1380 |  |  | 0.490 |
+| walker |  | 4179 | 17 | export member at lib/command.js:13 member 1694 |  |  | 0.490 |
+| walker |  | 4196 | 17 | export member at lib/command.js:13 member 2146 |  |  | 0.490 |
+| walker |  | 4214 | 18 | export member at lib/command.js:13 member 409 |  |  | 0.493 |
+| walker |  | 4232 | 18 | export member at lib/command.js:13 member 826 |  |  | 0.496 |
+| walker |  | 4250 | 18 | export member at lib/command.js:13 member 905 |  |  | 0.499 |
+| walker |  | 4268 | 18 | export member at lib/command.js:13 member 1001 |  |  | 0.499 |
 | ns | 4284 |  | 320 | splitOptionFlags — flag-parser core | 4.4 | 3.3 | 0.484 |
-| walker |  | 4294 | 18 | export member at lib/command.js:13 member 1550 |  |  | 0.484 |
-| walker |  | 4312 | 18 | export member at lib/command.js:13 member 2070 |  |  | 0.484 |
-| walker |  | 4331 | 19 | export member at lib/command.js:13 member 336 |  |  | 0.486 |
-| walker |  | 4350 | 19 | export member at lib/command.js:13 member 788 |  |  | 0.488 |
-| walker |  | 4369 | 19 | export member at lib/command.js:13 member 848 |  |  | 0.491 |
-| walker |  | 4388 | 19 | export member at lib/command.js:13 member 953 |  |  | 0.495 |
-| walker |  | 4407 | 19 | export member at lib/command.js:13 member 1499 |  |  | 0.495 |
-| walker |  | 4426 | 19 | export member at lib/help.js:12 member 650 |  |  | 0.497 |
-| walker |  | 4446 | 20 | export member at lib/command.js:13 member 805 |  |  | 0.500 |
-| walker |  | 4466 | 20 | export member at lib/command.js:13 member 1352 |  |  | 0.500 |
+| walker |  | 4286 | 18 | export member at lib/command.js:13 member 1202 |  |  | 0.484 |
+| walker |  | 4304 | 18 | export member at lib/command.js:13 member 1481 |  |  | 0.484 |
+| walker |  | 4322 | 18 | export member at lib/command.js:13 member 1550 |  |  | 0.484 |
+| walker |  | 4340 | 18 | export member at lib/command.js:13 member 2070 |  |  | 0.484 |
+| walker |  | 4359 | 19 | export member at lib/command.js:13 member 336 |  |  | 0.486 |
+| walker |  | 4378 | 19 | export member at lib/command.js:13 member 788 |  |  | 0.488 |
+| walker |  | 4397 | 19 | export member at lib/command.js:13 member 848 |  |  | 0.491 |
+| walker |  | 4416 | 19 | export member at lib/command.js:13 member 953 |  |  | 0.495 |
+| walker |  | 4435 | 19 | export member at lib/command.js:13 member 1499 |  |  | 0.495 |
+| walker |  | 4454 | 19 | export member at lib/help.js:12 member 650 |  |  | 0.497 |
+| walker |  | 4474 | 20 | export member at lib/command.js:13 member 805 |  |  | 0.500 |
+| walker |  | 4494 | 20 | export member at lib/command.js:13 member 1352 |  |  | 0.500 |
 | ns | 4569 |  | 285 | parsing-and-hooks doc | 5.1 |  | 0.485 |
-| walker |  | 4593 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.485 |
-| walker |  | 4614 | 21 | export member at lib/help.js:12 member 417 |  |  | 0.488 |
-| walker |  | 4764 | 150 | export names surface in index.js |  |  | 0.513 |
-| walker |  | 4764 | 0 | export at index.js:17 |  |  | 0.513 |
-| walker |  | 4783 | 19 | export doc at index.js:17 |  |  | 0.513 |
-| walker |  | 4805 | 22 | export member at lib/command.js:13 member 155 |  |  | 0.516 |
-| walker |  | 4827 | 22 | export member at lib/command.js:13 member 599 |  |  | 0.516 |
-| walker |  | 4849 | 22 | export member at lib/command.js:13 member 741 |  |  | 0.516 |
-| ns | 5020 |  | 451 | _parseCommand body — option pass + subcommand routing | 5.2 | 3.6 | 0.494 |
-| walker |  | 5105 | 256 | package dependencies in package.json |  |  | 0.494 |
+| walker |  | 4722 | 228 | package dependencies in package.json |  |  | 0.485 |
+| walker |  | 4849 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.485 |
+| walker |  | 4870 | 21 | export member at lib/help.js:12 member 417 |  |  | 0.488 |
+| walker |  | 5020 | 150 | export names surface in index.js |  |  | 0.492 |
+| walker |  | 5020 | 0 | export at index.js:17 |  |  | 0.492 |
+| ns | 5020 |  | 451 | _parseCommand body — option pass + subcommand routing | 5.2 | 3.6 | 0.492 |
+| walker |  | 5039 | 19 | export doc at index.js:17 |  |  | 0.492 |
+| walker |  | 5061 | 22 | export member at lib/command.js:13 member 155 |  |  | 0.494 |
+| walker |  | 5083 | 22 | export member at lib/command.js:13 member 599 |  |  | 0.494 |
+| walker |  | 5105 | 22 | export member at lib/command.js:13 member 741 |  |  | 0.494 |
 | walker |  | 5153 | 48 | export names surface in lib/argument.js |  |  | 0.498 |
 | walker |  | 5153 | 0 | export at lib/argument.js:143 |  |  | 0.498 |
 | walker |  | 5231 | 78 | Readme.md section #7 |  |  | 0.499 |

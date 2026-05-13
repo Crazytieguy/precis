@@ -32,13 +32,9 @@ package.json
     18→	"main": "./distribution/index.js",
     19→	"types": "./distribution/index.d.ts",
     20→	"sideEffects": false,
-    24→	"scripts": {
-    25→		"test": "xo && npm run build && ava",
-    26→		"debug": "PWDEBUG=1 ava --timeout=2m",
-    27→		"release": "np",
-    28→		"build": "del-cli distribution && tsc --project tsconfig.dist.json",
-    29→		"prepare": "npm run build"
-    30→	},
+    21→	"engines": {
+    22→		"node": ">=18"
+    23→	},
     31→	"files": [
     32→		"distribution"
     33→	],
@@ -102,6 +98,7 @@ readme.md
     745→### ky.extend(defaultOptions)
     …
     747→Create a new `ky` instance with some defaults overridden with your own.
+    749→In contrast to `ky.create()`, `ky.extend()` inherits defaults from its parent.
     751→You can pass headers as a `Headers` instance or a plain object.
     811→### ky.create(defaultOptions)
     …

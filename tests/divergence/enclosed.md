@@ -5,84 +5,86 @@ Score(3000)=0.542 I=0.746 C=0.394 ns_rows≤3K=23/45 (reached=10 partial=0 missi
 | walker |  | 57 | 57 | listing of '.' |  |  | 1.000 |
 | ns | 57 |  | 57 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 86 | 29 | README headline in README.md |  |  | 1.000 |
-| walker |  | 92 | 6 | plaintext config .nvmrc |  |  | 1.000 |
-| walker |  | 117 | 25 | listing of 'packages' |  |  | 1.000 |
-| ns | 127 |  | 70 | README h1 + tagline | 1.2 |  | 0.840 |
-| ns | 152 |  | 25 | packages/ directory listing | 1.3 |  | 0.849 |
-| ns | 168 |  | 16 | pnpm workspace glob | 1.4 |  | 0.813 |
-| ns | 250 |  | 82 | Root package.json — name + version + license | 1.5 |  | 0.726 |
-| walker |  | 332 | 215 | package identity in package.json |  |  | 0.803 |
-| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.764 |
-| walker |  | 358 | 26 | listing of 'packages/lib' |  |  | 0.769 |
-| walker |  | 374 | 16 | listing of 'packages/lib/src' |  |  | 0.773 |
-| walker |  | 382 | 8 | export names surface in packages/lib/src/index.ts |  |  | 0.773 |
-| walker |  | 394 | 12 | export names surface in packages/lib/build.config.ts |  |  | 0.773 |
-| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.690 |
-| walker |  | 558 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.694 |
-| walker |  | 563 | 5 | listing of 'packages/lib/src/files' |  |  | 0.694 |
-| walker |  | 615 | 52 | README headline in packages/lib/README.md |  |  | 0.695 |
-| walker |  | 632 | 17 | listing of 'packages/docs' |  |  | 0.695 |
-| walker |  | 643 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.695 |
-| walker |  | 654 | 11 | export names surface in packages/docs/.vitepress/config.ts |  |  | 0.695 |
-| walker |  | 668 | 14 | export names surface in packages/docs/.vitepress/plausible.ts |  |  | 0.695 |
-| walker |  | 691 | 23 | listing of 'packages/app-server' |  |  | 0.698 |
-| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.616 |
-| walker |  | 772 | 81 | export at packages/lib/build.config.ts:3 |  |  | 0.616 |
-| walker |  | 793 | 21 | listing of 'packages/app-server/src' |  |  | 0.618 |
-| walker |  | 801 | 8 | export names surface in packages/app-server/src/index.cloudflare.ts |  |  | 0.618 |
-| ns | 872 |  | 178 | README — project structure (per-package one-liners) | 1.9 |  | 0.571 |
-| walker |  | 879 | 78 | package scripts in package.json |  |  | 0.659 |
-| walker |  | 904 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.659 |
-| walker |  | 930 | 26 | listing of 'packages/crypto' |  |  | 0.661 |
-| walker |  | 942 | 12 | export names surface in packages/crypto/build.config.ts |  |  | 0.661 |
-| walker |  | 1006 | 64 | README headline in packages/crypto/README.md |  |  | 0.661 |
-| walker |  | 1037 | 31 | headings outline in packages/crypto/README.md |  |  | 0.661 |
-| walker |  | 1129 | 92 | export at packages/crypto/build.config.ts:3 |  |  | 0.661 |
-| walker |  | 1169 | 40 | headings outline in packages/lib/README.md |  |  | 0.662 |
-| walker |  | 1198 | 29 | listing of 'packages/cli' |  |  | 0.667 |
-| walker |  | 1210 | 12 | export names surface in packages/cli/build.config.ts |  |  | 0.667 |
-| walker |  | 1215 | 5 | listing of 'packages/cli/bin' |  |  | 0.667 |
-| ns | 1225 |  | 353 | README — features list | 1.10 |  | 0.599 |
-| walker |  | 1265 | 50 | README headline in packages/cli/README.md |  |  | 0.599 |
-| walker |  | 1327 | 62 | export at packages/cli/build.config.ts:3 |  |  | 0.599 |
-| walker |  | 1348 | 21 | listing of 'packages/cli/src' |  |  | 0.599 |
-| walker |  | 1358 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.599 |
-| walker |  | 1371 | 13 | export names surface in packages/cli/src/shared/cli.models.ts |  |  | 0.599 |
-| walker |  | 1385 | 14 | export names surface in packages/cli/src/shared/http.models.ts |  |  | 0.599 |
-| ns | 1499 |  | 274 | README — how-it-works (creator side) | 1.11 |  | 0.566 |
-| walker |  | 1556 | 171 | headings outline in CONTRIBUTING.md |  |  | 0.566 |
-| walker |  | 1592 | 36 | CONTRIBUTING.md section #0 |  |  | 0.566 |
-| walker |  | 1603 | 11 | listing of 'packages/cli/src/files' |  |  | 0.566 |
-| walker |  | 1686 | 83 | package dependencies in package.json |  |  | 0.649 |
-| ns | 1700 |  | 201 | README — how-it-works (recipient side) | 1.12 | 1.11 | 0.626 |
-| walker |  | 1717 | 31 | listing of 'packages/docs/src' |  |  | 0.626 |
-| ns | 1726 |  | 26 | Top-level lib package contents | 2.1 |  | 0.641 |
-| walker |  | 1727 | 10 | listing of 'packages/docs/src/components' |  |  | 0.641 |
-| walker |  | 1738 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.641 |
-| ns | 1742 |  | 16 | lib/src — top-level source modules | 2.2 |  | 0.652 |
-| walker |  | 1750 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.652 |
-| walker |  | 1762 | 12 | export names surface in packages/cli/src/view-note/view-note.models.ts |  |  | 0.652 |
-| walker |  | 1777 | 15 | export names surface in packages/cli/src/view-note/view-note.command.ts |  |  | 0.652 |
-| walker |  | 1789 | 12 | listing of 'packages/docs/.vitepress/theme' |  |  | 0.652 |
-| walker |  | 1801 | 12 | listing of 'packages/docs/src/data' |  |  | 0.652 |
-| walker |  | 1810 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.652 |
-| walker |  | 1819 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.652 |
-| walker |  | 1866 | 47 | export at packages/docs/src/data/configuration.data.ts:55 |  |  | 0.652 |
-| walker |  | 1898 | 32 | listing of 'packages/crypto/src' |  |  | 0.652 |
-| walker |  | 1907 | 9 | export names surface in packages/crypto/src/index.node.ts |  |  | 0.652 |
-| walker |  | 1916 | 9 | export names surface in packages/crypto/src/index.web.ts |  |  | 0.652 |
-| walker |  | 1930 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.652 |
-| ns | 2101 |  | 359 | @enclosed/lib public API — index.ts re-exports | 2.3 |  | 0.608 |
-| ns | 2124 |  | 23 | Top-level app-server package contents | 2.4 |  | 0.617 |
-| walker |  | 2125 | 195 | headings outline in README.md |  |  | 0.618 |
-| ns | 2187 |  | 63 | Top-level app-client package contents | 2.5 |  | 0.588 |
-| walker |  | 2223 | 98 | README.md section #0 |  |  | 0.588 |
-| walker |  | 2241 | 18 | README.md section #32 |  |  | 0.588 |
-| ns | 2259 |  | 72 | Top-level cli + crypto + docs package contents | 2.6 |  | 0.616 |
-| walker |  | 2272 | 31 | README.md section #18 |  |  | 0.616 |
-| walker |  | 2302 | 30 | README.md section #25 |  |  | 0.616 |
-| walker |  | 2319 | 17 | README.md section #6 |  |  | 0.617 |
-| walker |  | 2336 | 17 | README.md section #7 |  |  | 0.618 |
+| ns | 127 |  | 70 | README h1 + tagline | 1.2 |  | 0.806 |
+| walker |  | 144 | 58 | package identity in package.json |  |  | 0.817 |
+| walker |  | 150 | 6 | plaintext config .nvmrc |  |  | 0.817 |
+| ns | 152 |  | 25 | packages/ directory listing | 1.3 |  | 0.682 |
+| ns | 168 |  | 16 | pnpm workspace glob | 1.4 |  | 0.653 |
+| walker |  | 175 | 25 | listing of 'packages' |  |  | 0.823 |
+| walker |  | 201 | 26 | listing of 'packages/lib' |  |  | 0.829 |
+| walker |  | 217 | 16 | listing of 'packages/lib/src' |  |  | 0.833 |
+| walker |  | 225 | 8 | export names surface in packages/lib/src/index.ts |  |  | 0.833 |
+| walker |  | 237 | 12 | export names surface in packages/lib/build.config.ts |  |  | 0.833 |
+| ns | 250 |  | 82 | Root package.json — name + version + license | 1.5 |  | 0.795 |
+| ns | 357 |  | 107 | Root package.json — author + repo + engines | 1.6 | 1.5 | 0.703 |
+| walker |  | 401 | 164 | export at packages/lib/src/index.ts:10 |  |  | 0.707 |
+| walker |  | 406 | 5 | listing of 'packages/lib/src/files' |  |  | 0.707 |
+| walker |  | 458 | 52 | README headline in packages/lib/README.md |  |  | 0.707 |
+| walker |  | 475 | 17 | listing of 'packages/docs' |  |  | 0.708 |
+| walker |  | 486 | 11 | listing of 'packages/docs/.vitepress' |  |  | 0.708 |
+| walker |  | 497 | 11 | export names surface in packages/docs/.vitepress/config.ts |  |  | 0.632 |
+| ns | 497 |  | 140 | pnpm-workspace.yaml — catalog versions | 1.7 | 1.4 | 0.632 |
+| walker |  | 511 | 14 | export names surface in packages/docs/.vitepress/plausible.ts |  |  | 0.632 |
+| walker |  | 534 | 23 | listing of 'packages/app-server' |  |  | 0.634 |
+| walker |  | 615 | 81 | export at packages/lib/build.config.ts:3 |  |  | 0.634 |
+| walker |  | 636 | 21 | listing of 'packages/app-server/src' |  |  | 0.636 |
+| walker |  | 644 | 8 | export names surface in packages/app-server/src/index.cloudflare.ts |  |  | 0.636 |
+| walker |  | 669 | 25 | listing of 'packages/deploy-cloudflare' |  |  | 0.636 |
+| ns | 694 |  | 197 | Root package.json — scripts + keywords + devDeps | 1.8 | 1.6 | 0.528 |
+| walker |  | 695 | 26 | listing of 'packages/crypto' |  |  | 0.530 |
+| walker |  | 707 | 12 | export names surface in packages/crypto/build.config.ts |  |  | 0.530 |
+| walker |  | 771 | 64 | README headline in packages/crypto/README.md |  |  | 0.530 |
+| walker |  | 802 | 31 | headings outline in packages/crypto/README.md |  |  | 0.530 |
+| ns | 872 |  | 178 | README — project structure (per-package one-liners) | 1.9 |  | 0.490 |
+| walker |  | 894 | 92 | export at packages/crypto/build.config.ts:3 |  |  | 0.490 |
+| walker |  | 934 | 40 | headings outline in packages/lib/README.md |  |  | 0.491 |
+| walker |  | 963 | 29 | listing of 'packages/cli' |  |  | 0.495 |
+| walker |  | 975 | 12 | export names surface in packages/cli/build.config.ts |  |  | 0.495 |
+| walker |  | 980 | 5 | listing of 'packages/cli/bin' |  |  | 0.495 |
+| walker |  | 1030 | 50 | README headline in packages/cli/README.md |  |  | 0.495 |
+| walker |  | 1092 | 62 | export at packages/cli/build.config.ts:3 |  |  | 0.495 |
+| walker |  | 1113 | 21 | listing of 'packages/cli/src' |  |  | 0.495 |
+| walker |  | 1123 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.495 |
+| walker |  | 1136 | 13 | export names surface in packages/cli/src/shared/cli.models.ts |  |  | 0.495 |
+| walker |  | 1150 | 14 | export names surface in packages/cli/src/shared/http.models.ts |  |  | 0.495 |
+| ns | 1225 |  | 353 | README — features list | 1.10 |  | 0.445 |
+| walker |  | 1321 | 171 | headings outline in CONTRIBUTING.md |  |  | 0.445 |
+| walker |  | 1357 | 36 | CONTRIBUTING.md section #0 |  |  | 0.445 |
+| walker |  | 1368 | 11 | listing of 'packages/cli/src/files' |  |  | 0.445 |
+| walker |  | 1399 | 31 | listing of 'packages/docs/src' |  |  | 0.445 |
+| walker |  | 1409 | 10 | listing of 'packages/docs/src/components' |  |  | 0.445 |
+| walker |  | 1420 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.445 |
+| walker |  | 1432 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.445 |
+| walker |  | 1444 | 12 | export names surface in packages/cli/src/view-note/view-note.models.ts |  |  | 0.445 |
+| walker |  | 1459 | 15 | export names surface in packages/cli/src/view-note/view-note.command.ts |  |  | 0.445 |
+| walker |  | 1471 | 12 | listing of 'packages/docs/.vitepress/theme' |  |  | 0.445 |
+| walker |  | 1483 | 12 | listing of 'packages/docs/src/data' |  |  | 0.445 |
+| walker |  | 1492 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.445 |
+| ns | 1499 |  | 274 | README — how-it-works (creator side) | 1.11 |  | 0.420 |
+| walker |  | 1501 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.420 |
+| walker |  | 1548 | 47 | export at packages/docs/src/data/configuration.data.ts:55 |  |  | 0.420 |
+| walker |  | 1580 | 32 | listing of 'packages/crypto/src' |  |  | 0.420 |
+| walker |  | 1589 | 9 | export names surface in packages/crypto/src/index.node.ts |  |  | 0.420 |
+| walker |  | 1598 | 9 | export names surface in packages/crypto/src/index.web.ts |  |  | 0.420 |
+| walker |  | 1612 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.420 |
+| ns | 1700 |  | 201 | README — how-it-works (recipient side) | 1.12 | 1.11 | 0.405 |
+| ns | 1726 |  | 26 | Top-level lib package contents | 2.1 |  | 0.437 |
+| ns | 1742 |  | 16 | lib/src — top-level source modules | 2.2 |  | 0.460 |
+| walker |  | 1807 | 195 | headings outline in README.md |  |  | 0.461 |
+| walker |  | 1905 | 98 | README.md section #0 |  |  | 0.461 |
+| walker |  | 1923 | 18 | README.md section #32 |  |  | 0.461 |
+| walker |  | 1954 | 31 | README.md section #18 |  |  | 0.461 |
+| walker |  | 1984 | 30 | README.md section #25 |  |  | 0.461 |
+| walker |  | 2001 | 17 | README.md section #6 |  |  | 0.462 |
+| walker |  | 2018 | 17 | README.md section #7 |  |  | 0.464 |
+| ns | 2101 |  | 359 | @enclosed/lib public API — index.ts re-exports | 2.3 |  | 0.447 |
+| ns | 2124 |  | 23 | Top-level app-server package contents | 2.4 |  | 0.464 |
+| walker |  | 2175 | 157 | package identity metadata in package.json |  |  | 0.510 |
+| ns | 2187 |  | 63 | Top-level app-client package contents | 2.5 |  | 0.485 |
+| walker |  | 2226 | 51 | package runtime metadata in package.json |  |  | 0.519 |
+| ns | 2259 |  | 72 | Top-level cli + crypto + docs package contents | 2.6 |  | 0.554 |
+| walker |  | 2304 | 78 | package scripts in package.json |  |  | 0.597 |
+| walker |  | 2336 | 32 | package dependencies in package.json |  |  | 0.618 |
 | walker |  | 2354 | 18 | README.md section #2 |  |  | 0.619 |
 | walker |  | 2368 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.620 |
 | walker |  | 2387 | 19 | README.md section #8 |  |  | 0.622 |
@@ -359,9 +361,7 @@ Score(3000)=0.542 I=0.746 C=0.394 ns_rows≤3K=23/45 (reached=10 partial=0 missi
 | walker |  | 9585 | 62 | README.md section #13 |  |  | 0.356 |
 | walker |  | 9609 | 24 | imports in packages/cli/src/create-note/create-note.usecases.ts |  |  | 0.356 |
 | walker |  | 9712 | 103 | export body at packages/cli/src/files/files.services.ts:26 body 27 |  |  | 0.356 |
-| walker |  | 9868 | 156 | plaintext config pnpm-workspace.yaml |  |  | 0.377 |
-| ns | 9903 |  | 364 | App-client — Solid Router routes | 6.4 |  | 0.369 |
-| walker |  | 9942 | 74 | export names surface in packages/app-server/src/modules/storage/storage.types.ts |  |  | 0.369 |
-| walker |  | 9955 | 13 | imports in packages/app-client/src/modules/shared/http/http-errors.ts |  |  | 0.369 |
+| walker |  | 9774 | 62 | package identity in packages/deploy-cloudflare/package.json |  |  | 0.356 |
+| ns | 9903 |  | 364 | App-client — Solid Router routes | 6.4 |  | 0.349 |
+| walker |  | 9930 | 156 | plaintext config pnpm-workspace.yaml |  |  | 0.369 |
 | ns | 9990 |  | 87 | Docs site — page map (VitePress src layout) | 6.5 |  | 0.384 |
-| walker |  | 9993 | 38 | CONTRIBUTING.md section #7 |  |  | 0.384 |

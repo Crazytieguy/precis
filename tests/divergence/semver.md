@@ -8,13 +8,14 @@ Score(3000)=0.654 I=0.735 C=0.582 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 130 | 24 | README headline in README.md |  |  | 0.000 |
 | walker |  | 135 | 5 | listing of 'bin' |  |  | 0.000 |
 | walker |  | 143 | 8 | CHANGELOG.md section #0 |  |  | 0.000 |
-| walker |  | 153 | 10 | export names surface in index.js |  |  | 0.000 |
 | ns | 164 |  | 103 | Repo top-level listing | 1.2 |  | 0.614 |
-| walker |  | 268 | 115 | package identity in package.json |  |  | 0.795 |
-| ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.695 |
-| walker |  | 285 | 17 | listing of 'classes' |  |  | 0.708 |
-| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.711 |
-| walker |  | 312 | 27 | listing of 'internal' |  |  | 0.725 |
+| walker |  | 198 | 55 | package identity in package.json |  |  | 0.784 |
+| walker |  | 208 | 10 | export names surface in index.js |  |  | 0.784 |
+| walker |  | 225 | 17 | listing of 'classes' |  |  | 0.799 |
+| walker |  | 252 | 27 | listing of 'internal' |  |  | 0.815 |
+| ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.680 |
+| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.688 |
+| walker |  | 312 | 60 | package identity metadata in package.json |  |  | 0.725 |
 | ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.727 |
 | ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.727 |
 | walker |  | 420 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.728 |
@@ -27,9 +28,10 @@ Score(3000)=0.654 I=0.735 C=0.582 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 728 | 24 | README.md section #54 |  |  | 0.573 |
 | ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.541 |
 | walker |  | 863 | 135 | package entrypoints in package.json |  |  | 0.611 |
-| walker |  | 1007 | 144 | package scripts in package.json |  |  | 0.611 |
-| ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.559 |
-| walker |  | 1119 | 112 | package dependencies in package.json |  |  | 0.591 |
+| walker |  | 891 | 28 | package runtime metadata in package.json |  |  | 0.646 |
+| ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.591 |
+| walker |  | 1035 | 144 | package scripts in package.json |  |  | 0.591 |
+| walker |  | 1119 | 84 | package dependencies in package.json |  |  | 0.591 |
 | walker |  | 1224 | 105 | listing of 'functions' |  |  | 0.776 |
 | walker |  | 1264 | 40 | CONTRIBUTING.md section #1 |  |  | 0.776 |
 | walker |  | 1297 | 33 | listing of 'test' |  |  | 0.776 |

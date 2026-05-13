@@ -6,25 +6,26 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | ns | 29 |  | 29 | Top-level directory listing | 1.1 |  | 1.000 |
 | walker |  | 33 | 4 | listing of 'src' |  |  | 1.000 |
 | ns | 57 |  | 28 | README title + tagline | 1.2 |  | 0.845 |
-| ns | 104 |  | 47 | package.json name + version + description | 1.3 |  | 0.738 |
-| ns | 120 |  | 16 | src/ and test/ listings | 1.4 |  | 0.672 |
-| walker |  | 206 | 173 | package identity in package.json |  |  | 0.789 |
+| walker |  | 91 | 58 | package identity in package.json |  |  | 0.873 |
+| ns | 104 |  | 47 | package.json name + version + description | 1.3 |  | 0.870 |
+| ns | 120 |  | 16 | src/ and test/ listings | 1.4 |  | 0.789 |
 | ns | 212 |  | 92 | package.json entrypoint + source fields | 1.5 |  | 0.663 |
-| ns | 362 |  | 150 | README feature bullets | 1.6 |  | 0.569 |
-| walker |  | 374 | 168 | README headline in README.md |  |  | 0.760 |
-| ns | 470 |  | 108 | src/index.ts public exports — name-only locations | 2.1 |  | 0.662 |
-| walker |  | 534 | 160 | export names surface in src/index.ts |  |  | 0.805 |
-| walker |  | 546 | 12 | export at src/index.ts:13 |  |  | 0.807 |
-| walker |  | 569 | 23 | export at src/index.ts:46 |  |  | 0.810 |
-| walker |  | 595 | 26 | export at src/index.ts:6 |  |  | 0.813 |
-| walker |  | 630 | 35 | export at src/index.ts:18 |  |  | 0.816 |
+| walker |  | 259 | 168 | README headline in README.md |  |  | 0.752 |
+| ns | 362 |  | 150 | README feature bullets | 1.6 |  | 0.760 |
+| walker |  | 419 | 160 | export names surface in src/index.ts |  |  | 0.788 |
+| walker |  | 431 | 12 | export at src/index.ts:13 |  |  | 0.789 |
+| walker |  | 454 | 23 | export at src/index.ts:46 |  |  | 0.792 |
+| ns | 470 |  | 108 | src/index.ts public exports — name-only locations | 2.1 |  | 0.810 |
+| walker |  | 480 | 26 | export at src/index.ts:6 |  |  | 0.813 |
+| walker |  | 515 | 35 | export at src/index.ts:18 |  |  | 0.816 |
 | ns | 667 |  | 197 | Emitter<Events> interface — full | 2.2 | 2.1 | 0.659 |
-| walker |  | 810 | 180 | export at src/index.ts:23 |  |  | 0.827 |
-| walker |  | 858 | 48 | export doc at src/index.ts:46 |  |  | 0.827 |
-| ns | 889 |  | 222 | README quickstart code example | 2.3 |  | 0.679 |
-| ns | 912 |  | 23 | mitt() default-export signature | 2.4 | 2.1 | 0.686 |
-| ns | 989 |  | 77 | Handler / WildcardHandler type aliases | 2.5 | 2.1 | 0.678 |
-| walker |  | 1004 | 146 | headings outline in README.md |  |  | 0.679 |
+| walker |  | 695 | 180 | export at src/index.ts:23 |  |  | 0.827 |
+| walker |  | 743 | 48 | export doc at src/index.ts:46 |  |  | 0.827 |
+| walker |  | 889 | 146 | headings outline in README.md |  |  | 0.680 |
+| ns | 889 |  | 222 | README quickstart code example | 2.3 |  | 0.680 |
+| ns | 912 |  | 23 | mitt() default-export signature | 2.4 | 2.1 | 0.687 |
+| ns | 989 |  | 77 | Handler / WildcardHandler type aliases | 2.5 | 2.1 | 0.679 |
+| walker |  | 1004 | 115 | package identity metadata in package.json |  |  | 0.679 |
 | walker |  | 1032 | 28 | README.md section #18 |  |  | 0.679 |
 | walker |  | 1067 | 35 | README.md section #15 |  |  | 0.679 |
 | walker |  | 1080 | 13 | README.md section #8 |  |  | 0.680 |

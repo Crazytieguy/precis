@@ -5,36 +5,37 @@ Score(3000)=0.288 I=0.338 C=0.245 ns_rows≤3K=19/45 (reached=4 partial=2 missin
 | walker |  | 48 | 48 | listing of '.' |  |  | 0.000 |
 | walker |  | 54 | 6 | listing of 'scripts' |  |  | 0.000 |
 | ns | 71 |  | 71 | README lede + tagline | 1.1 |  | 0.000 |
-| walker |  | 117 | 63 | README headline in README.md |  |  | 0.000 |
-| walker |  | 146 | 29 | listing of 'src' |  |  | 0.000 |
-| ns | 151 |  | 80 | package.json identity fields | 1.2 |  | 0.000 |
-| walker |  | 160 | 14 | export names surface in src/index.ts |  |  | 0.000 |
-| walker |  | 176 | 16 | export names surface in src/errors.ts |  |  | 0.000 |
-| walker |  | 188 | 12 | export at src/errors.ts:5 |  |  | 0.000 |
-| walker |  | 206 | 18 | export names surface in src/match.ts |  |  | 0.000 |
-| ns | 223 |  | 72 | src/index.ts — full public re-export surface | 1.3 |  | 0.048 |
-| walker |  | 226 | 20 | export at src/match.ts:32 |  |  | 0.048 |
-| walker |  | 240 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.049 |
-| walker |  | 248 | 8 | listing of 'src/internals' |  |  | 0.050 |
-| ns | 271 |  | 48 | Repo root listing | 1.4 |  | 0.315 |
-| walker |  | 274 | 26 | listing of 'docs' |  |  | 0.315 |
-| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.263 |
-| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.255 |
-| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.242 |
-| walker |  | 547 | 273 | package identity in package.json |  |  | 0.315 |
-| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.325 |
-| walker |  | 651 | 104 | README.md section #0 |  |  | 0.325 |
-| walker |  | 690 | 39 | imports in src/index.ts |  |  | 0.370 |
-| walker |  | 700 | 10 | listing of 'examples' |  |  | 0.370 |
-| ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.348 |
-| walker |  | 756 | 56 | export names surface in src/is-matching.ts |  |  | 0.356 |
-| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.335 |
-| walker |  | 781 | 25 | export at src/is-matching.ts:32 |  |  | 0.347 |
-| walker |  | 814 | 33 | export at src/is-matching.ts:53 |  |  | 0.348 |
-| walker |  | 853 | 39 | export at src/is-matching.ts:48 |  |  | 0.376 |
-| walker |  | 926 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.378 |
-| walker |  | 947 | 21 | plaintext config .prettierrc |  |  | 0.378 |
-| walker |  | 967 | 20 | README.md section #2 |  |  | 0.380 |
+| walker |  | 121 | 67 | package identity in package.json |  |  | 0.000 |
+| ns | 151 |  | 80 | package.json identity fields | 1.2 |  | 0.305 |
+| walker |  | 184 | 63 | README headline in README.md |  |  | 0.305 |
+| walker |  | 213 | 29 | listing of 'src' |  |  | 0.315 |
+| ns | 223 |  | 72 | src/index.ts — full public re-export surface | 1.3 |  | 0.237 |
+| walker |  | 227 | 14 | export names surface in src/index.ts |  |  | 0.245 |
+| walker |  | 243 | 16 | export names surface in src/errors.ts |  |  | 0.245 |
+| walker |  | 255 | 12 | export at src/errors.ts:5 |  |  | 0.246 |
+| ns | 271 |  | 48 | Repo root listing | 1.4 |  | 0.400 |
+| walker |  | 273 | 18 | export names surface in src/match.ts |  |  | 0.401 |
+| walker |  | 293 | 20 | export at src/match.ts:32 |  |  | 0.406 |
+| walker |  | 307 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.411 |
+| walker |  | 315 | 8 | listing of 'src/internals' |  |  | 0.417 |
+| walker |  | 341 | 26 | listing of 'docs' |  |  | 0.417 |
+| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.343 |
+| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.332 |
+| walker |  | 445 | 104 | README.md section #0 |  |  | 0.332 |
+| walker |  | 484 | 39 | imports in src/index.ts |  |  | 0.380 |
+| walker |  | 494 | 10 | listing of 'examples' |  |  | 0.381 |
+| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.361 |
+| walker |  | 550 | 56 | export names surface in src/is-matching.ts |  |  | 0.363 |
+| walker |  | 575 | 25 | export at src/is-matching.ts:32 |  |  | 0.367 |
+| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.375 |
+| walker |  | 608 | 33 | export at src/is-matching.ts:53 |  |  | 0.375 |
+| walker |  | 647 | 39 | export at src/is-matching.ts:48 |  |  | 0.383 |
+| ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.400 |
+| walker |  | 720 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.403 |
+| walker |  | 741 | 21 | plaintext config .prettierrc |  |  | 0.403 |
+| walker |  | 761 | 20 | README.md section #2 |  |  | 0.405 |
+| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.380 |
+| walker |  | 967 | 206 | package identity metadata in package.json |  |  | 0.380 |
 | ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.341 |
 | walker |  | 1009 | 42 | export doc at src/errors.ts:5 |  |  | 0.344 |
 | ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.323 |

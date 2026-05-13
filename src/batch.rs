@@ -296,18 +296,23 @@ pub enum TsKey {
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum JsonKey {
     /// `package.json` identity scalars: `name`, `version`, `description`,
-    /// `license`, `author`/`authors`, `repository`, `homepage`, `keywords`,
-    /// `type`. Priority 1.x.
+    /// `type`, `private`, `license`/`licenses`. Priority 1.x.
     Identity { file: PathBuf },
+    /// Auxiliary `package.json` metadata: authorship, repository/homepage,
+    /// bugs, keywords, publish config, funding. Priority 1.x-2.x.
+    IdentityMeta { file: PathBuf },
     /// `package.json` entrypoint pointers: `main`, `module`, `browser`,
     /// `exports`, `types`/`typings`, `source`, `bin`, `unpkg`, `umd:main`,
     /// `jsnext:main`, `react-native`, `files`. Priority 1.x–2.x.
     Entry { file: PathBuf },
+    /// `package.json` runtime/toolchain constraints: `engines`,
+    /// `engineStrict`, `packageManager`. Priority 1.x-2.x.
+    Runtime { file: PathBuf },
     /// `package.json` `scripts` block. Priority 2.x.
     Scripts { file: PathBuf },
     /// `package.json` dependency blocks (`dependencies`,
     /// `devDependencies`, `peerDependencies`, `optionalDependencies`,
-    /// `engines`, `packageManager`). Priority 2.x–4.x.
+    /// `overrides`, `resolutions`). Priority 2.x–4.x.
     Dependencies { file: PathBuf },
     /// Whole-file render of a small JSON config (`tsconfig.json`,
     /// `.eslintrc.json`, `jsr.json`, etc.). Skipped for `package.json`
@@ -923,8 +928,18 @@ impl JsonKey {
             JsonKey::Identity { file } => {
                 format!("package identity in {}", display_path(file, fixture_root))
             }
+            JsonKey::IdentityMeta { file } => {
+                format!(
+                    "package identity metadata in {}",
+                    display_path(file, fixture_root)
+                )
+            }
             JsonKey::Entry { file } => format!(
                 "package entrypoints in {}",
+                display_path(file, fixture_root)
+            ),
+            JsonKey::Runtime { file } => format!(
+                "package runtime metadata in {}",
                 display_path(file, fixture_root)
             ),
             JsonKey::Scripts { file } => {
