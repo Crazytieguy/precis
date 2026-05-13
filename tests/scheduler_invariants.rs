@@ -261,7 +261,7 @@ fn scheduler_invariants_gated_descendant_value_promotes_predecessor() {
         report
             .scheduled
             .iter()
-            .map(|r| r.key.describe())
+            .map(|r| r.key.describe(&stub_dir()))
             .collect::<Vec<_>>()
     );
 }

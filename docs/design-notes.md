@@ -160,109 +160,61 @@ cost under `Score(3000)`. The retrospective in
 Drop entries as candidates resolve; the doc shouldn't accumulate
 post-hoc verdicts.
 
-## Divergence diagnostic — deferred architectural items
-
-Two known approximations in the divergence report's diagnostic layer
-(`src/divergence/{diagnosis,synthesis}.rs`). Worth fixing before serious
-calibration that depends on distinguishing them; not blocking for the first
-walker/value pass.
-
-- **Loss reasons use post-hoc budget state.** `candidate_loss` checks
-  `row.final_cost.tokens > remaining_tokens` against the *final* remaining
-  budget, not the budget at first eligibility. Marginal cost itself is
-  pinned by walker invariants (non-ancestor line overlap is rejected at
-  apply, FS atom overlap is rejected at absorb in debug builds, ancestors
-  are scheduled before a dependent first becomes eligible — see
-  `src/scheduler.rs`), so cost-side drift isn't a concern. But budget is
-  consumed by later wins, so a candidate that fit when first eligible —
-  and lost the `value/cost^k` ratio race to competing batches — gets
-  labeled `too expensive at final margin` once those later wins consumed
-  the headroom. That conflates a true budget-pressure case (candidate
-  never fit) with a ranking-race case (candidate fit when eligible, lost
-  the rank fight, then ran out of room). The two want different
-  interventions: demote low-value spend vs. tune the value/cost ratio so
-  the candidate wins earlier. Right fix is scheduler-side instrumentation:
-  record eligibility, marginal cost, fit status, and rank at decision
-  time, and attribute losses against that. Lower urgency if next work is
-  walker granularity (which the current corpus mostly says is the lever).
+## Divergence open items
 
 - **`Schedule.candidates` is `#[serde(skip)]`.** The candidate pool
-  needed by unscheduled-bbox / predecessor-gating / coverage-gap
-  diagnostics doesn't survive TOML serialization. Scheduled-bbox and
-  scheduled-same-file hints still work from `schedule.batches` alone, so
-  basic ledger rows aren't affected — but anyone calling
-  `generate_divergence_report` from a deserialized schedule silently loses
-  the unscheduled-candidate signal entirely (rows that would have shown
-  `[unscheduled bbox exact=...]` or `predecessor not scheduled` collapse
-  to `no discovered candidate`). In-process baseline tests pass the
-  in-memory `Schedule` so they're unaffected. Either persist enough
-  candidate metadata, or split the API/type so reports require a
-  candidate-bearing schedule and fail loudly when the pool is empty.
+  doesn't survive TOML serialization. The current schedule-centric
+  divergence report doesn't read `candidates` at all (NS predecessor
+  comes from the NS file, not the candidate pool), so the regen path
+  is unaffected. Worth noting for any future code that loads a schedule
+  from TOML and wants candidate-derived signals — it would silently
+  see an empty pool. Either persist enough candidate metadata, or
+  fail loudly at the call site.
 
-## Next-pass plan: schedule-centric divergence reports
+- **Per-row Score column noise.** The schedule-centric report shows
+  `Score(B=cum)` per row at three decimals. Small walker tweaks
+  cascade through every later row's Score. Watch corpus diff noise
+  in practice; if trailing-decimal flicker dominates, revisit (two
+  decimals, or a delta-from-prev-row column).
 
-The current divergence report (Top opportunities, walker waste, arrival
-ledger with diagnosis labels, etc.) is built from derived heuristics that
-approximate per-batch impact on Score(B). The 2026-05 iteration concluded
-these derivations are over-engineered: they require their own correctness
-work (e.g. Codex caught the subtractive subtable conflating off_3k with
-off_any, overstating freed budget), the multiple rollups duplicate signal,
-and verdict-style labels stuck on the same value across most of the corpus.
+- **Single Score column can't decompose I × C.** Headline includes
+  `I=` and `C=` at B=3000, but the per-row Score is single-valued.
+  Loses the rank-order-miss vs partial-delivery distinction. Revisit
+  if iteration shows the single column loses signal.
 
-Planned replacement (not yet implemented as of 2026-05):
+## Walker / value open items
 
-- **Interleaved schedule view** — one timeline sorted by cum_tokens, with
-  NS rows and walker rows interleaved. Two cum_tokens columns
-  (`ns_cum_tokens`, `walker_cum_tokens`); only one is filled per row, so
-  the source is implicit. Plus `marginal_tokens` and `descriptor`.
-- **Score column per row** — `Score(B = cum_tokens at this row)`. Where
-  Score climbs, the schedule is contributing; where it stalls or falls,
-  that row (or the absence around it) is the problem. Replaces every
-  derived signal (opportunities, walker waste, diagnoses). The
-  interleaved order makes "read the top N lines" the canonical iteration
-  brief — value-density decays with depth so the reader stops when they've
-  seen enough.
-- **Predecessor info kept inline** — predecessor relationships aren't
-  inferrable from descriptors alone and are cheap to surface. Worth
-  keeping as a column or annotation on rows where it matters.
-- **Drop the per-budget table** — Score(3000) headline stays; the rest is
-  implicit in the Score column, sampled at every actual transition point
-  (~100/fixture) rather than 7 grid points.
-- **Lookups via existing TOMLs** — NS detail in
-  `tests/north-stars/<fixture>.toml`, walker detail in
-  `tests/snapshots/schedule/<fixture>.toml`. Both already checked in and
-  grep-friendly; no new lookup tooling needed in v1.
-
-Tradeoffs accepted for v1, to track:
-
-- Single Score column can't decompose Score = √(I × C). Losing the
-  rank-order-miss vs partial-delivery distinction. Accept; revisit if
-  iteration shows it matters. The descriptors usually carry enough
-  context to figure out the lever.
-- Per-row Score values cascade on small walker changes — a tweak at
-  cum_t=200 shifts the Score for every subsequent row. Rounding to 3
-  decimals absorbs sub-0.0005 changes. Watch diff noise in practice.
-
-## Walker descriptor cleanup items
-
-Two small walker/value issues noticed during the 2026-05 reports
-discussion. Not blocking the next-pass plan above; worth fixing
-opportunistically.
-
-- **Walker batch descriptors embed absolute paths.** Visible in
-  `tests/snapshots/schedule/<fixture>.toml` (e.g. `listing of
-  '/Users/yoav/projects/precis/tests/fixtures/ts-pattern'`) and ripples
-  into the divergence reports. Wastes tokens in both artifacts. Fix:
-  strip fixture-root prefix at descriptor-build time. There's already a
-  `strip_fixture_root` helper used in walker-waste rendering — descriptor
-  construction should do the same.
 - **Names-surface chunking can break unified-batch expectations.** Names
   surfaces are sometimes split into `... #1 in <path>`, `#2`, etc. NS
   authors typically expect the names surface as a single unit; the
   walker's chunked version creates a catastrophic-omission failure mode
   where partial delivery scores poorly. Investigate when chunking fires
-  and whether the granularity is worth the cost. Likely a walker/value
-  tuning issue, not a divergence-report issue.
+  and whether the granularity is worth the cost. Walker / value tuning
+  question, not a divergence-report one.
+
+- **0-cost C decl batches.** Visible in
+  `tests/divergence/bareiron.md` (e.g. four `c decl at
+  include/varnum.h:6/7/…` rows with `marginal=0` at the same
+  `walker_cum`, also in sds and krep). The C walker is emitting
+  separate batches for adjacent decls that render no marginal tokens —
+  presumably because the decl line was already rendered by a parent
+  batch (header banner, includes, or a prior decl). Plausible cause:
+  predecessor / parent edges keep the decl in the schedule (so a body
+  refinement can later attach), but the decl batch's content is fully
+  redundant. Either combine the redundant decl batches with their
+  parent, or skip emitting them when the marginal is 0.
+
+- **Schedule TOML `key` / `parent` / `path` fields still embed
+  absolute paths.** The walker descriptor fix (2026-05) made the
+  `descriptor` field root-relative, but `ScheduledBatch.key` is the
+  debug-formatted `BatchKey` enum which holds canonical `PathBuf`s,
+  `FsGroup.parent` is the raw absolute path, and `Span.path` inside
+  `BatchContent::Lines` likewise. These persist in
+  `tests/snapshots/schedule/*.toml` but aren't user-facing through the
+  new divergence reports. Fix would require either custom
+  `Display`/`Serialize` impls on each `BatchKey` variant, or holding
+  fixture-root-relative paths in the walker state. Not blocking; the
+  user-visible artifact (divergence reports) is clean.
 
 ## Min-tokens lower bound
 

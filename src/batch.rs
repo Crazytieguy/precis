@@ -11,7 +11,7 @@
 //! Content vocabulary shared with the NS schema lives in
 //! [`crate::content`]; this file is only walker/scheduler-internal.
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use crate::content::BatchContent;
 
@@ -544,7 +544,9 @@ pub trait WalkerKey:
     /// One-line human descriptor (e.g. `"crate-doc lede in src/lib.rs"`).
     /// Shown in schedule snapshots + divergence reports so diffs read
     /// as content-shape rather than `Rust(CrateDocLede(PathBuf(...)))`.
-    fn describe(&self) -> String;
+    /// `fixture_root` is stripped from any embedded paths so descriptors
+    /// stay relative and diff-stable across checkouts.
+    fn describe(&self, fixture_root: &Path) -> String;
 
     /// Per-key cost concavity exponent for the scheduling ratio
     /// (`value / cost^exponent`). Defaults to
@@ -565,18 +567,18 @@ pub trait WalkerKey:
 }
 
 impl WalkerKey for BatchKey {
-    fn describe(&self) -> String {
+    fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            BatchKey::Fs(k) => k.describe(),
-            BatchKey::Rust(k) => k.describe(),
-            BatchKey::Markdown(k) => k.describe(),
-            BatchKey::Toml(k) => k.describe(),
-            BatchKey::Typescript(k) => k.describe(),
-            BatchKey::Json(k) => k.describe(),
-            BatchKey::Plaintext(k) => k.describe(),
-            BatchKey::C(k) => k.describe(),
-            BatchKey::Go(k) => k.describe(),
-            BatchKey::Python(k) => k.describe(),
+            BatchKey::Fs(k) => k.describe(fixture_root),
+            BatchKey::Rust(k) => k.describe(fixture_root),
+            BatchKey::Markdown(k) => k.describe(fixture_root),
+            BatchKey::Toml(k) => k.describe(fixture_root),
+            BatchKey::Typescript(k) => k.describe(fixture_root),
+            BatchKey::Json(k) => k.describe(fixture_root),
+            BatchKey::Plaintext(k) => k.describe(fixture_root),
+            BatchKey::C(k) => k.describe(fixture_root),
+            BatchKey::Go(k) => k.describe(fixture_root),
+            BatchKey::Python(k) => k.describe(fixture_root),
         }
     }
 
@@ -604,10 +606,10 @@ impl WalkerKey for BatchKey {
 }
 
 impl FsKey {
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
             FsKey::DirListing { dir } => {
-                let shown = display_path(dir);
+                let shown = display_path(dir, fixture_root);
                 if shown.is_empty() {
                     "listing of '.'".to_string()
                 } else {
@@ -633,16 +635,29 @@ impl RustKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            RustKey::CrateDocLede { file } => format!("crate-doc lede in {}", display_path(file)),
-            RustKey::CrateDocBody { file } => format!("crate-doc body in {}", display_path(file)),
-            RustKey::ModUse { file } => format!("mod/use plumbing in {}", display_path(file)),
+            RustKey::CrateDocLede { file } => {
+                format!("crate-doc lede in {}", display_path(file, fixture_root))
+            }
+            RustKey::CrateDocBody { file } => {
+                format!("crate-doc body in {}", display_path(file, fixture_root))
+            }
+            RustKey::ModUse { file } => {
+                format!("mod/use plumbing in {}", display_path(file, fixture_root))
+            }
             RustKey::PubItemNames { file } => {
-                format!("pub-item names surface in {}", display_path(file))
+                format!(
+                    "pub-item names surface in {}",
+                    display_path(file, fixture_root)
+                )
             }
             RustKey::PubItem { file, start_line } => {
-                format!("pub item at {}:{}", display_path(file), start_line)
+                format!(
+                    "pub item at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             RustKey::PubItemBody {
                 file,
@@ -651,13 +666,17 @@ impl RustKey {
             } => {
                 format!(
                     "pub item body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
             }
             RustKey::EntryItem { file, start_line } => {
-                format!("entry item at {}:{}", display_path(file), start_line)
+                format!(
+                    "entry item at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             RustKey::EntryItemBody {
                 file,
@@ -666,44 +685,64 @@ impl RustKey {
             } => {
                 format!(
                     "entry item body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
             }
             RustKey::PubItemDocLede { file, start_line } => {
-                format!("pub-item doc lede at {}:{}", display_path(file), start_line)
+                format!(
+                    "pub-item doc lede at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             RustKey::PubItemDocBody { file, start_line } => {
-                format!("pub-item doc body at {}:{}", display_path(file), start_line)
+                format!(
+                    "pub-item doc body at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
-            RustKey::MethodSigs { file } => format!("impl method sigs in {}", display_path(file)),
+            RustKey::MethodSigs { file } => {
+                format!("impl method sigs in {}", display_path(file, fixture_root))
+            }
             RustKey::MacroNames { src_dir } => {
-                format!("macro_export names across {}", display_path(src_dir))
+                format!(
+                    "macro_export names across {}",
+                    display_path(src_dir, fixture_root)
+                )
             }
             RustKey::MacroBody { file, start_line } => {
-                format!("macro_export body at {}:{}", display_path(file), start_line)
+                format!(
+                    "macro_export body at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
         }
     }
 }
 
 impl MarkdownKey {
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
             MarkdownKey::SummaryWhole { file } => {
-                format!("mdBook SUMMARY at {}", display_path(file))
+                format!("mdBook SUMMARY at {}", display_path(file, fixture_root))
             }
             MarkdownKey::ReadmeHeadline { file } => {
-                format!("README headline in {}", display_path(file))
+                format!("README headline in {}", display_path(file, fixture_root))
             }
             MarkdownKey::HeadingsOutline { file } => {
-                format!("headings outline in {}", display_path(file))
+                format!("headings outline in {}", display_path(file, fixture_root))
             }
             MarkdownKey::Section {
                 file,
                 section_index,
-            } => format!("{} section #{section_index}", display_path(file)),
+            } => format!(
+                "{} section #{section_index}",
+                display_path(file, fixture_root)
+            ),
         }
     }
 
@@ -773,21 +812,31 @@ impl TsKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            TsKey::ModuleDocLede { file } => format!("module-doc lede in {}", display_path(file)),
-            TsKey::Imports { file } => format!("imports in {}", display_path(file)),
+            TsKey::ModuleDocLede { file } => {
+                format!("module-doc lede in {}", display_path(file, fixture_root))
+            }
+            TsKey::Imports { file } => format!("imports in {}", display_path(file, fixture_root)),
             TsKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("imports", file, *chunk_index)
+                describe_chunked_surface("imports", file, *chunk_index, fixture_root)
             }
             TsKey::ExportNames {
                 file, chunk_index, ..
-            } => describe_chunked_surface("export names surface", file, *chunk_index),
+            } => describe_chunked_surface("export names surface", file, *chunk_index, fixture_root),
             TsKey::Export { file, start_line } => {
-                format!("export at {}:{}", display_path(file), start_line)
+                format!(
+                    "export at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             TsKey::ExportDoc { file, start_line } => {
-                format!("export doc at {}:{}", display_path(file), start_line)
+                format!(
+                    "export doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             TsKey::ExportMember {
                 file,
@@ -796,7 +845,7 @@ impl TsKey {
             } => {
                 format!(
                     "export member at {}:{} member {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     member_start_line
                 )
@@ -808,13 +857,17 @@ impl TsKey {
             } => {
                 format!(
                     "export body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
             }
             TsKey::ModuleItem { file, start_line } => {
-                format!("module item at {}:{}", display_path(file), start_line)
+                format!(
+                    "module item at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             TsKey::ModuleItemBody {
                 file,
@@ -823,7 +876,7 @@ impl TsKey {
             } => {
                 format!(
                     "module item body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
@@ -833,11 +886,17 @@ impl TsKey {
 }
 
 impl TomlKey {
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            TomlKey::Identity { file } => format!("[package] in {}", display_path(file)),
-            TomlKey::Features { file } => format!("[features] in {}", display_path(file)),
-            TomlKey::Dependencies { file } => format!("[dependencies] in {}", display_path(file)),
+            TomlKey::Identity { file } => {
+                format!("[package] in {}", display_path(file, fixture_root))
+            }
+            TomlKey::Features { file } => {
+                format!("[features] in {}", display_path(file, fixture_root))
+            }
+            TomlKey::Dependencies { file } => {
+                format!("[dependencies] in {}", display_path(file, fixture_root))
+            }
         }
     }
 }
@@ -859,23 +918,35 @@ impl JsonKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            JsonKey::Identity { file } => format!("package identity in {}", display_path(file)),
-            JsonKey::Entry { file } => format!("package entrypoints in {}", display_path(file)),
-            JsonKey::Scripts { file } => format!("package scripts in {}", display_path(file)),
-            JsonKey::Dependencies { file } => {
-                format!("package dependencies in {}", display_path(file))
+            JsonKey::Identity { file } => {
+                format!("package identity in {}", display_path(file, fixture_root))
             }
-            JsonKey::Whole { file } => format!("json config {}", display_path(file)),
+            JsonKey::Entry { file } => format!(
+                "package entrypoints in {}",
+                display_path(file, fixture_root)
+            ),
+            JsonKey::Scripts { file } => {
+                format!("package scripts in {}", display_path(file, fixture_root))
+            }
+            JsonKey::Dependencies { file } => {
+                format!(
+                    "package dependencies in {}",
+                    display_path(file, fixture_root)
+                )
+            }
+            JsonKey::Whole { file } => format!("json config {}", display_path(file, fixture_root)),
         }
     }
 }
 
 impl PlaintextKey {
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            PlaintextKey::Whole { file } => format!("plaintext config {}", display_path(file)),
+            PlaintextKey::Whole { file } => {
+                format!("plaintext config {}", display_path(file, fixture_root))
+            }
         }
     }
 }
@@ -894,27 +965,48 @@ impl GoKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
             GoKey::PackageImports { file } => {
-                format!("go package + imports in {}", display_path(file))
+                format!(
+                    "go package + imports in {}",
+                    display_path(file, fixture_root)
+                )
             }
             GoKey::DeclNames { file } => {
-                format!("go decl names surface in {}", display_path(file))
+                format!(
+                    "go decl names surface in {}",
+                    display_path(file, fixture_root)
+                )
             }
             GoKey::Decl { file, start_line } => {
-                format!("go decl at {}:{}", display_path(file), start_line)
+                format!(
+                    "go decl at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             GoKey::DeclBody { file, start_line } => {
-                format!("go decl body at {}:{}", display_path(file), start_line)
+                format!(
+                    "go decl body at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             GoKey::DeclDoc { file, start_line } => {
-                format!("go decl doc at {}:{}", display_path(file), start_line)
+                format!(
+                    "go decl doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             GoKey::TestNames { file } => {
-                format!("go test names surface in {}", display_path(file))
+                format!(
+                    "go test names surface in {}",
+                    display_path(file, fixture_root)
+                )
             }
-            GoKey::GoMod { file } => format!("go module file {}", display_path(file)),
+            GoKey::GoMod { file } => format!("go module file {}", display_path(file, fixture_root)),
         }
     }
 }
@@ -941,20 +1033,33 @@ impl PythonKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            PythonKey::Imports { file } => format!("python imports in {}", display_path(file)),
+            PythonKey::Imports { file } => {
+                format!("python imports in {}", display_path(file, fixture_root))
+            }
             PythonKey::ImportChunk { file, chunk_index } => {
-                describe_chunked_surface("python imports", file, *chunk_index)
+                describe_chunked_surface("python imports", file, *chunk_index, fixture_root)
             }
-            PythonKey::DeclNames { file, chunk_index } => {
-                describe_chunked_surface("python decl names surface", file, *chunk_index)
-            }
+            PythonKey::DeclNames { file, chunk_index } => describe_chunked_surface(
+                "python decl names surface",
+                file,
+                *chunk_index,
+                fixture_root,
+            ),
             PythonKey::Decl { file, start_line } => {
-                format!("python decl at {}:{}", display_path(file), start_line)
+                format!(
+                    "python decl at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             PythonKey::DeclDoc { file, start_line } => {
-                format!("python decl doc at {}:{}", display_path(file), start_line)
+                format!(
+                    "python decl doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             PythonKey::DeclBody {
                 file,
@@ -963,22 +1068,34 @@ impl PythonKey {
             } => {
                 format!(
                     "python decl body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
             }
             PythonKey::ClassBody { file, start_line } => {
-                format!("python class body at {}:{}", display_path(file), start_line)
+                format!(
+                    "python class body at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             PythonKey::MethodSigs { file, chunk_index } => {
-                describe_chunked_surface("python method sigs", file, *chunk_index)
+                describe_chunked_surface("python method sigs", file, *chunk_index, fixture_root)
             }
             PythonKey::Method { file, start_line } => {
-                format!("python method at {}:{}", display_path(file), start_line)
+                format!(
+                    "python method at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             PythonKey::MethodDoc { file, start_line } => {
-                format!("python method doc at {}:{}", display_path(file), start_line)
+                format!(
+                    "python method doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             PythonKey::MethodBody {
                 file,
@@ -987,13 +1104,16 @@ impl PythonKey {
             } => {
                 format!(
                     "python method body at {}:{} body {}",
-                    display_path(file),
+                    display_path(file, fixture_root),
                     start_line,
                     body_start_line
                 )
             }
             PythonKey::TestNames { file } => {
-                format!("python test names surface in {}", display_path(file))
+                format!(
+                    "python test names surface in {}",
+                    display_path(file, fixture_root)
+                )
             }
         }
     }
@@ -1017,33 +1137,63 @@ impl CKey {
         }
     }
 
-    pub fn describe(&self) -> String {
+    pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
-            CKey::HeaderBanner { file } => format!("c header banner in {}", display_path(file)),
-            CKey::Includes { file } => format!("c includes in {}", display_path(file)),
-            CKey::DeclNames { file } => format!("c decl names surface in {}", display_path(file)),
+            CKey::HeaderBanner { file } => {
+                format!("c header banner in {}", display_path(file, fixture_root))
+            }
+            CKey::Includes { file } => {
+                format!("c includes in {}", display_path(file, fixture_root))
+            }
+            CKey::DeclNames { file } => format!(
+                "c decl names surface in {}",
+                display_path(file, fixture_root)
+            ),
             CKey::Decl { file, start_line } => {
-                format!("c decl at {}:{}", display_path(file), start_line)
+                format!(
+                    "c decl at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             CKey::DeclBody { file, start_line } => {
-                format!("c decl body at {}:{}", display_path(file), start_line)
+                format!(
+                    "c decl body at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
             CKey::DeclDoc { file, start_line } => {
-                format!("c decl doc at {}:{}", display_path(file), start_line)
+                format!(
+                    "c decl doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
             }
         }
     }
 }
 
-fn display_path(path: &std::path::Path) -> String {
-    path.display().to_string()
+fn display_path(path: &Path, fixture_root: &Path) -> String {
+    path.strip_prefix(fixture_root)
+        .unwrap_or(path)
+        .display()
+        .to_string()
 }
 
-fn describe_chunked_surface(label: &str, file: &std::path::Path, chunk_index: usize) -> String {
+fn describe_chunked_surface(
+    label: &str,
+    file: &Path,
+    chunk_index: usize,
+    fixture_root: &Path,
+) -> String {
     if chunk_index == 0 {
-        format!("{label} in {}", display_path(file))
+        format!("{label} in {}", display_path(file, fixture_root))
     } else {
-        format!("{label} #{chunk_index} in {}", display_path(file))
+        format!(
+            "{label} #{chunk_index} in {}",
+            display_path(file, fixture_root)
+        )
     }
 }
 

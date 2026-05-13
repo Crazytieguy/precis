@@ -1,120 +1,252 @@
-scores: Score(3000)=0.288 ns_rows≤3K=19/45 (reached=4 partial=2 missing=13)
+Score(3000)=0.288 I=0.339 C=0.244 ns_rows≤3K=19/45 (reached=4 partial=2 missing=13)
 
-## Per-budget scores
-
-| B | A_B | I(B) | C(B) | compl(B) | Score(B) | walker_used |
-|--:|----:|-----:|-----:|---------:|---------:|------------:|
-| 1000 | 97 | 0.303 | 0.384 | 0.743 | 0.341 | 986 |
-| 1442 | 122 | 0.386 | 0.506 | 0.778 | 0.442 | 1299 |
-| 2080 | 190 | 0.357 | 0.337 | 0.679 | 0.347 | 2074 |
-| 3000 | 267 | 0.339 | 0.244 | 0.604 | 0.288 | 2937 |
-| 4327 | 385 | 0.321 | 0.204 | 0.606 | 0.256 | 4267 |
-| 6240 | 511 | 0.373 | 0.183 | 0.724 | 0.261 | 5994 |
-| 9000 | 787 | 0.359 | 0.173 | 0.583 | 0.249 | 8795 |
-
-## Top opportunities
-
-### Additive (close partial / missing rows)
-
-| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
-|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 35 | 4.95 | 4.92 | 4.42 | nearby candidates have low exact atom overlap | 1.1, 1.2, 1.3, 2.8, 2.11, ... |
-| tune ranking for high-overlap unscheduled candidates | 2 | 0.24 | 0.24 | 0.24 | high-overlap candidates not in the schedule by T_max, exact total=65/71 | 2.4, 4.7 |
-
-### Subtractive (suppress consistently off-NS batches)
-
-| pattern | batches | freed@1k | freed@3k | freed@9k | evidence | top batch ids |
-|:--------|--------:|---------:|---------:|---------:|:---------|:--------------|
-| export names surface #<n> in src/types/helpers.ts | 2 | 0 | 475 | 742 | off_3k=475 | export names surface #2 in src/types/helpers.ts, export names surface #1 in src/types/helpers.ts |
-| export names surface #<n> in src/types/Pattern.ts | 2 | 0 | 279 | 279 | off_3k=477 | export names surface #2 in src/types/Pattern.ts, export names surface #1 in src/types/Pattern.ts |
-| export names surface in src/types/helpers.ts | 1 | 0 | 259 | 259 | off_3k=259 | export names surface in src/types/helpers.ts |
-| package identity in package.json | 1 | 217 | 217 | 217 | off_3k=217 | package identity in package.json |
-| export names surface in src/types/Pattern.ts | 1 | 0 | 212 | 212 | off_3k=233 | export names surface in src/types/Pattern.ts |
-
-Top missed paths (NS rows ≤ 3K): src/match.ts (8 rows, 130 atoms), src/is-matching.ts (2 rows, 61 atoms), README.md (3 rows, 13 atoms), package.json (1 row, 6 atoms), src/index.ts (1 row, 6 atoms)
-
-## Arrival ledger by diagnosis
-
-### ranking-recoverable
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 2.4 | 981 | 0.00 | missing | match() JSDoc | [unscheduled bbox exact=16/16] export doc at src/match.ts:32 (16 atoms, too expensive at final margin) |
-| 4.7 | 9767 | 0.00 | missing | matchPattern() — array / tuple / variadic branch | [unscheduled bbox exact=49/55] export body at src/internals/helpers.ts:32 body 37 (49 atoms, too expensive at final margin) |
-
-### wrong-slice / granularity
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.1 | 71 | 0.00 | missing | README lede + tagline | [scheduled same-file] README.md section #10 (t=9577, 15 atoms) |
-| 1.2 | 151 | 0.67 | missing | package.json identity fields | [scheduled bbox exact=4/6] package identity in package.json (t=566, 4 atoms) |
-| 1.3 | 223 | 0.67 | partial | src/index.ts — full public re-export surface | [scheduled bbox exact=3/6] imports in src/index.ts (t=709, 3 atoms) |
-| 1.6 | 434 | 0.33 | missing | README features — data structures + typesafety | [scheduled bbox exact=1/3] README.md section #3 (t=5459, 1 atoms) |
-| 1.7 | 546 | 0.00 | missing | README features — patterns, wildcards, predicates, bundle | [scheduled bbox exact=1/5] README.md section #4 (t=4686, 1 atoms) |
-| 2.5 | 1115 | 0.18 | missing | MatchExpression class doc + constructor | [scheduled bbox exact=2/11] module item at src/match.ts:47 (t=1207, 2 atoms) |
-| 2.6 | 1278 | 0.00 | missing | match.ts imports + MatchState/unmatched | [scheduled bbox exact=5/14] imports in src/match.ts (t=9182, 5 atoms) |
-| 2.7 | 1489 | 0.06 | missing | MatchExpression.with — argument parsing half | [scheduled bbox exact=2/16] module item at src/match.ts:47 (t=1207, 2 atoms); better unscheduled exact=7/16: module item body at src/match.ts:47 body 59 (7 atoms, discovered unscheduled) |
-| 2.8 | 1764 | 0.00 | missing | MatchExpression.with — selection + dispatch half | [unscheduled bbox exact=6/27] module item body at src/match.ts:47 body 84 (6 atoms, discovered unscheduled) |
-| 2.9 | 2017 | 0.24 | missing | MatchExpression.when / otherwise / exhaustive bodies | [scheduled bbox exact=9/25] module item at src/match.ts:47 (t=1207, 9 atoms) |
-| 2.10 | 2115 | 0.20 | missing | MatchExpression.run / returnType / narrow + defaultCatcher | [scheduled bbox exact=6/16] module item at src/match.ts:47 (t=1207, 6 atoms) |
-| 2.11 | 2477 | 0.00 | missing | isMatching — JSDoc + PatternConstraint helper | [scheduled bbox exact=4/31] imports in src/is-matching.ts (t=7481, 4 atoms); better unscheduled exact=15/31: export doc at src/is-matching.ts:32 (15 atoms, too expensive at final margin) |
-| 2.12 | 2851 | 0.10 | missing | isMatching — JSDoc for two-arg + runtime body | [scheduled bbox exact=12/30] export body at src/is-matching.ts:53 body 56 (t=4428, 12 atoms); better unscheduled exact=13/30: export doc at src/is-matching.ts:48 (13 atoms, too expensive at final margin) |
-| 3.1 | 3161 | 0.00 | missing | P module-doc + combinator-function name catalog | [scheduled bbox exact=0/18] export body at src/patterns.ts:246 body 249 (t=9107, 27 atoms); better unscheduled exact=6/18: export names surface #1 in src/patterns.ts (23 atoms, too expensive at final margin) |
-| 3.2 | 3350 | 0.00 | missing | P wildcards — every const definition | [unscheduled bbox exact=7/10] export names surface #2 in src/patterns.ts (14 atoms, too expensive at final margin) |
-| 3.3 | 3422 | 0.00 | missing | P type-level re-exports + matcher symbol | [scheduled bbox exact=4/6] export names surface in src/patterns.ts (t=6665, 10 atoms) |
-| 3.4 | 3482 | 0.00 | missing | P.string predicates — name catalog | [scheduled same-file] export body at src/patterns.ts:246 body 249 (t=9107, 27 atoms) |
-| 3.5 | 3560 | 0.00 | missing | P.number / P.bigint predicates — name catalog | [scheduled same-file] export body at src/patterns.ts:246 body 249 (t=9107, 27 atoms) |
-| 3.6 | 3780 | 0.00 | missing | P.union — JSDoc + signature | [unscheduled bbox exact=13/17] export doc at src/patterns.ts:572 (13 atoms, predecessor not scheduled: export at src/patterns.ts:572) |
-| 3.7 | 3971 | 0.00 | missing | P.not — JSDoc + signature | [unscheduled bbox exact=11/16] export doc at src/patterns.ts:611 (11 atoms, predecessor not scheduled: export at src/patterns.ts:611) |
-| 3.8 | 4233 | 0.00 | missing | P.when — JSDoc + both overload signatures | [unscheduled bbox exact=11/20] export doc at src/patterns.ts:637 (11 atoms, predecessor not scheduled: export at src/patterns.ts:637) |
-| 3.9 | 4659 | 0.00 | missing | P.select — JSDoc + all three overload signatures | [unscheduled bbox exact=13/35] export at src/patterns.ts:673 (13 atoms, predecessor not scheduled: export names surface #2 in src/patterns.ts) |
-| 3.10 | 4865 | 0.00 | missing | P.array — JSDoc + overload signatures | [scheduled bbox exact=4/15] export at src/patterns.ts:242 (t=6847, 4 atoms); better unscheduled exact=10/15: export doc at src/patterns.ts:241 (10 atoms, too expensive at final margin) |
-| 3.11 | 5071 | 0.00 | missing | P.optional — JSDoc + signature | [scheduled bbox exact=6/16] export at src/patterns.ts:187 (t=6950, 6 atoms); better unscheduled exact=10/16: export doc at src/patterns.ts:187 (10 atoms, too expensive at final margin) |
-| 3.12 | 5524 | 0.00 | missing | P.intersection / P.instanceOf — JSDoc + signatures | [unscheduled bbox exact=19/36] export doc at src/patterns.ts:536 (19 atoms, predecessor not scheduled: export at src/patterns.ts:536) |
-| 3.13 | 5846 | 0.00 | missing | P.record — JSDoc + signatures | [unscheduled bbox exact=12/24] export doc at src/patterns.ts:433 (12 atoms, predecessor not scheduled: export at src/patterns.ts:433) |
-| 3.14 | 6315 | 0.00 | missing | P.map / P.set — JSDoc + signatures | [scheduled bbox exact=4/33] export at src/patterns.ts:295 (t=6890, 4 atoms); better unscheduled exact=12/33: export doc at src/patterns.ts:356 (12 atoms, predecessor not scheduled: export at src/patterns.ts:356) |
-| 3.15 | 6498 | 0.00 | missing | P.shape + matcher protocol re-exports | [scheduled bbox exact=0/15] export body at src/patterns.ts:246 body 249 (t=9107, 27 atoms); better unscheduled exact=4/15: export names surface #3 in src/patterns.ts (12 atoms, too expensive at final margin) |
-| 3.16 | 6988 | 0.00 | missing | chainable() factory + variadic / arrayChainable | [scheduled same-file] export body at src/patterns.ts:246 body 249 (t=9107, 27 atoms) |
-| 3.17 | 7489 | 0.00 | missing | P.union / P.not / P.when — full bodies | [unscheduled bbox exact=21/46] export body at src/patterns.ts:572 body 576 (21 atoms, predecessor not scheduled: export at src/patterns.ts:572) |
-| 4.2 | 7921 | 0.12 | missing | Match<i, o> — public builder type signature | [scheduled bbox exact=2/10] export names surface in src/types/Match.ts (t=2123, 2 atoms); better unscheduled exact=6/10: export at src/types/Match.ts:22 (6 atoms, too expensive at final margin) |
-| 4.3 | 8414 | 0.44 | missing | Pattern<T> — public pattern type alias + typed wildcards | [scheduled bbox exact=8/34] export names surface #2 in src/types/Pattern.ts (t=2870, 8 atoms); better unscheduled exact=11/34: export doc at src/types/Pattern.ts:157 (11 atoms, too expensive at final margin) |
-| 4.4 | 8718 | 0.07 | missing | MatcherType union + Matcher interface | [scheduled bbox exact=12/32] export at src/types/Pattern.ts:7 (t=7765, 12 atoms); better unscheduled exact=20/32: export at src/types/Pattern.ts:50 (20 atoms, too expensive at final margin) |
-| 4.6 | 9151 | 0.00 | missing | matchPattern() — Matcher / object / primitive branches | [scheduled bbox exact=6/32] export at src/internals/helpers.ts:32 (t=4060, 6 atoms); better unscheduled exact=20/32: export body at src/internals/helpers.ts:32 body 37 (69 atoms, too expensive at final margin) |
-| 4.8 | 9976 | 0.00 | missing | getSelectionKeys() + flatMap helpers | [scheduled bbox exact=8/17] export body at src/internals/helpers.ts:120 body 121 (t=5634, 8 atoms) |
-
-### fs/listing
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 4.1 | 7838 | 0.09 | missing | tests/ + docs/ + examples/ listings | fs-only |
-
-### mixed/unknown
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 2.1 | 603 | 0.80 | partial | match() exported signature | [scheduled bbox exact=4/5] export at src/match.ts:32 (t=235, 4 atoms) |
-| 4.5 | 8816 | 0.00 | missing | internals/symbols.ts — core matcher / unset / isVariadic brands | [scheduled bbox exact=8/8] export names surface in src/internals/symbols.ts (t=8795, 8 atoms) |
-
-Top wasted paths (off-NS at 3K): src/types/helpers.ts (734t, 3 batches), src/types/Pattern.ts (710t, 3 batches), package.json (217t, 1 batch), README.md (167t, 2 batches), src/errors.ts (73t, 1 batch)
-
-## Walker waste rollup (by descriptor pattern)
-
-| n | off_3k_total | pattern |
-|--:|-------------:|:--------|
-| 2 | 477 | export names surface #<n> in src/types/Pattern.ts |
-| 2 | 475 | export names surface #<n> in src/types/helpers.ts |
-
-## Walker waste (walker_t ≤ 3000, off_3k ≥ 50)
-
-| off_3k | off_3k_ratio | off_any | cost | walker_t | batch |
-|-------:|-------------:|--------:|-----:|---------:|:------|
-| 270 | 1.00 | 270 | 270 | 2937 | export names surface #2 in src/types/helpers.ts |
-| 259 | 1.00 | 259 | 259 | 1532 | export names surface in src/types/helpers.ts |
-| 249 | 1.00 | 102 | 249 | 2621 | export names surface #2 in src/types/Pattern.ts |
-| 233 | 1.00 | 212 | 233 | 1299 | export names surface in src/types/Pattern.ts |
-| 228 | 1.00 | 177 | 228 | 2123 | export names surface #1 in src/types/Pattern.ts |
-| 217 | 0.79 | 217 | 273 | 293 | package identity in package.json |
-| 205 | 1.00 | 205 | 205 | 1869 | export names surface #1 in src/types/helpers.ts |
-| 104 | 1.00 | 104 | 104 | 566 | README.md section #0 |
-| 73 | 1.00 | 0 | 73 | 872 | export body at src/errors.ts:5 body 7 |
-| 63 | 1.00 | 63 | 63 | 63 | README headline in README.md |
+| source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
+|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
+| walker |  | 48 | 48 | listing of '.' |  |  | 0.000 |
+| walker |  | 54 | 6 | listing of 'scripts' |  |  | 0.000 |
+| walker |  | 63 | 9 | listing of '.github' |  |  | 0.000 |
+| ns | 71 |  | 71 | README lede + tagline | 1.1 |  | 0.000 |
+| walker |  | 126 | 63 | README headline in README.md |  |  | 0.000 |
+| ns | 151 |  | 80 | package.json identity fields | 1.2 |  | 0.000 |
+| walker |  | 155 | 29 | listing of 'src' |  |  | 0.000 |
+| walker |  | 169 | 14 | export names surface in src/index.ts |  |  | 0.000 |
+| walker |  | 169 | 0 | export at src/index.ts:5 |  |  | 0.000 |
+| walker |  | 185 | 16 | export names surface in src/errors.ts |  |  | 0.000 |
+| walker |  | 197 | 12 | export at src/errors.ts:5 |  |  | 0.000 |
+| walker |  | 215 | 18 | export names surface in src/match.ts |  |  | 0.000 |
+| ns | 223 |  | 72 | src/index.ts — full public re-export surface | 1.3 |  | 0.048 |
+| walker |  | 235 | 20 | export at src/match.ts:32 |  |  | 0.048 |
+| walker |  | 249 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.049 |
+| walker |  | 257 | 8 | listing of 'src/internals' |  |  | 0.050 |
+| walker |  | 267 | 10 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.050 |
+| ns | 271 |  | 48 | Repo root listing | 1.4 |  | 0.315 |
+| walker |  | 293 | 26 | listing of 'docs' |  |  | 0.315 |
+| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.263 |
+| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.255 |
+| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.242 |
+| walker |  | 566 | 273 | package identity in package.json |  |  | 0.315 |
+| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.325 |
+| walker |  | 670 | 104 | README.md section #0 |  |  | 0.325 |
+| ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.306 |
+| walker |  | 709 | 39 | imports in src/index.ts |  |  | 0.348 |
+| walker |  | 719 | 10 | listing of 'examples' |  |  | 0.348 |
+| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.327 |
+| walker |  | 775 | 56 | export names surface in src/is-matching.ts |  |  | 0.335 |
+| walker |  | 800 | 25 | export at src/is-matching.ts:32 |  |  | 0.347 |
+| walker |  | 833 | 33 | export at src/is-matching.ts:53 |  |  | 0.348 |
+| walker |  | 872 | 39 | export at src/is-matching.ts:48 |  |  | 0.376 |
+| walker |  | 945 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.378 |
+| walker |  | 966 | 21 | plaintext config .prettierrc |  |  | 0.378 |
+| ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.340 |
+| walker |  | 986 | 20 | README.md section #2 |  |  | 0.341 |
+| walker |  | 1028 | 42 | export doc at src/errors.ts:5 |  |  | 0.344 |
+| ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.323 |
+| walker |  | 1207 | 179 | module item at src/match.ts:47 |  |  | 0.371 |
+| walker |  | 1233 | 26 | listing of 'benchmarks' |  |  | 0.371 |
+| ns | 1278 |  | 163 | match.ts imports + MatchState/unmatched | 2.6 |  | 0.345 |
+| walker |  | 1289 | 56 | listing of 'src/types' |  |  | 0.442 |
+| walker |  | 1299 | 10 | imports in src/types/index.ts |  |  | 0.442 |
+| ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.411 |
+| walker |  | 1532 | 233 | export names surface in src/types/Pattern.ts |  |  | 0.411 |
+| walker |  | 1532 | 0 | export at src/types/Pattern.ts:79 |  |  | 0.411 |
+| walker |  | 1532 | 0 | export at src/types/Pattern.ts:94 |  |  | 0.411 |
+| walker |  | 1532 | 0 | export at src/types/Pattern.ts:102 |  |  | 0.411 |
+| walker |  | 1532 | 0 | export at src/types/Pattern.ts:104 |  |  | 0.411 |
+| walker |  | 1532 | 0 | export at src/types/Pattern.ts:106 |  |  | 0.411 |
+| ns | 1764 |  | 275 | MatchExpression.with — selection + dispatch half | 2.8 | 2.7 | 0.370 |
+| walker |  | 1791 | 259 | export names surface in src/types/helpers.ts |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:1 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:3 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:14 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:31 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:55 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:57 |  |  | 0.370 |
+| walker |  | 1791 | 0 | export at src/types/helpers.ts:59 |  |  | 0.370 |
+| walker |  | 1816 | 25 | export names surface in src/types/ExtractPreciseValue.ts |  |  | 0.370 |
+| walker |  | 1842 | 26 | export names surface in src/types/IsMatching.ts |  |  | 0.370 |
+| walker |  | 1869 | 27 | export names surface in src/types/DeepExclude.ts |  |  | 0.370 |
+| walker |  | 1869 | 0 | export at src/types/DeepExclude.ts:3 |  |  | 0.370 |
+| ns | 2017 |  | 253 | MatchExpression.when / otherwise / exhaustive bodies | 2.9 | 2.3 | 0.347 |
+| walker |  | 2074 | 205 | export names surface #1 in src/types/helpers.ts |  |  | 0.347 |
+| walker |  | 2074 | 0 | export at src/types/helpers.ts:61 |  |  | 0.347 |
+| walker |  | 2074 | 0 | export at src/types/helpers.ts:68 |  |  | 0.347 |
+| walker |  | 2074 | 0 | export at src/types/helpers.ts:138 |  |  | 0.347 |
+| walker |  | 2087 | 13 | export at src/types/helpers.ts:69 |  |  | 0.347 |
+| ns | 2115 |  | 98 | MatchExpression.run / returnType / narrow + defaultCatcher | 2.10 | 2.3 | 0.333 |
+| walker |  | 2123 | 36 | export names surface in src/types/Match.ts |  |  | 0.333 |
+| walker |  | 2123 | 0 | export at src/types/Match.ts:8 |  |  | 0.333 |
+| walker |  | 2351 | 228 | export names surface #1 in src/types/Pattern.ts |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:108 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:110 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:112 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:114 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:130 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:136 |  |  | 0.333 |
+| walker |  | 2351 | 0 | export at src/types/Pattern.ts:190 |  |  | 0.333 |
+| walker |  | 2365 | 14 | export at src/types/Pattern.ts:132 |  |  | 0.333 |
+| walker |  | 2383 | 18 | export at src/types/Pattern.ts:157 |  |  | 0.333 |
+| walker |  | 2406 | 23 | export at src/types/helpers.ts:122 |  |  | 0.333 |
+| walker |  | 2430 | 24 | export at src/types/Pattern.ts:38 |  |  | 0.333 |
+| walker |  | 2454 | 24 | export at src/types/Pattern.ts:74 |  |  | 0.333 |
+| ns | 2477 |  | 362 | isMatching — JSDoc + PatternConstraint helper | 2.11 | 2.2 | 0.307 |
+| walker |  | 2497 | 43 | export names surface in src/types/BuildMany.ts |  |  | 0.307 |
+| walker |  | 2515 | 18 | export at src/types/BuildMany.ts:4 |  |  | 0.307 |
+| walker |  | 2545 | 30 | export at src/types/Pattern.ts:96 |  |  | 0.307 |
+| walker |  | 2582 | 37 | export at src/types/helpers.ts:49 |  |  | 0.307 |
+| walker |  | 2621 | 39 | export at src/types/Pattern.ts:116 |  |  | 0.307 |
+| ns | 2851 |  | 374 | isMatching — JSDoc for two-arg + runtime body | 2.12 | 2.2 | 0.287 |
+| walker |  | 2870 | 249 | export names surface #2 in src/types/Pattern.ts |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:191 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:192 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:193 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:194 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:195 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:201 |  |  | 0.288 |
+| walker |  | 2870 | 0 | export at src/types/Pattern.ts:643 |  |  | 0.288 |
+| walker |  | 2894 | 24 | export at src/types/Pattern.ts:196 |  |  | 0.288 |
+| walker |  | 2937 | 43 | export at src/types/helpers.ts:63 |  |  | 0.288 |
+| ns | 3005 |  | 154 | NonExhaustiveError class | 2.13 |  | 0.305 |
+| ns | 3161 |  | 156 | P module-doc + combinator-function name catalog | 3.1 |  | 0.294 |
+| walker |  | 3207 | 270 | export names surface #2 in src/types/helpers.ts |  |  | 0.294 |
+| walker |  | 3207 | 0 | export at src/types/helpers.ts:173 |  |  | 0.294 |
+| walker |  | 3207 | 0 | export at src/types/helpers.ts:175 |  |  | 0.294 |
+| walker |  | 3207 | 0 | export at src/types/helpers.ts:177 |  |  | 0.294 |
+| walker |  | 3207 | 0 | export at src/types/helpers.ts:200 |  |  | 0.294 |
+| walker |  | 3207 | 0 | export at src/types/helpers.ts:202 |  |  | 0.294 |
+| walker |  | 3221 | 14 | export at src/types/helpers.ts:192 |  |  | 0.294 |
+| walker |  | 3235 | 14 | export at src/types/helpers.ts:196 |  |  | 0.294 |
+| walker |  | 3268 | 33 | export at src/types/helpers.ts:188 |  |  | 0.294 |
+| walker |  | 3307 | 39 | export at src/types/helpers.ts:182 |  |  | 0.294 |
+| walker |  | 3319 | 12 | export names surface #3 in src/types/Pattern.ts |  |  | 0.294 |
+| ns | 3350 |  | 189 | P wildcards — every const definition | 3.2 |  | 0.289 |
+| ns | 3422 |  | 72 | P type-level re-exports + matcher symbol | 3.3 |  | 0.286 |
+| walker |  | 3461 | 142 | headings outline in docs/v3-to-v4-migration-guide.md |  |  | 0.286 |
+| walker |  | 3461 | 0 | docs/v3-to-v4-migration-guide.md section #0 |  |  | 0.286 |
+| ns | 3482 |  | 60 | P.string predicates — name catalog | 3.4 |  | 0.282 |
+| ns | 3560 |  | 78 | P.number / P.bigint predicates — name catalog | 3.5 |  | 0.278 |
+| walker |  | 3605 | 144 | headings outline in docs/v4-to-v5-migration-guide.md |  |  | 0.278 |
+| walker |  | 3631 | 26 | docs/v4-to-v5-migration-guide.md section #0 |  |  | 0.278 |
+| walker |  | 3678 | 47 | export at src/types/Pattern.ts:124 |  |  | 0.278 |
+| walker |  | 3726 | 48 | export at src/types/helpers.ts:25 |  |  | 0.278 |
+| walker |  | 3751 | 25 | README.md section #7 |  |  | 0.278 |
+| walker |  | 3770 | 19 | imports in src/types/DeepExclude.ts |  |  | 0.278 |
+| ns | 3780 |  | 220 | P.union — JSDoc + signature | 3.6 | 3.1 | 0.270 |
+| walker |  | 3850 | 80 | export names surface in src/types/InvertPattern.ts |  |  | 0.270 |
+| walker |  | 3870 | 20 | export at src/types/InvertPattern.ts:106 |  |  | 0.270 |
+| walker |  | 3892 | 22 | export at src/types/InvertPattern.ts:303 |  |  | 0.270 |
+| ns | 3971 |  | 191 | P.not — JSDoc + signature | 3.7 | 3.1 | 0.263 |
+| walker |  | 3973 | 81 | export names surface in src/internals/helpers.ts |  |  | 0.263 |
+| walker |  | 3973 | 0 | export at src/internals/helpers.ts:120 |  |  | 0.263 |
+| walker |  | 3985 | 12 | export at src/internals/helpers.ts:12 |  |  | 0.263 |
+| walker |  | 4015 | 30 | export at src/internals/helpers.ts:16 |  |  | 0.263 |
+| walker |  | 4060 | 45 | export at src/internals/helpers.ts:32 |  |  | 0.264 |
+| walker |  | 4108 | 48 | export at src/internals/helpers.ts:132 |  |  | 0.264 |
+| walker |  | 4143 | 35 | export body at src/internals/helpers.ts:16 body 19 |  |  | 0.264 |
+| walker |  | 4197 | 54 | export at src/types/helpers.ts:164 |  |  | 0.264 |
+| ns | 4233 |  | 262 | P.when — JSDoc + both overload signatures | 3.8 | 3.1 | 0.256 |
+| walker |  | 4252 | 55 | export at src/types/helpers.ts:105 |  |  | 0.256 |
+| walker |  | 4267 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.256 |
+| walker |  | 4428 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.271 |
+| walker |  | 4456 | 28 | README.md section #8 |  |  | 0.273 |
+| walker |  | 4515 | 59 | export at src/types/Pattern.ts:138 |  |  | 0.274 |
+| walker |  | 4605 | 90 | export names surface in src/types/DistributeUnions.ts |  |  | 0.274 |
+| walker |  | 4633 | 28 | export at src/types/DistributeUnions.ts:41 |  |  | 0.274 |
+| walker |  | 4656 | 23 | imports in src/types/BuildMany.ts |  |  | 0.274 |
+| ns | 4659 |  | 426 | P.select — JSDoc + all three overload signatures | 3.9 | 3.1 | 0.260 |
+| walker |  | 4686 | 30 | README.md section #4 |  |  | 0.264 |
+| walker |  | 4751 | 65 | export at src/types/helpers.ts:42 |  |  | 0.264 |
+| ns | 4865 |  | 206 | P.array — JSDoc + overload signatures | 3.10 | 3.1 | 0.258 |
+| walker |  | 5018 | 267 | export names surface #3 in src/types/helpers.ts |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:217 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:227 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:240 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:242 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:244 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:246 |  |  | 0.258 |
+| walker |  | 5018 | 0 | export at src/types/helpers.ts:248 |  |  | 0.258 |
+| walker |  | 5032 | 14 | export at src/types/helpers.ts:250 |  |  | 0.258 |
+| walker |  | 5065 | 33 | export at src/types/helpers.ts:235 |  |  | 0.258 |
+| ns | 5071 |  | 206 | P.optional — JSDoc + signature | 3.11 | 3.1 | 0.253 |
+| walker |  | 5101 | 36 | export at src/types/helpers.ts:229 |  |  | 0.253 |
+| walker |  | 5137 | 36 | export at src/types/helpers.ts:254 |  |  | 0.253 |
+| walker |  | 5184 | 47 | export at src/types/helpers.ts:220 |  |  | 0.253 |
+| walker |  | 5207 | 23 | docs/v3-to-v4-migration-guide.md section #10 |  |  | 0.253 |
+| walker |  | 5279 | 72 | export at src/types/helpers.ts:16 |  |  | 0.253 |
+| walker |  | 5351 | 72 | export at src/types/helpers.ts:207 |  |  | 0.253 |
+| walker |  | 5425 | 74 | export at src/types/helpers.ts:83 |  |  | 0.253 |
+| walker |  | 5459 | 34 | README.md section #3 |  |  | 0.256 |
+| ns | 5524 |  | 453 | P.intersection / P.instanceOf — JSDoc + signatures | 3.12 | 3.1 | 0.245 |
+| walker |  | 5536 | 77 | export at src/types/helpers.ts:113 |  |  | 0.245 |
+| walker |  | 5634 | 98 | export body at src/internals/helpers.ts:120 body 121 |  |  | 0.246 |
+| ns | 5846 |  | 322 | P.record — JSDoc + signatures | 3.13 | 3.1 | 0.239 |
+| walker |  | 5994 | 360 | package entrypoints in package.json |  |  | 0.261 |
+| walker |  | 6265 | 271 | package scripts in package.json |  |  | 0.261 |
+| ns | 6315 |  | 469 | P.map / P.set — JSDoc + signatures | 3.14 | 3.1 | 0.252 |
+| walker |  | 6394 | 129 | package dependencies in package.json |  |  | 0.252 |
+| walker |  | 6477 | 83 | export at src/types/Pattern.ts:83 |  |  | 0.252 |
+| ns | 6498 |  | 183 | P.shape + matcher protocol re-exports | 3.15 | 3.1 | 0.248 |
+| walker |  | 6500 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.248 |
+| walker |  | 6665 | 165 | export names surface in src/patterns.ts |  |  | 0.253 |
+| walker |  | 6665 | 0 | export at src/patterns.ts:65 |  |  | 0.253 |
+| walker |  | 6665 | 0 | export at src/patterns.ts:116 |  |  | 0.253 |
+| walker |  | 6665 | 0 | export at src/patterns.ts:241 |  |  | 0.253 |
+| walker |  | 6665 | 0 | export at src/patterns.ts:294 |  |  | 0.253 |
+| walker |  | 6688 | 23 | export at src/patterns.ts:131 |  |  | 0.258 |
+| walker |  | 6716 | 28 | export at src/patterns.ts:246 |  |  | 0.258 |
+| walker |  | 6757 | 41 | export at src/patterns.ts:81 |  |  | 0.261 |
+| walker |  | 6804 | 47 | export at src/patterns.ts:100 |  |  | 0.265 |
+| walker |  | 6847 | 43 | export at src/patterns.ts:242 |  |  | 0.267 |
+| walker |  | 6890 | 43 | export at src/patterns.ts:295 |  |  | 0.268 |
+| walker |  | 6950 | 60 | export at src/patterns.ts:187 |  |  | 0.271 |
+| ns | 6988 |  | 490 | chainable() factory + variadic / arrayChainable | 3.16 | 3.1 | 0.260 |
+| walker |  | 7095 | 145 | export at src/patterns.ts:48 |  |  | 0.260 |
+| walker |  | 7330 | 235 | export body at src/patterns.ts:187 body 193 |  |  | 0.260 |
+| walker |  | 7419 | 89 | export at src/types/helpers.ts:33 |  |  | 0.260 |
+| walker |  | 7481 | 62 | imports in src/is-matching.ts |  |  | 0.262 |
+| ns | 7489 |  | 501 | P.union / P.not / P.when — full bodies | 3.17 | 3.6 | 0.251 |
+| walker |  | 7574 | 93 | export at src/types/DistributeUnions.ts:174 |  |  | 0.251 |
+| walker |  | 7668 | 94 | export at src/types/helpers.ts:73 |  |  | 0.251 |
+| walker |  | 7765 | 97 | export at src/types/Pattern.ts:7 |  |  | 0.251 |
+| ns | 7838 |  | 349 | tests/ + docs/ + examples/ listings | 4.1 |  | 0.239 |
+| walker |  | 7909 | 144 | export names surface in src/types/FindSelected.ts |  |  | 0.239 |
+| walker |  | 7909 | 0 | export at src/types/FindSelected.ts:21 |  |  | 0.239 |
+| ns | 7921 |  | 83 | Match<i, o> — public builder type signature | 4.2 |  | 0.238 |
+| walker |  | 7922 | 13 | export at src/types/FindSelected.ts:13 |  |  | 0.238 |
+| walker |  | 7944 | 22 | export at src/types/FindSelected.ts:16 |  |  | 0.238 |
+| walker |  | 7991 | 47 | export at src/types/FindSelected.ts:185 |  |  | 0.238 |
+| walker |  | 8050 | 59 | export at src/types/FindSelected.ts:165 |  |  | 0.238 |
+| walker |  | 8118 | 68 | export at src/types/FindSelected.ts:191 |  |  | 0.238 |
+| walker |  | 8187 | 69 | export at src/types/FindSelected.ts:159 |  |  | 0.238 |
+| walker |  | 8286 | 99 | export at src/types/InvertPattern.ts:180 |  |  | 0.238 |
+| walker |  | 8385 | 99 | export at src/types/InvertPattern.ts:192 |  |  | 0.238 |
+| ns | 8414 |  | 493 | Pattern<T> — public pattern type alias + typed wildcards | 4.3 |  | 0.245 |
+| walker |  | 8485 | 100 | export at src/types/helpers.ts:126 |  |  | 0.245 |
+| walker |  | 8639 | 154 | json config tsconfig.json |  |  | 0.245 |
+| ns | 8718 |  | 304 | MatcherType union + Matcher interface | 4.4 |  | 0.242 |
+| walker |  | 8795 | 156 | export names surface in src/internals/symbols.ts |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:17 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:19 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:20 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:22 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:23 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:26 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:27 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:29 |  |  | 0.243 |
+| walker |  | 8795 | 0 | export at src/internals/symbols.ts:30 |  |  | 0.243 |
+| ns | 8816 |  | 98 | internals/symbols.ts — core matcher / unset / isVariadic brands | 4.5 |  | 0.249 |
+| walker |  | 9107 | 312 | export body at src/patterns.ts:246 body 249 |  |  | 0.249 |
+| ns | 9151 |  | 335 | matchPattern() — Matcher / object / primitive branches | 4.6 | 4.4 | 0.244 |
+| walker |  | 9182 | 75 | imports in src/match.ts |  |  | 0.248 |
+| walker |  | 9204 | 22 | export doc at src/types/InvertPattern.ts:303 |  |  | 0.248 |
+| walker |  | 9321 | 117 | README.md section #11 |  |  | 0.248 |
+| walker |  | 9449 | 128 | export at src/types/DistributeUnions.ts:46 |  |  | 0.248 |
+| walker |  | 9577 | 128 | README.md section #10 |  |  | 0.248 |
+| walker |  | 9652 | 75 | export names surface #4 in src/types/helpers.ts |  |  | 0.248 |
+| walker |  | 9667 | 15 | export at src/types/helpers.ts:271 |  |  | 0.248 |
+| walker |  | 9688 | 21 | export at src/types/helpers.ts:266 |  |  | 0.248 |
+| walker |  | 9721 | 33 | export at src/types/helpers.ts:275 |  |  | 0.248 |
+| walker |  | 9755 | 34 | export at src/types/helpers.ts:260 |  |  | 0.248 |
+| ns | 9767 |  | 616 | matchPattern() — array / tuple / variadic branch | 4.7 | 4.6 | 0.239 |
+| walker |  | 9884 | 129 | export at src/types/DistributeUnions.ts:183 |  |  | 0.239 |
+| ns | 9976 |  | 209 | getSelectionKeys() + flatMap helpers | 4.8 | 4.6 | 0.246 |

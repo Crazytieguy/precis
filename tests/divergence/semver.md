@@ -1,108 +1,162 @@
-scores: Score(3000)=0.654 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
+Score(3000)=0.654 I=0.735 C=0.582 ns_rows≤3K=14/40 (reached=8 partial=1 missing=5)
 
-## Per-budget scores
-
-| B | A_B | I(B) | C(B) | compl(B) | Score(B) | walker_used |
-|--:|----:|-----:|-----:|---------:|---------:|------------:|
-| 1000 | 100 | 0.692 | 0.539 | 0.874 | 0.611 | 963 |
-| 1442 | 163 | 0.730 | 0.552 | 0.878 | 0.635 | 1435 |
-| 2080 | 194 | 0.715 | 0.547 | 0.856 | 0.625 | 2050 |
-| 3000 | 263 | 0.735 | 0.582 | 0.796 | 0.654 | 2969 |
-| 4327 | 317 | 0.724 | 0.535 | 0.854 | 0.622 | 4272 |
-| 6240 | 446 | 0.688 | 0.391 | 0.764 | 0.519 | 6109 |
-| 9000 | 701 | 0.677 | 0.330 | 0.924 | 0.473 | 8856 |
-
-## Top opportunities
-
-### Additive (close partial / missing rows)
-
-| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
-|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 27 | 2.41 | 2.41 | 2.10 | nearby candidates have low exact atom overlap | 1.1, 3.2, 3.3, 3.7, 5.1, ... |
-| tune ranking for high-overlap unscheduled candidates | 2 | 0.15 | 0.15 | 0.15 | high-overlap candidates not in the schedule by T_max, exact total=23/26 | 2.3, 3.6 |
-| add walker candidates for no-discovered rows | 1 | 0.15 | 0.15 | 0.15 | NS rows have no discovered line candidate | 2.4 |
-| promote export names surface in classes/semver.js | 1 | 0.02 | 0.02 | 0.02 | 0 files, exact total=9/9 | 4.1 |
-| promote export names surface in classes/range.js | 1 | 0.02 | 0.02 | 0.02 | 0 files, exact total=8/8 | 4.2 |
-
-### Subtractive (suppress consistently off-NS batches)
-
-| pattern | batches | freed@1k | freed@3k | freed@9k | evidence | top batch ids |
-|:--------|--------:|---------:|---------:|---------:|:---------|:--------------|
-| README.md section #<n> | 3 | 0 | 180 | 1603 | off_3k=180 | README.md section #27, README.md section #24, README.md section #29 |
-| package scripts in package.json | 1 | 144 | 144 | 144 | off_3k=144 | package scripts in package.json |
-| package entrypoints in package.json | 1 | 92 | 92 | 92 | off_3k=92 | package entrypoints in package.json |
-| package dependencies in package.json | 1 | 0 | 84 | 84 | off_3k=84 | package dependencies in package.json |
-| CONTRIBUTING.md section #<n> | 1 | 0 | 63 | 193 | off_3k=63 | CONTRIBUTING.md section #2 |
-
-Top missed paths (NS rows ≤ 3K): README.md (4 rows, 101 atoms), range.bnf (1 row, 16 atoms), package.json (1 row, 5 atoms)
-
-## Arrival ledger by diagnosis
-
-### ranking-recoverable
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 2.3 | 750 | 0.00 | missing | README — Usage example (calls into the public API) | [unscheduled bbox exact=9/9] README.md section #2 (9 atoms, too expensive at final margin) |
-| 3.6 | 4025 | 0.00 | missing | README — Tilde Ranges desugaring | [unscheduled bbox exact=14/17] README.md section #16 (14 atoms, too expensive at final margin) |
-| 4.1 | 5749 | 0.00 | missing | SemVer class — method signatures (locations) | [unscheduled bbox exact=9/9] export at classes/semver.js:9 (16 atoms, predecessor not scheduled: export names surface in classes/semver.js) |
-| 4.2 | 5809 | 0.00 | missing | Range class — method signatures (locations) | [unscheduled bbox exact=8/8] export at classes/range.js:6 (14 atoms, predecessor not scheduled: export names surface in classes/range.js) |
-
-### wrong-slice / granularity
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.1 | 61 | 0.80 | partial | package.json — name, description, main | [scheduled bbox exact=3/5] package identity in package.json (t=268, 3 atoms) |
-| 2.6 | 1667 | 0.74 | missing | README — all section heading locations | [scheduled bbox exact=1/23] README.md section #19 (t=8642, 40 atoms) |
-| 3.2 | 2375 | 0.06 | missing | README — Ranges intro (operators, comparator sets, ||) | [scheduled bbox exact=27/35] README.md section #4 (t=6669, 27 atoms) |
-| 3.3 | 2947 | 0.06 | missing | README — Prerelease Tags semantics | [scheduled bbox exact=7/34] README.md section #6 (t=7028, 7 atoms) |
-| 3.4 | 3219 | 0.00 | missing | README — Hyphen Ranges desugaring | [scheduled bbox exact=12/19] README.md section #14 (t=9111, 12 atoms) |
-| 3.5 | 3533 | 0.00 | missing | README — X-Ranges desugaring | [unscheduled bbox exact=13/18] README.md section #15 (13 atoms, too expensive at final margin) |
-| 3.7 | 4873 | 0.00 | missing | README — Caret Ranges desugaring (the most complex) | [unscheduled bbox exact=34/43] README.md section #17 (34 atoms, too expensive at final margin) |
-| 3.8 | 5124 | 0.11 | missing | README — Functions section preface (options doc) | [scheduled bbox exact=15/19] README.md section #19 (t=8642, 15 atoms) |
-| 3.9 | 5681 | 0.12 | missing | README — Coercion semantics | [scheduled bbox exact=5/26] README.md section #49 (t=4831, 5 atoms); better unscheduled exact=12/26: README.md section #48 (12 atoms, too expensive at final margin) |
-| 4.3 | 5992 | 0.00 | missing | Range module — internal helpers (locations) | [unscheduled same-file] export body at classes/range.js:6 body 8 (165 atoms, predecessor not scheduled: export at classes/range.js:6) |
-| 4.4 | 6069 | 0.00 | missing | Comparator class — method signatures (locations) | [unscheduled bbox exact=7/9] export at classes/comparator.js:5 (12 atoms, predecessor not scheduled: export names surface in classes/comparator.js) |
-| 4.5 | 6460 | 0.00 | missing | internal/constants.js — full file | [unscheduled bbox exact=10/37] export at internal/constants.js:28 (10 atoms, predecessor not scheduled: export names surface in internal/constants.js) |
-| 5.1 | 7003 | 0.00 | missing | internal/re.js — every token name (locations) | [unscheduled bbox exact=0/42] export names surface in internal/re.js (6 atoms, discovered unscheduled) |
-| 5.2 | 7475 | 0.00 | missing | internal/re.js — section comments and exports header | [unscheduled bbox exact=7/38] imports in internal/re.js (7 atoms, discovered unscheduled) |
-| 5.3 | 7628 | 0.00 | missing | SemVer.compare — body (entry into compareMain || comparePre) | [unscheduled bbox exact=11/15] export body at classes/semver.js:9 body 11 (11 atoms, predecessor not scheduled: export at classes/semver.js:9) |
-| 5.4 | 7934 | 0.00 | missing | internal/identifiers.js — full file | [unscheduled bbox exact=14/29] export body at internal/identifiers.js:4 body 5 (14 atoms, predecessor not scheduled: export at internal/identifiers.js:4) |
-| 5.5 | 8148 | 0.00 | missing | bin/semver.js — CLI flag case lines (truncated) | [unscheduled same-file] imports in bin/semver.js (1 atoms, discovered unscheduled) |
-| 6.1 | 8372 | 0.00 | missing | functions/ — module.exports lines (locations of every public function) | [unscheduled bbox exact=1/24] export at functions/valid.js:8 (1 atoms, predecessor not scheduled: export names surface in functions/valid.js) |
-| 6.2 | 8490 | 0.00 | missing | ranges/ — module.exports lines (locations of every range function) | [unscheduled bbox exact=1/11] export at ranges/valid.js:13 (1 atoms, predecessor not scheduled: export names surface in ranges/valid.js) |
-| 6.3 | 8897 | 0.00 | missing | functions/cmp.js — operator switch body | [unscheduled bbox exact=34/44] export body at functions/cmp.js:10 body 11 (34 atoms, predecessor not scheduled: export at functions/cmp.js:10) |
-| 6.4 | 9449 | 0.00 | missing | functions/diff.js — release-type comparison body | [unscheduled bbox exact=37/49] export body at functions/diff.js:5 body 6 (42 atoms, predecessor not scheduled: export at functions/diff.js:5) |
-| 7.1 | 9601 | 0.00 | missing | internal/parse-options.js — full file | [unscheduled bbox exact=7/17] export body at internal/parse-options.js:6 body 7 (7 atoms, predecessor not scheduled: export at internal/parse-options.js:6) |
-| 7.2 | 9711 | 0.00 | missing | internal/debug.js — full file | [unscheduled bbox exact=1/11] export at internal/debug.js:11 (1 atoms, predecessor not scheduled: export names surface in internal/debug.js) |
-| 7.3 | 9778 | 0.00 | missing | internal/lrucache.js — class signature + max constant | [unscheduled bbox exact=6/8] export at internal/lrucache.js:3 (8 atoms, predecessor not scheduled: export names surface in internal/lrucache.js) |
-| 7.4 | 9852 | 0.00 | missing | ranges/min-version.js — function signature + 0.0.0 fast path | [unscheduled bbox exact=4/6] export body at ranges/min-version.js:7 body 8 (4 atoms, predecessor not scheduled: export at ranges/min-version.js:7) |
-| 7.5 | 9924 | 0.88 | partial | LICENSE first line + CONTRIBUTING.md headings | [scheduled bbox exact=4/8] CONTRIBUTING.md section #3 (t=9441, 14 atoms) |
-| 7.6 | 9977 | 0.00 | missing | bin/semver.js — entry skeleton (shebang, version load, main call) | [unscheduled bbox exact=0/5] imports in bin/semver.js (1 atoms, discovered unscheduled) |
-
-### no discovered candidate
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 2.4 | 1011 | 0.00 | missing | range.bnf — canonical range grammar | no discovered line candidate |
-
-Top wasted paths (off-NS at 3K): package.json (320t, 3 batches), README.md (180t, 3 batches), CONTRIBUTING.md (171t, 2 batches), test/ranges (56t, 1 batch)
-
-## Walker waste rollup (by descriptor pattern)
-
-| n | off_3k_total | pattern |
-|--:|-------------:|:--------|
-| 3 | 180 | README.md section #<n> |
-
-## Walker waste (walker_t ≤ 3000, off_3k ≥ 50)
-
-| off_3k | off_3k_ratio | off_any | cost | walker_t | batch |
-|-------:|-------------:|--------:|-----:|---------:|:------|
-| 144 | 1.00 | 144 | 144 | 963 | package scripts in package.json |
-| 108 | 1.00 | 44 | 108 | 371 | headings outline in CONTRIBUTING.md |
-| 92 | 0.68 | 92 | 135 | 787 | package entrypoints in package.json |
-| 84 | 0.75 | 84 | 112 | 1107 | package dependencies in package.json |
-| 71 | 1.00 | 71 | 71 | 2969 | README.md section #27 |
-| 63 | 1.00 | 63 | 63 | 2050 | CONTRIBUTING.md section #2 |
-| 57 | 1.00 | 57 | 57 | 2821 | README.md section #24 |
-| 56 | 1.00 | 56 | 56 | 2385 | listing of 'test/ranges' |
-| 52 | 1.00 | 52 | 52 | 2333 | README.md section #29 |
+| source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
+|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
+| ns | 61 |  | 61 | package.json — name, description, main | 1.1 |  | 0.000 |
+| walker |  | 103 | 103 | listing of '.' |  |  | 0.000 |
+| walker |  | 106 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
+| walker |  | 130 | 24 | README headline in README.md |  |  | 0.000 |
+| walker |  | 135 | 5 | listing of 'bin' |  |  | 0.000 |
+| walker |  | 143 | 8 | CHANGELOG.md section #0 |  |  | 0.000 |
+| walker |  | 153 | 10 | export names surface in index.js |  |  | 0.000 |
+| ns | 164 |  | 103 | Repo top-level listing | 1.2 |  | 0.614 |
+| walker |  | 268 | 115 | package identity in package.json |  |  | 0.795 |
+| ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.695 |
+| walker |  | 285 | 17 | listing of 'classes' |  |  | 0.708 |
+| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.711 |
+| walker |  | 312 | 27 | listing of 'internal' |  |  | 0.725 |
+| ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.727 |
+| walker |  | 340 | 28 | listing of '.github' |  |  | 0.727 |
+| walker |  | 344 | 4 | listing of '.github/matchers' |  |  | 0.727 |
+| walker |  | 352 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.727 |
+| ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.727 |
+| walker |  | 363 | 11 | listing of '.github/actions' |  |  | 0.727 |
+| walker |  | 367 | 4 | listing of '.github/actions/create-check' |  |  | 0.727 |
+| walker |  | 371 | 4 | listing of '.github/actions/install-latest-npm' |  |  | 0.727 |
+| walker |  | 479 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.728 |
+| walker |  | 479 | 0 | CONTRIBUTING.md section #0 |  |  | 0.728 |
+| ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.544 |
+| walker |  | 535 | 56 | listing of 'ranges' |  |  | 0.568 |
+| walker |  | 559 | 24 | json config .release-please-manifest.json |  |  | 0.568 |
+| walker |  | 741 | 182 | headings outline in README.md |  |  | 0.573 |
+| ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.541 |
+| walker |  | 763 | 22 | README.md section #1 |  |  | 0.541 |
+| walker |  | 787 | 24 | README.md section #54 |  |  | 0.541 |
+| walker |  | 922 | 135 | package entrypoints in package.json |  |  | 0.611 |
+| walker |  | 963 | 41 | listing of '.github/workflows' |  |  | 0.611 |
+| ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.559 |
+| walker |  | 1107 | 144 | package scripts in package.json |  |  | 0.559 |
+| walker |  | 1219 | 112 | package dependencies in package.json |  |  | 0.591 |
+| walker |  | 1324 | 105 | listing of 'functions' |  |  | 0.776 |
+| walker |  | 1364 | 40 | CONTRIBUTING.md section #1 |  |  | 0.776 |
+| walker |  | 1397 | 33 | listing of 'test' |  |  | 0.776 |
+| ns | 1401 |  | 390 | index.js — module.exports object body (canonical public API list) | 2.5 |  | 0.635 |
+| walker |  | 1414 | 17 | listing of 'test/classes' |  |  | 0.635 |
+| walker |  | 1435 | 21 | README.md section #20 |  |  | 0.635 |
+| walker |  | 1456 | 21 | README.md section #21 |  |  | 0.635 |
+| walker |  | 1477 | 21 | README.md section #22 |  |  | 0.635 |
+| walker |  | 1498 | 21 | README.md section #23 |  |  | 0.635 |
+| walker |  | 1536 | 38 | listing of 'benchmarks' |  |  | 0.635 |
+| walker |  | 1558 | 22 | README.md section #34 |  |  | 0.635 |
+| walker |  | 1580 | 22 | README.md section #42 |  |  | 0.635 |
+| walker |  | 1602 | 22 | README.md section #51 |  |  | 0.635 |
+| walker |  | 1627 | 25 | README.md section #12 |  |  | 0.635 |
+| walker |  | 1651 | 24 | README.md section #47 |  |  | 0.635 |
+| ns | 1667 |  | 266 | README — all section heading locations | 2.6 |  | 0.617 |
+| walker |  | 1678 | 27 | README.md section #25 |  |  | 0.617 |
+| walker |  | 1707 | 29 | README.md section #13 |  |  | 0.617 |
+| ns | 1775 |  | 108 | README — Versions section (leading = and v) | 3.1 | 2.6 | 0.602 |
+| walker |  | 1805 | 98 | README.md section #3 |  |  | 0.625 |
+| walker |  | 1833 | 28 | README.md section #38 |  |  | 0.625 |
+| walker |  | 1862 | 29 | README.md section #35 |  |  | 0.625 |
+| walker |  | 1889 | 27 | listing of 'test/internal' |  |  | 0.625 |
+| walker |  | 1920 | 31 | README.md section #30 |  |  | 0.625 |
+| walker |  | 1956 | 36 | README.md section #40 |  |  | 0.625 |
+| walker |  | 1993 | 37 | README.md section #39 |  |  | 0.625 |
+| walker |  | 2030 | 37 | README.md section #46 |  |  | 0.625 |
+| walker |  | 2050 | 20 | README.md section #33 |  |  | 0.625 |
+| walker |  | 2113 | 63 | CONTRIBUTING.md section #2 |  |  | 0.625 |
+| walker |  | 2155 | 42 | README.md section #44 |  |  | 0.625 |
+| walker |  | 2199 | 44 | README.md section #36 |  |  | 0.625 |
+| walker |  | 2243 | 44 | README.md section #37 |  |  | 0.625 |
+| walker |  | 2288 | 45 | README.md section #28 |  |  | 0.625 |
+| walker |  | 2333 | 45 | README.md section #52 |  |  | 0.625 |
+| ns | 2375 |  | 600 | README — Ranges intro (operators, comparator sets, \|\|) | 3.2 | 2.6 | 0.568 |
+| walker |  | 2385 | 52 | README.md section #29 |  |  | 0.568 |
+| walker |  | 2441 | 56 | listing of 'test/ranges' |  |  | 0.568 |
+| walker |  | 2821 | 380 | export at index.js:45 |  |  | 0.709 |
+| walker |  | 2878 | 57 | README.md section #24 |  |  | 0.709 |
+| walker |  | 2897 | 19 | CHANGELOG.md section #34 |  |  | 0.709 |
+| walker |  | 2900 | 3 | listing of 'tap-snapshots/test' |  |  | 0.709 |
+| walker |  | 2921 | 21 | CHANGELOG.md section #33 |  |  | 0.709 |
+| walker |  | 2943 | 22 | CHANGELOG.md section #31 |  |  | 0.709 |
+| ns | 2947 |  | 572 | README — Prerelease Tags semantics | 3.3 | 2.6 | 0.654 |
+| walker |  | 2969 | 26 | CHANGELOG.md section #24 |  |  | 0.654 |
+| walker |  | 3040 | 71 | README.md section #27 |  |  | 0.654 |
+| walker |  | 3124 | 84 | listing of 'test/fixtures' |  |  | 0.654 |
+| walker |  | 3196 | 72 | README.md section #31 |  |  | 0.654 |
+| ns | 3219 |  | 272 | README — Hyphen Ranges desugaring | 3.4 | 2.6 | 0.628 |
+| walker |  | 3222 | 26 | CHANGELOG.md section #27 |  |  | 0.628 |
+| walker |  | 3299 | 77 | README.md section #5 |  |  | 0.630 |
+| walker |  | 3303 | 4 | listing of 'test/integration' |  |  | 0.630 |
+| walker |  | 3327 | 24 | CHANGELOG.md section #35 |  |  | 0.630 |
+| walker |  | 3407 | 80 | README.md section #7 |  |  | 0.636 |
+| walker |  | 3435 | 28 | CHANGELOG.md section #26 |  |  | 0.636 |
+| walker |  | 3513 | 78 | README.md section #26 |  |  | 0.636 |
+| ns | 3533 |  | 314 | README — X-Ranges desugaring | 3.5 | 2.6 | 0.614 |
+| walker |  | 3602 | 89 | README.md section #9 |  |  | 0.624 |
+| walker |  | 3707 | 105 | listing of 'test/functions' |  |  | 0.624 |
+| walker |  | 3792 | 85 | README.md section #50 |  |  | 0.625 |
+| walker |  | 3820 | 28 | CHANGELOG.md section #36 |  |  | 0.625 |
+| walker |  | 3825 | 5 | listing of 'test/bin' |  |  | 0.625 |
+| walker |  | 3913 | 88 | README.md section #41 |  |  | 0.625 |
+| walker |  | 3951 | 38 | CHANGELOG.md section #21 |  |  | 0.625 |
+| walker |  | 4002 | 51 | CHANGELOG.md section #17 |  |  | 0.625 |
+| ns | 4025 |  | 492 | README — Tilde Ranges desugaring | 3.6 | 2.6 | 0.605 |
+| walker |  | 4036 | 34 | CHANGELOG.md section #37 |  |  | 0.605 |
+| walker |  | 4080 | 44 | CHANGELOG.md section #22 |  |  | 0.605 |
+| walker |  | 4194 | 114 | README.md section #8 |  |  | 0.622 |
+| walker |  | 4233 | 39 | CHANGELOG.md section #28 |  |  | 0.622 |
+| walker |  | 4272 | 39 | CHANGELOG.md section #29 |  |  | 0.622 |
+| walker |  | 4402 | 130 | CONTRIBUTING.md section #4 |  |  | 0.622 |
+| walker |  | 4533 | 131 | CHANGELOG.md section #4 |  |  | 0.622 |
+| walker |  | 4593 | 60 | README.md section #56 |  |  | 0.622 |
+| walker |  | 4650 | 57 | CHANGELOG.md section #19 |  |  | 0.622 |
+| walker |  | 4698 | 48 | CHANGELOG.md section #25 |  |  | 0.622 |
+| walker |  | 4831 | 133 | README.md section #49 |  |  | 0.623 |
+| ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.579 |
+| walker |  | 4904 | 73 | README.md section #32 |  |  | 0.579 |
+| walker |  | 4965 | 61 | CHANGELOG.md section #20 |  |  | 0.579 |
+| walker |  | 5034 | 69 | CHANGELOG.md section #18 |  |  | 0.579 |
+| walker |  | 5094 | 60 | CHANGELOG.md section #23 |  |  | 0.579 |
+| ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.562 |
+| walker |  | 5251 | 157 | README.md section #43 |  |  | 0.562 |
+| walker |  | 5601 | 350 | json config release-please-config.json |  |  | 0.562 |
+| ns | 5681 |  | 557 | README — Coercion semantics | 3.9 | 2.6 | 0.548 |
+| walker |  | 5736 | 135 | CHANGELOG.md section #7 |  |  | 0.548 |
+| ns | 5749 |  | 68 | SemVer class — method signatures (locations) | 4.1 |  | 0.541 |
+| ns | 5809 |  | 60 | Range class — method signatures (locations) | 4.2 |  | 0.535 |
+| ns | 5992 |  | 183 | Range module — internal helpers (locations) | 4.3 |  | 0.525 |
+| ns | 6069 |  | 77 | Comparator class — method signatures (locations) | 4.4 |  | 0.519 |
+| walker |  | 6109 | 373 | plaintext config .gitignore |  |  | 0.519 |
+| ns | 6460 |  | 391 | internal/constants.js — full file | 4.5 |  | 0.496 |
+| walker |  | 6669 | 560 | README.md section #4 |  |  | 0.541 |
+| walker |  | 6841 | 172 | README.md section #45 |  |  | 0.541 |
+| ns | 7003 |  | 543 | internal/re.js — every token name (locations) | 5.1 |  | 0.516 |
+| walker |  | 7028 | 187 | README.md section #6 |  |  | 0.536 |
+| walker |  | 7087 | 59 | CHANGELOG.md section #38 |  |  | 0.536 |
+| walker |  | 7403 | 316 | CHANGELOG.md section #2 |  |  | 0.536 |
+| walker |  | 7411 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.536 |
+| ns | 7475 |  | 472 | internal/re.js — section comments and exports header | 5.2 | 5.1 | 0.515 |
+| walker |  | 7483 | 72 | CHANGELOG.md section #30 |  |  | 0.515 |
+| walker |  | 7555 | 72 | CHANGELOG.md section #32 |  |  | 0.515 |
+| ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.507 |
+| walker |  | 7779 | 224 | README.md section #53 |  |  | 0.507 |
+| walker |  | 7912 | 133 | CHANGELOG.md section #13 |  |  | 0.507 |
+| ns | 7934 |  | 306 | internal/identifiers.js — full file | 5.4 |  | 0.493 |
+| ns | 8148 |  | 214 | bin/semver.js — CLI flag case lines (truncated) | 5.5 |  | 0.486 |
+| ns | 8372 |  | 224 | functions/ — module.exports lines (locations of every public function) | 6.1 |  | 0.476 |
+| ns | 8490 |  | 118 | ranges/ — module.exports lines (locations of every range function) | 6.2 |  | 0.471 |
+| walker |  | 8642 | 730 | README.md section #19 |  |  | 0.491 |
+| walker |  | 8856 | 214 | CHANGELOG.md section #6 |  |  | 0.491 |
+| ns | 8897 |  | 407 | functions/cmp.js — operator switch body | 6.3 |  | 0.473 |
+| walker |  | 9111 | 255 | README.md section #14 |  |  | 0.489 |
+| walker |  | 9441 | 330 | CONTRIBUTING.md section #3 |  |  | 0.489 |
+| ns | 9449 |  | 552 | functions/diff.js — release-type comparison body | 6.4 |  | 0.471 |
+| ns | 9601 |  | 152 | internal/parse-options.js — full file | 7.1 |  | 0.465 |
+| ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.461 |
+| walker |  | 9717 | 276 | README.md section #10 |  |  | 0.463 |
+| ns | 9778 |  | 67 | internal/lrucache.js — class signature + max constant | 7.3 |  | 0.461 |
+| ns | 9852 |  | 74 | ranges/min-version.js — function signature + 0.0.0 fast path | 7.4 |  | 0.459 |
+| ns | 9924 |  | 72 | LICENSE first line + CONTRIBUTING.md headings | 7.5 |  | 0.462 |
+| ns | 9977 |  | 53 | bin/semver.js — entry skeleton (shebang, version load, main call) | 7.6 |  | 0.460 |

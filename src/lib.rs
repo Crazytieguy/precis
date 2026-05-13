@@ -83,7 +83,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .unwrap_or("")
         .to_string();
 
-    let scheduler = Scheduler::new(root, FsWalker, budget, None);
+    let scheduler = Scheduler::new(root.clone(), FsWalker, budget, None);
     let report = scheduler.run_with_report();
 
     let cumulative_tokens = report.scheduled.last().map(|b| b.cum_tokens).unwrap_or(0);
@@ -94,7 +94,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .map(|(i, b)| ScheduledBatch {
             position: i + 1,
             key: format!("{:?}", &b.key),
-            descriptor: WalkerKey::describe(&b.key),
+            descriptor: WalkerKey::describe(&b.key, &root),
             cost_tokens: b.cost.tokens,
             cum_tokens: b.cum_tokens,
             content: b.content,
@@ -106,7 +106,7 @@ pub fn render_schedule(paths: &[impl AsRef<Path>], budget: usize) -> Result<Sche
         .map(|b| CandidateBatch {
             key: format!("{:?}", &b.key),
             predecessor: b.predecessor.as_ref().map(|p| format!("{p:?}")),
-            descriptor: WalkerKey::describe(&b.key),
+            descriptor: WalkerKey::describe(&b.key, &root),
             content: b.content,
         })
         .collect();

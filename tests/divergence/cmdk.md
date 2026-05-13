@@ -1,106 +1,219 @@
-scores: Score(3000)=0.587 ns_rows≤3K=19/42 (reached=11 partial=0 missing=8)
+Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missing=8)
 
-## Per-budget scores
-
-| B | A_B | I(B) | C(B) | compl(B) | Score(B) | walker_used |
-|--:|----:|-----:|-----:|---------:|---------:|------------:|
-| 1000 | 112 | 0.709 | 0.196 | 1.000 | 0.373 | 960 |
-| 1442 | 144 | 0.701 | 0.153 | 1.000 | 0.327 | 1308 |
-| 2080 | 185 | 0.731 | 0.357 | 1.000 | 0.510 | 2070 |
-| 3000 | 254 | 0.731 | 0.472 | 0.919 | 0.587 | 2864 |
-| 4327 | 345 | 0.724 | 0.387 | 0.785 | 0.529 | 3828 |
-| 6240 | 521 | 0.821 | 0.393 | 0.917 | 0.568 | 6227 |
-| 9000 | 743 | 0.836 | 0.455 | 0.921 | 0.617 | 8990 |
-
-## Top opportunities
-
-### Additive (close partial / missing rows)
-
-| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
-|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 16 | 0.73 | 0.72 | 0.46 | nearby candidates have low exact atom overlap | 5.1, 5.5, 8.3, 7.3, 9.4, ... |
-| tune ranking for high-overlap unscheduled candidates | 3 | 0.31 | 0.31 | 0.31 | high-overlap candidates not in the schedule by T_max, exact total=111/122 | 6.1, 6.2, 3.1 |
-
-### Subtractive (suppress consistently off-NS batches)
-
-| pattern | batches | freed@1k | freed@3k | freed@9k | evidence | top batch ids |
-|:--------|--------:|---------:|---------:|---------:|:---------|:--------------|
-| module item at cmdk/src/index.tsx:1081 | 1 | 0 | 135 | 135 | off_3k=135 | module item at cmdk/src/index.tsx:1081 |
-| export doc at cmdk/src/index.tsx:<n> | 2 | 0 | 118 | 118 | off_3k=118 | export doc at cmdk/src/index.tsx:664, export doc at cmdk/src/index.tsx:833 |
-| headings outline in README.md | 1 | 0 | 80 | 80 | off_3k=90 | headings outline in README.md |
-| module item at cmdk/src/index.tsx:1071 | 1 | 65 | 65 | 65 | off_3k=65 | module item at cmdk/src/index.tsx:1071 |
-| headings outline in ARCHITECTURE.md | 1 | 27 | 27 | 27 | off_3k=57 | headings outline in ARCHITECTURE.md |
-
-Top missed paths (NS rows ≤ 3K): README.md (3 rows, 62 atoms), website (1 row, 30 atoms), test (1 row, 23 atoms), package.json (1 row, 10 atoms), cmdk/package.json (1 row, 6 atoms), ARCHITECTURE.md (1 row, 1 atom)
-
-## Arrival ledger by diagnosis
-
-### ranking-recoverable
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 3.1 | 1232 | 0.00 | missing | Architecture — Approach paragraph (DOM-as-truth) | [unscheduled bbox exact=1/1] ARCHITECTURE.md section #1 (1 atoms, too expensive at final margin) |
-| 6.1 | 4490 | 0.00 | missing | index.tsx — onKeyDown switch (next/prev/Home/End/Enter) | [unscheduled bbox exact=58/61] export body at cmdk/src/index.tsx:169 body 170 (58 atoms, too expensive at final margin) |
-| 6.2 | 5181 | 0.00 | missing | index.tsx — sort() body (DOM-as-truth, in code) | [unscheduled bbox exact=52/60] export body at cmdk/src/index.tsx:169 body 170 (52 atoms, too expensive at final margin) |
-
-### wrong-slice / granularity
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 5.1 | 2516 | 0.00 | missing | README — Item subsection (the most-asked-about part) | [scheduled bbox exact=9/27] README.md section #16 (t=7597, 9 atoms) |
-| 5.2 | 2755 | 0.17 | missing | README — Command (root) value/filter/keywords/loop prose | [scheduled bbox exact=1/12] README.md section #9 (t=7894, 14 atoms) |
-| 5.4 | 3397 | 0.00 | missing | FAQ — accessibility, virtualization, RSC, etc. | [scheduled bbox exact=6/11] README.md section #35 (t=8506, 6 atoms) |
-| 5.5 | 3705 | 0.25 | missing | README — Group / Separator / Empty / Loading subsections | [scheduled bbox exact=8/32] headings outline in README.md (t=2760, 8 atoms) |
-| 5.6 | 3856 | 0.20 | missing | useCommandState — state slice subscription hook | [scheduled bbox exact=5/10] README.md section #27 (t=5762, 5 atoms) |
-| 7.1 | 5336 | 0.14 | missing | command-score — exported scoring function signature | [scheduled bbox exact=6/8] export body at cmdk/src/command-score.ts:155 body 156 (t=3828, 6 atoms) |
-| 7.2 | 5647 | 0.00 | missing | command-score — SCORE_* constants (positive weights) | [scheduled same-file] export body at cmdk/src/command-score.ts:155 body 156 (t=3828, 6 atoms) |
-| 7.3 | 6081 | 0.00 | missing | command-score — PENALTY_* constants (decay weights) | [scheduled same-file] export body at cmdk/src/command-score.ts:155 body 156 (t=3828, 6 atoms) |
-| 8.1 | 6245 | 0.00 | missing | Test file → describe-block names | [unscheduled same-file] imports in test/props.test.ts (1 atoms, discovered unscheduled) |
-| 8.2 | 6516 | 0.00 | missing | Playwright config — test dir + dev-server hookup | [scheduled same-file] imports in playwright.config.ts (t=895, 1 atoms) |
-| 8.3 | 6992 | 0.00 | missing | test/pages/keybinds — fixture for every keybind spec | [scheduled bbox exact=1/47] export at test/pages/keybinds.tsx:47 (t=8107, 1 atoms); better unscheduled exact=3/47: imports in test/pages/keybinds.tsx (3 atoms, discovered unscheduled) |
-| 9.4 | 8625 | 0.17 | missing | index.tsx — useCmdk + useValue helpers | [scheduled bbox exact=7/41] module item at cmdk/src/index.tsx:1010 (t=1120, 7 atoms); better unscheduled exact=19/41: module item body at cmdk/src/index.tsx:1010 body 1019 (19 atoms, discovered unscheduled) |
-| 10.1 | 9027 | 0.20 | missing | Architecture — Discarded approaches (rejected alternatives) | [scheduled bbox exact=2/10] headings outline in ARCHITECTURE.md (t=736, 2 atoms); better unscheduled exact=5/10: ARCHITECTURE.md section #1 (5 atoms, too expensive at final margin) |
-| 10.2 | 9480 | 0.00 | missing | test/pages/group — fixture for the group.test specs | [scheduled bbox exact=1/42] export at test/pages/group.tsx:42 (t=8075, 1 atoms); better unscheduled exact=2/42: imports in test/pages/group.tsx (2 atoms, discovered unscheduled) |
-| 10.3 | 9603 | 0.71 | missing | Architecture — Performance + Groups bodies | [scheduled bbox exact=4/7] headings outline in ARCHITECTURE.md (t=736, 4 atoms) |
-| 10.7 | 9996 | 0.45 | missing | index.tsx — Empty body | [scheduled bbox exact=3/9] export doc at cmdk/src/index.tsx:899 (t=2070, 3 atoms) |
-
-### fs/listing
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.6 | 409 | 0.00 | missing | Test app layout — pages + test files | fs-only |
-| 1.7 | 549 | 0.00 | missing | Website (showcase) layout — themes + components | fs-only |
-
-### mixed/unknown
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.4 | 257 | 0.00 | missing | Library runtime dependencies | [scheduled bbox exact=6/6] package dependencies in cmdk/package.json (t=7184, 6 atoms) |
-| 1.8 | 751 | 0.00 | missing | Root scripts — how to build/run/test | [scheduled bbox exact=10/10] package scripts in package.json (t=3066, 10 atoms) |
-| 2.3 | 1166 | 0.00 | missing | README — basic Use snippet | [scheduled bbox exact=20/23] README.md section #2 (t=9573, 20 atoms) |
-| 5.3 | 3157 | 0.00 | missing | README — Dialog usage with ⌘K keybind | [scheduled bbox exact=32/38] README.md section #2 (t=9573, 32 atoms) |
-| 9.1 | 7365 | 0.04 | missing | index.tsx — Item header (registration + state subscriptions) | [scheduled bbox exact=23/28] export body at cmdk/src/index.tsx:664 body 665 (t=4464, 23 atoms) |
-| 9.2 | 7686 | 0.00 | missing | index.tsx — Item render output (the cmdk-item div) | [scheduled bbox exact=26/32] export body at cmdk/src/index.tsx:664 body 665 (t=4464, 26 atoms) |
-| 9.3 | 8154 | 0.03 | missing | index.tsx — Group component body | [scheduled bbox exact=34/40] export body at cmdk/src/index.tsx:729 body 730 (t=3634, 34 atoms) |
-
-Top wasted paths (off-NS at 3K): cmdk/src/index.tsx (491t, 6 batches), README.md (90t, 1 batch), cmdk/tsup.config.ts (73t, 1 batch), ARCHITECTURE.md (57t, 1 batch)
-
-## Walker waste rollup (by descriptor pattern)
-
-| n | off_3k_total | pattern |
-|--:|-------------:|:--------|
-| 2 | 118 | export doc at cmdk/src/index.tsx:<n> |
-
-## Walker waste (walker_t ≤ 3000, off_3k ≥ 50)
-
-| off_3k | off_3k_ratio | off_any | cost | walker_t | batch |
-|-------:|-------------:|--------:|-----:|---------:|:------|
-| 135 | 1.00 | 135 | 135 | 1517 | module item at cmdk/src/index.tsx:1081 |
-| 97 | 1.00 | 0 | 97 | 1920 | export body at cmdk/src/index.tsx:774 body 775 |
-| 90 | 0.31 | 80 | 290 | 2470 | headings outline in README.md |
-| 76 | 1.00 | 0 | 76 | 1044 | module item at cmdk/src/index.tsx:1010 |
-| 73 | 1.00 | 0 | 73 | 736 | export at cmdk/tsup.config.ts:3 |
-| 66 | 1.00 | 66 | 66 | 2275 | export doc at cmdk/src/index.tsx:664 |
-| 65 | 1.00 | 65 | 65 | 895 | module item at cmdk/src/index.tsx:1071 |
-| 57 | 1.00 | 27 | 57 | 679 | headings outline in ARCHITECTURE.md |
-| 52 | 1.00 | 52 | 52 | 2223 | export doc at cmdk/src/index.tsx:833 |
+| source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
+|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
+| walker |  | 62 | 62 | listing of '.' |  |  | 0.000 |
+| walker |  | 70 | 8 | export names surface in playwright.config.ts |  |  | 0.000 |
+| walker |  | 70 | 0 | export at playwright.config.ts:27 |  |  | 0.000 |
+| ns | 78 |  | 78 | README lede — one-sentence elevator pitch | 1.1 |  | 0.000 |
+| walker |  | 93 | 23 | package identity in package.json |  |  | 0.000 |
+| walker |  | 98 | 5 | listing of '.husky' |  |  | 0.000 |
+| walker |  | 106 | 8 | listing of '.github' |  |  | 0.000 |
+| walker |  | 110 | 4 | listing of '.github/workflows' |  |  | 0.000 |
+| walker |  | 123 | 13 | listing of 'cmdk' |  |  | 0.000 |
+| walker |  | 134 | 11 | export names surface in cmdk/tsup.config.ts |  |  | 0.000 |
+| ns | 140 |  | 62 | Top-level filesystem layout | 1.2 |  | 0.833 |
+| walker |  | 144 | 10 | listing of 'cmdk/src' |  |  | 0.858 |
+| walker |  | 158 | 14 | module item at cmdk/src/index.tsx:10 |  |  | 0.858 |
+| ns | 163 |  | 23 | Library inner layout — only two source files | 1.3 |  | 0.834 |
+| walker |  | 170 | 12 | module item at cmdk/src/index.tsx:160 |  |  | 0.834 |
+| walker |  | 187 | 17 | module item at cmdk/src/index.tsx:981 |  |  | 0.834 |
+| walker |  | 204 | 17 | module item at cmdk/src/index.tsx:1061 |  |  | 0.834 |
+| walker |  | 218 | 14 | module item at cmdk/src/index.tsx:159 |  |  | 0.835 |
+| walker |  | 237 | 19 | module item at cmdk/src/index.tsx:963 |  |  | 0.835 |
+| walker |  | 256 | 19 | module item at cmdk/src/index.tsx:972 |  |  | 0.835 |
+| ns | 257 |  | 94 | Library runtime dependencies | 1.4 |  | 0.717 |
+| walker |  | 275 | 19 | module item at cmdk/src/index.tsx:993 |  |  | 0.717 |
+| walker |  | 290 | 15 | module item at cmdk/src/index.tsx:154 |  |  | 0.717 |
+| ns | 291 |  | 34 | pnpm workspace members | 1.5 |  | 0.660 |
+| walker |  | 305 | 15 | module item at cmdk/src/index.tsx:157 |  |  | 0.661 |
+| walker |  | 320 | 15 | module item at cmdk/src/index.tsx:167 |  |  | 0.661 |
+| walker |  | 336 | 16 | module item at cmdk/src/index.tsx:163 |  |  | 0.661 |
+| walker |  | 352 | 16 | module item at cmdk/src/index.tsx:164 |  |  | 0.661 |
+| walker |  | 368 | 16 | module item at cmdk/src/index.tsx:165 |  |  | 0.661 |
+| walker |  | 384 | 16 | module item at cmdk/src/index.tsx:166 |  |  | 0.661 |
+| walker |  | 400 | 16 | module item at cmdk/src/index.tsx:1046 |  |  | 0.661 |
+| ns | 409 |  | 118 | Test app layout — pages + test files | 1.6 |  | 0.474 |
+| walker |  | 424 | 24 | module item at cmdk/src/index.tsx:79 |  |  | 0.474 |
+| walker |  | 441 | 17 | module item at cmdk/src/index.tsx:155 |  |  | 0.474 |
+| walker |  | 459 | 18 | module item at cmdk/src/index.tsx:156 |  |  | 0.475 |
+| walker |  | 486 | 27 | module item at cmdk/src/index.tsx:1004 |  |  | 0.475 |
+| walker |  | 507 | 21 | module item at cmdk/src/index.tsx:158 |  |  | 0.476 |
+| walker |  | 539 | 32 | module item at cmdk/src/index.tsx:149 |  |  | 0.476 |
+| ns | 549 |  | 140 | Website (showcase) layout — themes + components | 1.7 |  | 0.366 |
+| walker |  | 627 | 88 | README headline in README.md |  |  | 0.438 |
+| walker |  | 652 | 25 | module item at cmdk/src/index.tsx:991 |  |  | 0.438 |
+| walker |  | 679 | 27 | module item at cmdk/src/index.tsx:161 |  |  | 0.439 |
+| walker |  | 736 | 57 | headings outline in ARCHITECTURE.md |  |  | 0.439 |
+| ns | 751 |  | 202 | Root scripts — how to build/run/test | 1.8 |  | 0.410 |
+| ns | 802 |  | 51 | README — top-level section headings | 2.1 |  | 0.393 |
+| walker |  | 809 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.394 |
+| walker |  | 876 | 67 | module item at cmdk/src/index.tsx:137 |  |  | 0.394 |
+| walker |  | 895 | 19 | imports in playwright.config.ts |  |  | 0.394 |
+| ns | 949 |  | 147 | README — every Parts heading (with [cmdk-*] selectors) | 2.2 | 2.1 | 0.373 |
+| walker |  | 960 | 65 | module item at cmdk/src/index.tsx:1071 |  |  | 0.373 |
+| walker |  | 1044 | 84 | module item at cmdk/src/index.tsx:143 |  |  | 0.374 |
+| walker |  | 1120 | 76 | module item at cmdk/src/index.tsx:1010 |  |  | 0.375 |
+| ns | 1166 |  | 217 | README — basic Use snippet | 2.3 | 2.1 | 0.335 |
+| walker |  | 1193 | 73 | module item at cmdk/src/index.tsx:930 |  |  | 0.336 |
+| walker |  | 1207 | 14 | imports in cmdk/tsup.config.ts |  |  | 0.336 |
+| ns | 1232 |  | 66 | Architecture — Approach paragraph (DOM-as-truth) | 3.1 |  | 0.335 |
+| walker |  | 1308 | 101 | export names surface #1 in cmdk/src/index.tsx |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:945 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:946 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:947 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:948 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:949 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:950 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:951 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:952 |  |  | 0.338 |
+| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:953 |  |  | 0.338 |
+| ns | 1342 |  | 110 | index.tsx — module imports + 'use client' | 4.1 |  | 0.327 |
+| walker |  | 1483 | 175 | module item at cmdk/src/index.tsx:123 |  |  | 0.332 |
+| walker |  | 1517 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.367 |
+| ns | 1557 |  | 215 | index.tsx — public exports surface | 4.2 |  | 0.424 |
+| walker |  | 1652 | 135 | module item at cmdk/src/index.tsx:1081 |  |  | 0.424 |
+| ns | 1718 |  | 161 | index.tsx — every component declaration line | 4.3 |  | 0.411 |
+| ns | 1857 |  | 139 | index.tsx — data-attribute selectors + SELECT_EVENT | 4.4 |  | 0.437 |
+| walker |  | 1920 | 268 | export names surface in cmdk/src/index.tsx |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:169 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:664 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:729 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:774 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:787 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:833 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:882 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:899 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:909 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:941 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:942 |  |  | 0.510 |
+| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:943 |  |  | 0.510 |
+| walker |  | 2017 | 97 | export body at cmdk/src/index.tsx:774 body 775 |  |  | 0.510 |
+| walker |  | 2043 | 26 | export doc at cmdk/src/index.tsx:882 |  |  | 0.510 |
+| walker |  | 2070 | 27 | export doc at cmdk/src/index.tsx:899 |  |  | 0.510 |
+| walker |  | 2100 | 30 | export doc at cmdk/src/index.tsx:909 |  |  | 0.510 |
+| walker |  | 2137 | 37 | export doc at cmdk/src/index.tsx:729 |  |  | 0.510 |
+| walker |  | 2175 | 38 | export doc at cmdk/src/index.tsx:787 |  |  | 0.510 |
+| ns | 2215 |  | 358 | index.tsx — internal type system (Context/State/Store) | 4.5 |  | 0.564 |
+| walker |  | 2223 | 48 | export doc at cmdk/src/index.tsx:774 |  |  | 0.564 |
+| walker |  | 2275 | 52 | export doc at cmdk/src/index.tsx:833 |  |  | 0.564 |
+| walker |  | 2341 | 66 | export doc at cmdk/src/index.tsx:664 |  |  | 0.564 |
+| walker |  | 2446 | 105 | imports in cmdk/src/index.tsx |  |  | 0.588 |
+| walker |  | 2470 | 24 | export names surface in cmdk/src/command-score.ts |  |  | 0.588 |
+| walker |  | 2470 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.588 |
+| ns | 2516 |  | 301 | README — Item subsection (the most-asked-about part) | 5.1 | 2.2 | 0.549 |
+| ns | 2755 |  | 239 | README — Command (root) value/filter/keywords/loop prose | 5.2 | 2.2 | 0.533 |
+| walker |  | 2760 | 290 | headings outline in README.md |  |  | 0.587 |
+| walker |  | 2771 | 11 | README.md section #28 |  |  | 0.587 |
+| walker |  | 2794 | 23 | README.md section #1 |  |  | 0.587 |
+| walker |  | 2835 | 41 | README.md section #3 |  |  | 0.587 |
+| walker |  | 2864 | 29 | ARCHITECTURE.md section #4 |  |  | 0.587 |
+| walker |  | 3066 | 202 | package scripts in package.json |  |  | 0.619 |
+| ns | 3157 |  | 402 | README — Dialog usage with ⌘K keybind | 5.3 | 2.1 | 0.571 |
+| walker |  | 3199 | 133 | package dependencies in package.json |  |  | 0.571 |
+| ns | 3397 |  | 240 | FAQ — accessibility, virtualization, RSC, etc. | 5.4 | 2.1 | 0.559 |
+| walker |  | 3634 | 435 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.562 |
+| walker |  | 3660 | 26 | README.md section #19 |  |  | 0.562 |
+| walker |  | 3686 | 26 | README.md section #22 |  |  | 0.562 |
+| walker |  | 3702 | 16 | README.md section #24 |  |  | 0.563 |
+| ns | 3705 |  | 308 | README — Group / Separator / Empty / Loading subsections | 5.5 | 2.2 | 0.537 |
+| walker |  | 3828 | 126 | export body at cmdk/src/command-score.ts:155 body 156 |  |  | 0.538 |
+| ns | 3856 |  | 151 | useCommandState — state slice subscription hook | 5.6 | 2.2 | 0.529 |
+| walker |  | 4464 | 636 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.534 |
+| ns | 4490 |  | 634 | index.tsx — onKeyDown switch (next/prev/Home/End/Enter) | 6.1 |  | 0.486 |
+| walker |  | 4499 | 35 | README.md section #21 |  |  | 0.490 |
+| walker |  | 4553 | 54 | listing of 'website' |  |  | 0.502 |
+| walker |  | 4567 | 14 | listing of 'website/components' |  |  | 0.512 |
+| walker |  | 4584 | 17 | listing of 'website/pages' |  |  | 0.521 |
+| walker |  | 4607 | 23 | listing of 'website/components/cmdk' |  |  | 0.535 |
+| walker |  | 4665 | 58 | listing of 'test' |  |  | 0.555 |
+| walker |  | 4677 | 12 | export names surface in website/pages/index.tsx |  |  | 0.555 |
+| walker |  | 4677 | 0 | export at website/pages/index.tsx:29 |  |  | 0.555 |
+| walker |  | 4699 | 22 | README.md section #23 |  |  | 0.558 |
+| walker |  | 4764 | 65 | ARCHITECTURE.md section #3 |  |  | 0.558 |
+| walker |  | 4877 | 113 | README.md section #37 |  |  | 0.558 |
+| walker |  | 4929 | 52 | README.md section #4 |  |  | 0.559 |
+| walker |  | 4981 | 52 | README.md section #5 |  |  | 0.563 |
+| walker |  | 5037 | 56 | README.md section #17 |  |  | 0.566 |
+| walker |  | 5180 | 143 | README.md section #36 |  |  | 0.566 |
+| ns | 5181 |  | 691 | index.tsx — sort() body (DOM-as-truth, in code) | 6.2 | 3.1 | 0.523 |
+| walker |  | 5238 | 58 | README.md section #10 |  |  | 0.526 |
+| ns | 5336 |  | 155 | command-score — exported scoring function signature | 7.1 |  | 0.531 |
+| walker |  | 5480 | 242 | json config tsconfig.json |  |  | 0.531 |
+| walker |  | 5490 | 10 | module item at website/pages/index.tsx:300 |  |  | 0.531 |
+| walker |  | 5556 | 66 | README.md section #26 |  |  | 0.534 |
+| walker |  | 5624 | 68 | README.md section #20 |  |  | 0.545 |
+| ns | 5647 |  | 311 | command-score — SCORE_* constants (positive weights) | 7.2 |  | 0.533 |
+| walker |  | 5684 | 60 | listing of 'test/pages' |  |  | 0.576 |
+| walker |  | 5692 | 8 | export names surface in test/pages/index.tsx |  |  | 0.576 |
+| walker |  | 5692 | 0 | export at test/pages/index.tsx:28 |  |  | 0.576 |
+| walker |  | 5762 | 70 | README.md section #27 |  |  | 0.586 |
+| walker |  | 5773 | 11 | module item at website/pages/index.tsx:101 |  |  | 0.586 |
+| walker |  | 5784 | 11 | module item at website/pages/index.tsx:158 |  |  | 0.586 |
+| walker |  | 5795 | 11 | module item at website/pages/index.tsx:262 |  |  | 0.586 |
+| walker |  | 5806 | 11 | module item at website/pages/index.tsx:296 |  |  | 0.586 |
+| walker |  | 5817 | 11 | module item at website/pages/index.tsx:350 |  |  | 0.586 |
+| ns | 6081 |  | 434 | command-score — PENALTY_* constants (decay weights) | 7.3 | 7.2 | 0.568 |
+| walker |  | 6203 | 386 | ARCHITECTURE.md section #0 |  |  | 0.568 |
+| walker |  | 6215 | 12 | module item at website/pages/index.tsx:123 |  |  | 0.568 |
+| walker |  | 6227 | 12 | module item at website/pages/index.tsx:326 |  |  | 0.568 |
+| ns | 6245 |  | 164 | Test file → describe-block names | 8.1 |  | 0.561 |
+| walker |  | 6304 | 77 | README.md section #15 |  |  | 0.561 |
+| walker |  | 6341 | 37 | README.md section #34 |  |  | 0.561 |
+| walker |  | 6420 | 79 | README.md section #18 |  |  | 0.570 |
+| walker |  | 6439 | 19 | README headline in website/README.md |  |  | 0.570 |
+| ns | 6516 |  | 271 | Playwright config — test dir + dev-server hookup | 8.2 |  | 0.556 |
+| walker |  | 6562 | 123 | plaintext config .gitignore |  |  | 0.556 |
+| walker |  | 6772 | 210 | package identity in cmdk/package.json |  |  | 0.556 |
+| walker |  | 6917 | 145 | package entrypoints in cmdk/package.json |  |  | 0.556 |
+| ns | 6992 |  | 476 | test/pages/keybinds — fixture for every keybind spec | 8.3 |  | 0.531 |
+| walker |  | 6995 | 78 | package scripts in cmdk/package.json |  |  | 0.531 |
+| walker |  | 7184 | 189 | package dependencies in cmdk/package.json |  |  | 0.550 |
+| walker |  | 7196 | 12 | module item at test/pages/index.tsx:3 |  |  | 0.550 |
+| walker |  | 7283 | 87 | README.md section #32 |  |  | 0.550 |
+| ns | 7365 |  | 373 | index.tsx — Item header (registration + state subscriptions) | 9.1 | 4.3 | 0.565 |
+| walker |  | 7380 | 97 | README.md section #7 |  |  | 0.567 |
+| walker |  | 7482 | 102 | README.md section #14 |  |  | 0.567 |
+| walker |  | 7597 | 115 | README.md section #16 |  |  | 0.587 |
+| walker |  | 7622 | 25 | module item at website/pages/index.tsx:25 |  |  | 0.587 |
+| ns | 7686 |  | 321 | index.tsx — Item render output (the cmdk-item div) | 9.2 | 9.1 | 0.598 |
+| walker |  | 7745 | 123 | README.md section #6 |  |  | 0.598 |
+| walker |  | 7768 | 23 | module item at website/pages/index.tsx:84 |  |  | 0.598 |
+| walker |  | 7894 | 126 | README.md section #9 |  |  | 0.600 |
+| walker |  | 8026 | 132 | README.md section #8 |  |  | 0.604 |
+| walker |  | 8046 | 20 | module item at website/pages/index.tsx:27 |  |  | 0.604 |
+| walker |  | 8059 | 13 | imports in test/pages/index.tsx |  |  | 0.604 |
+| walker |  | 8067 | 8 | export names surface in test/pages/dialog.tsx |  |  | 0.604 |
+| walker |  | 8067 | 0 | export at test/pages/dialog.tsx:25 |  |  | 0.604 |
+| walker |  | 8075 | 8 | export names surface in test/pages/group.tsx |  |  | 0.604 |
+| walker |  | 8075 | 0 | export at test/pages/group.tsx:42 |  |  | 0.604 |
+| walker |  | 8083 | 8 | export names surface in test/pages/huge.tsx |  |  | 0.604 |
+| walker |  | 8083 | 0 | export at test/pages/huge.tsx:34 |  |  | 0.604 |
+| walker |  | 8091 | 8 | export names surface in test/pages/item-advanced.tsx |  |  | 0.604 |
+| walker |  | 8091 | 0 | export at test/pages/item-advanced.tsx:25 |  |  | 0.604 |
+| walker |  | 8099 | 8 | export names surface in test/pages/item.tsx |  |  | 0.604 |
+| walker |  | 8099 | 0 | export at test/pages/item.tsx:47 |  |  | 0.604 |
+| walker |  | 8107 | 8 | export names surface in test/pages/keybinds.tsx |  |  | 0.604 |
+| walker |  | 8107 | 0 | export at test/pages/keybinds.tsx:47 |  |  | 0.604 |
+| walker |  | 8115 | 8 | export names surface in test/pages/numeric.tsx |  |  | 0.604 |
+| walker |  | 8115 | 0 | export at test/pages/numeric.tsx:22 |  |  | 0.604 |
+| walker |  | 8123 | 8 | export names surface in test/pages/portal.tsx |  |  | 0.604 |
+| walker |  | 8123 | 0 | export at test/pages/portal.tsx:58 |  |  | 0.604 |
+| walker |  | 8131 | 8 | export names surface in test/pages/props.tsx |  |  | 0.604 |
+| walker |  | 8131 | 0 | export at test/pages/props.tsx:56 |  |  | 0.604 |
+| ns | 8154 |  | 468 | index.tsx — Group component body | 9.3 | 4.3 | 0.618 |
+| walker |  | 8506 | 375 | README.md section #35 |  |  | 0.625 |
+| walker |  | 8582 | 76 | README.md section #25 |  |  | 0.636 |
+| ns | 8625 |  | 471 | index.tsx — useCmdk + useValue helpers | 9.4 |  | 0.617 |
+| walker |  | 8728 | 146 | README.md section #12 |  |  | 0.617 |
+| walker |  | 8876 | 148 | README.md section #11 |  |  | 0.617 |
+| walker |  | 8909 | 33 | module item at website/pages/index.tsx:20 |  |  | 0.617 |
+| walker |  | 8990 | 81 | README.md section #13 |  |  | 0.617 |
+| ns | 9027 |  | 402 | Architecture — Discarded approaches (rejected alternatives) | 10.1 | 3.1 | 0.612 |
+| ns | 9480 |  | 453 | test/pages/group — fixture for the group.test specs | 10.2 |  | 0.594 |
+| walker |  | 9573 | 583 | README.md section #2 |  |  | 0.652 |
+| ns | 9603 |  | 123 | Architecture — Performance + Groups bodies | 10.3 | 3.1 | 0.654 |
+| ns | 9626 |  | 23 | README — Install snippet | 10.4 | 2.1 | 0.655 |
+| ns | 9729 |  | 103 | tsup build config | 10.5 |  | 0.658 |
+| ns | 9892 |  | 163 | index.tsx — Separator body | 10.6 | 4.3 | 0.660 |
+| ns | 9996 |  | 104 | index.tsx — Empty body | 10.7 | 4.3 | 0.658 |

@@ -6,7 +6,7 @@ batch_count = 188
 [[batches]]
 position = 1
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sds" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/sds'"
+descriptor = "listing of '.'"
 cost_tokens = 31
 cum_tokens = 31
 
@@ -20,7 +20,7 @@ entries = [".gitignore", "Changelog", "LICENSE", "Makefile", "README.md", "sds.c
 [[batches]]
 position = 2
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h"
+descriptor = "c decl names surface in sdsalloc.h"
 cost_tokens = 31
 cum_tokens = 62
 
@@ -38,7 +38,7 @@ kind = "full"
 [[batches]]
 position = 3
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h", start_line: 40 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h:40"
+descriptor = "c decl at sdsalloc.h:40"
 cost_tokens = 0
 cum_tokens = 62
 
@@ -56,7 +56,7 @@ kind = "full"
 [[batches]]
 position = 4
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h", start_line: 41 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h:41"
+descriptor = "c decl at sdsalloc.h:41"
 cost_tokens = 0
 cum_tokens = 62
 
@@ -74,7 +74,7 @@ kind = "full"
 [[batches]]
 position = 5
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h", start_line: 42 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h:42"
+descriptor = "c decl at sdsalloc.h:42"
 cost_tokens = 0
 cum_tokens = 62
 
@@ -92,7 +92,7 @@ kind = "full"
 [[batches]]
 position = 6
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h"
+descriptor = "c decl names surface in testhelp.h"
 cost_tokens = 56
 cum_tokens = 118
 
@@ -134,7 +134,7 @@ kind = "ellipsis"
 [[batches]]
 position = 7
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 42 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h:42"
+descriptor = "c decl at testhelp.h:42"
 cost_tokens = 0
 cum_tokens = 118
 
@@ -152,7 +152,7 @@ kind = "full"
 [[batches]]
 position = 8
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 43 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h:43"
+descriptor = "c decl at testhelp.h:43"
 cost_tokens = 0
 cum_tokens = 118
 
@@ -170,7 +170,7 @@ kind = "full"
 [[batches]]
 position = 9
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/sds/README.md" })'
-descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/sds/README.md"
+descriptor = "README headline in README.md"
 cost_tokens = 102
 cum_tokens = 220
 
@@ -196,7 +196,7 @@ kind = "full"
 [[batches]]
 position = 10
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 44 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h:44"
+descriptor = "c decl at testhelp.h:44"
 cost_tokens = 59
 cum_tokens = 279
 
@@ -214,7 +214,7 @@ kind = "full"
 [[batches]]
 position = 11
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+descriptor = "c includes in sds.h"
 cost_tokens = 32
 cum_tokens = 311
 
@@ -232,7 +232,7 @@ kind = "full"
 [[batches]]
 position = 12
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/sds/.gitignore" })'
-descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/sds/.gitignore"
+descriptor = "plaintext config .gitignore"
 cost_tokens = 8
 cum_tokens = 319
 
@@ -250,7 +250,7 @@ kind = "full"
 [[batches]]
 position = 13
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 48 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h:48"
+descriptor = "c decl at testhelp.h:48"
 cost_tokens = 97
 cum_tokens = 416
 
@@ -268,7 +268,7 @@ kind = "full"
 [[batches]]
 position = 14
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sds/README.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/sds/README.md"
+descriptor = "headings outline in README.md"
 cost_tokens = 399
 cum_tokens = 815
 
@@ -678,7 +678,7 @@ kind = "ellipsis"
 [[batches]]
 position = 15
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+descriptor = "c decl names surface in sds.h"
 cost_tokens = 1104
 cum_tokens = 1919
 
@@ -992,7 +992,7 @@ kind = "ellipsis"
 [[batches]]
 position = 16
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 36 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:36"
+descriptor = "c decl at sds.h:36"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1010,7 +1010,7 @@ kind = "full"
 [[batches]]
 position = 17
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 37 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:37"
+descriptor = "c decl at sds.h:37"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1028,7 +1028,7 @@ kind = "full"
 [[batches]]
 position = 18
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 43 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:43"
+descriptor = "c decl at sds.h:43"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1046,7 +1046,7 @@ kind = "full"
 [[batches]]
 position = 19
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 76 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:76"
+descriptor = "c decl at sds.h:76"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1064,7 +1064,7 @@ kind = "full"
 [[batches]]
 position = 20
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 77 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:77"
+descriptor = "c decl at sds.h:77"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1082,7 +1082,7 @@ kind = "full"
 [[batches]]
 position = 21
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 78 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:78"
+descriptor = "c decl at sds.h:78"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1100,7 +1100,7 @@ kind = "full"
 [[batches]]
 position = 22
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 79 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:79"
+descriptor = "c decl at sds.h:79"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1118,7 +1118,7 @@ kind = "full"
 [[batches]]
 position = 23
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 80 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:80"
+descriptor = "c decl at sds.h:80"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1136,7 +1136,7 @@ kind = "full"
 [[batches]]
 position = 24
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 81 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:81"
+descriptor = "c decl at sds.h:81"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1154,7 +1154,7 @@ kind = "full"
 [[batches]]
 position = 25
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 82 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:82"
+descriptor = "c decl at sds.h:82"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1172,7 +1172,7 @@ kind = "full"
 [[batches]]
 position = 26
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 83 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:83"
+descriptor = "c decl at sds.h:83"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1190,7 +1190,7 @@ kind = "full"
 [[batches]]
 position = 27
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 84 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:84"
+descriptor = "c decl at sds.h:84"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1208,7 +1208,7 @@ kind = "full"
 [[batches]]
 position = 28
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 85 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:85"
+descriptor = "c decl at sds.h:85"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1226,7 +1226,7 @@ kind = "full"
 [[batches]]
 position = 29
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 87 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:87"
+descriptor = "c decl at sds.h:87"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1252,7 +1252,7 @@ kind = "ellipsis"
 [[batches]]
 position = 30
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:104"
+descriptor = "c decl at sds.h:104"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1278,7 +1278,7 @@ kind = "ellipsis"
 [[batches]]
 position = 31
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:130"
+descriptor = "c decl at sds.h:130"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1304,7 +1304,7 @@ kind = "ellipsis"
 [[batches]]
 position = 32
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:154"
+descriptor = "c decl at sds.h:154"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1330,7 +1330,7 @@ kind = "ellipsis"
 [[batches]]
 position = 33
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:180"
+descriptor = "c decl at sds.h:180"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1356,7 +1356,7 @@ kind = "ellipsis"
 [[batches]]
 position = 34
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:197"
+descriptor = "c decl at sds.h:197"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1382,7 +1382,7 @@ kind = "ellipsis"
 [[batches]]
 position = 35
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 218 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:218"
+descriptor = "c decl at sds.h:218"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1400,7 +1400,7 @@ kind = "full"
 [[batches]]
 position = 36
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 219 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:219"
+descriptor = "c decl at sds.h:219"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1418,7 +1418,7 @@ kind = "full"
 [[batches]]
 position = 37
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 220 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:220"
+descriptor = "c decl at sds.h:220"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1436,7 +1436,7 @@ kind = "full"
 [[batches]]
 position = 38
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 221 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:221"
+descriptor = "c decl at sds.h:221"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1454,7 +1454,7 @@ kind = "full"
 [[batches]]
 position = 39
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 222 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:222"
+descriptor = "c decl at sds.h:222"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1472,7 +1472,7 @@ kind = "full"
 [[batches]]
 position = 40
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 223 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:223"
+descriptor = "c decl at sds.h:223"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1490,7 +1490,7 @@ kind = "full"
 [[batches]]
 position = 41
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 224 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:224"
+descriptor = "c decl at sds.h:224"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1508,7 +1508,7 @@ kind = "full"
 [[batches]]
 position = 42
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 225 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:225"
+descriptor = "c decl at sds.h:225"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1526,7 +1526,7 @@ kind = "full"
 [[batches]]
 position = 43
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 226 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:226"
+descriptor = "c decl at sds.h:226"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1544,7 +1544,7 @@ kind = "full"
 [[batches]]
 position = 44
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 227 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:227"
+descriptor = "c decl at sds.h:227"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1562,7 +1562,7 @@ kind = "full"
 [[batches]]
 position = 45
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 228 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:228"
+descriptor = "c decl at sds.h:228"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1580,7 +1580,7 @@ kind = "full"
 [[batches]]
 position = 46
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 230 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:230"
+descriptor = "c decl at sds.h:230"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1598,7 +1598,7 @@ kind = "full"
 [[batches]]
 position = 47
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 238 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:238"
+descriptor = "c decl at sds.h:238"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1616,7 +1616,7 @@ kind = "full"
 [[batches]]
 position = 48
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 239 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:239"
+descriptor = "c decl at sds.h:239"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1634,7 +1634,7 @@ kind = "full"
 [[batches]]
 position = 49
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 240 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:240"
+descriptor = "c decl at sds.h:240"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1652,7 +1652,7 @@ kind = "full"
 [[batches]]
 position = 50
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 241 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:241"
+descriptor = "c decl at sds.h:241"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1670,7 +1670,7 @@ kind = "full"
 [[batches]]
 position = 51
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 242 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:242"
+descriptor = "c decl at sds.h:242"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1688,7 +1688,7 @@ kind = "full"
 [[batches]]
 position = 52
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 243 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:243"
+descriptor = "c decl at sds.h:243"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1706,7 +1706,7 @@ kind = "full"
 [[batches]]
 position = 53
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 244 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:244"
+descriptor = "c decl at sds.h:244"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1724,7 +1724,7 @@ kind = "full"
 [[batches]]
 position = 54
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 245 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:245"
+descriptor = "c decl at sds.h:245"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1742,7 +1742,7 @@ kind = "full"
 [[batches]]
 position = 55
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 246 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:246"
+descriptor = "c decl at sds.h:246"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1760,7 +1760,7 @@ kind = "full"
 [[batches]]
 position = 56
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 247 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:247"
+descriptor = "c decl at sds.h:247"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1778,7 +1778,7 @@ kind = "full"
 [[batches]]
 position = 57
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 248 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:248"
+descriptor = "c decl at sds.h:248"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1796,7 +1796,7 @@ kind = "full"
 [[batches]]
 position = 58
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 249 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:249"
+descriptor = "c decl at sds.h:249"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1814,7 +1814,7 @@ kind = "full"
 [[batches]]
 position = 59
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 250 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:250"
+descriptor = "c decl at sds.h:250"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1832,7 +1832,7 @@ kind = "full"
 [[batches]]
 position = 60
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 251 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:251"
+descriptor = "c decl at sds.h:251"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1850,7 +1850,7 @@ kind = "full"
 [[batches]]
 position = 61
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 252 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:252"
+descriptor = "c decl at sds.h:252"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1868,7 +1868,7 @@ kind = "full"
 [[batches]]
 position = 62
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 253 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:253"
+descriptor = "c decl at sds.h:253"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1886,7 +1886,7 @@ kind = "full"
 [[batches]]
 position = 63
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 256 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:256"
+descriptor = "c decl at sds.h:256"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1904,7 +1904,7 @@ kind = "full"
 [[batches]]
 position = 64
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 257 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:257"
+descriptor = "c decl at sds.h:257"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1922,7 +1922,7 @@ kind = "full"
 [[batches]]
 position = 65
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 258 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:258"
+descriptor = "c decl at sds.h:258"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1940,7 +1940,7 @@ kind = "full"
 [[batches]]
 position = 66
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 259 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:259"
+descriptor = "c decl at sds.h:259"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1958,7 +1958,7 @@ kind = "full"
 [[batches]]
 position = 67
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 260 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:260"
+descriptor = "c decl at sds.h:260"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1976,7 +1976,7 @@ kind = "full"
 [[batches]]
 position = 68
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 266 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:266"
+descriptor = "c decl at sds.h:266"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -1994,7 +1994,7 @@ kind = "full"
 [[batches]]
 position = 69
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 267 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:267"
+descriptor = "c decl at sds.h:267"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -2012,7 +2012,7 @@ kind = "full"
 [[batches]]
 position = 70
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 268 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:268"
+descriptor = "c decl at sds.h:268"
 cost_tokens = 0
 cum_tokens = 1919
 
@@ -2030,7 +2030,7 @@ kind = "full"
 [[batches]]
 position = 71
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:47"
+descriptor = "c decl at sds.h:47"
 cost_tokens = 37
 cum_tokens = 1956
 
@@ -2048,7 +2048,7 @@ kind = "full"
 [[batches]]
 position = 72
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 256 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:256"
+descriptor = "c decl doc at sds.h:256"
 cost_tokens = 14
 cum_tokens = 1970
 
@@ -2066,7 +2066,7 @@ kind = "full"
 [[batches]]
 position = 73
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:180"
+descriptor = "c decl doc at sds.h:180"
 cost_tokens = 20
 cum_tokens = 1990
 
@@ -2084,7 +2084,7 @@ kind = "full"
 [[batches]]
 position = 74
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 51 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:51"
+descriptor = "c decl at sds.h:51"
 cost_tokens = 65
 cum_tokens = 2055
 
@@ -2102,7 +2102,7 @@ kind = "full"
 [[batches]]
 position = 75
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 57 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:57"
+descriptor = "c decl at sds.h:57"
 cost_tokens = 65
 cum_tokens = 2120
 
@@ -2120,7 +2120,7 @@ kind = "full"
 [[batches]]
 position = 76
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 63 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:63"
+descriptor = "c decl at sds.h:63"
 cost_tokens = 65
 cum_tokens = 2185
 
@@ -2138,7 +2138,7 @@ kind = "full"
 [[batches]]
 position = 77
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 69 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:69"
+descriptor = "c decl at sds.h:69"
 cost_tokens = 65
 cum_tokens = 2250
 
@@ -2156,7 +2156,7 @@ kind = "full"
 [[batches]]
 position = 78
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:47"
+descriptor = "c decl doc at sds.h:47"
 cost_tokens = 43
 cum_tokens = 2293
 
@@ -2174,7 +2174,7 @@ kind = "full"
 [[batches]]
 position = 79
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 266 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:266"
+descriptor = "c decl doc at sds.h:266"
 cost_tokens = 68
 cum_tokens = 2361
 
@@ -2192,7 +2192,7 @@ kind = "full"
 [[batches]]
 position = 80
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+descriptor = "c header banner in sds.h"
 cost_tokens = 493
 cum_tokens = 2854
 
@@ -2210,7 +2210,7 @@ kind = "full"
 [[batches]]
 position = 81
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h"
+descriptor = "c header banner in testhelp.h"
 cost_tokens = 534
 cum_tokens = 3388
 
@@ -2228,7 +2228,7 @@ kind = "full"
 [[batches]]
 position = 82
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+descriptor = "c includes in sds.c"
 cost_tokens = 83
 cum_tokens = 3471
 
@@ -2246,7 +2246,7 @@ kind = "full"
 [[batches]]
 position = 83
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h"
+descriptor = "c header banner in sdsalloc.h"
 cost_tokens = 579
 cum_tokens = 4050
 
@@ -2272,7 +2272,7 @@ kind = "full"
 [[batches]]
 position = 84
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 87 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:87"
+descriptor = "c decl body at sds.h:87"
 cost_tokens = 163
 cum_tokens = 4213
 
@@ -2290,7 +2290,7 @@ kind = "full"
 [[batches]]
 position = 85
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:180"
+descriptor = "c decl body at sds.h:180"
 cost_tokens = 163
 cum_tokens = 4376
 
@@ -2308,7 +2308,7 @@ kind = "full"
 [[batches]]
 position = 86
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:197"
+descriptor = "c decl body at sds.h:197"
 cost_tokens = 203
 cum_tokens = 4579
 
@@ -2326,7 +2326,7 @@ kind = "full"
 [[batches]]
 position = 87
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:130"
+descriptor = "c decl body at sds.h:130"
 cost_tokens = 235
 cum_tokens = 4814
 
@@ -2344,7 +2344,7 @@ kind = "full"
 [[batches]]
 position = 88
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:104"
+descriptor = "c decl body at sds.h:104"
 cost_tokens = 242
 cum_tokens = 5056
 
@@ -2362,7 +2362,7 @@ kind = "full"
 [[batches]]
 position = 89
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.h:154"
+descriptor = "c decl body at sds.h:154"
 cost_tokens = 250
 cum_tokens = 5306
 
@@ -2380,7 +2380,7 @@ kind = "full"
 [[batches]]
 position = 90
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+descriptor = "c decl names surface in sds.c"
 cost_tokens = 914
 cum_tokens = 6220
 
@@ -3030,7 +3030,7 @@ kind = "ellipsis"
 [[batches]]
 position = 91
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 42 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:42"
+descriptor = "c decl at sds.c:42"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3048,7 +3048,7 @@ kind = "full"
 [[batches]]
 position = 92
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:89"
+descriptor = "c decl at sds.c:89"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3074,7 +3074,7 @@ kind = "ellipsis"
 [[batches]]
 position = 93
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:149"
+descriptor = "c decl at sds.c:149"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3100,7 +3100,7 @@ kind = "ellipsis"
 [[batches]]
 position = 94
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:154"
+descriptor = "c decl at sds.c:154"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3126,7 +3126,7 @@ kind = "ellipsis"
 [[batches]]
 position = 95
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:160"
+descriptor = "c decl at sds.c:160"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3152,7 +3152,7 @@ kind = "ellipsis"
 [[batches]]
 position = 96
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:165"
+descriptor = "c decl at sds.c:165"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3178,7 +3178,7 @@ kind = "ellipsis"
 [[batches]]
 position = 97
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:184"
+descriptor = "c decl at sds.c:184"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3204,7 +3204,7 @@ kind = "ellipsis"
 [[batches]]
 position = 98
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:193"
+descriptor = "c decl at sds.c:193"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3230,7 +3230,7 @@ kind = "ellipsis"
 [[batches]]
 position = 99
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:204"
+descriptor = "c decl at sds.c:204"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3256,7 +3256,7 @@ kind = "ellipsis"
 [[batches]]
 position = 100
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:256"
+descriptor = "c decl at sds.c:256"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3282,7 +3282,7 @@ kind = "ellipsis"
 [[batches]]
 position = 101
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:300"
+descriptor = "c decl at sds.c:300"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3308,7 +3308,7 @@ kind = "ellipsis"
 [[batches]]
 position = 102
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:307"
+descriptor = "c decl at sds.c:307"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3334,7 +3334,7 @@ kind = "ellipsis"
 [[batches]]
 position = 103
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 334 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:334"
+descriptor = "c decl at sds.c:334"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3360,7 +3360,7 @@ kind = "ellipsis"
 [[batches]]
 position = 104
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:380"
+descriptor = "c decl at sds.c:380"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3386,7 +3386,7 @@ kind = "ellipsis"
 [[batches]]
 position = 105
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:398"
+descriptor = "c decl at sds.c:398"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3412,7 +3412,7 @@ kind = "ellipsis"
 [[batches]]
 position = 106
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:413"
+descriptor = "c decl at sds.c:413"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3438,7 +3438,7 @@ kind = "ellipsis"
 [[batches]]
 position = 107
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:421"
+descriptor = "c decl at sds.c:421"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3464,7 +3464,7 @@ kind = "ellipsis"
 [[batches]]
 position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:427"
+descriptor = "c decl at sds.c:427"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3490,7 +3490,7 @@ kind = "ellipsis"
 [[batches]]
 position = 109
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:440"
+descriptor = "c decl at sds.c:440"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3516,7 +3516,7 @@ kind = "ellipsis"
 [[batches]]
 position = 110
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:450"
+descriptor = "c decl at sds.c:450"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3534,7 +3534,7 @@ kind = "full"
 [[batches]]
 position = 111
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 451 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:451"
+descriptor = "c decl at sds.c:451"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3560,7 +3560,7 @@ kind = "ellipsis"
 [[batches]]
 position = 112
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:494"
+descriptor = "c decl at sds.c:494"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3586,7 +3586,7 @@ kind = "ellipsis"
 [[batches]]
 position = 113
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:526"
+descriptor = "c decl at sds.c:526"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3612,7 +3612,7 @@ kind = "ellipsis"
 [[batches]]
 position = 114
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:534"
+descriptor = "c decl at sds.c:534"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3638,7 +3638,7 @@ kind = "ellipsis"
 [[batches]]
 position = 115
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:591"
+descriptor = "c decl at sds.c:591"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3664,7 +3664,7 @@ kind = "ellipsis"
 [[batches]]
 position = 116
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 616 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:616"
+descriptor = "c decl at sds.c:616"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3690,7 +3690,7 @@ kind = "ellipsis"
 [[batches]]
 position = 117
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 725 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:725"
+descriptor = "c decl at sds.c:725"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3716,7 +3716,7 @@ kind = "ellipsis"
 [[batches]]
 position = 118
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 756 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:756"
+descriptor = "c decl at sds.c:756"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3742,7 +3742,7 @@ kind = "ellipsis"
 [[batches]]
 position = 119
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:783"
+descriptor = "c decl at sds.c:783"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3768,7 +3768,7 @@ kind = "ellipsis"
 [[batches]]
 position = 120
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:790"
+descriptor = "c decl at sds.c:790"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3794,7 +3794,7 @@ kind = "ellipsis"
 [[batches]]
 position = 121
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 807 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:807"
+descriptor = "c decl at sds.c:807"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3820,7 +3820,7 @@ kind = "ellipsis"
 [[batches]]
 position = 122
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 835 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:835"
+descriptor = "c decl at sds.c:835"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3846,7 +3846,7 @@ kind = "ellipsis"
 [[batches]]
 position = 123
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:885"
+descriptor = "c decl at sds.c:885"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3872,7 +3872,7 @@ kind = "ellipsis"
 [[batches]]
 position = 124
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 898 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:898"
+descriptor = "c decl at sds.c:898"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3898,7 +3898,7 @@ kind = "ellipsis"
 [[batches]]
 position = 125
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:925"
+descriptor = "c decl at sds.c:925"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3924,7 +3924,7 @@ kind = "ellipsis"
 [[batches]]
 position = 126
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 932 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:932"
+descriptor = "c decl at sds.c:932"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3950,7 +3950,7 @@ kind = "ellipsis"
 [[batches]]
 position = 127
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 973 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:973"
+descriptor = "c decl at sds.c:973"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -3976,7 +3976,7 @@ kind = "ellipsis"
 [[batches]]
 position = 128
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1092 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1092"
+descriptor = "c decl at sds.c:1092"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4002,7 +4002,7 @@ kind = "ellipsis"
 [[batches]]
 position = 129
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1108"
+descriptor = "c decl at sds.c:1108"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4028,7 +4028,7 @@ kind = "ellipsis"
 [[batches]]
 position = 130
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1120 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1120"
+descriptor = "c decl at sds.c:1120"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4054,7 +4054,7 @@ kind = "ellipsis"
 [[batches]]
 position = 131
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1136 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1136"
+descriptor = "c decl at sds.c:1136"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4072,7 +4072,7 @@ kind = "full"
 [[batches]]
 position = 132
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1137 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1137"
+descriptor = "c decl at sds.c:1137"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4090,7 +4090,7 @@ kind = "full"
 [[batches]]
 position = 133
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1138 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1138"
+descriptor = "c decl at sds.c:1138"
 cost_tokens = 0
 cum_tokens = 6220
 
@@ -4108,7 +4108,7 @@ kind = "full"
 [[batches]]
 position = 134
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:160"
+descriptor = "c decl doc at sds.c:160"
 cost_tokens = 12
 cum_tokens = 6232
 
@@ -4126,7 +4126,7 @@ kind = "full"
 [[batches]]
 position = 135
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:149"
+descriptor = "c decl body at sds.c:149"
 cost_tokens = 11
 cum_tokens = 6243
 
@@ -4144,7 +4144,7 @@ kind = "full"
 [[batches]]
 position = 136
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:154"
+descriptor = "c decl doc at sds.c:154"
 cost_tokens = 20
 cum_tokens = 6263
 
@@ -4162,7 +4162,7 @@ kind = "full"
 [[batches]]
 position = 137
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1120 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1120"
+descriptor = "c decl doc at sds.c:1120"
 cost_tokens = 20
 cum_tokens = 6283
 
@@ -4180,7 +4180,7 @@ kind = "full"
 [[batches]]
 position = 138
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:494"
+descriptor = "c decl doc at sds.c:494"
 cost_tokens = 21
 cum_tokens = 6304
 
@@ -4198,7 +4198,7 @@ kind = "full"
 [[batches]]
 position = 139
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:783"
+descriptor = "c decl doc at sds.c:783"
 cost_tokens = 21
 cum_tokens = 6325
 
@@ -4216,7 +4216,7 @@ kind = "full"
 [[batches]]
 position = 140
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:790"
+descriptor = "c decl doc at sds.c:790"
 cost_tokens = 21
 cum_tokens = 6346
 
@@ -4234,7 +4234,7 @@ kind = "full"
 [[batches]]
 position = 141
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:534"
+descriptor = "c decl doc at sds.c:534"
 cost_tokens = 22
 cum_tokens = 6368
 
@@ -4252,7 +4252,7 @@ kind = "full"
 [[batches]]
 position = 142
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:160"
+descriptor = "c decl body at sds.c:160"
 cost_tokens = 15
 cum_tokens = 6383
 
@@ -4270,7 +4270,7 @@ kind = "full"
 [[batches]]
 position = 143
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:413"
+descriptor = "c decl body at sds.c:413"
 cost_tokens = 15
 cum_tokens = 6398
 
@@ -4288,7 +4288,7 @@ kind = "full"
 [[batches]]
 position = 144
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:440"
+descriptor = "c decl body at sds.c:440"
 cost_tokens = 15
 cum_tokens = 6413
 
@@ -4306,7 +4306,7 @@ kind = "full"
 [[batches]]
 position = 145
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:165"
+descriptor = "c decl doc at sds.c:165"
 cost_tokens = 23
 cum_tokens = 6436
 
@@ -4324,7 +4324,7 @@ kind = "full"
 [[batches]]
 position = 146
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:885"
+descriptor = "c decl doc at sds.c:885"
 cost_tokens = 26
 cum_tokens = 6462
 
@@ -4342,7 +4342,7 @@ kind = "full"
 [[batches]]
 position = 147
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:307"
+descriptor = "c decl body at sds.c:307"
 cost_tokens = 17
 cum_tokens = 6479
 
@@ -4360,7 +4360,7 @@ kind = "full"
 [[batches]]
 position = 148
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:421"
+descriptor = "c decl body at sds.c:421"
 cost_tokens = 17
 cum_tokens = 6496
 
@@ -4378,7 +4378,7 @@ kind = "full"
 [[batches]]
 position = 149
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:925"
+descriptor = "c decl doc at sds.c:925"
 cost_tokens = 33
 cum_tokens = 6529
 
@@ -4396,7 +4396,7 @@ kind = "full"
 [[batches]]
 position = 150
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:307"
+descriptor = "c decl doc at sds.c:307"
 cost_tokens = 34
 cum_tokens = 6563
 
@@ -4414,7 +4414,7 @@ kind = "full"
 [[batches]]
 position = 151
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 932 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:932"
+descriptor = "c decl doc at sds.c:932"
 cost_tokens = 34
 cum_tokens = 6597
 
@@ -4432,7 +4432,7 @@ kind = "full"
 [[batches]]
 position = 152
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:149"
+descriptor = "c decl doc at sds.c:149"
 cost_tokens = 36
 cum_tokens = 6633
 
@@ -4450,7 +4450,7 @@ kind = "full"
 [[batches]]
 position = 153
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1108"
+descriptor = "c decl doc at sds.c:1108"
 cost_tokens = 38
 cum_tokens = 6671
 
@@ -4468,7 +4468,7 @@ kind = "full"
 [[batches]]
 position = 154
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:440"
+descriptor = "c decl doc at sds.c:440"
 cost_tokens = 41
 cum_tokens = 6712
 
@@ -4486,7 +4486,7 @@ kind = "full"
 [[batches]]
 position = 155
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:427"
+descriptor = "c decl doc at sds.c:427"
 cost_tokens = 42
 cum_tokens = 6754
 
@@ -4504,7 +4504,7 @@ kind = "full"
 [[batches]]
 position = 156
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:184"
+descriptor = "c decl body at sds.c:184"
 cost_tokens = 25
 cum_tokens = 6779
 
@@ -4522,7 +4522,7 @@ kind = "full"
 [[batches]]
 position = 157
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:193"
+descriptor = "c decl body at sds.c:193"
 cost_tokens = 25
 cum_tokens = 6804
 
@@ -4540,7 +4540,7 @@ kind = "full"
 [[batches]]
 position = 158
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:526"
+descriptor = "c decl doc at sds.c:526"
 cost_tokens = 51
 cum_tokens = 6855
 
@@ -4558,7 +4558,7 @@ kind = "full"
 [[batches]]
 position = 159
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:165"
+descriptor = "c decl body at sds.c:165"
 cost_tokens = 30
 cum_tokens = 6885
 
@@ -4576,7 +4576,7 @@ kind = "full"
 [[batches]]
 position = 160
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:300"
+descriptor = "c decl body at sds.c:300"
 cost_tokens = 30
 cum_tokens = 6915
 
@@ -4594,7 +4594,7 @@ kind = "full"
 [[batches]]
 position = 161
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:154"
+descriptor = "c decl body at sds.c:154"
 cost_tokens = 35
 cum_tokens = 6950
 
@@ -4612,7 +4612,7 @@ kind = "full"
 [[batches]]
 position = 162
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:421"
+descriptor = "c decl doc at sds.c:421"
 cost_tokens = 67
 cum_tokens = 7017
 
@@ -4630,7 +4630,7 @@ kind = "full"
 [[batches]]
 position = 163
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:413"
+descriptor = "c decl doc at sds.c:413"
 cost_tokens = 68
 cum_tokens = 7085
 
@@ -4648,7 +4648,7 @@ kind = "full"
 [[batches]]
 position = 164
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:193"
+descriptor = "c decl doc at sds.c:193"
 cost_tokens = 69
 cum_tokens = 7154
 
@@ -4666,7 +4666,7 @@ kind = "full"
 [[batches]]
 position = 165
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:885"
+descriptor = "c decl body at sds.c:885"
 cost_tokens = 37
 cum_tokens = 7191
 
@@ -4684,7 +4684,7 @@ kind = "full"
 [[batches]]
 position = 166
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:380"
+descriptor = "c decl doc at sds.c:380"
 cost_tokens = 73
 cum_tokens = 7264
 
@@ -4702,7 +4702,7 @@ kind = "full"
 [[batches]]
 position = 167
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:526"
+descriptor = "c decl body at sds.c:526"
 cost_tokens = 40
 cum_tokens = 7304
 
@@ -4728,7 +4728,7 @@ kind = "full"
 [[batches]]
 position = 168
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:783"
+descriptor = "c decl body at sds.c:783"
 cost_tokens = 41
 cum_tokens = 7345
 
@@ -4754,7 +4754,7 @@ kind = "full"
 [[batches]]
 position = 169
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:790"
+descriptor = "c decl body at sds.c:790"
 cost_tokens = 41
 cum_tokens = 7386
 
@@ -4780,7 +4780,7 @@ kind = "full"
 [[batches]]
 position = 170
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:398"
+descriptor = "c decl doc at sds.c:398"
 cost_tokens = 85
 cum_tokens = 7471
 
@@ -4798,7 +4798,7 @@ kind = "full"
 [[batches]]
 position = 171
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:300"
+descriptor = "c decl doc at sds.c:300"
 cost_tokens = 88
 cum_tokens = 7559
 
@@ -4816,7 +4816,7 @@ kind = "full"
 [[batches]]
 position = 172
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:925"
+descriptor = "c decl body at sds.c:925"
 cost_tokens = 47
 cum_tokens = 7606
 
@@ -4834,7 +4834,7 @@ kind = "full"
 [[batches]]
 position = 173
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:256"
+descriptor = "c decl doc at sds.c:256"
 cost_tokens = 98
 cum_tokens = 7704
 
@@ -4852,7 +4852,7 @@ kind = "full"
 [[batches]]
 position = 174
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:450"
+descriptor = "c decl doc at sds.c:450"
 cost_tokens = 86
 cum_tokens = 7790
 
@@ -4870,7 +4870,7 @@ kind = "full"
 [[batches]]
 position = 175
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1136 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1136"
+descriptor = "c decl doc at sds.c:1136"
 cost_tokens = 103
 cum_tokens = 7893
 
@@ -4888,7 +4888,7 @@ kind = "full"
 [[batches]]
 position = 176
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 898 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:898"
+descriptor = "c decl doc at sds.c:898"
 cost_tokens = 110
 cum_tokens = 8003
 
@@ -4906,7 +4906,7 @@ kind = "full"
 [[batches]]
 position = 177
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:204"
+descriptor = "c decl doc at sds.c:204"
 cost_tokens = 111
 cum_tokens = 8114
 
@@ -4924,7 +4924,7 @@ kind = "full"
 [[batches]]
 position = 178
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:591"
+descriptor = "c decl body at sds.c:591"
 cost_tokens = 62
 cum_tokens = 8176
 
@@ -4942,7 +4942,7 @@ kind = "full"
 [[batches]]
 position = 179
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 807 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:807"
+descriptor = "c decl doc at sds.c:807"
 cost_tokens = 140
 cum_tokens = 8316
 
@@ -4960,7 +4960,7 @@ kind = "full"
 [[batches]]
 position = 180
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1092 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1092"
+descriptor = "c decl doc at sds.c:1092"
 cost_tokens = 149
 cum_tokens = 8465
 
@@ -4978,7 +4978,7 @@ kind = "full"
 [[batches]]
 position = 181
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 725 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:725"
+descriptor = "c decl doc at sds.c:725"
 cost_tokens = 177
 cum_tokens = 8642
 
@@ -4996,7 +4996,7 @@ kind = "full"
 [[batches]]
 position = 182
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 756 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:756"
+descriptor = "c decl doc at sds.c:756"
 cost_tokens = 190
 cum_tokens = 8832
 
@@ -5014,7 +5014,7 @@ kind = "full"
 [[batches]]
 position = 183
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:184"
+descriptor = "c decl doc at sds.c:184"
 cost_tokens = 198
 cum_tokens = 9030
 
@@ -5032,7 +5032,7 @@ kind = "full"
 [[batches]]
 position = 184
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 835 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:835"
+descriptor = "c decl doc at sds.c:835"
 cost_tokens = 209
 cum_tokens = 9239
 
@@ -5050,7 +5050,7 @@ kind = "full"
 [[batches]]
 position = 185
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:89"
+descriptor = "c decl doc at sds.c:89"
 cost_tokens = 211
 cum_tokens = 9450
 
@@ -5068,7 +5068,7 @@ kind = "full"
 [[batches]]
 position = 186
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:591"
+descriptor = "c decl doc at sds.c:591"
 cost_tokens = 215
 cum_tokens = 9665
 
@@ -5086,7 +5086,7 @@ kind = "full"
 [[batches]]
 position = 187
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 616 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:616"
+descriptor = "c decl doc at sds.c:616"
 cost_tokens = 215
 cum_tokens = 9880
 
@@ -5104,7 +5104,7 @@ kind = "full"
 [[batches]]
 position = 188
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/sds/sds.c:1108"
+descriptor = "c decl body at sds.c:1108"
 cost_tokens = 96
 cum_tokens = 9976
 

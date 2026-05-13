@@ -6,7 +6,7 @@ batch_count = 251
 [[batches]]
 position = 1
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/krep" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/krep'"
+descriptor = "listing of '.'"
 cost_tokens = 35
 cum_tokens = 35
 
@@ -20,7 +20,7 @@ entries = [".github", ".gitignore", "LICENSE", "Makefile", "README.md", "aho_cor
 [[batches]]
 position = 2
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md" })'
-descriptor = "README headline in /Users/yoav/projects/precis/tests/fixtures/krep/README.md"
+descriptor = "README headline in README.md"
 cost_tokens = 62
 cum_tokens = 97
 
@@ -46,7 +46,7 @@ kind = "full"
 [[batches]]
 position = 3
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/krep/.github" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/krep/.github'"
+descriptor = "listing of '.github'"
 cost_tokens = 13
 cum_tokens = 110
 
@@ -60,7 +60,7 @@ entries = ["FUNDING.yml", "dependabot.yml", "workflows"]
 [[batches]]
 position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/krep/.github/workflows" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/krep/.github/workflows'"
+descriptor = "listing of '.github/workflows'"
 cost_tokens = 8
 cum_tokens = 118
 
@@ -74,7 +74,7 @@ entries = ["ci.yml", "release.yml"]
 [[batches]]
 position = 5
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+descriptor = "c header banner in aho_corasick.h"
 cost_tokens = 45
 cum_tokens = 163
 
@@ -92,7 +92,7 @@ kind = "full"
 [[batches]]
 position = 6
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+descriptor = "c header banner in krep.h"
 cost_tokens = 49
 cum_tokens = 212
 
@@ -110,7 +110,7 @@ kind = "full"
 [[batches]]
 position = 7
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+descriptor = "c decl names surface in aho_corasick.h"
 cost_tokens = 182
 cum_tokens = 394
 
@@ -248,7 +248,7 @@ kind = "ellipsis"
 [[batches]]
 position = 8
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 14 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:14"
+descriptor = "c decl at aho_corasick.h:14"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -266,7 +266,7 @@ kind = "full"
 [[batches]]
 position = 9
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 15 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:15"
+descriptor = "c decl at aho_corasick.h:15"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -284,7 +284,7 @@ kind = "full"
 [[batches]]
 position = 10
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 19 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:19"
+descriptor = "c decl at aho_corasick.h:19"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -302,7 +302,7 @@ kind = "full"
 [[batches]]
 position = 11
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 20 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:20"
+descriptor = "c decl at aho_corasick.h:20"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -320,7 +320,7 @@ kind = "full"
 [[batches]]
 position = 12
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 23 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:23"
+descriptor = "c decl at aho_corasick.h:23"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -338,7 +338,7 @@ kind = "full"
 [[batches]]
 position = 13
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 26 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:26"
+descriptor = "c decl at aho_corasick.h:26"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -356,7 +356,7 @@ kind = "full"
 [[batches]]
 position = 14
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 27 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:27"
+descriptor = "c decl at aho_corasick.h:27"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -374,7 +374,7 @@ kind = "full"
 [[batches]]
 position = 15
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 30 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:30"
+descriptor = "c decl at aho_corasick.h:30"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -392,7 +392,7 @@ kind = "full"
 [[batches]]
 position = 16
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 33 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:33"
+descriptor = "c decl at aho_corasick.h:33"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -410,7 +410,7 @@ kind = "full"
 [[batches]]
 position = 17
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 36 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:36"
+descriptor = "c decl at aho_corasick.h:36"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -428,7 +428,7 @@ kind = "full"
 [[batches]]
 position = 18
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 39 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:39"
+descriptor = "c decl at aho_corasick.h:39"
 cost_tokens = 0
 cum_tokens = 394
 
@@ -446,7 +446,7 @@ kind = "full"
 [[batches]]
 position = 19
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 23 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:23"
+descriptor = "c decl doc at aho_corasick.h:23"
 cost_tokens = 12
 cum_tokens = 406
 
@@ -464,7 +464,7 @@ kind = "full"
 [[batches]]
 position = 20
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 26 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:26"
+descriptor = "c decl doc at aho_corasick.h:26"
 cost_tokens = 16
 cum_tokens = 422
 
@@ -482,7 +482,7 @@ kind = "full"
 [[batches]]
 position = 21
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 14 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:14"
+descriptor = "c decl doc at aho_corasick.h:14"
 cost_tokens = 18
 cum_tokens = 440
 
@@ -500,7 +500,7 @@ kind = "full"
 [[batches]]
 position = 22
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 33 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:33"
+descriptor = "c decl doc at aho_corasick.h:33"
 cost_tokens = 14
 cum_tokens = 454
 
@@ -518,7 +518,7 @@ kind = "full"
 [[batches]]
 position = 23
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 39 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:39"
+descriptor = "c decl doc at aho_corasick.h:39"
 cost_tokens = 14
 cum_tokens = 468
 
@@ -536,7 +536,7 @@ kind = "full"
 [[batches]]
 position = 24
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 30 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:30"
+descriptor = "c decl doc at aho_corasick.h:30"
 cost_tokens = 17
 cum_tokens = 485
 
@@ -554,7 +554,7 @@ kind = "full"
 [[batches]]
 position = 25
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 36 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:36"
+descriptor = "c decl doc at aho_corasick.h:36"
 cost_tokens = 22
 cum_tokens = 507
 
@@ -572,7 +572,7 @@ kind = "full"
 [[batches]]
 position = 26
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h", start_line: 19 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h:19"
+descriptor = "c decl doc at aho_corasick.h:19"
 cost_tokens = 37
 cum_tokens = 544
 
@@ -590,7 +590,7 @@ kind = "full"
 [[batches]]
 position = 27
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.h"
+descriptor = "c includes in aho_corasick.h"
 cost_tokens = 41
 cum_tokens = 585
 
@@ -608,7 +608,7 @@ kind = "full"
 [[batches]]
 position = 28
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md" })'
-descriptor = "headings outline in /Users/yoav/projects/precis/tests/fixtures/krep/README.md"
+descriptor = "headings outline in README.md"
 cost_tokens = 279
 cum_tokens = 864
 
@@ -970,7 +970,7 @@ kind = "ellipsis"
 [[batches]]
 position = 29
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 42 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #42"
+descriptor = "README.md section #42"
 cost_tokens = 15
 cum_tokens = 879
 
@@ -996,7 +996,7 @@ kind = "full"
 [[batches]]
 position = 30
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 49 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #49"
+descriptor = "README.md section #49"
 cost_tokens = 18
 cum_tokens = 897
 
@@ -1022,7 +1022,7 @@ kind = "full"
 [[batches]]
 position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 0 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #0"
+descriptor = "README.md section #0"
 cost_tokens = 117
 cum_tokens = 1014
 
@@ -1040,7 +1040,7 @@ kind = "full"
 [[batches]]
 position = 32
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 50 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #50"
+descriptor = "README.md section #50"
 cost_tokens = 26
 cum_tokens = 1040
 
@@ -1066,7 +1066,7 @@ kind = "full"
 [[batches]]
 position = 33
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 12 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #12"
+descriptor = "README.md section #12"
 cost_tokens = 16
 cum_tokens = 1056
 
@@ -1084,7 +1084,7 @@ kind = "full"
 [[batches]]
 position = 34
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 7 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #7"
+descriptor = "README.md section #7"
 cost_tokens = 17
 cum_tokens = 1073
 
@@ -1102,7 +1102,7 @@ kind = "full"
 [[batches]]
 position = 35
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 9 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #9"
+descriptor = "README.md section #9"
 cost_tokens = 20
 cum_tokens = 1093
 
@@ -1120,7 +1120,7 @@ kind = "full"
 [[batches]]
 position = 36
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 51 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #51"
+descriptor = "README.md section #51"
 cost_tokens = 36
 cum_tokens = 1129
 
@@ -1154,7 +1154,7 @@ kind = "full"
 [[batches]]
 position = 37
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 5 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #5"
+descriptor = "README.md section #5"
 cost_tokens = 21
 cum_tokens = 1150
 
@@ -1172,7 +1172,7 @@ kind = "full"
 [[batches]]
 position = 38
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 6 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #6"
+descriptor = "README.md section #6"
 cost_tokens = 21
 cum_tokens = 1171
 
@@ -1190,7 +1190,7 @@ kind = "full"
 [[batches]]
 position = 39
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 14 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #14"
+descriptor = "README.md section #14"
 cost_tokens = 21
 cum_tokens = 1192
 
@@ -1208,7 +1208,7 @@ kind = "full"
 [[batches]]
 position = 40
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 16 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #16"
+descriptor = "README.md section #16"
 cost_tokens = 61
 cum_tokens = 1253
 
@@ -1234,7 +1234,7 @@ kind = "full"
 [[batches]]
 position = 41
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 39 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #39"
+descriptor = "README.md section #39"
 cost_tokens = 16
 cum_tokens = 1269
 
@@ -1252,7 +1252,7 @@ kind = "full"
 [[batches]]
 position = 42
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 40 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #40"
+descriptor = "README.md section #40"
 cost_tokens = 16
 cum_tokens = 1285
 
@@ -1270,7 +1270,7 @@ kind = "full"
 [[batches]]
 position = 43
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 3 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #3"
+descriptor = "README.md section #3"
 cost_tokens = 25
 cum_tokens = 1310
 
@@ -1288,7 +1288,7 @@ kind = "full"
 [[batches]]
 position = 44
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 8 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #8"
+descriptor = "README.md section #8"
 cost_tokens = 25
 cum_tokens = 1335
 
@@ -1306,7 +1306,7 @@ kind = "full"
 [[batches]]
 position = 45
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 15 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #15"
+descriptor = "README.md section #15"
 cost_tokens = 25
 cum_tokens = 1360
 
@@ -1324,7 +1324,7 @@ kind = "full"
 [[batches]]
 position = 46
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 24 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #24"
+descriptor = "README.md section #24"
 cost_tokens = 17
 cum_tokens = 1377
 
@@ -1342,7 +1342,7 @@ kind = "full"
 [[batches]]
 position = 47
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 31 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #31"
+descriptor = "README.md section #31"
 cost_tokens = 17
 cum_tokens = 1394
 
@@ -1360,7 +1360,7 @@ kind = "full"
 [[batches]]
 position = 48
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 38 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #38"
+descriptor = "README.md section #38"
 cost_tokens = 17
 cum_tokens = 1411
 
@@ -1378,7 +1378,7 @@ kind = "full"
 [[batches]]
 position = 49
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 10 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #10"
+descriptor = "README.md section #10"
 cost_tokens = 26
 cum_tokens = 1437
 
@@ -1396,7 +1396,7 @@ kind = "full"
 [[batches]]
 position = 50
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 11 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #11"
+descriptor = "README.md section #11"
 cost_tokens = 27
 cum_tokens = 1464
 
@@ -1414,7 +1414,7 @@ kind = "full"
 [[batches]]
 position = 51
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 23 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #23"
+descriptor = "README.md section #23"
 cost_tokens = 18
 cum_tokens = 1482
 
@@ -1432,7 +1432,7 @@ kind = "full"
 [[batches]]
 position = 52
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+descriptor = "c decl names surface in aho_corasick.c"
 cost_tokens = 175
 cum_tokens = 1657
 
@@ -1570,7 +1570,7 @@ kind = "ellipsis"
 [[batches]]
 position = 53
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 293 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:293"
+descriptor = "c decl at aho_corasick.c:293"
 cost_tokens = 0
 cum_tokens = 1657
 
@@ -1588,7 +1588,7 @@ kind = "full"
 [[batches]]
 position = 54
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 294 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:294"
+descriptor = "c decl at aho_corasick.c:294"
 cost_tokens = 0
 cum_tokens = 1657
 
@@ -1606,7 +1606,7 @@ kind = "full"
 [[batches]]
 position = 55
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 296 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:296"
+descriptor = "c decl at aho_corasick.c:296"
 cost_tokens = 0
 cum_tokens = 1657
 
@@ -1624,7 +1624,7 @@ kind = "full"
 [[batches]]
 position = 56
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 111 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:111"
+descriptor = "c decl at aho_corasick.c:111"
 cost_tokens = 5
 cum_tokens = 1662
 
@@ -1650,7 +1650,7 @@ kind = "ellipsis"
 [[batches]]
 position = 57
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+descriptor = "c decl at aho_corasick.c:274"
 cost_tokens = 5
 cum_tokens = 1667
 
@@ -1676,7 +1676,7 @@ kind = "ellipsis"
 [[batches]]
 position = 58
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+descriptor = "c decl at aho_corasick.c:287"
 cost_tokens = 5
 cum_tokens = 1672
 
@@ -1702,7 +1702,7 @@ kind = "ellipsis"
 [[batches]]
 position = 59
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 111 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:111"
+descriptor = "c decl doc at aho_corasick.c:111"
 cost_tokens = 14
 cum_tokens = 1686
 
@@ -1720,7 +1720,7 @@ kind = "full"
 [[batches]]
 position = 60
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+descriptor = "c decl doc at aho_corasick.c:274"
 cost_tokens = 14
 cum_tokens = 1700
 
@@ -1738,7 +1738,7 @@ kind = "full"
 [[batches]]
 position = 61
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 296 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:296"
+descriptor = "c decl doc at aho_corasick.c:296"
 cost_tokens = 14
 cum_tokens = 1714
 
@@ -1756,7 +1756,7 @@ kind = "full"
 [[batches]]
 position = 62
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+descriptor = "c decl doc at aho_corasick.c:287"
 cost_tokens = 22
 cum_tokens = 1736
 
@@ -1774,7 +1774,7 @@ kind = "full"
 [[batches]]
 position = 63
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 293 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:293"
+descriptor = "c decl doc at aho_corasick.c:293"
 cost_tokens = 21
 cum_tokens = 1757
 
@@ -1792,7 +1792,7 @@ kind = "full"
 [[batches]]
 position = 64
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 299 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:299"
+descriptor = "c decl at aho_corasick.c:299"
 cost_tokens = 37
 cum_tokens = 1794
 
@@ -1818,7 +1818,7 @@ kind = "ellipsis"
 [[batches]]
 position = 65
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 299 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:299"
+descriptor = "c decl doc at aho_corasick.c:299"
 cost_tokens = 15
 cum_tokens = 1809
 
@@ -1836,7 +1836,7 @@ kind = "full"
 [[batches]]
 position = 66
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 26 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:26"
+descriptor = "c decl at aho_corasick.c:26"
 cost_tokens = 61
 cum_tokens = 1870
 
@@ -1854,7 +1854,7 @@ kind = "full"
 [[batches]]
 position = 67
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 36 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #36"
+descriptor = "README.md section #36"
 cost_tokens = 19
 cum_tokens = 1889
 
@@ -1872,7 +1872,7 @@ kind = "full"
 [[batches]]
 position = 68
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 1 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #1"
+descriptor = "README.md section #1"
 cost_tokens = 114
 cum_tokens = 2003
 
@@ -1906,7 +1906,7 @@ kind = "full"
 [[batches]]
 position = 69
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 287 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:287"
+descriptor = "c decl body at aho_corasick.c:287"
 cost_tokens = 26
 cum_tokens = 2029
 
@@ -1924,7 +1924,7 @@ kind = "full"
 [[batches]]
 position = 70
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 32 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #32"
+descriptor = "README.md section #32"
 cost_tokens = 20
 cum_tokens = 2049
 
@@ -1942,7 +1942,7 @@ kind = "full"
 [[batches]]
 position = 71
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+descriptor = "c includes in krep.h"
 cost_tokens = 114
 cum_tokens = 2163
 
@@ -1960,7 +1960,7 @@ kind = "full"
 [[batches]]
 position = 72
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 29 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #29"
+descriptor = "README.md section #29"
 cost_tokens = 21
 cum_tokens = 2184
 
@@ -1978,7 +1978,7 @@ kind = "full"
 [[batches]]
 position = 73
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 4 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #4"
+descriptor = "README.md section #4"
 cost_tokens = 32
 cum_tokens = 2216
 
@@ -1996,7 +1996,7 @@ kind = "full"
 [[batches]]
 position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 25 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #25"
+descriptor = "README.md section #25"
 cost_tokens = 22
 cum_tokens = 2238
 
@@ -2014,7 +2014,7 @@ kind = "full"
 [[batches]]
 position = 75
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/krep/test" })'
-descriptor = "listing of '/Users/yoav/projects/precis/tests/fixtures/krep/test'"
+descriptor = "listing of 'test'"
 cost_tokens = 42
 cum_tokens = 2280
 
@@ -2028,7 +2028,7 @@ entries = ["benchmark_krep_vs_rg.sh", "test_compat.h", "test_directory.c", "test
 [[batches]]
 position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 2 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #2"
+descriptor = "README.md section #2"
 cost_tokens = 36
 cum_tokens = 2316
 
@@ -2046,7 +2046,7 @@ kind = "full"
 [[batches]]
 position = 77
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 13 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #13"
+descriptor = "README.md section #13"
 cost_tokens = 37
 cum_tokens = 2353
 
@@ -2064,7 +2064,7 @@ kind = "full"
 [[batches]]
 position = 78
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/krep/.gitignore" })'
-descriptor = "plaintext config /Users/yoav/projects/precis/tests/fixtures/krep/.gitignore"
+descriptor = "plaintext config .gitignore"
 cost_tokens = 35
 cum_tokens = 2388
 
@@ -2082,7 +2082,7 @@ kind = "full"
 [[batches]]
 position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 35 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #35"
+descriptor = "README.md section #35"
 cost_tokens = 25
 cum_tokens = 2413
 
@@ -2100,7 +2100,7 @@ kind = "full"
 [[batches]]
 position = 80
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 37 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #37"
+descriptor = "README.md section #37"
 cost_tokens = 25
 cum_tokens = 2438
 
@@ -2118,7 +2118,7 @@ kind = "full"
 [[batches]]
 position = 81
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/krep.h"
+descriptor = "c decl names surface in krep.h"
 cost_tokens = 1025
 cum_tokens = 3463
 
@@ -2512,7 +2512,7 @@ kind = "ellipsis"
 [[batches]]
 position = 82
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 19 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:19"
+descriptor = "c decl at krep.h:19"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2530,7 +2530,7 @@ kind = "full"
 [[batches]]
 position = 83
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 22 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:22"
+descriptor = "c decl at krep.h:22"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2548,7 +2548,7 @@ kind = "full"
 [[batches]]
 position = 84
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 23 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:23"
+descriptor = "c decl at krep.h:23"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2566,7 +2566,7 @@ kind = "full"
 [[batches]]
 position = 85
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 34 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:34"
+descriptor = "c decl at krep.h:34"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2584,7 +2584,7 @@ kind = "full"
 [[batches]]
 position = 86
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 35 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:35"
+descriptor = "c decl at krep.h:35"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2602,7 +2602,7 @@ kind = "full"
 [[batches]]
 position = 87
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 36 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:36"
+descriptor = "c decl at krep.h:36"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2620,7 +2620,7 @@ kind = "full"
 [[batches]]
 position = 88
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 37 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:37"
+descriptor = "c decl at krep.h:37"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2638,7 +2638,7 @@ kind = "full"
 [[batches]]
 position = 89
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 38 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:38"
+descriptor = "c decl at krep.h:38"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2656,7 +2656,7 @@ kind = "full"
 [[batches]]
 position = 90
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 39 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:39"
+descriptor = "c decl at krep.h:39"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2674,7 +2674,7 @@ kind = "full"
 [[batches]]
 position = 91
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 42 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:42"
+descriptor = "c decl at krep.h:42"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2692,7 +2692,7 @@ kind = "full"
 [[batches]]
 position = 92
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 43 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:43"
+descriptor = "c decl at krep.h:43"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2710,7 +2710,7 @@ kind = "full"
 [[batches]]
 position = 93
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 44 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:44"
+descriptor = "c decl at krep.h:44"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2728,7 +2728,7 @@ kind = "full"
 [[batches]]
 position = 94
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 45 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:45"
+descriptor = "c decl at krep.h:45"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2746,7 +2746,7 @@ kind = "full"
 [[batches]]
 position = 95
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 146 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:146"
+descriptor = "c decl at krep.h:146"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2764,7 +2764,7 @@ kind = "full"
 [[batches]]
 position = 96
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 147 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:147"
+descriptor = "c decl at krep.h:147"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2782,7 +2782,7 @@ kind = "full"
 [[batches]]
 position = 97
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 148 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:148"
+descriptor = "c decl at krep.h:148"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2800,7 +2800,7 @@ kind = "full"
 [[batches]]
 position = 98
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 149 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:149"
+descriptor = "c decl at krep.h:149"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2818,7 +2818,7 @@ kind = "full"
 [[batches]]
 position = 99
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 161 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:161"
+descriptor = "c decl at krep.h:161"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2836,7 +2836,7 @@ kind = "full"
 [[batches]]
 position = 100
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 170 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:170"
+descriptor = "c decl at krep.h:170"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2854,7 +2854,7 @@ kind = "full"
 [[batches]]
 position = 101
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 180 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:180"
+descriptor = "c decl at krep.h:180"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2872,7 +2872,7 @@ kind = "full"
 [[batches]]
 position = 102
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 183 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:183"
+descriptor = "c decl at krep.h:183"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2890,7 +2890,7 @@ kind = "full"
 [[batches]]
 position = 103
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 184 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:184"
+descriptor = "c decl at krep.h:184"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2908,7 +2908,7 @@ kind = "full"
 [[batches]]
 position = 104
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 185 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:185"
+descriptor = "c decl at krep.h:185"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2926,7 +2926,7 @@ kind = "full"
 [[batches]]
 position = 105
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 186 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:186"
+descriptor = "c decl at krep.h:186"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2944,7 +2944,7 @@ kind = "full"
 [[batches]]
 position = 106
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 200 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:200"
+descriptor = "c decl at krep.h:200"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2962,7 +2962,7 @@ kind = "full"
 [[batches]]
 position = 107
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 203 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:203"
+descriptor = "c decl at krep.h:203"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2980,7 +2980,7 @@ kind = "full"
 [[batches]]
 position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 207 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:207"
+descriptor = "c decl at krep.h:207"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -2998,7 +2998,7 @@ kind = "full"
 [[batches]]
 position = 109
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 208 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:208"
+descriptor = "c decl at krep.h:208"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3016,7 +3016,7 @@ kind = "full"
 [[batches]]
 position = 110
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 209 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:209"
+descriptor = "c decl at krep.h:209"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3034,7 +3034,7 @@ kind = "full"
 [[batches]]
 position = 111
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 210 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:210"
+descriptor = "c decl at krep.h:210"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3052,7 +3052,7 @@ kind = "full"
 [[batches]]
 position = 112
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 211 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:211"
+descriptor = "c decl at krep.h:211"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3070,7 +3070,7 @@ kind = "full"
 [[batches]]
 position = 113
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 231 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:231"
+descriptor = "c decl at krep.h:231"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3088,7 +3088,7 @@ kind = "full"
 [[batches]]
 position = 114
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 232 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:232"
+descriptor = "c decl at krep.h:232"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3106,7 +3106,7 @@ kind = "full"
 [[batches]]
 position = 115
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 233 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:233"
+descriptor = "c decl at krep.h:233"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3124,7 +3124,7 @@ kind = "full"
 [[batches]]
 position = 116
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 234 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:234"
+descriptor = "c decl at krep.h:234"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3142,7 +3142,7 @@ kind = "full"
 [[batches]]
 position = 117
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 278 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:278"
+descriptor = "c decl at krep.h:278"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3160,7 +3160,7 @@ kind = "full"
 [[batches]]
 position = 118
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 288 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:288"
+descriptor = "c decl at krep.h:288"
 cost_tokens = 0
 cum_tokens = 3463
 
@@ -3178,7 +3178,7 @@ kind = "full"
 [[batches]]
 position = 119
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+descriptor = "c decl at krep.h:298"
 cost_tokens = 5
 cum_tokens = 3468
 
@@ -3204,7 +3204,7 @@ kind = "ellipsis"
 [[batches]]
 position = 120
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+descriptor = "c decl at krep.h:312"
 cost_tokens = 5
 cum_tokens = 3473
 
@@ -3230,7 +3230,7 @@ kind = "ellipsis"
 [[batches]]
 position = 121
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 203 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:203"
+descriptor = "c decl doc at krep.h:203"
 cost_tokens = 9
 cum_tokens = 3482
 
@@ -3248,7 +3248,7 @@ kind = "full"
 [[batches]]
 position = 122
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 98 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:98"
+descriptor = "c decl at krep.h:98"
 cost_tokens = 30
 cum_tokens = 3512
 
@@ -3266,7 +3266,7 @@ kind = "full"
 [[batches]]
 position = 123
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 231 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:231"
+descriptor = "c decl doc at krep.h:231"
 cost_tokens = 10
 cum_tokens = 3522
 
@@ -3284,7 +3284,7 @@ kind = "full"
 [[batches]]
 position = 124
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 146 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:146"
+descriptor = "c decl doc at krep.h:146"
 cost_tokens = 11
 cum_tokens = 3533
 
@@ -3302,7 +3302,7 @@ kind = "full"
 [[batches]]
 position = 125
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 183 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:183"
+descriptor = "c decl doc at krep.h:183"
 cost_tokens = 12
 cum_tokens = 3545
 
@@ -3320,7 +3320,7 @@ kind = "full"
 [[batches]]
 position = 126
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 22 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:22"
+descriptor = "c decl doc at krep.h:22"
 cost_tokens = 16
 cum_tokens = 3561
 
@@ -3338,7 +3338,7 @@ kind = "full"
 [[batches]]
 position = 127
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 42 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:42"
+descriptor = "c decl doc at krep.h:42"
 cost_tokens = 11
 cum_tokens = 3572
 
@@ -3356,7 +3356,7 @@ kind = "full"
 [[batches]]
 position = 128
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 49 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:49"
+descriptor = "c decl at krep.h:49"
 cost_tokens = 49
 cum_tokens = 3621
 
@@ -3374,7 +3374,7 @@ kind = "full"
 [[batches]]
 position = 129
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 49 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:49"
+descriptor = "c decl doc at krep.h:49"
 cost_tokens = 25
 cum_tokens = 3646
 
@@ -3392,7 +3392,7 @@ kind = "full"
 [[batches]]
 position = 130
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 19 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:19"
+descriptor = "c decl doc at krep.h:19"
 cost_tokens = 14
 cum_tokens = 3660
 
@@ -3410,7 +3410,7 @@ kind = "full"
 [[batches]]
 position = 131
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+descriptor = "c decl body at krep.h:298"
 cost_tokens = 17
 cum_tokens = 3677
 
@@ -3428,7 +3428,7 @@ kind = "full"
 [[batches]]
 position = 132
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 34 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:34"
+descriptor = "c decl doc at krep.h:34"
 cost_tokens = 20
 cum_tokens = 3697
 
@@ -3446,7 +3446,7 @@ kind = "full"
 [[batches]]
 position = 133
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 125 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:125"
+descriptor = "c decl at krep.h:125"
 cost_tokens = 59
 cum_tokens = 3756
 
@@ -3464,7 +3464,7 @@ kind = "full"
 [[batches]]
 position = 134
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 125 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:125"
+descriptor = "c decl doc at krep.h:125"
 cost_tokens = 11
 cum_tokens = 3767
 
@@ -3482,7 +3482,7 @@ kind = "full"
 [[batches]]
 position = 135
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 98 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:98"
+descriptor = "c decl doc at krep.h:98"
 cost_tokens = 39
 cum_tokens = 3806
 
@@ -3500,7 +3500,7 @@ kind = "full"
 [[batches]]
 position = 136
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 55 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:55"
+descriptor = "c decl at krep.h:55"
 cost_tokens = 79
 cum_tokens = 3885
 
@@ -3518,7 +3518,7 @@ kind = "full"
 [[batches]]
 position = 137
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 298 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:298"
+descriptor = "c decl doc at krep.h:298"
 cost_tokens = 68
 cum_tokens = 3953
 
@@ -3536,7 +3536,7 @@ kind = "full"
 [[batches]]
 position = 138
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 132 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:132"
+descriptor = "c decl at krep.h:132"
 cost_tokens = 170
 cum_tokens = 4123
 
@@ -3554,7 +3554,7 @@ kind = "full"
 [[batches]]
 position = 139
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 170 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:170"
+descriptor = "c decl doc at krep.h:170"
 cost_tokens = 92
 cum_tokens = 4215
 
@@ -3572,7 +3572,7 @@ kind = "full"
 [[batches]]
 position = 140
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 278 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:278"
+descriptor = "c decl doc at krep.h:278"
 cost_tokens = 97
 cum_tokens = 4312
 
@@ -3590,7 +3590,7 @@ kind = "full"
 [[batches]]
 position = 141
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+descriptor = "c decl doc at krep.h:312"
 cost_tokens = 107
 cum_tokens = 4419
 
@@ -3608,7 +3608,7 @@ kind = "full"
 [[batches]]
 position = 142
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 180 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:180"
+descriptor = "c decl doc at krep.h:180"
 cost_tokens = 98
 cum_tokens = 4517
 
@@ -3626,7 +3626,7 @@ kind = "full"
 [[batches]]
 position = 143
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 312 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:312"
+descriptor = "c decl body at krep.h:312"
 cost_tokens = 61
 cum_tokens = 4578
 
@@ -3644,7 +3644,7 @@ kind = "full"
 [[batches]]
 position = 144
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 288 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:288"
+descriptor = "c decl doc at krep.h:288"
 cost_tokens = 104
 cum_tokens = 4682
 
@@ -3662,7 +3662,7 @@ kind = "full"
 [[batches]]
 position = 145
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 161 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:161"
+descriptor = "c decl doc at krep.h:161"
 cost_tokens = 116
 cum_tokens = 4798
 
@@ -3680,7 +3680,7 @@ kind = "full"
 [[batches]]
 position = 146
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 104 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:104"
+descriptor = "c decl at krep.h:104"
 cost_tokens = 244
 cum_tokens = 5042
 
@@ -3722,7 +3722,7 @@ kind = "full"
 [[batches]]
 position = 147
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 104 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:104"
+descriptor = "c decl doc at krep.h:104"
 cost_tokens = 12
 cum_tokens = 5054
 
@@ -3740,7 +3740,7 @@ kind = "full"
 [[batches]]
 position = 148
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 200 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:200"
+descriptor = "c decl doc at krep.h:200"
 cost_tokens = 171
 cum_tokens = 5225
 
@@ -3758,7 +3758,7 @@ kind = "full"
 [[batches]]
 position = 149
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 28 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #28"
+descriptor = "README.md section #28"
 cost_tokens = 26
 cum_tokens = 5251
 
@@ -3776,7 +3776,7 @@ kind = "full"
 [[batches]]
 position = 150
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 34 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #34"
+descriptor = "README.md section #34"
 cost_tokens = 26
 cum_tokens = 5277
 
@@ -3794,7 +3794,7 @@ kind = "full"
 [[batches]]
 position = 151
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 26 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #26"
+descriptor = "README.md section #26"
 cost_tokens = 27
 cum_tokens = 5304
 
@@ -3812,7 +3812,7 @@ kind = "full"
 [[batches]]
 position = 152
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 30 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #30"
+descriptor = "README.md section #30"
 cost_tokens = 29
 cum_tokens = 5333
 
@@ -3830,7 +3830,7 @@ kind = "full"
 [[batches]]
 position = 153
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 65 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:65"
+descriptor = "c decl at krep.h:65"
 cost_tokens = 347
 cum_tokens = 5680
 
@@ -3896,7 +3896,7 @@ kind = "full"
 [[batches]]
 position = 154
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.h", start_line: 65 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.h:65"
+descriptor = "c decl doc at krep.h:65"
 cost_tokens = 13
 cum_tokens = 5693
 
@@ -3914,7 +3914,7 @@ kind = "full"
 [[batches]]
 position = 155
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 27 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #27"
+descriptor = "README.md section #27"
 cost_tokens = 31
 cum_tokens = 5724
 
@@ -3932,7 +3932,7 @@ kind = "full"
 [[batches]]
 position = 156
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 44 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #44"
+descriptor = "README.md section #44"
 cost_tokens = 29
 cum_tokens = 5753
 
@@ -3950,7 +3950,7 @@ kind = "full"
 [[batches]]
 position = 157
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 17 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:17"
+descriptor = "c decl at aho_corasick.c:17"
 cost_tokens = 111
 cum_tokens = 5864
 
@@ -3968,7 +3968,7 @@ kind = "full"
 [[batches]]
 position = 158
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 21 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #21"
+descriptor = "README.md section #21"
 cost_tokens = 129
 cum_tokens = 5993
 
@@ -3994,7 +3994,7 @@ kind = "full"
 [[batches]]
 position = 159
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+descriptor = "c header banner in krep.c"
 cost_tokens = 74
 cum_tokens = 6067
 
@@ -4020,7 +4020,7 @@ kind = "full"
 [[batches]]
 position = 160
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 33 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #33"
+descriptor = "README.md section #33"
 cost_tokens = 40
 cum_tokens = 6107
 
@@ -4038,7 +4038,7 @@ kind = "full"
 [[batches]]
 position = 161
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+descriptor = "c header banner in aho_corasick.c"
 cost_tokens = 77
 cum_tokens = 6184
 
@@ -4056,7 +4056,7 @@ kind = "full"
 [[batches]]
 position = 162
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c"
+descriptor = "c includes in aho_corasick.c"
 cost_tokens = 114
 cum_tokens = 6298
 
@@ -4082,7 +4082,7 @@ kind = "full"
 [[batches]]
 position = 163
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c", start_line: 274 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/aho_corasick.c:274"
+descriptor = "c decl body at aho_corasick.c:274"
 cost_tokens = 63
 cum_tokens = 6361
 
@@ -4116,7 +4116,7 @@ kind = "full"
 [[batches]]
 position = 164
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 19 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #19"
+descriptor = "README.md section #19"
 cost_tokens = 37
 cum_tokens = 6398
 
@@ -4142,7 +4142,7 @@ kind = "full"
 [[batches]]
 position = 165
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 47 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #47"
+descriptor = "README.md section #47"
 cost_tokens = 32
 cum_tokens = 6430
 
@@ -4168,7 +4168,7 @@ kind = "full"
 [[batches]]
 position = 166
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
-descriptor = "c decl names surface in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+descriptor = "c decl names surface in krep.c"
 cost_tokens = 929
 cum_tokens = 7359
 
@@ -4690,7 +4690,7 @@ kind = "ellipsis"
 [[batches]]
 position = 167
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 77 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:77"
+descriptor = "c decl at krep.c:77"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4708,7 +4708,7 @@ kind = "full"
 [[batches]]
 position = 168
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 78 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:78"
+descriptor = "c decl at krep.c:78"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4726,7 +4726,7 @@ kind = "full"
 [[batches]]
 position = 169
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 79 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:79"
+descriptor = "c decl at krep.c:79"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4744,7 +4744,7 @@ kind = "full"
 [[batches]]
 position = 170
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 80 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:80"
+descriptor = "c decl at krep.c:80"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4762,7 +4762,7 @@ kind = "full"
 [[batches]]
 position = 171
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 81 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:81"
+descriptor = "c decl at krep.c:81"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4780,7 +4780,7 @@ kind = "full"
 [[batches]]
 position = 172
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 82 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:82"
+descriptor = "c decl at krep.c:82"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4798,7 +4798,7 @@ kind = "full"
 [[batches]]
 position = 173
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 83 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:83"
+descriptor = "c decl at krep.c:83"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4816,7 +4816,7 @@ kind = "full"
 [[batches]]
 position = 174
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 87 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:87"
+descriptor = "c decl at krep.c:87"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4834,7 +4834,7 @@ kind = "full"
 [[batches]]
 position = 175
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 88 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:88"
+descriptor = "c decl at krep.c:88"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4852,7 +4852,7 @@ kind = "full"
 [[batches]]
 position = 176
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 89 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:89"
+descriptor = "c decl at krep.c:89"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4870,7 +4870,7 @@ kind = "full"
 [[batches]]
 position = 177
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 90 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:90"
+descriptor = "c decl at krep.c:90"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4888,7 +4888,7 @@ kind = "full"
 [[batches]]
 position = 178
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 93 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:93"
+descriptor = "c decl at krep.c:93"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4906,7 +4906,7 @@ kind = "full"
 [[batches]]
 position = 179
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 94 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:94"
+descriptor = "c decl at krep.c:94"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4924,7 +4924,7 @@ kind = "full"
 [[batches]]
 position = 180
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 95 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:95"
+descriptor = "c decl at krep.c:95"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4942,7 +4942,7 @@ kind = "full"
 [[batches]]
 position = 181
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 96 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:96"
+descriptor = "c decl at krep.c:96"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4960,7 +4960,7 @@ kind = "full"
 [[batches]]
 position = 182
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 97 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:97"
+descriptor = "c decl at krep.c:97"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4978,7 +4978,7 @@ kind = "full"
 [[batches]]
 position = 183
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 125 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:125"
+descriptor = "c decl at krep.c:125"
 cost_tokens = 0
 cum_tokens = 7359
 
@@ -4996,7 +4996,7 @@ kind = "full"
 [[batches]]
 position = 184
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 139 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:139"
+descriptor = "c decl at krep.c:139"
 cost_tokens = 5
 cum_tokens = 7364
 
@@ -5022,7 +5022,7 @@ kind = "ellipsis"
 [[batches]]
 position = 185
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 175 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:175"
+descriptor = "c decl at krep.c:175"
 cost_tokens = 5
 cum_tokens = 7369
 
@@ -5048,7 +5048,7 @@ kind = "ellipsis"
 [[batches]]
 position = 186
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+descriptor = "c decl at krep.c:244"
 cost_tokens = 5
 cum_tokens = 7374
 
@@ -5074,7 +5074,7 @@ kind = "ellipsis"
 [[batches]]
 position = 187
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 256 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:256"
+descriptor = "c decl at krep.c:256"
 cost_tokens = 5
 cum_tokens = 7379
 
@@ -5100,7 +5100,7 @@ kind = "ellipsis"
 [[batches]]
 position = 188
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 363 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:363"
+descriptor = "c decl at krep.c:363"
 cost_tokens = 5
 cum_tokens = 7384
 
@@ -5126,7 +5126,7 @@ kind = "ellipsis"
 [[batches]]
 position = 189
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+descriptor = "c decl at krep.c:401"
 cost_tokens = 5
 cum_tokens = 7389
 
@@ -5152,7 +5152,7 @@ kind = "ellipsis"
 [[batches]]
 position = 190
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 461 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:461"
+descriptor = "c decl at krep.c:461"
 cost_tokens = 5
 cum_tokens = 7394
 
@@ -5178,7 +5178,7 @@ kind = "ellipsis"
 [[batches]]
 position = 191
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+descriptor = "c decl at krep.c:1125"
 cost_tokens = 6
 cum_tokens = 7400
 
@@ -5204,7 +5204,7 @@ kind = "ellipsis"
 [[batches]]
 position = 192
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1137 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1137"
+descriptor = "c decl at krep.c:1137"
 cost_tokens = 6
 cum_tokens = 7406
 
@@ -5230,7 +5230,7 @@ kind = "ellipsis"
 [[batches]]
 position = 193
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+descriptor = "c decl at krep.c:1198"
 cost_tokens = 6
 cum_tokens = 7412
 
@@ -5256,7 +5256,7 @@ kind = "ellipsis"
 [[batches]]
 position = 194
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1213 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1213"
+descriptor = "c decl at krep.c:1213"
 cost_tokens = 6
 cum_tokens = 7418
 
@@ -5282,7 +5282,7 @@ kind = "ellipsis"
 [[batches]]
 position = 195
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1771 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1771"
+descriptor = "c decl at krep.c:1771"
 cost_tokens = 6
 cum_tokens = 7424
 
@@ -5308,7 +5308,7 @@ kind = "ellipsis"
 [[batches]]
 position = 196
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1919 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1919"
+descriptor = "c decl at krep.c:1919"
 cost_tokens = 6
 cum_tokens = 7430
 
@@ -5334,7 +5334,7 @@ kind = "ellipsis"
 [[batches]]
 position = 197
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1964 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1964"
+descriptor = "c decl at krep.c:1964"
 cost_tokens = 6
 cum_tokens = 7436
 
@@ -5360,7 +5360,7 @@ kind = "ellipsis"
 [[batches]]
 position = 198
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1999 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1999"
+descriptor = "c decl at krep.c:1999"
 cost_tokens = 6
 cum_tokens = 7442
 
@@ -5386,7 +5386,7 @@ kind = "ellipsis"
 [[batches]]
 position = 199
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 2274 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:2274"
+descriptor = "c decl at krep.c:2274"
 cost_tokens = 6
 cum_tokens = 7448
 
@@ -5412,7 +5412,7 @@ kind = "ellipsis"
 [[batches]]
 position = 200
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+descriptor = "c decl at krep.c:3442"
 cost_tokens = 6
 cum_tokens = 7454
 
@@ -5438,7 +5438,7 @@ kind = "ellipsis"
 [[batches]]
 position = 201
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4104 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4104"
+descriptor = "c decl at krep.c:4104"
 cost_tokens = 6
 cum_tokens = 7460
 
@@ -5464,7 +5464,7 @@ kind = "ellipsis"
 [[batches]]
 position = 202
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4209 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4209"
+descriptor = "c decl at krep.c:4209"
 cost_tokens = 6
 cum_tokens = 7466
 
@@ -5490,7 +5490,7 @@ kind = "ellipsis"
 [[batches]]
 position = 203
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+descriptor = "c decl at krep.c:4313"
 cost_tokens = 6
 cum_tokens = 7472
 
@@ -5516,7 +5516,7 @@ kind = "ellipsis"
 [[batches]]
 position = 204
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4332 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4332"
+descriptor = "c decl at krep.c:4332"
 cost_tokens = 6
 cum_tokens = 7478
 
@@ -5542,7 +5542,7 @@ kind = "ellipsis"
 [[batches]]
 position = 205
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 77 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:77"
+descriptor = "c decl doc at krep.c:77"
 cost_tokens = 7
 cum_tokens = 7485
 
@@ -5560,7 +5560,7 @@ kind = "full"
 [[batches]]
 position = 206
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 139 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:139"
+descriptor = "c decl doc at krep.c:139"
 cost_tokens = 10
 cum_tokens = 7495
 
@@ -5578,7 +5578,7 @@ kind = "full"
 [[batches]]
 position = 207
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1137 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1137"
+descriptor = "c decl doc at krep.c:1137"
 cost_tokens = 10
 cum_tokens = 7505
 
@@ -5596,7 +5596,7 @@ kind = "full"
 [[batches]]
 position = 208
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+descriptor = "c decl doc at krep.c:1125"
 cost_tokens = 11
 cum_tokens = 7516
 
@@ -5614,7 +5614,7 @@ kind = "full"
 [[batches]]
 position = 209
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4332 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4332"
+descriptor = "c decl doc at krep.c:4332"
 cost_tokens = 11
 cum_tokens = 7527
 
@@ -5632,7 +5632,7 @@ kind = "full"
 [[batches]]
 position = 210
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 93 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:93"
+descriptor = "c decl doc at krep.c:93"
 cost_tokens = 11
 cum_tokens = 7538
 
@@ -5650,7 +5650,7 @@ kind = "full"
 [[batches]]
 position = 211
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+descriptor = "c decl doc at krep.c:244"
 cost_tokens = 13
 cum_tokens = 7551
 
@@ -5668,7 +5668,7 @@ kind = "full"
 [[batches]]
 position = 212
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+descriptor = "c decl doc at krep.c:4313"
 cost_tokens = 13
 cum_tokens = 7564
 
@@ -5686,7 +5686,7 @@ kind = "full"
 [[batches]]
 position = 213
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4209 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4209"
+descriptor = "c decl doc at krep.c:4209"
 cost_tokens = 14
 cum_tokens = 7578
 
@@ -5704,7 +5704,7 @@ kind = "full"
 [[batches]]
 position = 214
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1213 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1213"
+descriptor = "c decl doc at krep.c:1213"
 cost_tokens = 15
 cum_tokens = 7593
 
@@ -5722,7 +5722,7 @@ kind = "full"
 [[batches]]
 position = 215
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+descriptor = "c decl doc at krep.c:401"
 cost_tokens = 16
 cum_tokens = 7609
 
@@ -5740,7 +5740,7 @@ kind = "full"
 [[batches]]
 position = 216
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1999 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1999"
+descriptor = "c decl doc at krep.c:1999"
 cost_tokens = 16
 cum_tokens = 7625
 
@@ -5758,7 +5758,7 @@ kind = "full"
 [[batches]]
 position = 217
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+descriptor = "c decl doc at krep.c:1198"
 cost_tokens = 17
 cum_tokens = 7642
 
@@ -5776,7 +5776,7 @@ kind = "full"
 [[batches]]
 position = 218
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1964 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1964"
+descriptor = "c decl doc at krep.c:1964"
 cost_tokens = 17
 cum_tokens = 7659
 
@@ -5794,7 +5794,7 @@ kind = "full"
 [[batches]]
 position = 219
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 175 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:175"
+descriptor = "c decl doc at krep.c:175"
 cost_tokens = 18
 cum_tokens = 7677
 
@@ -5812,7 +5812,7 @@ kind = "full"
 [[batches]]
 position = 220
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4104 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4104"
+descriptor = "c decl doc at krep.c:4104"
 cost_tokens = 18
 cum_tokens = 7695
 
@@ -5830,7 +5830,7 @@ kind = "full"
 [[batches]]
 position = 221
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 125 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:125"
+descriptor = "c decl doc at krep.c:125"
 cost_tokens = 14
 cum_tokens = 7709
 
@@ -5848,7 +5848,7 @@ kind = "full"
 [[batches]]
 position = 222
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1919 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1919"
+descriptor = "c decl doc at krep.c:1919"
 cost_tokens = 19
 cum_tokens = 7728
 
@@ -5866,7 +5866,7 @@ kind = "full"
 [[batches]]
 position = 223
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3146 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3146"
+descriptor = "c decl at krep.c:3146"
 cost_tokens = 45
 cum_tokens = 7773
 
@@ -5884,7 +5884,7 @@ kind = "full"
 [[batches]]
 position = 224
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3146 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3146"
+descriptor = "c decl doc at krep.c:3146"
 cost_tokens = 15
 cum_tokens = 7788
 
@@ -5902,7 +5902,7 @@ kind = "full"
 [[batches]]
 position = 225
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+descriptor = "c decl body at krep.c:3442"
 cost_tokens = 19
 cum_tokens = 7807
 
@@ -5920,7 +5920,7 @@ kind = "full"
 [[batches]]
 position = 226
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1389 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1389"
+descriptor = "c decl at krep.c:1389"
 cost_tokens = 41
 cum_tokens = 7848
 
@@ -5946,7 +5946,7 @@ kind = "ellipsis"
 [[batches]]
 position = 227
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3891 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3891"
+descriptor = "c decl at krep.c:3891"
 cost_tokens = 41
 cum_tokens = 7889
 
@@ -5972,7 +5972,7 @@ kind = "ellipsis"
 [[batches]]
 position = 228
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3891 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3891"
+descriptor = "c decl doc at krep.c:3891"
 cost_tokens = 13
 cum_tokens = 7902
 
@@ -5990,7 +5990,7 @@ kind = "full"
 [[batches]]
 position = 229
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4371 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4371"
+descriptor = "c decl at krep.c:4371"
 cost_tokens = 41
 cum_tokens = 7943
 
@@ -6016,7 +6016,7 @@ kind = "ellipsis"
 [[batches]]
 position = 230
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4371 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4371"
+descriptor = "c decl doc at krep.c:4371"
 cost_tokens = 21
 cum_tokens = 7964
 
@@ -6034,7 +6034,7 @@ kind = "full"
 [[batches]]
 position = 231
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3442 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3442"
+descriptor = "c decl doc at krep.c:3442"
 cost_tokens = 35
 cum_tokens = 7999
 
@@ -6052,7 +6052,7 @@ kind = "full"
 [[batches]]
 position = 232
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 363 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:363"
+descriptor = "c decl doc at krep.c:363"
 cost_tokens = 40
 cum_tokens = 8039
 
@@ -6070,7 +6070,7 @@ kind = "full"
 [[batches]]
 position = 233
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1628 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1628"
+descriptor = "c decl at krep.c:1628"
 cost_tokens = 50
 cum_tokens = 8089
 
@@ -6096,7 +6096,7 @@ kind = "ellipsis"
 [[batches]]
 position = 234
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3154 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3154"
+descriptor = "c decl at krep.c:3154"
 cost_tokens = 67
 cum_tokens = 8156
 
@@ -6114,7 +6114,7 @@ kind = "full"
 [[batches]]
 position = 235
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 3154 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:3154"
+descriptor = "c decl doc at krep.c:3154"
 cost_tokens = 22
 cum_tokens = 8178
 
@@ -6132,7 +6132,7 @@ kind = "full"
 [[batches]]
 position = 236
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 256 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:256"
+descriptor = "c decl doc at krep.c:256"
 cost_tokens = 49
 cum_tokens = 8227
 
@@ -6150,7 +6150,7 @@ kind = "full"
 [[batches]]
 position = 237
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1628 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1628"
+descriptor = "c decl doc at krep.c:1628"
 cost_tokens = 56
 cum_tokens = 8283
 
@@ -6168,7 +6168,7 @@ kind = "full"
 [[batches]]
 position = 238
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1259 })'
-descriptor = "c decl at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1259"
+descriptor = "c decl at krep.c:1259"
 cost_tokens = 71
 cum_tokens = 8354
 
@@ -6194,7 +6194,7 @@ kind = "ellipsis"
 [[batches]]
 position = 239
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1259 })'
-descriptor = "c decl doc at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1259"
+descriptor = "c decl doc at krep.c:1259"
 cost_tokens = 36
 cum_tokens = 8390
 
@@ -6212,7 +6212,7 @@ kind = "full"
 [[batches]]
 position = 240
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 244 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:244"
+descriptor = "c decl body at krep.c:244"
 cost_tokens = 43
 cum_tokens = 8433
 
@@ -6230,7 +6230,7 @@ kind = "full"
 [[batches]]
 position = 241
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1198 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1198"
+descriptor = "c decl body at krep.c:1198"
 cost_tokens = 87
 cum_tokens = 8520
 
@@ -6248,7 +6248,7 @@ kind = "full"
 [[batches]]
 position = 242
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 22 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #22"
+descriptor = "README.md section #22"
 cost_tokens = 239
 cum_tokens = 8759
 
@@ -6362,7 +6362,7 @@ kind = "full"
 [[batches]]
 position = 243
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 17 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #17"
+descriptor = "README.md section #17"
 cost_tokens = 47
 cum_tokens = 8806
 
@@ -6396,7 +6396,7 @@ kind = "full"
 [[batches]]
 position = 244
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 1125 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:1125"
+descriptor = "c decl body at krep.c:1125"
 cost_tokens = 100
 cum_tokens = 8906
 
@@ -6414,7 +6414,7 @@ kind = "full"
 [[batches]]
 position = 245
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 20 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #20"
+descriptor = "README.md section #20"
 cost_tokens = 49
 cum_tokens = 8955
 
@@ -6448,7 +6448,7 @@ kind = "full"
 [[batches]]
 position = 246
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 41 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #41"
+descriptor = "README.md section #41"
 cost_tokens = 259
 cum_tokens = 9214
 
@@ -6522,7 +6522,7 @@ kind = "full"
 [[batches]]
 position = 247
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c" })'
-descriptor = "c includes in /Users/yoav/projects/precis/tests/fixtures/krep/krep.c"
+descriptor = "c includes in krep.c"
 cost_tokens = 333
 cum_tokens = 9547
 
@@ -6548,7 +6548,7 @@ kind = "full"
 [[batches]]
 position = 248
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/krep/test/test_krep.h" })'
-descriptor = "c header banner in /Users/yoav/projects/precis/tests/fixtures/krep/test/test_krep.h"
+descriptor = "c header banner in test/test_krep.h"
 cost_tokens = 24
 cum_tokens = 9571
 
@@ -6566,7 +6566,7 @@ kind = "full"
 [[batches]]
 position = 249
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 4313 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:4313"
+descriptor = "c decl body at krep.c:4313"
 cost_tokens = 138
 cum_tokens = 9709
 
@@ -6608,7 +6608,7 @@ kind = "full"
 [[batches]]
 position = 250
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/krep/krep.c", start_line: 401 })'
-descriptor = "c decl body at /Users/yoav/projects/precis/tests/fixtures/krep/krep.c:401"
+descriptor = "c decl body at krep.c:401"
 cost_tokens = 156
 cum_tokens = 9865
 
@@ -6642,7 +6642,7 @@ kind = "full"
 [[batches]]
 position = 251
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/krep/README.md", section_index: 46 })'
-descriptor = "/Users/yoav/projects/precis/tests/fixtures/krep/README.md section #46"
+descriptor = "README.md section #46"
 cost_tokens = 61
 cum_tokens = 9926
 

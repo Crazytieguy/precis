@@ -19,9 +19,7 @@
 //!   Divergence reports are generated from the in-memory schedules the
 //!   per-fixture tests already produce. Survey across fixtures with
 //!   `head -1 tests/divergence/*.md` (each report's first line is the
-//!   score line) or
-//!   `grep -H '^scores:' tests/divergence/*.md | sort -t= -k2 -g`
-//!   for a Score(3000)-ascending index.
+//!   `Score(3000)=… I=… C=… ns_rows≤3K=…` headline).
 //!
 //! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).

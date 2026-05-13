@@ -96,8 +96,8 @@ Once the fixture is in the corpus, walker / value iteration is handled
 by `Skill(iterate-divergence)`.
 
 If the new fixture's report has obvious red flags before any iteration
-(verdict label that doesn't match what the fixture is for, NS rows
-with empty `descriptor`s, etc.), surface them — those are NS-authoring
+(NS rows with empty `descriptor`s, NS rows that look mistargeted for
+what the fixture is for, etc.), surface them — those are NS-authoring
 issues, not calibration ones, and may need a respawn of step 2.
 
 ## Things to *not* do

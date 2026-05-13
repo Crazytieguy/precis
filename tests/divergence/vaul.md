@@ -1,104 +1,149 @@
-scores: Score(3000)=0.577 ns_rows≤3K=14/33 (reached=7 partial=1 missing=6)
+Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missing=6)
 
-## Per-budget scores
-
-| B | A_B | I(B) | C(B) | compl(B) | Score(B) | walker_used |
-|--:|----:|-----:|-----:|---------:|---------:|------------:|
-| 1000 | 77 | 0.673 | 0.623 | 0.818 | 0.648 | 988 |
-| 1442 | 127 | 0.718 | 0.668 | 0.873 | 0.693 | 1433 |
-| 2080 | 178 | 0.714 | 0.651 | 0.887 | 0.682 | 1875 |
-| 3000 | 237 | 0.681 | 0.489 | 0.887 | 0.577 | 2907 |
-| 4327 | 332 | 0.668 | 0.417 | 0.800 | 0.528 | 4197 |
-| 6240 | 468 | 0.718 | 0.549 | 0.856 | 0.628 | 6236 |
-| 9000 | 662 | 0.707 | 0.425 | 0.799 | 0.548 | 8971 |
-
-## Top opportunities
-
-### Additive (close partial / missing rows)
-
-| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
-|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| split wrong-slice walker batches | 9 | 1.69 | 1.69 | 1.63 | nearby candidates have low exact atom overlap | 1.1, 2.9, 2.6, 3.11, 3.5, ... |
-| tune ranking for high-overlap unscheduled candidates | 3 | 0.26 | 0.26 | 0.26 | high-overlap candidates not in the schedule by T_max, exact total=102/122 | 3.9, 3.7, 3.4 |
-| add walker candidates for no-discovered rows | 3 | 0.23 | 0.23 | 0.23 | NS rows have no discovered line candidate | 2.10, 1.3, 2.11 |
-
-### Subtractive (suppress consistently off-NS batches)
-
-| pattern | batches | freed@1k | freed@3k | freed@9k | evidence | top batch ids |
-|:--------|--------:|---------:|---------:|---------:|:---------|:--------------|
-| export at playwright.config.ts:<n> | 1 | 0 | 407 | 407 | off_3k=512 | export at playwright.config.ts:12 |
-| package identity in package.json | 1 | 189 | 189 | 189 | off_3k=189 | package identity in package.json |
-| package entrypoints in package.json | 1 | 0 | 174 | 174 | off_3k=174 | package entrypoints in package.json |
-| package scripts in package.json | 1 | 0 | 135 | 135 | off_3k=135 | package scripts in package.json |
-| export at src/use-position-fixed.ts:<n> | 1 | 0 | 124 | 124 | off_3k=124 | export at src/use-position-fixed.ts:15 |
-
-Top missed paths (NS rows ≤ 3K): src/index.tsx (4 rows, 107 atoms), package.json (2 rows, 12 atoms), README.md (1 row, 2 atoms)
-
-## Arrival ledger by diagnosis
-
-### ranking-recoverable
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 3.4 | 4688 | 0.00 | missing | Root inner-function locations (onPress, onDrag, onRelease, …) | [unscheduled bbox exact=11/11] export body at src/index.tsx:139 body 170 (384 atoms, too expensive at final margin) |
-| 3.7 | 6032 | 0.00 | missing | useSnapPoints — return shape + snapPointsOffset memo | [unscheduled bbox exact=39/47] export body at src/use-snap-points.ts:7 body 30 (178 atoms, too expensive at final margin) |
-| 3.9 | 7179 | 0.00 | missing | Root onRelease — close-threshold + velocity decision | [unscheduled bbox exact=52/64] export body at src/index.tsx:139 body 170 (52 atoms, too expensive at final margin) |
-
-### wrong-slice / granularity
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.1 | 46 | 0.75 | partial | package.json — name, version, description | [scheduled bbox exact=3/4] package identity in package.json (t=314, 3 atoms) |
-| 2.6 | 2011 | 0.00 | missing | Overlay + Content render — what data-vaul-* attributes appear on DOM | [scheduled bbox exact=11/20] export body at src/index.tsx:803 body 805 (t=3582, 11 atoms) |
-| 2.9 | 3228 | 0.05 | missing | NestedRoot + Portal — nested-drawer wiring + container override | [scheduled bbox exact=4/38] export names surface in src/index.tsx (t=962, 4 atoms); better unscheduled exact=25/38: export body at src/index.tsx:1098 body 1099 (25 atoms, discovered unscheduled) |
-| 3.5 | 5171 | 0.06 | missing | context.ts — DrawerContextValue interface (parent/child contract) | [scheduled bbox exact=2/35] imports in src/context.ts (t=2436, 2 atoms) |
-| 3.8 | 6394 | 0.00 | missing | helpers.ts — dampenValue, getTranslate, isVertical bodies | [scheduled bbox exact=10/34] export body at src/helpers.ts:59 body 60 (t=5754, 10 atoms); better unscheduled exact=15/34: export body at src/helpers.ts:72 body 73 (15 atoms, discovered unscheduled) |
-| 3.10 | 7585 | 0.00 | missing | browser.ts — every UA-detection function (full file) | [scheduled bbox exact=14/36] export names surface in src/browser.ts (t=3154, 14 atoms) |
-| 3.11 | 8357 | 0.02 | missing | useScaleBackground — wrapper-scale effect (full hook) | [scheduled bbox exact=45/60] export body at src/use-scale-background.ts:8 body 9 (t=9604, 45 atoms) |
-| 3.12 | 9050 | 0.15 | missing | use-prevent-scroll — exports + the six mobile-Safari quirks | [scheduled bbox exact=0/33] export body at src/use-prevent-scroll.ts:68 body 69 (t=4197, 18 atoms) |
-| 4.4 | 9693 | 0.33 | missing | Landing page + Playwright device profiles | [scheduled bbox exact=11/33] export at playwright.config.ts:12 (t=2387, 11 atoms) |
-
-### no discovered candidate
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.3 | 171 | 0.00 | missing | README — unmaintained notice | no discovered line candidate |
-| 2.10 | 4024 | 0.00 | missing | style.css — every selector head (locations only) | no discovered line candidate |
-| 2.11 | 4132 | 0.00 | missing | style.css — keyframe names (locations only) | no discovered line candidate |
-
-### fs/listing
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 4.1 | 9102 | 0.00 | missing | test/ workspace listing | fs-only |
-| 4.2 | 9201 | 0.00 | missing | test/src/app/ — every demo page directory | fs-only |
-| 4.3 | 9267 | 0.00 | missing | test/tests/ — Playwright spec catalog | fs-only |
-
-### mixed/unknown
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.6 | 503 | 0.00 | missing | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | [scheduled bbox exact=8/8] package dependencies in package.json (t=7363, 8 atoms) |
-| 2.4 | 1393 | 0.00 | missing | DialogProps — every prop name (signatures only, no JSDoc) | [scheduled bbox exact=28/28] export at src/index.tsx:50 (t=5367, 87 atoms) |
-| 2.7 | 2405 | 0.00 | missing | DialogProps — JSDoc for the high-traffic props | [scheduled bbox exact=30/30] export at src/index.tsx:50 (t=5367, 50 atoms) |
-| 2.8 | 2810 | 0.00 | missing | DialogProps — JSDoc for the lower-traffic props | [scheduled bbox exact=29/29] export at src/index.tsx:50 (t=5367, 73 atoms) |
-| 3.1 | 4321 | 0.00 | missing | constants.ts — every tunable threshold and timing | [scheduled bbox exact=15/18] export names surface in src/constants.ts (t=3738, 15 atoms) |
-| 3.3 | 4502 | 0.00 | missing | helpers.ts — every exported function (signature heads only) | [scheduled bbox exact=8/8] export names surface in src/helpers.ts (t=5538, 15 atoms) |
-| 3.6 | 5503 | 0.04 | missing | useSnapPoints — full parameter shape | [scheduled bbox exact=24/28] export at src/use-snap-points.ts:7 (t=4027, 24 atoms) |
-
-Top wasted paths (off-NS at 3K): playwright.config.ts (512t, 1 batch), package.json (498t, 3 batches), src/use-prevent-scroll.ts (235t, 3 batches), src/use-position-fixed.ts (124t, 1 batch), src/context.ts (57t, 1 batch), src/types.ts (52t, 1 batch)
-
-## Walker waste (walker_t ≤ 3000, off_3k ≥ 50)
-
-| off_3k | off_3k_ratio | off_any | cost | walker_t | batch |
-|-------:|-------------:|--------:|-----:|---------:|:------|
-| 512 | 1.00 | 407 | 512 | 1875 | export at playwright.config.ts:12 |
-| 189 | 0.82 | 189 | 230 | 84 | package identity in package.json |
-| 174 | 1.00 | 174 | 174 | 2733 | package entrypoints in package.json |
-| 135 | 1.00 | 135 | 135 | 2907 | package scripts in package.json |
-| 124 | 1.00 | 124 | 124 | 1751 | export at src/use-position-fixed.ts:15 |
-| 95 | 1.00 | 10 | 95 | 2459 | export names surface in src/use-prevent-scroll.ts |
-| 80 | 1.00 | 80 | 80 | 2653 | export body at src/use-prevent-scroll.ts:34 body 35 |
-| 60 | 1.00 | 60 | 60 | 2593 | export body at src/use-prevent-scroll.ts:294 body 295 |
-| 57 | 1.00 | 57 | 57 | 682 | export body at src/context.ts:69 body 70 |
-| 52 | 1.00 | 0 | 52 | 570 | export names surface in src/types.ts |
+| source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
+|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
+| ns | 46 |  | 46 | package.json — name, version, description | 1.1 |  | 0.000 |
+| walker |  | 62 | 62 | listing of '.' |  |  | 0.000 |
+| walker |  | 65 | 3 | listing of '.github' |  |  | 0.000 |
+| walker |  | 69 | 4 | listing of '.vscode' |  |  | 0.000 |
+| walker |  | 80 | 11 | export names surface in playwright.config.ts |  |  | 0.000 |
+| walker |  | 84 | 4 | listing of '.github/workflows' |  |  | 0.000 |
+| ns | 108 |  | 62 | Top-level repo listing | 1.2 |  | 0.580 |
+| ns | 171 |  | 63 | README — unmaintained notice | 1.3 |  | 0.546 |
+| ns | 242 |  | 71 | src/ listing — every source file | 1.4 |  | 0.409 |
+| walker |  | 314 | 230 | package identity in package.json |  |  | 0.581 |
+| walker |  | 331 | 17 | imports in playwright.config.ts |  |  | 0.581 |
+| ns | 355 |  | 113 | Drawer namespace export — the public component map | 1.5 |  | 0.485 |
+| walker |  | 402 | 71 | listing of 'src' |  |  | 0.683 |
+| walker |  | 415 | 13 | module item at src/index.tsx:993 |  |  | 0.683 |
+| walker |  | 428 | 13 | module item at src/index.tsx:994 |  |  | 0.683 |
+| walker |  | 440 | 12 | export names surface in src/use-position-fixed.ts |  |  | 0.683 |
+| walker |  | 452 | 12 | export names surface in src/use-snap-points.ts |  |  | 0.683 |
+| walker |  | 465 | 13 | export names surface in src/use-scale-background.ts |  |  | 0.683 |
+| walker |  | 465 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.683 |
+| walker |  | 479 | 14 | export names surface in src/use-composed-refs.ts |  |  | 0.683 |
+| walker |  | 479 | 0 | export at src/use-composed-refs.ts:36 |  |  | 0.683 |
+| ns | 503 |  | 148 | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | 1.6 |  | 0.621 |
+| walker |  | 513 | 34 | export names surface in src/context.ts |  |  | 0.621 |
+| walker |  | 513 | 0 | export at src/context.ts:69 |  |  | 0.621 |
+| walker |  | 548 | 35 | export names surface in src/use-controllable-state.ts |  |  | 0.621 |
+| walker |  | 548 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.621 |
+| walker |  | 558 | 10 | imports in src/use-controllable-state.ts |  |  | 0.621 |
+| walker |  | 570 | 12 | imports in src/use-composed-refs.ts |  |  | 0.621 |
+| walker |  | 622 | 52 | export names surface in src/types.ts |  |  | 0.622 |
+| walker |  | 622 | 0 | export at src/types.ts:1 |  |  | 0.622 |
+| walker |  | 622 | 0 | export at src/types.ts:7 |  |  | 0.622 |
+| ns | 642 |  | 139 | All top-level export locations in src/index.tsx | 2.1 |  | 0.557 |
+| walker |  | 643 | 21 | export at src/types.ts:2 |  |  | 0.558 |
+| walker |  | 659 | 16 | imports in src/helpers.ts |  |  | 0.558 |
+| walker |  | 682 | 23 | plaintext config pnpm-workspace.yaml |  |  | 0.558 |
+| ns | 730 |  | 88 | Handle component — snap-point cycle + double-tap timing constants | 2.2 | 2.1 | 0.512 |
+| walker |  | 739 | 57 | export body at src/context.ts:69 body 70 |  |  | 0.512 |
+| walker |  | 962 | 223 | export names surface in src/index.tsx |  |  | 0.632 |
+| walker |  | 962 | 0 | export at src/index.tsx:831 |  |  | 0.632 |
+| walker |  | 962 | 0 | export at src/index.tsx:1098 |  |  | 0.632 |
+| walker |  | 962 | 0 | export at src/index.tsx:1130 |  |  | 0.632 |
+| walker |  | 975 | 13 | export at src/index.tsx:989 |  |  | 0.648 |
+| walker |  | 988 | 13 | export at src/index.tsx:803 |  |  | 0.648 |
+| walker |  | 1017 | 29 | export at src/index.tsx:996 |  |  | 0.680 |
+| ns | 1020 |  | 290 | WithFadeFromProps / WithoutFadeFromProps — snap-point fade contract | 2.3 | 2.1 | 0.586 |
+| walker |  | 1051 | 34 | export at src/index.tsx:833 |  |  | 0.586 |
+| walker |  | 1171 | 120 | export at src/index.tsx:40 |  |  | 0.616 |
+| walker |  | 1332 | 161 | export at src/index.tsx:27 |  |  | 0.717 |
+| ns | 1393 |  | 373 | DialogProps — every prop name (signatures only, no JSDoc) | 2.4 | 2.1 | 0.618 |
+| walker |  | 1433 | 101 | export at src/index.tsx:1137 |  |  | 0.693 |
+| ns | 1711 |  | 318 | Root signature — full destructuring with every default value | 2.5 | 2.4 | 0.609 |
+| walker |  | 1751 | 318 | export at src/index.tsx:139 |  |  | 0.731 |
+| walker |  | 1875 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.731 |
+| ns | 2011 |  | 300 | Overlay + Content render — what data-vaul-* attributes appear on DOM | 2.6 |  | 0.682 |
+| walker |  | 2387 | 512 | export at playwright.config.ts:12 |  |  | 0.682 |
+| ns | 2405 |  | 394 | DialogProps — JSDoc for the high-traffic props | 2.7 | 2.4 | 0.622 |
+| walker |  | 2413 | 26 | export doc at playwright.config.ts:12 |  |  | 0.622 |
+| walker |  | 2436 | 23 | imports in src/context.ts |  |  | 0.622 |
+| walker |  | 2459 | 23 | imports in src/use-position-fixed.ts |  |  | 0.622 |
+| walker |  | 2554 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.623 |
+| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:8 |  |  | 0.623 |
+| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.623 |
+| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.623 |
+| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.623 |
+| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.623 |
+| walker |  | 2593 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.623 |
+| walker |  | 2653 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.623 |
+| walker |  | 2733 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.623 |
+| ns | 2810 |  | 405 | DialogProps — JSDoc for the lower-traffic props | 2.8 | 2.4 | 0.577 |
+| walker |  | 2907 | 174 | package entrypoints in package.json |  |  | 0.577 |
+| walker |  | 3042 | 135 | package scripts in package.json |  |  | 0.577 |
+| walker |  | 3154 | 112 | export names surface in src/browser.ts |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:1 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:10 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:14 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:18 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:22 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:30 |  |  | 0.577 |
+| walker |  | 3154 | 0 | export at src/browser.ts:34 |  |  | 0.577 |
+| walker |  | 3164 | 10 | export body at src/browser.ts:10 body 11 |  |  | 0.577 |
+| walker |  | 3175 | 11 | export body at src/browser.ts:14 body 15 |  |  | 0.577 |
+| walker |  | 3196 | 21 | export body at src/browser.ts:18 body 19 |  |  | 0.577 |
+| ns | 3228 |  | 418 | NestedRoot + Portal — nested-drawer wiring + container override | 2.9 | 2.1 | 0.530 |
+| walker |  | 3277 | 81 | export body at src/browser.ts:1 body 2 |  |  | 0.531 |
+| walker |  | 3582 | 305 | export body at src/index.tsx:803 body 805 |  |  | 0.545 |
+| walker |  | 3612 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.545 |
+| walker |  | 3738 | 126 | export names surface in src/constants.ts |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:6 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:8 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:10 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:12 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:14 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:16 |  |  | 0.547 |
+| walker |  | 3738 | 0 | export at src/constants.ts:18 |  |  | 0.547 |
+| walker |  | 3778 | 40 | export at src/constants.ts:1 |  |  | 0.548 |
+| ns | 4024 |  | 796 | style.css — every selector head (locations only) | 2.10 |  | 0.517 |
+| walker |  | 4027 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.520 |
+| ns | 4132 |  | 108 | style.css — keyframe names (locations only) | 2.11 |  | 0.510 |
+| walker |  | 4197 | 170 | export body at src/use-prevent-scroll.ts:68 body 69 |  |  | 0.510 |
+| ns | 4321 |  | 189 | constants.ts — every tunable threshold and timing | 3.1 |  | 0.528 |
+| ns | 4399 |  | 78 | types.ts — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.532 |
+| ns | 4502 |  | 103 | helpers.ts — every exported function (signature heads only) | 3.3 |  | 0.525 |
+| ns | 4688 |  | 186 | Root inner-function locations (onPress, onDrag, onRelease, …) | 3.4 |  | 0.516 |
+| ns | 5171 |  | 483 | context.ts — DrawerContextValue interface (parent/child contract) | 3.5 |  | 0.489 |
+| walker |  | 5367 | 1170 | export at src/index.tsx:50 |  |  | 0.657 |
+| ns | 5503 |  | 332 | useSnapPoints — full parameter shape | 3.6 |  | 0.655 |
+| walker |  | 5538 | 171 | export names surface in src/helpers.ts |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:9 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:23 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:42 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:59 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:72 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:90 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:94 |  |  | 0.667 |
+| walker |  | 5538 | 0 | export at src/helpers.ts:108 |  |  | 0.667 |
+| walker |  | 5567 | 29 | export doc at src/helpers.ts:108 |  |  | 0.667 |
+| walker |  | 5671 | 104 | export body at src/helpers.ts:9 body 10 |  |  | 0.667 |
+| walker |  | 5754 | 83 | export body at src/helpers.ts:59 body 60 |  |  | 0.667 |
+| walker |  | 5888 | 134 | export body at src/helpers.ts:42 body 43 |  |  | 0.667 |
+| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.628 |
+| walker |  | 6040 | 152 | export body at src/helpers.ts:23 body 24 |  |  | 0.628 |
+| walker |  | 6151 | 111 | json config tsconfig.json |  |  | 0.628 |
+| walker |  | 6178 | 27 | json config .vscode/settings.json |  |  | 0.628 |
+| walker |  | 6236 | 58 | export doc at src/use-prevent-scroll.ts:68 |  |  | 0.628 |
+| ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.609 |
+| walker |  | 6481 | 245 | export body at src/use-controllable-state.ts:39 body 40 |  |  | 0.609 |
+| walker |  | 6533 | 52 | listing of 'test' |  |  | 0.610 |
+| walker |  | 6536 | 3 | listing of 'test/src' |  |  | 0.610 |
+| walker |  | 6863 | 327 | export at src/context.ts:37 |  |  | 0.610 |
+| walker |  | 6932 | 69 | imports in src/use-scale-background.ts |  |  | 0.610 |
+| walker |  | 7006 | 74 | imports in src/use-snap-points.ts |  |  | 0.610 |
+| ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.569 |
+| walker |  | 7363 | 357 | package dependencies in package.json |  |  | 0.587 |
+| ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.578 |
+| walker |  | 7674 | 311 | imports in src/index.tsx |  |  | 0.578 |
+| ns | 8357 |  | 772 | useScaleBackground — wrapper-scale effect (full hook) | 3.11 |  | 0.548 |
+| walker |  | 8713 | 1039 | export body at src/index.tsx:996 body 1000 |  |  | 0.548 |
+| walker |  | 8860 | 147 | export doc at src/use-position-fixed.ts:15 |  |  | 0.548 |
+| walker |  | 8971 | 111 | json config turbo.json |  |  | 0.548 |
+| ns | 9050 |  | 693 | use-prevent-scroll — exports + the six mobile-Safari quirks | 3.12 |  | 0.534 |
+| ns | 9102 |  | 52 | test/ workspace listing | 4.1 |  | 0.539 |
+| ns | 9201 |  | 99 | test/src/app/ — every demo page directory | 4.2 |  | 0.531 |
+| ns | 9267 |  | 66 | test/tests/ — Playwright spec catalog | 4.3 |  | 0.527 |
+| walker |  | 9604 | 633 | export body at src/use-scale-background.ts:8 body 9 |  |  | 0.573 |
+| ns | 9693 |  | 426 | Landing page + Playwright device profiles | 4.4 |  | 0.560 |

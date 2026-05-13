@@ -1,92 +1,226 @@
-scores: Score(3000)=0.647 ns_rows≤3K=18/34 (reached=11 partial=0 missing=7)
+Score(3000)=0.647 I=0.794 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missing=7)
 
-## Per-budget scores
-
-| B | A_B | I(B) | C(B) | compl(B) | Score(B) | walker_used |
-|--:|----:|-----:|-----:|---------:|---------:|------------:|
-| 1000 | 66 | 0.707 | 0.212 | 1.000 | 0.387 | 815 |
-| 1442 | 81 | 0.679 | 0.173 | 1.000 | 0.342 | 815 |
-| 2080 | 125 | 0.810 | 0.521 | 0.853 | 0.650 | 2055 |
-| 3000 | 207 | 0.794 | 0.527 | 0.732 | 0.647 | 2854 |
-| 4327 | 299 | 0.758 | 0.430 | 0.712 | 0.571 | 4213 |
-| 6240 | 458 | 0.724 | 0.365 | 0.662 | 0.514 | 6232 |
-| 9000 | 667 | 0.694 | 0.304 | 0.636 | 0.460 | 8832 |
-
-## Top opportunities
-
-### Additive (close partial / missing rows)
-
-| intervention | rows | gap@1k | gap@3k | gap@9k | evidence | top row ids |
-|:-------------|-----:|-------:|-------:|-------:|:---------|:------------|
-| tune ranking for high-overlap unscheduled candidates | 8 | 1.29 | 1.29 | 1.29 | high-overlap candidates not in the schedule by T_max, exact total=203/232 | 1.4, 2.4, 3.4, 4.2, 3.5, ... |
-| split wrong-slice walker batches | 12 | 1.16 | 1.15 | 0.93 | nearby candidates have low exact atom overlap | 2.10, 2.11, 2.6, 3.8, 4.1, ... |
-| add walker candidates for no-discovered rows | 1 | 0.03 | 0.03 | 0.03 | NS rows have no discovered line candidate | 5.4 |
-
-### Subtractive (suppress consistently off-NS batches)
-
-| pattern | batches | freed@1k | freed@3k | freed@9k | evidence | top batch ids |
-|:--------|--------:|---------:|---------:|---------:|:---------|:--------------|
-| c header banner in testhelp.h | 1 | 0 | 534 | 534 | off_3k=534 | c header banner in testhelp.h |
-| c header banner in sds.h | 1 | 0 | 493 | 493 | off_3k=493 | c header banner in sds.h |
-| headings outline in README.md | 1 | 129 | 129 | 129 | off_3k=246 | headings outline in README.md |
-| c decl names surface in sds.h | 1 | 99 | 99 | 99 | off_3k=137 | c decl names surface in sds.h |
-
-Top missed paths (NS rows ≤ 3K): README.md (5 rows, 81 atoms), sdsalloc.h (1 row, 10 atoms), sds.h (1 row, 9 atoms)
-
-## Arrival ledger by diagnosis
-
-### ranking-recoverable
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 1.4 | 252 | 0.00 | missing | README v2 lede — perf note + sdscatfmt headline | [unscheduled bbox exact=7/8] README.md section #0 (7 atoms, too expensive at final margin) |
-| 2.4 | 657 | 0.00 | missing | Cardinal usage rule — must reassign return value | [unscheduled bbox exact=9/11] README.md section #0 (9 atoms, too expensive at final margin) |
-| 3.4 | 3492 | 0.06 | missing | How SDS strings work — design narrative + ASCII diagram | [scheduled bbox exact=2/35] headings outline in README.md (t=815, 2 atoms); better unscheduled exact=28/35: README.md section #0 (28 atoms, too expensive at final margin) |
-| 3.5 | 3896 | 0.00 | missing | Preallocation + SDS_MAX_PREALLOC growth strategy | [unscheduled bbox exact=22/26] README.md section #0 (22 atoms, too expensive at final margin) |
-| 3.6 | 4166 | 0.10 | missing | Zero-copy append idiom | [scheduled bbox exact=2/20] headings outline in README.md (t=815, 2 atoms); better unscheduled exact=16/20: README.md section #0 (16 atoms, too expensive at final margin) |
-| 3.9 | 5456 | 0.03 | missing | Outdated v1 internals diagram in README | [scheduled bbox exact=1/35] headings outline in README.md (t=815, 1 atoms); better unscheduled exact=29/35: README.md section #0 (29 atoms, too expensive at final margin) |
-| 4.2 | 6852 | 0.00 | missing | sdsnewlen body — canonical allocator (no doc-comment) | [scheduled bbox exact=2/57] c decl at sds.c:89 (t=6220, 2 atoms); better unscheduled exact=54/57: c decl body at sds.c:89 (54 atoms, too expensive at final margin) |
-| 5.2 | 9412 | 0.00 | missing | sdsIncrLen body — zero-copy idiom's other half (no doc-comment) | [scheduled bbox exact=2/40] c decl at sds.c:334 (t=6220, 2 atoms); better unscheduled exact=38/40: c decl body at sds.c:334 (38 atoms, too expensive at final margin) |
-
-### wrong-slice / granularity
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 2.6 | 979 | 0.23 | missing | Public fn declarations — printf family (sdscatvprintf/printf/fmt) | [scheduled bbox exact=3/9] c decl names surface in sds.h (t=1919, 3 atoms) |
-| 2.10 | 2230 | 0.12 | missing | Canonical Hello World | [scheduled bbox exact=3/24] headings outline in README.md (t=815, 3 atoms); better unscheduled exact=17/24: README.md section #0 (17 atoms, too expensive at final margin) |
-| 2.11 | 2584 | 0.21 | missing | Embedding + allocator-swap instructions | [scheduled bbox exact=6/28] headings outline in README.md (t=815, 6 atoms); better unscheduled exact=21/28: README.md section #0 (21 atoms, too expensive at final margin) |
-| 2.12 | 2706 | 0.30 | missing | sdsalloc.h — full file | [scheduled bbox exact=6/10] c header banner in sdsalloc.h (t=4050, 6 atoms) |
-| 3.1 | 2823 | 0.30 | missing | Error handling — NULL on OOM | [scheduled bbox exact=3/10] headings outline in README.md (t=815, 3 atoms); better unscheduled exact=7/10: README.md section #0 (7 atoms, too expensive at final margin) |
-| 3.7 | 4516 | 0.00 | missing | sdsReqType + sdsHdrSize — internal dispatch helpers | [scheduled same-file] c decl names surface in sds.c (t=6220, 83 atoms) |
-| 3.8 | 4974 | 0.05 | missing | sds.h inline accessors — sdslen + sdsavail | [scheduled bbox exact=23/42] c decl body at sds.h:104 (t=5056, 23 atoms) |
-| 4.1 | 6189 | 0.00 | missing | sdsMakeRoomFor body — growth/realloc engine | [scheduled bbox exact=6/51] c decl doc at sds.c:204 (t=8114, 6 atoms); better unscheduled exact=38/51: c decl body at sds.c:204 (38 atoms, too expensive at final margin) |
-| 4.4 | 7347 | 0.00 | missing | Constructor family + sdsfree (short bodies) | [scheduled bbox exact=8/22] c decl names surface in sds.c (t=6220, 8 atoms) |
-| 4.5 | 8081 | 0.02 | missing | README — Concatenating strings + sdsgrowzero | [scheduled bbox exact=1/64] headings outline in README.md (t=815, 1 atoms); better unscheduled exact=49/64: README.md section #0 (49 atoms, too expensive at final margin) |
-| 5.1 | 8792 | 0.00 | missing | Append/copy primitive bodies (sdscatlen/cat/catsds/cpylen/cpy) | [scheduled bbox exact=10/50] c decl names surface in sds.c (t=6220, 10 atoms) |
-| 5.3 | 9663 | 0.74 | partial | testhelp.h — minimal test framework macros | [scheduled bbox exact=8/19] c decl at testhelp.h:48 (t=416, 8 atoms) |
-
-### no discovered candidate
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 5.4 | 9909 | 0.00 | missing | Makefile + Changelog | no discovered line candidate |
-
-### mixed/unknown
-
-| id | ns_t | credit | status | descriptor | candidate hint |
-|----|-----:|-------:|:-------|:-----------|:---------------|
-| 4.3 | 7067 | 0.00 | missing | sdscatfmt — fast subset of printf, format spec list | [scheduled bbox exact=16/16] c decl doc at sds.c:616 (t=9880, 16 atoms) |
-
-Top wasted paths (off-NS at 3K): testhelp.h (746t, 4 batches), sds.h (630t, 2 batches), README.md (246t, 1 batch)
-
-## Walker waste (walker_t ≤ 3000, off_3k ≥ 50)
-
-| off_3k | off_3k_ratio | off_any | cost | walker_t | batch |
-|-------:|-------------:|--------:|-----:|---------:|:------|
-| 534 | 1.00 | 534 | 534 | 2854 | c header banner in testhelp.h |
-| 493 | 1.00 | 493 | 493 | 2361 | c header banner in sds.h |
-| 246 | 0.62 | 129 | 399 | 416 | headings outline in README.md |
-| 137 | 0.12 | 99 | 1104 | 815 | c decl names surface in sds.h |
-| 97 | 1.00 | 0 | 97 | 319 | c decl at testhelp.h:48 |
-| 59 | 1.00 | 0 | 59 | 220 | c decl at testhelp.h:44 |
-| 56 | 1.00 | 0 | 56 | 62 | c decl names surface in testhelp.h |
+| source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
+|:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
+| walker |  | 31 | 31 | listing of '.' |  |  | 1.000 |
+| ns | 31 |  | 31 | Repo file listing | 1.1 |  | 1.000 |
+| ns | 39 |  | 8 | README title | 1.2 |  | 0.932 |
+| walker |  | 62 | 31 | c decl names surface in sdsalloc.h |  |  | 0.933 |
+| walker |  | 62 | 0 | c decl at sdsalloc.h:40 |  |  | 0.933 |
+| walker |  | 62 | 0 | c decl at sdsalloc.h:41 |  |  | 0.933 |
+| walker |  | 62 | 0 | c decl at sdsalloc.h:42 |  |  | 0.933 |
+| walker |  | 118 | 56 | c decl names surface in testhelp.h |  |  | 0.933 |
+| walker |  | 118 | 0 | c decl at testhelp.h:42 |  |  | 0.933 |
+| walker |  | 118 | 0 | c decl at testhelp.h:43 |  |  | 0.933 |
+| ns | 128 |  | 89 | README v2 lede — first paragraph (binary-compat warning) | 1.3 |  | 0.748 |
+| walker |  | 220 | 102 | README headline in README.md |  |  | 1.000 |
+| ns | 252 |  | 124 | README v2 lede — perf note + sdscatfmt headline | 1.4 |  | 0.749 |
+| ns | 262 |  | 10 | sds typedef — sds IS char* | 2.1 |  | 0.728 |
+| walker |  | 279 | 59 | c decl at testhelp.h:44 |  |  | 0.729 |
+| ns | 293 |  | 31 | SDS_MAX_PREALLOC + SDS_NOINIT constants | 2.2 |  | 0.692 |
+| walker |  | 311 | 32 | c includes in sds.h |  |  | 0.692 |
+| walker |  | 319 | 8 | plaintext config .gitignore |  |  | 0.692 |
+| walker |  | 416 | 97 | c decl at testhelp.h:48 |  |  | 0.693 |
+| ns | 469 |  | 176 | SDS_TYPE_* tag constants + SDS_HDR macros | 2.3 |  | 0.562 |
+| ns | 657 |  | 188 | Cardinal usage rule — must reassign return value | 2.4 |  | 0.475 |
+| walker |  | 815 | 399 | headings outline in README.md |  |  | 0.482 |
+| ns | 847 |  | 190 | Public fn declarations — high-level API (creation/length/free/concat/copy) | 2.5 |  | 0.423 |
+| ns | 979 |  | 132 | Public fn declarations — printf family (sdscatvprintf/printf/fmt) | 2.6 |  | 0.387 |
+| ns | 1276 |  | 297 | Public fn declarations — utility fns (trim/range/cmp/split/case/repr/join) | 2.7 |  | 0.342 |
+| ns | 1487 |  | 211 | Public fn declarations — low-level + allocator-export API | 2.8 |  | 0.311 |
+| ns | 1917 |  | 430 | Five packed sdshdr structs | 2.9 |  | 0.264 |
+| walker |  | 1919 | 1104 | c decl names surface in sds.h |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:36 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:37 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:43 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:76 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:77 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:78 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:79 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:80 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:81 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:82 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:83 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:84 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:85 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:87 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:104 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:130 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:154 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:180 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:197 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:218 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:219 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:220 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:221 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:222 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:223 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:224 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:225 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:226 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:227 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:228 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:230 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:238 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:239 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:240 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:241 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:242 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:243 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:244 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:245 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:246 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:247 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:248 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:249 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:250 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:251 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:252 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:253 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:256 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:257 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:258 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:259 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:260 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:266 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:267 |  |  | 0.615 |
+| walker |  | 1919 | 0 | c decl at sds.h:268 |  |  | 0.615 |
+| walker |  | 1956 | 37 | c decl at sds.h:47 |  |  | 0.622 |
+| walker |  | 1970 | 14 | c decl doc at sds.h:256 |  |  | 0.630 |
+| walker |  | 1990 | 20 | c decl doc at sds.h:180 |  |  | 0.630 |
+| walker |  | 2055 | 65 | c decl at sds.h:51 |  |  | 0.650 |
+| walker |  | 2120 | 65 | c decl at sds.h:57 |  |  | 0.677 |
+| walker |  | 2185 | 65 | c decl at sds.h:63 |  |  | 0.711 |
+| ns | 2230 |  | 313 | Canonical Hello World | 2.10 |  | 0.641 |
+| walker |  | 2250 | 65 | c decl at sds.h:69 |  |  | 0.678 |
+| walker |  | 2293 | 43 | c decl doc at sds.h:47 |  |  | 0.704 |
+| walker |  | 2361 | 68 | c decl doc at sds.h:266 |  |  | 0.743 |
+| ns | 2584 |  | 354 | Embedding + allocator-swap instructions | 2.11 |  | 0.673 |
+| ns | 2706 |  | 122 | sdsalloc.h — full file | 2.12 | 2.11 | 0.653 |
+| ns | 2823 |  | 117 | Error handling — NULL on OOM | 3.1 |  | 0.634 |
+| walker |  | 2854 | 493 | c header banner in sds.h |  |  | 0.634 |
+| ns | 2912 |  | 89 | README section TOC — first half (intro through copying) | 3.2 |  | 0.647 |
+| ns | 3011 |  | 99 | README section TOC — second half (quoting through credits) | 3.3 |  | 0.658 |
+| walker |  | 3388 | 534 | c header banner in testhelp.h |  |  | 0.658 |
+| walker |  | 3471 | 83 | c includes in sds.c |  |  | 0.658 |
+| ns | 3492 |  | 481 | How SDS strings work — design narrative + ASCII diagram | 3.4 |  | 0.604 |
+| ns | 3896 |  | 404 | Preallocation + SDS_MAX_PREALLOC growth strategy | 3.5 |  | 0.570 |
+| walker |  | 4050 | 579 | c header banner in sdsalloc.h |  |  | 0.593 |
+| ns | 4166 |  | 270 | Zero-copy append idiom | 3.6 |  | 0.569 |
+| walker |  | 4213 | 163 | c decl body at sds.h:87 |  |  | 0.571 |
+| walker |  | 4376 | 163 | c decl body at sds.h:180 |  |  | 0.571 |
+| ns | 4516 |  | 350 | sdsReqType + sdsHdrSize — internal dispatch helpers | 3.7 |  | 0.539 |
+| walker |  | 4579 | 203 | c decl body at sds.h:197 |  |  | 0.539 |
+| walker |  | 4814 | 235 | c decl body at sds.h:130 |  |  | 0.539 |
+| ns | 4974 |  | 458 | sds.h inline accessors — sdslen + sdsavail | 3.8 |  | 0.517 |
+| walker |  | 5056 | 242 | c decl body at sds.h:104 |  |  | 0.579 |
+| walker |  | 5306 | 250 | c decl body at sds.h:154 |  |  | 0.579 |
+| ns | 5456 |  | 482 | Outdated v1 internals diagram in README | 3.9 |  | 0.550 |
+| ns | 6189 |  | 733 | sdsMakeRoomFor body — growth/realloc engine | 4.1 |  | 0.514 |
+| walker |  | 6220 | 914 | c decl names surface in sds.c |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:42 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:89 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:149 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:154 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:160 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:165 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:184 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:193 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:204 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:256 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:300 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:307 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:334 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:380 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:398 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:413 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:421 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:427 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:440 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:450 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:451 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:494 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:526 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:534 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:591 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:616 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:725 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:756 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:783 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:790 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:807 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:835 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:885 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:898 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:925 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:932 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:973 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1092 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1108 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1120 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1136 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1137 |  |  | 0.514 |
+| walker |  | 6220 | 0 | c decl at sds.c:1138 |  |  | 0.514 |
+| walker |  | 6232 | 12 | c decl doc at sds.c:160 |  |  | 0.514 |
+| walker |  | 6243 | 11 | c decl body at sds.c:149 |  |  | 0.514 |
+| walker |  | 6263 | 20 | c decl doc at sds.c:154 |  |  | 0.514 |
+| walker |  | 6283 | 20 | c decl doc at sds.c:1120 |  |  | 0.514 |
+| walker |  | 6304 | 21 | c decl doc at sds.c:494 |  |  | 0.514 |
+| walker |  | 6325 | 21 | c decl doc at sds.c:783 |  |  | 0.514 |
+| walker |  | 6346 | 21 | c decl doc at sds.c:790 |  |  | 0.514 |
+| walker |  | 6368 | 22 | c decl doc at sds.c:534 |  |  | 0.514 |
+| walker |  | 6383 | 15 | c decl body at sds.c:160 |  |  | 0.515 |
+| walker |  | 6398 | 15 | c decl body at sds.c:413 |  |  | 0.515 |
+| walker |  | 6413 | 15 | c decl body at sds.c:440 |  |  | 0.515 |
+| walker |  | 6436 | 23 | c decl doc at sds.c:165 |  |  | 0.515 |
+| walker |  | 6462 | 26 | c decl doc at sds.c:885 |  |  | 0.515 |
+| walker |  | 6479 | 17 | c decl body at sds.c:307 |  |  | 0.515 |
+| walker |  | 6496 | 17 | c decl body at sds.c:421 |  |  | 0.515 |
+| walker |  | 6529 | 33 | c decl doc at sds.c:925 |  |  | 0.515 |
+| walker |  | 6563 | 34 | c decl doc at sds.c:307 |  |  | 0.515 |
+| walker |  | 6597 | 34 | c decl doc at sds.c:932 |  |  | 0.515 |
+| walker |  | 6633 | 36 | c decl doc at sds.c:149 |  |  | 0.515 |
+| walker |  | 6671 | 38 | c decl doc at sds.c:1108 |  |  | 0.515 |
+| walker |  | 6712 | 41 | c decl doc at sds.c:440 |  |  | 0.515 |
+| walker |  | 6754 | 42 | c decl doc at sds.c:427 |  |  | 0.515 |
+| walker |  | 6779 | 25 | c decl body at sds.c:184 |  |  | 0.515 |
+| walker |  | 6804 | 25 | c decl body at sds.c:193 |  |  | 0.515 |
+| ns | 6852 |  | 663 | sdsnewlen body — canonical allocator (no doc-comment) | 4.2 |  | 0.482 |
+| walker |  | 6855 | 51 | c decl doc at sds.c:526 |  |  | 0.482 |
+| walker |  | 6885 | 30 | c decl body at sds.c:165 |  |  | 0.482 |
+| walker |  | 6915 | 30 | c decl body at sds.c:300 |  |  | 0.482 |
+| walker |  | 6950 | 35 | c decl body at sds.c:154 |  |  | 0.482 |
+| walker |  | 7017 | 67 | c decl doc at sds.c:421 |  |  | 0.483 |
+| ns | 7067 |  | 215 | sdscatfmt — fast subset of printf, format spec list | 4.3 |  | 0.474 |
+| walker |  | 7085 | 68 | c decl doc at sds.c:413 |  |  | 0.475 |
+| walker |  | 7154 | 69 | c decl doc at sds.c:193 |  |  | 0.475 |
+| walker |  | 7191 | 37 | c decl body at sds.c:885 |  |  | 0.475 |
+| walker |  | 7264 | 73 | c decl doc at sds.c:380 |  |  | 0.475 |
+| walker |  | 7304 | 40 | c decl body at sds.c:526 |  |  | 0.475 |
+| walker |  | 7345 | 41 | c decl body at sds.c:783 |  |  | 0.475 |
+| ns | 7347 |  | 280 | Constructor family + sdsfree (short bodies) | 4.4 |  | 0.484 |
+| walker |  | 7386 | 41 | c decl body at sds.c:790 |  |  | 0.484 |
+| walker |  | 7471 | 85 | c decl doc at sds.c:398 |  |  | 0.484 |
+| walker |  | 7559 | 88 | c decl doc at sds.c:300 |  |  | 0.484 |
+| walker |  | 7606 | 47 | c decl body at sds.c:925 |  |  | 0.484 |
+| walker |  | 7704 | 98 | c decl doc at sds.c:256 |  |  | 0.484 |
+| walker |  | 7790 | 86 | c decl doc at sds.c:450 |  |  | 0.484 |
+| walker |  | 7893 | 103 | c decl doc at sds.c:1136 |  |  | 0.484 |
+| walker |  | 8003 | 110 | c decl doc at sds.c:898 |  |  | 0.484 |
+| ns | 8081 |  | 734 | README — Concatenating strings + sdsgrowzero | 4.5 |  | 0.455 |
+| walker |  | 8114 | 111 | c decl doc at sds.c:204 |  |  | 0.457 |
+| walker |  | 8176 | 62 | c decl body at sds.c:591 |  |  | 0.457 |
+| walker |  | 8316 | 140 | c decl doc at sds.c:807 |  |  | 0.457 |
+| walker |  | 8465 | 149 | c decl doc at sds.c:1092 |  |  | 0.457 |
+| walker |  | 8642 | 177 | c decl doc at sds.c:725 |  |  | 0.457 |
+| ns | 8792 |  | 711 | Append/copy primitive bodies (sdscatlen/cat/catsds/cpylen/cpy) | 5.1 |  | 0.460 |
+| walker |  | 8832 | 190 | c decl doc at sds.c:756 |  |  | 0.460 |
+| walker |  | 9030 | 198 | c decl doc at sds.c:184 |  |  | 0.460 |
+| walker |  | 9239 | 209 | c decl doc at sds.c:835 |  |  | 0.460 |
+| ns | 9412 |  | 620 | sdsIncrLen body — zero-copy idiom's other half (no doc-comment) | 5.2 | 3.6 | 0.445 |
+| walker |  | 9450 | 211 | c decl doc at sds.c:89 |  |  | 0.445 |
+| ns | 9663 |  | 251 | testhelp.h — minimal test framework macros | 5.3 |  | 0.451 |
+| walker |  | 9665 | 215 | c decl doc at sds.c:591 |  |  | 0.451 |
+| walker |  | 9880 | 215 | c decl doc at sds.c:616 |  |  | 0.469 |
+| ns | 9909 |  | 246 | Makefile + Changelog | 5.4 |  | 0.462 |
+| walker |  | 9976 | 96 | c decl body at sds.c:1108 |  |  | 0.462 |
