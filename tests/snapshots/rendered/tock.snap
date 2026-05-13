@@ -3,16 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    dependabot.yml
-    pull_request_template.md
-        1→# Description
-        …
-        3→<!-- Describe what this PR does. What problem does it solve or what feature does it add? -->
-        5→## Type of change
-        …
-    workflows/
-        ci.yml
-        release.yml
 .gitignore
 .golangci.yaml
 .goreleaser.yaml
@@ -154,6 +144,14 @@ internal/
                 …
             list_gui.go
             remove.go
+                22→func NewRemoveCmd() *cobra.Command {
+                …
+                95→func parseRemoveIndex(s string) (time.Time, int, error) {
+                …
+                116→func findLastActivity(ctx context.Context, svc ports.ActivityResolver) (models.Activity, error) {
+                …
+                127→func findActivityByIndex(ctx context.Context, svc ports.ActivityResolver, index string) (models.Activity, error) {
+                …
             report.go
                 20→type reportOptions struct {
                 …

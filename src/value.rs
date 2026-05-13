@@ -74,9 +74,9 @@ pub fn depth_factor(depth: usize) -> f64 {
 
 /// Multiplier applied to content whose path is under a "non-essential"
 /// directory (tests / examples / benches / fixtures / private helpers /
-/// showcase websites). These are load-bearing for *using* the crate's
-/// infrastructure but rarely for understanding it; they should only
-/// appear once the primary-source batches have landed.
+/// contributor automation / showcase websites). These are load-bearing for
+/// *using* the crate's infrastructure but rarely for understanding it; they
+/// should only appear once the primary-source batches have landed.
 ///
 /// File-level test-file naming (`*.test.ts`, `*.spec.ts`, `*_test.go`)
 /// is also caught — many JS/TS projects keep tests next to source rather
@@ -88,6 +88,17 @@ pub fn depth_factor(depth: usize) -> f64 {
 /// for release-mode robustness), the absolute path is used as-is.
 pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
+    let mut comps = target.components();
+    if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str())
+        && first.eq_ignore_ascii_case(".github")
+    {
+        // CI workflows are load-bearing operational config; everything
+        // else under `.github/` is contributor templates and admin docs.
+        let second = comps.next().and_then(|c| c.as_os_str().to_str());
+        if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
+            return 0.2;
+        }
+    }
     for component in target.components() {
         let Some(s) = component.as_os_str().to_str() else {
             continue;
@@ -224,6 +235,40 @@ mod tests {
         assert_eq!(
             non_essential_factor(&root.join("src/_helper.rs"), root),
             1.0,
+        );
+    }
+
+    #[test]
+    fn value_github_contributor_templates_are_discounted() {
+        let root = Path::new("/repo");
+        assert_eq!(
+            non_essential_factor(&root.join(".github/PULL_REQUEST_TEMPLATE.md"), root),
+            0.2,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join(".github/pull_request_template.md"), root),
+            0.2,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join(".github/ISSUE_TEMPLATE/bug.md"), root),
+            0.2,
+        );
+    }
+
+    #[test]
+    fn value_github_workflows_keep_full_weight() {
+        let root = Path::new("/repo");
+        assert_eq!(
+            non_essential_factor(&root.join(".github/workflows/ci.yml"), root),
+            1.0,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join(".github/workflows"), root),
+            1.0,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join(".github/dependabot.yml"), root),
+            0.2,
         );
     }
 }

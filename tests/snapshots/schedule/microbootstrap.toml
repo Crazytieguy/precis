@@ -19,24 +19,10 @@ entries = [".github", ".gitignore", "Justfile", "README.md", "examples", "logo.s
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 36
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github"
-entries = ["workflows"]
-
-[[batches]]
-position = 3
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 68
-cum_tokens = 104
+cum_tokens = 101
 
 [batches.content]
 kind = "lines"
@@ -50,25 +36,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 9
-cum_tokens = 113
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github/workflows"
-entries = ["release_docs.yml", "workflow.yml"]
-
-[[batches]]
-position = 5
+position = 3
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap" })'
 descriptor = "listing of 'microbootstrap'"
 cost_tokens = 55
-cum_tokens = 168
+cum_tokens = 156
 
 [batches.content]
 kind = "fs"
@@ -78,11 +50,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstr
 entries = ["__init__.py", "bootstrappers", "config", "console_writer.py", "exceptions.py", "granian_server.py", "helpers.py", "instruments", "instruments_setupper.py", "middlewares", "py.typed", "settings.py"]
 
 [[batches]]
-position = 6
+position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/middlewares" })'
 descriptor = "listing of 'microbootstrap/middlewares'"
 cost_tokens = 16
-cum_tokens = 184
+cum_tokens = 172
 
 [batches.content]
 kind = "fs"
@@ -92,11 +64,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstr
 entries = ["__init__.py", "fastapi.py", "litestar.py"]
 
 [[batches]]
-position = 7
+position = 5
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments_setupper.py"
 cost_tokens = 11
-cum_tokens = 195
+cum_tokens = 183
 
 [batches.content]
 kind = "lines"
@@ -118,11 +90,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 8
+position = 6
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 19 })'
 descriptor = "python decl at microbootstrap/instruments_setupper.py:19"
 cost_tokens = 0
-cum_tokens = 195
+cum_tokens = 183
 
 [batches.content]
 kind = "lines"
@@ -136,11 +108,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 9
+position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config" })'
 descriptor = "listing of 'microbootstrap/config'"
 cost_tokens = 21
-cum_tokens = 216
+cum_tokens = 204
 
 [batches.content]
 kind = "fs"
@@ -150,11 +122,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstr
 entries = ["__init__.py", "fastapi.py", "faststream.py", "litestar.py"]
 
 [[batches]]
-position = 10
+position = 8
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/console_writer.py"
 cost_tokens = 12
-cum_tokens = 228
+cum_tokens = 216
 
 [batches.content]
 kind = "lines"
@@ -176,11 +148,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 9
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", start_line: 10 })'
 descriptor = "python decl at microbootstrap/console_writer.py:10"
 cost_tokens = 6
-cum_tokens = 234
+cum_tokens = 222
 
 [batches.content]
 kind = "lines"
@@ -194,11 +166,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers" })'
 descriptor = "listing of 'microbootstrap/bootstrappers'"
 cost_tokens = 25
-cum_tokens = 259
+cum_tokens = 247
 
 [batches.content]
 kind = "fs"
@@ -208,11 +180,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstr
 entries = ["__init__.py", "base.py", "fastapi.py", "faststream.py", "litestar.py"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in microbootstrap/__init__.py"
 cost_tokens = 17
-cum_tokens = 276
+cum_tokens = 264
 
 [batches.content]
 kind = "lines"
@@ -226,11 +198,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/config/fastapi.py"
 cost_tokens = 12
-cum_tokens = 288
+cum_tokens = 276
 
 [batches.content]
 kind = "lines"
@@ -245,6 +217,50 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py", start_line: 20 })'
+descriptor = "python decl at microbootstrap/config/fastapi.py:20"
+cost_tokens = 7
+cum_tokens = 283
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py", chunk_index: 0 })'
+descriptor = "python decl names surface in microbootstrap/config/faststream.py"
+cost_tokens = 12
+cum_tokens = 295
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
 start = 21
 end = 21
 
@@ -253,16 +269,16 @@ kind = "ellipsis"
 
 [[batches]]
 position = 15
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py", start_line: 20 })'
-descriptor = "python decl at microbootstrap/config/fastapi.py:20"
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py", start_line: 20 })'
+descriptor = "python decl at microbootstrap/config/faststream.py:20"
 cost_tokens = 7
-cum_tokens = 295
+cum_tokens = 302
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/fastapi.py"
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
 start = 20
 end = 21
 
@@ -271,54 +287,10 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py", chunk_index: 0 })'
-descriptor = "python decl names surface in microbootstrap/config/faststream.py"
-cost_tokens = 12
-cum_tokens = 307
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py", start_line: 20 })'
-descriptor = "python decl at microbootstrap/config/faststream.py:20"
-cost_tokens = 7
-cum_tokens = 314
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/faststream.py"
-start = 20
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/litestar.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/config/litestar.py"
 cost_tokens = 12
-cum_tokens = 326
+cum_tokens = 314
 
 [batches.content]
 kind = "lines"
@@ -340,11 +312,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/litestar.py", start_line: 13 })'
 descriptor = "python decl at microbootstrap/config/litestar.py:13"
 cost_tokens = 9
-cum_tokens = 335
+cum_tokens = 323
 
 [batches.content]
 kind = "lines"
@@ -358,11 +330,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/middlewares/fastapi.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/middlewares/fastapi.py"
 cost_tokens = 14
-cum_tokens = 349
+cum_tokens = 337
 
 [batches.content]
 kind = "lines"
@@ -384,11 +356,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/granian_server.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/granian_server.py"
 cost_tokens = 25
-cum_tokens = 374
+cum_tokens = 362
 
 [batches.content]
 kind = "lines"
@@ -418,11 +390,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 20
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/middlewares/litestar.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/middlewares/litestar.py"
 cost_tokens = 15
-cum_tokens = 389
+cum_tokens = 377
 
 [batches.content]
 kind = "lines"
@@ -444,11 +416,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 21
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 19 })'
 descriptor = "python class body at microbootstrap/instruments_setupper.py:19"
 cost_tokens = 20
-cum_tokens = 409
+cum_tokens = 397
 
 [batches.content]
 kind = "lines"
@@ -462,11 +434,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 24
+position = 22
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 222
-cum_tokens = 631
+cum_tokens = 619
 
 [batches.content]
 kind = "lines"
@@ -488,11 +460,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in microbootstrap/__init__.py"
 cost_tokens = 18
-cum_tokens = 649
+cum_tokens = 637
 
 [batches.content]
 kind = "lines"
@@ -506,11 +478,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 26
+position = 24
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments" })'
 descriptor = "listing of 'microbootstrap/instruments'"
 cost_tokens = 70
-cum_tokens = 719
+cum_tokens = 707
 
 [batches.content]
 kind = "fs"
@@ -520,11 +492,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstr
 entries = ["__init__.py", "base.py", "cors_instrument.py", "health_checks_instrument.py", "instrument_box.py", "logging_instrument.py", "opentelemetry_instrument.py", "prometheus_instrument.py", "pyroscope_instrument.py", "sentry_instrument.py", "swagger_instrument.py"]
 
 [[batches]]
-position = 27
+position = 25
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/instrument_box.py"
 cost_tokens = 12
-cum_tokens = 731
+cum_tokens = 719
 
 [batches.content]
 kind = "lines"
@@ -546,11 +518,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 26
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 9 })'
 descriptor = "python decl at microbootstrap/instruments/instrument_box.py:9"
 cost_tokens = 6
-cum_tokens = 737
+cum_tokens = 725
 
 [batches.content]
 kind = "lines"
@@ -564,11 +536,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 29
+position = 27
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/middlewares/litestar.py", start_line: 14 })'
 descriptor = "python decl at microbootstrap/middlewares/litestar.py:14"
 cost_tokens = 23
-cum_tokens = 760
+cum_tokens = 748
 
 [batches.content]
 kind = "lines"
@@ -582,11 +554,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 30
+position = 28
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 83
-cum_tokens = 843
+cum_tokens = 831
 
 [batches.content]
 kind = "lines"
@@ -600,11 +572,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 31
+position = 29
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/middlewares/fastapi.py", start_line: 12 })'
 descriptor = "python decl at microbootstrap/middlewares/fastapi.py:12"
 cost_tokens = 24
-cum_tokens = 867
+cum_tokens = 855
 
 [batches.content]
 kind = "lines"
@@ -618,11 +590,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 32
+position = 30
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/exceptions.py"
 cost_tokens = 45
-cum_tokens = 912
+cum_tokens = 900
 
 [batches.content]
 kind = "lines"
@@ -676,11 +648,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 31
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 1 })'
 descriptor = "python decl at microbootstrap/exceptions.py:1"
 cost_tokens = 0
-cum_tokens = 912
+cum_tokens = 900
 
 [batches.content]
 kind = "lines"
@@ -689,52 +661,52 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py"
 start = 1
 end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 5 })'
+descriptor = "python decl at microbootstrap/exceptions.py:5"
+cost_tokens = 0
+cum_tokens = 900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 9 })'
+descriptor = "python decl at microbootstrap/exceptions.py:9"
+cost_tokens = 0
+cum_tokens = 900
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 34
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 5 })'
-descriptor = "python decl at microbootstrap/exceptions.py:5"
-cost_tokens = 0
-cum_tokens = 912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 9 })'
-descriptor = "python decl at microbootstrap/exceptions.py:9"
-cost_tokens = 0
-cum_tokens = 912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 1 })'
 descriptor = "python decl doc at microbootstrap/exceptions.py:1"
 cost_tokens = 9
-cum_tokens = 921
+cum_tokens = 909
 
 [batches.content]
 kind = "lines"
@@ -748,11 +720,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 37
+position = 35
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 5 })'
 descriptor = "python decl doc at microbootstrap/exceptions.py:5"
 cost_tokens = 16
-cum_tokens = 937
+cum_tokens = 925
 
 [batches.content]
 kind = "lines"
@@ -766,11 +738,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/exceptions.py", start_line: 9 })'
 descriptor = "python decl doc at microbootstrap/exceptions.py:9"
 cost_tokens = 17
-cum_tokens = 954
+cum_tokens = 942
 
 [batches.content]
 kind = "lines"
@@ -784,11 +756,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 33
-cum_tokens = 987
+cum_tokens = 975
 
 [batches.content]
 kind = "lines"
@@ -802,11 +774,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/cors_instrument.py"
 cost_tokens = 28
-cum_tokens = 1015
+cum_tokens = 1003
 
 [batches.content]
 kind = "lines"
@@ -844,11 +816,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 8 })'
 descriptor = "python decl at microbootstrap/instruments/cors_instrument.py:8"
 cost_tokens = 0
-cum_tokens = 1015
+cum_tokens = 1003
 
 [batches.content]
 kind = "lines"
@@ -862,11 +834,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 18 })'
 descriptor = "python decl at microbootstrap/instruments/cors_instrument.py:18"
 cost_tokens = 0
-cum_tokens = 1015
+cum_tokens = 1003
 
 [batches.content]
 kind = "lines"
@@ -880,11 +852,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/swagger_instrument.py"
 cost_tokens = 28
-cum_tokens = 1043
+cum_tokens = 1031
 
 [batches.content]
 kind = "lines"
@@ -922,11 +894,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 10 })'
 descriptor = "python decl at microbootstrap/instruments/swagger_instrument.py:10"
 cost_tokens = 0
-cum_tokens = 1043
+cum_tokens = 1031
 
 [batches.content]
 kind = "lines"
@@ -940,11 +912,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 21 })'
 descriptor = "python decl at microbootstrap/instruments/swagger_instrument.py:21"
 cost_tokens = 0
-cum_tokens = 1043
+cum_tokens = 1031
 
 [batches.content]
 kind = "lines"
@@ -958,11 +930,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 46
+position = 44
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/pyroscope_instrument.py"
 cost_tokens = 31
-cum_tokens = 1074
+cum_tokens = 1062
 
 [batches.content]
 kind = "lines"
@@ -1000,11 +972,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 45
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 15 })'
 descriptor = "python decl at microbootstrap/instruments/pyroscope_instrument.py:15"
 cost_tokens = 0
-cum_tokens = 1074
+cum_tokens = 1062
 
 [batches.content]
 kind = "lines"
@@ -1018,11 +990,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 48
+position = 46
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 27 })'
 descriptor = "python decl at microbootstrap/instruments/pyroscope_instrument.py:27"
 cost_tokens = 0
-cum_tokens = 1074
+cum_tokens = 1062
 
 [batches.content]
 kind = "lines"
@@ -1036,11 +1008,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 49
+position = 47
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in microbootstrap/__init__.py"
 cost_tokens = 16
-cum_tokens = 1090
+cum_tokens = 1078
 
 [batches.content]
 kind = "lines"
@@ -1054,11 +1026,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 50
+position = 48
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/cors_instrument.py"
 cost_tokens = 25
-cum_tokens = 1115
+cum_tokens = 1103
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1068,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 49
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 22 })'
 descriptor = "python method at microbootstrap/instruments/cors_instrument.py:22"
 cost_tokens = 0
-cum_tokens = 1115
+cum_tokens = 1103
 
 [batches.content]
 kind = "lines"
@@ -1114,11 +1086,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 52
+position = 50
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 27 })'
 descriptor = "python method at microbootstrap/instruments/cors_instrument.py:27"
 cost_tokens = 15
-cum_tokens = 1130
+cum_tokens = 1118
 
 [batches.content]
 kind = "lines"
@@ -1132,11 +1104,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 53
+position = 51
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/swagger_instrument.py"
 cost_tokens = 25
-cum_tokens = 1155
+cum_tokens = 1143
 
 [batches.content]
 kind = "lines"
@@ -1174,11 +1146,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 52
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 25 })'
 descriptor = "python method at microbootstrap/instruments/swagger_instrument.py:25"
 cost_tokens = 0
-cum_tokens = 1155
+cum_tokens = 1143
 
 [batches.content]
 kind = "lines"
@@ -1192,11 +1164,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 55
+position = 53
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 28 })'
 descriptor = "python method at microbootstrap/instruments/swagger_instrument.py:28"
 cost_tokens = 15
-cum_tokens = 1170
+cum_tokens = 1158
 
 [batches.content]
 kind = "lines"
@@ -1210,11 +1182,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 56
+position = 54
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/console_writer.py"
 cost_tokens = 47
-cum_tokens = 1217
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -1268,11 +1240,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 55
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", start_line: 16 })'
 descriptor = "python method at microbootstrap/console_writer.py:16"
 cost_tokens = 0
-cum_tokens = 1217
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -1286,11 +1258,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 58
+position = 56
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", start_line: 31 })'
 descriptor = "python method at microbootstrap/console_writer.py:31"
 cost_tokens = 0
-cum_tokens = 1217
+cum_tokens = 1205
 
 [batches.content]
 kind = "lines"
@@ -1304,11 +1276,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 59
+position = 57
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/__init__.py", chunk_index: 0 })'
 descriptor = "python imports in microbootstrap/__init__.py"
 cost_tokens = 200
-cum_tokens = 1417
+cum_tokens = 1405
 
 [batches.content]
 kind = "lines"
@@ -1322,11 +1294,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 60
+position = 58
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 21 })'
 descriptor = "python class body at microbootstrap/instruments/swagger_instrument.py:21"
 cost_tokens = 23
-cum_tokens = 1440
+cum_tokens = 1428
 
 [batches.content]
 kind = "lines"
@@ -1340,11 +1312,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 61
+position = 59
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/granian_server.py", start_line: 27 })'
 descriptor = "python decl at microbootstrap/granian_server.py:27"
 cost_tokens = 50
-cum_tokens = 1490
+cum_tokens = 1478
 
 [batches.content]
 kind = "lines"
@@ -1358,11 +1330,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 62
+position = 60
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 18 })'
 descriptor = "python class body at microbootstrap/instruments/cors_instrument.py:18"
 cost_tokens = 24
-cum_tokens = 1514
+cum_tokens = 1502
 
 [batches.content]
 kind = "lines"
@@ -1376,11 +1348,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 63
+position = 61
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 27 })'
 descriptor = "python class body at microbootstrap/instruments/pyroscope_instrument.py:27"
 cost_tokens = 24
-cum_tokens = 1538
+cum_tokens = 1526
 
 [batches.content]
 kind = "lines"
@@ -1394,11 +1366,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 64
+position = 62
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 18
-cum_tokens = 1556
+cum_tokens = 1544
 
 [batches.content]
 kind = "fs"
@@ -1408,11 +1380,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/examples"
 entries = ["fastapi_app.py", "faststream_app.py", "litestar_app.py"]
 
 [[batches]]
-position = 65
+position = 63
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", start_line: 10 })'
 descriptor = "python class body at microbootstrap/console_writer.py:10"
 cost_tokens = 49
-cum_tokens = 1605
+cum_tokens = 1593
 
 [batches.content]
 kind = "lines"
@@ -1426,11 +1398,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 66
+position = 64
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 242
-cum_tokens = 1847
+cum_tokens = 1835
 
 [batches.content]
 kind = "lines"
@@ -1772,11 +1744,11 @@ end = 747
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 65
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 15
-cum_tokens = 1862
+cum_tokens = 1850
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +1762,11 @@ end = 461
 kind = "full"
 
 [[batches]]
-position = 68
+position = 66
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md", section_index: 33 })'
 descriptor = "README.md section #33"
 cost_tokens = 45
-cum_tokens = 1907
+cum_tokens = 1895
 
 [batches.content]
 kind = "lines"
@@ -1824,11 +1796,11 @@ end = 590
 kind = "full"
 
 [[batches]]
-position = 69
+position = 67
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py", start_line: 27, body_start_line: 29 })'
 descriptor = "python method body at microbootstrap/instruments/cors_instrument.py:27 body 29"
 cost_tokens = 9
-cum_tokens = 1916
+cum_tokens = 1904
 
 [batches.content]
 kind = "lines"
@@ -1842,11 +1814,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 70
+position = 68
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/swagger_instrument.py", start_line: 28, body_start_line: 30 })'
 descriptor = "python method body at microbootstrap/instruments/swagger_instrument.py:28 body 30"
 cost_tokens = 9
-cum_tokens = 1925
+cum_tokens = 1913
 
 [batches.content]
 kind = "lines"
@@ -1860,11 +1832,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 71
+position = 69
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 136
-cum_tokens = 2061
+cum_tokens = 2049
 
 [batches.content]
 kind = "lines"
@@ -1878,11 +1850,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 72
+position = 70
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/health_checks_instrument.py"
 cost_tokens = 51
-cum_tokens = 2112
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1936,11 +1908,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 71
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 8 })'
 descriptor = "python decl at microbootstrap/instruments/health_checks_instrument.py:8"
 cost_tokens = 0
-cum_tokens = 2112
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1954,11 +1926,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 74
+position = 72
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 14 })'
 descriptor = "python decl at microbootstrap/instruments/health_checks_instrument.py:14"
 cost_tokens = 0
-cum_tokens = 2112
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1972,11 +1944,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 75
+position = 73
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 26 })'
 descriptor = "python decl at microbootstrap/instruments/health_checks_instrument.py:26"
 cost_tokens = 0
-cum_tokens = 2112
+cum_tokens = 2100
 
 [batches.content]
 kind = "lines"
@@ -1990,11 +1962,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 76
+position = 74
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 26 })'
 descriptor = "python class body at microbootstrap/instruments/health_checks_instrument.py:26"
 cost_tokens = 26
-cum_tokens = 2138
+cum_tokens = 2126
 
 [batches.content]
 kind = "lines"
@@ -2008,11 +1980,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 77
+position = 75
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 8 })'
 descriptor = "python class body at microbootstrap/instruments/health_checks_instrument.py:8"
 cost_tokens = 32
-cum_tokens = 2170
+cum_tokens = 2158
 
 [batches.content]
 kind = "lines"
@@ -2026,11 +1998,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 78
+position = 76
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/health_checks_instrument.py"
 cost_tokens = 45
-cum_tokens = 2215
+cum_tokens = 2203
 
 [batches.content]
 kind = "lines"
@@ -2084,11 +2056,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 77
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 30 })'
 descriptor = "python method at microbootstrap/instruments/health_checks_instrument.py:30"
 cost_tokens = 0
-cum_tokens = 2215
+cum_tokens = 2203
 
 [batches.content]
 kind = "lines"
@@ -2102,11 +2074,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 80
+position = 78
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 37 })'
 descriptor = "python method at microbootstrap/instruments/health_checks_instrument.py:37"
 cost_tokens = 0
-cum_tokens = 2215
+cum_tokens = 2203
 
 [batches.content]
 kind = "lines"
@@ -2120,11 +2092,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 81
+position = 79
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 40 })'
 descriptor = "python method at microbootstrap/instruments/health_checks_instrument.py:40"
 cost_tokens = 16
-cum_tokens = 2231
+cum_tokens = 2219
 
 [batches.content]
 kind = "lines"
@@ -2138,11 +2110,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 82
+position = 80
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 40, body_start_line: 42 })'
 descriptor = "python method body at microbootstrap/instruments/health_checks_instrument.py:40 body 42"
 cost_tokens = 10
-cum_tokens = 2241
+cum_tokens = 2229
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2128,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 83
+position = 81
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py", start_line: 22 })'
 descriptor = "python method at microbootstrap/console_writer.py:22"
 cost_tokens = 48
-cum_tokens = 2289
+cum_tokens = 2277
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2146,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 84
+position = 82
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py", start_line: 37, body_start_line: 38 })'
 descriptor = "python method body at microbootstrap/instruments/health_checks_instrument.py:37 body 38"
 cost_tokens = 11
-cum_tokens = 2300
+cum_tokens = 2288
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2164,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 85
+position = 83
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/instrument_box.py"
 cost_tokens = 53
-cum_tokens = 2353
+cum_tokens = 2341
 
 [batches.content]
 kind = "lines"
@@ -2266,11 +2238,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 84
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 14 })'
 descriptor = "python method at microbootstrap/instruments/instrument_box.py:14"
 cost_tokens = 0
-cum_tokens = 2353
+cum_tokens = 2341
 
 [batches.content]
 kind = "lines"
@@ -2284,11 +2256,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 87
+position = 85
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 48 })'
 descriptor = "python method at microbootstrap/instruments/instrument_box.py:48"
 cost_tokens = 15
-cum_tokens = 2368
+cum_tokens = 2356
 
 [batches.content]
 kind = "lines"
@@ -2302,11 +2274,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 88
+position = 86
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 21 })'
 descriptor = "python method at microbootstrap/instruments/instrument_box.py:21"
 cost_tokens = 26
-cum_tokens = 2394
+cum_tokens = 2382
 
 [batches.content]
 kind = "lines"
@@ -2320,11 +2292,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 89
+position = 87
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/pyroscope_instrument.py"
 cost_tokens = 53
-cum_tokens = 2447
+cum_tokens = 2435
 
 [batches.content]
 kind = "lines"
@@ -2394,11 +2366,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 88
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 31 })'
 descriptor = "python method at microbootstrap/instruments/pyroscope_instrument.py:31"
 cost_tokens = 0
-cum_tokens = 2447
+cum_tokens = 2435
 
 [batches.content]
 kind = "lines"
@@ -2412,11 +2384,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 91
+position = 89
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 34 })'
 descriptor = "python method at microbootstrap/instruments/pyroscope_instrument.py:34"
 cost_tokens = 0
-cum_tokens = 2447
+cum_tokens = 2435
 
 [batches.content]
 kind = "lines"
@@ -2430,11 +2402,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 92
+position = 90
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 37 })'
 descriptor = "python method at microbootstrap/instruments/pyroscope_instrument.py:37"
 cost_tokens = 0
-cum_tokens = 2447
+cum_tokens = 2435
 
 [batches.content]
 kind = "lines"
@@ -2448,11 +2420,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 93
+position = 91
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 52 })'
 descriptor = "python method at microbootstrap/instruments/pyroscope_instrument.py:52"
 cost_tokens = 16
-cum_tokens = 2463
+cum_tokens = 2451
 
 [batches.content]
 kind = "lines"
@@ -2466,11 +2438,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 94
+position = 92
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 34, body_start_line: 35 })'
 descriptor = "python method body at microbootstrap/instruments/pyroscope_instrument.py:34 body 35"
 cost_tokens = 7
-cum_tokens = 2470
+cum_tokens = 2458
 
 [batches.content]
 kind = "lines"
@@ -2484,11 +2456,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 95
+position = 93
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 52, body_start_line: 54 })'
 descriptor = "python method body at microbootstrap/instruments/pyroscope_instrument.py:52 body 54"
 cost_tokens = 10
-cum_tokens = 2480
+cum_tokens = 2468
 
 [batches.content]
 kind = "lines"
@@ -2502,11 +2474,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 96
+position = 94
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 48, body_start_line: 50 })'
 descriptor = "python method body at microbootstrap/instruments/instrument_box.py:48 body 50"
 cost_tokens = 12
-cum_tokens = 2492
+cum_tokens = 2480
 
 [batches.content]
 kind = "lines"
@@ -2520,11 +2492,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 97
+position = 95
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/base.py"
 cost_tokens = 69
-cum_tokens = 2561
+cum_tokens = 2549
 
 [batches.content]
 kind = "lines"
@@ -2570,11 +2542,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 96
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/base.py", start_line: 19 })'
 descriptor = "python decl at microbootstrap/instruments/base.py:19"
 cost_tokens = 0
-cum_tokens = 2561
+cum_tokens = 2549
 
 [batches.content]
 kind = "lines"
@@ -2588,11 +2560,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 99
+position = 97
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/base.py", start_line: 23 })'
 descriptor = "python decl at microbootstrap/instruments/base.py:23"
 cost_tokens = 16
-cum_tokens = 2577
+cum_tokens = 2565
 
 [batches.content]
 kind = "lines"
@@ -2606,11 +2578,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 100
+position = 98
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/base.py", start_line: 19 })'
 descriptor = "python class body at microbootstrap/instruments/base.py:19"
 cost_tokens = 17
-cum_tokens = 2594
+cum_tokens = 2582
 
 [batches.content]
 kind = "lines"
@@ -2624,11 +2596,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 101
+position = 99
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/base.py", start_line: 23 })'
 descriptor = "python class body at microbootstrap/instruments/base.py:23"
 cost_tokens = 38
-cum_tokens = 2632
+cum_tokens = 2620
 
 [batches.content]
 kind = "lines"
@@ -2642,11 +2614,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 102
+position = 100
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 34 })'
 descriptor = "python method at microbootstrap/instruments/instrument_box.py:34"
 cost_tokens = 36
-cum_tokens = 2668
+cum_tokens = 2656
 
 [batches.content]
 kind = "lines"
@@ -2660,11 +2632,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 103
+position = 101
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 9 })'
 descriptor = "python class body at microbootstrap/instruments/instrument_box.py:9"
 cost_tokens = 50
-cum_tokens = 2718
+cum_tokens = 2706
 
 [batches.content]
 kind = "lines"
@@ -2678,11 +2650,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 104
+position = 102
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/console_writer.py" })'
 descriptor = "python imports in microbootstrap/console_writer.py"
 cost_tokens = 56
-cum_tokens = 2774
+cum_tokens = 2762
 
 [batches.content]
 kind = "lines"
@@ -2704,11 +2676,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 105
+position = 103
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/instrument_box.py", start_line: 34 })'
 descriptor = "python method doc at microbootstrap/instruments/instrument_box.py:34"
 cost_tokens = 20
-cum_tokens = 2794
+cum_tokens = 2782
 
 [batches.content]
 kind = "lines"
@@ -2722,11 +2694,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 106
+position = 104
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers/base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/bootstrappers/base.py"
 cost_tokens = 83
-cum_tokens = 2877
+cum_tokens = 2865
 
 [batches.content]
 kind = "lines"
@@ -2772,11 +2744,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 105
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers/base.py", start_line: 17 })'
 descriptor = "python decl at microbootstrap/bootstrappers/base.py:17"
 cost_tokens = 0
-cum_tokens = 2877
+cum_tokens = 2865
 
 [batches.content]
 kind = "lines"
@@ -2790,11 +2762,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 108
+position = 106
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers/base.py", start_line: 25 })'
 descriptor = "python decl at microbootstrap/bootstrappers/base.py:25"
 cost_tokens = 0
-cum_tokens = 2877
+cum_tokens = 2865
 
 [batches.content]
 kind = "lines"
@@ -2808,11 +2780,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 109
+position = 107
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers/base.py", start_line: 17 })'
 descriptor = "python class body at microbootstrap/bootstrappers/base.py:17"
 cost_tokens = 18
-cum_tokens = 2895
+cum_tokens = 2883
 
 [batches.content]
 kind = "lines"
@@ -2826,11 +2798,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 110
+position = 108
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/bootstrappers/base.py", start_line: 25 })'
 descriptor = "python class body at microbootstrap/bootstrappers/base.py:25"
 cost_tokens = 45
-cum_tokens = 2940
+cum_tokens = 2928
 
 [batches.content]
 kind = "lines"
@@ -2844,11 +2816,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 111
+position = 109
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in microbootstrap/instruments/opentelemetry_instrument.py"
 cost_tokens = 35
-cum_tokens = 2975
+cum_tokens = 2963
 
 [batches.content]
 kind = "lines"
@@ -2886,11 +2858,11 @@ end = 198
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 110
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 191 })'
 descriptor = "python decl at microbootstrap/instruments/opentelemetry_instrument.py:191"
 cost_tokens = 0
-cum_tokens = 2975
+cum_tokens = 2963
 
 [batches.content]
 kind = "lines"
@@ -2904,11 +2876,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 113
+position = 111
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 197 })'
 descriptor = "python decl at microbootstrap/instruments/opentelemetry_instrument.py:197"
 cost_tokens = 0
-cum_tokens = 2975
+cum_tokens = 2963
 
 [batches.content]
 kind = "lines"
@@ -2922,11 +2894,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 114
+position = 112
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/health_checks_instrument.py" })'
 descriptor = "python imports in microbootstrap/instruments/health_checks_instrument.py"
 cost_tokens = 36
-cum_tokens = 3011
+cum_tokens = 2999
 
 [batches.content]
 kind = "lines"
@@ -2956,11 +2928,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 115
+position = 113
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/helpers.py"
 cost_tokens = 150
-cum_tokens = 3161
+cum_tokens = 3149
 
 [batches.content]
 kind = "lines"
@@ -3070,11 +3042,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 114
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 19 })'
 descriptor = "python decl at microbootstrap/helpers.py:19"
 cost_tokens = 0
-cum_tokens = 3161
+cum_tokens = 3149
 
 [batches.content]
 kind = "lines"
@@ -3088,11 +3060,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 117
+position = 115
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 96 })'
 descriptor = "python decl at microbootstrap/helpers.py:96"
 cost_tokens = 0
-cum_tokens = 3161
+cum_tokens = 3149
 
 [batches.content]
 kind = "lines"
@@ -3106,11 +3078,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 118
+position = 116
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 48 })'
 descriptor = "python decl at microbootstrap/helpers.py:48"
 cost_tokens = 37
-cum_tokens = 3198
+cum_tokens = 3186
 
 [batches.content]
 kind = "lines"
@@ -3124,11 +3096,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 119
+position = 117
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 60 })'
 descriptor = "python decl at microbootstrap/helpers.py:60"
 cost_tokens = 38
-cum_tokens = 3236
+cum_tokens = 3224
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +3114,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 120
+position = 118
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 96, body_start_line: 97 })'
 descriptor = "python decl body at microbootstrap/helpers.py:96 body 97"
 cost_tokens = 16
-cum_tokens = 3252
+cum_tokens = 3240
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +3132,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 121
+position = 119
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 35 })'
 descriptor = "python decl at microbootstrap/helpers.py:35"
 cost_tokens = 40
-cum_tokens = 3292
+cum_tokens = 3280
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3150,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 122
+position = 120
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 100 })'
 descriptor = "python decl at microbootstrap/helpers.py:100"
 cost_tokens = 40
-cum_tokens = 3332
+cum_tokens = 3320
 
 [batches.content]
 kind = "lines"
@@ -3196,11 +3168,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 123
+position = 121
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py", start_line: 60, body_start_line: 93 })'
 descriptor = "python decl body at microbootstrap/helpers.py:60 body 93"
 cost_tokens = 9
-cum_tokens = 3341
+cum_tokens = 3329
 
 [batches.content]
 kind = "lines"
@@ -3214,11 +3186,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 124
+position = 122
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 45
-cum_tokens = 3386
+cum_tokens = 3374
 
 [batches.content]
 kind = "fs"
@@ -3228,11 +3200,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/tests"
 entries = ["__init__.py", "bootstrappers", "conftest.py", "instruments", "test_granian_server.py", "test_helpers.py", "test_instruments_setupper.py", "test_settings.py"]
 
 [[batches]]
-position = 125
+position = 123
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/cors_instrument.py" })'
 descriptor = "python imports in microbootstrap/instruments/cors_instrument.py"
 cost_tokens = 37
-cum_tokens = 3423
+cum_tokens = 3411
 
 [batches.content]
 kind = "lines"
@@ -3262,11 +3234,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 126
+position = 124
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/granian_server.py", start_line: 16 })'
 descriptor = "python decl at microbootstrap/granian_server.py:16"
 cost_tokens = 79
-cum_tokens = 3502
+cum_tokens = 3490
 
 [batches.content]
 kind = "lines"
@@ -3280,11 +3252,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 127
+position = 125
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments_setupper.py"
 cost_tokens = 136
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3418,11 +3390,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 126
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 23 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:23"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3436,11 +3408,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 129
+position = 127
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 28 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:28"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3454,11 +3426,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 130
+position = 128
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 51 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:51"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3472,11 +3444,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 131
+position = 129
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 57 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:57"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3490,11 +3462,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 132
+position = 130
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 62 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:62"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3508,11 +3480,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 133
+position = 131
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 65 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:65"
 cost_tokens = 0
-cum_tokens = 3638
+cum_tokens = 3626
 
 [batches.content]
 kind = "lines"
@@ -3526,11 +3498,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 134
+position = 132
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 62, body_start_line: 63 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:62 body 63"
 cost_tokens = 6
-cum_tokens = 3644
+cum_tokens = 3632
 
 [batches.content]
 kind = "lines"
@@ -3544,11 +3516,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 135
+position = 133
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 65, body_start_line: 66 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:65 body 66"
 cost_tokens = 7
-cum_tokens = 3651
+cum_tokens = 3639
 
 [batches.content]
 kind = "lines"
@@ -3562,11 +3534,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 136
+position = 134
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 32 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:32"
 cost_tokens = 30
-cum_tokens = 3681
+cum_tokens = 3669
 
 [batches.content]
 kind = "lines"
@@ -3580,11 +3552,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 137
+position = 135
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 40 })'
 descriptor = "python method at microbootstrap/instruments_setupper.py:40"
 cost_tokens = 61
-cum_tokens = 3742
+cum_tokens = 3730
 
 [batches.content]
 kind = "lines"
@@ -3598,11 +3570,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 138
+position = 136
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments_setupper.py", start_line: 28, body_start_line: 29 })'
 descriptor = "python method body at microbootstrap/instruments_setupper.py:28 body 29"
 cost_tokens = 21
-cum_tokens = 3763
+cum_tokens = 3751
 
 [batches.content]
 kind = "lines"
@@ -3616,11 +3588,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 139
+position = 137
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/settings.py"
 cost_tokens = 159
-cum_tokens = 3922
+cum_tokens = 3910
 
 [batches.content]
 kind = "lines"
@@ -3730,11 +3702,11 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 138
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 53 })'
 descriptor = "python decl at microbootstrap/settings.py:53"
 cost_tokens = 0
-cum_tokens = 3922
+cum_tokens = 3910
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3720,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 141
+position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 29 })'
 descriptor = "python decl at microbootstrap/settings.py:29"
 cost_tokens = 15
-cum_tokens = 3937
+cum_tokens = 3925
 
 [batches.content]
 kind = "lines"
@@ -3766,11 +3738,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 142
+position = 140
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 105 })'
 descriptor = "python decl at microbootstrap/settings.py:105"
 cost_tokens = 49
-cum_tokens = 3986
+cum_tokens = 3974
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +3756,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 143
+position = 141
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 105 })'
 descriptor = "python decl doc at microbootstrap/settings.py:105"
 cost_tokens = 12
-cum_tokens = 3998
+cum_tokens = 3986
 
 [batches.content]
 kind = "lines"
@@ -3802,11 +3774,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 144
+position = 142
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python decl at microbootstrap/settings.py:90"
 cost_tokens = 79
-cum_tokens = 4077
+cum_tokens = 4065
 
 [batches.content]
 kind = "lines"
@@ -3820,11 +3792,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 145
+position = 143
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python decl doc at microbootstrap/settings.py:90"
 cost_tokens = 13
-cum_tokens = 4090
+cum_tokens = 4078
 
 [batches.content]
 kind = "lines"
@@ -3838,11 +3810,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 146
+position = 144
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 90 })'
 descriptor = "python class body at microbootstrap/settings.py:90"
 cost_tokens = 17
-cum_tokens = 4107
+cum_tokens = 4095
 
 [batches.content]
 kind = "lines"
@@ -3856,11 +3828,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 147
+position = 145
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 53 })'
 descriptor = "python class body at microbootstrap/settings.py:53"
 cost_tokens = 64
-cum_tokens = 4171
+cum_tokens = 4159
 
 [batches.content]
 kind = "lines"
@@ -3874,11 +3846,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 148
+position = 146
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 60 })'
 descriptor = "python decl at microbootstrap/settings.py:60"
 cost_tokens = 93
-cum_tokens = 4264
+cum_tokens = 4252
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +3864,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 149
+position = 147
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 60 })'
 descriptor = "python decl doc at microbootstrap/settings.py:60"
 cost_tokens = 14
-cum_tokens = 4278
+cum_tokens = 4266
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +3882,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 150
+position = 148
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 75 })'
 descriptor = "python decl at microbootstrap/settings.py:75"
 cost_tokens = 93
-cum_tokens = 4371
+cum_tokens = 4359
 
 [batches.content]
 kind = "lines"
@@ -3928,11 +3900,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 151
+position = 149
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/settings.py", start_line: 75 })'
 descriptor = "python decl doc at microbootstrap/settings.py:75"
 cost_tokens = 14
-cum_tokens = 4385
+cum_tokens = 4373
 
 [batches.content]
 kind = "lines"
@@ -3946,11 +3918,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 152
+position = 150
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py", start_line: 31, body_start_line: 32 })'
 descriptor = "python method body at microbootstrap/instruments/pyroscope_instrument.py:31 body 32"
 cost_tokens = 16
-cum_tokens = 4401
+cum_tokens = 4389
 
 [batches.content]
 kind = "lines"
@@ -3964,11 +3936,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 153
+position = 151
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 191, body_start_line: 192 })'
 descriptor = "python decl body at microbootstrap/instruments/opentelemetry_instrument.py:191 body 192"
 cost_tokens = 14
-cum_tokens = 4415
+cum_tokens = 4403
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +3954,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 154
+position = 152
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/pyroscope_instrument.py" })'
 descriptor = "python imports in microbootstrap/instruments/pyroscope_instrument.py"
 cost_tokens = 44
-cum_tokens = 4459
+cum_tokens = 4447
 
 [batches.content]
 kind = "lines"
@@ -4016,11 +3988,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 155
+position = 153
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/helpers.py" })'
 descriptor = "python imports in microbootstrap/helpers.py"
 cost_tokens = 82
-cum_tokens = 4541
+cum_tokens = 4529
 
 [batches.content]
 kind = "lines"
@@ -4058,11 +4030,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 156
+position = 154
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", chunk_index: 1 })'
 descriptor = "python method sigs #1 in microbootstrap/instruments/opentelemetry_instrument.py"
 cost_tokens = 92
-cum_tokens = 4633
+cum_tokens = 4621
 
 [batches.content]
 kind = "lines"
@@ -4116,11 +4088,11 @@ end = 214
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 155
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 198 })'
 descriptor = "python method at microbootstrap/instruments/opentelemetry_instrument.py:198"
 cost_tokens = 0
-cum_tokens = 4633
+cum_tokens = 4621
 
 [batches.content]
 kind = "lines"
@@ -4134,11 +4106,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 158
+position = 156
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 207 })'
 descriptor = "python method at microbootstrap/instruments/opentelemetry_instrument.py:207"
 cost_tokens = 0
-cum_tokens = 4633
+cum_tokens = 4621
 
 [batches.content]
 kind = "lines"
@@ -4152,11 +4124,11 @@ end = 207
 kind = "full"
 
 [[batches]]
-position = 159
+position = 157
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 213 })'
 descriptor = "python method at microbootstrap/instruments/opentelemetry_instrument.py:213"
 cost_tokens = 0
-cum_tokens = 4633
+cum_tokens = 4621
 
 [batches.content]
 kind = "lines"
@@ -4170,11 +4142,11 @@ end = 213
 kind = "full"
 
 [[batches]]
-position = 160
+position = 158
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/opentelemetry_instrument.py", start_line: 213, body_start_line: 214 })'
 descriptor = "python method body at microbootstrap/instruments/opentelemetry_instrument.py:213 body 214"
 cost_tokens = 6
-cum_tokens = 4639
+cum_tokens = 4627
 
 [batches.content]
 kind = "lines"
@@ -4188,11 +4160,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 161
+position = 159
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 93
-cum_tokens = 4732
+cum_tokens = 4720
 
 [batches.content]
 kind = "lines"
@@ -4230,11 +4202,11 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 162
+position = 160
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/README.md", section_index: 42 })'
 descriptor = "README.md section #42"
 cost_tokens = 29
-cum_tokens = 4761
+cum_tokens = 4749
 
 [batches.content]
 kind = "lines"
@@ -4248,11 +4220,11 @@ end = 744
 kind = "full"
 
 [[batches]]
-position = 163
+position = 161
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/config/litestar.py", start_line: 13 })'
 descriptor = "python class body at microbootstrap/config/litestar.py:13"
 cost_tokens = 84
-cum_tokens = 4845
+cum_tokens = 4833
 
 [batches.content]
 kind = "lines"
@@ -4266,11 +4238,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 164
+position = 162
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", chunk_index: 0 })'
 descriptor = "python decl names surface in microbootstrap/instruments/prometheus_instrument.py"
 cost_tokens = 121
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4380,11 +4352,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 163
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 17 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:17"
 cost_tokens = 0
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4398,11 +4370,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 166
+position = 164
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 24 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:24"
 cost_tokens = 0
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4416,11 +4388,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 167
+position = 165
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 28 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:28"
 cost_tokens = 0
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4434,11 +4406,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 168
+position = 166
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 55 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:55"
 cost_tokens = 0
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4452,11 +4424,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 169
+position = 167
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 60 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:60"
 cost_tokens = 0
-cum_tokens = 4966
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -4470,11 +4442,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 170
+position = 168
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 35 })'
 descriptor = "python decl at microbootstrap/instruments/prometheus_instrument.py:35"
 cost_tokens = 13
-cum_tokens = 4979
+cum_tokens = 4967
 
 [batches.content]
 kind = "lines"
@@ -4488,11 +4460,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 171
+position = 169
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 24 })'
 descriptor = "python class body at microbootstrap/instruments/prometheus_instrument.py:24"
 cost_tokens = 24
-cum_tokens = 5003
+cum_tokens = 4991
 
 [batches.content]
 kind = "lines"
@@ -4506,11 +4478,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 172
+position = 170
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 60 })'
 descriptor = "python class body at microbootstrap/instruments/prometheus_instrument.py:60"
 cost_tokens = 26
-cum_tokens = 5029
+cum_tokens = 5017
 
 [batches.content]
 kind = "lines"
@@ -4524,11 +4496,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 173
+position = 171
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", chunk_index: 0 })'
 descriptor = "python method sigs in microbootstrap/instruments/prometheus_instrument.py"
 cost_tokens = 47
-cum_tokens = 5076
+cum_tokens = 5064
 
 [batches.content]
 kind = "lines"
@@ -4598,11 +4570,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 172
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 64 })'
 descriptor = "python method at microbootstrap/instruments/prometheus_instrument.py:64"
 cost_tokens = 0
-cum_tokens = 5076
+cum_tokens = 5064
 
 [batches.content]
 kind = "lines"
@@ -4616,11 +4588,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 175
+position = 173
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 69 })'
 descriptor = "python method at microbootstrap/instruments/prometheus_instrument.py:69"
 cost_tokens = 17
-cum_tokens = 5093
+cum_tokens = 5081
 
 [batches.content]
 kind = "lines"
@@ -4634,11 +4606,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 176
+position = 174
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 17 })'
 descriptor = "python class body at microbootstrap/instruments/prometheus_instrument.py:17"
 cost_tokens = 43
-cum_tokens = 5136
+cum_tokens = 5124
 
 [batches.content]
 kind = "lines"
@@ -4660,11 +4632,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 177
+position = 175
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 55 })'
 descriptor = "python class body at microbootstrap/instruments/prometheus_instrument.py:55"
 cost_tokens = 48
-cum_tokens = 5184
+cum_tokens = 5172
 
 [batches.content]
 kind = "lines"
@@ -4678,11 +4650,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 178
+position = 176
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 46 })'
 descriptor = "python method at microbootstrap/instruments/prometheus_instrument.py:46"
 cost_tokens = 52
-cum_tokens = 5236
+cum_tokens = 5224
 
 [batches.content]
 kind = "lines"
@@ -4696,11 +4668,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 179
+position = 177
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 46, body_start_line: 52 })'
 descriptor = "python method body at microbootstrap/instruments/prometheus_instrument.py:46 body 52"
 cost_tokens = 18
-cum_tokens = 5254
+cum_tokens = 5242
 
 [batches.content]
 kind = "lines"
@@ -4714,11 +4686,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 180
+position = 178
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/microbootstrap/instruments/prometheus_instrument.py", start_line: 69, body_start_line: 71 })'
 descriptor = "python method body at microbootstrap/instruments/prometheus_instrument.py:69 body 71"
 cost_tokens = 19
-cum_tokens = 5273
+cum_tokens = 5261
 
 [batches.content]
 kind = "lines"
@@ -4730,6 +4702,34 @@ end = 71
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 179
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 5264
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 180
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 9
+cum_tokens = 5273
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/microbootstrap/.github/workflows"
+entries = ["release_docs.yml", "workflow.yml"]
 
 [[batches]]
 position = 181

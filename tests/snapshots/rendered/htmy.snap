@@ -4,12 +4,6 @@ expression: rendered
 ---
 .coderabbit.yaml
 .github/
-    funding.yml
-    workflows/
-        build-docs.yml
-        linters.yml
-        publish.yml
-        tests.yml
 .gitignore
 LICENSE
 README.md
@@ -282,6 +276,7 @@ htmy/
         default.py
             20→class _Node:
             …
+            23→    __slots__ = ("component", "next")
             50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
             53→class _ComponentRenderer:
             …

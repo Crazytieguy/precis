@@ -6,28 +6,6 @@ expression: rendered
 .eslintrc.js
 .eslintrc.local.js
 .github/
-    CODEOWNERS
-    ISSUE_TEMPLATE/
-        bug.yml
-        config.yml
-    actions/
-        create-check/
-            action.yml
-        install-latest-npm/
-            action.yml
-    dependabot.yml
-    matchers/
-        tap.json
-    settings.yml
-    workflows/
-        audit.yml
-        ci-release.yml
-        ci.yml
-        codeql-analysis.yml
-        post-dependabot.yml
-        pull-request.yml
-        release-integration.yml
-        release.yml
 .gitignore
 .npmrc
 .release-please-manifest.json
@@ -112,6 +90,8 @@ README.md
     460→  even if they're not the same string.  You already know how to
     461→  compare strings.
     462→* `neq(v1, v2)`: `v1 != v2` The opposite of `eq`.
+    467→* `compare(v1, v2)`: Return `0` if `v1 == v2`, or `1` if `v1` is greater, or `-1` if
+    468→  `v2` is greater.  Sorts in ascending order if passed to `Array.sort()`.
     469→* `rcompare(v1, v2)`: The reverse of `compare`.  Sorts an array of versions
     470→  in descending order when passed to `Array.sort()`.
     471→* `compareBuild(v1, v2)`: The same as `compare` but considers `build` when two versions

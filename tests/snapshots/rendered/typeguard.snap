@@ -3,33 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    FUNDING.yml
-    ISSUE_TEMPLATE/
-        bug_report.yaml
-        config.yml
-        features_request.yaml
-    SECURITY.md
-        1→# Security Policy
-        …
-        3→## Supported Versions
-        …
-        13→## Reporting a Vulnerability
-        …
-        15→See the [security](https://github.com/agronholm/typeguard/security)
-        16→section to view existing security advisories or to report a new vulnerability.
-    dependabot.yml
-    pull_request_template.md
-        2→## Changes
-        …
-        4→Fixes #. <!-- Provide issue number if exists -->
-        6→<!-- Please give a short brief about these changes. -->
-        8→## Checklist
-        …
-        21→### Updating the changelog
-        …
-    workflows/
-        publish.yml
-        test.yml
 .gitignore
 .pre-commit-config.yaml
 .readthedocs.yml
@@ -193,15 +166,28 @@ src/
             121→    memo: TypeCheckMemo,
             122→) -> Literal[True]:
             149→def check_return_type(
-            …
+            150→    func_name: str,
+            151→    retval: T,
+            152→    annotation: Any,
+            153→    memo: TypeCheckMemo,
+            154→) -> T:
             185→def check_send_type(
-            …
+            186→    func_name: str,
+            187→    sendval: T,
+            188→    annotation: Any,
+            189→    memo: TypeCheckMemo,
+            190→) -> T:
             216→def check_yield_type(
-            …
+            217→    func_name: str,
+            218→    yieldval: T,
+            219→    annotation: Any,
+            220→    memo: TypeCheckMemo,
+            221→) -> T:
             245→def check_variable_assignment(
             …
             291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
             …
+            299→    warnings.warn(TypeCheckWarning(str(exc)), stacklevel=get_stacklevel())
         _importhook.py
             40→P = ParamSpec("P")
             41→T = TypeVar("T")

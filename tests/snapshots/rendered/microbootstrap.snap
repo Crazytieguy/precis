@@ -3,9 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
-    workflows/
-        release_docs.yml
-        workflow.yml
 .gitignore
 Justfile
 README.md
@@ -188,6 +185,9 @@ microbootstrap/
             28→    def get_config_type(cls) -> type[CorsConfig]:
             29→        return CorsConfig
         health_checks_instrument.py
+            1→from __future__ import annotations
+            3→import typing_extensions
+            5→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
             8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
             9→    service_version: str | None
             10→    service_name: str | None

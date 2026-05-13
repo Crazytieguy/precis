@@ -4,15 +4,6 @@ expression: rendered
 ---
 .dockerignore
 .github/
-    FUNDING.yml
-    ISSUE_TEMPLATE/
-        bug-report.yml
-        config.yml
-        feature-request.yml
-    enclosed-mockup.png
-    icon-dark.png
-    icon-light.png
-    workflows/
 .gitignore
 .nvmrc
     1→22
@@ -217,6 +208,13 @@ packages/
                     5→  set: setInstanceUrl,
                     6→} = createConfigBindings({ key: 'instance-url' });
             create-note/
+                create-note.command.ts
+                    13→export const createNoteCommand = defineCommand({
+                    …
+                create-note.usecases.test.ts
+                create-note.usecases.ts
+                    3→export async function getNoteContent({
+                    …
             files/
                 files.services.test.ts
                 files.services.ts

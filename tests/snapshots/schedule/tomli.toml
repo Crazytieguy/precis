@@ -33,24 +33,10 @@ entries = ["tomli"]
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/.github" })'
-descriptor = "listing of '.github'"
-cost_tokens = 3
-cum_tokens = 69
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/.github"
-entries = ["workflows"]
-
-[[batches]]
-position = 4
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 0 })'
 descriptor = "CHANGELOG.md section #0"
 cost_tokens = 8
-cum_tokens = 77
+cum_tokens = 74
 
 [batches.content]
 kind = "lines"
@@ -64,11 +50,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer" })'
 descriptor = "listing of 'fuzzer'"
 cost_tokens = 8
-cum_tokens = 85
+cum_tokens = 82
 
 [batches.content]
 kind = "fs"
@@ -78,25 +64,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer"
 entries = ["fuzz.py", "requirements.txt"]
 
 [[batches]]
-position = 6
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/.github/workflows" })'
-descriptor = "listing of '.github/workflows'"
-cost_tokens = 4
-cum_tokens = 89
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/.github/workflows"
-entries = ["tests.yaml"]
-
-[[batches]]
-position = 7
+position = 5
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler" })'
 descriptor = "listing of 'profiler'"
 cost_tokens = 9
-cum_tokens = 98
+cum_tokens = 91
 
 [batches.content]
 kind = "fs"
@@ -106,11 +78,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler"
 entries = ["profiler_script.py", "requirements.txt"]
 
 [[batches]]
-position = 8
+position = 6
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 51
-cum_tokens = 149
+cum_tokens = 142
 
 [batches.content]
 kind = "lines"
@@ -140,11 +112,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 9
+position = 7
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler/profiler_script.py", chunk_index: 0 })'
 descriptor = "python decl names surface in profiler/profiler_script.py"
 cost_tokens = 10
-cum_tokens = 159
+cum_tokens = 152
 
 [batches.content]
 kind = "lines"
@@ -158,11 +130,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 10
+position = 8
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli" })'
 descriptor = "listing of 'src/tomli'"
 cost_tokens = 26
-cum_tokens = 185
+cum_tokens = 178
 
 [batches.content]
 kind = "fs"
@@ -172,11 +144,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli"
 entries = ["__init__.py", "_parser.py", "_re.py", "_types.py", "py.typed"]
 
 [[batches]]
-position = 11
+position = 9
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts" })'
 descriptor = "listing of 'scripts'"
 cost_tokens = 17
-cum_tokens = 202
+cum_tokens = 195
 
 [batches.content]
 kind = "fs"
@@ -186,11 +158,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts"
 entries = ["mypyc_tox", "requirements.txt", "use_setuptools.py"]
 
 [[batches]]
-position = 12
+position = 10
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py", chunk_index: 0 })'
 descriptor = "python decl names surface in scripts/use_setuptools.py"
 cost_tokens = 14
-cum_tokens = 216
+cum_tokens = 209
 
 [batches.content]
 kind = "lines"
@@ -212,11 +184,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 11
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py", start_line: 12 })'
 descriptor = "python decl at scripts/use_setuptools.py:12"
 cost_tokens = 0
-cum_tokens = 216
+cum_tokens = 209
 
 [batches.content]
 kind = "lines"
@@ -230,11 +202,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/__init__.py" })'
 descriptor = "python imports in src/tomli/__init__.py"
 cost_tokens = 74
-cum_tokens = 290
+cum_tokens = 283
 
 [batches.content]
 kind = "lines"
@@ -256,11 +228,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md" })'
 descriptor = "headings outline in tomllib.md"
 cost_tokens = 55
-cum_tokens = 345
+cum_tokens = 338
 
 [batches.content]
 kind = "lines"
@@ -330,11 +302,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py" })'
 descriptor = "python imports in fuzzer/fuzz.py"
 cost_tokens = 9
-cum_tokens = 354
+cum_tokens = 347
 
 [batches.content]
 kind = "lines"
@@ -348,11 +320,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/setup.py" })'
 descriptor = "python imports in setup.py"
 cost_tokens = 25
-cum_tokens = 379
+cum_tokens = 372
 
 [batches.content]
 kind = "lines"
@@ -374,11 +346,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler/profiler_script.py", start_line: 12 })'
 descriptor = "python decl at profiler/profiler_script.py:12"
 cost_tokens = 32
-cum_tokens = 411
+cum_tokens = 404
 
 [batches.content]
 kind = "lines"
@@ -392,11 +364,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_types.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/tomli/_types.py"
 cost_tokens = 32
-cum_tokens = 443
+cum_tokens = 436
 
 [batches.content]
 kind = "lines"
@@ -410,11 +382,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/src/tomli/_types.py" })'
 descriptor = "python imports in src/tomli/_types.py"
 cost_tokens = 13
-cum_tokens = 456
+cum_tokens = 449
 
 [batches.content]
 kind = "lines"
@@ -428,11 +400,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", chunk_index: 0 })'
 descriptor = "python decl names surface in fuzzer/fuzz.py"
 cost_tokens = 60
-cum_tokens = 516
+cum_tokens = 509
 
 [batches.content]
 kind = "lines"
@@ -502,11 +474,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 20
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 53 })'
 descriptor = "python decl at fuzzer/fuzz.py:53"
 cost_tokens = 0
-cum_tokens = 516
+cum_tokens = 509
 
 [batches.content]
 kind = "lines"
@@ -520,11 +492,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 23
+position = 21
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 59 })'
 descriptor = "python decl at fuzzer/fuzz.py:59"
 cost_tokens = 0
-cum_tokens = 516
+cum_tokens = 509
 
 [batches.content]
 kind = "lines"
@@ -538,11 +510,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 24
+position = 22
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 20 })'
 descriptor = "python decl at fuzzer/fuzz.py:20"
 cost_tokens = 13
-cum_tokens = 529
+cum_tokens = 522
 
 [batches.content]
 kind = "lines"
@@ -556,11 +528,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 71 })'
 descriptor = "python decl at fuzzer/fuzz.py:71"
 cost_tokens = 22
-cum_tokens = 551
+cum_tokens = 544
 
 [batches.content]
 kind = "lines"
@@ -574,11 +546,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 26
+position = 24
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 59 })'
 descriptor = "python decl doc at fuzzer/fuzz.py:59"
 cost_tokens = 16
-cum_tokens = 567
+cum_tokens = 560
 
 [batches.content]
 kind = "lines"
@@ -592,11 +564,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 27
+position = 25
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 30
-cum_tokens = 597
+cum_tokens = 590
 
 [batches.content]
 kind = "fs"
@@ -606,11 +578,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/tests"
 entries = ["__init__.py", "burntsushi.py", "data", "test_data.py", "test_error.py", "test_misc.py"]
 
 [[batches]]
-position = 28
+position = 26
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 379
-cum_tokens = 976
+cum_tokens = 969
 
 [batches.content]
 kind = "lines"
@@ -872,11 +844,11 @@ end = 231
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 27
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 998
+cum_tokens = 991
 
 [batches.content]
 kind = "lines"
@@ -898,11 +870,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 30
+position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 6
-cum_tokens = 1004
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -916,11 +888,11 @@ end = 169
 kind = "full"
 
 [[batches]]
-position = 31
+position = 29
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 8
-cum_tokens = 1012
+cum_tokens = 1005
 
 [batches.content]
 kind = "lines"
@@ -934,11 +906,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 32
+position = 30
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 11
-cum_tokens = 1023
+cum_tokens = 1016
 
 [batches.content]
 kind = "lines"
@@ -952,11 +924,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 33
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 14
-cum_tokens = 1037
+cum_tokens = 1030
 
 [batches.content]
 kind = "lines"
@@ -970,11 +942,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 34
+position = 32
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 362
-cum_tokens = 1399
+cum_tokens = 1392
 
 [batches.content]
 kind = "lines"
@@ -1004,11 +976,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 35
+position = 33
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 25 })'
 descriptor = "README.md section #25"
 cost_tokens = 75
-cum_tokens = 1474
+cum_tokens = 1467
 
 [batches.content]
 kind = "lines"
@@ -1038,11 +1010,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 36
+position = 34
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 26
-cum_tokens = 1500
+cum_tokens = 1493
 
 [batches.content]
 kind = "lines"
@@ -1056,11 +1028,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 37
+position = 35
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 71, body_start_line: 73 })'
 descriptor = "python decl body at fuzzer/fuzz.py:71 body 73"
 cost_tokens = 40
-cum_tokens = 1540
+cum_tokens = 1533
 
 [batches.content]
 kind = "lines"
@@ -1074,11 +1046,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 1 })'
 descriptor = "CHANGELOG.md section #1"
 cost_tokens = 48
-cum_tokens = 1588
+cum_tokens = 1581
 
 [batches.content]
 kind = "lines"
@@ -1100,11 +1072,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/profiler/profiler_script.py" })'
 descriptor = "python imports in profiler/profiler_script.py"
 cost_tokens = 70
-cum_tokens = 1658
+cum_tokens = 1651
 
 [batches.content]
 kind = "lines"
@@ -1142,11 +1114,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 31
-cum_tokens = 1689
+cum_tokens = 1682
 
 [batches.content]
 kind = "lines"
@@ -1160,11 +1132,11 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/scripts/use_setuptools.py" })'
 descriptor = "python imports in scripts/use_setuptools.py"
 cost_tokens = 75
-cum_tokens = 1764
+cum_tokens = 1757
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1174,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/tomllib.md", section_index: 0 })'
 descriptor = "tomllib.md section #0"
 cost_tokens = 162
-cum_tokens = 1926
+cum_tokens = 1919
 
 [batches.content]
 kind = "lines"
@@ -1244,11 +1216,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 33
-cum_tokens = 1959
+cum_tokens = 1952
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1234,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/CHANGELOG.md", section_index: 4 })'
 descriptor = "CHANGELOG.md section #4"
 cost_tokens = 35
-cum_tokens = 1994
+cum_tokens = 1987
 
 [batches.content]
 kind = "lines"
@@ -1288,11 +1260,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 40
-cum_tokens = 2034
+cum_tokens = 2027
 
 [batches.content]
 kind = "lines"
@@ -1306,11 +1278,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 46
+position = 44
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/tomli/fuzzer/fuzz.py", start_line: 53, body_start_line: 54 })'
 descriptor = "python decl body at fuzzer/fuzz.py:53 body 54"
 cost_tokens = 57
-cum_tokens = 2091
+cum_tokens = 2084
 
 [batches.content]
 kind = "lines"
@@ -1322,6 +1294,34 @@ end = 56
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 45
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 3
+cum_tokens = 2087
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/.github"
+entries = ["workflows"]
+
+[[batches]]
+position = 46
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/tomli/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 4
+cum_tokens = 2091
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/tomli/.github/workflows"
+entries = ["tests.yaml"]
 
 [[batches]]
 position = 47

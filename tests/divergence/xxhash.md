@@ -4,73 +4,73 @@ Score(3000)=0.658 I=0.849 C=0.511 ns_rows≤3K=20/40 (reached=9 partial=4 missin
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 83 | 83 | listing of '.' |  |  | 1.000 |
 | ns | 83 |  | 83 | Fixture top-level listing | 1.1 |  | 1.000 |
-| walker |  | 86 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 112 | 26 | go module file go.mod |  |  | 1.000 |
-| walker |  | 116 | 4 | listing of '.github/workflows' |  |  | 1.000 |
-| walker |  | 127 | 11 | listing of 'xxhsum' |  |  | 1.000 |
-| ns | 145 |  | 62 | README — title and one-sentence positioning | 1.2 |  | 0.890 |
-| walker |  | 189 | 62 | README headline in README.md |  |  | 1.000 |
-| walker |  | 220 | 31 | headings outline in README.md |  |  | 1.000 |
-| ns | 221 |  | 76 | Package doc + module path | 1.3 |  | 0.878 |
-| walker |  | 234 | 14 | listing of 'dynamic' |  |  | 0.881 |
-| walker |  | 242 | 8 | go package + imports in xxhash_asm.go |  |  | 0.881 |
-| walker |  | 250 | 8 | go package + imports in xxhash_other.go |  |  | 0.881 |
-| walker |  | 258 | 8 | go package + imports in xxhash_safe.go |  |  | 0.881 |
-| walker |  | 273 | 15 | listing of 'xxhashbench' |  |  | 0.886 |
-| walker |  | 306 | 33 | go decl names surface in xxhash_asm.go |  |  | 0.887 |
-| walker |  | 306 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.887 |
-| walker |  | 306 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.887 |
-| walker |  | 341 | 35 | go decl names surface in xxhash_other.go |  |  | 0.887 |
-| walker |  | 341 | 0 | go decl at xxhash_other.go:7 |  |  | 0.887 |
-| walker |  | 341 | 0 | go decl at xxhash_other.go:64 |  |  | 0.887 |
-| walker |  | 382 | 41 | go decl names surface in xxhash_safe.go |  |  | 0.887 |
-| walker |  | 382 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.887 |
-| walker |  | 382 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.887 |
-| ns | 387 |  | 166 | README — public API code-fence sketch | 1.4 |  | 0.676 |
-| walker |  | 391 | 9 | go decl body at xxhash_safe.go:9 |  |  | 0.676 |
-| walker |  | 400 | 9 | go decl body at xxhash_safe.go:14 |  |  | 0.676 |
-| walker |  | 452 | 52 | go decl names surface in xxhash_unsafe.go |  |  | 0.677 |
-| walker |  | 452 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.677 |
-| walker |  | 452 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.677 |
-| ns | 463 |  | 76 | README — purego/asm note | 1.5 |  | 0.634 |
-| walker |  | 471 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.634 |
-| walker |  | 480 | 9 | go decl doc at xxhash_asm.go:15 |  |  | 0.635 |
-| walker |  | 502 | 22 | go decl doc at xxhash_other.go:7 |  |  | 0.635 |
-| walker |  | 525 | 23 | go decl doc at xxhash_safe.go:9 |  |  | 0.635 |
-| walker |  | 546 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.635 |
-| walker |  | 590 | 44 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.635 |
-| walker |  | 590 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.635 |
-| walker |  | 590 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.635 |
-| walker |  | 590 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.635 |
-| ns | 603 |  | 140 | Digest struct + zero-value caveat | 2.1 |  | 0.552 |
-| walker |  | 626 | 36 | go decl doc at xxhash_asm.go:12 |  |  | 0.554 |
-| walker |  | 653 | 27 | go package + imports in xxhash_unsafe.go |  |  | 0.554 |
-| walker |  | 682 | 29 | go decl body at xxhash_unsafe.go:38 |  |  | 0.554 |
-| ns | 712 |  | 109 | Constructors — New and NewWithSeed | 2.2 | 2.1 | 0.503 |
-| walker |  | 726 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.504 |
-| walker |  | 767 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.506 |
-| walker |  | 900 | 133 | go module file xxhashbench/go.mod |  |  | 0.506 |
-| ns | 907 |  | 195 | Reset / ResetWithSeed — full bodies | 2.3 | 2.1 | 0.450 |
-| walker |  | 978 | 78 | go decl names surface in dynamic/plugin.go |  |  | 0.450 |
-| walker |  | 978 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.450 |
-| walker |  | 978 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.450 |
-| walker |  | 987 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.450 |
-| ns | 1077 |  | 170 | Remaining Digest methods — Size, BlockSize, Write, Sum, Sum64 signatures | 2.4 | 2.1 | 0.423 |
-| ns | 1196 |  | 119 | Sum64 / writeBlocks signatures (asm build) | 2.5 |  | 0.440 |
-| walker |  | 1209 | 222 | README.md section #0 |  |  | 0.585 |
-| walker |  | 1254 | 45 | go package + imports in xxhash.go |  |  | 0.590 |
-| walker |  | 1262 | 8 | plaintext config dynamic/.gitignore |  |  | 0.590 |
-| walker |  | 1304 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.590 |
-| walker |  | 1313 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.590 |
-| ns | 1341 |  | 145 | Sum64String / WriteString signatures (unsafe build) | 2.6 |  | 0.598 |
-| walker |  | 1436 | 123 | README.md section #1 |  |  | 0.599 |
-| ns | 1460 |  | 119 | MarshalBinary / UnmarshalBinary signatures + magic constants | 2.7 | 2.1 | 0.576 |
-| walker |  | 1491 | 55 | go package + imports in dynamic/plugin.go |  |  | 0.576 |
-| ns | 1507 |  | 47 | Sub-directory listings (.github, dynamic, xxhsum, xxhashbench) | 3.1 | 1.1 | 0.602 |
-| walker |  | 1546 | 55 | go package + imports in xxhsum/xxhsum.go |  |  | 0.602 |
-| walker |  | 1628 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.603 |
-| ns | 1648 |  | 141 | All test/benchmark function names across the repo | 3.2 |  | 0.565 |
-| walker |  | 1682 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.565 |
+| walker |  | 109 | 26 | go module file go.mod |  |  | 1.000 |
+| walker |  | 120 | 11 | listing of 'xxhsum' |  |  | 1.000 |
+| ns | 145 |  | 62 | README — title and one-sentence positioning | 1.2 |  | 0.889 |
+| walker |  | 182 | 62 | README headline in README.md |  |  | 1.000 |
+| walker |  | 213 | 31 | headings outline in README.md |  |  | 1.000 |
+| ns | 221 |  | 76 | Package doc + module path | 1.3 |  | 0.877 |
+| walker |  | 227 | 14 | listing of 'dynamic' |  |  | 0.879 |
+| walker |  | 235 | 8 | go package + imports in xxhash_asm.go |  |  | 0.879 |
+| walker |  | 243 | 8 | go package + imports in xxhash_other.go |  |  | 0.879 |
+| walker |  | 251 | 8 | go package + imports in xxhash_safe.go |  |  | 0.879 |
+| walker |  | 266 | 15 | listing of 'xxhashbench' |  |  | 0.883 |
+| walker |  | 299 | 33 | go decl names surface in xxhash_asm.go |  |  | 0.883 |
+| walker |  | 299 | 0 | go decl at xxhash_asm.go:12 |  |  | 0.883 |
+| walker |  | 299 | 0 | go decl at xxhash_asm.go:15 |  |  | 0.883 |
+| walker |  | 334 | 35 | go decl names surface in xxhash_other.go |  |  | 0.883 |
+| walker |  | 334 | 0 | go decl at xxhash_other.go:7 |  |  | 0.883 |
+| walker |  | 334 | 0 | go decl at xxhash_other.go:64 |  |  | 0.883 |
+| walker |  | 375 | 41 | go decl names surface in xxhash_safe.go |  |  | 0.884 |
+| walker |  | 375 | 0 | go decl at xxhash_safe.go:9 |  |  | 0.884 |
+| walker |  | 375 | 0 | go decl at xxhash_safe.go:14 |  |  | 0.884 |
+| walker |  | 384 | 9 | go decl body at xxhash_safe.go:9 |  |  | 0.884 |
+| ns | 387 |  | 166 | README — public API code-fence sketch | 1.4 |  | 0.674 |
+| walker |  | 393 | 9 | go decl body at xxhash_safe.go:14 |  |  | 0.674 |
+| walker |  | 445 | 52 | go decl names surface in xxhash_unsafe.go |  |  | 0.674 |
+| walker |  | 445 | 0 | go decl at xxhash_unsafe.go:38 |  |  | 0.674 |
+| walker |  | 445 | 0 | go decl at xxhash_unsafe.go:45 |  |  | 0.674 |
+| ns | 463 |  | 76 | README — purego/asm note | 1.5 |  | 0.632 |
+| walker |  | 464 | 19 | go decl at xxhash_unsafe.go:55 |  |  | 0.632 |
+| walker |  | 473 | 9 | go decl doc at xxhash_asm.go:15 |  |  | 0.632 |
+| walker |  | 495 | 22 | go decl doc at xxhash_other.go:7 |  |  | 0.632 |
+| walker |  | 518 | 23 | go decl doc at xxhash_safe.go:9 |  |  | 0.633 |
+| walker |  | 539 | 21 | go decl doc at xxhash_safe.go:14 |  |  | 0.633 |
+| walker |  | 583 | 44 | go decl names surface in xxhsum/xxhsum.go |  |  | 0.633 |
+| walker |  | 583 | 0 | go decl at xxhsum/xxhsum.go:11 |  |  | 0.633 |
+| walker |  | 583 | 0 | go decl at xxhsum/xxhsum.go:34 |  |  | 0.633 |
+| walker |  | 583 | 0 | go decl at xxhsum/xxhsum.go:43 |  |  | 0.633 |
+| ns | 603 |  | 140 | Digest struct + zero-value caveat | 2.1 |  | 0.550 |
+| walker |  | 619 | 36 | go decl doc at xxhash_asm.go:12 |  |  | 0.552 |
+| walker |  | 646 | 27 | go package + imports in xxhash_unsafe.go |  |  | 0.552 |
+| walker |  | 675 | 29 | go decl body at xxhash_unsafe.go:38 |  |  | 0.552 |
+| ns | 712 |  | 109 | Constructors — New and NewWithSeed | 2.2 | 2.1 | 0.501 |
+| walker |  | 719 | 44 | go decl doc at xxhash_unsafe.go:38 |  |  | 0.502 |
+| walker |  | 760 | 41 | go decl doc at xxhash_unsafe.go:45 |  |  | 0.504 |
+| walker |  | 893 | 133 | go module file xxhashbench/go.mod |  |  | 0.504 |
+| ns | 907 |  | 195 | Reset / ResetWithSeed — full bodies | 2.3 | 2.1 | 0.448 |
+| walker |  | 971 | 78 | go decl names surface in dynamic/plugin.go |  |  | 0.448 |
+| walker |  | 971 | 0 | go decl at dynamic/plugin.go:19 |  |  | 0.448 |
+| walker |  | 971 | 0 | go decl at dynamic/plugin.go:26 |  |  | 0.448 |
+| walker |  | 980 | 9 | go decl at dynamic/plugin.go:14 |  |  | 0.448 |
+| ns | 1077 |  | 170 | Remaining Digest methods — Size, BlockSize, Write, Sum, Sum64 signatures | 2.4 | 2.1 | 0.421 |
+| ns | 1196 |  | 119 | Sum64 / writeBlocks signatures (asm build) | 2.5 |  | 0.438 |
+| walker |  | 1202 | 222 | README.md section #0 |  |  | 0.583 |
+| walker |  | 1247 | 45 | go package + imports in xxhash.go |  |  | 0.588 |
+| walker |  | 1255 | 8 | plaintext config dynamic/.gitignore |  |  | 0.588 |
+| walker |  | 1297 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.588 |
+| walker |  | 1306 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.588 |
+| ns | 1341 |  | 145 | Sum64String / WriteString signatures (unsafe build) | 2.6 |  | 0.596 |
+| walker |  | 1429 | 123 | README.md section #1 |  |  | 0.597 |
+| ns | 1460 |  | 119 | MarshalBinary / UnmarshalBinary signatures + magic constants | 2.7 | 2.1 | 0.574 |
+| walker |  | 1484 | 55 | go package + imports in dynamic/plugin.go |  |  | 0.574 |
+| ns | 1507 |  | 47 | Sub-directory listings (.github, dynamic, xxhsum, xxhashbench) | 3.1 | 1.1 | 0.582 |
+| walker |  | 1539 | 55 | go package + imports in xxhsum/xxhsum.go |  |  | 0.582 |
+| walker |  | 1621 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.583 |
+| ns | 1648 |  | 141 | All test/benchmark function names across the repo | 3.2 |  | 0.547 |
+| walker |  | 1675 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.547 |
+| walker |  | 1678 | 3 | listing of '.github' |  |  | 0.556 |
+| walker |  | 1682 | 4 | listing of '.github/workflows' |  |  | 0.565 |
 | ns | 1765 |  | 117 | testall.sh — full body | 3.3 |  | 0.545 |
 | ns | 2081 |  | 316 | xxhsum CLI — main + usage | 3.4 |  | 0.495 |
 | walker |  | 2394 | 712 | go decl names surface in xxhash.go |  |  | 0.525 |

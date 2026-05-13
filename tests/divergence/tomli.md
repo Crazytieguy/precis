@@ -5,62 +5,62 @@ Score(3000)=0.449 I=0.725 C=0.278 ns_rows≤3K=18/40 (reached=5 partial=3 missin
 | walker |  | 62 | 62 | listing of '.' |  |  | 1.000 |
 | ns | 62 |  | 62 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 66 | 4 | listing of 'src' |  |  | 1.000 |
-| walker |  | 69 | 3 | listing of '.github' |  |  | 1.000 |
-| walker |  | 77 | 8 | CHANGELOG.md section #0 |  |  | 1.000 |
-| walker |  | 85 | 8 | listing of 'fuzzer' |  |  | 1.000 |
+| walker |  | 74 | 8 | CHANGELOG.md section #0 |  |  | 1.000 |
+| walker |  | 82 | 8 | listing of 'fuzzer' |  |  | 1.000 |
 | ns | 87 |  | 25 | README title + tagline | 1.2 |  | 0.911 |
-| walker |  | 89 | 4 | listing of '.github/workflows' |  |  | 0.911 |
-| walker |  | 98 | 9 | listing of 'profiler' |  |  | 0.911 |
-| walker |  | 149 | 51 | README headline in README.md |  |  | 0.969 |
-| walker |  | 159 | 10 | python decl names surface in profiler/profiler_script.py |  |  | 0.969 |
+| walker |  | 91 | 9 | listing of 'profiler' |  |  | 0.911 |
+| walker |  | 142 | 51 | README headline in README.md |  |  | 0.969 |
+| walker |  | 152 | 10 | python decl names surface in profiler/profiler_script.py |  |  | 0.969 |
 | ns | 166 |  | 79 | Public API: __init__ __all__ + version | 1.3 |  | 0.872 |
-| walker |  | 185 | 26 | listing of 'src/tomli' |  |  | 0.893 |
+| walker |  | 178 | 26 | listing of 'src/tomli' |  |  | 0.892 |
 | ns | 192 |  | 26 | src/tomli/ module listing | 1.4 |  | 0.890 |
-| walker |  | 202 | 17 | listing of 'scripts' |  |  | 0.891 |
-| walker |  | 216 | 14 | python decl names surface in scripts/use_setuptools.py |  |  | 0.891 |
-| walker |  | 216 | 0 | python decl at scripts/use_setuptools.py:12 |  |  | 0.891 |
+| walker |  | 195 | 17 | listing of 'scripts' |  |  | 0.890 |
+| walker |  | 209 | 14 | python decl names surface in scripts/use_setuptools.py |  |  | 0.890 |
+| walker |  | 209 | 0 | python decl at scripts/use_setuptools.py:12 |  |  | 0.890 |
 | ns | 279 |  | 87 | loads / load signatures + docstrings | 1.5 |  | 0.812 |
-| walker |  | 290 | 74 | python imports in src/tomli/__init__.py |  |  | 0.871 |
-| walker |  | 345 | 55 | headings outline in tomllib.md |  |  | 0.871 |
-| walker |  | 354 | 9 | python imports in fuzzer/fuzz.py |  |  | 0.871 |
-| walker |  | 379 | 25 | python imports in setup.py |  |  | 0.871 |
+| walker |  | 283 | 74 | python imports in src/tomli/__init__.py |  |  | 0.871 |
+| walker |  | 338 | 55 | headings outline in tomllib.md |  |  | 0.871 |
+| walker |  | 347 | 9 | python imports in fuzzer/fuzz.py |  |  | 0.871 |
+| walker |  | 372 | 25 | python imports in setup.py |  |  | 0.871 |
 | ns | 403 |  | 124 | TOMLDecodeError class + docstring | 1.6 |  | 0.749 |
-| walker |  | 411 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.749 |
+| walker |  | 404 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.749 |
 | ns | 433 |  | 30 | tests/ directory listing | 2.1 |  | 0.695 |
-| walker |  | 443 | 32 | python decl names surface in src/tomli/_types.py |  |  | 0.697 |
-| walker |  | 456 | 13 | python imports in src/tomli/_types.py |  |  | 0.700 |
+| walker |  | 436 | 32 | python decl names surface in src/tomli/_types.py |  |  | 0.697 |
+| walker |  | 449 | 13 | python imports in src/tomli/_types.py |  |  | 0.700 |
 | ns | 491 |  | 58 | _types.py — full | 2.2 |  | 0.692 |
-| walker |  | 516 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.692 |
-| walker |  | 516 | 0 | python decl at fuzzer/fuzz.py:53 |  |  | 0.692 |
-| walker |  | 516 | 0 | python decl at fuzzer/fuzz.py:59 |  |  | 0.692 |
-| walker |  | 529 | 13 | python decl at fuzzer/fuzz.py:20 |  |  | 0.692 |
-| walker |  | 551 | 22 | python decl at fuzzer/fuzz.py:71 |  |  | 0.692 |
-| walker |  | 567 | 16 | python decl doc at fuzzer/fuzz.py:59 |  |  | 0.692 |
-| walker |  | 597 | 30 | listing of 'tests' |  |  | 0.765 |
+| walker |  | 509 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.692 |
+| walker |  | 509 | 0 | python decl at fuzzer/fuzz.py:53 |  |  | 0.692 |
+| walker |  | 509 | 0 | python decl at fuzzer/fuzz.py:59 |  |  | 0.692 |
+| walker |  | 522 | 13 | python decl at fuzzer/fuzz.py:20 |  |  | 0.692 |
+| walker |  | 544 | 22 | python decl at fuzzer/fuzz.py:71 |  |  | 0.692 |
+| walker |  | 560 | 16 | python decl doc at fuzzer/fuzz.py:59 |  |  | 0.692 |
+| walker |  | 590 | 30 | listing of 'tests' |  |  | 0.765 |
 | ns | 697 |  | 206 | _parser.py: state-class headers + Flags constants | 2.3 |  | 0.655 |
 | ns | 844 |  | 147 | _re.py: regex constants + match-helper locations | 2.4 |  | 0.617 |
-| walker |  | 976 | 379 | headings outline in README.md |  |  | 0.617 |
-| walker |  | 998 | 22 | README.md section #2 |  |  | 0.617 |
-| walker |  | 1004 | 6 | README.md section #19 |  |  | 0.617 |
-| walker |  | 1012 | 8 | README.md section #13 |  |  | 0.617 |
-| walker |  | 1023 | 11 | README.md section #14 |  |  | 0.617 |
-| walker |  | 1037 | 14 | README.md section #18 |  |  | 0.617 |
+| walker |  | 969 | 379 | headings outline in README.md |  |  | 0.617 |
+| walker |  | 991 | 22 | README.md section #2 |  |  | 0.617 |
+| walker |  | 997 | 6 | README.md section #19 |  |  | 0.617 |
+| walker |  | 1005 | 8 | README.md section #13 |  |  | 0.617 |
+| walker |  | 1016 | 11 | README.md section #14 |  |  | 0.617 |
+| walker |  | 1030 | 14 | README.md section #18 |  |  | 0.617 |
 | ns | 1160 |  | 316 | README intro paragraph | 2.5 |  | 0.553 |
-| walker |  | 1399 | 362 | README.md section #0 |  |  | 0.563 |
-| walker |  | 1474 | 75 | README.md section #25 |  |  | 0.563 |
+| walker |  | 1392 | 362 | README.md section #0 |  |  | 0.562 |
+| walker |  | 1467 | 75 | README.md section #25 |  |  | 0.562 |
 | ns | 1486 |  | 326 | README table of contents | 2.6 |  | 0.613 |
-| walker |  | 1500 | 26 | README.md section #16 |  |  | 0.613 |
-| walker |  | 1540 | 40 | python decl body at fuzzer/fuzz.py:71 body 73 |  |  | 0.613 |
-| walker |  | 1588 | 48 | CHANGELOG.md section #1 |  |  | 0.613 |
-| walker |  | 1658 | 70 | python imports in profiler/profiler_script.py |  |  | 0.613 |
-| walker |  | 1689 | 31 | README.md section #23 |  |  | 0.613 |
-| walker |  | 1764 | 75 | python imports in scripts/use_setuptools.py |  |  | 0.613 |
+| walker |  | 1493 | 26 | README.md section #16 |  |  | 0.613 |
+| walker |  | 1533 | 40 | python decl body at fuzzer/fuzz.py:71 body 73 |  |  | 0.613 |
+| walker |  | 1581 | 48 | CHANGELOG.md section #1 |  |  | 0.613 |
+| walker |  | 1651 | 70 | python imports in profiler/profiler_script.py |  |  | 0.613 |
+| walker |  | 1682 | 31 | README.md section #23 |  |  | 0.613 |
+| walker |  | 1757 | 75 | python imports in scripts/use_setuptools.py |  |  | 0.613 |
 | ns | 1904 |  | 418 | _parser.py: parse_* and skip_* function locations | 2.7 |  | 0.553 |
-| walker |  | 1926 | 162 | tomllib.md section #0 |  |  | 0.553 |
-| walker |  | 1959 | 33 | README.md section #21 |  |  | 0.553 |
-| walker |  | 1994 | 35 | CHANGELOG.md section #4 |  |  | 0.553 |
-| walker |  | 2034 | 40 | README.md section #9 |  |  | 0.553 |
-| walker |  | 2091 | 57 | python decl body at fuzzer/fuzz.py:53 body 54 |  |  | 0.553 |
+| walker |  | 1919 | 162 | tomllib.md section #0 |  |  | 0.553 |
+| walker |  | 1952 | 33 | README.md section #21 |  |  | 0.553 |
+| walker |  | 1987 | 35 | CHANGELOG.md section #4 |  |  | 0.553 |
+| walker |  | 2027 | 40 | README.md section #9 |  |  | 0.553 |
+| walker |  | 2084 | 57 | python decl body at fuzzer/fuzz.py:53 body 54 |  |  | 0.553 |
+| walker |  | 2087 | 3 | listing of '.github' |  |  | 0.553 |
+| walker |  | 2091 | 4 | listing of '.github/workflows' |  |  | 0.553 |
 | ns | 2100 |  | 196 | README usage: parse a TOML string | 2.8 |  | 0.513 |
 | walker |  | 2104 | 13 | python decl body at fuzzer/fuzz.py:59 body 61 |  |  | 0.513 |
 | walker |  | 2160 | 56 | CHANGELOG.md section #2 |  |  | 0.513 |
