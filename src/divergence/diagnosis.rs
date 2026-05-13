@@ -10,19 +10,6 @@ pub(super) enum CandidateHintKind {
     NoDiscoveredCandidate,
 }
 
-impl CandidateHintKind {
-    pub(super) fn label(self) -> &'static str {
-        match self {
-            CandidateHintKind::ScheduledBbox => "scheduled bbox",
-            CandidateHintKind::UnscheduledBbox => "unscheduled bbox",
-            CandidateHintKind::ScheduledSameFile => "scheduled same-file",
-            CandidateHintKind::UnscheduledSameFile => "unscheduled same-file",
-            CandidateHintKind::FsOnly => "fs-only",
-            CandidateHintKind::NoDiscoveredCandidate => "no discovered candidate",
-        }
-    }
-}
-
 #[derive(Debug, Clone)]
 pub(super) struct CandidateHint {
     pub(super) kind: CandidateHintKind,
@@ -72,17 +59,6 @@ impl CandidateLossReason {
             CandidateLossReason::DiscoveredUnscheduled => "discovered unscheduled",
         }
     }
-
-    /// `TooExpensiveAtFinalMargin` shares `tune ranking` with
-    /// `DiscoveredUnscheduled` — see the divergence module doc on
-    /// the ranking-race bucket for why.
-    pub(super) fn intervention_label(self) -> &'static str {
-        match self {
-            CandidateLossReason::PredecessorNotScheduled => "promote predecessor",
-            CandidateLossReason::TooExpensiveAtFinalMargin
-            | CandidateLossReason::DiscoveredUnscheduled => "tune ranking",
-        }
-    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -104,16 +80,6 @@ impl DiagnosisKind {
             DiagnosisKind::MixedUnknown => "mixed/unknown",
         }
     }
-
-    pub(super) fn likely_lever(self) -> &'static str {
-        match self {
-            DiagnosisKind::RankingRecoverable => "value/ranking",
-            DiagnosisKind::WrongSlice => "walker granularity / wrong slice",
-            DiagnosisKind::NoDiscoveredCandidate => "walker coverage or predecessor-gated emit",
-            DiagnosisKind::FsListing => "filesystem/listing value",
-            DiagnosisKind::MixedUnknown => "inspect row",
-        }
-    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
@@ -122,17 +88,6 @@ pub(super) enum ExactOverlapBucket {
     Low,
     High,
     Full,
-}
-
-impl ExactOverlapBucket {
-    pub(super) fn label(self) -> &'static str {
-        match self {
-            ExactOverlapBucket::None => "none",
-            ExactOverlapBucket::Low => "low",
-            ExactOverlapBucket::High => "high",
-            ExactOverlapBucket::Full => "full",
-        }
-    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

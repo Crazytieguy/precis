@@ -15,11 +15,13 @@
 //!   atom metrics alone don't cover.
 //!
 //! - **Divergence report** — `tests/divergence/<fixture>.md`, one per
-//!   fixture with a frozen NS (`tests/north-stars/<fixture>.toml`),
-//!   plus `tests/divergence/OVERVIEW.md`. Divergence reports are
-//!   generated from the in-memory schedules the per-fixture tests already
-//!   produce; the overview is assembled once all fixture summaries have
-//!   landed in the process-global map.
+//!   fixture with a frozen NS (`tests/north-stars/<fixture>.toml`).
+//!   Divergence reports are generated from the in-memory schedules the
+//!   per-fixture tests already produce. Survey across fixtures with
+//!   `head -1 tests/divergence/*.md` (each report's first line is the
+//!   score line) or
+//!   `grep -H '^scores:' tests/divergence/*.md | sort -t= -k2 -g`
+//!   for a Score(3000)-ascending index.
 //!
 //! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
@@ -29,10 +31,8 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use precis::{
-    Schedule,
-    divergence::{BUDGETS, PRIMARY_BUDGET_INDEX, generate_divergence_report},
-    ns_loader::load_ns_checked,
-    render_schedule, render_with_schedule,
+    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked, render_schedule,
+    render_with_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -112,10 +112,6 @@ fn divergence_path(fixture: &str) -> PathBuf {
         .join(format!("{fixture}.md"))
 }
 
-fn divergence_index_path() -> PathBuf {
-    manifest_dir().join(DIVERGENCE_DIR).join("OVERVIEW.md")
-}
-
 fn ns_path(fixture: &str) -> PathBuf {
     manifest_dir().join(format!("tests/north-stars/{fixture}.toml"))
 }
@@ -143,9 +139,7 @@ fn check_fixture_baselines(fixture: &str) {
         .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
     check_schedule_toml(fixture, &schedule);
     check_rendered(fixture, &fixture_dir, &schedule);
-    if let Some(report) = check_divergence(fixture, &fixture_dir, &schedule) {
-        record_divergence_summary(fixture, &report);
-    }
+    check_divergence(fixture, &fixture_dir, &schedule);
 }
 
 fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
@@ -158,10 +152,10 @@ fn check_schedule_toml(fixture: &str, schedule: &Schedule) {
     );
 }
 
-fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) -> Option<String> {
+fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
     let ns_toml = ns_path(fixture);
     if !ns_toml.exists() {
-        return None;
+        return;
     }
     let ns = load_ns_checked(&ns_toml, fixture_dir)
         .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
@@ -177,7 +171,6 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) -> O
         &divergence_path(fixture),
         report.as_bytes(),
     );
-    Some(report)
 }
 
 fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
@@ -231,165 +224,6 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
         path.display(),
         new_path.display(),
     );
-}
-
-// ---- invariants --------------------------------------------------------
-
-#[derive(Clone)]
-struct DivergenceSummaryRow {
-    fixture: String,
-    /// `Score(B)` for each B in [`BUDGETS`], formatted to 3 decimals. `"—"`
-    /// when the report didn't expose that budget (defensive — should
-    /// never happen with the current renderer).
-    scores: [String; BUDGETS.len()],
-    verdict: String,
-    primary: String,
-    evidence: String,
-}
-
-/// Rebuild OVERVIEW.md from the on-disk per-fixture reports. Under
-/// nextest's process-per-test model each test runs in its own
-/// process, so we can't accumulate summaries through a static mutex.
-/// Instead, every per-fixture test re-reads the full set of reports
-/// and writes OVERVIEW iff every fixture's report is present —
-/// guarantees `OVERVIEW.md` is only ever written from a complete
-/// snapshot, regardless of which process finishes last.
-fn record_divergence_summary(_fixture: &str, _report: &str) {
-    let div_dir = manifest_dir().join(DIVERGENCE_DIR);
-    let expected = fixtures_with_north_stars();
-    let rows: Vec<DivergenceSummaryRow> = expected
-        .iter()
-        .filter_map(|fixture| {
-            let path = div_dir.join(format!("{fixture}.md"));
-            let report = fs::read_to_string(&path).ok()?;
-            Some(summary_row_from_report(fixture, &report))
-        })
-        .collect();
-    if rows.len() != expected.len() {
-        // Not all fixtures have a report on disk yet — another process
-        // (or a later test in this process) will write the complete
-        // OVERVIEW.
-        return;
-    }
-    check_divergence_overview(rows);
-}
-
-fn summary_row_from_report(fixture: &str, report: &str) -> DivergenceSummaryRow {
-    DivergenceSummaryRow {
-        fixture: fixture.to_string(),
-        scores: extract_score_vector(report)
-            .unwrap_or_else(|| std::array::from_fn(|_| "—".to_string())),
-        verdict: extract_prefixed_line(report, "Verdict: ")
-            .unwrap_or("—")
-            .to_string(),
-        primary: extract_prefixed_line(report, "Likely primary lever: ")
-            .unwrap_or("—")
-            .to_string(),
-        evidence: extract_prefixed_line(report, "Evidence: ")
-            .unwrap_or("—")
-            .to_string(),
-    }
-}
-
-fn check_divergence_overview(mut rows: Vec<DivergenceSummaryRow>) {
-    rows.sort_by(|a, b| {
-        let score_a = a.scores[PRIMARY_BUDGET_INDEX]
-            .parse::<f64>()
-            .unwrap_or(f64::INFINITY);
-        let score_b = b.scores[PRIMARY_BUDGET_INDEX]
-            .parse::<f64>()
-            .unwrap_or(f64::INFINITY);
-        score_a
-            .partial_cmp(&score_b)
-            .unwrap_or(std::cmp::Ordering::Equal)
-            .then_with(|| a.fixture.cmp(&b.fixture))
-    });
-    let mut index = String::new();
-    index.push_str("# Divergence Summary\n\n");
-    index.push_str("Sorted by `Score(3000)` ascending. Score columns are `√(Importance × Coverage)` evaluated at each budget on the geometric grid `[1000, 9000]` with ratio ⁶√9 ≈ 1.442.\n\n");
-    let mut header = String::from("| fixture |");
-    let mut sep = String::from("|:--------|");
-    for &b in BUDGETS.iter() {
-        header.push_str(&format!(" s@{b} |"));
-        sep.push_str("-----:|");
-    }
-    header.push_str(" verdict | likely primary lever | evidence |\n");
-    sep.push_str(":--------|:---------------------|:---------|\n");
-    index.push_str(&header);
-    index.push_str(&sep);
-    for row in rows {
-        index.push_str(&format!("| {} |", row.fixture));
-        for s in &row.scores {
-            index.push_str(&format!(" {s} |"));
-        }
-        index.push_str(&format!(
-            " {} | {} | {} |\n",
-            row.verdict, row.primary, row.evidence
-        ));
-    }
-
-    compare_or_update(
-        "divergence summary index",
-        &divergence_index_path(),
-        index.as_bytes(),
-    );
-}
-
-fn fixtures_with_north_stars() -> Vec<String> {
-    let ns_dir = manifest_dir().join("tests/north-stars");
-    let mut fixtures = Vec::new();
-    let read_dir =
-        fs::read_dir(&ns_dir).unwrap_or_else(|e| panic!("read {}: {e}", ns_dir.display()));
-    for entry in read_dir.flatten() {
-        let path = entry.path();
-        if path.extension().and_then(|s| s.to_str()) != Some("toml") {
-            continue;
-        }
-        let Some(fixture) = path.file_stem().and_then(|s| s.to_str()) else {
-            continue;
-        };
-        fixtures.push(fixture.to_string());
-    }
-    fixtures.sort();
-    fixtures
-}
-
-/// Parse the per-budget table emitted by `format_score_vector`.
-/// Each `BUDGETS[i]` row has shape `| <B> | <A_B> | <I> | <C> |
-/// <Score> | <walker_used> |`; the 5th pipe-separated cell holds the
-/// score string we want, formatted to 3 decimals already by the
-/// renderer. We pass that through verbatim so OVERVIEW.md doesn't
-/// re-round.
-fn extract_score_vector(report: &str) -> Option<[String; BUDGETS.len()]> {
-    let mut out: [Option<String>; BUDGETS.len()] = std::array::from_fn(|_| None);
-    for line in report.lines() {
-        if out.iter().all(Option::is_some) {
-            break;
-        }
-        let stripped = line.trim();
-        if !stripped.starts_with("| ") {
-            continue;
-        }
-        let parts: Vec<&str> = stripped.split('|').map(|s| s.trim()).collect();
-        // ["", "B", "A_B", "I(B)", "C(B)", "Score(B)", "walker_used", ""]
-        if parts.len() < 7 {
-            continue;
-        }
-        let Ok(budget) = parts[1].parse::<usize>() else {
-            continue;
-        };
-        let Some(idx) = BUDGETS.iter().position(|&b| b == budget) else {
-            continue;
-        };
-        out[idx] = Some(parts[5].to_string());
-    }
-    out.into_iter()
-        .collect::<Option<Vec<_>>>()
-        .and_then(|v| v.try_into().ok())
-}
-
-fn extract_prefixed_line<'a>(report: &'a str, prefix: &str) -> Option<&'a str> {
-    report.lines().find_map(|line| line.strip_prefix(prefix))
 }
 
 #[test]

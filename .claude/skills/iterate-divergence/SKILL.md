@@ -6,12 +6,12 @@ description: Iterate walker / value changes against the divergence reports. Use 
 # iterate-divergence
 
 The divergence reports are the calibration loop's instrument.
-`tests/divergence/OVERVIEW.md` is the corpus index; per-fixture reports
-live alongside it. The reports are designed to answer "what should I
-change next?" at the top — read them in that spirit. The verdict
-block and Top opportunities table on each fixture report are the
-brief; lower sections (per-budget table, rollups, ledger, walker
-waste) are reference to consult as needed.
+Per-fixture reports live in `tests/divergence/<fixture>.md`. The
+reports are designed to answer "what should I change next?" at the
+top — read them in that spirit. The Top opportunities section on each
+fixture report (additive + subtractive subtables) is the brief; lower
+sections (per-budget table, rollups, ledger, walker waste) are
+reference.
 
 For column semantics, scoring formulas, status labels, and threshold
 constants, read the module-level `//!` doc at the top of
@@ -36,22 +36,25 @@ are still a ship.
 
 ## 1. Survey the corpus
 
-Start at `tests/divergence/OVERVIEW.md`. Rows are sorted by
-`Score(3000)` ascending. Each row exposes the per-budget `Score(B)`
-vector plus the verdict, likely primary lever, and a corpus-level
-evidence string (diagnosis-bucketed `gap@3k` totals — this is *not*
-the same as a per-fixture Top-opportunity `gap@3k`; the OVERVIEW
-field aggregates by diagnosis kind, the per-fixture table by
-intervention). The vector reveals walker shape; the verdict +
-evidence direct attention. For column semantics, see the module-
-level `//!` doc on `src/divergence.rs`.
+Survey from per-fixture score lines (each report's first line is
+`scores: Score(3000)=X.XXX ns_rows≤3K=N/T (...)`):
 
+- Quick scan, filename-ordered: `head -1 tests/divergence/*.md`
+- Sorted by Score(3000) ascending (bottom-N stuck fixtures):
+  `grep -H '^scores:' tests/divergence/*.md | sort -t= -k2 -g`
+
+The bottom 3–5 fixtures are usually where iteration focuses.
 Patterns across fixtures are the strongest signal. Scan for:
 
-- A verdict label recurring across many low-`Score(3000)` fixtures.
-- A loss reason recurring across fixtures of one verdict.
-- A descriptor pattern appearing in many fixtures' Top
-  opportunities.
+- A descriptor pattern appearing in many fixtures' Top opportunities
+  (either subtable).
+- A path appearing in many fixtures' Top missed paths or Top wasted
+  paths rollups.
+- A diagnosis section (`wrong-slice`, `ranking-recoverable`, etc.)
+  carrying most of the gap on multiple fixtures.
+
+For column semantics, see the module-level `//!` doc on
+`src/divergence.rs`.
 
 A pattern visible in only one fixture is still actionable if the
 underlying issue would plausibly show up in other real-world
@@ -67,22 +70,29 @@ Once a candidate pattern is in mind, open the per-fixture reports
 that exemplify it (one is enough if it's clear; 2–4 if you want to
 check the pattern generalizes). For each:
 
-1. **Verdict block**. Confirms the pattern fits the fixture.
-2. **Per-budget table**. Where on the budget axis does the walker
+1. **Per-budget table**. Where on the budget axis does the walker
    fall off? A walker that scores 0.6 at 3k but 0.3 at 9k has a
    different problem than one that scores 0.3 at 3k and climbs to
    0.6 at 9k.
-3. **Top opportunities** table. `gap@1k` / `gap@3k` / `gap@9k`
-   show how an intervention's headroom decays across budgets — gap
-   is monotone non-increasing in B (walker has more budget at
-   higher B). A wide spread (high `gap@1k`, low `gap@9k`) means
-   closing the row helps low-budget runs disproportionately; a flat
-   profile means it helps everywhere. `gap@3k` is the sort key.
-4. **Arrival ledger**, only the section for the diagnosis you're
+2. **Top opportunities** section. Two subtables — additive (`gap@B`,
+   dimensionless rank-weighted priority for closing partial/missing
+   rows) and subtractive (`freed@B`, raw tokens the walker is putting
+   into atoms outside `A_B`'s NS atom set). Different units, same
+   prominence. Look at both — additive and subtractive interventions
+   are equally valid moves. The `gap@1k`/`gap@3k`/`gap@9k` and
+   `freed@1k`/`freed@3k`/`freed@9k` vectors show how each
+   intervention's leverage decays across budgets — wide spread means
+   the intervention helps disproportionately at low B; flat means it
+   helps everywhere. `gap@3k` and `freed@3k` are each subtable's sort
+   key. The companion **Top missed paths** rollup (top of arrival
+   ledger) and **Top wasted paths** rollup (top of walker waste)
+   surface where on the filesystem missing vs. wasted content
+   concentrates — pair them to spot path-mismatch suppression
+   candidates.
+3. **Arrival ledger**, only the section for the diagnosis you're
    working on, and only the rows you need as evidence — usually 3–5
-   per fixture. The `comp` column flags partially-delivered batches.
-   Other ledger sections and the rollups below are reference; read
-   them if the verdict or opportunities seem off.
+   per fixture. Other ledger sections and the walker-waste detail
+   below are reference; read them if the Top opportunities seem off.
 
 The goal at this step is to verify the corpus-level pattern holds in
 specific fixtures and to understand what walker / value behavior is
@@ -101,9 +111,8 @@ Prefer an accepted divergence to a fixture-specific heuristic.
 UPDATE_BASELINES=1 cargo t fixture_baselines
 ```
 
-Regenerates every per-fixture report and `OVERVIEW.md` in one pass.
-For read-only spot-checks of a single fixture: `cargo t
-fixture_baselines_<name>`.
+Regenerates every per-fixture report in one pass. For read-only
+spot-checks of a single fixture: `cargo t fixture_baselines_<name>`.
 
 ## 5. Read the diff across the whole corpus
 
@@ -132,9 +141,9 @@ Success criteria, in order of importance:
    worth the code added — judgment call on whether the rule earns
    its complexity. A code-removing or heuristic-simplifying change
    at flat metric is a ship.
-5. **The verdict label may shift** on individual fixtures — that's
-   fine when the change genuinely fixed one bucket and another now
-   dominates.
+5. **The dominant diagnosis may shift** on individual fixtures —
+   that's fine when the change genuinely fixed one bucket and
+   another now dominates.
 
 Bucket counts and `gap@3k` are heuristic-derived attention directors,
 not the optimization target. A change that drops a bucket count
@@ -187,7 +196,7 @@ perspectives.
 - Run `codex-companion task` to delegate ideation or analysis to
   Codex.
 - Re-read the `## Divergence diagnostic — deferred architectural
-  items` section in `docs/design-notes.md` — current verdict labels
+  items` section in `docs/design-notes.md` — current diagnosis labels
   can be off when the diagnostic itself is approximating.
 
 ## Anti-Goodhart discipline
@@ -205,10 +214,16 @@ direct attention; they don't define success.
 - **Don't change North Star files to match the walker.** That's
   moving the goalpost. Frozen NSs are the calibration target; the
   walker has to come to them.
-- **The verdict is heuristic.** When a fixture's primary lever
-  doesn't match what your code change targeted, trust the code change
-  first and inspect what the verdict missed — not the other way
-  around.
+- **Diagnosis labels are heuristic.** When a fixture's dominant
+  diagnosis doesn't match what your code change targeted, trust the
+  code change first and inspect what the diagnosis missed — not the
+  other way around.
+- **Verify suppression candidates against North Stars.** Before
+  treating a content class as a suppression candidate, grep
+  `tests/north-stars/` for whatever discriminator you're considering
+  — folder, file extension, file name, symbol pattern. A
+  discriminator that hits NS in one fixture but is pure waste in
+  others is a refinement target, not a suppression target.
 
 ## Things to *not* do
 

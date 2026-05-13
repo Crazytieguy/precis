@@ -98,8 +98,10 @@ Two related conventions worth resisting drift on:
 ## Value/cost ranking — open lever on NS divergence
 
 One of the open levers on NS divergence; current per-fixture priority
-should be read from `tests/divergence/OVERVIEW.md` and the per-fixture
-verdict blocks rather than from this section. Historical context: per-
+should be read from the per-fixture reports
+(`tests/divergence/<fixture>.md`) rather than from this section. Cross-
+fixture survey is via shell — see the survey commands in the
+`iterate-divergence` skill. Historical context: per-
 tier rollups across fixtures showed a consistent shape — walker reaches
 tier 1 reliably, tier 2 mostly, drops sharply at tier 3+. The cost
 concavity is now per-key via
@@ -196,6 +198,71 @@ walker/value pass.
   in-memory `Schedule` so they're unaffected. Either persist enough
   candidate metadata, or split the API/type so reports require a
   candidate-bearing schedule and fail loudly when the pool is empty.
+
+## Next-pass plan: schedule-centric divergence reports
+
+The current divergence report (Top opportunities, walker waste, arrival
+ledger with diagnosis labels, etc.) is built from derived heuristics that
+approximate per-batch impact on Score(B). The 2026-05 iteration concluded
+these derivations are over-engineered: they require their own correctness
+work (e.g. Codex caught the subtractive subtable conflating off_3k with
+off_any, overstating freed budget), the multiple rollups duplicate signal,
+and verdict-style labels stuck on the same value across most of the corpus.
+
+Planned replacement (not yet implemented as of 2026-05):
+
+- **Interleaved schedule view** — one timeline sorted by cum_tokens, with
+  NS rows and walker rows interleaved. Two cum_tokens columns
+  (`ns_cum_tokens`, `walker_cum_tokens`); only one is filled per row, so
+  the source is implicit. Plus `marginal_tokens` and `descriptor`.
+- **Score column per row** — `Score(B = cum_tokens at this row)`. Where
+  Score climbs, the schedule is contributing; where it stalls or falls,
+  that row (or the absence around it) is the problem. Replaces every
+  derived signal (opportunities, walker waste, diagnoses). The
+  interleaved order makes "read the top N lines" the canonical iteration
+  brief — value-density decays with depth so the reader stops when they've
+  seen enough.
+- **Predecessor info kept inline** — predecessor relationships aren't
+  inferrable from descriptors alone and are cheap to surface. Worth
+  keeping as a column or annotation on rows where it matters.
+- **Drop the per-budget table** — Score(3000) headline stays; the rest is
+  implicit in the Score column, sampled at every actual transition point
+  (~100/fixture) rather than 7 grid points.
+- **Lookups via existing TOMLs** — NS detail in
+  `tests/north-stars/<fixture>.toml`, walker detail in
+  `tests/snapshots/schedule/<fixture>.toml`. Both already checked in and
+  grep-friendly; no new lookup tooling needed in v1.
+
+Tradeoffs accepted for v1, to track:
+
+- Single Score column can't decompose Score = √(I × C). Losing the
+  rank-order-miss vs partial-delivery distinction. Accept; revisit if
+  iteration shows it matters. The descriptors usually carry enough
+  context to figure out the lever.
+- Per-row Score values cascade on small walker changes — a tweak at
+  cum_t=200 shifts the Score for every subsequent row. Rounding to 3
+  decimals absorbs sub-0.0005 changes. Watch diff noise in practice.
+
+## Walker descriptor cleanup items
+
+Two small walker/value issues noticed during the 2026-05 reports
+discussion. Not blocking the next-pass plan above; worth fixing
+opportunistically.
+
+- **Walker batch descriptors embed absolute paths.** Visible in
+  `tests/snapshots/schedule/<fixture>.toml` (e.g. `listing of
+  '/Users/yoav/projects/precis/tests/fixtures/ts-pattern'`) and ripples
+  into the divergence reports. Wastes tokens in both artifacts. Fix:
+  strip fixture-root prefix at descriptor-build time. There's already a
+  `strip_fixture_root` helper used in walker-waste rendering — descriptor
+  construction should do the same.
+- **Names-surface chunking can break unified-batch expectations.** Names
+  surfaces are sometimes split into `... #1 in <path>`, `#2`, etc. NS
+  authors typically expect the names surface as a single unit; the
+  walker's chunked version creates a catastrophic-omission failure mode
+  where partial delivery scores poorly. Investigate when chunking fires
+  and whether the granularity is worth the cost. Likely a walker/value
+  tuning issue, not a divergence-report issue.
 
 ## Min-tokens lower bound
 

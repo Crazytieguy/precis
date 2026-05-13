@@ -4,6 +4,7 @@ pub(super) struct ReportRow<'a> {
     pub(super) id: &'a str,
     pub(super) exp_t: usize,
     pub(super) descriptor: &'a str,
+    pub(super) atoms: &'a [GradedAtom],
     pub(super) arrival: &'a Arrival,
     pub(super) hint: CandidateHint,
     pub(super) diagnosis: DiagnosisKind,
@@ -28,6 +29,7 @@ pub(super) fn report_rows<'a>(ctx: &'a BuildCtx, arrivals: &'a [Arrival]) -> Vec
                 id: &ns_row.id,
                 exp_t: ns_row.exp_t,
                 descriptor: &ctx.ns.batches[i].descriptor,
+                atoms: &ns_row.atoms,
                 arrival,
                 hint,
                 diagnosis,
@@ -36,267 +38,21 @@ pub(super) fn report_rows<'a>(ctx: &'a BuildCtx, arrivals: &'a [Arrival]) -> Vec
         .collect()
 }
 
-pub(super) struct ReportSummary {
-    pub(super) verdict: String,
-    pub(super) primary_intervention: String,
-    pub(super) secondary_intervention: Option<String>,
-    pub(super) evidence: String,
-    pub(super) top_rows: String,
-}
-
 pub(super) struct Opportunity {
     pub(super) intervention: String,
     pub(super) rows: usize,
-    /// Σ priority over the opportunity's rows at B=[`BUDGETS[LOW_BUDGET_INDEX]`].
+    /// Σ priority over the opportunity's rows at the low display
+    /// budget (1K).
     pub(super) gap_at_low: f64,
-    /// Σ priority at B=[`PRIMARY_BUDGET`]. Direct proxy for
+    /// Σ priority at the primary budget (3K). Direct proxy for
     /// `Score(3000)` headroom and the primary sort key for
     /// opportunities, so iterators land on interventions that move the
     /// optimization target rather than future-budget rows.
     pub(super) gap_at_primary: f64,
-    /// Σ priority at B=[`BUDGETS[HIGH_BUDGET_INDEX]`].
+    /// Σ priority at the high display budget (9K).
     pub(super) gap_at_high: f64,
     pub(super) evidence: String,
     pub(super) top_row_ids: String,
-}
-
-pub(super) fn report_summary(rows: &[ReportRow<'_>]) -> ReportSummary {
-    let diagnosis = diagnosis_counts(rows);
-    let losses = loss_reason_counts(rows);
-    let diagnosis_weights = diagnosis_weights(rows);
-    let loss_weights = loss_reason_weights(rows);
-    let pred_groups = predecessor_groups(rows);
-    let no_discovered = diagnosis
-        .get(&DiagnosisKind::NoDiscoveredCandidate)
-        .copied()
-        .unwrap_or(0);
-    let wrong_slice = diagnosis
-        .get(&DiagnosisKind::WrongSlice)
-        .copied()
-        .unwrap_or(0);
-    let ranking = diagnosis
-        .get(&DiagnosisKind::RankingRecoverable)
-        .copied()
-        .unwrap_or(0);
-    let pred_count = losses
-        .get(&CandidateLossReason::PredecessorNotScheduled)
-        .copied()
-        .unwrap_or(0);
-    let pred_weight = loss_weights
-        .get(&CandidateLossReason::PredecessorNotScheduled)
-        .copied()
-        .unwrap_or(0.0);
-    // `DiscoveredUnscheduled` + `TooExpensiveAtFinalMargin` collapse
-    // into one ranking-race bucket. Rationale on the module-level
-    // doc; the short version is that `TooExpensive` is a post-hoc
-    // label conflating two cases that share the same `tune ranking`
-    // lever.
-    let race_weight = loss_weights
-        .get(&CandidateLossReason::DiscoveredUnscheduled)
-        .copied()
-        .unwrap_or(0.0)
-        + loss_weights
-            .get(&CandidateLossReason::TooExpensiveAtFinalMargin)
-            .copied()
-            .unwrap_or(0.0);
-    let ranking_weight = diagnosis_weights
-        .get(&DiagnosisKind::RankingRecoverable)
-        .copied()
-        .unwrap_or(0.0);
-    let wrong_slice_weight = diagnosis_weights
-        .get(&DiagnosisKind::WrongSlice)
-        .copied()
-        .unwrap_or(0.0);
-    let no_discovered_weight = diagnosis_weights
-        .get(&DiagnosisKind::NoDiscoveredCandidate)
-        .copied()
-        .unwrap_or(0.0);
-
-    let primary_diagnosis = [
-        (DiagnosisKind::WrongSlice, wrong_slice_weight),
-        (DiagnosisKind::RankingRecoverable, ranking_weight),
-        (DiagnosisKind::NoDiscoveredCandidate, no_discovered_weight),
-    ]
-    .into_iter()
-    .max_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal))
-    .filter(|(_, weight)| *weight > 0.0)
-    .map(|(diagnosis, _)| diagnosis);
-
-    let primary_loss = if primary_diagnosis == Some(DiagnosisKind::RankingRecoverable) {
-        if pred_weight > 0.0 && pred_weight >= race_weight {
-            Some(CandidateLossReason::PredecessorNotScheduled)
-        } else if race_weight > 0.0 {
-            Some(CandidateLossReason::DiscoveredUnscheduled)
-        } else {
-            None
-        }
-    } else {
-        None
-    };
-
-    let (verdict, primary_intervention) = if primary_diagnosis == Some(DiagnosisKind::WrongSlice) {
-        (
-            "wrong-slice bound".to_string(),
-            "split walker batches to match NS semantic slices".to_string(),
-        )
-    } else if primary_diagnosis == Some(DiagnosisKind::NoDiscoveredCandidate) {
-        (
-            "coverage-gap bound".to_string(),
-            "add walker candidates for no-discovered NS rows".to_string(),
-        )
-    } else if primary_loss == Some(CandidateLossReason::PredecessorNotScheduled) {
-        if let Some(top) = predecessor_kind_groups(rows).first() {
-            let file_text = if top.files.is_empty() {
-                String::new()
-            } else {
-                format!(
-                    " across {} file{}",
-                    top.files.len(),
-                    plural(top.files.len())
-                )
-            };
-            (
-                "parent-gating bound".to_string(),
-                format!(
-                    "promote {} for {} gated row{}{}",
-                    top.kind,
-                    top.rows.len(),
-                    plural(top.rows.len()),
-                    file_text
-                ),
-            )
-        } else if let Some(top) = pred_groups.first().filter(|g| g.rows.len() >= 2) {
-            (
-                "parent-gating bound".to_string(),
-                format!("promote `{}`", top.predecessor),
-            )
-        } else {
-            (
-                "parent-gating bound".to_string(),
-                format!("promote predecessor candidates for {pred_count} gated rows"),
-            )
-        }
-    } else if primary_loss == Some(CandidateLossReason::DiscoveredUnscheduled) {
-        (
-            "ranking-race bound".to_string(),
-            "raise high-overlap discovered candidates over competing batches".to_string(),
-        )
-    } else {
-        (
-            "timing-only / low-action".to_string(),
-            "inspect timing rows only if score movement matters".to_string(),
-        )
-    };
-
-    // Secondary intervention only fires when it's distinct from the
-    // primary diagnosis — e.g. a wrong-slice fixture with a few
-    // gated predecessors surfaces both. If the candidate
-    // intervention overlaps with the verdict's primary lever, drop
-    // it; restating the same recommendation is noise.
-    let secondary_intervention = if primary_loss
-        != Some(CandidateLossReason::PredecessorNotScheduled)
-        && pred_count > 0
-    {
-        Some(format!(
-            "promote predecessors for {pred_count} gated candidate{}",
-            plural(pred_count)
-        ))
-    } else if primary_diagnosis != Some(DiagnosisKind::WrongSlice)
-        && wrong_slice > ranking
-        && wrong_slice > 0
-    {
-        Some(format!(
-            "split wrong-slice batches for {wrong_slice} row{}",
-            plural(wrong_slice)
-        ))
-    } else if primary_diagnosis != Some(DiagnosisKind::NoDiscoveredCandidate) && no_discovered > 0 {
-        Some(format!(
-            "investigate {no_discovered} no-discovered row{}",
-            plural(no_discovered)
-        ))
-    } else {
-        None
-    };
-
-    let evidence = format!(
-        "{ranking} ranking-recoverable (gap@3k={ranking_weight:.2}), {wrong_slice} wrong-slice/granularity (gap@3k={wrong_slice_weight:.2}), {no_discovered} no-discovered (gap@3k={no_discovered_weight:.2})"
-    );
-    let top_rows = top_opportunities(rows, 1)
-        .first()
-        .map(|opp| opp.top_row_ids.clone())
-        .unwrap_or_else(|| {
-            rows.iter()
-                .take(5)
-                .map(|r| r.id)
-                .collect::<Vec<_>>()
-                .join(", ")
-        });
-
-    ReportSummary {
-        verdict,
-        primary_intervention,
-        secondary_intervention,
-        evidence,
-        top_rows: if top_rows.is_empty() {
-            "none".to_string()
-        } else {
-            top_rows
-        },
-    }
-}
-
-fn diagnosis_counts(rows: &[ReportRow<'_>]) -> BTreeMap<DiagnosisKind, usize> {
-    let mut counts = BTreeMap::new();
-    for row in rows {
-        *counts.entry(row.diagnosis).or_default() += 1;
-    }
-    counts
-}
-
-pub(super) fn loss_reason_counts(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, usize> {
-    let mut counts = BTreeMap::new();
-    for row in rows {
-        if row.diagnosis != DiagnosisKind::RankingRecoverable {
-            continue;
-        }
-        if let Some(loss) = ranking_loss(row) {
-            *counts.entry(loss.reason).or_default() += 1;
-        }
-    }
-    counts
-}
-
-pub(super) fn loss_reason_weights(rows: &[ReportRow<'_>]) -> BTreeMap<CandidateLossReason, f64> {
-    let mut weights = BTreeMap::new();
-    for row in rows {
-        if row.diagnosis != DiagnosisKind::RankingRecoverable {
-            continue;
-        }
-        if let Some(loss) = ranking_loss(row) {
-            *weights.entry(loss.reason).or_default() +=
-                priority_at_budget(row, PRIMARY_BUDGET_INDEX);
-        }
-    }
-    weights
-}
-
-fn diagnosis_weights(rows: &[ReportRow<'_>]) -> BTreeMap<DiagnosisKind, f64> {
-    let mut weights = BTreeMap::new();
-    for row in rows {
-        *weights.entry(row.diagnosis).or_default() += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
-    }
-    weights
-}
-
-/// Per-row priority weight at a specific budget index in
-/// [`BUDGETS`]: `Σ over atoms with rank ≤ |A_B|: (1 −
-/// damped_credit(a)) / rank(a)` evaluated at that budget's walker
-/// snapshot. Slot [`PRIMARY_BUDGET_INDEX`] is the sort key throughout
-/// opportunity / loss / diagnosis rollups; [`LOW_BUDGET_INDEX`] and
-/// [`HIGH_BUDGET_INDEX`] surface the per-budget shape in the
-/// opportunity table.
-pub(super) fn priority_at_budget(row: &ReportRow<'_>, b_index: usize) -> f64 {
-    row.arrival.priority_at_b[b_index]
 }
 
 pub(super) struct PredecessorGroup<'a> {
@@ -320,27 +76,14 @@ struct PredecessorKindGroup<'a> {
     gap_at_high: f64,
 }
 
-/// Sum each row's per-budget priority at the three display indices
-/// (`LOW_BUDGET_INDEX`, `PRIMARY_BUDGET_INDEX`, `HIGH_BUDGET_INDEX`).
+/// Sum each row's priority at the three display budgets (1K / 3K /
+/// 9K).
 fn sum_gap_vector(rows: &[&ReportRow<'_>]) -> (f64, f64, f64) {
-    let low: f64 = rows
-        .iter()
-        .map(|r| priority_at_budget(r, LOW_BUDGET_INDEX))
-        .sum();
-    let primary: f64 = rows
-        .iter()
-        .map(|r| priority_at_budget(r, PRIMARY_BUDGET_INDEX))
-        .sum();
-    let high: f64 = rows
-        .iter()
-        .map(|r| priority_at_budget(r, HIGH_BUDGET_INDEX))
-        .sum();
-    (low, primary, high)
-}
-
-fn predecessor_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorGroup<'a>> {
-    let refs = rows.iter().collect::<Vec<_>>();
-    predecessor_groups_from_refs(&refs)
+    rows.iter()
+        .fold((0.0, 0.0, 0.0), |(low, primary, high), r| {
+            let [l, p, h] = r.arrival.priority_at_b;
+            (low + l, primary + p, high + h)
+        })
 }
 
 fn predecessor_kind_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorKindGroup<'a>> {
@@ -368,9 +111,10 @@ fn predecessor_kind_groups<'a>(rows: &'a [ReportRow<'a>]) -> Vec<PredecessorKind
             gap_at_high: 0.0,
         });
         group.rows.push(row);
-        group.gap_at_low += priority_at_budget(row, LOW_BUDGET_INDEX);
-        group.gap_at_primary += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
-        group.gap_at_high += priority_at_budget(row, HIGH_BUDGET_INDEX);
+        let [low, primary, high] = row.arrival.priority_at_b;
+        group.gap_at_low += low;
+        group.gap_at_primary += primary;
+        group.gap_at_high += high;
         if let Some(file) = predecessor_file(predecessor) {
             group.files.insert(file);
         }
@@ -583,8 +327,8 @@ fn push_diagnosis_opportunity(
 pub(super) fn row_ids(rows: &[&ReportRow<'_>], limit: usize) -> String {
     let mut weighted_rows = rows.to_vec();
     weighted_rows.sort_by(|a, b| {
-        priority_at_budget(b, PRIMARY_BUDGET_INDEX)
-            .partial_cmp(&priority_at_budget(a, PRIMARY_BUDGET_INDEX))
+        b.arrival.priority_at_b[PRIORITY_AT_PRIMARY]
+            .partial_cmp(&a.arrival.priority_at_b[PRIORITY_AT_PRIMARY])
             .unwrap_or(std::cmp::Ordering::Equal)
             .then_with(|| a.exp_t.cmp(&b.exp_t))
             .then_with(|| a.id.cmp(b.id))
@@ -662,9 +406,10 @@ pub(super) fn predecessor_groups_from_refs<'a>(
                 gap_at_high: 0.0,
             });
         group.rows.push(row);
-        group.gap_at_low += priority_at_budget(row, LOW_BUDGET_INDEX);
-        group.gap_at_primary += priority_at_budget(row, PRIMARY_BUDGET_INDEX);
-        group.gap_at_high += priority_at_budget(row, HIGH_BUDGET_INDEX);
+        let [low, primary, high] = row.arrival.priority_at_b;
+        group.gap_at_low += low;
+        group.gap_at_primary += primary;
+        group.gap_at_high += high;
         if let Some(overlap) = overlap {
             group.hits += overlap.hits;
             group.total += overlap.total;
