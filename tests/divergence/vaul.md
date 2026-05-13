@@ -22,7 +22,6 @@ Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 465 | 13 | export names surface in src/use-scale-background.ts |  |  | 0.683 |
 | walker |  | 465 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.683 |
 | walker |  | 479 | 14 | export names surface in src/use-composed-refs.ts |  |  | 0.683 |
-| walker |  | 479 | 0 | export at src/use-composed-refs.ts:36 |  |  | 0.683 |
 | ns | 503 |  | 148 | package.json — runtime + peer deps (Radix dialog, React 16.8–19) | 1.6 |  | 0.621 |
 | walker |  | 513 | 34 | export names surface in src/context.ts |  |  | 0.621 |
 | walker |  | 513 | 0 | export at src/context.ts:69 |  |  | 0.621 |
@@ -31,8 +30,6 @@ Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 558 | 10 | imports in src/use-controllable-state.ts |  |  | 0.621 |
 | walker |  | 570 | 12 | imports in src/use-composed-refs.ts |  |  | 0.621 |
 | walker |  | 622 | 52 | export names surface in src/types.ts |  |  | 0.622 |
-| walker |  | 622 | 0 | export at src/types.ts:1 |  |  | 0.622 |
-| walker |  | 622 | 0 | export at src/types.ts:7 |  |  | 0.622 |
 | ns | 642 |  | 139 | All top-level export locations in src/index.tsx | 2.1 |  | 0.557 |
 | walker |  | 643 | 21 | export at src/types.ts:2 |  |  | 0.558 |
 | walker |  | 659 | 16 | imports in src/helpers.ts |  |  | 0.558 |
@@ -40,7 +37,6 @@ Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | ns | 730 |  | 88 | Handle component — snap-point cycle + double-tap timing constants | 2.2 | 2.1 | 0.512 |
 | walker |  | 739 | 57 | export body at src/context.ts:69 body 70 |  |  | 0.512 |
 | walker |  | 962 | 223 | export names surface in src/index.tsx |  |  | 0.632 |
-| walker |  | 962 | 0 | export at src/index.tsx:831 |  |  | 0.632 |
 | walker |  | 962 | 0 | export at src/index.tsx:1098 |  |  | 0.632 |
 | walker |  | 962 | 0 | export at src/index.tsx:1130 |  |  | 0.632 |
 | walker |  | 975 | 13 | export at src/index.tsx:989 |  |  | 0.648 |
@@ -62,7 +58,6 @@ Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 2436 | 23 | imports in src/context.ts |  |  | 0.622 |
 | walker |  | 2459 | 23 | imports in src/use-position-fixed.ts |  |  | 0.622 |
 | walker |  | 2554 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.623 |
-| walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:8 |  |  | 0.623 |
 | walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.623 |
 | walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.623 |
 | walker |  | 2554 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.623 |
@@ -89,13 +84,6 @@ Score(3000)=0.577 I=0.681 C=0.489 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 3582 | 305 | export body at src/index.tsx:803 body 805 |  |  | 0.545 |
 | walker |  | 3612 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.545 |
 | walker |  | 3738 | 126 | export names surface in src/constants.ts |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:6 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:8 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:10 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:12 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:14 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:16 |  |  | 0.547 |
-| walker |  | 3738 | 0 | export at src/constants.ts:18 |  |  | 0.547 |
 | walker |  | 3778 | 40 | export at src/constants.ts:1 |  |  | 0.548 |
 | ns | 4024 |  | 796 | style.css — every selector head (locations only) | 2.10 |  | 0.517 |
 | walker |  | 4027 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.520 |

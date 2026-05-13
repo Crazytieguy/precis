@@ -17,7 +17,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | ns | 247 |  | 100 | tests/ listing | 1.4 |  | 0.549 |
 | walker |  | 262 | 72 | listing of 'src/typeguard' |  |  | 0.774 |
 | walker |  | 290 | 28 | python decl names surface in src/typeguard/__init__.py |  |  | 0.774 |
-| walker |  | 290 | 0 | python decl at src/typeguard/__init__.py:34 |  |  | 0.774 |
 | walker |  | 290 | 0 | python decl at src/typeguard/__init__.py:37 |  |  | 0.774 |
 | walker |  | 301 | 11 | python decl names surface in src/typeguard/_memo.py |  |  | 0.774 |
 | walker |  | 301 | 0 | python decl at src/typeguard/_memo.py:8 |  |  | 0.774 |
@@ -45,10 +44,8 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | ns | 964 |  | 264 | Public re-exports — head of typeguard/__init__.py | 1.8 |  | 0.641 |
 | walker |  | 988 | 30 | python decl doc at src/typeguard/_exceptions.py:26 |  |  | 0.642 |
 | walker |  | 1044 | 56 | python decl names surface in src/typeguard/_config.py |  |  | 0.642 |
-| walker |  | 1044 | 0 | python decl at src/typeguard/_config.py:11 |  |  | 0.642 |
 | walker |  | 1044 | 0 | python decl at src/typeguard/_config.py:14 |  |  | 0.642 |
 | walker |  | 1044 | 0 | python decl at src/typeguard/_config.py:30 |  |  | 0.642 |
-| walker |  | 1044 | 0 | python decl at src/typeguard/_config.py:106 |  |  | 0.642 |
 | walker |  | 1051 | 7 | python decl at src/typeguard/_config.py:62 |  |  | 0.642 |
 | walker |  | 1072 | 21 | python method sigs in src/typeguard/_config.py |  |  | 0.642 |
 | walker |  | 1072 | 0 | python method at src/typeguard/_config.py:52 |  |  | 0.642 |
@@ -58,10 +55,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 1177 | 57 | python decl body at src/typeguard/__init__.py:37 body 38 |  |  | 0.666 |
 | walker |  | 1219 | 42 | python decl doc at src/typeguard/_exceptions.py:5 |  |  | 0.668 |
 | walker |  | 1297 | 78 | python decl names surface in src/typeguard/_suppression.py |  |  | 0.668 |
-| walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:15 |  |  | 0.668 |
-| walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:16 |  |  | 0.668 |
-| walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:18 |  |  | 0.668 |
-| walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:19 |  |  | 0.668 |
 | walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:22 |  |  | 0.668 |
 | walker |  | 1297 | 0 | python decl at src/typeguard/_suppression.py:26 |  |  | 0.668 |
 | walker |  | 1329 | 32 | python decl at src/typeguard/_suppression.py:30 |  |  | 0.669 |
@@ -70,17 +63,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 1363 | 20 | python decl body at src/typeguard/_suppression.py:22 body 23 |  |  | 0.613 |
 | walker |  | 1400 | 37 | python imports in src/typeguard/_memo.py |  |  | 0.613 |
 | walker |  | 1526 | 126 | python decl names surface in docs/conf.py |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:12 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:13 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:14 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:15 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:16 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:17 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:19 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:20 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:21 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:23 |  |  | 0.613 |
-| walker |  | 1526 | 0 | python decl at docs/conf.py:25 |  |  | 0.613 |
 | walker |  | 1572 | 46 | python decl at docs/conf.py:6 |  |  | 0.613 |
 | walker |  | 1659 | 87 | python method sigs in src/typeguard/_exceptions.py |  |  | 0.615 |
 | walker |  | 1659 | 0 | python method at src/typeguard/_exceptions.py:15 |  |  | 0.615 |
@@ -93,7 +75,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 1677 | 9 | python method body at src/typeguard/_exceptions.py:22 body 23 |  |  | 0.603 |
 | walker |  | 1686 | 9 | python method body at src/typeguard/_exceptions.py:35 body 36 |  |  | 0.603 |
 | walker |  | 1791 | 105 | python decl names surface in src/typeguard/_decorators.py |  |  | 0.603 |
-| walker |  | 1791 | 0 | python decl at src/typeguard/_decorators.py:19 |  |  | 0.603 |
 | walker |  | 1791 | 0 | python decl at src/typeguard/_decorators.py:32 |  |  | 0.603 |
 | walker |  | 1791 | 0 | python decl at src/typeguard/_decorators.py:56 |  |  | 0.603 |
 | walker |  | 1791 | 0 | python decl at src/typeguard/_decorators.py:146 |  |  | 0.603 |
@@ -101,8 +82,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 1843 | 20 | python decl body at src/typeguard/_decorators.py:32 body 33 |  |  | 0.603 |
 | walker |  | 1864 | 21 | python decl body at src/typeguard/_decorators.py:146 body 147 |  |  | 0.603 |
 | walker |  | 1977 | 113 | python decl names surface in src/typeguard/_importhook.py |  |  | 0.603 |
-| walker |  | 1977 | 0 | python decl at src/typeguard/_importhook.py:40 |  |  | 0.603 |
-| walker |  | 1977 | 0 | python decl at src/typeguard/_importhook.py:41 |  |  | 0.603 |
 | walker |  | 1977 | 0 | python decl at src/typeguard/_importhook.py:51 |  |  | 0.603 |
 | walker |  | 1977 | 0 | python decl at src/typeguard/_importhook.py:55 |  |  | 0.603 |
 | walker |  | 1977 | 0 | python decl at src/typeguard/_importhook.py:109 |  |  | 0.603 |
@@ -123,7 +102,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 2434 | 0 | python decl at src/typeguard/_utils.py:142 |  |  | 0.526 |
 | walker |  | 2434 | 0 | python decl at src/typeguard/_utils.py:154 |  |  | 0.526 |
 | walker |  | 2434 | 0 | python decl at src/typeguard/_utils.py:162 |  |  | 0.526 |
-| walker |  | 2434 | 0 | python decl at src/typeguard/_utils.py:180 |  |  | 0.526 |
 | walker |  | 2440 | 6 | python decl at src/typeguard/_utils.py:172 |  |  | 0.526 |
 | walker |  | 2450 | 10 | python class body at src/typeguard/_utils.py:172 |  |  | 0.526 |
 | walker |  | 2466 | 16 | python method sigs in src/typeguard/_utils.py |  |  | 0.526 |
@@ -131,19 +109,11 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 2473 | 7 | python method body at src/typeguard/_utils.py:176 body 177 |  |  | 0.526 |
 | walker |  | 2534 | 61 | python decl doc at src/typeguard/_utils.py:127 |  |  | 0.526 |
 | walker |  | 2635 | 101 | python decl names surface #1 in docs/conf.py |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:26 |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:27 |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:33 |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:35 |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:36 |  |  | 0.526 |
-| walker |  | 2635 | 0 | python decl at docs/conf.py:38 |  |  | 0.526 |
 | walker |  | 2695 | 60 | python decl at docs/conf.py:28 |  |  | 0.526 |
 | walker |  | 2733 | 38 | .github/SECURITY.md section #2 |  |  | 0.526 |
 | ns | 2766 |  | 517 | @typechecked — overloaded signatures | 2.3 |  | 0.485 |
 | walker |  | 2802 | 69 | python decl doc at src/typeguard/_utils.py:104 |  |  | 0.485 |
 | walker |  | 2948 | 146 | python decl names surface in src/typeguard/_functions.py |  |  | 0.485 |
-| walker |  | 2948 | 0 | python decl at src/typeguard/_functions.py:24 |  |  | 0.485 |
-| walker |  | 2948 | 0 | python decl at src/typeguard/_functions.py:25 |  |  | 0.485 |
 | walker |  | 2948 | 0 | python decl at src/typeguard/_functions.py:291 |  |  | 0.485 |
 | ns | 2985 |  | 219 | install_import_hook — signature + docstring | 2.4 |  | 0.468 |
 | walker |  | 2992 | 44 | python decl at src/typeguard/_functions.py:118 |  |  | 0.469 |
@@ -188,8 +158,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | ns | 4573 |  | 171 | Checker plug-in API — TypeCheckerCallable / TypeCheckLookupCallback / checker_lookup_functions | 2.9 |  | 0.491 |
 | walker |  | 4638 | 82 | python imports in src/typeguard/_config.py |  |  | 0.491 |
 | walker |  | 4778 | 140 | python decl names surface in src/typeguard/_transformer.py |  |  | 0.491 |
-| walker |  | 4778 | 0 | python decl at src/typeguard/_transformer.py:67 |  |  | 0.491 |
-| walker |  | 4778 | 0 | python decl at src/typeguard/_transformer.py:68 |  |  | 0.491 |
 | walker |  | 4778 | 0 | python decl at src/typeguard/_transformer.py:285 |  |  | 0.491 |
 | walker |  | 4778 | 0 | python decl at src/typeguard/_transformer.py:313 |  |  | 0.491 |
 | walker |  | 4778 | 0 | python decl at src/typeguard/_transformer.py:338 |  |  | 0.491 |
@@ -204,8 +172,6 @@ Score(3000)=0.469 I=0.736 C=0.298 ns_rows≤3K=14/39 (reached=5 partial=0 missin
 | walker |  | 5043 | 112 | python class body at src/typeguard/_transformer.py:338 |  |  | 0.501 |
 | ns | 5177 |  | 251 | warn_on_error + load_plugins — signatures | 2.11 |  | 0.494 |
 | walker |  | 5184 | 141 | python decl names surface in src/typeguard/_checkers.py |  |  | 0.498 |
-| walker |  | 5184 | 0 | python decl at src/typeguard/_checkers.py:88 |  |  | 0.498 |
-| walker |  | 5184 | 0 | python decl at src/typeguard/_checkers.py:96 |  |  | 0.498 |
 | walker |  | 5210 | 26 | python decl at src/typeguard/_checkers.py:81 |  |  | 0.502 |
 | walker |  | 5239 | 29 | python decl at src/typeguard/_checkers.py:84 |  |  | 0.507 |
 | walker |  | 5270 | 31 | python decl at src/typeguard/_checkers.py:89 |  |  | 0.516 |

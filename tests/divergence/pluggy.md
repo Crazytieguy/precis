@@ -56,30 +56,22 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 1255 | 40 | python imports in docs/conf.py |  |  | 0.684 |
 | ns | 1261 |  | 266 | docs/index.rst lede — "what is pluggy" | 3.2 |  | 0.624 |
 | walker |  | 1310 | 55 | python decl names surface in src/pluggy/_tracing.py |  |  | 0.624 |
-| walker |  | 1310 | 0 | python decl at src/pluggy/_tracing.py:12 |  |  | 0.624 |
-| walker |  | 1310 | 0 | python decl at src/pluggy/_tracing.py:13 |  |  | 0.624 |
 | walker |  | 1310 | 0 | python decl at src/pluggy/_tracing.py:16 |  |  | 0.624 |
 | walker |  | 1310 | 0 | python decl at src/pluggy/_tracing.py:59 |  |  | 0.624 |
 | walker |  | 1366 | 56 | python decl body at src/pluggy/__init__.py:32 body 33 |  |  | 0.624 |
 | walker |  | 1381 | 15 | listing of 'docs/examples' |  |  | 0.624 |
 | walker |  | 1389 | 8 | listing of 'docs/examples/eggsample' |  |  | 0.624 |
 | walker |  | 1457 | 68 | python decl names surface in src/pluggy/_callers.py |  |  | 0.625 |
-| walker |  | 1457 | 0 | python decl at src/pluggy/_callers.py:24 |  |  | 0.625 |
 | walker |  | 1486 | 29 | python decl at src/pluggy/_callers.py:27 |  |  | 0.625 |
 | walker |  | 1517 | 31 | python decl doc at src/pluggy/_callers.py:27 |  |  | 0.625 |
 | walker |  | 1586 | 69 | python decl names surface in src/pluggy/_result.py |  |  | 0.625 |
-| walker |  | 1586 | 0 | python decl at src/pluggy/_result.py:16 |  |  | 0.625 |
-| walker |  | 1586 | 0 | python decl at src/pluggy/_result.py:17 |  |  | 0.625 |
 | walker |  | 1586 | 0 | python decl at src/pluggy/_result.py:20 |  |  | 0.625 |
-| walker |  | 1586 | 0 | python decl at src/pluggy/_result.py:107 |  |  | 0.625 |
 | walker |  | 1595 | 9 | python decl at src/pluggy/_result.py:24 |  |  | 0.546 |
 | ns | 1595 |  | 334 | _manager.py — every class + def name | 4.1 |  | 0.546 |
 | walker |  | 1604 | 9 | python decl doc at src/pluggy/_result.py:20 |  |  | 0.546 |
 | walker |  | 1624 | 20 | python class body at src/pluggy/_result.py:24 |  |  | 0.546 |
 | walker |  | 1658 | 34 | python decl doc at src/pluggy/_result.py:24 |  |  | 0.546 |
 | walker |  | 1787 | 129 | python decl names surface in testing/benchmark.py |  |  | 0.546 |
-| walker |  | 1787 | 0 | python decl at testing/benchmark.py:16 |  |  | 0.546 |
-| walker |  | 1787 | 0 | python decl at testing/benchmark.py:17 |  |  | 0.546 |
 | walker |  | 1787 | 0 | python decl at testing/benchmark.py:40 |  |  | 0.546 |
 | walker |  | 1800 | 13 | python decl at testing/benchmark.py:20 |  |  | 0.546 |
 | walker |  | 1813 | 13 | python decl at testing/benchmark.py:25 |  |  | 0.546 |
@@ -100,17 +92,6 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 2184 | 79 | python imports in scripts/release.py |  |  | 0.473 |
 | ns | 2275 |  | 137 | _result.py — Result class + every method (in full) | 4.4 |  | 0.460 |
 | walker |  | 2319 | 135 | python decl names surface in docs/conf.py |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:18 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:20 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:23 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:27 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:28 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:29 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:31 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:33 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:36 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:38 |  |  | 0.460 |
-| walker |  | 2319 | 0 | python decl at docs/conf.py:40 |  |  | 0.460 |
 | walker |  | 2387 | 68 | python decl at docs/conf.py:9 |  |  | 0.460 |
 | walker |  | 2419 | 32 | python decl at src/pluggy/_callers.py:60 |  |  | 0.460 |
 | walker |  | 2516 | 97 | python method sigs in src/pluggy/_result.py |  |  | 0.477 |
@@ -129,7 +110,6 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 2662 | 12 | python method doc at src/pluggy/_result.py:31 |  |  | 0.477 |
 | ns | 2682 |  | 101 | _tracing.py — class + def names | 4.6 |  | 0.467 |
 | walker |  | 2778 | 116 | python decl names surface in src/pluggy/_manager.py |  |  | 0.470 |
-| walker |  | 2778 | 0 | python decl at src/pluggy/_manager.py:36 |  |  | 0.470 |
 | walker |  | 2778 | 0 | python decl at src/pluggy/_manager.py:42 |  |  | 0.470 |
 | walker |  | 2778 | 0 | python decl at src/pluggy/_manager.py:52 |  |  | 0.470 |
 | walker |  | 2778 | 0 | python decl at src/pluggy/_manager.py:65 |  |  | 0.470 |
@@ -157,10 +137,6 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 3686 | 56 | python method doc at src/pluggy/_result.py:91 |  |  | 0.405 |
 | walker |  | 3705 | 19 | python decl body at scripts/release.py:30 body 36 |  |  | 0.405 |
 | walker |  | 3854 | 149 | python decl names surface #1 in docs/conf.py |  |  | 0.405 |
-| walker |  | 3854 | 0 | python decl at docs/conf.py:57 |  |  | 0.405 |
-| walker |  | 3854 | 0 | python decl at docs/conf.py:61 |  |  | 0.405 |
-| walker |  | 3854 | 0 | python decl at docs/conf.py:63 |  |  | 0.405 |
-| walker |  | 3854 | 0 | python decl at docs/conf.py:65 |  |  | 0.405 |
 | walker |  | 3854 | 0 | python decl at docs/conf.py:106 |  |  | 0.405 |
 | walker |  | 3854 | 0 | python decl at docs/conf.py:130 |  |  | 0.405 |
 | walker |  | 3861 | 7 | python decl body at docs/conf.py:130 body 131 |  |  | 0.405 |
@@ -196,15 +172,9 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | ns | 5075 |  | 220 | Eggsample hookspecs.py — host-side hook specifications | 6.2 |  | 0.394 |
 | walker |  | 5085 | 18 | python method body at src/pluggy/_tracing.py:60 body 61 |  |  | 0.394 |
 | walker |  | 5266 | 181 | python decl names surface in src/pluggy/_hooks.py |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:28 |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:29 |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:31 |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:32 |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:37 |  |  | 0.394 |
 | walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:40 |  |  | 0.394 |
 | walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:56 |  |  | 0.394 |
 | walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:281 |  |  | 0.394 |
-| walker |  | 5266 | 0 | python decl at src/pluggy/_hooks.py:290 |  |  | 0.394 |
 | walker |  | 5273 | 7 | python decl at src/pluggy/_hooks.py:77 |  |  | 0.395 |
 | walker |  | 5280 | 7 | python decl at src/pluggy/_hooks.py:164 |  |  | 0.395 |
 | walker |  | 5290 | 10 | python decl doc at src/pluggy/_hooks.py:40 |  |  | 0.395 |
@@ -238,9 +208,7 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | ns | 6579 |  | 62 | testing/ FS listing | 7.1 |  | 0.392 |
 | walker |  | 6684 | 113 | python decl names surface #1 in src/pluggy/_hooks.py |  |  | 0.396 |
 | walker |  | 6684 | 0 | python decl at src/pluggy/_hooks.py:293 |  |  | 0.396 |
-| walker |  | 6684 | 0 | python decl at src/pluggy/_hooks.py:374 |  |  | 0.396 |
 | walker |  | 6684 | 0 | python decl at src/pluggy/_hooks.py:382 |  |  | 0.396 |
-| walker |  | 6684 | 0 | python decl at src/pluggy/_hooks.py:590 |  |  | 0.396 |
 | walker |  | 6684 | 0 | python decl at src/pluggy/_hooks.py:593 |  |  | 0.396 |
 | walker |  | 6690 | 6 | python decl at src/pluggy/_hooks.py:358 |  |  | 0.397 |
 | walker |  | 6696 | 6 | python decl at src/pluggy/_hooks.py:638 |  |  | 0.398 |
@@ -270,7 +238,6 @@ Score(3000)=0.455 I=0.742 C=0.279 ns_rows≤3K=15/40 (reached=5 partial=0 missin
 | walker |  | 8330 | 97 | json config .claude/settings.json |  |  | 0.444 |
 | walker |  | 8379 | 49 | python method body at src/pluggy/_tracing.py:17 body 18 |  |  | 0.444 |
 | walker |  | 8397 | 18 | python decl names surface in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.444 |
-| walker |  | 8397 | 0 | python decl at docs/examples/eggsample/eggsample/__init__.py:4 |  |  | 0.444 |
 | walker |  | 8549 | 152 | python decl body at testing/benchmark.py:40 body 41 |  |  | 0.444 |
 | walker |  | 8560 | 11 | python method body at src/pluggy/_result.py:42 body 45 |  |  | 0.444 |
 | ns | 8576 |  | 252 | pyproject.toml — [tool.ruff.lint] config | 7.7 | 7.6 | 0.438 |

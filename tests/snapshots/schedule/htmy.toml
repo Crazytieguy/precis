@@ -1,7 +1,7 @@
 fixture = "htmy"
 budget = 10000
 cumulative_tokens = 9902
-batch_count = 391
+batch_count = 354
 
 [[batches]]
 position = 1
@@ -185,42 +185,6 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", start_line: 46 })'
-descriptor = "python decl at htmy/__init__.py:46"
-cost_tokens = 0
-cum_tokens = 251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", start_line: 48 })'
-descriptor = "python decl at htmy/__init__.py:48"
-cost_tokens = 0
-cum_tokens = 251
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/error_boundary.py"
 cost_tokens = 10
@@ -246,7 +210,7 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 12
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python decl at htmy/error_boundary.py:15"
 cost_tokens = 0
@@ -264,7 +228,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 15
+position = 13
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/etree.py"
 cost_tokens = 11
@@ -290,7 +254,7 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 23 })'
 descriptor = "python decl at htmy/etree.py:23"
 cost_tokens = 0
@@ -308,7 +272,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer" })'
 descriptor = "listing of 'htmy/renderer'"
 cost_tokens = 22
@@ -322,7 +286,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer"
 entries = ["__init__.py", "baseline.py", "context.py", "default.py", "typing.py"]
 
 [[batches]]
-position = 18
+position = 16
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py" })'
 descriptor = "python imports in htmy/renderer/__init__.py"
 cost_tokens = 60
@@ -340,7 +304,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/__init__.py"
 cost_tokens = 32
@@ -374,61 +338,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 20
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py", start_line: 6 })'
-descriptor = "python decl at htmy/renderer/__init__.py:6"
-cost_tokens = 0
-cum_tokens = 386
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py", start_line: 9 })'
-descriptor = "python decl at htmy/renderer/__init__.py:9"
-cost_tokens = 0
-cum_tokens = 386
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py", start_line: 12 })'
-descriptor = "python decl at htmy/renderer/__init__.py:12"
-cost_tokens = 0
-cum_tokens = 386
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/__init__.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
+position = 18
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/baseline.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/baseline.py"
 cost_tokens = 9
@@ -454,7 +364,7 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 19
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/baseline.py", start_line: 18 })'
 descriptor = "python decl at htmy/renderer/baseline.py:18"
 cost_tokens = 0
@@ -472,7 +382,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 25
+position = 20
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/context.py"
 cost_tokens = 10
@@ -498,7 +408,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 21
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py", start_line: 6 })'
 descriptor = "python decl at htmy/renderer/context.py:6"
 cost_tokens = 0
@@ -516,7 +426,7 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 27
+position = 22
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/snippet.py"
 cost_tokens = 19
@@ -558,7 +468,7 @@ end = 159
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 23
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 27 })'
 descriptor = "python decl at htmy/snippet.py:27"
 cost_tokens = 0
@@ -576,7 +486,7 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 29
+position = 24
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 158 })'
 descriptor = "python decl at htmy/snippet.py:158"
 cost_tokens = 0
@@ -594,7 +504,7 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 30
+position = 25
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/__init__.py" })'
 descriptor = "python imports in htmy/md/__init__.py"
 cost_tokens = 88
@@ -612,7 +522,7 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 31
+position = 26
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/io.py"
 cost_tokens = 20
@@ -638,7 +548,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 27
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py", start_line: 11 })'
 descriptor = "python decl at htmy/io.py:11"
 cost_tokens = 0
@@ -656,7 +566,7 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 33
+position = 28
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/renderer/context.py"
 cost_tokens = 10
@@ -682,7 +592,7 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 29
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 2 })'
 descriptor = "python imports #2 in htmy/__init__.py"
 cost_tokens = 15
@@ -700,7 +610,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 35
+position = 30
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python class body at htmy/error_boundary.py:15"
 cost_tokens = 19
@@ -718,7 +628,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 36
+position = 31
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py", start_line: 11 })'
 descriptor = "python decl doc at htmy/io.py:11"
 cost_tokens = 13
@@ -736,7 +646,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 37
+position = 32
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 158 })'
 descriptor = "python class body at htmy/snippet.py:158"
 cost_tokens = 24
@@ -754,7 +664,7 @@ end = 216
 kind = "full"
 
 [[batches]]
-position = 38
+position = 33
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md" })'
 descriptor = "headings outline in docs/components-guide.md"
 cost_tokens = 53
@@ -828,7 +738,7 @@ end = 185
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 34
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/components-guide.md", section_index: 0 })'
 descriptor = "docs/components-guide.md section #0"
 cost_tokens = 0
@@ -846,7 +756,7 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 40
+position = 35
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md" })'
 descriptor = "headings outline in docs/function-components.md"
 cost_tokens = 59
@@ -952,7 +862,7 @@ end = 151
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 36
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/md/core.py"
 cost_tokens = 24
@@ -994,7 +904,7 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 37
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 20 })'
 descriptor = "python decl at htmy/md/core.py:20"
 cost_tokens = 0
@@ -1012,7 +922,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 43
+position = 38
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 81 })'
 descriptor = "python decl at htmy/md/core.py:81"
 cost_tokens = 0
@@ -1030,7 +940,7 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 44
+position = 39
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 3 })'
 descriptor = "python imports #3 in htmy/__init__.py"
 cost_tokens = 13
@@ -1048,7 +958,7 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 45
+position = 40
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py", start_line: 11 })'
 descriptor = "python method at htmy/renderer/context.py:11"
 cost_tokens = 16
@@ -1066,7 +976,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 46
+position = 41
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/baseline.py", start_line: 18 })'
 descriptor = "python class body at htmy/renderer/baseline.py:18"
 cost_tokens = 18
@@ -1084,7 +994,7 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 47
+position = 42
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/error_boundary.py"
 cost_tokens = 52
@@ -1142,7 +1052,7 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 43
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 45 })'
 descriptor = "python method at htmy/error_boundary.py:45"
 cost_tokens = 0
@@ -1160,7 +1070,7 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 49
+position = 44
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 56 })'
 descriptor = "python method at htmy/error_boundary.py:56"
 cost_tokens = 0
@@ -1178,7 +1088,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 50
+position = 45
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/tag.py"
 cost_tokens = 64
@@ -1276,7 +1186,7 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 46
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 12 })'
 descriptor = "python decl at htmy/tag.py:12"
 cost_tokens = 0
@@ -1294,7 +1204,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 52
+position = 47
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 24 })'
 descriptor = "python decl at htmy/tag.py:24"
 cost_tokens = 0
@@ -1312,25 +1222,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 53 })'
-descriptor = "python decl at htmy/tag.py:53"
-cost_tokens = 0
-cum_tokens = 912
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 56 })'
 descriptor = "python decl at htmy/tag.py:56"
 cost_tokens = 0
@@ -1348,7 +1240,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 55
+position = 49
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 73 })'
 descriptor = "python decl at htmy/tag.py:73"
 cost_tokens = 0
@@ -1366,7 +1258,7 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 56
+position = 50
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 56 })'
 descriptor = "python class body at htmy/tag.py:56"
 cost_tokens = 13
@@ -1384,7 +1276,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 57
+position = 51
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 73 })'
 descriptor = "python class body at htmy/tag.py:73"
 cost_tokens = 14
@@ -1402,7 +1294,7 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 58
+position = 52
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 12 })'
 descriptor = "python class body at htmy/tag.py:12"
 cost_tokens = 13
@@ -1420,7 +1312,7 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 59
+position = 53
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 214
@@ -1782,7 +1674,7 @@ end = 378
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 54
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 32
@@ -1800,7 +1692,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 61
+position = 55
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 11
@@ -1818,7 +1710,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 62
+position = 56
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 14
@@ -1836,7 +1728,7 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 63
+position = 57
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 14
@@ -1854,7 +1746,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 64
+position = 58
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 14
@@ -1872,7 +1764,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 65
+position = 59
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 17
@@ -1890,7 +1782,7 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 66
+position = 60
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 19
@@ -1908,7 +1800,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 67
+position = 61
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 21
@@ -1926,7 +1818,7 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 68
+position = 62
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 21
@@ -1944,7 +1836,7 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 69
+position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 51 })'
 descriptor = "README.md section #51"
 cost_tokens = 30
@@ -1970,7 +1862,7 @@ end = 379
 kind = "full"
 
 [[batches]]
-position = 70
+position = 64
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 22
@@ -1988,7 +1880,7 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 71
+position = 65
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 23
@@ -2006,7 +1898,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 72
+position = 66
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 23
@@ -2024,7 +1916,7 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 73
+position = 67
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api" })'
 descriptor = "listing of 'docs/api'"
 cost_tokens = 42
@@ -2038,7 +1930,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api"
 entries = ["core.md", "etree.md", "function_component.md", "html.md", "i18n.md", "md.md", "renderer", "snippet.md", "typing.md", "utils.md"]
 
 [[batches]]
-position = 74
+position = 68
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md" })'
 descriptor = "headings outline in docs/api/md.md"
 cost_tokens = 27
@@ -2080,7 +1972,7 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 69
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer" })'
 descriptor = "listing of 'docs/api/renderer'"
 cost_tokens = 12
@@ -2094,7 +1986,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer"
 entries = ["baseline.md", "default.md", "typing.md"]
 
 [[batches]]
-position = 76
+position = 70
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 84 })'
 descriptor = "python decl at htmy/tag.py:84"
 cost_tokens = 55
@@ -2112,7 +2004,7 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 77
+position = 71
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 84, body_start_line: 100 })'
 descriptor = "python decl body at htmy/tag.py:84 body 100"
 cost_tokens = 22
@@ -2130,7 +2022,7 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 78
+position = 72
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 24
@@ -2148,7 +2040,7 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 79
+position = 73
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 22
@@ -2162,7 +2054,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples"
 entries = ["internationalization", "markdown_customization", "markdown_essentials", "snippet-slots-fastapi"]
 
 [[batches]]
-position = 80
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md", section_index: 0 })'
 descriptor = "docs/api/md.md section #0"
 cost_tokens = 18
@@ -2188,7 +2080,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 81
+position = 75
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 81 })'
 descriptor = "python class body at htmy/md/core.py:81"
 cost_tokens = 32
@@ -2206,7 +2098,7 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 82
+position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 27
@@ -2224,7 +2116,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 83
+position = 77
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 24 })'
 descriptor = "python class body at htmy/tag.py:24"
 cost_tokens = 20
@@ -2242,7 +2134,7 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 84
+position = 78
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py" })'
 descriptor = "python imports in htmy/typing.py"
 cost_tokens = 35
@@ -2260,7 +2152,7 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 85
+position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 41 })'
 descriptor = "README.md section #41"
 cost_tokens = 16
@@ -2278,7 +2170,7 @@ end = 305
 kind = "full"
 
 [[batches]]
-position = 86
+position = 80
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 56 })'
 descriptor = "python decl doc at htmy/tag.py:56"
 cost_tokens = 46
@@ -2304,7 +2196,7 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 87
+position = 81
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at htmy/io.py:11 body 13"
 cost_tokens = 28
@@ -2322,7 +2214,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 88
+position = 82
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 46 })'
 descriptor = "README.md section #46"
 cost_tokens = 43
@@ -2348,7 +2240,7 @@ end = 339
 kind = "full"
 
 [[batches]]
-position = 89
+position = 83
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization" })'
 descriptor = "listing of 'examples/internationalization'"
 cost_tokens = 13
@@ -2362,7 +2254,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/international
 entries = ["__init__.py", "app.py", "locale"]
 
 [[batches]]
-position = 90
+position = 84
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 15 })'
 descriptor = "python decl doc at htmy/error_boundary.py:15"
 cost_tokens = 55
@@ -2388,7 +2280,7 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 91
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 69
@@ -2414,7 +2306,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 92
+position = 86
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_customization" })'
 descriptor = "listing of 'examples/markdown_customization'"
 cost_tokens = 14
@@ -2428,7 +2320,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_cust
 entries = ["__init__.py", "app.py", "post.md"]
 
 [[batches]]
-position = 93
+position = 87
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_essentials" })'
 descriptor = "listing of 'examples/markdown_essentials'"
 cost_tokens = 14
@@ -2442,7 +2334,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/markdown_esse
 entries = ["__init__.py", "app.py", "post.md"]
 
 [[batches]]
-position = 94
+position = 88
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/core.py"
 cost_tokens = 102
@@ -2596,7 +2488,7 @@ end = 202
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 89
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 19 })'
 descriptor = "python decl at htmy/core.py:19"
 cost_tokens = 0
@@ -2614,7 +2506,7 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 96
+position = 90
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 38 })'
 descriptor = "python decl at htmy/core.py:38"
 cost_tokens = 0
@@ -2632,7 +2524,7 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 97
+position = 91
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 64 })'
 descriptor = "python decl at htmy/core.py:64"
 cost_tokens = 0
@@ -2650,7 +2542,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 98
+position = 92
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 146 })'
 descriptor = "python decl at htmy/core.py:146"
 cost_tokens = 0
@@ -2668,7 +2560,7 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 99
+position = 93
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 157 })'
 descriptor = "python decl at htmy/core.py:157"
 cost_tokens = 0
@@ -2686,7 +2578,7 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 100
+position = 94
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 163 })'
 descriptor = "python decl at htmy/core.py:163"
 cost_tokens = 0
@@ -2704,7 +2596,7 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 101
+position = 95
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 175 })'
 descriptor = "python decl at htmy/core.py:175"
 cost_tokens = 0
@@ -2722,7 +2614,7 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 102
+position = 96
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 196 })'
 descriptor = "python decl at htmy/core.py:196"
 cost_tokens = 0
@@ -2740,7 +2632,7 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 103
+position = 97
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 201 })'
 descriptor = "python decl at htmy/core.py:201"
 cost_tokens = 0
@@ -2758,7 +2650,7 @@ end = 201
 kind = "full"
 
 [[batches]]
-position = 104
+position = 98
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 146 })'
 descriptor = "python class body at htmy/core.py:146"
 cost_tokens = 6
@@ -2776,7 +2668,7 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 105
+position = 99
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 157 })'
 descriptor = "python class body at htmy/core.py:157"
 cost_tokens = 6
@@ -2794,7 +2686,7 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 106
+position = 100
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 163 })'
 descriptor = "python class body at htmy/core.py:163"
 cost_tokens = 6
@@ -2812,7 +2704,7 @@ end = 172
 kind = "full"
 
 [[batches]]
-position = 107
+position = 101
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 19 })'
 descriptor = "python class body at htmy/core.py:19"
 cost_tokens = 14
@@ -2830,7 +2722,7 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 108
+position = 102
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 38 })'
 descriptor = "python class body at htmy/core.py:38"
 cost_tokens = 14
@@ -2848,7 +2740,7 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 109
+position = 103
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 175 })'
 descriptor = "python class body at htmy/core.py:175"
 cost_tokens = 18
@@ -2866,7 +2758,7 @@ end = 184
 kind = "full"
 
 [[batches]]
-position = 110
+position = 104
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 19 })'
 descriptor = "python decl doc at htmy/core.py:19"
 cost_tokens = 14
@@ -2884,7 +2776,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 111
+position = 105
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 157 })'
 descriptor = "python decl doc at htmy/core.py:157"
 cost_tokens = 15
@@ -2902,7 +2794,7 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 112
+position = 106
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 146 })'
 descriptor = "python decl doc at htmy/core.py:146"
 cost_tokens = 17
@@ -2920,7 +2812,7 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 113
+position = 107
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 201 })'
 descriptor = "python class body at htmy/core.py:201"
 cost_tokens = 23
@@ -2938,7 +2830,7 @@ end = 220
 kind = "full"
 
 [[batches]]
-position = 114
+position = 108
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 38 })'
 descriptor = "python decl doc at htmy/core.py:38"
 cost_tokens = 23
@@ -2956,7 +2848,7 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 115
+position = 109
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 64 })'
 descriptor = "python class body at htmy/core.py:64"
 cost_tokens = 33
@@ -2982,7 +2874,7 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 116
+position = 110
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 196, body_start_line: 198 })'
 descriptor = "python decl body at htmy/core.py:196 body 198"
 cost_tokens = 19
@@ -3000,7 +2892,7 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 117
+position = 111
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 196 })'
 descriptor = "python decl doc at htmy/core.py:196"
 cost_tokens = 29
@@ -3018,7 +2910,7 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 118
+position = 112
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py", start_line: 6 })'
 descriptor = "python decl doc at htmy/renderer/context.py:6"
 cost_tokens = 32
@@ -3036,7 +2928,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 119
+position = 113
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 33
@@ -3054,7 +2946,7 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 120
+position = 114
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in htmy/__init__.py"
 cost_tokens = 122
@@ -3072,7 +2964,7 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 121
+position = 115
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/default.py"
 cost_tokens = 61
@@ -3154,7 +3046,7 @@ end = 229
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 116
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 20 })'
 descriptor = "python decl at htmy/renderer/default.py:20"
 cost_tokens = 0
@@ -3172,25 +3064,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 123
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 50 })'
-descriptor = "python decl at htmy/renderer/default.py:50"
-cost_tokens = 0
-cum_tokens = 2648
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
+position = 117
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 53 })'
 descriptor = "python decl at htmy/renderer/default.py:53"
 cost_tokens = 0
@@ -3208,7 +3082,7 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 125
+position = 118
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 228 })'
 descriptor = "python decl at htmy/renderer/default.py:228"
 cost_tokens = 0
@@ -3226,7 +3100,7 @@ end = 228
 kind = "full"
 
 [[batches]]
-position = 126
+position = 119
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 228 })'
 descriptor = "python class body at htmy/renderer/default.py:228"
 cost_tokens = 18
@@ -3244,7 +3118,7 @@ end = 236
 kind = "full"
 
 [[batches]]
-position = 127
+position = 120
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/i18n.py"
 cost_tokens = 109
@@ -3358,25 +3232,7 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 128
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 11 })'
-descriptor = "python decl at htmy/i18n.py:11"
-cost_tokens = 0
-cum_tokens = 2775
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
+position = 121
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 15 })'
 descriptor = "python decl at htmy/i18n.py:15"
 cost_tokens = 0
@@ -3394,7 +3250,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 130
+position = 122
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 18 })'
 descriptor = "python decl at htmy/i18n.py:18"
 cost_tokens = 0
@@ -3412,7 +3268,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 131
+position = 123
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 21 })'
 descriptor = "python decl at htmy/i18n.py:21"
 cost_tokens = 0
@@ -3430,7 +3286,7 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 132
+position = 124
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 24 })'
 descriptor = "python decl at htmy/i18n.py:24"
 cost_tokens = 0
@@ -3448,7 +3304,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 133
+position = 125
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 147 })'
 descriptor = "python decl at htmy/i18n.py:147"
 cost_tokens = 0
@@ -3466,7 +3322,7 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 134
+position = 126
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 15 })'
 descriptor = "python class body at htmy/i18n.py:15"
 cost_tokens = 0
@@ -3484,7 +3340,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 135
+position = 127
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 18 })'
 descriptor = "python class body at htmy/i18n.py:18"
 cost_tokens = 0
@@ -3502,7 +3358,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 136
+position = 128
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 21 })'
 descriptor = "python class body at htmy/i18n.py:21"
 cost_tokens = 0
@@ -3520,7 +3376,7 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 137
+position = 129
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 115 })'
 descriptor = "python decl at htmy/i18n.py:115"
 cost_tokens = 15
@@ -3538,7 +3394,7 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 138
+position = 130
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 24 })'
 descriptor = "python decl doc at htmy/i18n.py:24"
 cost_tokens = 22
@@ -3556,7 +3412,7 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 139
+position = 131
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 24 })'
 descriptor = "python class body at htmy/i18n.py:24"
 cost_tokens = 66
@@ -3582,7 +3438,7 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 140
+position = 132
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/i18n.py"
 cost_tokens = 93
@@ -3672,7 +3528,7 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 133
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 34 })'
 descriptor = "python method at htmy/i18n.py:34"
 cost_tokens = 0
@@ -3690,7 +3546,7 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 142
+position = 134
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 45 })'
 descriptor = "python method at htmy/i18n.py:45"
 cost_tokens = 0
@@ -3708,7 +3564,7 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 143
+position = 135
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 48 })'
 descriptor = "python method at htmy/i18n.py:48"
 cost_tokens = 0
@@ -3726,7 +3582,7 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 144
+position = 136
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 51 })'
 descriptor = "python method at htmy/i18n.py:51"
 cost_tokens = 0
@@ -3744,7 +3600,7 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 145
+position = 137
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/context.py" })'
 descriptor = "python imports in htmy/renderer/context.py"
 cost_tokens = 26
@@ -3770,7 +3626,7 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 146
+position = 138
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 20 })'
 descriptor = "python class body at htmy/renderer/default.py:20"
 cost_tokens = 15
@@ -3788,7 +3644,7 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 147
+position = 139
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 49 })'
 descriptor = "README.md section #49"
 cost_tokens = 49
@@ -3822,7 +3678,7 @@ end = 365
 kind = "full"
 
 [[batches]]
-position = 148
+position = 140
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py", start_line: 25 })'
 descriptor = "python method at htmy/error_boundary.py:25"
 cost_tokens = 53
@@ -3840,7 +3696,7 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 149
+position = 141
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 175 })'
 descriptor = "python decl doc at htmy/core.py:175"
 cost_tokens = 63
@@ -3866,7 +3722,7 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 150
+position = 142
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 26 })'
 descriptor = "README.md section #26"
 cost_tokens = 21
@@ -3884,7 +3740,7 @@ end = 181
 kind = "full"
 
 [[batches]]
-position = 151
+position = 143
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 39 })'
 descriptor = "README.md section #39"
 cost_tokens = 21
@@ -3902,7 +3758,7 @@ end = 301
 kind = "full"
 
 [[batches]]
-position = 152
+position = 144
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 23 })'
 descriptor = "python class body at htmy/etree.py:23"
 cost_tokens = 86
@@ -3928,7 +3784,7 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 153
+position = 145
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/core.md", section_index: 0 })'
 descriptor = "docs/api/core.md section #0"
 cost_tokens = 28
@@ -3954,7 +3810,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 154
+position = 146
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/html.md", section_index: 0 })'
 descriptor = "docs/api/html.md section #0"
 cost_tokens = 28
@@ -3980,7 +3836,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 155
+position = 147
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/utils.md", section_index: 0 })'
 descriptor = "docs/api/utils.md section #0"
 cost_tokens = 28
@@ -4006,7 +3862,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 156
+position = 148
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/md/typing.py"
 cost_tokens = 70
@@ -4056,25 +3912,7 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 157
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 11 })'
-descriptor = "python decl at htmy/md/typing.py:11"
-cost_tokens = 0
-cum_tokens = 3459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
+position = 149
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 14 })'
 descriptor = "python decl at htmy/md/typing.py:14"
 cost_tokens = 0
@@ -4092,43 +3930,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 159
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 21 })'
-descriptor = "python decl at htmy/md/typing.py:21"
-cost_tokens = 0
-cum_tokens = 3459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 24 })'
-descriptor = "python decl at htmy/md/typing.py:24"
-cost_tokens = 0
-cum_tokens = 3459
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
+position = 150
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 14 })'
 descriptor = "python decl doc at htmy/md/typing.py:14"
 cost_tokens = 11
@@ -4146,7 +3948,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 162
+position = 151
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py", start_line: 14 })'
 descriptor = "python class body at htmy/md/typing.py:14"
 cost_tokens = 25
@@ -4164,7 +3966,7 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 163
+position = 152
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/etree.md", section_index: 0 })'
 descriptor = "docs/api/etree.md section #0"
 cost_tokens = 29
@@ -4190,7 +3992,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 164
+position = 153
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/function_component.md", section_index: 0 })'
 descriptor = "docs/api/function_component.md section #0"
 cost_tokens = 29
@@ -4216,7 +4018,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 165
+position = 154
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/snippet.md", section_index: 0 })'
 descriptor = "docs/api/snippet.md section #0"
 cost_tokens = 29
@@ -4242,7 +4044,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 166
+position = 155
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/typing.md", section_index: 0 })'
 descriptor = "docs/api/typing.md section #0"
 cost_tokens = 29
@@ -4268,7 +4070,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 167
+position = 156
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 14 })'
 descriptor = "docs/function-components.md section #14"
 cost_tokens = 7
@@ -4286,7 +4088,7 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 168
+position = 157
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py" })'
 descriptor = "python imports in htmy/io.py"
 cost_tokens = 55
@@ -4328,7 +4130,7 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 169
+position = 158
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 20 })'
 descriptor = "python class body at htmy/md/core.py:20"
 cost_tokens = 53
@@ -4354,7 +4156,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 170
+position = 159
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/i18n.md", section_index: 0 })'
 descriptor = "docs/api/i18n.md section #0"
 cost_tokens = 30
@@ -4380,7 +4182,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 171
+position = 160
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/renderer/typing.py"
 cost_tokens = 75
@@ -4454,7 +4256,7 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 172
+position = 161
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 12 })'
 descriptor = "python decl at htmy/renderer/typing.py:12"
 cost_tokens = 0
@@ -4472,7 +4274,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 173
+position = 162
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 29 })'
 descriptor = "python decl at htmy/renderer/typing.py:29"
 cost_tokens = 0
@@ -4490,7 +4292,7 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 174
+position = 163
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 36 })'
 descriptor = "python decl at htmy/renderer/typing.py:36"
 cost_tokens = 0
@@ -4508,7 +4310,7 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 175
+position = 164
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 53 })'
 descriptor = "python decl at htmy/renderer/typing.py:53"
 cost_tokens = 0
@@ -4526,7 +4328,7 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 176
+position = 165
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 12 })'
 descriptor = "python decl doc at htmy/renderer/typing.py:12"
 cost_tokens = 10
@@ -4544,7 +4346,7 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 177
+position = 166
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 36 })'
 descriptor = "python decl doc at htmy/renderer/typing.py:36"
 cost_tokens = 11
@@ -4562,7 +4364,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 178
+position = 167
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 29 })'
 descriptor = "python decl doc at htmy/renderer/typing.py:29"
 cost_tokens = 16
@@ -4580,7 +4382,7 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 179
+position = 168
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 53 })'
 descriptor = "python decl doc at htmy/renderer/typing.py:53"
 cost_tokens = 17
@@ -4598,7 +4400,7 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 180
+position = 169
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/renderer/typing.py"
 cost_tokens = 55
@@ -4640,7 +4442,7 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 170
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 15 })'
 descriptor = "python method at htmy/renderer/typing.py:15"
 cost_tokens = 0
@@ -4658,7 +4460,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 182
+position = 171
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 39 })'
 descriptor = "python method at htmy/renderer/typing.py:39"
 cost_tokens = 0
@@ -4676,7 +4478,7 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 183
+position = 172
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 15, body_start_line: 26 })'
 descriptor = "python method body at htmy/renderer/typing.py:15 body 26"
 cost_tokens = 6
@@ -4694,7 +4496,7 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 184
+position = 173
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/typing.py", start_line: 39, body_start_line: 50 })'
 descriptor = "python method body at htmy/renderer/typing.py:39 body 50"
 cost_tokens = 6
@@ -4712,7 +4514,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 185
+position = 174
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 45, body_start_line: 46 })'
 descriptor = "python method body at htmy/i18n.py:45 body 46"
 cost_tokens = 21
@@ -4730,7 +4532,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 186
+position = 175
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md" })'
 descriptor = "headings outline in docs/index.md"
 cost_tokens = 215
@@ -5092,7 +4894,7 @@ end = 374
 kind = "ellipsis"
 
 [[batches]]
-position = 187
+position = 176
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 0 })'
 descriptor = "docs/index.md section #0"
 cost_tokens = 49
@@ -5126,7 +4928,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 188
+position = 177
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in htmy/__init__.py"
 cost_tokens = 16
@@ -5144,7 +4946,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 189
+position = 178
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/utils.py"
 cost_tokens = 137
@@ -5266,7 +5068,7 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 179
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 42 })'
 descriptor = "python decl at htmy/utils.py:42"
 cost_tokens = 0
@@ -5284,7 +5086,7 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 191
+position = 180
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 49 })'
 descriptor = "python decl at htmy/utils.py:49"
 cost_tokens = 0
@@ -5302,7 +5104,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 192
+position = 181
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 55 })'
 descriptor = "python decl at htmy/utils.py:55"
 cost_tokens = 0
@@ -5320,7 +5122,7 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 193
+position = 182
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 62 })'
 descriptor = "python decl at htmy/utils.py:62"
 cost_tokens = 0
@@ -5338,7 +5140,7 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 194
+position = 183
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 67 })'
 descriptor = "python decl at htmy/utils.py:67"
 cost_tokens = 0
@@ -5356,7 +5158,7 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 195
+position = 184
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 73 })'
 descriptor = "python decl at htmy/utils.py:73"
 cost_tokens = 0
@@ -5374,7 +5176,7 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 196
+position = 185
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 67 })'
 descriptor = "python decl doc at htmy/utils.py:67"
 cost_tokens = 15
@@ -5392,7 +5194,7 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 197
+position = 186
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 55 })'
 descriptor = "python decl doc at htmy/utils.py:55"
 cost_tokens = 16
@@ -5410,7 +5212,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 198
+position = 187
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 62 })'
 descriptor = "python decl doc at htmy/utils.py:62"
 cost_tokens = 16
@@ -5428,7 +5230,7 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 199
+position = 188
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 62, body_start_line: 64 })'
 descriptor = "python decl body at htmy/utils.py:62 body 64"
 cost_tokens = 14
@@ -5446,7 +5248,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 200
+position = 189
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 73 })'
 descriptor = "python decl doc at htmy/utils.py:73"
 cost_tokens = 19
@@ -5464,7 +5266,7 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 201
+position = 190
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 42, body_start_line: 46 })'
 descriptor = "python decl body at htmy/utils.py:42 body 46"
 cost_tokens = 16
@@ -5482,7 +5284,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 202
+position = 191
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 12 })'
 descriptor = "python decl at htmy/utils.py:12"
 cost_tokens = 44
@@ -5500,7 +5302,7 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 203
+position = 192
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 49 })'
 descriptor = "python decl doc at htmy/utils.py:49"
 cost_tokens = 27
@@ -5518,7 +5320,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 204
+position = 193
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 42 })'
 descriptor = "python decl doc at htmy/utils.py:42"
 cost_tokens = 31
@@ -5536,7 +5338,7 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 205
+position = 194
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in htmy/__init__.py"
 cost_tokens = 26
@@ -5554,7 +5356,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 206
+position = 195
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 48 })'
 descriptor = "README.md section #48"
 cost_tokens = 62
@@ -5588,7 +5390,7 @@ end = 359
 kind = "full"
 
 [[batches]]
-position = 207
+position = 196
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 38 })'
 descriptor = "README.md section #38"
 cost_tokens = 26
@@ -5606,7 +5408,7 @@ end = 297
 kind = "full"
 
 [[batches]]
-position = 208
+position = 197
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 20 })'
 descriptor = "python decl doc at htmy/renderer/default.py:20"
 cost_tokens = 20
@@ -5624,7 +5426,7 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 209
+position = 198
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py" })'
 descriptor = "python imports in htmy/html.py"
 cost_tokens = 68
@@ -5666,7 +5468,7 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 210
+position = 199
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/snippet.py"
 cost_tokens = 136
@@ -5804,7 +5606,7 @@ end = 273
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 200
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 110 })'
 descriptor = "python method at htmy/snippet.py:110"
 cost_tokens = 0
@@ -5822,7 +5624,7 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 212
+position = 201
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 126 })'
 descriptor = "python method at htmy/snippet.py:126"
 cost_tokens = 0
@@ -5840,7 +5642,7 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 213
+position = 202
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 241 })'
 descriptor = "python method at htmy/snippet.py:241"
 cost_tokens = 0
@@ -5858,7 +5660,7 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 214
+position = 203
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 256 })'
 descriptor = "python method at htmy/snippet.py:256"
 cost_tokens = 0
@@ -5876,7 +5678,7 @@ end = 256
 kind = "full"
 
 [[batches]]
-position = 215
+position = 204
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 265 })'
 descriptor = "python method at htmy/snippet.py:265"
 cost_tokens = 0
@@ -5894,7 +5696,7 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 216
+position = 205
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 241 })'
 descriptor = "python method doc at htmy/snippet.py:241"
 cost_tokens = 9
@@ -5912,7 +5714,7 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 217
+position = 206
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 110, body_start_line: 124 })'
 descriptor = "python method body at htmy/snippet.py:110 body 124"
 cost_tokens = 13
@@ -5930,7 +5732,7 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 218
+position = 207
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 256 })'
 descriptor = "python method doc at htmy/snippet.py:256"
 cost_tokens = 14
@@ -5948,7 +5750,7 @@ end = 257
 kind = "full"
 
 [[batches]]
-position = 219
+position = 208
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 265, body_start_line: 270 })'
 descriptor = "python method body at htmy/snippet.py:265 body 270"
 cost_tokens = 10
@@ -5966,7 +5768,7 @@ end = 270
 kind = "full"
 
 [[batches]]
-position = 220
+position = 209
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 83 })'
 descriptor = "python method at htmy/snippet.py:83"
 cost_tokens = 64
@@ -5984,7 +5786,7 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 221
+position = 210
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 218 })'
 descriptor = "python method at htmy/snippet.py:218"
 cost_tokens = 66
@@ -6002,7 +5804,7 @@ end = 224
 kind = "full"
 
 [[batches]]
-position = 222
+position = 211
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 272 })'
 descriptor = "python method at htmy/snippet.py:272"
 cost_tokens = 28
@@ -6020,7 +5822,7 @@ end = 274
 kind = "full"
 
 [[batches]]
-position = 223
+position = 212
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 272 })'
 descriptor = "python method doc at htmy/snippet.py:272"
 cost_tokens = 15
@@ -6038,7 +5840,7 @@ end = 275
 kind = "full"
 
 [[batches]]
-position = 224
+position = 213
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/etree.py"
 cost_tokens = 137
@@ -6144,7 +5946,7 @@ end = 104
 kind = "ellipsis"
 
 [[batches]]
-position = 225
+position = 214
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 46 })'
 descriptor = "python method at htmy/etree.py:46"
 cost_tokens = 0
@@ -6162,7 +5964,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 226
+position = 215
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 55 })'
 descriptor = "python method at htmy/etree.py:55"
 cost_tokens = 0
@@ -6180,7 +5982,7 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 227
+position = 216
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 63 })'
 descriptor = "python method at htmy/etree.py:63"
 cost_tokens = 0
@@ -6198,7 +6000,7 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 228
+position = 217
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 83 })'
 descriptor = "python method at htmy/etree.py:83"
 cost_tokens = 0
@@ -6216,7 +6018,7 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 229
+position = 218
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 91 })'
 descriptor = "python method at htmy/etree.py:91"
 cost_tokens = 0
@@ -6234,7 +6036,7 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 230
+position = 219
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 103 })'
 descriptor = "python method at htmy/etree.py:103"
 cost_tokens = 0
@@ -6252,7 +6054,7 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 231
+position = 220
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 63 })'
 descriptor = "python method doc at htmy/etree.py:63"
 cost_tokens = 15
@@ -6270,7 +6072,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 232
+position = 221
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 46, body_start_line: 53 })'
 descriptor = "python method body at htmy/etree.py:46 body 53"
 cost_tokens = 11
@@ -6288,7 +6090,7 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 233
+position = 222
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 55 })'
 descriptor = "python method doc at htmy/etree.py:55"
 cost_tokens = 19
@@ -6306,7 +6108,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 234
+position = 223
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 103 })'
 descriptor = "python method doc at htmy/etree.py:103"
 cost_tokens = 13
@@ -6324,7 +6126,7 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 235
+position = 224
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py", start_line: 46 })'
 descriptor = "python method doc at htmy/etree.py:46"
 cost_tokens = 38
@@ -6350,7 +6152,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 236
+position = 225
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/core.py", start_line: 163 })'
 descriptor = "python decl doc at htmy/core.py:163"
 cost_tokens = 92
@@ -6376,7 +6178,7 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 237
+position = 226
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 12 })'
 descriptor = "python decl doc at htmy/utils.py:12"
 cost_tokens = 79
@@ -6402,7 +6204,7 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 238
+position = 227
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 228 })'
 descriptor = "python decl doc at htmy/renderer/default.py:228"
 cost_tokens = 53
@@ -6428,7 +6230,7 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 239
+position = 228
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py" })'
 descriptor = "python imports in htmy/i18n.py"
 cost_tokens = 76
@@ -6462,7 +6264,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 240
+position = 229
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/typing.py" })'
 descriptor = "python imports in htmy/md/typing.py"
 cost_tokens = 42
@@ -6488,7 +6290,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 241
+position = 230
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 48, body_start_line: 49 })'
 descriptor = "python method body at htmy/i18n.py:48 body 49"
 cost_tokens = 26
@@ -6506,7 +6308,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 242
+position = 231
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/snippet.py", start_line: 272, body_start_line: 276 })'
 descriptor = "python method body at htmy/snippet.py:272 body 276"
 cost_tokens = 12
@@ -6524,7 +6326,7 @@ end = 276
 kind = "full"
 
 [[batches]]
-position = 243
+position = 232
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 79 })'
 descriptor = "python method at htmy/i18n.py:79"
 cost_tokens = 31
@@ -6542,7 +6344,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 244
+position = 233
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md", section_index: 1 })'
 descriptor = "docs/api/md.md section #1"
 cost_tokens = 18
@@ -6568,7 +6370,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 245
+position = 234
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py" })'
 descriptor = "python imports in htmy/tag.py"
 cost_tokens = 79
@@ -6610,7 +6412,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 246
+position = 235
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py" })'
 descriptor = "python imports in htmy/utils.py"
 cost_tokens = 82
@@ -6652,7 +6454,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 247
+position = 236
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 50 })'
 descriptor = "docs/index.md section #50"
 cost_tokens = 30
@@ -6678,7 +6480,7 @@ end = 375
 kind = "full"
 
 [[batches]]
-position = 248
+position = 237
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 57
@@ -6692,7 +6494,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests"
 entries = ["__init__.py", "conftest.py", "data", "renderer", "test_formatter.py", "test_function_component.py", "test_i18n.py", "test_main_components.py", "test_md.py", "test_snippet.py", "utils.py"]
 
 [[batches]]
-position = 249
+position = 238
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 43 })'
 descriptor = "README.md section #43"
 cost_tokens = 88
@@ -6734,7 +6536,7 @@ end = 322
 kind = "full"
 
 [[batches]]
-position = 250
+position = 239
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/renderer/default.py", start_line: 53 })'
 descriptor = "python class body at htmy/renderer/default.py:53"
 cost_tokens = 27
@@ -6752,7 +6554,7 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 251
+position = 240
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 115 })'
 descriptor = "python decl doc at htmy/i18n.py:115"
 cost_tokens = 94
@@ -6794,7 +6596,7 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 252
+position = 241
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/renderer" })'
 descriptor = "listing of 'tests/renderer'"
 cost_tokens = 28
@@ -6808,7 +6610,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/tests/renderer"
 entries = ["test_default_renderer.py", "test_renderer_comparison.py", "test_renderer_in_context.py", "test_streaming_renderers.py"]
 
 [[batches]]
-position = 253
+position = 242
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 20 })'
 descriptor = "python decl doc at htmy/md/core.py:20"
 cost_tokens = 63
@@ -6834,7 +6636,7 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 254
+position = 243
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/tag.py"
 cost_tokens = 175
@@ -6972,7 +6774,7 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 255
+position = 244
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 15 })'
 descriptor = "python method at htmy/tag.py:15"
 cost_tokens = 0
@@ -6990,7 +6792,7 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 256
+position = 245
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 19 })'
 descriptor = "python method at htmy/tag.py:19"
 cost_tokens = 0
@@ -7008,7 +6810,7 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 257
+position = 246
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 39 })'
 descriptor = "python method at htmy/tag.py:39"
 cost_tokens = 0
@@ -7026,7 +6828,7 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 258
+position = 247
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 66 })'
 descriptor = "python method at htmy/tag.py:66"
 cost_tokens = 0
@@ -7044,7 +6846,7 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 259
+position = 248
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 69 })'
 descriptor = "python method at htmy/tag.py:69"
 cost_tokens = 0
@@ -7062,7 +6864,7 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 260
+position = 249
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 76 })'
 descriptor = "python method at htmy/tag.py:76"
 cost_tokens = 0
@@ -7080,7 +6882,7 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 261
+position = 250
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 80 })'
 descriptor = "python method at htmy/tag.py:80"
 cost_tokens = 0
@@ -7098,7 +6900,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 262
+position = 251
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 66, body_start_line: 67 })'
 descriptor = "python method body at htmy/tag.py:66 body 67"
 cost_tokens = 8
@@ -7116,7 +6918,7 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 263
+position = 252
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 69, body_start_line: 70 })'
 descriptor = "python method body at htmy/tag.py:69 body 70"
 cost_tokens = 14
@@ -7134,7 +6936,7 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 264
+position = 253
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 15, body_start_line: 16 })'
 descriptor = "python method body at htmy/tag.py:15 body 16"
 cost_tokens = 18
@@ -7152,7 +6954,7 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 265
+position = 254
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 80, body_start_line: 81 })'
 descriptor = "python method body at htmy/tag.py:80 body 81"
 cost_tokens = 18
@@ -7170,7 +6972,7 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 266
+position = 255
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 27 })'
 descriptor = "python method at htmy/tag.py:27"
 cost_tokens = 53
@@ -7188,7 +6990,7 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 267
+position = 256
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 76, body_start_line: 77 })'
 descriptor = "python method body at htmy/tag.py:76 body 77"
 cost_tokens = 20
@@ -7206,7 +7008,7 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 268
+position = 257
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/default.md", section_index: 0 })'
 descriptor = "docs/api/renderer/default.md section #0"
 cost_tokens = 29
@@ -7232,7 +7034,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 269
+position = 258
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/function_component.py"
 cost_tokens = 208
@@ -7346,61 +7148,7 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 270
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 13 })'
-descriptor = "python decl at htmy/function_component.py:13"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 271
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 18 })'
-descriptor = "python decl at htmy/function_component.py:18"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 272
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 25 })'
-descriptor = "python decl at htmy/function_component.py:25"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 273
+position = 259
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 31 })'
 descriptor = "python decl at htmy/function_component.py:31"
 cost_tokens = 0
@@ -7418,25 +7166,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 274
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 40 })'
-descriptor = "python decl at htmy/function_component.py:40"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 275
+position = 260
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 46 })'
 descriptor = "python decl at htmy/function_component.py:46"
 cost_tokens = 0
@@ -7454,43 +7184,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 276
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 57 })'
-descriptor = "python decl at htmy/function_component.py:57"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 277
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 62 })'
-descriptor = "python decl at htmy/function_component.py:62"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 278
+position = 261
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 71 })'
 descriptor = "python decl at htmy/function_component.py:71"
 cost_tokens = 0
@@ -7508,25 +7202,7 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 279
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 362 })'
-descriptor = "python decl at htmy/function_component.py:362"
-cost_tokens = 0
-cum_tokens = 6898
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py"
-start = 362
-end = 362
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 280
+position = 262
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 71 })'
 descriptor = "python decl doc at htmy/function_component.py:71"
 cost_tokens = 19
@@ -7544,7 +7220,7 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 281
+position = 263
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 71 })'
 descriptor = "python class body at htmy/function_component.py:71"
 cost_tokens = 58
@@ -7594,7 +7270,7 @@ end = 303
 kind = "full"
 
 [[batches]]
-position = 282
+position = 264
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 31 })'
 descriptor = "python decl doc at htmy/function_component.py:31"
 cost_tokens = 39
@@ -7612,7 +7288,7 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 283
+position = 265
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 46 })'
 descriptor = "python decl doc at htmy/function_component.py:46"
 cost_tokens = 39
@@ -7630,7 +7306,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 284
+position = 266
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/baseline.md", section_index: 0 })'
 descriptor = "docs/api/renderer/baseline.md section #0"
 cost_tokens = 30
@@ -7656,7 +7332,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 285
+position = 267
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer/typing.md", section_index: 0 })'
 descriptor = "docs/api/renderer/typing.md section #0"
 cost_tokens = 30
@@ -7682,7 +7358,7 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 286
+position = 268
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/error_boundary.py" })'
 descriptor = "python imports in htmy/error_boundary.py"
 cost_tokens = 94
@@ -7732,7 +7408,7 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 287
+position = 269
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 45 })'
 descriptor = "README.md section #45"
 cost_tokens = 89
@@ -7766,7 +7442,7 @@ end = 335
 kind = "full"
 
 [[batches]]
-position = 288
+position = 270
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py" })'
 descriptor = "python imports in htmy/function_component.py"
 cost_tokens = 96
@@ -7800,7 +7476,7 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 289
+position = 271
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 118
@@ -7850,7 +7526,7 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 290
+position = 272
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 147 })'
 descriptor = "python decl doc at htmy/i18n.py:147"
 cost_tokens = 106
@@ -7892,7 +7568,7 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 291
+position = 273
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/function-components.md", section_index: 8 })'
 descriptor = "docs/function-components.md section #8"
 cost_tokens = 11
@@ -7910,7 +7586,7 @@ end = 148
 kind = "full"
 
 [[batches]]
-position = 292
+position = 274
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/index.md", section_index: 14 })'
 descriptor = "docs/index.md section #14"
 cost_tokens = 11
@@ -7928,7 +7604,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 293
+position = 275
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/md/core.py"
 cost_tokens = 108
@@ -8034,7 +7710,7 @@ end = 132
 kind = "ellipsis"
 
 [[batches]]
-position = 294
+position = 276
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 43 })'
 descriptor = "python method at htmy/md/core.py:43"
 cost_tokens = 0
@@ -8052,7 +7728,7 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 295
+position = 277
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 53 })'
 descriptor = "python method at htmy/md/core.py:53"
 cost_tokens = 0
@@ -8070,7 +7746,7 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 296
+position = 278
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 64 })'
 descriptor = "python method at htmy/md/core.py:64"
 cost_tokens = 0
@@ -8088,7 +7764,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 297
+position = 279
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 131 })'
 descriptor = "python method at htmy/md/core.py:131"
 cost_tokens = 0
@@ -8106,7 +7782,7 @@ end = 131
 kind = "full"
 
 [[batches]]
-position = 298
+position = 280
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 33 })'
 descriptor = "python method at htmy/md/core.py:33"
 cost_tokens = 11
@@ -8124,7 +7800,7 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 299
+position = 281
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 33 })'
 descriptor = "python method doc at htmy/md/core.py:33"
 cost_tokens = 22
@@ -8142,7 +7818,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 300
+position = 282
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 53 })'
 descriptor = "python method doc at htmy/md/core.py:53"
 cost_tokens = 25
@@ -8160,7 +7836,7 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 301
+position = 283
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 36 })'
 descriptor = "README.md section #36"
 cost_tokens = 36
@@ -8178,7 +7854,7 @@ end = 293
 kind = "full"
 
 [[batches]]
-position = 302
+position = 284
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/etree.py" })'
 descriptor = "python imports in htmy/etree.py"
 cost_tokens = 100
@@ -8220,7 +7896,7 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 303
+position = 285
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/html.py"
 cost_tokens = 169
@@ -8350,7 +8026,7 @@ end = 80
 kind = "ellipsis"
 
 [[batches]]
-position = 304
+position = 286
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 13 })'
 descriptor = "python decl at htmy/html.py:13"
 cost_tokens = 0
@@ -8368,115 +8044,7 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 305
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 20 })'
-descriptor = "python decl at htmy/html.py:20"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 306
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 27 })'
-descriptor = "python decl at htmy/html.py:27"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 307
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 34 })'
-descriptor = "python decl at htmy/html.py:34"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 308
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 41 })'
-descriptor = "python decl at htmy/html.py:41"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 309
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 48 })'
-descriptor = "python decl at htmy/html.py:48"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 310
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 55 })'
-descriptor = "python decl at htmy/html.py:55"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 311
+position = 287
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 63 })'
 descriptor = "python decl at htmy/html.py:63"
 cost_tokens = 0
@@ -8494,25 +8062,7 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 312
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 71 })'
-descriptor = "python decl at htmy/html.py:71"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 313
+position = 288
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 79 })'
 descriptor = "python decl at htmy/html.py:79"
 cost_tokens = 0
@@ -8530,43 +8080,7 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 314
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 103 })'
-descriptor = "python decl at htmy/html.py:103"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 103
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 315
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 113 })'
-descriptor = "python decl at htmy/html.py:113"
-cost_tokens = 0
-cum_tokens = 8109
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 316
+position = 289
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 13 })'
 descriptor = "python decl doc at htmy/html.py:13"
 cost_tokens = 8
@@ -8584,7 +8098,7 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 317
+position = 290
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 63 })'
 descriptor = "python decl doc at htmy/html.py:63"
 cost_tokens = 10
@@ -8602,7 +8116,7 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 318
+position = 291
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 79 })'
 descriptor = "python decl doc at htmy/html.py:79"
 cost_tokens = 10
@@ -8620,7 +8134,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 319
+position = 292
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 13 })'
 descriptor = "python class body at htmy/html.py:13"
 cost_tokens = 24
@@ -8638,7 +8152,7 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 320
+position = 293
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/html.py"
 cost_tokens = 60
@@ -8744,7 +8258,7 @@ end = 99
 kind = "ellipsis"
 
 [[batches]]
-position = 321
+position = 294
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 82 })'
 descriptor = "python method at htmy/html.py:82"
 cost_tokens = 13
@@ -8762,7 +8276,7 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 322
+position = 295
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 90 })'
 descriptor = "python method at htmy/html.py:90"
 cost_tokens = 13
@@ -8780,7 +8294,7 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 323
+position = 296
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 94 })'
 descriptor = "python method at htmy/html.py:94"
 cost_tokens = 13
@@ -8798,7 +8312,7 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 324
+position = 297
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 66 })'
 descriptor = "python method at htmy/html.py:66"
 cost_tokens = 14
@@ -8816,7 +8330,7 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 325
+position = 298
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 86 })'
 descriptor = "python method at htmy/html.py:86"
 cost_tokens = 19
@@ -8834,7 +8348,7 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 326
+position = 299
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 98 })'
 descriptor = "python method at htmy/html.py:98"
 cost_tokens = 25
@@ -8852,7 +8366,7 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 327
+position = 300
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 86, body_start_line: 88 })'
 descriptor = "python method body at htmy/html.py:86 body 88"
 cost_tokens = 12
@@ -8870,7 +8384,7 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 328
+position = 301
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 82, body_start_line: 84 })'
 descriptor = "python method body at htmy/html.py:82 body 84"
 cost_tokens = 15
@@ -8888,7 +8402,7 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 329
+position = 302
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 90, body_start_line: 92 })'
 descriptor = "python method body at htmy/html.py:90 body 92"
 cost_tokens = 15
@@ -8906,7 +8420,7 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 330
+position = 303
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 94, body_start_line: 96 })'
 descriptor = "python method body at htmy/html.py:94 body 96"
 cost_tokens = 15
@@ -8924,7 +8438,7 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 331
+position = 304
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 98, body_start_line: 100 })'
 descriptor = "python method body at htmy/html.py:98 body 100"
 cost_tokens = 15
@@ -8942,7 +8456,7 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 332
+position = 305
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/html.py", start_line: 66, body_start_line: 68 })'
 descriptor = "python method body at htmy/html.py:66 body 68"
 cost_tokens = 20
@@ -8960,7 +8474,7 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 333
+position = 306
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/function_component.py"
 cost_tokens = 200
@@ -9242,7 +8756,7 @@ end = 316
 kind = "ellipsis"
 
 [[batches]]
-position = 334
+position = 307
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 37 })'
 descriptor = "python method at htmy/function_component.py:37"
 cost_tokens = 0
@@ -9260,7 +8774,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 335
+position = 308
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 52 })'
 descriptor = "python method at htmy/function_component.py:52"
 cost_tokens = 0
@@ -9278,7 +8792,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 336
+position = 309
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 80 })'
 descriptor = "python method at htmy/function_component.py:80"
 cost_tokens = 0
@@ -9296,7 +8810,7 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 337
+position = 310
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 83 })'
 descriptor = "python method at htmy/function_component.py:83"
 cost_tokens = 0
@@ -9314,7 +8828,7 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 338
+position = 311
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 141 })'
 descriptor = "python method at htmy/function_component.py:141"
 cost_tokens = 0
@@ -9332,7 +8846,7 @@ end = 141
 kind = "full"
 
 [[batches]]
-position = 339
+position = 312
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 144 })'
 descriptor = "python method at htmy/function_component.py:144"
 cost_tokens = 0
@@ -9350,7 +8864,7 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 340
+position = 313
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 37, body_start_line: 37 })'
 descriptor = "python method body at htmy/function_component.py:37 body 37"
 cost_tokens = 0
@@ -9368,7 +8882,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 341
+position = 314
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 52, body_start_line: 52 })'
 descriptor = "python method body at htmy/function_component.py:52 body 52"
 cost_tokens = 0
@@ -9386,7 +8900,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 342
+position = 315
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 184 })'
 descriptor = "python method at htmy/function_component.py:184"
 cost_tokens = 23
@@ -9404,7 +8918,7 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 343
+position = 316
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 189 })'
 descriptor = "python method at htmy/function_component.py:189"
 cost_tokens = 23
@@ -9422,7 +8936,7 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 344
+position = 317
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 305 })'
 descriptor = "python method at htmy/function_component.py:305"
 cost_tokens = 25
@@ -9440,7 +8954,7 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 345
+position = 318
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 310 })'
 descriptor = "python method at htmy/function_component.py:310"
 cost_tokens = 25
@@ -9458,7 +8972,7 @@ end = 312
 kind = "full"
 
 [[batches]]
-position = 346
+position = 319
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 234 })'
 descriptor = "python method at htmy/function_component.py:234"
 cost_tokens = 26
@@ -9476,7 +8990,7 @@ end = 236
 kind = "full"
 
 [[batches]]
-position = 347
+position = 320
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 239 })'
 descriptor = "python method at htmy/function_component.py:239"
 cost_tokens = 26
@@ -9494,7 +9008,7 @@ end = 241
 kind = "full"
 
 [[batches]]
-position = 348
+position = 321
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 305, body_start_line: 308 })'
 descriptor = "python method body at htmy/function_component.py:305 body 308"
 cost_tokens = 16
@@ -9512,7 +9026,7 @@ end = 308
 kind = "full"
 
 [[batches]]
-position = 349
+position = 322
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 310, body_start_line: 313 })'
 descriptor = "python method body at htmy/function_component.py:310 body 313"
 cost_tokens = 16
@@ -9530,7 +9044,7 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 350
+position = 323
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 184, body_start_line: 187 })'
 descriptor = "python method body at htmy/function_component.py:184 body 187"
 cost_tokens = 17
@@ -9548,7 +9062,7 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 351
+position = 324
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 189, body_start_line: 192 })'
 descriptor = "python method body at htmy/function_component.py:189 body 192"
 cost_tokens = 17
@@ -9566,7 +9080,7 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 352
+position = 325
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 86 })'
 descriptor = "python method at htmy/function_component.py:86"
 cost_tokens = 51
@@ -9584,7 +9098,7 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 353
+position = 326
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 147 })'
 descriptor = "python method at htmy/function_component.py:147"
 cost_tokens = 51
@@ -9602,7 +9116,7 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 354
+position = 327
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 147, body_start_line: 180 })'
 descriptor = "python method body at htmy/function_component.py:147 body 180"
 cost_tokens = 9
@@ -9620,7 +9134,7 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 355
+position = 328
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 194 })'
 descriptor = "python method at htmy/function_component.py:194"
 cost_tokens = 51
@@ -9638,7 +9152,7 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 356
+position = 329
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 315 })'
 descriptor = "python method at htmy/function_component.py:315"
 cost_tokens = 53
@@ -9656,7 +9170,7 @@ end = 318
 kind = "full"
 
 [[batches]]
-position = 357
+position = 330
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 234, body_start_line: 237 })'
 descriptor = "python method body at htmy/function_component.py:234 body 237"
 cost_tokens = 19
@@ -9674,7 +9188,7 @@ end = 237
 kind = "full"
 
 [[batches]]
-position = 358
+position = 331
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 239, body_start_line: 242 })'
 descriptor = "python method body at htmy/function_component.py:239 body 242"
 cost_tokens = 19
@@ -9692,7 +9206,7 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 359
+position = 332
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 244 })'
 descriptor = "python method at htmy/function_component.py:244"
 cost_tokens = 65
@@ -9710,7 +9224,7 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 360
+position = 333
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 141, body_start_line: 142 })'
 descriptor = "python method body at htmy/function_component.py:141 body 142"
 cost_tokens = 26
@@ -9728,7 +9242,7 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 361
+position = 334
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 144, body_start_line: 145 })'
 descriptor = "python method body at htmy/function_component.py:144 body 145"
 cost_tokens = 26
@@ -9746,7 +9260,7 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 362
+position = 335
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 80, body_start_line: 81 })'
 descriptor = "python method body at htmy/function_component.py:80 body 81"
 cost_tokens = 28
@@ -9764,7 +9278,7 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 363
+position = 336
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/function_component.py", start_line: 83, body_start_line: 84 })'
 descriptor = "python method body at htmy/function_component.py:83 body 84"
 cost_tokens = 28
@@ -9782,7 +9296,7 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 364
+position = 337
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 84 })'
 descriptor = "python decl doc at htmy/tag.py:84"
 cost_tokens = 110
@@ -9808,7 +9322,7 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 365
+position = 338
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in htmy/typing.py"
 cost_tokens = 171
@@ -9922,151 +9436,7 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 366
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 4 })'
-descriptor = "python decl at htmy/typing.py:4"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 367
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 5 })'
-descriptor = "python decl at htmy/typing.py:5"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 368
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 9 })'
-descriptor = "python decl at htmy/typing.py:9"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 369
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 12 })'
-descriptor = "python decl at htmy/typing.py:12"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 370
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 17 })'
-descriptor = "python decl at htmy/typing.py:17"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 371
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 20 })'
-descriptor = "python decl at htmy/typing.py:20"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 372
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 23 })'
-descriptor = "python decl at htmy/typing.py:23"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 373
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 26 })'
-descriptor = "python decl at htmy/typing.py:26"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 374
+position = 339
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 37 })'
 descriptor = "python decl at htmy/typing.py:37"
 cost_tokens = 0
@@ -10084,7 +9454,7 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 375
+position = 340
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 45 })'
 descriptor = "python decl at htmy/typing.py:45"
 cost_tokens = 0
@@ -10102,43 +9472,7 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 376
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 53 })'
-descriptor = "python decl at htmy/typing.py:53"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 377
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 56 })'
-descriptor = "python decl at htmy/typing.py:56"
-cost_tokens = 0
-cum_tokens = 9531
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 378
+position = 341
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 37 })'
 descriptor = "python decl doc at htmy/typing.py:37"
 cost_tokens = 14
@@ -10156,7 +9490,7 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 379
+position = 342
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 45 })'
 descriptor = "python decl doc at htmy/typing.py:45"
 cost_tokens = 14
@@ -10174,7 +9508,7 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 380
+position = 343
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", chunk_index: 0 })'
 descriptor = "python method sigs in htmy/typing.py"
 cost_tokens = 45
@@ -10216,7 +9550,7 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 381
+position = 344
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 40 })'
 descriptor = "python method at htmy/typing.py:40"
 cost_tokens = 0
@@ -10234,7 +9568,7 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 382
+position = 345
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 48 })'
 descriptor = "python method at htmy/typing.py:48"
 cost_tokens = 0
@@ -10252,7 +9586,7 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 383
+position = 346
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 40, body_start_line: 42 })'
 descriptor = "python method body at htmy/typing.py:40 body 42"
 cost_tokens = 6
@@ -10270,7 +9604,7 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 384
+position = 347
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 48, body_start_line: 50 })'
 descriptor = "python method body at htmy/typing.py:48 body 50"
 cost_tokens = 6
@@ -10288,7 +9622,7 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 385
+position = 348
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 40 })'
 descriptor = "python method doc at htmy/typing.py:40"
 cost_tokens = 9
@@ -10306,7 +9640,7 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 386
+position = 349
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py", start_line: 48 })'
 descriptor = "python method doc at htmy/typing.py:48"
 cost_tokens = 9
@@ -10324,7 +9658,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 387
+position = 350
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/utils.py", start_line: 49, body_start_line: 52 })'
 descriptor = "python decl body at htmy/utils.py:49 body 52"
 cost_tokens = 13
@@ -10342,7 +9676,7 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 388
+position = 351
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/i18n.py", start_line: 34 })'
 descriptor = "python method doc at htmy/i18n.py:34"
 cost_tokens = 64
@@ -10368,7 +9702,7 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 389
+position = 352
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples" })'
 descriptor = "listing of 'docs/examples'"
 cost_tokens = 34
@@ -10382,7 +9716,7 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/examples"
 entries = ["fastapi-htmx-tailwind-daisyui.md", "index.md", "internationalization.md", "markdown.md", "snippet-slots-fastapi.md"]
 
 [[batches]]
-position = 390
+position = 353
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 43 })'
 descriptor = "python method doc at htmy/md/core.py:43"
 cost_tokens = 37
@@ -10408,7 +9742,7 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 391
+position = 354
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 120

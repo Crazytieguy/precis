@@ -4,7 +4,6 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
 | walker |  | 62 | 62 | listing of '.' |  |  | 0.000 |
 | walker |  | 70 | 8 | export names surface in playwright.config.ts |  |  | 0.000 |
-| walker |  | 70 | 0 | export at playwright.config.ts:27 |  |  | 0.000 |
 | ns | 78 |  | 78 | README lede — one-sentence elevator pitch | 1.1 |  | 0.000 |
 | walker |  | 93 | 23 | package identity in package.json |  |  | 0.000 |
 | walker |  | 98 | 5 | listing of '.husky' |  |  | 0.000 |
@@ -59,15 +58,6 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 | walker |  | 1207 | 14 | imports in cmdk/tsup.config.ts |  |  | 0.336 |
 | ns | 1232 |  | 66 | Architecture — Approach paragraph (DOM-as-truth) | 3.1 |  | 0.335 |
 | walker |  | 1308 | 101 | export names surface #1 in cmdk/src/index.tsx |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:945 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:946 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:947 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:948 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:949 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:950 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:951 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:952 |  |  | 0.338 |
-| walker |  | 1308 | 0 | export at cmdk/src/index.tsx:953 |  |  | 0.338 |
 | ns | 1342 |  | 110 | index.tsx — module imports + 'use client' | 4.1 |  | 0.327 |
 | walker |  | 1483 | 175 | module item at cmdk/src/index.tsx:123 |  |  | 0.332 |
 | walker |  | 1517 | 34 | plaintext config pnpm-workspace.yaml |  |  | 0.367 |
@@ -85,9 +75,6 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 | walker |  | 1920 | 0 | export at cmdk/src/index.tsx:882 |  |  | 0.510 |
 | walker |  | 1920 | 0 | export at cmdk/src/index.tsx:899 |  |  | 0.510 |
 | walker |  | 1920 | 0 | export at cmdk/src/index.tsx:909 |  |  | 0.510 |
-| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:941 |  |  | 0.510 |
-| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:942 |  |  | 0.510 |
-| walker |  | 1920 | 0 | export at cmdk/src/index.tsx:943 |  |  | 0.510 |
 | walker |  | 2017 | 97 | export body at cmdk/src/index.tsx:774 body 775 |  |  | 0.510 |
 | walker |  | 2043 | 26 | export doc at cmdk/src/index.tsx:882 |  |  | 0.510 |
 | walker |  | 2070 | 27 | export doc at cmdk/src/index.tsx:899 |  |  | 0.510 |
@@ -146,7 +133,6 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 | ns | 5647 |  | 311 | command-score — SCORE_* constants (positive weights) | 7.2 |  | 0.533 |
 | walker |  | 5684 | 60 | listing of 'test/pages' |  |  | 0.576 |
 | walker |  | 5692 | 8 | export names surface in test/pages/index.tsx |  |  | 0.576 |
-| walker |  | 5692 | 0 | export at test/pages/index.tsx:28 |  |  | 0.576 |
 | walker |  | 5762 | 70 | README.md section #27 |  |  | 0.586 |
 | walker |  | 5773 | 11 | module item at website/pages/index.tsx:101 |  |  | 0.586 |
 | walker |  | 5784 | 11 | module item at website/pages/index.tsx:158 |  |  | 0.586 |
@@ -184,23 +170,14 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 | walker |  | 8046 | 20 | module item at website/pages/index.tsx:27 |  |  | 0.604 |
 | walker |  | 8059 | 13 | imports in test/pages/index.tsx |  |  | 0.604 |
 | walker |  | 8067 | 8 | export names surface in test/pages/dialog.tsx |  |  | 0.604 |
-| walker |  | 8067 | 0 | export at test/pages/dialog.tsx:25 |  |  | 0.604 |
 | walker |  | 8075 | 8 | export names surface in test/pages/group.tsx |  |  | 0.604 |
-| walker |  | 8075 | 0 | export at test/pages/group.tsx:42 |  |  | 0.604 |
 | walker |  | 8083 | 8 | export names surface in test/pages/huge.tsx |  |  | 0.604 |
-| walker |  | 8083 | 0 | export at test/pages/huge.tsx:34 |  |  | 0.604 |
 | walker |  | 8091 | 8 | export names surface in test/pages/item-advanced.tsx |  |  | 0.604 |
-| walker |  | 8091 | 0 | export at test/pages/item-advanced.tsx:25 |  |  | 0.604 |
 | walker |  | 8099 | 8 | export names surface in test/pages/item.tsx |  |  | 0.604 |
-| walker |  | 8099 | 0 | export at test/pages/item.tsx:47 |  |  | 0.604 |
 | walker |  | 8107 | 8 | export names surface in test/pages/keybinds.tsx |  |  | 0.604 |
-| walker |  | 8107 | 0 | export at test/pages/keybinds.tsx:47 |  |  | 0.604 |
 | walker |  | 8115 | 8 | export names surface in test/pages/numeric.tsx |  |  | 0.604 |
-| walker |  | 8115 | 0 | export at test/pages/numeric.tsx:22 |  |  | 0.604 |
 | walker |  | 8123 | 8 | export names surface in test/pages/portal.tsx |  |  | 0.604 |
-| walker |  | 8123 | 0 | export at test/pages/portal.tsx:58 |  |  | 0.604 |
 | walker |  | 8131 | 8 | export names surface in test/pages/props.tsx |  |  | 0.604 |
-| walker |  | 8131 | 0 | export at test/pages/props.tsx:56 |  |  | 0.604 |
 | ns | 8154 |  | 468 | index.tsx — Group component body | 9.3 | 4.3 | 0.618 |
 | walker |  | 8506 | 375 | README.md section #35 |  |  | 0.625 |
 | walker |  | 8582 | 76 | README.md section #25 |  |  | 0.636 |

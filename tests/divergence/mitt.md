@@ -16,9 +16,6 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | walker |  | 393 | 168 | README headline in README.md |  |  | 0.760 |
 | ns | 470 |  | 108 | src/index.ts public exports — name-only locations | 2.1 |  | 0.662 |
 | walker |  | 553 | 160 | export names surface in src/index.ts |  |  | 0.805 |
-| walker |  | 553 | 0 | export at src/index.ts:1 |  |  | 0.805 |
-| walker |  | 553 | 0 | export at src/index.ts:5 |  |  | 0.805 |
-| walker |  | 553 | 0 | export at src/index.ts:12 |  |  | 0.805 |
 | walker |  | 565 | 12 | export at src/index.ts:13 |  |  | 0.807 |
 | walker |  | 588 | 23 | export at src/index.ts:46 |  |  | 0.810 |
 | walker |  | 614 | 26 | export at src/index.ts:6 |  |  | 0.813 |

@@ -10,7 +10,6 @@ Score(3000)=0.520 I=0.794 C=0.340 ns_rows≤3K=17/38 (reached=5 partial=1 missin
 | ns | 79 |  | 39 | Readme one-line tagline | 1.2 |  | 0.953 |
 | walker |  | 83 | 16 | listing of 'source' |  |  | 0.956 |
 | walker |  | 93 | 10 | export names surface in source/index.ts |  |  | 0.956 |
-| walker |  | 93 | 0 | export at source/index.ts:36 |  |  | 0.956 |
 | walker |  | 101 | 8 | listing of 'source/core' |  |  | 0.959 |
 | walker |  | 111 | 10 | export names surface in source/core/Ky.ts |  |  | 0.959 |
 | ns | 163 |  | 84 | Readme top-level section headings (## only) | 1.3 |  | 0.680 |
@@ -41,49 +40,40 @@ Score(3000)=0.520 I=0.794 C=0.340 ns_rows≤3K=17/38 (reached=5 partial=1 missin
 | walker |  | 1158 | 16 | export names surface in source/types/ResponsePromise.ts |  |  | 0.489 |
 | walker |  | 1174 | 16 | export names surface in source/types/request.ts |  |  | 0.489 |
 | walker |  | 1190 | 16 | export names surface in source/types/response.ts |  |  | 0.489 |
-| ns | 1356 |  | 223 | KyInstance: every member's signature (location batch) | 2.3 |  | 0.466 |
-| walker |  | 1521 | 331 | export names surface in source/types/options.ts |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:6 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:9 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:11 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:12 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:14 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:27 |  |  | 0.467 |
-| walker |  | 1521 | 0 | export at source/types/options.ts:307 |  |  | 0.467 |
-| walker |  | 1546 | 25 | export names surface in source/types/retry.ts |  |  | 0.468 |
-| walker |  | 1567 | 21 | export at source/types/request.ts:1 |  |  | 0.468 |
-| walker |  | 1589 | 22 | export at source/types/response.ts:1 |  |  | 0.468 |
-| walker |  | 1627 | 38 | listing of 'source/utils' |  |  | 0.556 |
-| walker |  | 1651 | 24 | export names surface in source/utils/delay.ts |  |  | 0.556 |
-| walker |  | 1666 | 15 | export at source/utils/delay.ts:5 |  |  | 0.556 |
-| walker |  | 1694 | 28 | export at source/utils/delay.ts:9 |  |  | 0.556 |
-| walker |  | 1718 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.556 |
-| walker |  | 1739 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.556 |
-| ns | 1768 |  | 412 | source/index.ts named-export block | 2.4 |  | 0.486 |
-| walker |  | 1787 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.486 |
-| walker |  | 1815 | 28 | export names surface in source/utils/is.ts |  |  | 0.486 |
-| walker |  | 1815 | 0 | export at source/utils/is.ts:2 |  |  | 0.486 |
-| walker |  | 1849 | 34 | export names surface in source/utils/types.ts |  |  | 0.486 |
-| walker |  | 1867 | 18 | export at source/utils/types.ts:1 |  |  | 0.486 |
-| walker |  | 1902 | 35 | export names surface in source/utils/options.ts |  |  | 0.486 |
-| walker |  | 1902 | 0 | export at source/utils/options.ts:30 |  |  | 0.486 |
-| walker |  | 1933 | 31 | export at source/utils/options.ts:4 |  |  | 0.486 |
-| ns | 1953 |  | 185 | source/index.ts imports + createInstance signature + default export | 2.5 |  | 0.464 |
-| walker |  | 1979 | 46 | export names surface in source/utils/normalize.ts |  |  | 0.464 |
-| walker |  | 1979 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.464 |
-| walker |  | 1999 | 20 | export at source/utils/normalize.ts:5 |  |  | 0.464 |
-| walker |  | 2035 | 36 | export at source/utils/types.ts:5 |  |  | 0.464 |
-| walker |  | 2050 | 15 | imports in source/types/ResponsePromise.ts |  |  | 0.464 |
-| walker |  | 2065 | 15 | imports in source/types/retry.ts |  |  | 0.464 |
-| walker |  | 2165 | 100 | imports in source/index.ts |  |  | 0.482 |
+| walker |  | 1215 | 25 | export names surface in source/types/retry.ts |  |  | 0.489 |
+| walker |  | 1236 | 21 | export at source/types/request.ts:1 |  |  | 0.490 |
+| walker |  | 1258 | 22 | export at source/types/response.ts:1 |  |  | 0.490 |
+| walker |  | 1296 | 38 | listing of 'source/utils' |  |  | 0.582 |
+| walker |  | 1320 | 24 | export names surface in source/utils/delay.ts |  |  | 0.582 |
+| walker |  | 1335 | 15 | export at source/utils/delay.ts:5 |  |  | 0.582 |
+| ns | 1356 |  | 223 | KyInstance: every member's signature (location batch) | 2.3 |  | 0.555 |
+| walker |  | 1363 | 28 | export at source/utils/delay.ts:9 |  |  | 0.555 |
+| walker |  | 1387 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.555 |
+| walker |  | 1408 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.555 |
+| walker |  | 1456 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.555 |
+| walker |  | 1484 | 28 | export names surface in source/utils/is.ts |  |  | 0.555 |
+| walker |  | 1518 | 34 | export names surface in source/utils/types.ts |  |  | 0.555 |
+| walker |  | 1536 | 18 | export at source/utils/types.ts:1 |  |  | 0.555 |
+| walker |  | 1571 | 35 | export names surface in source/utils/options.ts |  |  | 0.555 |
+| walker |  | 1571 | 0 | export at source/utils/options.ts:30 |  |  | 0.555 |
+| walker |  | 1602 | 31 | export at source/utils/options.ts:4 |  |  | 0.555 |
+| walker |  | 1648 | 46 | export names surface in source/utils/normalize.ts |  |  | 0.555 |
+| walker |  | 1648 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.555 |
+| walker |  | 1668 | 20 | export at source/utils/normalize.ts:5 |  |  | 0.555 |
+| walker |  | 1704 | 36 | export at source/utils/types.ts:5 |  |  | 0.555 |
+| walker |  | 1719 | 15 | imports in source/types/ResponsePromise.ts |  |  | 0.555 |
+| walker |  | 1734 | 15 | imports in source/types/retry.ts |  |  | 0.555 |
+| ns | 1768 |  | 412 | source/index.ts named-export block | 2.4 |  | 0.485 |
+| walker |  | 1834 | 100 | imports in source/index.ts |  |  | 0.487 |
+| ns | 1953 |  | 185 | source/index.ts imports + createInstance signature + default export | 2.5 |  | 0.481 |
+| walker |  | 2165 | 331 | export names surface in source/types/options.ts |  |  | 0.482 |
+| walker |  | 2165 | 0 | export at source/types/options.ts:307 |  |  | 0.482 |
 | walker |  | 2181 | 16 | imports in source/errors/TimeoutError.ts |  |  | 0.482 |
 | walker |  | 2197 | 16 | imports in source/utils/delay.ts |  |  | 0.482 |
 | ns | 2246 |  | 293 | source/index.ts createInstance body | 2.6 | 2.5 | 0.457 |
 | walker |  | 2279 | 82 | json config tsconfig.json |  |  | 0.457 |
 | walker |  | 2296 | 17 | imports in source/utils/timeout.ts |  |  | 0.457 |
 | walker |  | 2374 | 78 | export names surface in source/types/common.ts |  |  | 0.457 |
-| walker |  | 2374 | 0 | export at source/types/common.ts:2 |  |  | 0.457 |
-| walker |  | 2374 | 0 | export at source/types/common.ts:4 |  |  | 0.457 |
 | walker |  | 2395 | 21 | export at source/types/common.ts:6 |  |  | 0.458 |
 | ns | 2473 |  | 227 | Default ky() body-method behavior + body shortcuts list | 2.7 |  | 0.454 |
 | walker |  | 2730 | 335 | headings outline in readme.md |  |  | 0.563 |
@@ -155,8 +145,6 @@ Score(3000)=0.520 I=0.794 C=0.340 ns_rows≤3K=17/38 (reached=5 partial=1 missin
 | walker |  | 5934 | 341 | export at source/core/Ky.ts:33 |  |  | 0.501 |
 | walker |  | 5975 | 41 | imports in source/utils/options.ts |  |  | 0.501 |
 | walker |  | 6136 | 161 | export names surface in source/types/hooks.ts |  |  | 0.508 |
-| walker |  | 6136 | 0 | export at source/types/hooks.ts:30 |  |  | 0.508 |
-| walker |  | 6136 | 0 | export at source/types/hooks.ts:57 |  |  | 0.508 |
 | walker |  | 6182 | 46 | export at source/types/hooks.ts:14 |  |  | 0.515 |
 | walker |  | 6239 | 57 | export at source/types/hooks.ts:41 |  |  | 0.526 |
 | walker |  | 6322 | 83 | export at source/types/hooks.ts:20 |  |  | 0.526 |
@@ -195,14 +183,6 @@ Score(3000)=0.520 I=0.794 C=0.340 ns_rows≤3K=17/38 (reached=5 partial=1 missin
 | walker |  | 8979 | 255 | export body at source/utils/options.ts:4 body 8 |  |  | 0.546 |
 | ns | 9072 |  | 171 | options.ts utils + body.ts streaming exports + small util one-liners | 6.4 |  | 0.551 |
 | walker |  | 9227 | 248 | export names surface in source/core/constants.ts |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:34 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:35 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:36 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:37 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:39 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:58 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:61 |  |  | 0.556 |
-| walker |  | 9227 | 0 | export at source/core/constants.ts:63 |  |  | 0.556 |
 | walker |  | 9238 | 11 | export at source/core/constants.ts:148 |  |  | 0.556 |
 | walker |  | 9268 | 30 | export doc at source/core/constants.ts:148 |  |  | 0.558 |
 | walker |  | 9376 | 108 | export at source/core/constants.ts:46 |  |  | 0.571 |

@@ -57,7 +57,7 @@ use super::import_chunks::{
 };
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_per_file_content, dedup_sorted,
-    extend_span, file_depth_factor,
+    extend_span, file_depth_factor, file_lines_covered_by,
     fs::{JS_MODULE_ENTRYPOINT_FILES, files_with_any_extension, is_source_dir},
     name_of, node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
     statement_block_parts,
@@ -169,12 +169,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     })
                 })
                 .collect();
-            for (chunk_index, chunk) in exports.chunks(NAMES_SURFACE_CHUNK_SIZE).enumerate() {
-                let Some(content) = single_file_lines_content(
-                    file,
-                    &source,
-                    collect_export_names_from(chunk, &export_start_lines),
-                ) else {
+            let names_lines_by_chunk: Vec<_> = exports
+                .chunks(NAMES_SURFACE_CHUNK_SIZE)
+                .map(|chunk| collect_export_names_from(chunk, &export_start_lines))
+                .collect();
+            for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
+                let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
+                else {
                     continue;
                 };
                 out.push(Batch {
@@ -199,15 +200,27 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     start_line: item.start_line,
                 };
                 let split_js_class = should_split_js_class_export(file, item);
-                if let Some(content) = single_file_lines_content(
-                    file,
+                let export_lines = if split_js_class {
+                    class_header_surface_lines(item.anchor, item.decl, &source)
+                } else {
+                    decl_surface_lines(item.kind, item.anchor, item.decl, &source)
+                };
+                let mut doc_lines = Vec::new();
+                collect_jsdoc_above(
+                    item.anchor,
                     &source,
-                    if split_js_class {
-                        class_header_surface_lines(item.anchor, item.decl, &source)
-                    } else {
-                        decl_surface_lines(item.kind, item.anchor, item.decl, &source)
-                    },
-                ) {
+                    &mut doc_lines,
+                    is_entrypoint_file(file),
+                );
+                let export_has_descendants = !doc_lines.is_empty()
+                    || (split_js_class && !item.class_members.is_empty())
+                    || (!split_js_class && !item.body_parts.is_empty());
+                if (!file_lines_covered_by(
+                    &export_lines,
+                    &names_lines_by_chunk[names_surface_chunk_index(item_index)],
+                ) || export_has_descendants)
+                    && let Some(content) = single_file_lines_content(file, &source, export_lines)
+                {
                     out.push(Batch {
                         key: export_key.clone().into(),
                         predecessor: Some(names_predecessor.clone()),
@@ -252,13 +265,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         );
                     }
                 }
-                let mut doc_lines = Vec::new();
-                collect_jsdoc_above(
-                    item.anchor,
-                    &source,
-                    &mut doc_lines,
-                    is_entrypoint_file(file),
-                );
                 if let Some(content) = single_file_lines_content(
                     file,
                     &source,

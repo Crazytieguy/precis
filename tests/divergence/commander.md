@@ -35,11 +35,8 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 968 | 29 | Readme_zh-CN.md section #1 |  |  | 0.554 |
 | walker |  | 994 | 26 | export names surface in lib/suggestSimilar.js |  |  | 0.554 |
 | walker |  | 994 | 0 | export at lib/suggestSimilar.js:56 |  |  | 0.554 |
-| walker |  | 994 | 0 | export at lib/suggestSimilar.js:101 |  |  | 0.554 |
 | ns | 1040 |  | 249 | Quick Start — split subcommand | 2.5 |  | 0.487 |
 | walker |  | 1146 | 152 | export names surface in typings/index.d.ts |  |  | 0.487 |
-| walker |  | 1146 | 0 | export at typings/index.d.ts:38 |  |  | 0.487 |
-| walker |  | 1146 | 0 | export at typings/index.d.ts:340 |  |  | 0.487 |
 | walker |  | 1156 | 10 | export at typings/index.d.ts:31 |  |  | 0.487 |
 | walker |  | 1177 | 21 | export at typings/index.d.ts:342 |  |  | 0.487 |
 | walker |  | 1206 | 29 | export at typings/index.d.ts:345 |  |  | 0.487 |
@@ -50,8 +47,6 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | ns | 1376 |  | 136 | esm.mjs wrapper | 2.7 |  | 0.417 |
 | walker |  | 1402 | 40 | export names surface in lib/option.js |  |  | 0.417 |
 | walker |  | 1402 | 0 | export at lib/option.js:3 |  |  | 0.417 |
-| walker |  | 1402 | 0 | export at lib/option.js:379 |  |  | 0.417 |
-| walker |  | 1402 | 0 | export at lib/option.js:380 |  |  | 0.417 |
 | walker |  | 1412 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.417 |
 | walker |  | 1423 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.417 |
 | walker |  | 1434 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.417 |
@@ -73,8 +68,6 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 1772 | 41 | export names surface in lib/help.js |  |  | 0.380 |
 | walker |  | 1772 | 0 | export at lib/help.js:12 |  |  | 0.380 |
 | walker |  | 1772 | 0 | export at lib/help.js:740 |  |  | 0.380 |
-| walker |  | 1772 | 0 | export at lib/help.js:746 |  |  | 0.380 |
-| walker |  | 1772 | 0 | export at lib/help.js:747 |  |  | 0.380 |
 | walker |  | 1780 | 8 | export member at lib/help.js:12 member 13 |  |  | 0.381 |
 | walker |  | 1792 | 12 | export member at lib/help.js:12 member 40 |  |  | 0.381 |
 | walker |  | 1804 | 12 | export member at lib/help.js:12 member 79 |  |  | 0.381 |
@@ -130,8 +123,6 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 3155 | 51 | export names surface in lib/command.js |  |  | 0.409 |
 | walker |  | 3155 | 0 | export at lib/command.js:13 |  |  | 0.409 |
 | walker |  | 3155 | 0 | export at lib/command.js:2752 |  |  | 0.409 |
-| walker |  | 3155 | 0 | export at lib/command.js:2776 |  |  | 0.409 |
-| walker |  | 3155 | 0 | export at lib/command.js:2777 |  |  | 0.409 |
 | walker |  | 3166 | 11 | export member at lib/command.js:13 member 20 |  |  | 0.410 |
 | walker |  | 3177 | 11 | export member at lib/command.js:13 member 203 |  |  | 0.410 |
 | walker |  | 3188 | 11 | export member at lib/command.js:13 member 359 |  |  | 0.411 |
@@ -236,17 +227,7 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 4694 | 127 | headings outline in docs/zh-CN/可变参数的选项.md |  |  | 0.485 |
 | walker |  | 4715 | 21 | export member at lib/help.js:12 member 417 |  |  | 0.488 |
 | walker |  | 4865 | 150 | export names surface in index.js |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:7 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:9 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:10 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:11 |  |  | 0.513 |
 | walker |  | 4865 | 0 | export at index.js:17 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:18 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:19 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:20 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:22 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:23 |  |  | 0.513 |
-| walker |  | 4865 | 0 | export at index.js:24 |  |  | 0.513 |
 | walker |  | 4884 | 19 | export doc at index.js:17 |  |  | 0.513 |
 | walker |  | 4906 | 22 | export member at lib/command.js:13 member 155 |  |  | 0.516 |
 | walker |  | 4928 | 22 | export member at lib/command.js:13 member 599 |  |  | 0.516 |
@@ -255,15 +236,11 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 5206 | 256 | package dependencies in package.json |  |  | 0.494 |
 | walker |  | 5254 | 48 | export names surface in lib/argument.js |  |  | 0.498 |
 | walker |  | 5254 | 0 | export at lib/argument.js:143 |  |  | 0.498 |
-| walker |  | 5254 | 0 | export at lib/argument.js:149 |  |  | 0.498 |
-| walker |  | 5254 | 0 | export at lib/argument.js:150 |  |  | 0.498 |
 | walker |  | 5332 | 78 | Readme.md section #7 |  |  | 0.499 |
 | ns | 5411 |  | 391 | _parseCommand body — action handler + hooks | 5.2b | 5.2 | 0.482 |
 | walker |  | 5508 | 176 | export at typings/index.d.ts:48 |  |  | 0.482 |
 | walker |  | 5532 | 24 | export member at lib/command.js:13 member 1531 |  |  | 0.482 |
 | walker |  | 5583 | 51 | export names surface in lib/error.js |  |  | 0.484 |
-| walker |  | 5583 | 0 | export at lib/error.js:38 |  |  | 0.484 |
-| walker |  | 5583 | 0 | export at lib/error.js:39 |  |  | 0.484 |
 | walker |  | 5594 | 11 | export at lib/error.js:25 |  |  | 0.484 |
 | walker |  | 5610 | 16 | export at lib/error.js:4 |  |  | 0.485 |
 | walker |  | 5635 | 25 | export member at lib/command.js:13 member 1183 |  |  | 0.485 |
@@ -282,13 +259,6 @@ Score(3000)=0.407 I=0.582 C=0.284 ns_rows≤3K=20/41 (reached=4 partial=2 missin
 | walker |  | 7186 | 48 | export body at lib/argument.js:143 body 144 |  |  | 0.453 |
 | ns | 7221 |  | 422 | addOption body — defaults + listener registration | 5.4 | 3.4 | 0.439 |
 | walker |  | 7386 | 200 | export names surface #1 in typings/index.d.ts |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:367 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:368 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:374 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:1109 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:1110 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:1111 |  |  | 0.439 |
-| walker |  | 7386 | 0 | export at typings/index.d.ts:1113 |  |  | 0.439 |
 | walker |  | 7401 | 15 | export at typings/index.d.ts:1100 |  |  | 0.439 |
 | walker |  | 7425 | 24 | export at typings/index.d.ts:1104 |  |  | 0.439 |
 | walker |  | 7461 | 36 | export at typings/index.d.ts:370 |  |  | 0.439 |

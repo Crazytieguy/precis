@@ -28,9 +28,6 @@ Score(3000)=0.449 I=0.725 C=0.278 ns_rows≤3K=18/40 (reached=5 partial=3 missin
 | walker |  | 411 | 32 | python decl at profiler/profiler_script.py:12 |  |  | 0.749 |
 | ns | 433 |  | 30 | tests/ directory listing | 2.1 |  | 0.695 |
 | walker |  | 443 | 32 | python decl names surface in src/tomli/_types.py |  |  | 0.697 |
-| walker |  | 443 | 0 | python decl at src/tomli/_types.py:8 |  |  | 0.697 |
-| walker |  | 443 | 0 | python decl at src/tomli/_types.py:9 |  |  | 0.697 |
-| walker |  | 443 | 0 | python decl at src/tomli/_types.py:10 |  |  | 0.697 |
 | walker |  | 456 | 13 | python imports in src/tomli/_types.py |  |  | 0.700 |
 | ns | 491 |  | 58 | _types.py — full | 2.2 |  | 0.692 |
 | walker |  | 516 | 60 | python decl names surface in fuzzer/fuzz.py |  |  | 0.692 |
@@ -69,8 +66,6 @@ Score(3000)=0.449 I=0.725 C=0.278 ns_rows≤3K=18/40 (reached=5 partial=3 missin
 | walker |  | 2160 | 56 | CHANGELOG.md section #2 |  |  | 0.513 |
 | walker |  | 2201 | 41 | README.md section #22 |  |  | 0.513 |
 | walker |  | 2352 | 151 | python decl names surface in src/tomli/_re.py |  |  | 0.544 |
-| walker |  | 2352 | 0 | python decl at src/tomli/_re.py:11 |  |  | 0.544 |
-| walker |  | 2352 | 0 | python decl at src/tomli/_re.py:45 |  |  | 0.544 |
 | walker |  | 2352 | 0 | python decl at src/tomli/_re.py:59 |  |  | 0.544 |
 | walker |  | 2352 | 0 | python decl at src/tomli/_re.py:109 |  |  | 0.544 |
 | walker |  | 2352 | 0 | python decl at src/tomli/_re.py:116 |  |  | 0.544 |
@@ -108,17 +103,6 @@ Score(3000)=0.449 I=0.725 C=0.278 ns_rows≤3K=18/40 (reached=5 partial=3 missin
 | walker |  | 4019 | 150 | python imports in src/tomli/_parser.py |  |  | 0.427 |
 | walker |  | 4102 | 83 | python decl body at src/tomli/_re.py:109 body 110 |  |  | 0.427 |
 | walker |  | 4353 | 251 | python decl names surface in src/tomli/_parser.py |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:19 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:35 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:37 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:41 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:42 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:44 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:45 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:47 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:49 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:50 |  |  | 0.427 |
-| walker |  | 4353 | 0 | python decl at src/tomli/_parser.py:54 |  |  | 0.427 |
 | walker |  | 4378 | 25 | python decl at src/tomli/_parser.py:51 |  |  | 0.427 |
 | walker |  | 4410 | 32 | CHANGELOG.md section #21 |  |  | 0.427 |
 | walker |  | 4441 | 31 | CHANGELOG.md section #23 |  |  | 0.427 |
@@ -135,7 +119,6 @@ Score(3000)=0.449 I=0.725 C=0.278 ns_rows≤3K=18/40 (reached=5 partial=3 missin
 | walker |  | 5109 | 63 | tomllib.md section #5 |  |  | 0.383 |
 | ns | 5138 |  | 241 | Flags — __init__, add_pending, finalize_pending, unset_all | 3.9 | 2.3 | 0.373 |
 | walker |  | 5322 | 213 | python decl names surface #1 in src/tomli/_parser.py |  |  | 0.380 |
-| walker |  | 5322 | 0 | python decl at src/tomli/_parser.py:55 |  |  | 0.380 |
 | walker |  | 5322 | 0 | python decl at src/tomli/_parser.py:71 |  |  | 0.380 |
 | walker |  | 5322 | 0 | python decl at src/tomli/_parser.py:76 |  |  | 0.380 |
 | walker |  | 5322 | 0 | python decl at src/tomli/_parser.py:137 |  |  | 0.380 |

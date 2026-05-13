@@ -228,6 +228,14 @@ impl FileLines {
     }
 }
 
+pub(crate) fn file_lines_covered_by(child: &FileLines, parent: &FileLines) -> bool {
+    child.full.iter().all(|line| parent.full.contains(line))
+        && child
+            .ellipses
+            .iter()
+            .all(|line| parent.ellipses.contains(line) || parent.full.contains(line))
+}
+
 /// Path-relative location prior shared by every per-file walker: depth
 /// penalty (`value::depth_factor`) folded with the non-essential-directory
 /// discount (`WalkCtx::non_essential_factor`). Walkers without an

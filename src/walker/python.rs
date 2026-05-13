@@ -58,8 +58,8 @@ use super::import_chunks::{
 };
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, dedup_sorted, extend_nonblank_rows,
-    extend_span, file_depth_factor, fs::files_with_extension, name_of, push_rows,
-    signature_end_row, single_file_lines_content, statement_block_parts,
+    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension, name_of,
+    push_rows, signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
 const VISIBILITY_PUBLIC: f64 = 1.0;
@@ -153,9 +153,12 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 })
             })
             .collect();
-        for (chunk_index, chunk) in decls.chunks(NAMES_SURFACE_CHUNK_SIZE).enumerate() {
-            let Some(content) =
-                single_file_lines_content(file, &source, collect_decl_names_from(chunk))
+        let names_lines_by_chunk: Vec<_> = decls
+            .chunks(NAMES_SURFACE_CHUNK_SIZE)
+            .map(collect_decl_names_from)
+            .collect();
+        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
+            let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
             else {
                 continue;
             };
@@ -210,7 +213,11 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 file: file.clone(),
                 start_line: decl.start_line,
             };
-            if let Some(content) = single_file_lines_content(file, &source, collect_decl(decl)) {
+            let decl_lines = collect_decl(decl);
+            if (!matches!(decl.kind, DeclKind::Const)
+                || !file_lines_covered_by(&decl_lines, &names_lines_by_chunk[chunk_index]))
+                && let Some(content) = single_file_lines_content(file, &source, decl_lines)
+            {
                 out.push(Batch {
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),

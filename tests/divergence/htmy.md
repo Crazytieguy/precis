@@ -16,8 +16,6 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 233 | 14 | listing of 'htmy/md' |  |  | 0.758 |
 | ns | 238 |  | 70 | Public exports — renderer + decorator | 1.4 |  | 0.663 |
 | walker |  | 251 | 18 | python decl names surface in htmy/__init__.py |  |  | 0.663 |
-| walker |  | 251 | 0 | python decl at htmy/__init__.py:46 |  |  | 0.663 |
-| walker |  | 251 | 0 | python decl at htmy/__init__.py:48 |  |  | 0.663 |
 | ns | 253 |  | 15 | Project version | 1.5 |  | 0.672 |
 | walker |  | 261 | 10 | python decl names surface in htmy/error_boundary.py |  |  | 0.672 |
 | walker |  | 261 | 0 | python decl at htmy/error_boundary.py:15 |  |  | 0.672 |
@@ -26,9 +24,6 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 294 | 22 | listing of 'htmy/renderer' |  |  | 0.680 |
 | walker |  | 354 | 60 | python imports in htmy/renderer/__init__.py |  |  | 0.681 |
 | walker |  | 386 | 32 | python decl names surface in htmy/renderer/__init__.py |  |  | 0.682 |
-| walker |  | 386 | 0 | python decl at htmy/renderer/__init__.py:6 |  |  | 0.682 |
-| walker |  | 386 | 0 | python decl at htmy/renderer/__init__.py:9 |  |  | 0.682 |
-| walker |  | 386 | 0 | python decl at htmy/renderer/__init__.py:12 |  |  | 0.682 |
 | ns | 394 |  | 141 | README key features (top half) | 1.6 |  | 0.580 |
 | walker |  | 395 | 9 | python decl names surface in htmy/renderer/baseline.py |  |  | 0.580 |
 | walker |  | 395 | 0 | python decl at htmy/renderer/baseline.py:18 |  |  | 0.580 |
@@ -63,7 +58,6 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 912 | 64 | python decl names surface in htmy/tag.py |  |  | 0.445 |
 | walker |  | 912 | 0 | python decl at htmy/tag.py:12 |  |  | 0.445 |
 | walker |  | 912 | 0 | python decl at htmy/tag.py:24 |  |  | 0.445 |
-| walker |  | 912 | 0 | python decl at htmy/tag.py:53 |  |  | 0.445 |
 | walker |  | 912 | 0 | python decl at htmy/tag.py:56 |  |  | 0.445 |
 | walker |  | 912 | 0 | python decl at htmy/tag.py:73 |  |  | 0.445 |
 | walker |  | 925 | 13 | python class body at htmy/tag.py:56 |  |  | 0.445 |
@@ -141,12 +135,10 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 2587 | 122 | python imports #1 in htmy/__init__.py |  |  | 0.474 |
 | walker |  | 2648 | 61 | python decl names surface in htmy/renderer/default.py |  |  | 0.474 |
 | walker |  | 2648 | 0 | python decl at htmy/renderer/default.py:20 |  |  | 0.474 |
-| walker |  | 2648 | 0 | python decl at htmy/renderer/default.py:50 |  |  | 0.474 |
 | walker |  | 2648 | 0 | python decl at htmy/renderer/default.py:53 |  |  | 0.474 |
 | walker |  | 2648 | 0 | python decl at htmy/renderer/default.py:228 |  |  | 0.474 |
 | walker |  | 2666 | 18 | python class body at htmy/renderer/default.py:228 |  |  | 0.474 |
 | walker |  | 2775 | 109 | python decl names surface in htmy/i18n.py |  |  | 0.475 |
-| walker |  | 2775 | 0 | python decl at htmy/i18n.py:11 |  |  | 0.475 |
 | walker |  | 2775 | 0 | python decl at htmy/i18n.py:15 |  |  | 0.475 |
 | walker |  | 2775 | 0 | python decl at htmy/i18n.py:18 |  |  | 0.475 |
 | walker |  | 2775 | 0 | python decl at htmy/i18n.py:21 |  |  | 0.475 |
@@ -178,10 +170,7 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 3361 | 28 | docs/api/html.md section #0 |  |  | 0.416 |
 | walker |  | 3389 | 28 | docs/api/utils.md section #0 |  |  | 0.416 |
 | walker |  | 3459 | 70 | python decl names surface in htmy/md/typing.py |  |  | 0.416 |
-| walker |  | 3459 | 0 | python decl at htmy/md/typing.py:11 |  |  | 0.416 |
 | walker |  | 3459 | 0 | python decl at htmy/md/typing.py:14 |  |  | 0.416 |
-| walker |  | 3459 | 0 | python decl at htmy/md/typing.py:21 |  |  | 0.416 |
-| walker |  | 3459 | 0 | python decl at htmy/md/typing.py:24 |  |  | 0.416 |
 | walker |  | 3470 | 11 | python decl doc at htmy/md/typing.py:14 |  |  | 0.416 |
 | walker |  | 3495 | 25 | python class body at htmy/md/typing.py:14 |  |  | 0.416 |
 | walker |  | 3524 | 29 | docs/api/etree.md section #0 |  |  | 0.416 |
@@ -303,16 +292,9 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 6690 | 29 | docs/api/renderer/default.md section #0 |  |  | 0.448 |
 | ns | 6703 |  | 161 | Formatter class signature | 2.19 |  | 0.443 |
 | walker |  | 6898 | 208 | python decl names surface in htmy/function_component.py |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:13 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:18 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:25 |  |  | 0.443 |
 | walker |  | 6898 | 0 | python decl at htmy/function_component.py:31 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:40 |  |  | 0.443 |
 | walker |  | 6898 | 0 | python decl at htmy/function_component.py:46 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:57 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:62 |  |  | 0.443 |
 | walker |  | 6898 | 0 | python decl at htmy/function_component.py:71 |  |  | 0.443 |
-| walker |  | 6898 | 0 | python decl at htmy/function_component.py:362 |  |  | 0.443 |
 | walker |  | 6917 | 19 | python decl doc at htmy/function_component.py:71 |  |  | 0.443 |
 | walker |  | 6975 | 58 | python class body at htmy/function_component.py:71 |  |  | 0.444 |
 | walker |  | 7014 | 39 | python decl doc at htmy/function_component.py:31 |  |  | 0.444 |
@@ -341,17 +323,8 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | walker |  | 7940 | 100 | python imports in htmy/etree.py |  |  | 0.445 |
 | walker |  | 8109 | 169 | python decl names surface in htmy/html.py |  |  | 0.447 |
 | walker |  | 8109 | 0 | python decl at htmy/html.py:13 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:20 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:27 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:34 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:41 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:48 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:55 |  |  | 0.447 |
 | walker |  | 8109 | 0 | python decl at htmy/html.py:63 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:71 |  |  | 0.447 |
 | walker |  | 8109 | 0 | python decl at htmy/html.py:79 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:103 |  |  | 0.447 |
-| walker |  | 8109 | 0 | python decl at htmy/html.py:113 |  |  | 0.447 |
 | walker |  | 8117 | 8 | python decl doc at htmy/html.py:13 |  |  | 0.448 |
 | walker |  | 8127 | 10 | python decl doc at htmy/html.py:63 |  |  | 0.449 |
 | ns | 8131 |  | 293 | html.py — block + form tag inventory (locations) | 3.2 |  | 0.435 |
@@ -405,18 +378,8 @@ Score(3000)=0.475 I=0.722 C=0.313 ns_rows≤3K=17/40 (reached=6 partial=1 missin
 | ns | 9299 |  | 515 | Snippet docstring — the 4-step pipeline + warning | 4.1 |  | 0.477 |
 | walker |  | 9360 | 110 | python decl doc at htmy/tag.py:84 |  |  | 0.491 |
 | walker |  | 9531 | 171 | python decl names surface in htmy/typing.py |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:4 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:5 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:9 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:12 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:17 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:20 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:23 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:26 |  |  | 0.498 |
 | walker |  | 9531 | 0 | python decl at htmy/typing.py:37 |  |  | 0.498 |
 | walker |  | 9531 | 0 | python decl at htmy/typing.py:45 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:53 |  |  | 0.498 |
-| walker |  | 9531 | 0 | python decl at htmy/typing.py:56 |  |  | 0.498 |
 | walker |  | 9545 | 14 | python decl doc at htmy/typing.py:37 |  |  | 0.499 |
 | walker |  | 9559 | 14 | python decl doc at htmy/typing.py:45 |  |  | 0.500 |
 | walker |  | 9604 | 45 | python method sigs in htmy/typing.py |  |  | 0.503 |
