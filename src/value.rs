@@ -114,11 +114,11 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     if is_auto_injected_doc_file(path, root) {
         return 0.1;
     }
-    // Peripheral admin / release / translation markdown at the root.
-    // NS authors universally treat these as "appendix" content; the
-    // walker should not let CHANGELOG, CONTRIBUTING, etc. crowd the
-    // primary-source schedule.
-    if is_top_level_peripheral_doc(target) || is_top_level_localized_readme(target) {
+    // Peripheral admin / release / translation markdown (anywhere in
+    // the tree). NS authors universally treat these as "appendix"
+    // content; the walker should not let CHANGELOG, CONTRIBUTING, etc.
+    // crowd the primary-source schedule.
+    if is_peripheral_doc(target) || is_localized_readme(target) {
         return 0.2;
     }
     for component in target.components() {
@@ -191,6 +191,11 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
 /// Takes the original `path` + `root` (mirroring [`non_essential_factor`])
 /// rather than a pre-stripped target, so call sites don't have to
 /// duplicate the strip-prefix dance.
+///
+/// Matches anywhere in the tree, not just at the repo root: nested
+/// `packages/foo/CLAUDE.md` in a monorepo is the same kind of
+/// agent-instruction content as the root one, and Claude Code's
+/// CLAUDE.md hierarchy is recursive.
 pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path) -> bool {
     let target = path.strip_prefix(root).unwrap_or(path);
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
@@ -202,41 +207,34 @@ pub fn is_auto_injected_doc_file(path: &std::path::Path, root: &std::path::Path)
     {
         return false;
     }
-    let mut comps = target.components();
-    let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) else {
-        return false;
-    };
-    let second = comps.next().and_then(|c| c.as_os_str().to_str());
-    if second.is_none()
-        && let Some(stem) = target.file_stem().and_then(|s| s.to_str())
+    if let Some(stem) = target.file_stem().and_then(|s| s.to_str())
         && (stem.eq_ignore_ascii_case("AGENTS") || stem.eq_ignore_ascii_case("CLAUDE"))
     {
         return true;
     }
-    let Some(second) = second else { return false };
-    (first.eq_ignore_ascii_case(".claude") && second.eq_ignore_ascii_case("skills"))
-        || (first.eq_ignore_ascii_case(".agent") && second.eq_ignore_ascii_case("skills"))
-        || (first.eq_ignore_ascii_case(".cursor") && second.eq_ignore_ascii_case("rules"))
+    // Skill / rules subtrees: any text file whose path contains an
+    // adjacent `(agent-dir, subdir)` pair, e.g. `.claude/skills`,
+    // `.agent/skills`, `.cursor/rules`.
+    let parts: Vec<&str> = target
+        .components()
+        .filter_map(|c| c.as_os_str().to_str())
+        .collect();
+    parts.windows(2).any(|w| {
+        let (a, b) = (w[0], w[1]);
+        (a.eq_ignore_ascii_case(".claude") && b.eq_ignore_ascii_case("skills"))
+            || (a.eq_ignore_ascii_case(".agent") && b.eq_ignore_ascii_case("skills"))
+            || (a.eq_ignore_ascii_case(".cursor") && b.eq_ignore_ascii_case("rules"))
+    })
 }
 
-/// True iff `target` (already root-relative) is a single component —
-/// a file directly at the repo root. Used by predicates that should
-/// only fire on top-level admin/translation markdown, leaving the
-/// same basenames in subdirectories at full weight.
-fn is_top_level(target: &std::path::Path) -> bool {
-    let mut comps = target.components();
-    comps.next().is_some() && comps.next().is_none()
-}
-
-/// True for top-level admin / release markdown — CHANGELOG /
-/// CONTRIBUTING / SECURITY / NOTICE / RELEASING / etc. — only when
-/// at the repo root. Subdir occurrences (e.g. otree's
-/// `docs/changelog.md`) are deliberately untouched because NS authors
-/// sometimes promote them.
-pub fn is_top_level_peripheral_doc(target: &std::path::Path) -> bool {
-    if !is_top_level(target) {
-        return false;
-    }
+/// True for admin / release markdown — CHANGELOG / CONTRIBUTING /
+/// SECURITY / NOTICE / RELEASING / etc. — anywhere in the tree.
+/// Monorepos commonly carry per-package CHANGELOGs (d2ts's
+/// `packages/d2mini/CHANGELOG.md`, the Changesets pattern); these
+/// follow the same admin-doc semantics as the root copy. NS atoms
+/// pointing at these basenames are all at `exp_t > 9000` across the
+/// corpus, so demotion is metric-safe.
+pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(ext) = target.extension().and_then(|e| e.to_str()) else {
         return false;
     };
@@ -267,14 +265,12 @@ pub fn is_top_level_peripheral_doc(target: &std::path::Path) -> bool {
     .any(|s| stem.eq_ignore_ascii_case(s))
 }
 
-/// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>` at the
-/// repo root, where `<locale>` is a known ISO-639-style code. The
-/// whitelist (rather than a `[a-z]{2,3}([-_][A-Z]{2,4})?` regex) is
-/// what rules out `README.api.md` / `README.dev.md` / `README.old.md`.
-pub fn is_top_level_localized_readme(target: &std::path::Path) -> bool {
-    if !is_top_level(target) {
-        return false;
-    }
+/// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
+/// anywhere in the tree, where `<locale>` is a known ISO-639-style
+/// code. The whitelist (rather than a
+/// `[a-z]{2,3}([-_][A-Z]{2,4})?` regex) is what rules out
+/// `README.api.md` / `README.dev.md` / `README.old.md`.
+pub fn is_localized_readme(target: &std::path::Path) -> bool {
     let Some(name) = target.file_name().and_then(|n| n.to_str()) else {
         return false;
     };
@@ -477,26 +473,29 @@ mod tests {
         }
     }
 
-    /// Same basenames in subdirectories keep full weight — NS authors
-    /// sometimes promote `docs/changelog.md` (otree) as primary
-    /// content. The peripheral-doc predicate is intentionally
-    /// root-scoped.
+    /// Same basenames in subdirectories ARE demoted — monorepo
+    /// per-package CHANGELOGs (d2ts's `packages/d2mini/CHANGELOG.md`)
+    /// follow the same admin-doc semantics. NS atoms that point at
+    /// these paths (otree's `docs/changelog.md`, etc.) are all at
+    /// `exp_t > 9000` across the corpus, so demotion is metric-safe.
     #[test]
-    fn value_subdir_peripheral_basenames_keep_full_weight() {
+    fn value_subdir_peripheral_basenames_are_demoted() {
         let root = Path::new("/repo");
-        // `docs/` is not in the non-essential dir list, so these files
-        // stay at 1.0.
         assert_eq!(
             non_essential_factor(&root.join("docs/changelog.md"), root),
-            1.0,
+            0.2,
         );
         assert_eq!(
             non_essential_factor(&root.join("docs/CONTRIBUTING.md"), root),
-            1.0,
+            0.2,
+        );
+        assert_eq!(
+            non_essential_factor(&root.join("packages/d2mini/CHANGELOG.md"), root),
+            0.2,
         );
         assert_eq!(
             non_essential_factor(&root.join("subproject/CHANGELOG.md"), root),
-            1.0,
+            0.2,
         );
     }
 
@@ -511,6 +510,11 @@ mod tests {
             ".claude/skills/foo/SKILL.md",
             ".agent/skills/bar/instructions.md",
             ".cursor/rules/baz.mdc",
+            // Nested AGENTS.md / CLAUDE.md in monorepos: Claude Code's
+            // CLAUDE.md hierarchy is recursive, so these are still
+            // auto-injected.
+            "packages/foo/CLAUDE.md",
+            "crates/bar/AGENTS.md",
         ] {
             assert_eq!(
                 non_essential_factor(&root.join(path), root),
@@ -635,14 +639,14 @@ mod tests {
         assert_eq!(non_essential_factor(&root.join("Readme.md"), root), 1.0,);
     }
 
-    /// Localized READMEs in subdirs keep full weight — only top-level
-    /// localized copies are demoted.
+    /// Localized READMEs in subdirs (e.g. monorepo packages) ARE
+    /// demoted — same admin-doc semantics as root.
     #[test]
-    fn value_subdir_localized_readme_keeps_full_weight() {
+    fn value_subdir_localized_readme_is_demoted() {
         let root = Path::new("/repo");
         assert_eq!(
             non_essential_factor(&root.join("docs/README.zh-CN.md"), root),
-            1.0,
+            0.2,
         );
     }
 }

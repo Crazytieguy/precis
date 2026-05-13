@@ -144,38 +144,36 @@ Score(3000)=0.509 I=0.788 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missin
 | walker |  | 6267 | 259 | pub item at src/config/colors.rs:78 |  |  | 0.543 |
 | ns | 6578 |  | 344 | Action enum variants | 5.3 |  | 0.528 |
 | walker |  | 6588 | 321 | [dependencies] in Cargo.toml |  |  | 0.528 |
-| walker |  | 6909 | 321 | headings outline in docs/changelog.md |  |  | 0.529 |
-| walker |  | 6940 | 31 | docs/changelog.md section #0 |  |  | 0.529 |
+| walker |  | 6883 | 295 | pub item at src/config/colors.rs:162 |  |  | 0.529 |
 | ns | 6976 |  | 398 | Default key bindings | 5.4 |  | 0.515 |
+| walker |  | 7001 | 118 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.515 |
 | ns | 7174 |  | 198 | Key enum + KeyAction | 5.5 |  | 0.520 |
-| walker |  | 7235 | 295 | pub item at src/config/colors.rs:162 |  |  | 0.521 |
-| walker |  | 7353 | 118 | pub item body at src/parse/syntax.rs:139 body 140 |  |  | 0.521 |
-| walker |  | 7369 | 16 | docs/changelog.md section #8 |  |  | 0.521 |
-| walker |  | 7390 | 21 | docs/changelog.md section #6 |  |  | 0.521 |
-| walker |  | 7577 | 187 | README.md section #4 |  |  | 0.521 |
-| ns | 7644 |  | 470 | Per-branch struct fields (Tree / Layout / Filter / Data) | 5.6 |  | 0.529 |
-| ns | 7894 |  | 250 | Editor + Header + Footer struct fields | 5.7 |  | 0.532 |
-| ns | 8331 |  | 437 | Config::load + Config::parse | 5.8 |  | 0.518 |
-| walker |  | 8482 | 905 | pub item at src/cmd.rs:13 |  |  | 0.519 |
-| walker |  | 8538 | 56 | README.md section #3 |  |  | 0.519 |
+| walker |  | 7188 | 187 | README.md section #4 |  |  | 0.520 |
+| ns | 7644 |  | 470 | Per-branch struct fields (Tree / Layout / Filter / Data) | 5.6 |  | 0.528 |
+| ns | 7894 |  | 250 | Editor + Header + Footer struct fields | 5.7 |  | 0.531 |
+| walker |  | 8093 | 905 | pub item at src/cmd.rs:13 |  |  | 0.533 |
+| walker |  | 8149 | 56 | README.md section #3 |  |  | 0.533 |
+| walker |  | 8251 | 102 | plaintext config .gitignore |  |  | 0.533 |
+| walker |  | 8259 | 8 | listing of '.github' |  |  | 0.533 |
+| walker |  | 8275 | 16 | listing of '.github/workflows' |  |  | 0.533 |
+| ns | 8331 |  | 437 | Config::load + Config::parse | 5.8 |  | 0.519 |
 | ns | 8613 |  | 282 | Config::get_path resolution | 5.9 |  | 0.511 |
-| walker |  | 8640 | 102 | plaintext config .gitignore |  |  | 0.511 |
-| walker |  | 8648 | 8 | listing of '.github' |  |  | 0.511 |
-| walker |  | 8664 | 16 | listing of '.github/workflows' |  |  | 0.511 |
-| ns | 8986 |  | 373 | Color struct + Colors namespaces | 5.10 |  | 0.518 |
-| ns | 9095 |  | 109 | DataColors fields | 5.11 |  | 0.523 |
-| ns | 9221 |  | 126 | TreeColors fields | 5.12 |  | 0.528 |
+| ns | 8986 |  | 373 | Color struct + Colors namespaces | 5.10 |  | 0.517 |
+| ns | 9095 |  | 109 | DataColors fields | 5.11 |  | 0.522 |
+| walker |  | 9145 | 870 | pub item at src/config/keys.rs:195 |  |  | 0.522 |
+| walker |  | 9215 | 70 | README.md section #2 |  |  | 0.522 |
+| ns | 9221 |  | 126 | TreeColors fields | 5.12 |  | 0.527 |
+| walker |  | 9222 | 7 | pub item body at src/ui/mod.rs:35 body 60 |  |  | 0.528 |
+| walker |  | 9229 | 7 | pub item body at src/parse/json.rs:26 body 80 |  |  | 0.528 |
+| walker |  | 9239 | 10 | pub item body at src/ui/mod.rs:35 body 59 |  |  | 0.528 |
 | ns | 9311 |  | 90 | Types config struct | 5.13 |  | 0.529 |
-| walker |  | 9534 | 870 | pub item at src/config/keys.rs:195 |  |  | 0.529 |
 | ns | 9599 |  | 288 | CommandArgs flag list | 6.1 |  | 0.539 |
-| walker |  | 9604 | 70 | README.md section #2 |  |  | 0.539 |
-| walker |  | 9632 | 28 | docs/changelog.md section #12 |  |  | 0.539 |
 | ns | 9652 |  | 53 | examples/ + docs/ listings | 6.2 |  | 0.536 |
-| walker |  | 9735 | 103 | docs/changelog.md section #1 |  |  | 0.536 |
-| ns | 9808 |  | 156 | Changelog version headings | 6.3 |  | 0.541 |
-| walker |  | 9814 | 79 | docs/changelog.md section #2 |  |  | 0.541 |
-| walker |  | 9821 | 7 | pub item body at src/ui/mod.rs:35 body 60 |  |  | 0.541 |
-| walker |  | 9864 | 43 | docs/changelog.md section #10 |  |  | 0.541 |
-| walker |  | 9871 | 7 | pub item body at src/parse/json.rs:26 body 80 |  |  | 0.541 |
-| walker |  | 9881 | 10 | pub item body at src/ui/mod.rs:35 body 59 |  |  | 0.542 |
-| ns | 9967 |  | 159 | clipboard OS routing | 6.4 |  | 0.538 |
+| ns | 9808 |  | 156 | Changelog version headings | 6.3 |  | 0.532 |
+| walker |  | 9814 | 575 | README.md section #5 |  |  | 0.532 |
+| walker |  | 9825 | 11 | pub item body at src/ui/mod.rs:35 body 36 |  |  | 0.532 |
+| walker |  | 9836 | 11 | pub item body at src/ui/mod.rs:35 body 58 |  |  | 0.532 |
+| walker |  | 9847 | 11 | pub item body at src/parse/json.rs:26 body 27 |  |  | 0.532 |
+| walker |  | 9862 | 15 | pub item body at src/ui/mod.rs:35 body 37 |  |  | 0.533 |
+| walker |  | 9875 | 13 | pub item body at src/parse/json.rs:26 body 78 |  |  | 0.533 |
+| ns | 9967 |  | 159 | clipboard OS routing | 6.4 |  | 0.529 |
