@@ -67,7 +67,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 1757 | 12 | pub item at crates/toasty-driver-mysql/src/lib.rs:133 |  |  | 0.512 |
 | walker |  | 1778 | 21 | pub item at crates/toasty-driver-mysql/src/lib.rs:22 |  |  | 0.512 |
 | walker |  | 1790 | 12 | pub-item names surface in crates/toasty-driver-mysql/src/value.rs |  |  | 0.512 |
-| walker |  | 1790 | 0 | pub item at crates/toasty-driver-mysql/src/value.rs:5 |  |  | 0.512 |
 | walker |  | 1803 | 13 | listing of 'crates/toasty-codegen' |  |  | 0.512 |
 | walker |  | 1821 | 18 | listing of 'crates/toasty-codegen/src' |  |  | 0.512 |
 | ns | 1823 |  | 182 | ARCHITECTURE.md: toasty-core crate role | 3.4 |  | 0.491 |
@@ -86,7 +85,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 2147 | 15 | pub item at crates/toasty-driver-sqlite/src/lib.rs:123 |  |  | 0.458 |
 | walker |  | 2167 | 20 | pub item at crates/toasty-driver-sqlite/src/lib.rs:23 |  |  | 0.458 |
 | walker |  | 2179 | 12 | pub-item names surface in crates/toasty-driver-sqlite/src/value.rs |  |  | 0.458 |
-| walker |  | 2179 | 0 | pub item at crates/toasty-driver-sqlite/src/value.rs:8 |  |  | 0.458 |
 | walker |  | 2195 | 16 | listing of 'crates/toasty' |  |  | 0.458 |
 | walker |  | 2255 | 60 | listing of 'crates/toasty/src' |  |  | 0.458 |
 | walker |  | 2259 | 4 | listing of 'crates/toasty/src/batch' |  |  | 0.458 |
@@ -188,7 +186,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 3992 | 13 | pub-item names surface in crates/toasty-core/src/error/unsupported_feature.rs |  |  | 0.363 |
 | walker |  | 4005 | 13 | pub-item names surface in crates/toasty-sql/src/serializer/fmt.rs |  |  | 0.363 |
 | walker |  | 4018 | 13 | pub-item names surface in crates/toasty-sql/src/stmt/name.rs |  |  | 0.363 |
-| walker |  | 4018 | 0 | pub item at crates/toasty-sql/src/stmt/name.rs:4 |  |  | 0.363 |
 | walker |  | 4043 | 25 | pub item at crates/toasty-sql/src/migration.rs:12 |  |  | 0.363 |
 | walker |  | 4064 | 21 | pub-item names surface in crates/toasty/src/apply_update.rs |  |  | 0.363 |
 | walker |  | 4064 | 0 | pub item at crates/toasty/src/apply_update.rs:19 |  |  | 0.363 |
@@ -215,7 +212,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 4456 | 11 | pub-item names surface in crates/toasty-driver-postgresql/src/statement_cache.rs |  |  | 0.342 |
 | walker |  | 4467 | 11 | pub-item names surface in crates/toasty-driver-postgresql/src/type.rs |  |  | 0.342 |
 | walker |  | 4482 | 15 | pub-item names surface in crates/toasty-driver-postgresql/src/value.rs |  |  | 0.342 |
-| walker |  | 4482 | 0 | pub item at crates/toasty-driver-postgresql/src/value.rs:8 |  |  | 0.342 |
 | walker |  | 4501 | 19 | pub item at crates/toasty-driver-postgresql/src/statement_cache.rs:9 |  |  | 0.342 |
 | walker |  | 4537 | 36 | pub item at crates/toasty-driver-postgresql/src/type.rs:4 |  |  | 0.342 |
 | walker |  | 4559 | 22 | pub item at crates/toasty-sql/src/stmt/table_name.rs:5 |  |  | 0.342 |
@@ -262,7 +258,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 5200 | 39 | listing of 'crates/toasty-driver-dynamodb/src/op' |  |  | 0.318 |
 | walker |  | 5211 | 11 | pub-item names surface in crates/toasty-driver-dynamodb/src/type.rs |  |  | 0.318 |
 | walker |  | 5223 | 12 | pub-item names surface in crates/toasty-driver-dynamodb/src/value.rs |  |  | 0.318 |
-| walker |  | 5223 | 0 | pub item at crates/toasty-driver-dynamodb/src/value.rs:5 |  |  | 0.318 |
 | walker |  | 5262 | 39 | pub item at crates/toasty-driver-dynamodb/src/type.rs:4 |  |  | 0.318 |
 | walker |  | 5273 | 11 | pub-item names surface in crates/toasty-core/src/driver/operation/query_pk.rs |  |  | 0.318 |
 | walker |  | 5284 | 11 | pub-item names surface in crates/toasty-core/src/driver/operation/query_sql.rs |  |  | 0.318 |
@@ -272,7 +267,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 5336 | 30 | pub item at crates/toasty/src/stmt.rs:51 |  |  | 0.304 |
 | walker |  | 5352 | 16 | pub-item names surface in crates/toasty/src/stmt/into_expr.rs |  |  | 0.304 |
 | walker |  | 5368 | 16 | pub-item names surface in crates/toasty-sql/src/stmt/ident.rs |  |  | 0.304 |
-| walker |  | 5368 | 0 | pub item at crates/toasty-sql/src/stmt/ident.rs:4 |  |  | 0.304 |
 | walker |  | 5393 | 25 | pub-item names surface in crates/toasty/src/schema.rs |  |  | 0.304 |
 | walker |  | 5393 | 0 | pub item at crates/toasty/src/schema.rs:5 |  |  | 0.304 |
 | walker |  | 5404 | 11 | pub item body at crates/toasty/src/schema.rs:5 body 6 |  |  | 0.304 |
@@ -280,7 +274,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 5433 | 29 | pub item at crates/toasty/src/stmt/into_insert.rs:4 |  |  | 0.333 |
 | walker |  | 5462 | 29 | pub item at crates/toasty/src/stmt/into_select.rs:4 |  |  | 0.333 |
 | walker |  | 5479 | 17 | pub-item names surface in crates/toasty-sql/src/serializer/column.rs |  |  | 0.333 |
-| walker |  | 5479 | 0 | pub item at crates/toasty-sql/src/serializer/column.rs:4 |  |  | 0.333 |
 | walker |  | 5491 | 12 | pub-item names surface in crates/toasty/src/engine/exec/action.rs |  |  | 0.333 |
 | walker |  | 5503 | 12 | pub-item names surface in crates/toasty/src/engine/exec/eval.rs |  |  | 0.333 |
 | walker |  | 5515 | 12 | pub-item names surface in crates/toasty/src/engine/exec/filter.rs |  |  | 0.333 |
@@ -300,7 +293,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 5659 | 12 | pub-item names surface in crates/toasty-core/src/driver/operation/update_by_key.rs |  |  | 0.384 |
 | walker |  | 5677 | 18 | pub-item names surface in crates/toasty/src/engine/eval.rs |  |  | 0.384 |
 | walker |  | 5695 | 18 | pub-item names surface in crates/toasty-sql/src/serializer/ident.rs |  |  | 0.384 |
-| walker |  | 5695 | 0 | pub item at crates/toasty-sql/src/serializer/ident.rs:5 |  |  | 0.384 |
 | walker |  | 5727 | 32 | pub item at crates/toasty/src/stmt/into_expr.rs:6 |  |  | 0.384 |
 | walker |  | 5740 | 13 | pub-item names surface in crates/toasty/src/engine/eval/as_expr.rs |  |  | 0.384 |
 | walker |  | 5753 | 13 | pub-item names surface in crates/toasty/src/engine/exec/plan.rs |  |  | 0.384 |
@@ -316,7 +308,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | ns | 6010 |  | 36 | toasty-core src dir listing | 7.2 |  | 0.395 |
 | walker |  | 6021 | 177 | impl method sigs in crates/toasty-cli/src/lib.rs |  |  | 0.395 |
 | walker |  | 6051 | 30 | pub-item names surface in crates/toasty/src/cursor.rs |  |  | 0.395 |
-| walker |  | 6051 | 0 | pub item at crates/toasty/src/cursor.rs:12 |  |  | 0.395 |
 | walker |  | 6075 | 24 | listing of 'crates/std-util/src' |  |  | 0.395 |
 | ns | 6095 |  | 85 | toasty-core schema/app + schema/db submodule listings | 7.3 |  | 0.414 |
 | walker |  | 6126 | 51 | mod/use plumbing in crates/std-util/src/lib.rs |  |  | 0.414 |
@@ -438,7 +429,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 8625 | 21 | listing of 'examples' |  |  | 0.407 |
 | walker |  | 8658 | 33 | pub-item names surface in crates/toasty-core/src/driver/capability.rs |  |  | 0.407 |
 | walker |  | 8691 | 33 | pub-item names surface in crates/toasty-sql/src/serializer/params.rs |  |  | 0.407 |
-| walker |  | 8691 | 0 | pub item at crates/toasty-sql/src/serializer/params.rs:11 |  |  | 0.407 |
 | ns | 8694 |  | 237 | Connect: URL scheme dispatch (sqlite/postgres/mysql/dynamodb) | 9.4 |  | 0.403 |
 | walker |  | 8724 | 33 | pub item at crates/toasty-sql/src/serializer/params.rs:7 |  |  | 0.403 |
 | walker |  | 8754 | 30 | pub item at crates/toasty-sql/src/serializer/params.rs:14 |  |  | 0.403 |
@@ -464,7 +454,6 @@ Score(3000)=0.395 I=0.676 C=0.230 ns_rows≤3K=19/55 (reached=4 partial=3 missin
 | walker |  | 9339 | 43 | pub item at crates/toasty/src/stmt/select.rs:6 |  |  | 0.394 |
 | ns | 9368 |  | 328 | Per-driver test entry: sqlite.rs full | 10.3 |  | 0.387 |
 | walker |  | 9392 | 53 | pub-item names surface in crates/toasty-sql/src/serializer.rs |  |  | 0.387 |
-| walker |  | 9392 | 0 | pub item at crates/toasty-sql/src/serializer.rs:73 |  |  | 0.387 |
 | walker |  | 9424 | 32 | pub item at crates/toasty-sql/src/serializer.rs:36 |  |  | 0.387 |
 | walker |  | 9436 | 12 | pub-item doc lede at crates/toasty-cli/src/config.rs:9 |  |  | 0.387 |
 | ns | 9633 |  | 265 | Examples: composite-key model | 10.4 |  | 0.391 |

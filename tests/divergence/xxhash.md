@@ -88,18 +88,8 @@ Score(3000)=0.658 I=0.849 C=0.511 ns_rows≤3K=20/40 (reached=9 partial=4 missin
 | walker |  | 2394 | 0 | go decl at xxhash.go:190 |  |  | 0.525 |
 | walker |  | 2394 | 0 | go decl at xxhash.go:208 |  |  | 0.525 |
 | walker |  | 2394 | 0 | go decl at xxhash.go:214 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:219 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:220 |  |  | 0.525 |
 | walker |  | 2394 | 0 | go decl at xxhash.go:222 |  |  | 0.525 |
 | walker |  | 2394 | 0 | go decl at xxhash.go:229 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:236 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:237 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:238 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:239 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:240 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:241 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:242 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:243 |  |  | 0.525 |
 | ns | 2400 |  | 319 | CI matrix — what configurations are tested | 3.5 |  | 0.483 |
 | walker |  | 2403 | 9 | go decl body at xxhash.go:40 |  |  | 0.485 |
 | walker |  | 2412 | 9 | go decl body at xxhash.go:53 |  |  | 0.486 |

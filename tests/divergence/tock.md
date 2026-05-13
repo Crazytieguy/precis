@@ -97,7 +97,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 1976 | 85 | README.md section #10 |  |  | 0.647 |
 | ns | 2005 |  | 79 | cli/ directory listing | 3.2 |  | 0.612 |
 | walker |  | 2139 | 163 | go decl names surface in internal/config/config.go |  |  | 0.612 |
-| walker |  | 2139 | 0 | go decl at internal/config/config.go:60 |  |  | 0.612 |
 | walker |  | 2139 | 0 | go decl at internal/config/config.go:62 |  |  | 0.612 |
 | walker |  | 2139 | 0 | go decl at internal/config/config.go:68 |  |  | 0.612 |
 | walker |  | 2139 | 0 | go decl at internal/config/config.go:74 |  |  | 0.612 |
@@ -161,7 +160,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 3211 | 11 | go decl body at internal/adapters/cli/current.go:23 |  |  | 0.578 |
 | walker |  | 3256 | 45 | go package + imports in internal/timeutil/timeutil.go |  |  | 0.578 |
 | walker |  | 3365 | 109 | go decl names surface in internal/adapters/cli/calendar_sidebar.go |  |  | 0.578 |
-| walker |  | 3365 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:12 |  |  | 0.578 |
 | walker |  | 3365 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:15 |  |  | 0.578 |
 | walker |  | 3365 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:27 |  |  | 0.578 |
 | walker |  | 3365 | 0 | go decl at internal/adapters/cli/calendar_sidebar.go:51 |  |  | 0.578 |
@@ -237,7 +235,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | ns | 5311 |  | 237 | Service method signatures | 6.4 | 4.1 | 0.591 |
 | walker |  | 5467 | 165 | go decl names surface in internal/adapters/cli/watch.go |  |  | 0.594 |
 | walker |  | 5467 | 0 | go decl at internal/adapters/cli/watch.go:19 |  |  | 0.594 |
-| walker |  | 5467 | 0 | go decl at internal/adapters/cli/watch.go:75 |  |  | 0.594 |
 | walker |  | 5467 | 0 | go decl at internal/adapters/cli/watch.go:95 |  |  | 0.594 |
 | walker |  | 5467 | 0 | go decl at internal/adapters/cli/watch.go:115 |  |  | 0.594 |
 | walker |  | 5467 | 0 | go decl at internal/adapters/cli/watch.go:121 |  |  | 0.594 |
@@ -254,7 +251,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 5657 | 0 | go decl at internal/adapters/cli/ical.go:250 |  |  | 0.577 |
 | walker |  | 5657 | 0 | go decl at internal/adapters/cli/ical.go:302 |  |  | 0.577 |
 | walker |  | 5770 | 113 | go decl names surface in internal/adapters/repositories/file/parser.go |  |  | 0.578 |
-| walker |  | 5770 | 0 | go decl at internal/adapters/repositories/file/parser.go:13 |  |  | 0.578 |
 | walker |  | 5770 | 0 | go decl at internal/adapters/repositories/file/parser.go:20 |  |  | 0.578 |
 | walker |  | 5770 | 0 | go decl at internal/adapters/repositories/file/parser.go:64 |  |  | 0.578 |
 | walker |  | 5770 | 0 | go decl at internal/adapters/repositories/file/parser.go:72 |  |  | 0.578 |
@@ -307,10 +303,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 7254 | 23 | docs/commands.md section #19 |  |  | 0.581 |
 | ns | 7464 |  | 508 | cli/root.go — PersistentPreRunE body | 7.3 | 7.1 | 0.559 |
 | walker |  | 7518 | 264 | go decl names surface in internal/adapters/cli/root.go |  |  | 0.561 |
-| walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:26 |  |  | 0.561 |
-| walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:27 |  |  | 0.561 |
-| walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:28 |  |  | 0.561 |
-| walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:29 |  |  | 0.561 |
 | walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:31 |  |  | 0.561 |
 | walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:107 |  |  | 0.561 |
 | walker |  | 7518 | 0 | go decl at internal/adapters/cli/root.go:115 |  |  | 0.561 |
@@ -357,7 +349,6 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:234 |  |  | 0.566 |
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:256 |  |  | 0.566 |
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:402 |  |  | 0.566 |
-| walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:422 |  |  | 0.566 |
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:424 |  |  | 0.566 |
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:488 |  |  | 0.566 |
 | walker |  | 8859 | 0 | go decl at internal/adapters/cli/calendar.go:520 |  |  | 0.566 |
@@ -388,11 +379,9 @@ Score(3000)=0.624 I=0.792 C=0.492 ns_rows≤3K=18/43 (reached=5 partial=4 missin
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:80 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:89 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:98 |  |  | 0.588 |
-| walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:131 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:133 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:155 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:176 |  |  | 0.588 |
-| walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:212 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:214 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:251 |  |  | 0.588 |
 | walker |  | 9885 | 0 | go decl at internal/adapters/cli/interactive.go:263 |  |  | 0.588 |

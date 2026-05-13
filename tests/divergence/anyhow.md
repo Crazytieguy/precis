@@ -39,7 +39,6 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | walker |  | 1372 | 173 | mod/use plumbing in src/lib.rs |  |  | 0.554 |
 | walker |  | 1387 | 15 | plaintext config .gitignore |  |  | 0.554 |
 | walker |  | 1400 | 13 | pub-item names surface in src/backtrace.rs |  |  | 0.554 |
-| walker |  | 1400 | 0 | pub item at src/backtrace.rs:8 |  |  | 0.554 |
 | walker |  | 1536 | 136 | macro_export body at src/macros.rs:58 |  |  | 0.554 |
 | ns | 1542 |  | 240 | Cargo features + dev-deps | 2.10 | 1.4 | 0.519 |
 | walker |  | 1710 | 174 | pub-item doc lede at src/lib.rs:390 |  |  | 0.572 |
@@ -64,18 +63,12 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | walker |  | 3132 | 50 | pub item at src/ptr.rs:64 |  |  | 0.580 |
 | walker |  | 3183 | 51 | pub item at src/ptr.rs:125 |  |  | 0.581 |
 | walker |  | 3235 | 52 | pub-item names surface in src/wrapper.rs |  |  | 0.581 |
-| walker |  | 3235 | 0 | pub item at src/wrapper.rs:11 |  |  | 0.581 |
-| walker |  | 3235 | 0 | pub item at src/wrapper.rs:34 |  |  | 0.581 |
-| walker |  | 3235 | 0 | pub item at src/wrapper.rs:58 |  |  | 0.581 |
 | walker |  | 3308 | 73 | pub item at src/error.rs:934 |  |  | 0.581 |
 | ns | 3399 |  | 373 | Debug repr `{:#?}` + manual chain rendering | 2.15 | 2.5 | 0.543 |
 | walker |  | 3508 | 200 | README.md section #7 |  |  | 0.543 |
 | walker |  | 3601 | 93 | pub item at src/chain.rs:16 |  |  | 0.544 |
 | ns | 3672 |  | 273 | error.rs item locations | 3.1 |  | 0.526 |
 | walker |  | 3674 | 73 | pub-item names surface in src/kind.rs |  |  | 0.526 |
-| walker |  | 3674 | 0 | pub item at src/kind.rs:55 |  |  | 0.526 |
-| walker |  | 3674 | 0 | pub item at src/kind.rs:77 |  |  | 0.526 |
-| walker |  | 3674 | 0 | pub item at src/kind.rs:100 |  |  | 0.526 |
 | walker |  | 3763 | 89 | pub-item names surface in src/nightly.rs |  |  | 0.526 |
 | walker |  | 3763 | 0 | pub item at src/nightly.rs:41 |  |  | 0.526 |
 | walker |  | 3763 | 0 | pub item at src/nightly.rs:52 |  |  | 0.526 |

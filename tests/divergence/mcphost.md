@@ -9,7 +9,6 @@ Score(3000)=0.551 I=0.786 C=0.387 ns_rows≤3K=13/40 (reached=5 partial=1 missin
 | walker |  | 123 | 24 | README.md section #0 |  |  | 1.000 |
 | ns | 135 |  | 95 | README lede | 1.2 |  | 0.899 |
 | walker |  | 145 | 22 | go decl names surface in main.go |  |  | 0.900 |
-| walker |  | 145 | 0 | go decl at main.go:12 |  |  | 0.900 |
 | walker |  | 145 | 0 | go decl at main.go:14 |  |  | 0.900 |
 | walker |  | 160 | 15 | listing of 'contribute' |  |  | 0.900 |
 | walker |  | 168 | 8 | listing of '.github/workflows' |  |  | 0.900 |
@@ -280,10 +279,7 @@ Score(3000)=0.551 I=0.786 C=0.387 ns_rows≤3K=13/40 (reached=5 partial=1 missin
 | walker |  | 6981 | 58 | go decl doc at internal/hooks/config.go:30 |  |  | 0.334 |
 | ns | 7004 |  | 455 | CreateProvider — provider switch | 4.1 |  | 0.320 |
 | walker |  | 7117 | 136 | go decl names surface in internal/ui/styles.go |  |  | 0.320 |
-| walker |  | 7117 | 0 | go decl at internal/ui/styles.go:11 |  |  | 0.320 |
 | walker |  | 7117 | 0 | go decl at internal/ui/styles.go:14 |  |  | 0.320 |
-| walker |  | 7117 | 0 | go decl at internal/ui/styles.go:15 |  |  | 0.320 |
-| walker |  | 7117 | 0 | go decl at internal/ui/styles.go:16 |  |  | 0.320 |
 | walker |  | 7117 | 0 | go decl at internal/ui/styles.go:21 |  |  | 0.320 |
 | walker |  | 7117 | 0 | go decl at internal/ui/styles.go:28 |  |  | 0.320 |
 | walker |  | 7117 | 0 | go decl at internal/ui/styles.go:37 |  |  | 0.320 |

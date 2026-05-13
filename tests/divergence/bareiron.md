@@ -17,10 +17,7 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 217 | 38 | listing of 'include' |  |  | 0.938 |
 | ns | 232 |  | 38 | include/ listing | 2.2 |  | 0.928 |
 | walker |  | 239 | 22 | c decl names surface in include/structures.h |  |  | 0.928 |
-| walker |  | 239 | 0 | c decl at include/structures.h:4 |  |  | 0.928 |
 | walker |  | 283 | 44 | c decl names surface in include/crafting.h |  |  | 0.933 |
-| walker |  | 283 | 0 | c decl at include/crafting.h:6 |  |  | 0.933 |
-| walker |  | 283 | 0 | c decl at include/crafting.h:7 |  |  | 0.933 |
 | walker |  | 293 | 10 | c includes in include/crafting.h |  |  | 0.935 |
 | ns | 298 |  | 66 | Connection state-machine constants (STATE_*) | 3.1 |  | 0.846 |
 | walker |  | 303 | 10 | c includes in include/serialize.h |  |  | 0.846 |
@@ -28,26 +25,12 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 323 | 10 | c includes in include/worldgen.h |  |  | 0.846 |
 | ns | 384 |  | 86 | Tools — mod_abs / div_floor inline helpers | 3.2 |  | 0.777 |
 | walker |  | 418 | 95 | c decl names surface in include/varnum.h |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:6 |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:7 |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:8 |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:10 |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:11 |  |  | 0.786 |
-| walker |  | 418 | 0 | c decl at include/varnum.h:12 |  |  | 0.786 |
 | walker |  | 438 | 20 | c includes in include/globals.h |  |  | 0.786 |
 | walker |  | 458 | 20 | c includes in include/procedures.h |  |  | 0.786 |
 | walker |  | 478 | 20 | c includes in include/tools.h |  |  | 0.786 |
 | ns | 500 |  | 116 | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | 3.3 |  | 0.705 |
 | ns | 653 |  | 153 | structures.h + crafting.h — full (tiny) | 3.4 |  | 0.648 |
 | walker |  | 667 | 189 | c decl names surface in include/worldgen.h |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:20 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:21 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:22 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:23 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:24 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:25 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:27 |  |  | 0.651 |
-| walker |  | 667 | 0 | c decl at include/worldgen.h:28 |  |  | 0.651 |
 | walker |  | 709 | 42 | c decl at include/worldgen.h:6 |  |  | 0.653 |
 | walker |  | 751 | 42 | c decl at include/worldgen.h:13 |  |  | 0.656 |
 | ns | 803 |  | 150 | varnum.h — full | 3.5 |  | 0.648 |
@@ -64,29 +47,6 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 1393 | 433 | c decl names surface in include/tools.h |  |  | 0.542 |
 | walker |  | 1393 | 0 | c decl at include/tools.h:8 |  |  | 0.542 |
 | walker |  | 1393 | 0 | c decl at include/tools.h:11 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:15 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:16 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:17 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:18 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:20 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:21 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:22 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:23 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:24 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:25 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:27 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:28 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:29 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:30 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:31 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:32 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:33 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:34 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:36 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:37 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:38 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:40 |  |  | 0.542 |
-| walker |  | 1393 | 0 | c decl at include/tools.h:41 |  |  | 0.542 |
 | walker |  | 1408 | 15 | c decl body at include/tools.h:8 |  |  | 0.550 |
 | walker |  | 1431 | 23 | c decl body at include/tools.h:11 |  |  | 0.562 |
 | walker |  | 1484 | 53 | c decl names surface in src/structures.c |  |  | 0.562 |
@@ -105,8 +65,6 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | ns | 1987 |  | 275 | procedures.h — game-logic function names, part 1 | 3.11 |  | 0.446 |
 | ns | 2107 |  | 120 | procedures.h — game-logic function names, part 2 | 3.12 |  | 0.430 |
 | walker |  | 2269 | 650 | c decl names surface in include/globals.h |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:15 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:16 |  |  | 0.472 |
 | walker |  | 2269 | 0 | c decl at include/globals.h:19 |  |  | 0.472 |
 | walker |  | 2269 | 0 | c decl at include/globals.h:23 |  |  | 0.472 |
 | walker |  | 2269 | 0 | c decl at include/globals.h:26 |  |  | 0.472 |
@@ -127,26 +85,6 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 2269 | 0 | c decl at include/globals.h:93 |  |  | 0.472 |
 | walker |  | 2269 | 0 | c decl at include/globals.h:103 |  |  | 0.472 |
 | walker |  | 2269 | 0 | c decl at include/globals.h:106 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:165 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:166 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:167 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:168 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:169 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:170 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:172 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:173 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:175 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:176 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:178 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:179 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:181 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:182 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:189 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:268 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:269 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:271 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:272 |  |  | 0.472 |
-| walker |  | 2269 | 0 | c decl at include/globals.h:274 |  |  | 0.472 |
 | walker |  | 2290 | 21 | c decl at include/globals.h:255 |  |  | 0.473 |
 | walker |  | 2300 | 10 | c decl doc at include/globals.h:59 |  |  | 0.473 |
 | walker |  | 2312 | 12 | c decl doc at include/globals.h:66 |  |  | 0.473 |
@@ -182,105 +120,11 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | ns | 3629 |  | 103 | EntityData / EntityDataValue (entity metadata serialization) | 4.4 |  | 0.571 |
 | ns | 3794 |  | 165 | globals.h — runtime extern declarations | 4.5 |  | 0.574 |
 | walker |  | 4078 | 788 | c decl names surface in include/procedures.h |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:8 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:10 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:11 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:12 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:14 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:15 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:16 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:17 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:18 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:19 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:20 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:21 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:22 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:24 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:25 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:27 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:28 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:30 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:31 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:33 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:34 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:35 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:36 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:37 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:38 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:39 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:41 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:42 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:43 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:44 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:46 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:48 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:49 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:50 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:51 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:53 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:55 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:57 |  |  | 0.658 |
-| walker |  | 4078 | 0 | c decl at include/procedures.h:58 |  |  | 0.658 |
 | ns | 4079 |  | 285 | src/globals.c — runtime defaults + literal MOTD/brand | 4.6 |  | 0.632 |
 | ns | 4813 |  | 734 | globals.h — feature toggle #defines + their comments | 4.7 |  | 0.588 |
 | walker |  | 5244 | 1166 | c decl names surface in include/packets.h |  |  | 0.693 |
 | walker |  | 5244 | 0 | c decl at include/packets.h:5 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:6 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:7 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:8 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:9 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:10 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:11 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:12 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:13 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:14 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:15 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:16 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:17 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:18 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:19 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:20 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:21 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:22 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:23 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:24 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:25 |  |  | 0.693 |
 | walker |  | 5244 | 0 | c decl at include/packets.h:28 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:29 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:30 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:31 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:32 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:33 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:34 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:35 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:36 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:37 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:38 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:39 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:40 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:41 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:42 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:43 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:44 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:45 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:46 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:47 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:48 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:49 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:50 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:51 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:52 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:53 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:54 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:55 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:56 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:57 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:58 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:59 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:60 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:61 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:62 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:63 |  |  | 0.693 |
 | walker |  | 5253 | 9 | c decl doc at include/packets.h:5 |  |  | 0.697 |
 | walker |  | 5262 | 9 | c decl doc at include/packets.h:28 |  |  | 0.700 |
 | walker |  | 5302 | 40 | c includes in src/globals.c |  |  | 0.700 |
@@ -291,20 +135,6 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 5441 | 41 | README.md section #7 |  |  | 0.718 |
 | walker |  | 5499 | 58 | plaintext config .gitignore |  |  | 0.718 |
 | walker |  | 5707 | 208 | c decl names surface in src/globals.c |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:31 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:32 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:34 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:35 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:37 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:38 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:40 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:41 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:48 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:50 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:51 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:53 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:54 |  |  | 0.742 |
-| walker |  | 5707 | 0 | c decl at src/globals.c:56 |  |  | 0.742 |
 | walker |  | 5758 | 51 | c includes in src/varnum.c |  |  | 0.742 |
 | walker |  | 5803 | 45 | README.md section #8 |  |  | 0.742 |
 | ns | 5889 |  | 545 | globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate) | 4.9 |  | 0.720 |
@@ -328,10 +158,6 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 6954 | 0 | c decl at src/worldgen.c:323 |  |  | 0.747 |
 | walker |  | 6954 | 0 | c decl at src/worldgen.c:358 |  |  | 0.747 |
 | walker |  | 6954 | 0 | c decl at src/worldgen.c:374 |  |  | 0.747 |
-| walker |  | 6954 | 0 | c decl at src/worldgen.c:394 |  |  | 0.747 |
-| walker |  | 6954 | 0 | c decl at src/worldgen.c:395 |  |  | 0.747 |
-| walker |  | 6954 | 0 | c decl at src/worldgen.c:396 |  |  | 0.747 |
-| walker |  | 6954 | 0 | c decl at src/worldgen.c:397 |  |  | 0.747 |
 | walker |  | 6954 | 0 | c decl at src/worldgen.c:401 |  |  | 0.747 |
 | walker |  | 6981 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.747 |
 | walker |  | 7021 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.747 |

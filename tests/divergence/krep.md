@@ -14,12 +14,9 @@ Score(3000)=0.437 I=0.698 C=0.273 ns_rows≤3K=15/39 (reached=5 partial=1 missin
 | ns | 343 |  | 117 | README scope disclaimer | 1.4 |  | 0.626 |
 | walker |  | 394 | 182 | c decl names surface in aho_corasick.h |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:14 |  |  | 0.629 |
-| walker |  | 394 | 0 | c decl at aho_corasick.h:15 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:19 |  |  | 0.629 |
-| walker |  | 394 | 0 | c decl at aho_corasick.h:20 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:23 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:26 |  |  | 0.629 |
-| walker |  | 394 | 0 | c decl at aho_corasick.h:27 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:30 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:33 |  |  | 0.629 |
 | walker |  | 394 | 0 | c decl at aho_corasick.h:36 |  |  | 0.629 |
@@ -66,7 +63,6 @@ Score(3000)=0.437 I=0.698 C=0.273 ns_rows≤3K=15/39 (reached=5 partial=1 missin
 | ns | 1605 |  | 91 | search_func_t function pointer typedef | 2.3 |  | 0.450 |
 | walker |  | 1657 | 175 | c decl names surface in aho_corasick.c |  |  | 0.450 |
 | walker |  | 1657 | 0 | c decl at aho_corasick.c:293 |  |  | 0.450 |
-| walker |  | 1657 | 0 | c decl at aho_corasick.c:294 |  |  | 0.450 |
 | walker |  | 1657 | 0 | c decl at aho_corasick.c:296 |  |  | 0.450 |
 | walker |  | 1662 | 5 | c decl at aho_corasick.c:111 |  |  | 0.450 |
 | walker |  | 1667 | 5 | c decl at aho_corasick.c:274 |  |  | 0.450 |
@@ -102,39 +98,16 @@ Score(3000)=0.437 I=0.698 C=0.273 ns_rows≤3K=15/39 (reached=5 partial=1 missin
 | walker |  | 3463 | 1025 | c decl names surface in krep.h |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:19 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:22 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:23 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:34 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:35 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:36 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:37 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:38 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:39 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:42 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:43 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:44 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:45 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:146 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:147 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:148 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:149 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:161 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:170 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:180 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:183 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:184 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:185 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:186 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:200 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:203 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:207 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:208 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:209 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:210 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:211 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:231 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:232 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:233 |  |  | 0.441 |
-| walker |  | 3463 | 0 | c decl at krep.h:234 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:278 |  |  | 0.441 |
 | walker |  | 3463 | 0 | c decl at krep.h:288 |  |  | 0.441 |
 | walker |  | 3468 | 5 | c decl at krep.h:298 |  |  | 0.441 |
@@ -198,21 +171,7 @@ Score(3000)=0.437 I=0.698 C=0.273 ns_rows≤3K=15/39 (reached=5 partial=1 missin
 | ns | 7170 |  | 350 | thread_pool_t + task_t structures | 5.3 |  | 0.654 |
 | walker |  | 7359 | 929 | c decl names surface in krep.c |  |  | 0.660 |
 | walker |  | 7359 | 0 | c decl at krep.c:77 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:78 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:79 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:80 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:81 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:82 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:83 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:87 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:88 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:89 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:90 |  |  | 0.660 |
 | walker |  | 7359 | 0 | c decl at krep.c:93 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:94 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:95 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:96 |  |  | 0.660 |
-| walker |  | 7359 | 0 | c decl at krep.c:97 |  |  | 0.660 |
 | walker |  | 7359 | 0 | c decl at krep.c:125 |  |  | 0.660 |
 | walker |  | 7364 | 5 | c decl at krep.c:139 |  |  | 0.660 |
 | walker |  | 7369 | 5 | c decl at krep.c:175 |  |  | 0.660 |

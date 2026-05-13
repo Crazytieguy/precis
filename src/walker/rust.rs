@@ -43,8 +43,8 @@ use crate::value::{depth_factor, mix_signals};
 
 use super::{
     BodyPart, FileLines, WalkCtx, body_part_value_factor, build_file_spans, build_per_file_content,
-    dedup_sorted, extend_span, file_depth_factor, fs::files_with_extension, name_of, push_rows,
-    signature_end_row, single_file_lines_content, statement_block_parts,
+    dedup_sorted, extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension,
+    name_of, push_rows, signature_end_row, single_file_lines_content, statement_block_parts,
 };
 
 /// Per-run Rust-walker state owned by [`WalkCtx`]. Stores cross-file
@@ -256,8 +256,9 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let src_lines: Vec<&str> = source.lines().collect();
         if !items.is_empty() {
             let names_key = RustKey::PubItemNames { file: file.clone() };
+            let parent_names_lines = collect_pub_item_names(&items);
             if let Some(content) =
-                single_file_lines_content(file, &source, collect_pub_item_names(&items))
+                single_file_lines_content(file, &source, parent_names_lines.clone())
             {
                 out.push(batch(
                     names_key.clone(),
@@ -272,8 +273,21 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     file: file.clone(),
                     start_line: item.start_line,
                 };
-                if let Some(content) =
-                    single_file_lines_content(file, &source, collect_pub_item(item.node, &source))
+                let item_lines = collect_pub_item(item.node, &source);
+                let parts = body_parts_for_item(item.node, &src_lines);
+                // Pre-classify the doc-shape so empty Lede / empty Body
+                // candidates aren't emitted. An empty Lede with a Body
+                // predecessored on it would render the body unreachable.
+                let raw_doc = collect_pub_item_doc_raw(item.node, &source);
+                let lede_lines =
+                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
+                let body_lines =
+                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Body);
+                let item_has_descendants =
+                    !parts.is_empty() || !lede_lines.is_empty() || !body_lines.is_empty();
+                if (!file_lines_covered_by(&item_lines, &parent_names_lines)
+                    || item_has_descendants)
+                    && let Some(content) = single_file_lines_content(file, &source, item_lines)
                 {
                     out.push(batch(
                         pub_item_key.clone(),
@@ -283,7 +297,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     ));
                 }
                 let item_key = BatchKey::Rust(pub_item_key.clone());
-                let parts = body_parts_for_item(item.node, &src_lines);
                 let part_value_factor = body_part_value_factor(parts.len());
                 for part in parts {
                     let Some(body_start_line) = part.start_line() else {
@@ -305,14 +318,6 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         pub_item_body_value(file, item.kind, item.surface, ctx) * part_value_factor,
                     ));
                 }
-                // Pre-classify the doc-shape so empty Lede / empty Body
-                // candidates aren't emitted. An empty Lede with a Body
-                // predecessored on it would render the body unreachable.
-                let raw_doc = collect_pub_item_doc_raw(item.node, &source);
-                let lede_lines =
-                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Lede);
-                let body_lines =
-                    split_doc_lines_at_first_heading(raw_doc.clone(), &source, DocSection::Body);
                 let mut lede_emitted: Option<BatchKey> = None;
                 if !lede_lines.is_empty() {
                     let lede_key = RustKey::PubItemDocLede {

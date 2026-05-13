@@ -62,16 +62,11 @@ Score(3000)=0.509 I=0.788 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missin
 | walker |  | 1371 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.487 |
 | walker |  | 1382 | 11 | pub-item names surface in src/parse/any.rs |  |  | 0.487 |
 | walker |  | 1393 | 11 | pub-item names surface in src/parse/xml.rs |  |  | 0.487 |
-| walker |  | 1393 | 0 | pub item at src/parse/xml.rs:12 |  |  | 0.487 |
 | walker |  | 1405 | 12 | pub-item names surface in src/parse/hcl.rs |  |  | 0.487 |
-| walker |  | 1405 | 0 | pub item at src/parse/hcl.rs:8 |  |  | 0.487 |
 | walker |  | 1417 | 12 | pub-item names surface in src/parse/jsonl.rs |  |  | 0.487 |
-| walker |  | 1417 | 0 | pub item at src/parse/jsonl.rs:7 |  |  | 0.487 |
 | walker |  | 1429 | 12 | pub-item names surface in src/parse/toml.rs |  |  | 0.487 |
-| walker |  | 1429 | 0 | pub item at src/parse/toml.rs:9 |  |  | 0.487 |
 | ns | 1432 |  | 217 | main.rs run() — config + flag dispatch | 2.8 |  | 0.442 |
 | walker |  | 1441 | 12 | pub-item names surface in src/parse/yaml.rs |  |  | 0.442 |
-| walker |  | 1441 | 0 | pub item at src/parse/yaml.rs:8 |  |  | 0.442 |
 | walker |  | 1460 | 19 | pub item at src/parse/any.rs:9 |  |  | 0.442 |
 | walker |  | 1621 | 161 | pub item at src/parse/mod.rs:18 |  |  | 0.522 |
 | walker |  | 1650 | 29 | pub item at src/ui/popup.rs:13 |  |  | 0.522 |
@@ -99,7 +94,6 @@ Score(3000)=0.509 I=0.788 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missin
 | walker |  | 2508 | 303 | pub item at src/parse/mod.rs:36 |  |  | 0.535 |
 | walker |  | 2556 | 48 | pub item at src/ui/header.rs:11 |  |  | 0.536 |
 | walker |  | 2597 | 41 | pub-item names surface in src/parse/json.rs |  |  | 0.536 |
-| walker |  | 2597 | 0 | pub item at src/parse/json.rs:6 |  |  | 0.536 |
 | walker |  | 2597 | 0 | pub item at src/parse/json.rs:26 |  |  | 0.536 |
 | walker |  | 2640 | 43 | pub-item names surface in src/ui/filter.rs |  |  | 0.536 |
 | walker |  | 2664 | 24 | pub item at src/ui/filter.rs:34 |  |  | 0.536 |

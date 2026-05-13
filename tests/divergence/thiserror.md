@@ -30,7 +30,6 @@ Score(3000)=0.610 I=0.796 C=0.467 ns_rows≤3K=12/27 (reached=4 partial=3 missin
 | walker |  | 1038 | 21 | pub-item names surface in impl/src/scan_expr.rs |  |  | 0.668 |
 | walker |  | 1038 | 0 | pub item at impl/src/scan_expr.rs:192 |  |  | 0.668 |
 | walker |  | 1064 | 26 | pub-item names surface in impl/src/unraw.rs |  |  | 0.668 |
-| walker |  | 1064 | 0 | pub item at impl/src/unraw.rs:12 |  |  | 0.668 |
 | walker |  | 1087 | 23 | pub item at impl/src/unraw.rs:82 |  |  | 0.668 |
 | walker |  | 1114 | 27 | pub-item names surface in impl/src/generics.rs |  |  | 0.668 |
 | walker |  | 1130 | 16 | pub item at impl/src/generics.rs:8 |  |  | 0.668 |
@@ -68,14 +67,10 @@ Score(3000)=0.610 I=0.796 C=0.467 ns_rows≤3K=12/27 (reached=4 partial=3 missin
 | ns | 2515 |  | 532 | ast.rs — Input/Struct/Enum/Variant/Field/ContainerKind type defs | 3.1 |  | 0.608 |
 | walker |  | 2545 | 54 | mod/use plumbing in impl/src/fallback.rs |  |  | 0.608 |
 | walker |  | 2567 | 22 | pub-item names surface in src/var.rs |  |  | 0.608 |
-| walker |  | 2567 | 0 | pub item at src/var.rs:3 |  |  | 0.608 |
 | walker |  | 2662 | 95 | pub item body at impl/src/expand.rs:12 body 13 |  |  | 0.609 |
 | walker |  | 2688 | 26 | pub-item names surface in src/provide.rs |  |  | 0.609 |
-| walker |  | 2688 | 0 | pub item at src/provide.rs:19 |  |  | 0.609 |
 | walker |  | 2715 | 27 | pub-item names surface in src/display.rs |  |  | 0.609 |
-| walker |  | 2715 | 0 | pub item at src/display.rs:46 |  |  | 0.609 |
 | walker |  | 2743 | 28 | pub-item names surface in src/aserror.rs |  |  | 0.609 |
-| walker |  | 2743 | 0 | pub item at src/aserror.rs:45 |  |  | 0.609 |
 | walker |  | 2818 | 75 | mod/use plumbing in impl/src/scan_expr.rs |  |  | 0.609 |
 | walker |  | 2890 | 72 | listing of 'tests' |  |  | 0.610 |
 | walker |  | 2991 | 101 | mod/use plumbing in impl/src/generics.rs |  |  | 0.610 |
@@ -103,7 +98,6 @@ Score(3000)=0.610 I=0.796 C=0.467 ns_rows≤3K=12/27 (reached=4 partial=3 missin
 | ns | 6828 |  | 1191 | valid.rs — check_non_field_attrs / check_field_attrs (cross-field rules) | 5.2 | 5.1 | 0.500 |
 | walker |  | 6989 | 2481 | crate-doc body in src/lib.rs |  |  | 0.590 |
 | walker |  | 7011 | 22 | pub-item names surface in tests/test_backtrace.rs |  |  | 0.590 |
-| walker |  | 7011 | 0 | pub item at tests/test_backtrace.rs:8 |  |  | 0.590 |
 | walker |  | 7030 | 19 | pub item at tests/test_backtrace.rs:13 |  |  | 0.590 |
 | walker |  | 7104 | 74 | README.md section #2 |  |  | 0.590 |
 | walker |  | 7127 | 23 | pub-item names surface in tests/test_expr.rs |  |  | 0.590 |
@@ -136,7 +130,6 @@ Score(3000)=0.610 I=0.796 C=0.467 ns_rows≤3K=12/27 (reached=4 partial=3 missin
 | ns | 9392 |  | 320 | src/lib.rs — module decls + cfg gates + private include! | 7.1 |  | 0.505 |
 | walker |  | 9695 | 528 | listing of 'tests/ui' |  |  | 0.575 |
 | walker |  | 9705 | 10 | pub-item names surface in tests/ui/display-underscore.rs |  |  | 0.575 |
-| walker |  | 9705 | 0 | pub item at tests/ui/display-underscore.rs:5 |  |  | 0.575 |
 | ns | 9711 |  | 319 | src/provide.rs + var.rs — runtime helpers | 7.2 |  | 0.566 |
 | walker |  | 9715 | 10 | pub-item names surface in tests/ui/from-backtrace-backtrace.rs |  |  | 0.566 |
 | walker |  | 9725 | 10 | pub-item names surface in tests/ui/from-not-source.rs |  |  | 0.566 |
@@ -152,25 +145,18 @@ Score(3000)=0.610 I=0.796 C=0.467 ns_rows≤3K=12/27 (reached=4 partial=3 missin
 | walker |  | 9815 | 10 | pub-item names surface in tests/ui/transparent-struct-not-error.rs |  |  | 0.573 |
 | walker |  | 9827 | 12 | pub item at tests/ui/transparent-struct-not-error.rs:5 |  |  | 0.573 |
 | walker |  | 9837 | 10 | pub-item names surface in tests/ui/unconditional-recursion.rs |  |  | 0.573 |
-| walker |  | 9837 | 0 | pub item at tests/ui/unconditional-recursion.rs:5 |  |  | 0.573 |
 | walker |  | 9847 | 10 | pub-item names surface in tests/ui/unexpected-field-fmt.rs |  |  | 0.573 |
 | walker |  | 9857 | 10 | pub-item names surface in tests/ui/unexpected-struct-source.rs |  |  | 0.573 |
-| walker |  | 9857 | 0 | pub item at tests/ui/unexpected-struct-source.rs:5 |  |  | 0.573 |
 | walker |  | 9867 | 10 | pub-item names surface in tests/ui/union.rs |  |  | 0.573 |
 | walker |  | 9878 | 11 | pub-item names surface in tests/ui/duplicate-enum-source.rs |  |  | 0.573 |
 | walker |  | 9889 | 11 | pub-item names surface in tests/ui/duplicate-struct-source.rs |  |  | 0.573 |
 | walker |  | 9900 | 11 | pub-item names surface in tests/ui/expression-fallback.rs |  |  | 0.573 |
-| walker |  | 9900 | 0 | pub item at tests/ui/expression-fallback.rs:5 |  |  | 0.573 |
 | walker |  | 9911 | 11 | pub-item names surface in tests/ui/fallback-impl-with-display.rs |  |  | 0.573 |
-| walker |  | 9911 | 0 | pub item at tests/ui/fallback-impl-with-display.rs:6 |  |  | 0.573 |
 | walker |  | 9922 | 11 | pub-item names surface in tests/ui/invalid-input-impl-anyway.rs |  |  | 0.573 |
-| walker |  | 9922 | 0 | pub item at tests/ui/invalid-input-impl-anyway.rs:5 |  |  | 0.573 |
 | walker |  | 9933 | 11 | pub-item names surface in tests/ui/missing-display.rs |  |  | 0.573 |
 | walker |  | 9950 | 17 | pub item at tests/ui/missing-display.rs:4 |  |  | 0.573 |
 | walker |  | 9961 | 11 | pub-item names surface in tests/ui/source-struct-not-error.rs |  |  | 0.573 |
 | ns | 9966 |  | 174 | test_source.rs — three source-shape examples | 8.2 |  | 0.571 |
 | walker |  | 9974 | 13 | pub item at tests/ui/source-struct-not-error.rs:8 |  |  | 0.571 |
 | walker |  | 9985 | 11 | pub-item names surface in tests/ui/transparent-struct-unnamed-field-not-error.rs |  |  | 0.571 |
-| walker |  | 9985 | 0 | pub item at tests/ui/transparent-struct-unnamed-field-not-error.rs:5 |  |  | 0.571 |
 | walker |  | 9997 | 12 | pub-item names surface in tests/ui/numbered-positional-tuple.rs |  |  | 0.571 |
-| walker |  | 9997 | 0 | pub item at tests/ui/numbered-positional-tuple.rs:5 |  |  | 0.571 |

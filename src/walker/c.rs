@@ -40,7 +40,8 @@ use crate::value::mix_signals;
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
-    fs::files_with_any_extension, push_rows, signature_end_row, single_file_lines_content,
+    file_lines_covered_by, fs::files_with_any_extension, push_rows, signature_end_row,
+    single_file_lines_content,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -77,8 +78,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
         let names_key = CKey::DeclNames { file: file.clone() };
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_decl_names_from(&decls))
+        let parent_names_lines = collect_decl_names_from(&decls);
+        if let Some(content) = single_file_lines_content(file, &source, parent_names_lines.clone())
         {
             out.push(Batch {
                 key: names_key.clone().into(),
@@ -94,8 +95,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: info.start_line,
             };
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_decl(*node, info, &source))
+            let decl_lines = collect_decl(*node, info, &source);
+            let doc_lines = collect_decl_doc(*node, &source);
+            let body_lines = if info.has_body {
+                collect_decl_body(*node, &src_lines)
+            } else {
+                FileLines::new(Vec::new())
+            };
+            let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
+            if (!file_lines_covered_by(&decl_lines, &parent_names_lines) || decl_has_descendants)
+                && let Some(content) = single_file_lines_content(file, &source, decl_lines)
             {
                 out.push(Batch {
                     key: decl_key.clone().into(),
@@ -105,9 +114,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 });
             }
             let decl_predecessor = BatchKey::C(decl_key);
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_decl_doc(*node, &source))
-            {
+            if let Some(content) = single_file_lines_content(file, &source, doc_lines) {
                 out.push(Batch {
                     key: CKey::DeclDoc {
                         file: file.clone(),
@@ -120,8 +127,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 });
             }
             if info.has_body
-                && let Some(content) =
-                    single_file_lines_content(file, &source, collect_decl_body(*node, &src_lines))
+                && let Some(content) = single_file_lines_content(file, &source, body_lines)
             {
                 out.push(Batch {
                     key: CKey::DeclBody {
@@ -737,9 +743,12 @@ sds sdsnewlen(const void *init, size_t initlen) { return 0; }
         );
 
         let keys: Vec<_> = report.scheduled.iter().map(|r| r.key.clone()).collect();
-        let has_decl = keys
+        let has_decl_names = keys
             .iter()
-            .any(|k| matches!(k, BatchKey::C(CKey::Decl { .. })));
-        assert!(has_decl, "expected a C::Decl batch; keys: {keys:?}");
+            .any(|k| matches!(k, BatchKey::C(CKey::DeclNames { .. })));
+        assert!(
+            has_decl_names,
+            "expected a C::DeclNames batch; keys: {keys:?}"
+        );
     }
 }

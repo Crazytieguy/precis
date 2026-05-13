@@ -21,7 +21,6 @@ Score(3000)=0.457 I=0.680 C=0.306 ns_rows≤3K=19/49 (reached=5 partial=1 missin
 | walker |  | 289 | 10 | pub-item names surface in sps/src/cli/info.rs |  |  | 0.823 |
 | walker |  | 299 | 10 | pub-item names surface in sps/src/cli/list.rs |  |  | 0.823 |
 | walker |  | 309 | 10 | pub-item names surface in sps/src/cli/update.rs |  |  | 0.823 |
-| walker |  | 309 | 0 | pub item at sps/src/cli/update.rs:11 |  |  | 0.823 |
 | walker |  | 320 | 11 | pub-item names surface in sps/src/cli/init.rs |  |  | 0.823 |
 | ns | 327 |  | 108 | CLI subcommand enum | 1.4 |  | 0.660 |
 | walker |  | 331 | 11 | pub-item names surface in sps/src/cli/install.rs |  |  | 0.660 |
@@ -81,7 +80,6 @@ Score(3000)=0.457 I=0.680 C=0.306 ns_rows≤3K=19/49 (reached=5 partial=1 missin
 | walker |  | 1224 | 38 | pub item at sps-common/src/formulary.rs:12 |  |  | 0.376 |
 | walker |  | 1263 | 39 | pub item at sps-common/src/cache.rs:15 |  |  | 0.376 |
 | walker |  | 1296 | 33 | pub-item names surface in sps-common/src/error.rs |  |  | 0.376 |
-| walker |  | 1296 | 0 | pub item at sps-common/src/error.rs:119 |  |  | 0.376 |
 | walker |  | 1317 | 21 | pub-item names surface in sps-common/src/dependency/definition.rs |  |  | 0.376 |
 | ns | 1377 |  | 272 | main.rs — pipeline-aware error printing on failure | 1.10 | 1.9 | 0.339 |
 | walker |  | 1388 | 71 | mod/use plumbing in sps-core/src/upgrade/mod.rs |  |  | 0.339 |
@@ -156,7 +154,6 @@ Score(3000)=0.457 I=0.680 C=0.306 ns_rows≤3K=19/49 (reached=5 partial=1 missin
 | ns | 4161 |  | 504 | Per-crate Cargo manifest signatures (name + deps highlights) | 2.16 |  | 0.458 |
 | walker |  | 4213 | 64 | pub item at sps/src/cli/info.rs:14 |  |  | 0.458 |
 | walker |  | 4265 | 52 | pub-item names surface in sps/src/pipeline/planner.rs |  |  | 0.458 |
-| walker |  | 4265 | 0 | pub item at sps/src/pipeline/planner.rs:25 |  |  | 0.458 |
 | ns | 4273 |  | 112 | Config struct fields | 3.1 |  | 0.465 |
 | walker |  | 4281 | 16 | listing of 'sps-core/src/install/bottle' |  |  | 0.472 |
 | walker |  | 4356 | 75 | pub-item names surface in sps-core/src/install/bottle/mod.rs |  |  | 0.472 |
@@ -172,7 +169,6 @@ Score(3000)=0.457 I=0.680 C=0.306 ns_rows≤3K=19/49 (reached=5 partial=1 missin
 | walker |  | 4711 | 115 | pub item body at sps-core/src/install/bottle/mod.rs:34 body 35 |  |  | 0.457 |
 | walker |  | 4737 | 26 | pub-item names surface in sps-core/src/install/bottle/link.rs |  |  | 0.457 |
 | walker |  | 4824 | 87 | pub-item names surface in sps-net/src/http.rs |  |  | 0.457 |
-| walker |  | 4824 | 0 | pub item at sps-net/src/http.rs:18 |  |  | 0.457 |
 | walker |  | 4867 | 43 | pub item at sps-net/src/http.rs:147 |  |  | 0.457 |
 | walker |  | 4886 | 19 | pub item body at sps-net/src/http.rs:147 body 152 |  |  | 0.457 |
 | walker |  | 4942 | 56 | pub item at sps-net/src/http.rs:155 |  |  | 0.457 |
@@ -237,7 +233,6 @@ Score(3000)=0.457 I=0.680 C=0.306 ns_rows≤3K=19/49 (reached=5 partial=1 missin
 | walker |  | 7815 | 72 | README.md section #3 |  |  | 0.419 |
 | ns | 7933 |  | 497 | JobProcessingState + DownloadOutcome + PlannedOperations | 4.2 | 4.1 | 0.413 |
 | walker |  | 7938 | 123 | pub-item names surface in sps-net/src/oci.rs |  |  | 0.413 |
-| walker |  | 7938 | 0 | pub item at sps-net/src/oci.rs:24 |  |  | 0.413 |
 | walker |  | 7938 | 0 | pub item at sps-net/src/oci.rs:190 |  |  | 0.413 |
 | walker |  | 7979 | 41 | pub item at sps-net/src/oci.rs:37 |  |  | 0.413 |
 | walker |  | 8023 | 44 | pub item at sps-net/src/oci.rs:182 |  |  | 0.413 |

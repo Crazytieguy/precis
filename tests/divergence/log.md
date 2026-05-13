@@ -123,7 +123,6 @@ Score(3000)=0.607 I=0.843 C=0.437 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | walker |  | 7160 | 318 | macro_export body at src/macros.rs:391 |  |  | 0.513 |
 | walker |  | 7164 | 4 | listing of 'benches' |  |  | 0.513 |
 | walker |  | 7255 | 91 | pub-item names surface in src/__private_api.rs |  |  | 0.514 |
-| walker |  | 7255 | 0 | pub item at src/__private_api.rs:10 |  |  | 0.514 |
 | walker |  | 7255 | 0 | pub item at src/__private_api.rs:39 |  |  | 0.514 |
 | walker |  | 7255 | 0 | pub item at src/__private_api.rs:103 |  |  | 0.514 |
 | walker |  | 7255 | 0 | pub item at src/__private_api.rs:108 |  |  | 0.514 |

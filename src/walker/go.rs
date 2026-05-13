@@ -50,6 +50,7 @@ use crate::value::mix_signals;
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
+    file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -183,8 +184,8 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         }
 
         let names_key = GoKey::DeclNames { file: file.clone() };
-        if let Some(content) =
-            single_file_lines_content(file, &source, collect_decl_names_from(&decls))
+        let parent_names_lines = collect_decl_names_from(&decls);
+        if let Some(content) = single_file_lines_content(file, &source, parent_names_lines.clone())
         {
             out.push(Batch {
                 key: names_key.clone().into(),
@@ -200,7 +201,17 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 file: file.clone(),
                 start_line: info.start_line,
             };
-            if let Some(content) = single_file_lines_content(file, &source, collect_decl(info)) {
+            let decl_lines = collect_decl(info);
+            let doc_lines = collect_decl_doc(*node, &source);
+            let body_lines = if info.kind.has_body() {
+                collect_decl_body(info, &src_lines)
+            } else {
+                FileLines::new(Vec::new())
+            };
+            let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
+            if (!file_lines_covered_by(&decl_lines, &parent_names_lines) || decl_has_descendants)
+                && let Some(content) = single_file_lines_content(file, &source, decl_lines)
+            {
                 out.push(Batch {
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
@@ -209,9 +220,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 });
             }
             let decl_predecessor = BatchKey::Go(decl_key);
-            if let Some(content) =
-                single_file_lines_content(file, &source, collect_decl_doc(*node, &source))
-            {
+            if let Some(content) = single_file_lines_content(file, &source, doc_lines) {
                 out.push(Batch {
                     key: GoKey::DeclDoc {
                         file: file.clone(),
@@ -224,8 +233,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 });
             }
             if info.kind.has_body()
-                && let Some(content) =
-                    single_file_lines_content(file, &source, collect_decl_body(info, &src_lines))
+                && let Some(content) = single_file_lines_content(file, &source, body_lines)
             {
                 out.push(Batch {
                     key: GoKey::DeclBody {

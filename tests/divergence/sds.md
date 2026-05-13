@@ -6,12 +6,7 @@ Score(3000)=0.647 I=0.794 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missi
 | ns | 31 |  | 31 | Repo file listing | 1.1 |  | 1.000 |
 | ns | 39 |  | 8 | README title | 1.2 |  | 0.932 |
 | walker |  | 62 | 31 | c decl names surface in sdsalloc.h |  |  | 0.933 |
-| walker |  | 62 | 0 | c decl at sdsalloc.h:40 |  |  | 0.933 |
-| walker |  | 62 | 0 | c decl at sdsalloc.h:41 |  |  | 0.933 |
-| walker |  | 62 | 0 | c decl at sdsalloc.h:42 |  |  | 0.933 |
 | walker |  | 118 | 56 | c decl names surface in testhelp.h |  |  | 0.933 |
-| walker |  | 118 | 0 | c decl at testhelp.h:42 |  |  | 0.933 |
-| walker |  | 118 | 0 | c decl at testhelp.h:43 |  |  | 0.933 |
 | ns | 128 |  | 89 | README v2 lede — first paragraph (binary-compat warning) | 1.3 |  | 0.748 |
 | walker |  | 220 | 102 | README headline in README.md |  |  | 1.000 |
 | ns | 252 |  | 124 | README v2 lede — perf note + sdscatfmt headline | 1.4 |  | 0.749 |
@@ -30,61 +25,14 @@ Score(3000)=0.647 I=0.794 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missi
 | ns | 1487 |  | 211 | Public fn declarations — low-level + allocator-export API | 2.8 |  | 0.311 |
 | ns | 1917 |  | 430 | Five packed sdshdr structs | 2.9 |  | 0.264 |
 | walker |  | 1919 | 1104 | c decl names surface in sds.h |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:36 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:37 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:43 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:76 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:77 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:78 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:79 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:80 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:81 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:82 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:83 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:84 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:85 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:87 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:104 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:130 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:154 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:180 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:197 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:218 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:219 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:220 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:221 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:222 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:223 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:224 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:225 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:226 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:227 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:228 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:230 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:238 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:239 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:240 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:241 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:242 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:243 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:244 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:245 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:246 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:247 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:248 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:249 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:250 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:251 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:252 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:253 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:256 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:257 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:258 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:259 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:260 |  |  | 0.615 |
 | walker |  | 1919 | 0 | c decl at sds.h:266 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:267 |  |  | 0.615 |
-| walker |  | 1919 | 0 | c decl at sds.h:268 |  |  | 0.615 |
 | walker |  | 1956 | 37 | c decl at sds.h:47 |  |  | 0.622 |
 | walker |  | 1970 | 14 | c decl doc at sds.h:256 |  |  | 0.630 |
 | walker |  | 1990 | 20 | c decl doc at sds.h:180 |  |  | 0.630 |
@@ -118,7 +66,6 @@ Score(3000)=0.647 I=0.794 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missi
 | ns | 5456 |  | 482 | Outdated v1 internals diagram in README | 3.9 |  | 0.550 |
 | ns | 6189 |  | 733 | sdsMakeRoomFor body — growth/realloc engine | 4.1 |  | 0.514 |
 | walker |  | 6220 | 914 | c decl names surface in sds.c |  |  | 0.514 |
-| walker |  | 6220 | 0 | c decl at sds.c:42 |  |  | 0.514 |
 | walker |  | 6220 | 0 | c decl at sds.c:89 |  |  | 0.514 |
 | walker |  | 6220 | 0 | c decl at sds.c:149 |  |  | 0.514 |
 | walker |  | 6220 | 0 | c decl at sds.c:154 |  |  | 0.514 |
@@ -159,8 +106,6 @@ Score(3000)=0.647 I=0.794 C=0.527 ns_rows≤3K=18/34 (reached=11 partial=0 missi
 | walker |  | 6220 | 0 | c decl at sds.c:1108 |  |  | 0.514 |
 | walker |  | 6220 | 0 | c decl at sds.c:1120 |  |  | 0.514 |
 | walker |  | 6220 | 0 | c decl at sds.c:1136 |  |  | 0.514 |
-| walker |  | 6220 | 0 | c decl at sds.c:1137 |  |  | 0.514 |
-| walker |  | 6220 | 0 | c decl at sds.c:1138 |  |  | 0.514 |
 | walker |  | 6232 | 12 | c decl doc at sds.c:160 |  |  | 0.514 |
 | walker |  | 6243 | 11 | c decl body at sds.c:149 |  |  | 0.514 |
 | walker |  | 6263 | 20 | c decl doc at sds.c:154 |  |  | 0.514 |
