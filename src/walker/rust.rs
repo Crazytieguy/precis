@@ -773,13 +773,34 @@ fn secondary_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn crate_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Secondary workspace members (mdbook-html, mdbook-driver, etc.)
+    // also emit a crate-doc lede from their lib.rs / main.rs even
+    // though `secondary_workspace_member_factor` doesn't apply (those
+    // files *are* entrypoints). NS authors rarely anchor on each
+    // sub-crate's lede; damp the lede on secondary members so the
+    // primary crate's lede + structural ARCHITECTURE rows compete
+    // first in budget.
+    let secondary = secondary_workspace_member_member_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx))
+    mix_signals(cat, 0.5, 0.9, rust_depth_factor(file, ctx)) * secondary
+}
+
+fn secondary_workspace_member_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
+        return 1.0;
+    };
+    let same_basename = ctx
+        .root()
+        .file_name()
+        .zip(manifest_dir.file_name())
+        .is_some_and(|(r, m)| r == m);
+    if same_basename { 1.0 } else { 0.7 }
 }
 
 fn crate_doc_body_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    let secondary = secondary_workspace_member_member_factor(file, ctx);
     let cat = (0.35 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx))
+    mix_signals(cat, 0.6, 0.75, rust_depth_factor(file, ctx)) * secondary
 }
 
 fn mod_use_value(file: &Path, ctx: &WalkCtx) -> f64 {

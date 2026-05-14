@@ -62,6 +62,7 @@ crates/
         README.md
             1→# mdbook-core
             7→This is the base support library for [mdBook](https://rust-lang.github.io/mdBook/). It is intended for internal use only. Other mdBook crates depend on this for any types that are shared across the crates.
+            9→> This crate is maintained by the mdBook team, primarily for use by mdBook and not intended for external use (except as a transitive dependency). This crate may make major changes to its APIs or be deprecated without warning.
         src/
             book/
                 tests.rs
@@ -69,6 +70,10 @@ crates/
             config.rs
             lib.rs
                 1→//! The base support library for mdbook, intended for internal use only.
+                3→/// The current version of `mdbook`.
+                4→///
+                5→/// This is provided as a way for custom preprocessors and renderers to do
+                6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
                 …
                 9→pub mod book;
@@ -90,7 +95,15 @@ crates/
                     11→pub(crate) use self::toml_ext::TomlExt;
                     13→pub use self::html::{escape_html, escape_html_attribute};
                     17→macro_rules! static_regex {
-                    …
+                    18→    ($name:ident, $regex:literal) => {
+                    19→        static $name: std::sync::LazyLock<regex::Regex> =
+                    20→            std::sync::LazyLock::new(|| regex::Regex::new($regex).unwrap());
+                    21→    };
+                    22→    ($name:ident, bytes, $regex:literal) => {
+                    23→        static $name: std::sync::LazyLock<regex::bytes::Regex> =
+                    24→            std::sync::LazyLock::new(|| regex::bytes::Regex::new($regex).unwrap());
+                    25→    };
+                    26→}
                     28→/// Prints a "backtrace" of some `Error`.
                     29→pub fn log_backtrace(e: &Error) {
                     30→    let mut message = format!("{e}");
@@ -100,6 +113,11 @@ crates/
                     36→    error!("{message}");
                 toml_ext.rs
     mdbook-driver/
+        Cargo.toml
+            31→[features]
+            32→search = ["mdbook-html/search"]
+        README.md
+        src/
     mdbook-html/
         Cargo.toml
             36→[features]
@@ -114,17 +132,6 @@ crates/
                 admonitions.rs
                 hide_lines.rs
                 mod.rs
-                    1→//! HTML rendering support.
-                    2→//!
-                    3→//! This module's primary entry point is [`render_markdown`] which will take
-                    4→//! markdown text and render it to HTML. In summary, the general procedure of
-                    5→//! that function is:
-                    6→//!
-                    7→//! 1. Use [`pulldown_cmark`] to parse the markdown and generate events.
-                    8→//! 2. [`tree`] converts those events to a tree data structure.
-                    9→//!      1. Parse HTML inside the markdown using [`tokenizer`].
-                    10→//!      2. Apply various transformations to the tree data structure, such as adding header links.
-                    11→//! 3. Serialize the tree to HTML in [`serialize()`].
                     34→pub(crate) struct HtmlRenderOptions<'a> {
                     …
                     45→impl<'a> HtmlRenderOptions<'a> {
