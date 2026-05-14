@@ -6,6 +6,10 @@ expression: rendered
 .gitattributes
 .github/
 .gitignore
+    1→node_modules/
+    2→yarn.lock
+    3→distribution/
+    4→package-lock.json
 .npmrc
 license
 media/
@@ -171,12 +175,17 @@ source/
             7→	public request: KyRequest;
             8→	public options: NormalizedOptions;
             10→	constructor(response: Response, request: Request, options: NormalizedOptions) {
-            …
+            11→		const code = (response.status || response.status === 0) ? response.status : '';
+            12→		const title = response.statusText ?? '';
+            13→		const status = `${code} ${title}`.trim();
+            14→		const reason = status ? `status code ${status}` : 'an unknown error';
+            16→		super(`Request failed with ${reason}: ${request.method} ${request.url}`);
+            18→		this.name = 'HTTPError';
+            19→		this.response = response;
+            20→		this.request = request;
+            21→		this.options = options;
         NonError.ts
             6→export class NonError extends Error {
-            7→	override name = 'NonError';
-            8→	readonly value: unknown;
-            10→	constructor(value: unknown) {
             …
         TimeoutError.ts
             1→import type {KyRequest} from '../types/request.js';
@@ -252,31 +261,11 @@ source/
     utils/
         body.ts
         delay.ts
-            5→export type DelayOptions = {
-            6→	signal?: InternalOptions['signal'];
-            7→};
-            9→export default async function delay(
-            10→	ms: number,
-            11→	{signal}: DelayOptions,
-            12→): Promise<void> {
-            …
         is.ts
-            2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
         merge.ts
         normalize.ts
         options.ts
         timeout.ts
-            3→export type TimeoutOptions = {
-            4→	timeout: number;
-            5→	fetch: typeof fetch;
-            6→};
-            9→export default async function timeout(
-            10→	request: Request,
-            11→	init: RequestInit,
-            12→	abortController: AbortController | undefined,
-            13→	options: TimeoutOptions,
-            14→): Promise<Response> {
-            …
         type-guards.ts
             27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
             28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
@@ -289,6 +278,18 @@ source/
         types.ts
 test/
 tsconfig.dist.json
+    1→{
+    2→	"extends": "./tsconfig",
+    3→	"compilerOptions": {
+    4→		"sourceMap": true,
+    5→		"inlineSources": true,
+    6→		"rootDir": "./source",
+    7→		"outDir": "./distribution"
+    8→	},
+    9→	"include": [
+    10→		"source"
+    11→	]
+    12→}
 tsconfig.json
     1→{
     2→	"extends": "@sindresorhus/tsconfig",

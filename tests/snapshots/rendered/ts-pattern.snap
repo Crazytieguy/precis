@@ -142,21 +142,12 @@ src/
     types/
         BuildMany.ts
         DeepExclude.ts
-            3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
         DistributeUnions.ts
         ExtractPreciseValue.ts
-            13→export type ExtractPreciseValue<a, b> = b extends Override<infer b1>
-            …
         FindSelected.ts
         InvertPattern.ts
         IsMatching.ts
-            57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
-            …
         Match.ts
-            8→export type PickReturnValue<a, b> = a extends symbols.unset ? b : a;
-            …
-            22→export type Match<
-            …
         Pattern.ts
             7→export type MatcherType =
             …

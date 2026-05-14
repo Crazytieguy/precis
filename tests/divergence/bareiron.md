@@ -172,14 +172,13 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | ns | 8012 |  | 250 | main.c — handlePacket switch case index (truncated) | 4.15 |  | 0.693 |
 | walker |  | 8083 | 135 | c includes in src/main.c |  |  | 0.693 |
 | walker |  | 8218 | 135 | c includes in src/procedures.c |  |  | 0.693 |
-| walker |  | 8242 | 24 | imports in build_registries.js |  |  | 0.693 |
 | ns | 8244 |  | 232 | getBlockAt body — block_changes overlay + terrain fallback | 5.1 |  | 0.682 |
-| walker |  | 8320 | 78 | c decl body at src/worldgen.c:13 |  |  | 0.682 |
-| walker |  | 8398 | 78 | c decl body at src/worldgen.c:117 |  |  | 0.682 |
+| walker |  | 8296 | 78 | c decl body at src/worldgen.c:13 |  |  | 0.682 |
+| walker |  | 8374 | 78 | c decl body at src/worldgen.c:117 |  |  | 0.682 |
 | ns | 8443 |  | 199 | getBlockChange body — linear scan with chest skip | 5.2 |  | 0.673 |
 | ns | 8853 |  | 410 | getChunkBiome body — biome from world_seed bit pattern | 5.3 |  | 0.659 |
-| walker |  | 8926 | 528 | README.md section #2 |  |  | 0.668 |
-| walker |  | 9016 | 90 | c decl body at src/varnum.c:43 |  |  | 0.668 |
+| walker |  | 8902 | 528 | README.md section #2 |  |  | 0.668 |
+| walker |  | 8992 | 90 | c decl body at src/varnum.c:43 |  |  | 0.668 |
 | ns | 9148 |  | 295 | handlePlayerJoin body — chat + spawn entity broadcast | 5.4 |  | 0.657 |
 | ns | 9430 |  | 282 | handleServerTick — world_time + per-player tick header | 5.5 |  | 0.647 |
 | ns | 9589 |  | 159 | sc_blockUpdate body — concrete sc_ packet wire format example | 5.6 |  | 0.643 |

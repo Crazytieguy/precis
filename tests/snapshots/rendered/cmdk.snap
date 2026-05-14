@@ -79,8 +79,6 @@ cmdk/
     package.json
     src/
         command-score.ts
-            155→export function commandScore(string: string, abbreviation: string, aliases: string[]): number {
-            …
         index.tsx
             1→'use client'
             3→import * as RadixDialog from '@radix-ui/react-dialog'
@@ -250,20 +248,22 @@ cmdk/
             1091→} as const
     tsup.config.ts
         3→export default defineConfig({
-        4→  sourcemap: false,
-        5→  minify: true,
-        6→  dts: true,
-        7→  format: ['esm', 'cjs'],
-        8→  loader: {
-        9→    '.js': 'jsx',
-        10→  },
-        11→})
+        …
 package.json
     2→  "name": "cmdk-root",
     3→  "private": true,
+    4→  "scripts": {
+    5→    "build": "pnpm -F cmdk build",
+    6→    "dev": "pnpm -F cmdk build --watch",
+    7→    "website": "pnpm -F cmdk-website dev",
+    8→    "testsite": "pnpm -F cmdk-tests dev",
+    9→    "format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --write",
+    10→    "preinstall": "npx only-allow pnpm",
+    11→    "test:format": "prettier '**/*.{js,jsx,ts,tsx,json,md,mdx,css,scss,yaml,yml}' --check",
+    12→    "test": "playwright test"
+    13→  },
     22→  "packageManager": "pnpm@8.8.0",
 playwright.config.ts
-    1→import { PlaywrightTestConfig, devices } from '@playwright/test'
     27→export default config
 pnpm-lock.yaml
 pnpm-workspace.yaml

@@ -1399,7 +1399,7 @@ fn public_surface_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     if ctx.is_ts_public_surface(file) {
         1.0
     } else {
-        0.65
+        0.5
     }
 }
 

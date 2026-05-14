@@ -114,6 +114,17 @@ packages/
         README.md
             1→## Usage
             3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+            11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+            …
+            13→## Available Scripts
+            …
+            17→### `npm run dev` or `npm start`
+            …
+            24→### `npm run build`
+            …
+            32→## Deployment
+            …
+            36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
         e2e-tests/
             create-and-view-note.e2e.test.ts
@@ -202,14 +213,7 @@ packages/
             enclosed.mjs
         build.config.ts
             3→export default defineBuildConfig({
-            4→  entries: [
-            5→    'src/cli',
-            6→  ],
-            7→  clean: true,
-            8→  rollup: {
-            9→    emitCJS: true,
-            10→  },
-            11→});
+            …
         eslint.config.js
         package.json
         src/
@@ -217,31 +221,21 @@ packages/
             config/
                 config.command.ts
                 config.constants.ts
-                    3→export const configDefinition = {
-                    …
                 config.models.ts
                 config.usecases.ts
-                    3→export const {
-                    …
             create-note/
                 create-note.command.ts
                 create-note.usecases.test.ts
                 create-note.usecases.ts
-                    3→export async function getNoteContent({
-                    …
             files/
                 files.services.test.ts
                 files.services.ts
             shared/
                 cli.models.ts
-                    3→export { readFromStdin };
-                    …
                 http.models.ts
             view-note/
                 view-note.command.ts
                 view-note.models.ts
-                    3→export { promptForPassword };
-                    …
         tsconfig.json
     crypto/
         README.md
@@ -262,8 +256,6 @@ packages/
         package.json
         src/
             api-definition.ts
-                4→export { createEnclosedCryptoApi };
-                …
             encryption-algorithms/
             index.node.ts
                 8→export const {
@@ -290,11 +282,7 @@ packages/
     docs/
         .vitepress/
             config.ts
-                11→export default defineConfig({
-                …
             plausible.ts
-                8→export { getPlausibleScripts };
-                …
             theme/
                 custom.css
                 icons.ts
@@ -307,11 +295,7 @@ packages/
                 toggle.vue
             data/
                 configuration.data.ts
-                    55→export default {
-                    …
                 i18n.data.ts
-                    59→export default {
-                    …
             how-it-works.md
             index.md
                 5→# Enclosed
@@ -358,8 +342,6 @@ packages/
         src/
             api/
                 api.client.ts
-                    4→export { apiClient };
-                    …
                 api.constants.ts
                 api.models.test.ts
                 api.models.ts
@@ -400,6 +382,8 @@ packages/
             notes/
                 notes.models.test.ts
                 notes.models.ts
+                    4→export { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment };
+                    …
                 notes.services.ts
                     3→export { fetchNote, storeNote };
                     …

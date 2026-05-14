@@ -59,7 +59,6 @@ package.json
     46→  },
     65→  "packageManager": "pnpm@8.8.0",
 playwright.config.ts
-    1→import { defineConfig, devices } from '@playwright/test';
     12→export default defineConfig({
     …
 pnpm-lock.yaml
@@ -71,10 +70,6 @@ src/
     browser.ts
     constants.ts
     context.ts
-        37→export const DrawerContext = React.createContext<DrawerContextValue>({
-        …
-        69→export const useDrawerContext = () => {
-        …
     helpers.ts
     index.tsx
         27→export interface WithFadeFromProps {
@@ -189,12 +184,8 @@ src/
     style.css
     types.ts
     use-composed-refs.ts
-        3→import * as React from 'react';
         36→export { composeRefs, useComposedRefs };
     use-controllable-state.ts
-        3→import React from 'react';
-        39→export function useControllableState<T>({ prop, defaultProp, onChange = () => {} }: UseControllableStateParams<T>) {
-        …
     use-position-fixed.ts
         15→export function usePositionFixed({
         …
