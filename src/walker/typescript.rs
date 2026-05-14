@@ -1815,7 +1815,21 @@ fn collect_export_lines(tree: &Tree, source: &str, start_line: usize) -> FileLin
 }
 
 fn module_item_lines(kind: ItemKind, decl: Node, source: &str) -> FileLines {
-    decl_surface_lines(kind, decl, decl, source)
+    let mut lines = decl_surface_lines(kind, decl, decl, source);
+    // Module-private classes commonly carry the type's documentation
+    // ("This class represents X. It follows the builder pattern...") in
+    // a JSDoc block immediately above. NS authors anchor on the doc +
+    // signature together (ts-pattern NS 2.5 = "MatchExpression class doc
+    // + constructor"); without this, the walker emits the class surface
+    // with the doc-block lines missing.
+    if matches!(kind, ItemKind::Class) {
+        let mut doc_lines = Vec::new();
+        collect_jsdoc_above(decl, source, &mut doc_lines, false);
+        if !doc_lines.is_empty() {
+            lines.full = dedup_sorted(lines.full.into_iter().chain(doc_lines).collect());
+        }
+    }
+    lines
 }
 
 fn decl_surface_lines(kind: ItemKind, anchor: Node, decl: Node, source: &str) -> FileLines {

@@ -180,6 +180,15 @@ src/
         33→  value: input
         34→): Match<input, output> {
         35→  return new MatchExpression(value, unmatched) as any;
+        38→/**
+        39→ * This class represents a match expression. It follows the
+        40→ * builder pattern, we chain methods to add features to the expression
+        41→ * until we call `.exhaustive`, `.otherwise` or the unsafe `.run`
+        42→ * method to execute it.
+        43→ *
+        44→ * The types of this class aren't public, the public type definition
+        45→ * can be found in src/types/Match.ts.
+        46→ */
         47→class MatchExpression<input, output> {
         48→  constructor(private input: input, private state: MatchState<output>) {}
         50→  with(...args: any[]): MatchExpression<input, output> {
@@ -201,20 +210,7 @@ src/
         …
     patterns.ts
         48→export type {
-        49→  /**
-        50→   * `Pattern<T>` is the type of all patterns
-        51→   * that can match a value of type `T`.
-        52→   */
-        53→  Pattern,
-        55→  /**
-        56→   * `unstable_Fn` can be used to created a
-        57→   * a Matchable instance – a custom type that
-        58→   * can be used as a pattern.
-        59→   *
-        60→   * @experimental This feature is unstable.
-        61→   */
-        62→  Fn as unstable_Fn,
-        63→};
+        …
         65→export { matcher };
         …
         81→export type unstable_Matchable<
