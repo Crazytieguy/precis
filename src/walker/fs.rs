@@ -317,7 +317,7 @@ fn inventory_depth_factor(dir: &Path, ctx: &WalkCtx, non_essential: f64) -> f64 
 /// heavy/generated trees. Note: these directories still appear in
 /// listings (via `fs_util::list_dir`); this only affects walker
 /// traversal and per-language file enumeration.
-fn should_skip_dir(name: &str) -> bool {
+pub(crate) fn should_skip_dir(name: &str) -> bool {
     matches!(
         name,
         "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"

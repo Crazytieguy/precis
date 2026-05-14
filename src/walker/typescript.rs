@@ -1342,15 +1342,37 @@ fn is_entrypoint_file(path: &Path) -> bool {
                 | "index.mjs"
                 | "index.cjs"
                 | "main.ts"
+                | "main.tsx"
                 | "main.js"
                 | "main.mjs"
                 | "main.cjs"
                 | "mod.ts"
+                | "mod.tsx"
                 | "mod.js"
                 | "mod.mjs"
                 | "mod.cjs"
                 | "esm.js"
                 | "esm.mjs"
+        )
+    })
+}
+
+/// True for files that should seed the public-surface graph but
+/// shouldn't otherwise get the entrypoint depth-pin / value boost.
+/// Currently: declaration-only entrypoint files (`index.d.ts`,
+/// `index.d.mts`, `index.d.cts` etc.) that ship as the TS public API
+/// for JS packages whose runtime entrypoint is plain JS — commander's
+/// `typings/index.d.ts` is the canonical example.
+fn is_declaration_entrypoint_file(path: &Path) -> bool {
+    path.file_name().and_then(|n| n.to_str()).is_some_and(|n| {
+        matches!(
+            n,
+            "index.d.ts"
+                | "index.d.mts"
+                | "index.d.cts"
+                | "main.d.ts"
+                | "main.d.mts"
+                | "main.d.cts"
         )
     })
 }
@@ -2096,10 +2118,16 @@ fn is_first_top_level_node(node: Node) -> bool {
 
 // --- public-surface reachability ----------------------------------------
 
-/// Recursively walk `dir` for files whose basename matches any of the
-/// JS/TS module-entrypoint conventions (`index.{ts,tsx,js,mjs,cjs}`,
-/// `main.{...}`, `mod.{...}`). Returns absolute paths; skips heavy /
-/// generated trees (`node_modules`, `dist`, etc.).
+/// Source-file extensions in TS/JS source-of-truth precedence order. Used
+/// for both relative-path resolution and the entrypoint-file scan.
+/// Declaration extensions come AFTER runtime so the TS source wins when
+/// both exist (e.g. `./foo.ts` over a generated `./foo.d.ts`); declaration
+/// files only enter as entrypoints when the package ships a pure-types
+/// `index.d.ts` (commander's `typings/index.d.ts` shape).
+const TS_JS_EXTS: &[&str] = &["ts", "tsx", "js", "mjs", "cjs", "d.ts", "d.mts", "d.cts"];
+
+/// Recursively walk `dir` for files whose basename `is_entrypoint_file`
+/// recognizes. Skips heavy / generated trees via [`fs::should_skip_dir`].
 fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
     fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
         let Ok(read_dir) = std::fs::read_dir(dir) else {
@@ -2112,25 +2140,13 @@ fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
             };
             if file_type.is_dir() {
                 let name = entry.file_name();
-                let s = name.to_string_lossy();
-                if !matches!(
-                    s.as_ref(),
-                    "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
-                ) {
+                if !super::fs::should_skip_dir(&name.to_string_lossy()) {
                     walk(&path, out);
                 }
-            } else if file_type.is_file() {
-                let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
-                    continue;
-                };
-                if is_entrypoint_file(&path)
-                    || matches!(
-                        name,
-                        "main.ts" | "main.tsx" | "main.js" | "main.mjs" | "main.cjs"
-                    )
-                {
-                    out.push(path);
-                }
+            } else if file_type.is_file()
+                && (is_entrypoint_file(&path) || is_declaration_entrypoint_file(&path))
+            {
+                out.push(path);
             }
         }
     }
@@ -2186,34 +2202,23 @@ fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
 fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
     let root = tree.root_node();
     let mut out: Vec<String> = Vec::new();
-
-    // Pass 1a: index ESM import bindings → source string.
     let mut import_bindings: HashMap<String, String> = HashMap::new();
+
     let mut cursor = root.walk();
     for stmt in root.children(&mut cursor) {
-        if stmt.kind() != "import_statement" {
-            continue;
+        if stmt.kind() == "import_statement" {
+            let Some(src) = source_literal(stmt, source) else {
+                continue;
+            };
+            let src = strip_quotes(&src).to_string();
+            for name in import_clause_bindings(stmt, source) {
+                import_bindings.insert(name, src.clone());
+            }
+        } else if is_require_declaration(stmt, source) {
+            collect_require_bindings(stmt, source, &mut import_bindings);
         }
-        let Some(src) = source_literal(stmt, source) else {
-            continue;
-        };
-        let src = strip_quotes(&src).to_string();
-        for name in import_clause_bindings(stmt, source) {
-            import_bindings.insert(name, src.clone());
-        }
-    }
-    // Pass 1b: index CommonJS require bindings → source string. Covers
-    // `const X = require('./foo')` and `const { X, Y } = require('./foo')`.
-    let mut cursor = root.walk();
-    for stmt in root.children(&mut cursor) {
-        if !is_require_declaration(stmt, source) {
-            continue;
-        }
-        collect_require_bindings(stmt, source, &mut import_bindings);
     }
 
-    // Pass 2a: ESM explicit `export ... from` sources + lookup local
-    // re-exports against the import-binding index.
     let mut cursor = root.walk();
     for stmt in root.children(&mut cursor) {
         if stmt.kind() != "export_statement" {
@@ -2231,9 +2236,6 @@ fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
             }
         }
     }
-    // Pass 2b: CommonJS `exports.X = local` / `module.exports.X = local`
-    // / `module.exports = { local, ... }` — look up against the
-    // require-binding index.
     let mut cursor = root.walk();
     for stmt in root.children(&mut cursor) {
         let Some((left, right)) = commonjs_assignment_sides(stmt, source) else {
@@ -2288,7 +2290,6 @@ fn collect_require_bindings(stmt: Node, source: &str, bindings: &mut HashMap<Str
         if !is_require_call(value, source) {
             continue;
         }
-        // The single string argument is the require source.
         let Some(args) = value.child_by_field_name("arguments") else {
             continue;
         };
@@ -2297,7 +2298,6 @@ fn collect_require_bindings(stmt: Node, source: &str, bindings: &mut HashMap<Str
             continue;
         };
         let src = strip_quotes(&source[src_node.start_byte()..src_node.end_byte()]).to_string();
-        // Bound name pattern: identifier (default) or object_pattern (destructure).
         let Some(name_node) = child.child_by_field_name("name") else {
             continue;
         };
@@ -2381,12 +2381,10 @@ fn collect_import_clause_names(clause: Node, source: &str, out: &mut Vec<String>
     for child in clause.children(&mut cursor) {
         match child.kind() {
             "identifier" => {
-                // Default import binding.
                 let name = source[child.start_byte()..child.end_byte()].to_string();
                 out.push(name);
             }
             "namespace_import" => {
-                // `* as Name`. The identifier child is the bound name.
                 if let Some(id) = first_identifier_child(child) {
                     let name = source[id.start_byte()..id.end_byte()].to_string();
                     out.push(name);
@@ -2398,14 +2396,14 @@ fn collect_import_clause_names(clause: Node, source: &str, out: &mut Vec<String>
                     if spec.kind() != "import_specifier" {
                         continue;
                     }
-                    // import_specifier shape: `name` (and optional `alias`).
-                    // The LOCAL binding is `alias` if present, else `name`.
-                    let alias = spec.child_by_field_name("alias");
-                    let name = spec.child_by_field_name("name");
-                    let bound = alias.or(name);
+                    // `import { name as alias }`: the LOCAL binding is `alias` if
+                    // present, else `name` — the field-name contract from the
+                    // tree-sitter-typescript grammar.
+                    let bound = spec
+                        .child_by_field_name("alias")
+                        .or_else(|| spec.child_by_field_name("name"));
                     if let Some(b) = bound {
-                        let s = source[b.start_byte()..b.end_byte()].to_string();
-                        out.push(s);
+                        out.push(source[b.start_byte()..b.end_byte()].to_string());
                     }
                 }
             }
@@ -2429,41 +2427,35 @@ fn strip_quotes(s: &str) -> &str {
 
 /// Resolve a relative TS/JS source specifier (`./foo`, `./foo.js`,
 /// `./foo/bar`) against `dir`. Returns the first existing candidate
-/// in extension-precedence order: `.ts` > `.tsx` > `.js` > `.mjs` >
-/// `.cjs`. Falls back to `<rel>/index.<ext>`. Bare specifiers
-/// (`react`, `@scope/pkg`) and non-relative paths return `None`.
+/// in [`TS_JS_EXTS`] precedence order. Stripping a `.js` / `.mjs` /
+/// `.cjs` suffix and substituting `.ts` first handles the post-build
+/// extension convention (`from './foo.js'` referring to `foo.ts`)
+/// used by ky / typeguard / similar. Falls back to `<rel>/index.<ext>`.
+/// Bare specifiers (`react`, `@scope/pkg`) and non-relative paths
+/// return `None`.
 fn resolve_ts_relative_path(dir: &Path, rel: &str) -> Option<PathBuf> {
     if !(rel.starts_with("./") || rel.starts_with("../") || rel == "." || rel == "..") {
         return None;
     }
-    // Strip a `.js` / `.mjs` / `.cjs` suffix that's actually pointing at
-    // a TS source (the post-build extension convention used by ky,
-    // typeguard, etc.).
-    let exts = ["ts", "tsx", "js", "mjs", "cjs"];
-    let candidate_base = dir.join(rel);
-    if candidate_base.is_file() {
-        return Some(candidate_base);
+    let candidate = dir.join(rel);
+    if candidate.is_file() {
+        return Some(candidate);
     }
-    // Try replacing a known ext with each TS-source ext.
-    if let Some(stripped) = strip_ext_suffix(rel) {
-        let stripped_base = dir.join(stripped);
-        for ext in &exts {
-            let with_ext = with_extension(&stripped_base, ext);
+    let stripped_base = strip_ts_js_ext(rel).map(|s| dir.join(s));
+    let bases: &[&PathBuf] = match &stripped_base {
+        Some(s) => &[s, &candidate],
+        None => &[&candidate],
+    };
+    for base in bases {
+        for ext in TS_JS_EXTS {
+            let with_ext = append_extension(base, ext);
             if with_ext.is_file() {
                 return Some(with_ext);
             }
         }
     }
-    // Try as `<rel>.<ext>` directly (no ext in source string).
-    for ext in &exts {
-        let with_ext = with_extension(&candidate_base, ext);
-        if with_ext.is_file() {
-            return Some(with_ext);
-        }
-    }
-    // Try as `<rel>/index.<ext>`.
-    for ext in &exts {
-        let idx = candidate_base.join(format!("index.{ext}"));
+    for ext in TS_JS_EXTS {
+        let idx = candidate.join(format!("index.{ext}"));
         if idx.is_file() {
             return Some(idx);
         }
@@ -2471,16 +2463,21 @@ fn resolve_ts_relative_path(dir: &Path, rel: &str) -> Option<PathBuf> {
     None
 }
 
-fn strip_ext_suffix(rel: &str) -> Option<&str> {
-    for ext in [".ts", ".tsx", ".js", ".mjs", ".cjs"] {
-        if let Some(stripped) = rel.strip_suffix(ext) {
+fn strip_ts_js_ext(rel: &str) -> Option<&str> {
+    for ext in TS_JS_EXTS {
+        let with_dot = format!(".{ext}");
+        if let Some(stripped) = rel.strip_suffix(&with_dot) {
             return Some(stripped);
         }
     }
     None
 }
 
-fn with_extension(base: &Path, ext: &str) -> PathBuf {
+/// Append `.<ext>` to `base`. Note: `Path::with_extension` REPLACES the
+/// last component's extension; we need append because the
+/// resolver also tries candidates against the as-written `rel` (which
+/// may not have an extension and shouldn't have one stripped).
+fn append_extension(base: &Path, ext: &str) -> PathBuf {
     let mut s = base.as_os_str().to_owned();
     s.push(".");
     s.push(ext);
