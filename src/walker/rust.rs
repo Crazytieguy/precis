@@ -413,7 +413,22 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         file: file.clone(),
                         start_line: item.start_line,
                     };
-                    let entry_lines = collect_private_entry_item(item.node, &source, example_entry);
+                    // Example main.rs walkthrough flow: render the main
+                    // fn as signature + body parts (like src/main.rs) so
+                    // tutorial steps inside the body schedule as peer
+                    // anchors. Only README-cited examples get this
+                    // treatment — those are the canonical "Quick Start"
+                    // demos NS authors anchor on. Non-cited example
+                    // main.rs stays as a whole-item batch under the
+                    // general non-essential discount.
+                    let is_main_fn = matches!(item.kind, ItemKind::Fn)
+                        && (name_of(item.node, &source) == Some("main")
+                            || has_async_main_attribute(item.node, &source));
+                    let body_split_example_main =
+                        example_main_entry && is_main_fn && ctx.is_readme_cited(file);
+                    let render_whole = example_entry && !body_split_example_main;
+                    let entry_lines =
+                        collect_private_entry_item(item.node, &source, render_whole);
                     if let Some(content) = single_file_lines_content(file, &source, entry_lines) {
                         out.push(batch(
                             entry_item_key.clone(),
@@ -422,7 +437,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             entry_item_value(file, item.kind, item.surface, ctx),
                         ));
                     }
-                    if example_entry {
+                    if example_entry && !body_split_example_main {
                         continue;
                     }
                     let item_key = BatchKey::Rust(entry_item_key);
@@ -435,7 +450,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     // into 5 sections). Use a softer (sqrt) decay so
                     // peer statements stay competitive against
                     // orientation batches.
-                    let part_value_factor = if src_main_entry {
+                    let part_value_factor = if src_main_entry || body_split_example_main {
                         1.0
                     } else {
                         body_part_value_factor(parts.len())

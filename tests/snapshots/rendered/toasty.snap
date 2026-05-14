@@ -71,214 +71,29 @@ crates/
             cursor.rs
             db/
                 builder.rs
-                    17→pub struct Builder {
-                    …
                 connect.rs
-                    14→pub struct Connect {
-                    15→    driver: Box<dyn Driver>,
-                    16→}
                 pool.rs
             db.rs
                 18→pub struct Db {
                 …
             engine/
-                eval/
-                    as_expr.rs
-                eval.rs
-                exec/
-                    action.rs
-                    delete_by_key.rs
-                    eval.rs
-                    exec_statement.rs
-                    filter.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    nested_merge.rs
-                    output.rs
-                    plan.rs
-                    project.rs
-                    query_pk.rs
-                    rmw.rs
-                    set_var.rs
-                    update_by_key.rs
-                    var.rs
-                exec.rs
-                hir.rs
-                index/
-                    index_match.rs
-                    index_plan.rs
-                index.rs
-                kv.rs
-                lower/
-                    insert.rs
-                    paginate.rs
-                    relation.rs
-                    returning.rs
-                lower.rs
-                mir/
-                    const.rs
-                    delete_by_key.rs
-                    eval.rs
-                    exec_statement.rs
-                    filter.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    logical_plan.rs
-                    nested_merge.rs
-                    node.rs
-                    operation.rs
-                    project.rs
-                    query_pk.rs
-                    read_modify_write.rs
-                    store.rs
-                    update_by_key.rs
-                mir.rs
-                plan/
-                    execution.rs
-                    nested_merge.rs
-                    statement.rs
-                plan.rs
-                simplify/
-                simplify.rs
-                ty.rs
-                verify.rs
             engine.rs
-                38→pub(crate) struct Engine {
-                …
             lib.rs
             model.rs
             page.rs
-                10→pub struct Page<M> {
-                …
             relation/
                 belongs_to.rs
                 has_many.rs
                 has_one.rs
                 option.rs
             relation.rs
-                16→pub trait Relation {
-                …
             schema.rs
             stmt/
-                association.rs
-                delete.rs
-                expr.rs
-                insert.rs
-                into_expr.rs
-                into_insert.rs
-                    4→pub trait IntoInsert {
-                    …
-                into_select.rs
-                    4→pub trait IntoSelect {
-                    …
-                paginate.rs
-                path.rs
-                primitive.rs
-                primitive_jiff.rs
-                select.rs
-                    6→pub struct Select<M> {
-                    …
-                to_statement.rs
-                    3→pub trait ToStatement {
-                    …
-                update.rs
-                    6→pub struct Update<M> {
-                    …
             stmt.rs
-                51→pub struct Statement<M> {
-                …
         tests/
     toasty-cli/
     toasty-codegen/
     toasty-core/
-        CONTEXT.md
-        Cargo.toml
-        src/
-            driver/
-                capability.rs
-                operation/
-                    delete_by_key.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    insert.rs
-                    query_pk.rs
-                    query_sql.rs
-                    transaction.rs
-                    update_by_key.rs
-                operation.rs
-                response.rs
-            driver.rs
-            error/
-                adhoc.rs
-                condition_failed.rs
-                connection_pool.rs
-                driver_operation_failed.rs
-                expression_evaluation_failed.rs
-                invalid_connection_url.rs
-                invalid_driver_configuration.rs
-                invalid_record_count.rs
-                invalid_result.rs
-                invalid_schema.rs
-                invalid_statement.rs
-                invalid_type_conversion.rs
-                record_not_found.rs
-                unsupported_feature.rs
-                validation.rs
-            error.rs
-            lib.rs
-                15→/// A Result type alias that uses Toasty's [`Error`] type.
-                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-                …
-            macros.rs
-                2→macro_rules! path {
-                …
-            schema/
-                app/
-                    arg.rs
-                    auto.rs
-                    constraint/
-                        length.rs
-                    constraint.rs
-                    embedded.rs
-                    field/
-                        primitive.rs
-                    field.rs
-                    fk.rs
-                    index.rs
-                    model.rs
-                    pk.rs
-                    relation/
-                        belongs_to.rs
-                        has_many.rs
-                        has_one.rs
-                    relation.rs
-                    schema.rs
-                app.rs
-                builder/
-                    table.rs
-                builder.rs
-                db/
-                    column.rs
-                    diff.rs
-                    index.rs
-                    migration.rs
-                    pk.rs
-                    schema.rs
-                    table.rs
-                    ty.rs
-                db.rs
-                mapping/
-                    field.rs
-                    model.rs
-                mapping.rs
-                name.rs
-                verify/
-                    relations_are_indexed.rs
-                verify.rs
-            schema.rs
-            stmt/
-            stmt.rs
-        tests/
     toasty-driver-dynamodb/
     toasty-driver-integration-suite/
     toasty-driver-integration-suite-macros/
@@ -287,50 +102,6 @@ crates/
     toasty-driver-sqlite/
     toasty-macros/
     toasty-sql/
-        CONTEXT.md
-        Cargo.toml
-        src/
-            lib.rs
-                1→pub mod migration;
-                2→pub use migration::*;
-                4→pub mod serializer;
-                5→pub use serializer::{Params, Serializer, TypedValue};
-                7→pub mod stmt;
-                8→pub use stmt::Statement;
-            migration.rs
-            serializer/
-                column.rs
-                column_def.rs
-                cte.rs
-                delim.rs
-                expr.rs
-                flavor.rs
-                fmt.rs
-                ident.rs
-                name.rs
-                params.rs
-                statement.rs
-                ty.rs
-                value.rs
-            serializer.rs
-            stmt/
-                add_column.rs
-                alter_column.rs
-                alter_table.rs
-                column_def.rs
-                copy_table.rs
-                create_index.rs
-                create_table.rs
-                drop_column.rs
-                drop_index.rs
-                drop_table.rs
-                ident.rs
-                name.rs
-                pragma.rs
-                table_name.rs
-                ty.rs
-            stmt.rs
-        tests/
 docs/
     ARCHITECTURE.md
         1→# Toasty Architecture Overview
