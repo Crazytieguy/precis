@@ -252,6 +252,7 @@ crates/
             error/
             error.rs
             lib.rs
+                15→/// A Result type alias that uses Toasty's [`Error`] type.
                 16→pub type Result<T, E = Error> = core::result::Result<T, E>;
                 …
             macros.rs
@@ -262,15 +263,20 @@ crates/
                     arg.rs
                     auto.rs
                     constraint/
+                        length.rs
                     constraint.rs
                     embedded.rs
                     field/
+                        primitive.rs
                     field.rs
                     fk.rs
                     index.rs
                     model.rs
                     pk.rs
                     relation/
+                        belongs_to.rs
+                        has_many.rs
+                        has_one.rs
                     relation.rs
                     schema.rs
                 app.rs
@@ -296,12 +302,8 @@ crates/
                     relations_are_indexed.rs
                 verify.rs
             schema.rs
-                22→pub struct Schema {
-                …
             stmt/
             stmt.rs
-                253→pub enum Statement {
-                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
@@ -322,8 +324,6 @@ crates/
                 134→    conn: Conn,
                 135→}
             value.rs
-                5→pub struct Value(CoreValue);
-                …
     toasty-driver-postgresql/
         Cargo.toml
         src/
@@ -340,8 +340,6 @@ crates/
                 124→    connection: RusqliteConnection,
                 125→}
             value.rs
-                8→pub struct Value(CoreValue);
-                …
     toasty-macros/
     toasty-sql/
 docs/

@@ -58,7 +58,7 @@ pub struct RustState {
     exported_macros_per_dir: RefCell<HashMap<PathBuf, Arc<HashSet<String>>>>,
     workspace_members: OnceCell<HashSet<PathBuf>>,
     workspace_member_lookup: RefCell<HashMap<PathBuf, bool>>,
-    workspace_source_file_lookup: RefCell<HashMap<PathBuf, bool>>,
+    nearest_member_dir_lookup: RefCell<HashMap<PathBuf, Option<PathBuf>>>,
     cargo_source_dirs: OnceCell<Vec<PathBuf>>,
     expanded_dirs: RefCell<HashSet<PathBuf>>,
     manifest_package_lookup: RefCell<HashMap<PathBuf, bool>>,
@@ -71,7 +71,7 @@ impl RustState {
             exported_macros_per_dir: RefCell::new(HashMap::new()),
             workspace_members: OnceCell::new(),
             workspace_member_lookup: RefCell::new(HashMap::new()),
-            workspace_source_file_lookup: RefCell::new(HashMap::new()),
+            nearest_member_dir_lookup: RefCell::new(HashMap::new()),
             cargo_source_dirs: OnceCell::new(),
             expanded_dirs: RefCell::new(HashSet::new()),
             manifest_package_lookup: RefCell::new(HashMap::new()),
@@ -119,6 +119,41 @@ impl RustState {
             .borrow_mut()
             .insert(file.to_path_buf(), hit);
         hit
+    }
+
+    /// Walk up from `file` to the nearest enclosing `Cargo.toml` and
+    /// return its directory iff that manifest is a workspace member.
+    /// Stops at the first manifest encountered — for a source file
+    /// inside a non-member nested crate, returns `None` even when a
+    /// member manifest exists further up. Memoized per file.
+    pub(in crate::walker) fn nearest_member_dir(
+        &self,
+        file: &Path,
+        root: &Path,
+    ) -> Option<PathBuf> {
+        let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        if let Some(hit) = self.nearest_member_dir_lookup.borrow().get(&key) {
+            return hit.clone();
+        }
+        let mut result = None;
+        let mut dir = file.parent();
+        while let Some(current) = dir {
+            if !current.starts_with(root) {
+                break;
+            }
+            let manifest = current.join("Cargo.toml");
+            if manifest.is_file() {
+                if self.is_workspace_member(&manifest, root) {
+                    result = Some(current.to_path_buf());
+                }
+                break;
+            }
+            dir = current.parent();
+        }
+        self.nearest_member_dir_lookup
+            .borrow_mut()
+            .insert(key, result.clone());
+        result
     }
 
     fn workspace_members(&self, root: &Path) -> &HashSet<PathBuf> {
@@ -659,35 +694,9 @@ fn has_async_main_attribute(node: Node, source: &str) -> bool {
 }
 
 fn is_workspace_member_source_file(file: &Path, ctx: &WalkCtx) -> bool {
-    let key = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
-    if let Some(&hit) = ctx
-        .rust_state()
-        .workspace_source_file_lookup
-        .borrow()
-        .get(&key)
-    {
-        return hit;
-    }
-    let mut dir = file.parent();
-    let mut hit = false;
-    while let Some(current) = dir {
-        if current.starts_with(ctx.root()) {
-            let manifest = current.join("Cargo.toml");
-            if manifest.is_file() {
-                hit = ctx.rust_state().is_workspace_member(&manifest, ctx.root());
-                break;
-            }
-        }
-        if !current.starts_with(ctx.root()) {
-            break;
-        }
-        dir = current.parent();
-    }
     ctx.rust_state()
-        .workspace_source_file_lookup
-        .borrow_mut()
-        .insert(key, hit);
-    hit
+        .nearest_member_dir(file, ctx.root())
+        .is_some()
 }
 
 fn entrypoint_boost(path: &Path) -> f64 {
@@ -701,10 +710,39 @@ fn entrypoint_boost(path: &Path) -> f64 {
     }
 }
 
-/// Composed location prior for Rust files: depth penalty (entrypoints
-/// pinned to depth 1) folded with the non-essential-directory discount.
+/// Multi-crate workspaces where the primary crate shares the repo
+/// basename (`toasty/crates/toasty`, `sps/sps`, `mdbook/.`) tend to
+/// have NS rows that anchor on each crate's `lib.rs` / `main.rs` /
+/// `mod.rs` (module tree, re-exports) but not its deep per-file API
+/// surface. Damping non-entrypoint files in secondary crates keeps
+/// each crate's entrypoints competitive while moving the wide-but-
+/// shallow per-file signature sweep further down the schedule.
+const SECONDARY_WORKSPACE_MEMBER_FACTOR: f64 = 0.7;
+
 fn rust_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_entrypoint_file(file))
+    let ep = is_entrypoint_file(file);
+    let base = file_depth_factor(file, ctx, ep);
+    if ep {
+        base
+    } else {
+        base * secondary_workspace_member_factor(file, ctx)
+    }
+}
+
+fn secondary_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    let Some(manifest_dir) = ctx.rust_state().nearest_member_dir(file, ctx.root()) else {
+        return 1.0;
+    };
+    let same_basename = ctx
+        .root()
+        .file_name()
+        .zip(manifest_dir.file_name())
+        .is_some_and(|(r, m)| r == m);
+    if same_basename {
+        1.0
+    } else {
+        SECONDARY_WORKSPACE_MEMBER_FACTOR
+    }
 }
 
 fn crate_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
