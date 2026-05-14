@@ -324,6 +324,15 @@ fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
 
 fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     let is_guide = is_changelog_class(file);
+    // A nested orientation doc (`docs/ARCHITECTURE.md`) gets the
+    // depth-1 pin already applied to its headings outline, plus a
+    // cat-omission bump so its sections compete with per-decl batches
+    // from deep workspace crates. Root-level orientation docs
+    // (cmdk's `ARCHITECTURE.md`) skip the bump — they're already at
+    // depth 1, and bumping their cat regresses fixtures whose NS
+    // anchors only specific sections (cmdk NS 3.1 is a single line,
+    // not the whole doc).
+    let is_nested_orientation = is_orientation_doc(file) && ctx.depth_from_root(file) > 1;
     // Changelogs are conventionally sorted newest-first, so later
     // sections are ancient release notes of decreasing relevance. Apply
     // an index-based decay only to guide-shape files; for general docs
@@ -337,8 +346,18 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     } else {
         1.0
     };
-    let cat = if is_guide { 0.5 } else { 0.3 };
-    mix_signals(cat, 0.5, 0.5, path_depth_factor(file, ctx)) * scale
+    let cat = if is_guide {
+        0.5
+    } else if is_nested_orientation {
+        0.65
+    } else {
+        0.3
+    };
+    // Orientation-doc sections share the headings-outline depth-pin —
+    // a `docs/ARCHITECTURE.md` section is as load-bearing as a root-
+    // level one. The depth pin is a no-op for root-level orientation
+    // docs (already depth 1), so this only lifts the nested case.
+    mix_signals(cat, 0.5, 0.5, orientation_aware_depth_factor(file, ctx)) * scale
 }
 
 /// Per-section value. Child ranges scale the parent's value — identical

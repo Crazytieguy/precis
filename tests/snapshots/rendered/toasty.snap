@@ -236,35 +236,12 @@ crates/
         Cargo.toml
         src/
             driver/
-                capability.rs
-                operation/
-                operation.rs
-                response.rs
             driver.rs
             error/
             error.rs
             lib.rs
-                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
-                …
             macros.rs
-                2→macro_rules! path {
-                …
             schema/
-                app/
-                app.rs
-                builder/
-                    table.rs
-                builder.rs
-                db/
-                db.rs
-                mapping/
-                    field.rs
-                    model.rs
-                mapping.rs
-                name.rs
-                verify/
-                    relations_are_indexed.rs
-                verify.rs
             schema.rs
             stmt/
             stmt.rs
@@ -339,20 +316,23 @@ docs/
         …
         3→## Project Structure
         …
+        5→Toasty is an ORM for Rust that supports SQL and NoSQL databases. The codebase is a Cargo workspace with separate crates for each layer.
         7→## Crates
         …
         9→### 1. toasty
-        …
+        10→User-facing crate with query engine and runtime.
         26→### 2. toasty-core
         …
         39→### 3. toasty-codegen
-        …
+        40→Generates Rust code from the `#[derive(Model)]` macro.
         54→### 4. toasty-driver-*
         …
         63→### 5. toasty-sql
-        …
+        64→Converts statement AST to SQL strings. Used by SQL-based drivers.
         74→## Further Reading
         …
+        76→- [Query Engine Architecture](architecture/query-engine.md) - Query compilation and execution pipeline
+        77→- [Type System](architecture/type-system.md) - Type system design and conversions
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context
