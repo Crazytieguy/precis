@@ -356,8 +356,11 @@ pub enum CKey {
     /// Surface listing of every top-level public declaration's first
     /// line — typedefs, function prototypes, struct/enum names, public
     /// `#define`s, function definitions. Catastrophic-omission hedge.
-    /// Priority 1.x.
-    DeclNames { file: PathBuf },
+    /// Large headers/source files (`krep.h` exposes ~80 decls) chunk
+    /// the surface in `NAMES_SURFACE_CHUNK_SIZE`-sized groups so a
+    /// 1000-token monolith doesn't lose the value/cost race against
+    /// per-decl batches. Priority 1.x.
+    DeclNames { file: PathBuf, chunk_index: usize },
     /// One top-level public declaration. For typedefs / function
     /// prototypes / `extern` decls / `#define`s, the whole statement.
     /// For struct / enum / union, the whole specifier. For function
@@ -1160,10 +1163,9 @@ impl CKey {
             CKey::Includes { file } => {
                 format!("c includes in {}", display_path(file, fixture_root))
             }
-            CKey::DeclNames { file } => format!(
-                "c decl names surface in {}",
-                display_path(file, fixture_root)
-            ),
+            CKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("c decl names surface", file, *chunk_index, fixture_root)
+            }
             CKey::Decl { file, start_line } => {
                 format!(
                     "c decl at {}:{}",

@@ -112,55 +112,34 @@ include/
         …
         165→#define STATE_NONE 0
         166→#define STATE_STATUS 1
-        167→#define STATE_LOGIN 2
-        168→#define STATE_TRANSFER 3
-        169→#define STATE_CONFIGURATION 4
-        170→#define STATE_PLAY 5
-        …
-        172→extern ssize_t recv_count;
-        173→extern uint8_t recv_buffer[MAX_RECV_BUF_LEN];
-        …
-        175→extern uint32_t world_seed;
-        176→extern uint32_t rng_seed;
-        …
-        178→extern uint16_t world_time;
-        179→extern uint32_t server_ticks;
-        …
-        181→extern char motd[];
-        182→extern uint8_t motd_len;
-        …
-        189→extern uint16_t client_count;
-        …
-        191→typedef struct {
-        192→  short x;
-        193→  short z;
-        194→  uint8_t y;
-        195→  uint8_t block;
-        196→} BlockChange;
-        200→typedef struct {
-        …
-        240→typedef struct {
-        …
-        255→union EntityDataValue {
-        256→  uint8_t byte;
-        257→  int pose;
-        258→};
-        260→typedef struct {
-        261→  uint8_t index;
-        262→  // 0 - Byte
-        263→  // 21 - Pose
-        264→  int type;
-        265→  union EntityDataValue value;
-        266→} EntityData;
-        268→extern BlockChange block_changes[MAX_BLOCK_CHANGES];
-        269→extern int block_changes_count;
-        …
-        271→extern PlayerData player_data[MAX_PLAYERS];
-        272→extern int player_data_count;
-        …
-        274→extern MobData mob_data[MAX_MOBS];
-        …
     packets.h
+        4→// Serverbound packets
+        5→int cs_handshake (int client_fd);
+        6→int cs_loginStart (int client_fd, uint8_t *uuid, char *name);
+        7→int cs_clientInformation (int client_fd);
+        8→int cs_pluginMessage (int client_fd);
+        9→int cs_playerAction (int client_fd);
+        10→int cs_useItemOn (int client_fd);
+        11→int cs_useItem (int client_fd);
+        12→int cs_setPlayerPositionAndRotation (int client_fd, double *x, double *y, double *z, float *yaw, float *pitch, uint8_t *on_ground);
+        13→int cs_setPlayerPosition (int client_fd, double *x, double *y, double *z, uint8_t *on_ground);
+        14→int cs_setPlayerRotation (int client_fd, float *yaw, float *pitch, uint8_t *on_ground);
+        15→int cs_setPlayerMovementFlags (int client_fd, uint8_t *on_ground);
+        16→int cs_setHeldItem (int client_fd);
+        17→int cs_swingArm (int client_fd);
+        18→int cs_clickContainer (int client_fd);
+        19→int cs_closeContainer (int client_fd);
+        20→int cs_clientStatus (int client_fd);
+        21→int cs_chat (int client_fd);
+        22→int cs_interact (int client_fd);
+        23→int cs_playerInput (int client_fd);
+        24→int cs_playerCommand (int client_fd);
+        25→int cs_playerLoaded (int client_fd);
+        …
+        27→// Clientbound packets
+        28→int sc_statusResponse (int client_fd);
+        29→int sc_loginSuccess (int client_fd, uint8_t *uuid, char *name);
+        30→int sc_knownPacks (int client_fd);
     procedures.h
         4→#include <unistd.h>
         6→#include "globals.h"

@@ -1,7 +1,7 @@
 fixture = "sds"
 budget = 10000
 cumulative_tokens = 9983
-batch_count = 138
+batch_count = 141
 
 [[batches]]
 position = 1
@@ -81,7 +81,7 @@ kind = "full"
 
 [[batches]]
 position = 5
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h" })'
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sdsalloc.h", chunk_index: 0 })'
 descriptor = "c decl names surface in sdsalloc.h"
 cost_tokens = 31
 cum_tokens = 204
@@ -99,7 +99,7 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h" })'
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", chunk_index: 0 })'
 descriptor = "c decl names surface in testhelp.h"
 cost_tokens = 56
 cum_tokens = 260
@@ -141,10 +141,526 @@ kind = "ellipsis"
 
 [[batches]]
 position = 7
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", chunk_index: 0 })'
+descriptor = "c decl names surface in sds.h"
+cost_tokens = 438
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 76
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 8
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 87 })'
+descriptor = "c decl at sds.h:87"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
+descriptor = "c decl at sds.h:104"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 10
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
+descriptor = "c decl at sds.h:130"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 11
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
+descriptor = "c decl at sds.h:154"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
+descriptor = "c decl at sds.h:180"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 13
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
+descriptor = "c decl at sds.h:197"
+cost_tokens = 0
+cum_tokens = 698
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
+descriptor = "c decl at sds.h:47"
+cost_tokens = 37
+cum_tokens = 735
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 47
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
+descriptor = "c decl doc at sds.h:180"
+cost_tokens = 20
+cum_tokens = 755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 51 })'
+descriptor = "c decl at sds.h:51"
+cost_tokens = 65
+cum_tokens = 820
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 51
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 57 })'
+descriptor = "c decl at sds.h:57"
+cost_tokens = 65
+cum_tokens = 885
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 57
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 63 })'
+descriptor = "c decl at sds.h:63"
+cost_tokens = 65
+cum_tokens = 950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 63
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 69 })'
+descriptor = "c decl at sds.h:69"
+cost_tokens = 65
+cum_tokens = 1015
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 69
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
+descriptor = "c decl doc at sds.h:47"
+cost_tokens = 43
+cum_tokens = 1058
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 45
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sds/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 399
-cum_tokens = 659
+cum_tokens = 1457
 
 [batches.content]
 kind = "lines"
@@ -550,146 +1066,18 @@ end = 913
 kind = "ellipsis"
 
 [[batches]]
-position = 8
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h" })'
-descriptor = "c decl names surface in sds.h"
-cost_tokens = 1104
-cum_tokens = 1763
+position = 22
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", chunk_index: 2 })'
+descriptor = "c decl names surface #2 in sds.h"
+cost_tokens = 227
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 36
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 76
-end = 85
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 197
-end = 197
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 218
-end = 228
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 230
-end = 230
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 238
+start = 250
 end = 253
 
 [batches.content.spans.render]
@@ -710,134 +1098,6 @@ end = 268
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 131
-end = 131
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 198
-end = 198
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 229
-end = 229
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 231
-end = 231
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
@@ -864,167 +1124,11 @@ end = 269
 kind = "ellipsis"
 
 [[batches]]
-position = 9
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 87 })'
-descriptor = "c decl at sds.h:87"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
-descriptor = "c decl at sds.h:104"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 104
-end = 104
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 105
-end = 105
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 11
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
-descriptor = "c decl at sds.h:130"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 130
-end = 130
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 131
-end = 131
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 12
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
-descriptor = "c decl at sds.h:154"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 13
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
-descriptor = "c decl at sds.h:180"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 180
-end = 180
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
-descriptor = "c decl at sds.h:197"
-cost_tokens = 0
-cum_tokens = 1763
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 197
-end = 197
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 198
-end = 198
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 15
+position = 23
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 256 })'
 descriptor = "c decl at sds.h:256"
 cost_tokens = 0
-cum_tokens = 1763
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -1038,11 +1142,11 @@ end = 256
 kind = "full"
 
 [[batches]]
-position = 16
+position = 24
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 266 })'
 descriptor = "c decl at sds.h:266"
 cost_tokens = 0
-cum_tokens = 1763
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -1056,29 +1160,11 @@ end = 266
 kind = "full"
 
 [[batches]]
-position = 17
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
-descriptor = "c decl at sds.h:47"
-cost_tokens = 37
-cum_tokens = 1800
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 47
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
+position = 25
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 256 })'
 descriptor = "c decl doc at sds.h:256"
 cost_tokens = 14
-cum_tokens = 1814
+cum_tokens = 1698
 
 [batches.content]
 kind = "lines"
@@ -1092,119 +1178,11 @@ end = 255
 kind = "full"
 
 [[batches]]
-position = 19
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
-descriptor = "c decl doc at sds.h:180"
-cost_tokens = 20
-cum_tokens = 1834
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 51 })'
-descriptor = "c decl at sds.h:51"
-cost_tokens = 65
-cum_tokens = 1899
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 51
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 57 })'
-descriptor = "c decl at sds.h:57"
-cost_tokens = 65
-cum_tokens = 1964
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 57
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 63 })'
-descriptor = "c decl at sds.h:63"
-cost_tokens = 65
-cum_tokens = 2029
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 63
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 23
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 69 })'
-descriptor = "c decl at sds.h:69"
-cost_tokens = 65
-cum_tokens = 2094
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 69
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 47 })'
-descriptor = "c decl doc at sds.h:47"
-cost_tokens = 43
-cum_tokens = 2137
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 45
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
+position = 26
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 266 })'
 descriptor = "c decl doc at sds.h:266"
 cost_tokens = 68
-cum_tokens = 2205
+cum_tokens = 1766
 
 [batches.content]
 kind = "lines"
@@ -1218,7 +1196,57 @@ end = 265
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in sds.h"
+cost_tokens = 439
+cum_tokens = 2205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 218
+end = 228
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 230
+end = 230
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 238
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 229
+end = 229
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 231
+end = 231
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 28
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h" })'
 descriptor = "c header banner in sds.h"
 cost_tokens = 493
@@ -1236,7 +1264,7 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 27
+position = 29
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 44 })'
 descriptor = "c decl at testhelp.h:44"
 cost_tokens = 59
@@ -1254,7 +1282,7 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 28
+position = 30
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c" })'
 descriptor = "c includes in sds.c"
 cost_tokens = 83
@@ -1272,7 +1300,7 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 29
+position = 31
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 87 })'
 descriptor = "c decl body at sds.h:87"
 cost_tokens = 163
@@ -1290,7 +1318,7 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 30
+position = 32
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 180 })'
 descriptor = "c decl body at sds.h:180"
 cost_tokens = 163
@@ -1308,7 +1336,7 @@ end = 194
 kind = "full"
 
 [[batches]]
-position = 31
+position = 33
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/testhelp.h", start_line: 48 })'
 descriptor = "c decl at testhelp.h:48"
 cost_tokens = 97
@@ -1326,83 +1354,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 32
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
-descriptor = "c decl body at sds.h:197"
-cost_tokens = 203
-cum_tokens = 3466
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 198
-end = 215
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
-descriptor = "c decl body at sds.h:130"
-cost_tokens = 235
-cum_tokens = 3701
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 131
-end = 151
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 34
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
-descriptor = "c decl body at sds.h:104"
-cost_tokens = 242
-cum_tokens = 3943
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 105
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
-descriptor = "c decl body at sds.h:154"
-cost_tokens = 250
-cum_tokens = 4193
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
-start = 155
-end = 176
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c" })'
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sds.c"
-cost_tokens = 914
-cum_tokens = 5107
+cost_tokens = 474
+cum_tokens = 3737
 
 [batches.content]
 kind = "lines"
@@ -1593,142 +1549,6 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 591
-end = 591
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 616
-end = 616
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 725
-end = 725
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 756
-end = 756
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 783
-end = 783
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 790
-end = 790
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 807
-end = 807
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 835
-end = 835
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 885
-end = 885
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 898
-end = 898
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 925
-end = 925
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 932
-end = 932
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 973
-end = 973
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 1092
-end = 1092
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 1108
-end = 1108
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 1120
-end = 1120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 1136
-end = 1138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
 start = 43
 end = 43
 
@@ -1911,6 +1731,1460 @@ end = 535
 [batches.content.spans.render]
 kind = "ellipsis"
 
+[[batches]]
+position = 35
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
+descriptor = "c decl at sds.c:89"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
+descriptor = "c decl at sds.c:149"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
+descriptor = "c decl at sds.c:154"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
+descriptor = "c decl at sds.c:160"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
+descriptor = "c decl at sds.c:165"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
+descriptor = "c decl at sds.c:184"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
+descriptor = "c decl at sds.c:193"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
+descriptor = "c decl at sds.c:204"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 43
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
+descriptor = "c decl at sds.c:256"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 44
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
+descriptor = "c decl at sds.c:300"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 300
+end = 300
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 301
+end = 301
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 45
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
+descriptor = "c decl at sds.c:307"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 46
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 334 })'
+descriptor = "c decl at sds.c:334"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 334
+end = 334
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 335
+end = 335
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
+descriptor = "c decl at sds.c:380"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 380
+end = 380
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 381
+end = 381
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
+descriptor = "c decl at sds.c:398"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 398
+end = 398
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
+descriptor = "c decl at sds.c:413"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 413
+end = 413
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 414
+end = 414
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
+descriptor = "c decl at sds.c:421"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 421
+end = 421
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 422
+end = 422
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
+descriptor = "c decl at sds.c:427"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 427
+end = 427
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 428
+end = 428
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 52
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
+descriptor = "c decl at sds.c:440"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 440
+end = 440
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 441
+end = 441
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 53
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
+descriptor = "c decl at sds.c:450"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 450
+end = 450
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 451 })'
+descriptor = "c decl at sds.c:451"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 451
+end = 451
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 452
+end = 452
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
+descriptor = "c decl at sds.c:494"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 494
+end = 494
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 495
+end = 495
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
+descriptor = "c decl at sds.c:526"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 526
+end = 526
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 527
+end = 527
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 57
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
+descriptor = "c decl at sds.c:534"
+cost_tokens = 0
+cum_tokens = 3737
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 534
+end = 534
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 535
+end = 535
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 58
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
+descriptor = "c decl doc at sds.c:160"
+cost_tokens = 12
+cum_tokens = 3749
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
+descriptor = "c decl body at sds.c:149"
+cost_tokens = 11
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
+descriptor = "c decl doc at sds.c:154"
+cost_tokens = 20
+cum_tokens = 3780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
+descriptor = "c decl doc at sds.c:494"
+cost_tokens = 21
+cum_tokens = 3801
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 493
+end = 493
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
+descriptor = "c decl doc at sds.c:534"
+cost_tokens = 22
+cum_tokens = 3823
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 533
+end = 533
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
+descriptor = "c decl body at sds.c:160"
+cost_tokens = 15
+cum_tokens = 3838
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
+descriptor = "c decl body at sds.c:413"
+cost_tokens = 15
+cum_tokens = 3853
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 414
+end = 414
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
+descriptor = "c decl body at sds.c:440"
+cost_tokens = 15
+cum_tokens = 3868
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 441
+end = 441
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
+descriptor = "c decl doc at sds.c:165"
+cost_tokens = 23
+cum_tokens = 3891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
+descriptor = "c decl body at sds.c:307"
+cost_tokens = 17
+cum_tokens = 3908
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
+descriptor = "c decl body at sds.c:421"
+cost_tokens = 17
+cum_tokens = 3925
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 422
+end = 422
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
+descriptor = "c decl doc at sds.c:307"
+cost_tokens = 34
+cum_tokens = 3959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 305
+end = 306
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
+descriptor = "c decl doc at sds.c:149"
+cost_tokens = 36
+cum_tokens = 3995
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 147
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
+descriptor = "c decl doc at sds.c:440"
+cost_tokens = 41
+cum_tokens = 4036
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 438
+end = 439
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
+descriptor = "c decl doc at sds.c:427"
+cost_tokens = 42
+cum_tokens = 4078
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 425
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
+descriptor = "c decl body at sds.c:184"
+cost_tokens = 25
+cum_tokens = 4103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 185
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
+descriptor = "c decl body at sds.c:193"
+cost_tokens = 25
+cum_tokens = 4128
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 194
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
+descriptor = "c decl doc at sds.c:526"
+cost_tokens = 51
+cum_tokens = 4179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 522
+end = 525
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
+descriptor = "c decl body at sds.c:165"
+cost_tokens = 30
+cum_tokens = 4209
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 166
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
+descriptor = "c decl body at sds.c:300"
+cost_tokens = 30
+cum_tokens = 4239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 301
+end = 302
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
+descriptor = "c decl body at sds.c:154"
+cost_tokens = 35
+cum_tokens = 4274
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 155
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
+descriptor = "c decl doc at sds.c:421"
+cost_tokens = 67
+cum_tokens = 4341
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 417
+end = 420
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
+descriptor = "c decl doc at sds.c:413"
+cost_tokens = 68
+cum_tokens = 4409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 409
+end = 412
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
+descriptor = "c decl doc at sds.c:193"
+cost_tokens = 69
+cum_tokens = 4478
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 189
+end = 192
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
+descriptor = "c decl doc at sds.c:380"
+cost_tokens = 73
+cum_tokens = 4551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 375
+end = 379
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
+descriptor = "c decl body at sds.c:526"
+cost_tokens = 40
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 527
+end = 528
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 530
+end = 530
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
+descriptor = "c decl doc at sds.c:398"
+cost_tokens = 85
+cum_tokens = 4676
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 393
+end = 397
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
+descriptor = "c decl doc at sds.c:300"
+cost_tokens = 88
+cum_tokens = 4764
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 293
+end = 299
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
+descriptor = "c decl doc at sds.c:256"
+cost_tokens = 98
+cum_tokens = 4862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 250
+end = 255
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
+descriptor = "c decl doc at sds.c:450"
+cost_tokens = 86
+cum_tokens = 4948
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 444
+end = 449
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
+descriptor = "c decl doc at sds.c:204"
+cost_tokens = 111
+cum_tokens = 5059
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 198
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 197 })'
+descriptor = "c decl body at sds.h:197"
+cost_tokens = 203
+cum_tokens = 5262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 198
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
+descriptor = "c decl doc at sds.c:184"
+cost_tokens = 198
+cum_tokens = 5460
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 170
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 130 })'
+descriptor = "c decl body at sds.h:130"
+cost_tokens = 235
+cum_tokens = 5695
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 131
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
+descriptor = "c decl doc at sds.c:89"
+cost_tokens = 211
+cum_tokens = 5906
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 76
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 104 })'
+descriptor = "c decl body at sds.h:104"
+cost_tokens = 242
+cum_tokens = 6148
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 105
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h", start_line: 154 })'
+descriptor = "c decl body at sds.h:154"
+cost_tokens = 250
+cum_tokens = 6398
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.h"
+start = 155
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
+descriptor = "c decl body at sds.c:398"
+cost_tokens = 97
+cum_tokens = 6495
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 401
+end = 406
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
+descriptor = "c decl body at sds.c:427"
+cost_tokens = 98
+cum_tokens = 6593
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 428
+end = 435
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in sds.c"
+cost_tokens = 440
+cum_tokens = 7033
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 591
+end = 591
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 616
+end = 616
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 725
+end = 725
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 756
+end = 756
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 783
+end = 783
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 790
+end = 790
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 807
+end = 807
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 835
+end = 835
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 885
+end = 885
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 898
+end = 898
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 925
+end = 925
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 932
+end = 932
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 973
+end = 973
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 1092
+end = 1092
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 1108
+end = 1108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 1120
+end = 1120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
+start = 1136
+end = 1138
+
+[batches.content.spans.render]
+kind = "full"
+
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
 start = 592
@@ -2048,601 +3322,11 @@ end = 1139
 kind = "ellipsis"
 
 [[batches]]
-position = 37
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
-descriptor = "c decl at sds.c:89"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 90
-end = 90
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 38
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl at sds.c:149"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 39
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl at sds.c:154"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 40
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl at sds.c:160"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 160
-end = 160
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 161
-end = 161
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 41
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl at sds.c:165"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 165
-end = 165
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 42
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl at sds.c:184"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 184
-end = 184
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 43
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl at sds.c:193"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 193
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 194
-end = 194
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 44
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
-descriptor = "c decl at sds.c:204"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 204
-end = 204
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 205
-end = 205
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 45
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
-descriptor = "c decl at sds.c:256"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 256
-end = 256
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 257
-end = 257
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 46
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl at sds.c:300"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 300
-end = 300
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 301
-end = 301
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl at sds.c:307"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 307
-end = 307
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 308
-end = 308
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 334 })'
-descriptor = "c decl at sds.c:334"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 334
-end = 334
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 335
-end = 335
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 49
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
-descriptor = "c decl at sds.c:380"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 380
-end = 380
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 381
-end = 381
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 50
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
-descriptor = "c decl at sds.c:398"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 398
-end = 398
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 51
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl at sds.c:413"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 413
-end = 413
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 414
-end = 414
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 52
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl at sds.c:421"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 421
-end = 421
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 422
-end = 422
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 53
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
-descriptor = "c decl at sds.c:427"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 427
-end = 427
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 428
-end = 428
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 54
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl at sds.c:440"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 440
-end = 440
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 441
-end = 441
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 55
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
-descriptor = "c decl at sds.c:450"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 450
-end = 450
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 451 })'
-descriptor = "c decl at sds.c:451"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 451
-end = 451
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 452
-end = 452
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 57
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
-descriptor = "c decl at sds.c:494"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 494
-end = 494
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 495
-end = 495
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 58
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl at sds.c:526"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 526
-end = 526
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 527
-end = 527
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 59
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
-descriptor = "c decl at sds.c:534"
-cost_tokens = 0
-cum_tokens = 5107
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 534
-end = 534
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 535
-end = 535
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 60
+position = 98
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
 descriptor = "c decl at sds.c:591"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2664,11 +3348,11 @@ end = 592
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 99
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 616 })'
 descriptor = "c decl at sds.c:616"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2690,11 +3374,11 @@ end = 617
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 100
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 725 })'
 descriptor = "c decl at sds.c:725"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2716,11 +3400,11 @@ end = 726
 kind = "ellipsis"
 
 [[batches]]
-position = 63
+position = 101
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 756 })'
 descriptor = "c decl at sds.c:756"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2742,11 +3426,11 @@ end = 757
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 102
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
 descriptor = "c decl at sds.c:783"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +3452,11 @@ end = 784
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 103
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
 descriptor = "c decl at sds.c:790"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2794,11 +3478,11 @@ end = 791
 kind = "ellipsis"
 
 [[batches]]
-position = 66
+position = 104
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 807 })'
 descriptor = "c decl at sds.c:807"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2820,11 +3504,11 @@ end = 808
 kind = "ellipsis"
 
 [[batches]]
-position = 67
+position = 105
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 835 })'
 descriptor = "c decl at sds.c:835"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2846,11 +3530,11 @@ end = 836
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 106
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
 descriptor = "c decl at sds.c:885"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2872,11 +3556,11 @@ end = 886
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 107
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 898 })'
 descriptor = "c decl at sds.c:898"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2898,11 +3582,11 @@ end = 899
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
 descriptor = "c decl at sds.c:925"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2924,11 +3608,11 @@ end = 926
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 109
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 932 })'
 descriptor = "c decl at sds.c:932"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2950,11 +3634,11 @@ end = 933
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 110
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 973 })'
 descriptor = "c decl at sds.c:973"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -2976,11 +3660,11 @@ end = 974
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 111
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1092 })'
 descriptor = "c decl at sds.c:1092"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3686,11 @@ end = 1093
 kind = "ellipsis"
 
 [[batches]]
-position = 74
+position = 112
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
 descriptor = "c decl at sds.c:1108"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -3028,11 +3712,11 @@ end = 1109
 kind = "ellipsis"
 
 [[batches]]
-position = 75
+position = 113
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1120 })'
 descriptor = "c decl at sds.c:1120"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -3054,11 +3738,11 @@ end = 1121
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 114
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1136 })'
 descriptor = "c decl at sds.c:1136"
 cost_tokens = 0
-cum_tokens = 5107
+cum_tokens = 7033
 
 [batches.content]
 kind = "lines"
@@ -3072,65 +3756,11 @@ end = 1136
 kind = "full"
 
 [[batches]]
-position = 77
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl doc at sds.c:160"
-cost_tokens = 12
-cum_tokens = 5119
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 159
-end = 159
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl body at sds.c:149"
-cost_tokens = 11
-cum_tokens = 5130
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl doc at sds.c:154"
-cost_tokens = 20
-cum_tokens = 5150
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 153
-end = 153
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
+position = 115
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1120 })'
 descriptor = "c decl doc at sds.c:1120"
 cost_tokens = 20
-cum_tokens = 5170
+cum_tokens = 7053
 
 [batches.content]
 kind = "lines"
@@ -3144,29 +3774,11 @@ end = 1119
 kind = "full"
 
 [[batches]]
-position = 81
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 494 })'
-descriptor = "c decl doc at sds.c:494"
-cost_tokens = 21
-cum_tokens = 5191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 493
-end = 493
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
+position = 116
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
 descriptor = "c decl doc at sds.c:783"
 cost_tokens = 21
-cum_tokens = 5212
+cum_tokens = 7074
 
 [batches.content]
 kind = "lines"
@@ -3180,11 +3792,11 @@ end = 782
 kind = "full"
 
 [[batches]]
-position = 83
+position = 117
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
 descriptor = "c decl doc at sds.c:790"
 cost_tokens = 21
-cum_tokens = 5233
+cum_tokens = 7095
 
 [batches.content]
 kind = "lines"
@@ -3198,101 +3810,11 @@ end = 789
 kind = "full"
 
 [[batches]]
-position = 84
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 534 })'
-descriptor = "c decl doc at sds.c:534"
-cost_tokens = 22
-cum_tokens = 5255
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 533
-end = 533
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 85
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 160 })'
-descriptor = "c decl body at sds.c:160"
-cost_tokens = 15
-cum_tokens = 5270
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 161
-end = 161
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 86
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl body at sds.c:413"
-cost_tokens = 15
-cum_tokens = 5285
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 414
-end = 414
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl body at sds.c:440"
-cost_tokens = 15
-cum_tokens = 5300
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 441
-end = 441
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl doc at sds.c:165"
-cost_tokens = 23
-cum_tokens = 5323
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
+position = 118
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
 descriptor = "c decl doc at sds.c:885"
 cost_tokens = 26
-cum_tokens = 5349
+cum_tokens = 7121
 
 [batches.content]
 kind = "lines"
@@ -3306,47 +3828,11 @@ end = 884
 kind = "full"
 
 [[batches]]
-position = 90
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl body at sds.c:307"
-cost_tokens = 17
-cum_tokens = 5366
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 308
-end = 308
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl body at sds.c:421"
-cost_tokens = 17
-cum_tokens = 5383
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 422
-end = 422
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
+position = 119
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
 descriptor = "c decl doc at sds.c:925"
 cost_tokens = 33
-cum_tokens = 5416
+cum_tokens = 7154
 
 [batches.content]
 kind = "lines"
@@ -3360,29 +3846,11 @@ end = 924
 kind = "full"
 
 [[batches]]
-position = 93
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 307 })'
-descriptor = "c decl doc at sds.c:307"
-cost_tokens = 34
-cum_tokens = 5450
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 305
-end = 306
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 94
+position = 120
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 932 })'
 descriptor = "c decl doc at sds.c:932"
 cost_tokens = 34
-cum_tokens = 5484
+cum_tokens = 7188
 
 [batches.content]
 kind = "lines"
@@ -3396,29 +3864,11 @@ end = 931
 kind = "full"
 
 [[batches]]
-position = 95
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 149 })'
-descriptor = "c decl doc at sds.c:149"
-cost_tokens = 36
-cum_tokens = 5520
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 147
-end = 148
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
+position = 121
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
 descriptor = "c decl doc at sds.c:1108"
 cost_tokens = 38
-cum_tokens = 5558
+cum_tokens = 7226
 
 [batches.content]
 kind = "lines"
@@ -3432,209 +3882,11 @@ end = 1107
 kind = "full"
 
 [[batches]]
-position = 97
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 440 })'
-descriptor = "c decl doc at sds.c:440"
-cost_tokens = 41
-cum_tokens = 5599
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 438
-end = 439
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
-descriptor = "c decl doc at sds.c:427"
-cost_tokens = 42
-cum_tokens = 5641
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 425
-end = 426
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl body at sds.c:184"
-cost_tokens = 25
-cum_tokens = 5666
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 185
-end = 186
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl body at sds.c:193"
-cost_tokens = 25
-cum_tokens = 5691
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 194
-end = 195
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl doc at sds.c:526"
-cost_tokens = 51
-cum_tokens = 5742
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 522
-end = 525
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 165 })'
-descriptor = "c decl body at sds.c:165"
-cost_tokens = 30
-cum_tokens = 5772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 166
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl body at sds.c:300"
-cost_tokens = 30
-cum_tokens = 5802
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 301
-end = 302
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 154 })'
-descriptor = "c decl body at sds.c:154"
-cost_tokens = 35
-cum_tokens = 5837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 155
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 421 })'
-descriptor = "c decl doc at sds.c:421"
-cost_tokens = 67
-cum_tokens = 5904
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 417
-end = 420
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 413 })'
-descriptor = "c decl doc at sds.c:413"
-cost_tokens = 68
-cum_tokens = 5972
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 409
-end = 412
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 193 })'
-descriptor = "c decl doc at sds.c:193"
-cost_tokens = 69
-cum_tokens = 6041
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 189
-end = 192
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
+position = 122
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 885 })'
 descriptor = "c decl body at sds.c:885"
 cost_tokens = 37
-cum_tokens = 6078
+cum_tokens = 7263
 
 [batches.content]
 kind = "lines"
@@ -3648,55 +3900,11 @@ end = 889
 kind = "full"
 
 [[batches]]
-position = 109
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
-descriptor = "c decl doc at sds.c:380"
-cost_tokens = 73
-cum_tokens = 6151
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 375
-end = 379
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 526 })'
-descriptor = "c decl body at sds.c:526"
-cost_tokens = 40
-cum_tokens = 6191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 527
-end = 528
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 530
-end = 530
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
+position = 123
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 783 })'
 descriptor = "c decl body at sds.c:783"
 cost_tokens = 41
-cum_tokens = 6232
+cum_tokens = 7304
 
 [batches.content]
 kind = "lines"
@@ -3718,11 +3926,11 @@ end = 786
 kind = "full"
 
 [[batches]]
-position = 112
+position = 124
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 790 })'
 descriptor = "c decl body at sds.c:790"
 cost_tokens = 41
-cum_tokens = 6273
+cum_tokens = 7345
 
 [batches.content]
 kind = "lines"
@@ -3744,47 +3952,11 @@ end = 793
 kind = "full"
 
 [[batches]]
-position = 113
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
-descriptor = "c decl doc at sds.c:398"
-cost_tokens = 85
-cum_tokens = 6358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 393
-end = 397
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 300 })'
-descriptor = "c decl doc at sds.c:300"
-cost_tokens = 88
-cum_tokens = 6446
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 293
-end = 299
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
+position = 125
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 925 })'
 descriptor = "c decl body at sds.c:925"
 cost_tokens = 47
-cum_tokens = 6493
+cum_tokens = 7392
 
 [batches.content]
 kind = "lines"
@@ -3798,47 +3970,11 @@ end = 927
 kind = "full"
 
 [[batches]]
-position = 116
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 256 })'
-descriptor = "c decl doc at sds.c:256"
-cost_tokens = 98
-cum_tokens = 6591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 250
-end = 255
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 450 })'
-descriptor = "c decl doc at sds.c:450"
-cost_tokens = 86
-cum_tokens = 6677
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 444
-end = 449
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
+position = 126
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1136 })'
 descriptor = "c decl doc at sds.c:1136"
 cost_tokens = 103
-cum_tokens = 6780
+cum_tokens = 7495
 
 [batches.content]
 kind = "lines"
@@ -3852,11 +3988,11 @@ end = 1135
 kind = "full"
 
 [[batches]]
-position = 119
+position = 127
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 898 })'
 descriptor = "c decl doc at sds.c:898"
 cost_tokens = 110
-cum_tokens = 6890
+cum_tokens = 7605
 
 [batches.content]
 kind = "lines"
@@ -3870,29 +4006,11 @@ end = 897
 kind = "full"
 
 [[batches]]
-position = 120
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 204 })'
-descriptor = "c decl doc at sds.c:204"
-cost_tokens = 111
-cum_tokens = 7001
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 198
-end = 203
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
+position = 128
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
 descriptor = "c decl body at sds.c:591"
 cost_tokens = 62
-cum_tokens = 7063
+cum_tokens = 7667
 
 [batches.content]
 kind = "lines"
@@ -3906,11 +4024,11 @@ end = 597
 kind = "full"
 
 [[batches]]
-position = 122
+position = 129
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 807 })'
 descriptor = "c decl doc at sds.c:807"
 cost_tokens = 140
-cum_tokens = 7203
+cum_tokens = 7807
 
 [batches.content]
 kind = "lines"
@@ -3924,11 +4042,11 @@ end = 806
 kind = "full"
 
 [[batches]]
-position = 123
+position = 130
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1092 })'
 descriptor = "c decl doc at sds.c:1092"
 cost_tokens = 149
-cum_tokens = 7352
+cum_tokens = 7956
 
 [batches.content]
 kind = "lines"
@@ -3942,11 +4060,11 @@ end = 1091
 kind = "full"
 
 [[batches]]
-position = 124
+position = 131
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 725 })'
 descriptor = "c decl doc at sds.c:725"
 cost_tokens = 177
-cum_tokens = 7529
+cum_tokens = 8133
 
 [batches.content]
 kind = "lines"
@@ -3960,11 +4078,11 @@ end = 724
 kind = "full"
 
 [[batches]]
-position = 125
+position = 132
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 756 })'
 descriptor = "c decl doc at sds.c:756"
 cost_tokens = 190
-cum_tokens = 7719
+cum_tokens = 8323
 
 [batches.content]
 kind = "lines"
@@ -3978,29 +4096,11 @@ end = 755
 kind = "full"
 
 [[batches]]
-position = 126
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 184 })'
-descriptor = "c decl doc at sds.c:184"
-cost_tokens = 198
-cum_tokens = 7917
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 170
-end = 183
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
+position = 133
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 835 })'
 descriptor = "c decl doc at sds.c:835"
 cost_tokens = 209
-cum_tokens = 8126
+cum_tokens = 8532
 
 [batches.content]
 kind = "lines"
@@ -4014,29 +4114,11 @@ end = 834
 kind = "full"
 
 [[batches]]
-position = 128
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 89 })'
-descriptor = "c decl doc at sds.c:89"
-cost_tokens = 211
-cum_tokens = 8337
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 76
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
+position = 134
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 591 })'
 descriptor = "c decl doc at sds.c:591"
 cost_tokens = 215
-cum_tokens = 8552
+cum_tokens = 8747
 
 [batches.content]
 kind = "lines"
@@ -4050,11 +4132,11 @@ end = 590
 kind = "full"
 
 [[batches]]
-position = 130
+position = 135
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 616 })'
 descriptor = "c decl doc at sds.c:616"
 cost_tokens = 215
-cum_tokens = 8767
+cum_tokens = 8962
 
 [batches.content]
 kind = "lines"
@@ -4068,11 +4150,11 @@ end = 615
 kind = "full"
 
 [[batches]]
-position = 131
+position = 136
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1108 })'
 descriptor = "c decl body at sds.c:1108"
 cost_tokens = 96
-cum_tokens = 8863
+cum_tokens = 9058
 
 [batches.content]
 kind = "lines"
@@ -4094,51 +4176,7 @@ end = 1116
 kind = "full"
 
 [[batches]]
-position = 132
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 398 })'
-descriptor = "c decl body at sds.c:398"
-cost_tokens = 97
-cum_tokens = 8960
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 401
-end = 406
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 133
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 427 })'
-descriptor = "c decl body at sds.c:427"
-cost_tokens = 98
-cum_tokens = 9058
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c"
-start = 428
-end = 435
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
+position = 137
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1120 })'
 descriptor = "c decl body at sds.c:1120"
 cost_tokens = 100
@@ -4164,7 +4202,7 @@ end = 1128
 kind = "full"
 
 [[batches]]
-position = 135
+position = 138
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 973 })'
 descriptor = "c decl doc at sds.c:973"
 cost_tokens = 255
@@ -4182,7 +4220,7 @@ end = 972
 kind = "full"
 
 [[batches]]
-position = 136
+position = 139
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 334 })'
 descriptor = "c decl doc at sds.c:334"
 cost_tokens = 322
@@ -4200,7 +4238,7 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 137
+position = 140
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 380 })'
 descriptor = "c decl body at sds.c:380"
 cost_tokens = 123
@@ -4234,7 +4272,7 @@ end = 390
 kind = "full"
 
 [[batches]]
-position = 138
+position = 141
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sds/sds.c", start_line: 1092 })'
 descriptor = "c decl body at sds.c:1092"
 cost_tokens = 125

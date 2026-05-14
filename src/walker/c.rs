@@ -36,7 +36,21 @@ use std::sync::Arc;
 use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, CKey};
-use crate::value::mix_signals;
+use crate::value::{mix_signals, names_surface_chunk_factor};
+
+/// Chunk size for C declaration-name surfaces. Larger than the
+/// `NAMES_SURFACE_CHUNK_SIZE = 12` used by Python/TS because C
+/// headers regularly expose 50+ decls and NS authors anchor on
+/// unified subset rows (e.g. sds's "Public fn declarations — utility
+/// fns" covers 14 specific lines). A 24-decl chunk keeps the
+/// surface coherent for files in the 25–48 decl band while still
+/// splitting catalog headers like krep.h (~80 decls) so the first
+/// chunk reaches the budget.
+const C_DECL_NAMES_CHUNK_SIZE: usize = 24;
+
+fn c_names_surface_chunk_index(decl_index: usize) -> usize {
+    decl_index / C_DECL_NAMES_CHUNK_SIZE
+}
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
@@ -77,20 +91,49 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         if decls.is_empty() {
             continue;
         }
-        let names_key = CKey::DeclNames { file: file.clone() };
-        let parent_names_lines = collect_decl_names_from(&decls);
-        if let Some(content) = single_file_lines_content(file, &source, parent_names_lines.clone())
-        {
+        // C catalog files (`sds.h`, headers exposing the whole public
+        // surface) often anchor NS rows on the *unified* declaration
+        // listing — splitting at the default 12 fragments rows like
+        // "Public fn declarations — utility fns" across chunks. Chunk
+        // only when the surface is large enough that the unified batch
+        // would lose the value/cost race against per-decl batches.
+        let chunk_size = C_DECL_NAMES_CHUNK_SIZE;
+        let names_chunk_count = if decls.len() <= chunk_size {
+            1
+        } else {
+            decls.len().div_ceil(chunk_size)
+        };
+        let names_predecessors: Vec<_> = (0..names_chunk_count)
+            .map(|chunk_index| {
+                BatchKey::C(CKey::DeclNames {
+                    file: file.clone(),
+                    chunk_index,
+                })
+            })
+            .collect();
+        let all_starts: std::collections::HashSet<usize> =
+            decls.iter().map(|(_, i)| i.start_line).collect();
+        let names_lines_by_chunk: Vec<FileLines> = decls
+            .chunks(chunk_size)
+            .map(|c| collect_decl_names_from_with_global_starts(c, &all_starts))
+            .collect();
+        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
+            let Some(content) = single_file_lines_content(file, &source, names_lines.clone())
+            else {
+                continue;
+            };
             out.push(Batch {
-                key: names_key.clone().into(),
+                key: names_predecessors[chunk_index].clone(),
                 predecessor: None,
                 content,
-                value: decl_names_value(file, ctx),
+                value: decl_names_value(file, ctx, chunk_index, names_chunk_count),
             });
         }
-        let names_predecessor = BatchKey::C(names_key);
         let src_lines: Vec<&str> = source.lines().collect();
-        for (node, info) in &decls {
+        for (decl_index, (node, info)) in decls.iter().enumerate() {
+            let names_chunk_index = c_names_surface_chunk_index(decl_index);
+            let names_predecessor = names_predecessors[names_chunk_index].clone();
+            let chunk_names_lines = &names_lines_by_chunk[names_chunk_index];
             let decl_key = CKey::Decl {
                 file: file.clone(),
                 start_line: info.start_line,
@@ -103,7 +146,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 FileLines::new(Vec::new())
             };
             let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
-            if (!file_lines_covered_by(&decl_lines, &parent_names_lines) || decl_has_descendants)
+            if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
             {
                 out.push(Batch {
@@ -528,9 +571,10 @@ fn includes_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(cat, 0.55, 0.3, c_depth_factor(file, ctx))
 }
 
-fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     let cat = (0.80 * header_cat_factor(file)).min(1.0);
     mix_signals(cat, 0.6, 0.35, c_depth_factor(file, ctx))
+        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 fn decl_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
@@ -589,11 +633,27 @@ fn collect_includes(tree: &Tree, source: &str) -> FileLines {
 }
 
 fn collect_decl_names_from(decls: &[(Node, DeclInfo)]) -> FileLines {
+    let starts: std::collections::HashSet<usize> =
+        decls.iter().map(|(_, i)| i.start_line).collect();
+    collect_decl_names_from_with_global_starts(decls, &starts)
+}
+
+fn collect_decl_names_from_with_global_starts(
+    decls: &[(Node, DeclInfo)],
+    all_starts: &std::collections::HashSet<usize>,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
+    // Don't drop an ellipsis on the row of any decl (this chunk or
+    // another). Single-line decls on adjacent lines (`#define` runs)
+    // would otherwise claim the next decl's start row as a truncation
+    // marker and trip the scheduler's non-ancestor overlap guard once
+    // the chunks are scheduled into the same render tree.
     for (_, info) in decls {
         full.push(info.start_line);
-        ellipses.push(info.start_line + 1);
+        if !all_starts.contains(&(info.start_line + 1)) {
+            ellipses.push(info.start_line + 1);
+        }
     }
     FileLines::new(full).with_ellipses(ellipses)
 }
