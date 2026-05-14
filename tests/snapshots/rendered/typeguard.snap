@@ -8,6 +8,31 @@ expression: rendered
 .readthedocs.yml
 LICENSE
 README.rst
+    14→This library provides run-time type checking for functions defined with
+    15→`PEP 484 <https://www.python.org/dev/peps/pep-0484/>`_ argument (and return) type
+    16→annotations, and any arbitrary objects. It can be used together with static type
+    17→checkers as an additional layer of type safety, to catch type violations that could only
+    18→be detected at run time.
+    20→Two principal ways to do type checking are provided:
+    22→#. The ``check_type`` function:
+    24→   * like ``isinstance()``, but supports arbitrary type annotations (within limits)
+    25→   * can be used as a ``cast()`` replacement, but with actual checking of the value
+    26→#. Code instrumentation:
+    28→   * entire modules, or individual functions (via ``@typechecked``) are recompiled, with
+    29→     type checking code injected into them
+    30→   * automatically checks function arguments, return values and assignments to annotated
+    31→     local variables
+    32→   * for generator functions (regular and async), checks yield and send values
+    33→   * requires the original source code of the instrumented module(s) to be accessible
+    35→Two options are provided for code instrumentation:
+    37→#. the ``@typechecked`` function:
+    39→   * can be applied to functions individually
+    40→#. the import hook (``typeguard.install_import_hook()``):
+    42→   * automatically instruments targeted modules on import
+    43→   * no manual code changes required in the target modules
+    44→   * requires the import hook to be installed before the targeted modules are imported
+    45→   * may clash with other import hooks
+    47→See the documentation_ for further information.
 docs/
     api.rst
     conf.py
@@ -152,42 +177,6 @@ src/
             38→    def __str__(self) -> str:
             …
         _functions.py
-            24→T = TypeVar("T")
-            25→TypeCheckFailCallback: TypeAlias = Callable[[TypeCheckError, TypeCheckMemo], Any]
-            28→@overload
-            …
-            39→@overload
-            …
-            50→def check_type(
-            …
-            118→def check_argument_types(
-            119→    func_name: str,
-            120→    arguments: dict[str, tuple[Any, Any]],
-            121→    memo: TypeCheckMemo,
-            122→) -> Literal[True]:
-            149→def check_return_type(
-            150→    func_name: str,
-            151→    retval: T,
-            152→    annotation: Any,
-            153→    memo: TypeCheckMemo,
-            154→) -> T:
-            185→def check_send_type(
-            186→    func_name: str,
-            187→    sendval: T,
-            188→    annotation: Any,
-            189→    memo: TypeCheckMemo,
-            190→) -> T:
-            216→def check_yield_type(
-            217→    func_name: str,
-            218→    yieldval: T,
-            219→    annotation: Any,
-            220→    memo: TypeCheckMemo,
-            221→) -> T:
-            245→def check_variable_assignment(
-            …
-            291→def warn_on_error(exc: TypeCheckError, memo: TypeCheckMemo) -> None:
-            …
-            299→    warnings.warn(TypeCheckWarning(str(exc)), stacklevel=get_stacklevel())
         _importhook.py
             40→P = ParamSpec("P")
             41→T = TypeVar("T")
@@ -243,11 +232,7 @@ src/
             66→def get_type_name(type_: Any) -> str:
             …
             104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
-            105→    """
-            106→    Return the qualified name (e.g. package.module.Type) for the given object.
-            108→    Builtins and types from the :mod:`typing` package get special treatment by having
-            109→    the module name stripped from the generated name.
-            111→    """
+            …
             127→def function_name(func: Callable[..., Any]) -> str:
             128→    """
             129→    Return the qualified name of the given function.

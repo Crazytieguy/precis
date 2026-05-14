@@ -15,6 +15,12 @@ CLAUDE.md
 LICENSE
 MANIFEST.in
 README.rst
+    1→====================================================
+    2→pluggy - A minimalist production ready plugin system
+    3→====================================================
+    5→|pypi| |conda-forge| |versions| |github-actions| |gitter| |black| |codecov|
+    7→This is the core framework used by the `pytest`_, `tox`_, and `devpi`_ projects.
+    9→Please `read the docs`_ to learn more!
 RELEASING.rst
 SECURITY.md
 TIDELIFT.rst
@@ -216,10 +222,7 @@ src/
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
-            81→        """Force the result to fail with ``exception``.
-            83→        This overrides any previous result or exception.
-            85→        .. versionadded:: 1.1.0
-            86→        """
+            …
             91→    def get_result(self) -> ResultType:
             …
             107→_Result = Result

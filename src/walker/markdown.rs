@@ -111,10 +111,49 @@ const BULLET_LARGE_ITEM_BYTES: usize = 200;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let md_files = files_with_extension(dir, "md");
-    if md_files.is_empty() {
-        return Vec::new();
-    }
     let mut out = Vec::new();
+
+    // RST README: emit a single `ReadmeHeadline` batch with the
+    // file's non-decorative content. No tree-sitter parse — we
+    // line-scan, drop `.. directive::` blocks (image / badge /
+    // hyperlink targets), and render the rest. This is enough
+    // to unblock typeguard / pluggy whose NS pins the README's
+    // lede + brief mode/feature paragraphs (a single substantive
+    // block in source order). Larger RST files get the same
+    // single-batch treatment capped by `RST_README_LINE_CAP`;
+    // beyond that the file is treated as too big for one slot
+    // and skipped. We do NOT emit `HeadingsOutline` or per-section
+    // `Section` batches for RST (tree-sitter-md can't parse the
+    // setext-style `===` / `---` underlines), so the budget for
+    // RST READMEs is one anchor batch.
+    for file in super::fs::files_with_extension(dir, "rst") {
+        if !is_readme_rst(&file) {
+            continue;
+        }
+        // Skip README.rst inside subdirectories (changelog/,
+        // downstream/, etc.). The root-level README is the only
+        // ReadmeHeadline anchor; nested READMEs are admin files
+        // describing the subtree's content convention, and crowding
+        // the schedule with them displaces real source content.
+        if dir != ctx.root() {
+            continue;
+        }
+        let Some(source) = ctx.read_source(&file) else {
+            continue;
+        };
+        if let Some(content) = build_rst_readme_content(&file, &source) {
+            out.push(Batch {
+                key: MarkdownKey::ReadmeHeadline { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: readme_headline_value(&file, ctx),
+            });
+        }
+    }
+
+    if md_files.is_empty() {
+        return out;
+    }
     for file in md_files {
         let name = file
             .file_name()
@@ -454,6 +493,117 @@ fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
+}
+
+fn is_readme_rst(file: &Path) -> bool {
+    file.file_name()
+        .and_then(|n| n.to_str())
+        .is_some_and(|n| n.eq_ignore_ascii_case("README.rst"))
+}
+
+/// Render the RST README's title + first substantive paragraph as a
+/// single `ReadmeHeadline` batch. Stops at the first setext-style
+/// heading after the title (a row of `=` or `-` whose width covers the
+/// preceding non-blank line) — analogous to how
+/// [`headline_spec`] stops at the first H2 of an MD README.
+///
+/// "Decorative" lines (top-level `.. directive::` blocks: `.. image::`,
+/// `.. _ref:`, `.. |substitution| image::`, bare `.. badges` comments)
+/// are skipped along with their indented continuation. The setext H1
+/// underline directly under the title is kept (it identifies the
+/// title); subsequent setext underlines after the lede end the
+/// headline.
+fn build_rst_readme_content(file: &Path, source: &str) -> Option<BatchContent> {
+    let src_lines: Vec<&str> = source.lines().collect();
+    if src_lines.is_empty() {
+        return None;
+    }
+    let mut keep: Vec<usize> = Vec::new();
+    let mut i = 0;
+    let mut seen_title = false;
+    while i < src_lines.len() {
+        let line = src_lines[i];
+        let trimmed = line.trim_start();
+        if trimmed.starts_with("..") {
+            let directive_indent = line.len() - trimmed.len();
+            i += 1;
+            while i < src_lines.len() {
+                let next = src_lines[i];
+                if next.trim().is_empty() {
+                    i += 1;
+                    continue;
+                }
+                let next_indent = next.len() - next.trim_start().len();
+                if next_indent > directive_indent {
+                    i += 1;
+                } else {
+                    break;
+                }
+            }
+            continue;
+        }
+        // Setext-style heading detection: a non-blank line followed by
+        // an underline of `=`, `-`, `~`, `^`, `*`, `+`, or `#` whose
+        // width is at least the line's. The first such heading is the
+        // title; subsequent ones bound the headline.
+        if i + 1 < src_lines.len()
+            && let Some(prev) = src_lines.get(i).filter(|l| !l.trim().is_empty())
+            && is_rst_underline(src_lines[i + 1], prev.trim_end().chars().count())
+        {
+            if seen_title {
+                break;
+            }
+            keep.push(i + 1);
+            keep.push(i + 2);
+            seen_title = true;
+            i += 2;
+            continue;
+        }
+        // Overline form (title surrounded by underline rows). Detect:
+        // a punctuation row followed by a title row followed by the
+        // same punctuation row.
+        if !seen_title
+            && i + 2 < src_lines.len()
+            && is_rst_underline(src_lines[i], 1)
+            && is_rst_underline(src_lines[i + 2], 1)
+            && src_lines[i].trim() == src_lines[i + 2].trim()
+            && !src_lines[i + 1].trim().is_empty()
+        {
+            keep.push(i + 1);
+            keep.push(i + 2);
+            keep.push(i + 3);
+            seen_title = true;
+            i += 3;
+            continue;
+        }
+        keep.push(i + 1);
+        i += 1;
+    }
+    while keep
+        .first()
+        .is_some_and(|&row| src_lines.get(row - 1).is_none_or(|l| l.trim().is_empty()))
+    {
+        keep.remove(0);
+    }
+    while keep
+        .last()
+        .is_some_and(|&row| src_lines.get(row - 1).is_none_or(|l| l.trim().is_empty()))
+    {
+        keep.pop();
+    }
+    if keep.is_empty() {
+        return None;
+    }
+    single_file_lines_content(file, source, FileLines::new(keep))
+}
+
+fn is_rst_underline(line: &str, min_width: usize) -> bool {
+    let trimmed = line.trim();
+    if trimmed.len() < min_width || trimmed.is_empty() {
+        return false;
+    }
+    let first = trimmed.chars().next().unwrap();
+    matches!(first, '=' | '-' | '~' | '^' | '*' | '+' | '#') && trimmed.chars().all(|c| c == first)
 }
 
 // --- headline spec + span construction ---
