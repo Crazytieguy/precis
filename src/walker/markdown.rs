@@ -278,7 +278,14 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.7, 0.55, 0.4, path_depth_factor(file, ctx))
+    mix_signals(0.7, 0.55, 0.4, orientation_aware_depth_factor(file, ctx))
+}
+
+/// Depth factor with orientation-doc pinning: a `docs/ARCHITECTURE.md`
+/// gets the same depth-1 treatment as a root-level one, because the
+/// content is the same kind of orientation anchor wherever it lives.
+fn orientation_aware_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    super::file_depth_factor(file, ctx, is_orientation_doc(file))
 }
 
 fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
@@ -493,6 +500,29 @@ fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
+}
+
+/// Project-orientation markdown files — the matklad-style `ARCHITECTURE.md`
+/// convention, plus the related `OVERVIEW.md` / `DESIGN.md` / `STRUCTURE.md`
+/// names. These are written specifically to orient a new contributor on
+/// the codebase, so they earn the same depth-1 pinning as code
+/// entrypoints — a `docs/ARCHITECTURE.md` is no less of an orientation
+/// anchor than a root-level one. Matched at any depth so monorepo
+/// `docs/ARCHITECTURE.md` counts too.
+fn is_orientation_doc(file: &Path) -> bool {
+    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+        return false;
+    };
+    let Some(ext) = file.extension().and_then(|e| e.to_str()) else {
+        return false;
+    };
+    if !ext.eq_ignore_ascii_case("md") {
+        return false;
+    }
+    matches!(
+        stem.to_ascii_uppercase().as_str(),
+        "ARCHITECTURE" | "OVERVIEW" | "DESIGN" | "STRUCTURE"
+    )
 }
 
 fn is_readme_rst(file: &Path) -> bool {

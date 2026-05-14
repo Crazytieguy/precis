@@ -238,14 +238,6 @@ crates/
             driver/
                 capability.rs
                 operation/
-                    delete_by_key.rs
-                    find_pk_by_index.rs
-                    get_by_key.rs
-                    insert.rs
-                    query_pk.rs
-                    query_sql.rs
-                    transaction.rs
-                    update_by_key.rs
                 operation.rs
                 response.rs
             driver.rs
@@ -264,14 +256,6 @@ crates/
                     table.rs
                 builder.rs
                 db/
-                    column.rs
-                    diff.rs
-                    index.rs
-                    migration.rs
-                    pk.rs
-                    schema.rs
-                    table.rs
-                    ty.rs
                 db.rs
                 mapping/
                     field.rs
@@ -282,12 +266,8 @@ crates/
                     relations_are_indexed.rs
                 verify.rs
             schema.rs
-                22→pub struct Schema {
-                …
             stmt/
             stmt.rs
-                253→pub enum Statement {
-                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
@@ -355,6 +335,24 @@ crates/
     toasty-sql/
 docs/
     ARCHITECTURE.md
+        1→# Toasty Architecture Overview
+        …
+        3→## Project Structure
+        …
+        7→## Crates
+        …
+        9→### 1. toasty
+        …
+        26→### 2. toasty-core
+        …
+        39→### 3. toasty-codegen
+        …
+        54→### 4. toasty-driver-*
+        …
+        63→### 5. toasty-sql
+        …
+        74→## Further Reading
+        …
     CHANGE_GUIDE.md
     CONTEXT.md
         1→# Documentation Context
