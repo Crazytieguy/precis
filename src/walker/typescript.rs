@@ -244,7 +244,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         chunk_count,
                         js_factor,
                         has_split_js_class_export,
-                    ),
+                    ) * per_export_factor,
                 });
             }
             for (item_index, item) in exports.iter().enumerate() {

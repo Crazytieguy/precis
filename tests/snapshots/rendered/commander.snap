@@ -304,34 +304,6 @@ tsconfig.ts.json
 typings/
     esm.d.mts
     index.d.ts
-        16→export class CommanderError extends Error {
-        …
-        31→export class InvalidArgumentError extends CommanderError {
-        …
-        36→  constructor(message: string);
-        38→export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
-        …
-        40→export interface ErrorOptions {
-        …
-        48→export class Argument {
-        …
-        95→export class Option {
-        …
-        210→export class Help {
-        …
-        340→export type HelpConfiguration = Partial<Help>;
-        …
-        342→export interface ParseOptions {
-        343→  from: 'node' | 'electron' | 'user';
-        344→}
-        345→export interface HelpContext {
-        346→  // optional parameter for .help() and .outputHelp()
-        347→  error: boolean;
-        348→}
-        349→export interface AddHelpTextContext {
-        …
-        354→export interface OutputConfiguration {
-        …
     index.test-d.ts
         509→class MyCommand extends commander.Command {
         510→  createCommand(name?: string): MyCommand {

@@ -61,76 +61,74 @@ Score(3000)=0.591 I=0.683 C=0.512 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 3923 | 3 | listing of '.github' |  |  | 0.783 |
 | walker |  | 3927 | 4 | listing of '.github/workflows' |  |  | 0.783 |
 | walker |  | 3939 | 12 | imports in src/use-composed-refs.ts |  |  | 0.783 |
-| walker |  | 3991 | 52 | export names surface in src/types.ts |  |  | 0.784 |
-| ns | 4024 |  | 796 | style.css — every selector head (locations only) | 2.10 |  | 0.740 |
-| ns | 4132 |  | 108 | style.css — keyframe names (locations only) | 2.11 |  | 0.726 |
-| walker |  | 4302 | 311 | imports in src/index.tsx |  |  | 0.726 |
-| ns | 4321 |  | 189 | constants.ts — every tunable threshold and timing | 3.1 |  | 0.703 |
-| ns | 4399 |  | 78 | types.ts — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.698 |
-| ns | 4502 |  | 103 | helpers.ts — every exported function (signature heads only) | 3.3 |  | 0.689 |
-| ns | 4688 |  | 186 | Root inner-function locations (onPress, onDrag, onRelease, …) | 3.4 |  | 0.677 |
-| ns | 5171 |  | 483 | context.ts — DrawerContextValue interface (parent/child contract) | 3.5 |  | 0.641 |
-| walker |  | 5341 | 1039 | export body at src/index.tsx:996 body 1000 |  |  | 0.641 |
-| walker |  | 5357 | 16 | imports in src/helpers.ts |  |  | 0.641 |
-| walker |  | 5414 | 57 | export body at src/context.ts:69 body 70 |  |  | 0.641 |
-| ns | 5503 |  | 332 | useSnapPoints — full parameter shape | 3.6 |  | 0.616 |
-| walker |  | 5525 | 111 | json config turbo.json |  |  | 0.616 |
-| walker |  | 5649 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.616 |
-| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.580 |
-| walker |  | 6161 | 512 | export at playwright.config.ts:12 |  |  | 0.580 |
-| walker |  | 6187 | 26 | export doc at playwright.config.ts:12 |  |  | 0.580 |
-| ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.557 |
-| ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.520 |
-| ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.502 |
-| walker |  | 7878 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.524 |
-| walker |  | 7944 | 66 | listing of 'test/tests' |  |  | 0.524 |
-| walker |  | 7967 | 23 | imports in src/context.ts |  |  | 0.524 |
-| walker |  | 7990 | 23 | imports in src/use-position-fixed.ts |  |  | 0.524 |
-| walker |  | 8085 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.525 |
-| walker |  | 8085 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.525 |
-| walker |  | 8085 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.525 |
-| walker |  | 8085 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.525 |
-| walker |  | 8085 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.525 |
-| walker |  | 8124 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.525 |
-| walker |  | 8184 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.525 |
-| walker |  | 8264 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.525 |
-| ns | 8357 |  | 772 | useScaleBackground — wrapper-scale effect (full hook) | 3.11 |  | 0.497 |
-| walker |  | 8376 | 112 | export names surface in src/browser.ts |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:1 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:10 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:14 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:18 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:22 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:30 |  |  | 0.500 |
-| walker |  | 8376 | 0 | export at src/browser.ts:34 |  |  | 0.500 |
-| walker |  | 8386 | 10 | export body at src/browser.ts:10 body 11 |  |  | 0.500 |
-| walker |  | 8397 | 11 | export body at src/browser.ts:14 body 15 |  |  | 0.501 |
-| walker |  | 8418 | 21 | export body at src/browser.ts:18 body 19 |  |  | 0.502 |
-| walker |  | 8499 | 81 | export body at src/browser.ts:1 body 2 |  |  | 0.509 |
-| walker |  | 8529 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.509 |
-| walker |  | 8655 | 126 | export names surface in src/constants.ts |  |  | 0.524 |
-| walker |  | 8695 | 40 | export at src/constants.ts:1 |  |  | 0.529 |
-| walker |  | 8794 | 99 | listing of 'test/src/app' |  |  | 0.531 |
-| walker |  | 9043 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.551 |
-| ns | 9050 |  | 693 | use-prevent-scroll — exports + the six mobile-Safari quirks | 3.12 |  | 0.536 |
-| ns | 9102 |  | 52 | test/ workspace listing | 4.1 |  | 0.542 |
-| ns | 9201 |  | 99 | test/src/app/ — every demo page directory | 4.2 |  | 0.551 |
-| walker |  | 9213 | 170 | export body at src/use-prevent-scroll.ts:68 body 69 |  |  | 0.551 |
-| ns | 9267 |  | 66 | test/tests/ — Playwright spec catalog | 4.3 |  | 0.556 |
-| walker |  | 9384 | 171 | export names surface in src/helpers.ts |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:9 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:23 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:42 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:59 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:72 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:90 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:94 |  |  | 0.564 |
-| walker |  | 9384 | 0 | export at src/helpers.ts:108 |  |  | 0.564 |
-| walker |  | 9413 | 29 | export doc at src/helpers.ts:108 |  |  | 0.564 |
-| walker |  | 9517 | 104 | export body at src/helpers.ts:9 body 10 |  |  | 0.564 |
-| walker |  | 9600 | 83 | export body at src/helpers.ts:59 body 60 |  |  | 0.568 |
-| ns | 9693 |  | 426 | Landing page + Playwright device profiles | 4.4 |  | 0.556 |
-| walker |  | 9734 | 134 | export body at src/helpers.ts:42 body 43 |  |  | 0.556 |
-| walker |  | 9886 | 152 | export body at src/helpers.ts:23 body 24 |  |  | 0.556 |
-| walker |  | 9907 | 21 | export at src/types.ts:2 |  |  | 0.560 |
-| walker |  | 9965 | 58 | export doc at src/use-prevent-scroll.ts:68 |  |  | 0.560 |
+| ns | 4024 |  | 796 | style.css — every selector head (locations only) | 2.10 |  | 0.739 |
+| ns | 4132 |  | 108 | style.css — keyframe names (locations only) | 2.11 |  | 0.725 |
+| walker |  | 4250 | 311 | imports in src/index.tsx |  |  | 0.725 |
+| ns | 4321 |  | 189 | constants.ts — every tunable threshold and timing | 3.1 |  | 0.702 |
+| ns | 4399 |  | 78 | types.ts — DrawerDirection, SnapPoint, AnyFunction | 3.2 |  | 0.694 |
+| ns | 4502 |  | 103 | helpers.ts — every exported function (signature heads only) | 3.3 |  | 0.685 |
+| ns | 4688 |  | 186 | Root inner-function locations (onPress, onDrag, onRelease, …) | 3.4 |  | 0.673 |
+| ns | 5171 |  | 483 | context.ts — DrawerContextValue interface (parent/child contract) | 3.5 |  | 0.637 |
+| walker |  | 5289 | 1039 | export body at src/index.tsx:996 body 1000 |  |  | 0.637 |
+| walker |  | 5305 | 16 | imports in src/helpers.ts |  |  | 0.637 |
+| walker |  | 5362 | 57 | export body at src/context.ts:69 body 70 |  |  | 0.637 |
+| walker |  | 5473 | 111 | json config turbo.json |  |  | 0.637 |
+| ns | 5503 |  | 332 | useSnapPoints — full parameter shape | 3.6 |  | 0.613 |
+| walker |  | 5597 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.613 |
+| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.576 |
+| walker |  | 6109 | 512 | export at playwright.config.ts:12 |  |  | 0.577 |
+| walker |  | 6135 | 26 | export doc at playwright.config.ts:12 |  |  | 0.577 |
+| ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.554 |
+| ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.517 |
+| ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.499 |
+| walker |  | 7826 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.520 |
+| walker |  | 7892 | 66 | listing of 'test/tests' |  |  | 0.521 |
+| walker |  | 7915 | 23 | imports in src/context.ts |  |  | 0.521 |
+| walker |  | 7938 | 23 | imports in src/use-position-fixed.ts |  |  | 0.521 |
+| walker |  | 8033 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.521 |
+| walker |  | 8033 | 0 | export at src/use-prevent-scroll.ts:29 |  |  | 0.521 |
+| walker |  | 8033 | 0 | export at src/use-prevent-scroll.ts:34 |  |  | 0.521 |
+| walker |  | 8033 | 0 | export at src/use-prevent-scroll.ts:68 |  |  | 0.521 |
+| walker |  | 8033 | 0 | export at src/use-prevent-scroll.ts:294 |  |  | 0.521 |
+| walker |  | 8072 | 39 | export body at src/use-prevent-scroll.ts:29 body 30 |  |  | 0.521 |
+| walker |  | 8132 | 60 | export body at src/use-prevent-scroll.ts:294 body 295 |  |  | 0.521 |
+| walker |  | 8212 | 80 | export body at src/use-prevent-scroll.ts:34 body 35 |  |  | 0.521 |
+| walker |  | 8324 | 112 | export names surface in src/browser.ts |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:1 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:10 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:14 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:18 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:22 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:30 |  |  | 0.524 |
+| walker |  | 8324 | 0 | export at src/browser.ts:34 |  |  | 0.524 |
+| walker |  | 8334 | 10 | export body at src/browser.ts:10 body 11 |  |  | 0.525 |
+| walker |  | 8345 | 11 | export body at src/browser.ts:14 body 15 |  |  | 0.526 |
+| ns | 8357 |  | 772 | useScaleBackground — wrapper-scale effect (full hook) | 3.11 |  | 0.498 |
+| walker |  | 8366 | 21 | export body at src/browser.ts:18 body 19 |  |  | 0.499 |
+| walker |  | 8447 | 81 | export body at src/browser.ts:1 body 2 |  |  | 0.506 |
+| walker |  | 8477 | 30 | imports in src/use-prevent-scroll.ts |  |  | 0.506 |
+| walker |  | 8603 | 126 | export names surface in src/constants.ts |  |  | 0.521 |
+| walker |  | 8643 | 40 | export at src/constants.ts:1 |  |  | 0.527 |
+| walker |  | 8742 | 99 | listing of 'test/src/app' |  |  | 0.528 |
+| walker |  | 8991 | 249 | export at src/use-snap-points.ts:7 |  |  | 0.548 |
+| ns | 9050 |  | 693 | use-prevent-scroll — exports + the six mobile-Safari quirks | 3.12 |  | 0.533 |
+| ns | 9102 |  | 52 | test/ workspace listing | 4.1 |  | 0.539 |
+| walker |  | 9161 | 170 | export body at src/use-prevent-scroll.ts:68 body 69 |  |  | 0.539 |
+| ns | 9201 |  | 99 | test/src/app/ — every demo page directory | 4.2 |  | 0.548 |
+| ns | 9267 |  | 66 | test/tests/ — Playwright spec catalog | 4.3 |  | 0.553 |
+| walker |  | 9332 | 171 | export names surface in src/helpers.ts |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:9 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:23 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:42 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:59 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:72 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:90 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:94 |  |  | 0.562 |
+| walker |  | 9332 | 0 | export at src/helpers.ts:108 |  |  | 0.562 |
+| walker |  | 9361 | 29 | export doc at src/helpers.ts:108 |  |  | 0.562 |
+| walker |  | 9465 | 104 | export body at src/helpers.ts:9 body 10 |  |  | 0.562 |
+| walker |  | 9548 | 83 | export body at src/helpers.ts:59 body 60 |  |  | 0.566 |
+| walker |  | 9682 | 134 | export body at src/helpers.ts:42 body 43 |  |  | 0.566 |
+| ns | 9693 |  | 426 | Landing page + Playwright device profiles | 4.4 |  | 0.554 |
+| walker |  | 9834 | 152 | export body at src/helpers.ts:23 body 24 |  |  | 0.554 |
+| walker |  | 9892 | 58 | export doc at src/use-prevent-scroll.ts:68 |  |  | 0.554 |

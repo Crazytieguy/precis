@@ -107,6 +107,7 @@ readme.md
     127→### ky.delete(input, options?)
     …
     129→Sets `options.method` to the method name and makes a request.
+    131→⌨️ **TypeScript:** Accepts an optional type parameter for use with JSON responses (see [`ky()`](#kyinput-options)).
     745→### ky.extend(defaultOptions)
     …
     747→Create a new `ky` instance with some defaults overridden with your own.
@@ -152,6 +153,8 @@ readme.md
     1345→Node.js 18 and later.
     1347→## Related
     …
+    1349→- [fetch-extras](https://github.com/sindresorhus/fetch-extras) - Useful utilities for working with Fetch
+    1350→- [ky-hooks-change-case](https://github.com/alice-health/ky-hooks-change-case) - Ky hooks to modify cases on requests and responses of objects
     1352→## Maintainers
     …
     1354→- [Sindre Sorhus](https://github.com/sindresorhus)
@@ -165,13 +168,30 @@ source/
         constants.ts
     errors/
         ForceRetryError.ts
+            1→import type {ForceRetryOptions} from '../core/constants.js';
+            2→import {NonError} from './NonError.js';
+            4→/**
+            5→Internal error used to signal a forced retry from afterResponse hooks.
+            6→This is thrown when a user returns ky.retry() from an afterResponse hook.
+            7→*/
             8→export class ForceRetryError extends Error {
             9→	override name = 'ForceRetryError' as const;
             10→	customDelay: number | undefined;
             11→	code: string | undefined;
             12→	customRequest: Request | undefined;
             14→	constructor(options?: ForceRetryOptions) {
-            …
+            15→		// Runtime protection: wrap non-Error causes in NonError
+            16→		// TypeScript type is Error for guidance, but JS users can pass anything
+            17→		const cause = options?.cause
+            18→			? (options.cause instanceof Error ? options.cause : new NonError(options.cause))
+            19→			: undefined;
+            21→		super(
+            22→			options?.code ? `Forced retry: ${options.code}` : 'Forced retry',
+            23→			cause ? {cause} : undefined,
+            24→		);
+            26→		this.customDelay = options?.delay;
+            27→		this.code = options?.code;
+            28→		this.customRequest = options?.request;
         HTTPError.ts
             5→export class HTTPError<T = unknown> extends Error {
             6→	public response: KyResponse<T>;
@@ -213,57 +233,34 @@ source/
     types/
         ResponsePromise.ts
             4→import {type KyResponse} from './response.js';
-            6→export type ResponsePromise<T = unknown> = {
-            …
         common.ts
         hooks.ts
         ky.ts
-            5→export type KyInstance = {
-            …
         options.ts
-            6→export type SearchParamsInit = string | string[][] | Record<string, string> | URLSearchParams | undefined;
-            …
-            9→export type SearchParamsOption = SearchParamsInit | Record<string, string | number | boolean | undefined> | Array<Array<string | number | boolean>>;
-            …
-            11→export type RequestHttpMethod = 'get' | 'post' | 'put' | 'patch' | 'head' | 'delete';
-            12→export type HttpMethod = LiteralUnion<RequestHttpMethod | 'options' | 'trace', string>;
-            …
-            14→export type Input = string | URL | Request;
-            …
-            16→export type Progress = {
-            …
-            27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
-            …
-            33→export type KyOptions = {
-            …
-            307→export type KyOptionsRegistry = {[K in keyof KyOptions]-?: true};
-            …
-            312→export interface Options extends KyOptions, Omit<RequestInit, 'headers'> { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-            …
-            358→export type InternalOptions = Required<
-            …
-            373→export interface NormalizedOptions extends RequestInit { // eslint-disable-line @typescript-eslint/consistent-type-definitions -- This must stay an interface so that it can be extended outside of Ky for use in `ky.create`.
-            …
         request.ts
-            1→export type KyRequest<T = unknown> = {
-            …
         response.ts
-            1→export type KyResponse<T = unknown> = {
-            …
         retry.ts
             1→import type {HttpMethod} from './options.js';
-            3→export type ShouldRetryState = {
-            …
-            15→export type RetryOptions = {
-            …
     utils/
         body.ts
         delay.ts
+            5→export type DelayOptions = {
+            6→	signal?: InternalOptions['signal'];
+            7→};
+            9→export default async function delay(
+            10→	ms: number,
+            11→	{signal}: DelayOptions,
+            12→): Promise<void> {
+            …
         is.ts
         merge.ts
         normalize.ts
         options.ts
         timeout.ts
+            3→export type TimeoutOptions = {
+            …
+            9→export default async function timeout(
+            …
         type-guards.ts
             27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
             28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
