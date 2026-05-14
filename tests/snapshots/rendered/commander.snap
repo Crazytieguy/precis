@@ -29,36 +29,6 @@ Readme_zh-CN.md
 SECURITY.md
 docs/
     deprecated.md
-        1→# Deprecated
-        …
-        22→### RegExp .option() parameter
-        …
-        34→### noHelp
-        …
-        44→### Callback to .help() and .outputHelp()
-        …
-        62→### .on('--help')
-        …
-        87→### .on('command:*')
-        …
-        98→### .command('*')
-        …
-        118→### cmd.description(cmdDescription, argDescriptions)
-        …
-        141→### InvalidOptionArgumentError
-        …
-        171→### Import from `commander/esm.mjs`
-        …
-        187→### cmd._args
-        …
-        203→### .addHelpCommand(string|boolean|undefined)
-        …
-        227→## Removed
-        …
-        229→### Short option flag longer than a single character
-        …
-        238→### Default import of global Command object
-        …
     help-in-depth.md
         1→# Help in Depth
         …
@@ -131,7 +101,19 @@ lib/
         149→exports.Argument = Argument;
         150→exports.humanReadableArgName = humanReadableArgName;
     command.js
+        13→class Command extends EventEmitter {
+        …
+        2752→function useColor() {
+        …
+        2776→exports.Command = Command;
+        2777→exports.useColor = useColor; // exporting for tests
     error.js
+        4→class CommanderError extends Error {
+        …
+        25→class InvalidArgumentError extends CommanderError {
+        …
+        38→exports.CommanderError = CommanderError;
+        39→exports.InvalidArgumentError = InvalidArgumentError;
     help.js
         12→class Help {
         …
@@ -294,7 +276,20 @@ typings/
         45→  exitCode?: number;
         46→}
         48→export class Argument {
-        …
+        49→  description: string;
+        50→  required: boolean;
+        51→  variadic: boolean;
+        52→  defaultValue?: any;
+        53→  defaultValueDescription?: string;
+        54→  parseArg?: <T>(value: string, previous: T) => T;
+        55→  argChoices?: string[];
+        62→  constructor(arg: string, description?: string);
+        67→  name(): string;
+        72→  default(value: unknown, description?: string): this;
+        77→  argParser<T>(fn: (value: string, previous: T) => T): this;
+        82→  choices(values: readonly string[]): this;
+        87→  argRequired(): this;
+        92→  argOptional(): this;
         95→export class Option {
         …
         210→export class Help {

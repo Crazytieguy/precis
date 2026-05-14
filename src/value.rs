@@ -244,7 +244,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     let Some(stem) = target.file_stem().and_then(|s| s.to_str()) else {
         return false;
     };
-    [
+    if [
         "CHANGELOG",
         "CHANGES",
         "HISTORY",
@@ -263,6 +263,20 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     ]
     .iter()
     .any(|s| stem.eq_ignore_ascii_case(s))
+    {
+        return true;
+    }
+    // Migration / upgrade / deprecation docs are content describing
+    // historical API changes — necessary at version-bump time but rarely
+    // load-bearing for orienting on the current API. NS authors
+    // universally treat these as tier-2 reference at best. Matched as
+    // substrings so `v3-to-v4-migration-guide.md`, `migrate-from-foo.md`,
+    // `deprecated.md`, `deprecation-policy.rst` are all caught.
+    let lower = stem.to_ascii_lowercase();
+    if lower.contains("migration") || lower.contains("migrate") || lower.contains("deprecated") {
+        return true;
+    }
+    false
 }
 
 /// True for `README.<locale>.<ext>` or `Readme_<locale>.<ext>`
