@@ -1,4 +1,4 @@
-Score(3000)=0.333 I=0.382 C=0.290 ns_rows≤3K=19/45 (reached=4 partial=3 missing=12)
+Score(3000)=0.363 I=0.436 C=0.302 ns_rows≤3K=19/45 (reached=5 partial=3 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -45,137 +45,123 @@ Score(3000)=0.333 I=0.382 C=0.290 ns_rows≤3K=19/45 (reached=4 partial=3 missin
 | walker |  | 1288 | 56 | listing of 'src/types' |  |  | 0.462 |
 | walker |  | 1298 | 10 | imports in src/types/index.ts |  |  | 0.462 |
 | ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.429 |
-| walker |  | 1531 | 233 | export names surface in src/types/Pattern.ts |  |  | 0.429 |
-| walker |  | 1555 | 24 | export at src/types/Pattern.ts:38 |  |  | 0.429 |
-| walker |  | 1579 | 24 | export at src/types/Pattern.ts:74 |  |  | 0.429 |
-| walker |  | 1609 | 30 | export at src/types/Pattern.ts:96 |  |  | 0.429 |
+| walker |  | 1503 | 205 | export names surface #1 in src/types/helpers.ts |  |  | 0.429 |
+| walker |  | 1736 | 233 | export names surface in src/types/Pattern.ts |  |  | 0.429 |
+| walker |  | 1748 | 12 | export names surface #3 in src/types/Pattern.ts |  |  | 0.429 |
 | ns | 1764 |  | 275 | MatchExpression.with — selection + dispatch half | 2.8 | 2.7 | 0.387 |
-| walker |  | 1814 | 205 | export names surface #1 in src/types/helpers.ts |  |  | 0.387 |
-| walker |  | 1827 | 13 | export at src/types/helpers.ts:69 |  |  | 0.387 |
-| walker |  | 1850 | 23 | export at src/types/helpers.ts:122 |  |  | 0.387 |
-| walker |  | 1893 | 43 | export at src/types/helpers.ts:63 |  |  | 0.387 |
-| walker |  | 1905 | 12 | export names surface #3 in src/types/Pattern.ts |  |  | 0.387 |
-| ns | 2017 |  | 253 | MatchExpression.when / otherwise / exhaustive bodies | 2.9 | 2.3 | 0.362 |
-| ns | 2115 |  | 98 | MatchExpression.run / returnType / narrow + defaultCatcher | 2.10 | 2.3 | 0.347 |
-| walker |  | 2164 | 259 | export names surface in src/types/helpers.ts |  |  | 0.347 |
-| walker |  | 2164 | 0 | export at src/types/helpers.ts:14 |  |  | 0.347 |
-| walker |  | 2201 | 37 | export at src/types/helpers.ts:49 |  |  | 0.347 |
-| walker |  | 2249 | 48 | export at src/types/helpers.ts:25 |  |  | 0.347 |
-| walker |  | 2274 | 25 | README.md section #7 |  |  | 0.348 |
-| walker |  | 2329 | 55 | export at src/types/helpers.ts:105 |  |  | 0.348 |
-| walker |  | 2344 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.348 |
-| ns | 2477 |  | 362 | isMatching — JSDoc + PatternConstraint helper | 2.11 | 2.2 | 0.321 |
-| walker |  | 2505 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.323 |
-| walker |  | 2533 | 28 | README.md section #8 |  |  | 0.326 |
-| walker |  | 2563 | 30 | README.md section #4 |  |  | 0.331 |
-| walker |  | 2628 | 65 | export at src/types/helpers.ts:42 |  |  | 0.331 |
-| walker |  | 2700 | 72 | export at src/types/helpers.ts:16 |  |  | 0.331 |
-| walker |  | 2774 | 74 | export at src/types/helpers.ts:83 |  |  | 0.331 |
-| walker |  | 2808 | 34 | README.md section #3 |  |  | 0.336 |
-| ns | 2851 |  | 374 | isMatching — JSDoc for two-arg + runtime body | 2.12 | 2.2 | 0.333 |
-| walker |  | 2885 | 77 | export at src/types/helpers.ts:113 |  |  | 0.333 |
-| ns | 3005 |  | 154 | NonExhaustiveError class | 2.13 |  | 0.348 |
-| ns | 3161 |  | 156 | P module-doc + combinator-function name catalog | 3.1 |  | 0.336 |
-| walker |  | 3245 | 360 | package entrypoints in package.json |  |  | 0.365 |
-| ns | 3350 |  | 189 | P wildcards — every const definition | 3.2 |  | 0.358 |
-| ns | 3422 |  | 72 | P type-level re-exports + matcher symbol | 3.3 |  | 0.355 |
-| ns | 3482 |  | 60 | P.string predicates — name catalog | 3.4 |  | 0.350 |
-| walker |  | 3516 | 271 | package scripts in package.json |  |  | 0.350 |
-| ns | 3560 |  | 78 | P.number / P.bigint predicates — name catalog | 3.5 |  | 0.345 |
-| walker |  | 3645 | 129 | package dependencies in package.json |  |  | 0.345 |
-| walker |  | 3728 | 83 | export at src/types/Pattern.ts:83 |  |  | 0.345 |
-| walker |  | 3751 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.345 |
-| ns | 3780 |  | 220 | P.union — JSDoc + signature | 3.6 | 3.1 | 0.335 |
-| walker |  | 3916 | 165 | export names surface in src/patterns.ts |  |  | 0.341 |
-| walker |  | 3916 | 0 | export at src/patterns.ts:116 |  |  | 0.341 |
-| walker |  | 3916 | 0 | export at src/patterns.ts:241 |  |  | 0.341 |
-| walker |  | 3916 | 0 | export at src/patterns.ts:294 |  |  | 0.341 |
-| walker |  | 3939 | 23 | export at src/patterns.ts:131 |  |  | 0.348 |
-| walker |  | 3967 | 28 | export at src/patterns.ts:246 |  |  | 0.348 |
-| ns | 3971 |  | 191 | P.not — JSDoc + signature | 3.7 | 3.1 | 0.339 |
-| walker |  | 4008 | 41 | export at src/patterns.ts:81 |  |  | 0.339 |
-| walker |  | 4055 | 47 | export at src/patterns.ts:100 |  |  | 0.339 |
-| walker |  | 4098 | 43 | export at src/patterns.ts:242 |  |  | 0.339 |
-| walker |  | 4141 | 43 | export at src/patterns.ts:295 |  |  | 0.340 |
-| walker |  | 4201 | 60 | export at src/patterns.ts:187 |  |  | 0.340 |
-| ns | 4233 |  | 262 | P.when — JSDoc + both overload signatures | 3.8 | 3.1 | 0.330 |
-| walker |  | 4346 | 145 | export at src/patterns.ts:48 |  |  | 0.330 |
-| walker |  | 4581 | 235 | export body at src/patterns.ts:187 body 193 |  |  | 0.330 |
-| ns | 4659 |  | 426 | P.select — JSDoc + all three overload signatures | 3.9 | 3.1 | 0.313 |
-| walker |  | 4670 | 89 | export at src/types/helpers.ts:33 |  |  | 0.313 |
-| ns | 4865 |  | 206 | P.array — JSDoc + overload signatures | 3.10 | 3.1 | 0.310 |
-| walker |  | 4898 | 228 | export names surface #1 in src/types/Pattern.ts |  |  | 0.310 |
-| walker |  | 4912 | 14 | export at src/types/Pattern.ts:132 |  |  | 0.310 |
-| walker |  | 4930 | 18 | export at src/types/Pattern.ts:157 |  |  | 0.310 |
-| walker |  | 4969 | 39 | export at src/types/Pattern.ts:116 |  |  | 0.310 |
-| walker |  | 5016 | 47 | export at src/types/Pattern.ts:124 |  |  | 0.310 |
-| ns | 5071 |  | 206 | P.optional — JSDoc + signature | 3.11 | 3.1 | 0.307 |
-| walker |  | 5075 | 59 | export at src/types/Pattern.ts:138 |  |  | 0.307 |
-| walker |  | 5137 | 62 | imports in src/is-matching.ts |  |  | 0.308 |
-| walker |  | 5231 | 94 | export at src/types/helpers.ts:73 |  |  | 0.308 |
-| walker |  | 5328 | 97 | export at src/types/Pattern.ts:7 |  |  | 0.309 |
-| walker |  | 5428 | 100 | export at src/types/helpers.ts:126 |  |  | 0.309 |
-| ns | 5524 |  | 453 | P.intersection / P.instanceOf — JSDoc + signatures | 3.12 | 3.1 | 0.295 |
-| walker |  | 5582 | 154 | json config tsconfig.json |  |  | 0.295 |
-| walker |  | 5607 | 25 | export names surface in src/types/ExtractPreciseValue.ts |  |  | 0.295 |
-| walker |  | 5763 | 156 | export names surface in src/internals/symbols.ts |  |  | 0.296 |
-| walker |  | 5763 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.296 |
-| ns | 5846 |  | 322 | P.record — JSDoc + signatures | 3.13 | 3.1 | 0.288 |
-| walker |  | 6033 | 270 | export names surface #2 in src/types/helpers.ts |  |  | 0.288 |
-| walker |  | 6047 | 14 | export at src/types/helpers.ts:192 |  |  | 0.288 |
-| walker |  | 6061 | 14 | export at src/types/helpers.ts:196 |  |  | 0.288 |
-| walker |  | 6094 | 33 | export at src/types/helpers.ts:188 |  |  | 0.288 |
-| walker |  | 6133 | 39 | export at src/types/helpers.ts:182 |  |  | 0.288 |
-| walker |  | 6187 | 54 | export at src/types/helpers.ts:164 |  |  | 0.288 |
-| walker |  | 6259 | 72 | export at src/types/helpers.ts:207 |  |  | 0.288 |
-| ns | 6315 |  | 469 | P.map / P.set — JSDoc + signatures | 3.14 | 3.1 | 0.279 |
-| ns | 6498 |  | 183 | P.shape + matcher protocol re-exports | 3.15 | 3.1 | 0.281 |
-| walker |  | 6571 | 312 | export body at src/patterns.ts:246 body 249 |  |  | 0.281 |
-| walker |  | 6597 | 26 | export names surface in src/types/IsMatching.ts |  |  | 0.281 |
-| walker |  | 6672 | 75 | imports in src/match.ts |  |  | 0.286 |
-| walker |  | 6699 | 27 | export names surface in src/types/DeepExclude.ts |  |  | 0.286 |
-| walker |  | 6816 | 117 | README.md section #11 |  |  | 0.286 |
-| walker |  | 6944 | 128 | README.md section #10 |  |  | 0.286 |
-| ns | 6988 |  | 490 | chainable() factory + variadic / arrayChainable | 3.16 | 3.1 | 0.275 |
-| walker |  | 7019 | 75 | export names surface #4 in src/types/helpers.ts |  |  | 0.275 |
-| walker |  | 7034 | 15 | export at src/types/helpers.ts:271 |  |  | 0.275 |
-| walker |  | 7055 | 21 | export at src/types/helpers.ts:266 |  |  | 0.275 |
-| walker |  | 7088 | 33 | export at src/types/helpers.ts:275 |  |  | 0.275 |
-| walker |  | 7122 | 34 | export at src/types/helpers.ts:260 |  |  | 0.275 |
-| walker |  | 7245 | 123 | export doc at src/patterns.ts:116 |  |  | 0.275 |
-| walker |  | 7383 | 138 | export at src/types/helpers.ts:92 |  |  | 0.275 |
-| walker |  | 7438 | 55 | README.md section #5 |  |  | 0.278 |
-| ns | 7489 |  | 501 | P.union / P.not / P.when — full bodies | 3.17 | 3.6 | 0.267 |
-| walker |  | 7580 | 142 | export at src/types/Pattern.ts:23 |  |  | 0.267 |
-| walker |  | 7728 | 148 | export names surface #1 in src/patterns.ts |  |  | 0.274 |
-| walker |  | 7728 | 0 | export at src/patterns.ts:356 |  |  | 0.274 |
-| walker |  | 7757 | 29 | export at src/patterns.ts:643 |  |  | 0.275 |
-| walker |  | 7793 | 36 | export at src/patterns.ts:445 |  |  | 0.275 |
-| walker |  | 7835 | 42 | export at src/patterns.ts:611 |  |  | 0.276 |
-| ns | 7838 |  | 349 | tests/ + docs/ + examples/ listings | 4.1 |  | 0.263 |
-| walker |  | 7880 | 45 | export at src/patterns.ts:433 |  |  | 0.264 |
-| ns | 7921 |  | 83 | Match<i, o> — public builder type signature | 4.2 |  | 0.262 |
-| walker |  | 7925 | 45 | export at src/patterns.ts:536 |  |  | 0.263 |
-| walker |  | 7970 | 45 | export at src/patterns.ts:572 |  |  | 0.264 |
-| walker |  | 8019 | 49 | export at src/patterns.ts:637 |  |  | 0.268 |
-| walker |  | 8069 | 50 | export at src/patterns.ts:299 |  |  | 0.268 |
-| walker |  | 8147 | 78 | export at src/patterns.ts:357 |  |  | 0.271 |
-| walker |  | 8241 | 94 | export at src/patterns.ts:437 |  |  | 0.276 |
-| walker |  | 8336 | 95 | export at src/patterns.ts:362 |  |  | 0.276 |
-| ns | 8414 |  | 493 | Pattern<T> — public pattern type alias + typed wildcards | 4.3 |  | 0.272 |
-| walker |  | 8621 | 285 | export body at src/patterns.ts:299 body 303 |  |  | 0.272 |
-| ns | 8718 |  | 304 | MatcherType union + Matcher interface | 4.4 |  | 0.269 |
-| walker |  | 8755 | 134 | export doc at src/patterns.ts:100 |  |  | 0.269 |
-| ns | 8816 |  | 98 | internals/symbols.ts — core matcher / unset / isVariadic brands | 4.5 |  | 0.275 |
-| walker |  | 8941 | 186 | export at src/types/Pattern.ts:50 |  |  | 0.301 |
-| ns | 9151 |  | 335 | matchPattern() — Matcher / object / primitive branches | 4.6 | 4.4 | 0.295 |
-| walker |  | 9359 | 418 | export body at src/patterns.ts:362 body 369 |  |  | 0.295 |
-| walker |  | 9386 | 27 | export doc at src/types/helpers.ts:182 |  |  | 0.295 |
-| walker |  | 9517 | 131 | export doc at src/patterns.ts:294 |  |  | 0.303 |
-| walker |  | 9610 | 93 | json config jsr.json |  |  | 0.303 |
-| walker |  | 9646 | 36 | export names surface in src/types/Match.ts |  |  | 0.303 |
-| walker |  | 9708 | 62 | README.md section #6 |  |  | 0.305 |
-| ns | 9767 |  | 616 | matchPattern() — array / tuple / variadic branch | 4.7 | 4.6 | 0.294 |
-| walker |  | 9957 | 249 | export names surface #2 in src/types/Pattern.ts |  |  | 0.301 |
-| ns | 9976 |  | 209 | getSelectionKeys() + flatMap helpers | 4.8 | 4.6 | 0.297 |
-| walker |  | 9981 | 24 | export at src/types/Pattern.ts:196 |  |  | 0.299 |
+| walker |  | 1773 | 25 | README.md section #7 |  |  | 0.388 |
+| walker |  | 1788 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.388 |
+| walker |  | 1949 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.390 |
+| walker |  | 1977 | 28 | README.md section #8 |  |  | 0.394 |
+| ns | 2017 |  | 253 | MatchExpression.when / otherwise / exhaustive bodies | 2.9 | 2.3 | 0.369 |
+| ns | 2115 |  | 98 | MatchExpression.run / returnType / narrow + defaultCatcher | 2.10 | 2.3 | 0.354 |
+| walker |  | 2236 | 259 | export names surface in src/types/helpers.ts |  |  | 0.354 |
+| walker |  | 2236 | 0 | export at src/types/helpers.ts:14 |  |  | 0.354 |
+| walker |  | 2266 | 30 | README.md section #4 |  |  | 0.359 |
+| walker |  | 2300 | 34 | README.md section #3 |  |  | 0.365 |
+| ns | 2477 |  | 362 | isMatching — JSDoc + PatternConstraint helper | 2.11 | 2.2 | 0.336 |
+| walker |  | 2660 | 360 | package entrypoints in package.json |  |  | 0.367 |
+| ns | 2851 |  | 374 | isMatching — JSDoc for two-arg + runtime body | 2.12 | 2.2 | 0.363 |
+| walker |  | 2931 | 271 | package scripts in package.json |  |  | 0.363 |
+| ns | 3005 |  | 154 | NonExhaustiveError class | 2.13 |  | 0.379 |
+| walker |  | 3060 | 129 | package dependencies in package.json |  |  | 0.379 |
+| walker |  | 3083 | 23 | listing of 'examples/gif-fetcher/src' |  |  | 0.379 |
+| ns | 3161 |  | 156 | P module-doc + combinator-function name catalog | 3.1 |  | 0.365 |
+| walker |  | 3248 | 165 | export names surface in src/patterns.ts |  |  | 0.367 |
+| walker |  | 3248 | 0 | export at src/patterns.ts:116 |  |  | 0.367 |
+| walker |  | 3248 | 0 | export at src/patterns.ts:241 |  |  | 0.367 |
+| walker |  | 3248 | 0 | export at src/patterns.ts:294 |  |  | 0.367 |
+| walker |  | 3271 | 23 | export at src/patterns.ts:131 |  |  | 0.368 |
+| walker |  | 3299 | 28 | export at src/patterns.ts:246 |  |  | 0.368 |
+| walker |  | 3340 | 41 | export at src/patterns.ts:81 |  |  | 0.368 |
+| ns | 3350 |  | 189 | P wildcards — every const definition | 3.2 |  | 0.361 |
+| walker |  | 3387 | 47 | export at src/patterns.ts:100 |  |  | 0.361 |
+| ns | 3422 |  | 72 | P type-level re-exports + matcher symbol | 3.3 |  | 0.369 |
+| walker |  | 3430 | 43 | export at src/patterns.ts:242 |  |  | 0.369 |
+| walker |  | 3473 | 43 | export at src/patterns.ts:295 |  |  | 0.369 |
+| ns | 3482 |  | 60 | P.string predicates — name catalog | 3.4 |  | 0.364 |
+| walker |  | 3533 | 60 | export at src/patterns.ts:187 |  |  | 0.365 |
+| ns | 3560 |  | 78 | P.number / P.bigint predicates — name catalog | 3.5 |  | 0.359 |
+| walker |  | 3678 | 145 | export at src/patterns.ts:48 |  |  | 0.359 |
+| ns | 3780 |  | 220 | P.union — JSDoc + signature | 3.6 | 3.1 | 0.349 |
+| walker |  | 3913 | 235 | export body at src/patterns.ts:187 body 193 |  |  | 0.349 |
+| ns | 3971 |  | 191 | P.not — JSDoc + signature | 3.7 | 3.1 | 0.340 |
+| walker |  | 3975 | 62 | imports in src/is-matching.ts |  |  | 0.342 |
+| walker |  | 3988 | 13 | export at src/types/helpers.ts:69 |  |  | 0.342 |
+| walker |  | 4142 | 154 | json config tsconfig.json |  |  | 0.342 |
+| walker |  | 4167 | 25 | export names surface in src/types/ExtractPreciseValue.ts |  |  | 0.342 |
+| ns | 4233 |  | 262 | P.when — JSDoc + both overload signatures | 3.8 | 3.1 | 0.331 |
+| walker |  | 4323 | 156 | export names surface in src/internals/symbols.ts |  |  | 0.332 |
+| walker |  | 4323 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.332 |
+| walker |  | 4635 | 312 | export body at src/patterns.ts:246 body 249 |  |  | 0.332 |
+| ns | 4659 |  | 426 | P.select — JSDoc + all three overload signatures | 3.9 | 3.1 | 0.316 |
+| walker |  | 4661 | 26 | export names surface in src/types/IsMatching.ts |  |  | 0.316 |
+| walker |  | 4736 | 75 | imports in src/match.ts |  |  | 0.321 |
+| ns | 4865 |  | 206 | P.array — JSDoc + overload signatures | 3.10 | 3.1 | 0.318 |
+| walker |  | 4964 | 228 | export names surface #1 in src/types/Pattern.ts |  |  | 0.318 |
+| walker |  | 4978 | 14 | export at src/types/Pattern.ts:132 |  |  | 0.318 |
+| walker |  | 5005 | 27 | export names surface in src/types/DeepExclude.ts |  |  | 0.318 |
+| ns | 5071 |  | 206 | P.optional — JSDoc + signature | 3.11 | 3.1 | 0.314 |
+| walker |  | 5122 | 117 | README.md section #11 |  |  | 0.314 |
+| walker |  | 5392 | 270 | export names surface #2 in src/types/helpers.ts |  |  | 0.314 |
+| walker |  | 5406 | 14 | export at src/types/helpers.ts:192 |  |  | 0.314 |
+| walker |  | 5420 | 14 | export at src/types/helpers.ts:196 |  |  | 0.314 |
+| ns | 5524 |  | 453 | P.intersection / P.instanceOf — JSDoc + signatures | 3.12 | 3.1 | 0.301 |
+| walker |  | 5548 | 128 | README.md section #10 |  |  | 0.301 |
+| walker |  | 5566 | 18 | export at src/types/Pattern.ts:157 |  |  | 0.301 |
+| walker |  | 5689 | 123 | export doc at src/patterns.ts:116 |  |  | 0.301 |
+| walker |  | 5744 | 55 | README.md section #5 |  |  | 0.304 |
+| ns | 5846 |  | 322 | P.record — JSDoc + signatures | 3.13 | 3.1 | 0.296 |
+| walker |  | 5892 | 148 | export names surface #1 in src/patterns.ts |  |  | 0.303 |
+| walker |  | 5892 | 0 | export at src/patterns.ts:356 |  |  | 0.303 |
+| walker |  | 5921 | 29 | export at src/patterns.ts:643 |  |  | 0.304 |
+| walker |  | 5957 | 36 | export at src/patterns.ts:445 |  |  | 0.304 |
+| walker |  | 5999 | 42 | export at src/patterns.ts:611 |  |  | 0.306 |
+| walker |  | 6044 | 45 | export at src/patterns.ts:433 |  |  | 0.307 |
+| walker |  | 6089 | 45 | export at src/patterns.ts:536 |  |  | 0.308 |
+| walker |  | 6134 | 45 | export at src/patterns.ts:572 |  |  | 0.310 |
+| walker |  | 6183 | 49 | export at src/patterns.ts:637 |  |  | 0.314 |
+| walker |  | 6233 | 50 | export at src/patterns.ts:299 |  |  | 0.314 |
+| walker |  | 6311 | 78 | export at src/patterns.ts:357 |  |  | 0.315 |
+| ns | 6315 |  | 469 | P.map / P.set — JSDoc + signatures | 3.14 | 3.1 | 0.309 |
+| walker |  | 6405 | 94 | export at src/patterns.ts:437 |  |  | 0.315 |
+| ns | 6498 |  | 183 | P.shape + matcher protocol re-exports | 3.15 | 3.1 | 0.317 |
+| walker |  | 6500 | 95 | export at src/patterns.ts:362 |  |  | 0.317 |
+| walker |  | 6785 | 285 | export body at src/patterns.ts:299 body 303 |  |  | 0.317 |
+| walker |  | 6919 | 134 | export doc at src/patterns.ts:100 |  |  | 0.317 |
+| ns | 6988 |  | 490 | chainable() factory + variadic / arrayChainable | 3.16 | 3.1 | 0.304 |
+| walker |  | 7337 | 418 | export body at src/patterns.ts:362 body 369 |  |  | 0.304 |
+| walker |  | 7412 | 75 | export names surface #4 in src/types/helpers.ts |  |  | 0.304 |
+| walker |  | 7427 | 15 | export at src/types/helpers.ts:271 |  |  | 0.304 |
+| walker |  | 7448 | 21 | export at src/types/helpers.ts:266 |  |  | 0.304 |
+| ns | 7489 |  | 501 | P.union / P.not / P.when — full bodies | 3.17 | 3.6 | 0.292 |
+| walker |  | 7579 | 131 | export doc at src/patterns.ts:294 |  |  | 0.302 |
+| walker |  | 7672 | 93 | json config jsr.json |  |  | 0.302 |
+| walker |  | 7708 | 36 | export names surface in src/types/Match.ts |  |  | 0.302 |
+| walker |  | 7770 | 62 | README.md section #6 |  |  | 0.305 |
+| walker |  | 7833 | 63 | README.md section #1 |  |  | 0.308 |
+| ns | 7838 |  | 349 | tests/ + docs/ + examples/ listings | 4.1 |  | 0.293 |
+| walker |  | 7856 | 23 | export at src/types/helpers.ts:122 |  |  | 0.293 |
+| ns | 7921 |  | 83 | Match<i, o> — public builder type signature | 4.2 |  | 0.291 |
+| walker |  | 8011 | 155 | export doc at src/patterns.ts:81 |  |  | 0.291 |
+| walker |  | 8153 | 142 | export doc at src/patterns.ts:241 |  |  | 0.305 |
+| walker |  | 8297 | 144 | export doc at src/patterns.ts:611 |  |  | 0.320 |
+| walker |  | 8321 | 24 | export at src/types/Pattern.ts:38 |  |  | 0.320 |
+| walker |  | 8345 | 24 | export at src/types/Pattern.ts:74 |  |  | 0.320 |
+| ns | 8414 |  | 493 | Pattern<T> — public pattern type alias + typed wildcards | 4.3 |  | 0.312 |
+| walker |  | 8491 | 146 | export doc at src/patterns.ts:187 |  |  | 0.326 |
+| walker |  | 8565 | 74 | plaintext config .gitignore |  |  | 0.326 |
+| walker |  | 8718 | 153 | export doc at src/is-matching.ts:48 |  |  | 0.338 |
+| ns | 8718 |  | 304 | MatcherType union + Matcher interface | 4.4 |  | 0.338 |
+| ns | 8816 |  | 98 | internals/symbols.ts — core matcher / unset / isVariadic brands | 4.5 |  | 0.343 |
+| walker |  | 8872 | 154 | export doc at src/patterns.ts:637 |  |  | 0.357 |
+| walker |  | 8915 | 43 | export names surface in src/types/BuildMany.ts |  |  | 0.357 |
+| ns | 9151 |  | 335 | matchPattern() — Matcher / object / primitive branches | 4.6 | 4.4 | 0.349 |
+| walker |  | 9164 | 249 | export names surface #2 in src/types/Pattern.ts |  |  | 0.354 |
+| walker |  | 9188 | 24 | export at src/types/Pattern.ts:196 |  |  | 0.355 |
+| walker |  | 9359 | 171 | export doc at src/patterns.ts:433 |  |  | 0.371 |
+| walker |  | 9533 | 174 | export doc at src/patterns.ts:356 |  |  | 0.386 |
+| walker |  | 9708 | 175 | export doc at src/patterns.ts:572 |  |  | 0.400 |
+| ns | 9767 |  | 616 | matchPattern() — array / tuple / variadic branch | 4.7 | 4.6 | 0.386 |
+| walker |  | 9884 | 176 | export doc at src/is-matching.ts:32 |  |  | 0.397 |
+| ns | 9976 |  | 209 | getSelectionKeys() + flatMap helpers | 4.8 | 4.6 | 0.392 |

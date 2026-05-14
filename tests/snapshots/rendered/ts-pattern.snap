@@ -45,6 +45,54 @@ package.json
     3→  "version": "5.9.0",
     4→  "description": " The exhaustive Pattern Matching library for TypeScript.",
     5→  "type": "module",
+    6→  "sideEffects": false,
+    7→  "source": "src/index.ts",
+    8→  "exports": {
+    9→    ".": {
+    10→      "require": {
+    11→        "types": "./dist/index.d.cts",
+    12→        "default": "./dist/index.cjs"
+    13→      },
+    14→      "import": {
+    15→        "types": "./dist/index.d.ts",
+    16→        "default": "./dist/index.js"
+    17→      },
+    18→      "types": "./dist/index.d.ts",
+    19→      "default": "./dist/index.js"
+    20→    },
+    21→    "./types": {
+    22→      "require": {
+    23→        "types": "./dist/types/index.d.cts"
+    24→      },
+    25→      "import": {
+    26→        "types": "./dist/types/index.d.ts"
+    27→      },
+    28→      "types": "./dist/types/index.d.ts"
+    29→    },
+    30→    "./package.json": "./package.json"
+    31→  },
+    32→  "types": "dist/index.d.ts",
+    33→  "main": "dist/index.cjs",
+    34→  "module": "dist/index.js",
+    35→  "unpkg": "dist/index.umd.js",
+    36→  "scripts": {
+    37→    "build": "rimraf dist && microbundle --format modern,cjs,umd && sh ./scripts/generate-cts.sh",
+    38→    "dev": "microbundle watch",
+    39→    "prepublishOnly": "npm run test && npm run build",
+    40→    "publish:jsr": "npm run prepublishOnly && npx jsr publish",
+    41→    "release": "npm run prepublishOnly && npm publish && npx jsr publish",
+    42→    "test": "jest",
+    43→    "clear-test": "jest --clearCache",
+    44→    "fmt": "prettier ./src/** ./tests/** -w",
+    45→    "check": "tsc --strict --noEmit --extendedDiagnostics",
+    46→    "perf": "tsc --project tests/tsconfig.json --noEmit --extendedDiagnostics",
+    47→    "trace": "tsc --project tests/tsconfig.json --generateTrace trace --incremental false  --noEmit",
+    48→    "analyzeTrace": "npx @typescript/analyze-trace trace"
+    49→  },
+    50→  "files": [
+    51→    "dist/**/*",
+    52→    "package.json"
+    53→  ],
     54→  "repository": {
     55→    "type": "git",
     56→    "url": "git+ssh://git@github.com/gvergnaud/ts-pattern.git"
@@ -154,15 +202,11 @@ src/
             23→export type MatcherProtocol<
             …
             38→export type MatchResult = {
-            39→  matched: boolean;
-            40→  selections?: Record<string, any>;
-            41→};
+            …
             50→export interface Matcher<
             …
             74→export type MatchedValue<a, invpattern> = WithDefault<
-            75→  ExtractPreciseValue<a, invpattern>,
-            76→  a
-            77→>;
+            …
             79→export type AnyMatcher = Matcher<any, any, any, any, any>;
             …
             83→export type CustomP<input, pattern, narrowedOrFn> = Matcher<
@@ -170,10 +214,7 @@ src/
             94→export type ArrayP<input, p> = Matcher<input, p, 'array'>;
             …
             96→export type RecordP<input, pkey, pvalue> = Matcher<
-            97→  input,
-            98→  [pkey, pvalue],
-            99→  'record'
-            100→>;
+            …
             102→export type OptionalP<input, p> = Matcher<input, p, 'optional'>;
             …
             104→export type MapP<input, pkey, pvalue> = Matcher<input, [pkey, pvalue], 'map'>;
@@ -190,32 +231,17 @@ src/
             14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
             …
             16→export type Contains<a, b> = a extends any
-            17→  ? 'exclude' extends {
-            18→      [k in keyof a]-?: Equal<a[k], b> extends true ? 'exclude' : 'include';
-            19→    }[keyof a]
-            20→    ? true
-            21→    : false
-            22→  : never;
+            …
             25→export type UnionToIntersection<union> = (
-            26→  union extends any ? (k: union) => void : never
-            27→) extends (k: infer intersection) => void
-            28→  ? intersection
-            29→  : never;
+            …
             31→export type IsUnion<a> = [a] extends [UnionToIntersection<a>] ? false : true;
             …
             33→export type UnionToTuple<
             …
             42→export type Flatten<
-            43→  xs extends readonly any[],
-            44→  output extends any[] = []
-            45→> = xs extends readonly [infer head, ...infer tail]
-            46→  ? Flatten<tail, [...output, ...Extract<head, readonly any[]>]>
-            47→  : output;
+            …
             49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
-            50→  T
-            51→>() => T extends b ? 1 : 2
-            52→  ? true
-            53→  : false;
+            …
             55→export type Expect<a extends true> = a;
             …
             57→export type IsAny<a> = 0 extends 1 & a ? true : false;
@@ -225,43 +251,22 @@ src/
             61→export type Length<it extends readonly any[]> = it['length'];
             …
             63→export type Iterator<
-            64→  n extends number,
-            65→  it extends any[] = []
-            66→> = it['length'] extends n ? it : Iterator<n, [any, ...it]>;
+            …
             68→export type Next<it extends any[]> = [any, ...it];
             69→export type Prev<it extends any[]> = it extends readonly [any, ...infer tail]
-            70→  ? tail
-            71→  : [];
+            …
             73→export type Take<
             …
             83→export type Drop<
-            84→  xs extends readonly any[],
-            85→  n extends any[]
-            86→> = Length<n> extends 0
-            87→  ? xs
-            88→  : xs extends readonly [any, ...infer tail]
-            89→  ? Drop<tail, Prev<n>>
-            90→  : [];
+            …
             92→export type UpdateAt<
             …
             105→export type BuiltInObjects =
-            106→  | Function
-            107→  | Date
-            108→  | RegExp
-            109→  | Generator
-            110→  | { readonly [Symbol.toStringTag]: string }
-            111→  | any[];
+            …
             113→export type IsPlainObject<o, excludeUnion = BuiltInObjects> = o extends object
-            114→  ? // to excluded branded string types,
-            115→    // like `string & { __brand: "id" }`
-            116→    // and built-in objects
-            117→    o extends string | excludeUnion
-            118→    ? false
-            119→    : true
-            120→  : false;
+            …
             122→export type Compute<a extends any> = a extends BuiltInObjects
-            123→  ? a
-            124→  : { [k in keyof a]: a[k] };
+            …
             126→export type IntersectObjects<a> = (
             …
             138→export type WithDefault<a, def> = [a] extends [never] ? def : a;

@@ -1,7 +1,7 @@
 fixture = "d2ts"
 budget = 10000
-cumulative_tokens = 9882
-batch_count = 166
+cumulative_tokens = 9997
+batch_count = 165
 
 [[batches]]
 position = 1
@@ -2075,10 +2075,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 72
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts", start_line: 16 })'
+descriptor = "export at packages/d2ql/src/compiler.ts:16"
+cost_tokens = 35
+cum_tokens = 3979
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts"
+start = 16
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 73
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", chunk_index: 0, export_count: 32, type_only_export_count: 32 })'
 descriptor = "export names surface in packages/d2ql/src/schema.ts"
 cost_tokens = 188
-cum_tokens = 4132
+cum_tokens = 4167
 
 [batches.content]
 kind = "lines"
@@ -2260,55 +2286,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 73
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 48 })'
-descriptor = "export at packages/d2ql/src/schema.ts:48"
-cost_tokens = 13
-cum_tokens = 4145
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 48
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 74
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts", start_line: 16 })'
-descriptor = "export at packages/d2ql/src/compiler.ts:16"
-cost_tokens = 35
-cum_tokens = 4180
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts"
-start = 16
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/compiler.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 75
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", chunk_index: 0, export_count: 17, type_only_export_count: 17 })'
 descriptor = "export names surface in packages/d2ql/src/types.ts"
 cost_tokens = 201
-cum_tokens = 4381
+cum_tokens = 4368
 
 [batches.content]
 kind = "lines"
@@ -2490,101 +2472,97 @@ end = 210
 kind = "ellipsis"
 
 [[batches]]
-position = 76
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 36 })'
-descriptor = "export at packages/d2ql/src/schema.ts:36"
-cost_tokens = 16
-cum_tokens = 4397
+position = 75
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
+descriptor = "export names surface in packages/d2ql/src/query-builder/query-builder.ts"
+cost_tokens = 33
+cum_tokens = 4401
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 36
-end = 38
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 609
+end = 609
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 619
+end = 619
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 610
+end = 610
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 620
+end = 620
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
-position = 77
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 201 })'
-descriptor = "export at packages/d2ql/src/types.ts:201"
-cost_tokens = 17
-cum_tokens = 4414
+position = 76
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", start_line: 609 })'
+descriptor = "export at packages/d2ql/src/query-builder/query-builder.ts:609"
+cost_tokens = 0
+cum_tokens = 4401
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 201
-end = 203
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 609
+end = 609
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 610
+end = 610
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 77
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", start_line: 619 })'
+descriptor = "export at packages/d2ql/src/query-builder/query-builder.ts:619"
+cost_tokens = 54
+cum_tokens = 4455
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
+start = 619
+end = 625
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 78
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 24 })'
-descriptor = "export at packages/d2ql/src/types.ts:24"
-cost_tokens = 19
-cum_tokens = 4433
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 24
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 183 })'
-descriptor = "export at packages/d2ql/src/types.ts:183"
-cost_tokens = 19
-cum_tokens = 4452
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 183
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 192 })'
-descriptor = "export at packages/d2ql/src/types.ts:192"
-cost_tokens = 19
-cum_tokens = 4471
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 192
-end = 194
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", chunk_index: 1, export_count: 17, type_only_export_count: 17 })'
 descriptor = "export names surface #1 in packages/d2ql/src/types.ts"
 cost_tokens = 70
-cum_tokens = 4541
+cum_tokens = 4525
 
 [batches.content]
 kind = "lines"
@@ -2670,133 +2648,11 @@ end = 275
 kind = "ellipsis"
 
 [[batches]]
-position = 82
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 196 })'
-descriptor = "export at packages/d2ql/src/types.ts:196"
-cost_tokens = 28
-cum_tokens = 4569
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 196
-end = 199
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 247 })'
-descriptor = "export at packages/d2ql/src/types.ts:247"
-cost_tokens = 29
-cum_tokens = 4598
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 247
-end = 249
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", chunk_index: 0, export_count: 2, type_only_export_count: 1 })'
-descriptor = "export names surface in packages/d2ql/src/query-builder/query-builder.ts"
-cost_tokens = 33
-cum_tokens = 4631
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 609
-end = 609
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 619
-end = 619
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 610
-end = 610
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 620
-end = 620
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", start_line: 609 })'
-descriptor = "export at packages/d2ql/src/query-builder/query-builder.ts:609"
-cost_tokens = 0
-cum_tokens = 4631
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 609
-end = 609
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 610
-end = 610
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 86
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts", start_line: 619 })'
-descriptor = "export at packages/d2ql/src/query-builder/query-builder.ts:619"
-cost_tokens = 54
-cum_tokens = 4685
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/query-builder/query-builder.ts"
-start = 619
-end = 625
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
+position = 79
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", chunk_index: 1, export_count: 32, type_only_export_count: 32 })'
 descriptor = "export names surface #1 in packages/d2ql/src/schema.ts"
 cost_tokens = 193
-cum_tokens = 4878
+cum_tokens = 4718
 
 [batches.content]
 kind = "lines"
@@ -2994,83 +2850,11 @@ end = 196
 kind = "ellipsis"
 
 [[batches]]
-position = 88
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 190 })'
-descriptor = "export at packages/d2ql/src/schema.ts:190"
-cost_tokens = 28
-cum_tokens = 4906
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 190
-end = 193
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 178 })'
-descriptor = "export at packages/d2ql/src/types.ts:178"
-cost_tokens = 31
-cum_tokens = 4937
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 178
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 187 })'
-descriptor = "export at packages/d2ql/src/types.ts:187"
-cost_tokens = 31
-cum_tokens = 4968
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 187
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 152 })'
-descriptor = "export at packages/d2ql/src/schema.ts:152"
-cost_tokens = 32
-cum_tokens = 5000
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 152
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 92
+position = 80
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/order.ts" })'
 descriptor = "imports in packages/d2ts/src/order.ts"
 cost_tokens = 15
-cum_tokens = 5015
+cum_tokens = 4733
 
 [batches.content]
 kind = "lines"
@@ -3084,11 +2868,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 93
+position = 81
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/d2.ts", chunk_index: 0, export_count: 4, type_only_export_count: 1 })'
 descriptor = "export names surface in packages/d2ts/src/d2.ts"
 cost_tokens = 65
-cum_tokens = 5080
+cum_tokens = 4798
 
 [batches.content]
 kind = "lines"
@@ -3158,11 +2942,11 @@ end = 167
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 82
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/d2.ts", start_line: 11 })'
 descriptor = "export at packages/d2ts/src/d2.ts:11"
 cost_tokens = 22
-cum_tokens = 5102
+cum_tokens = 4820
 
 [batches.content]
 kind = "lines"
@@ -3176,11 +2960,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 95
+position = 83
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/d2.ts", start_line: 166 })'
 descriptor = "export at packages/d2ts/src/d2.ts:166"
 cost_tokens = 71
-cum_tokens = 5173
+cum_tokens = 4891
 
 [batches.content]
 kind = "lines"
@@ -3218,11 +3002,11 @@ end = 175
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 84
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/d2.ts", start_line: 166, body_start_line: 171 })'
 descriptor = "export body at packages/d2ts/src/d2.ts:166 body 171"
 cost_tokens = 22
-cum_tokens = 5195
+cum_tokens = 4913
 
 [batches.content]
 kind = "lines"
@@ -3244,29 +3028,11 @@ end = 175
 kind = "full"
 
 [[batches]]
-position = 97
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 123 })'
-descriptor = "export at packages/d2ql/src/schema.ts:123"
-cost_tokens = 42
-cum_tokens = 5237
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 123
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
+position = 85
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 216
-cum_tokens = 5453
+cum_tokens = 5129
 
 [batches.content]
 kind = "lines"
@@ -3280,11 +3046,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 99
+position = 86
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/select.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ql/src/select.ts"
 cost_tokens = 11
-cum_tokens = 5464
+cum_tokens = 5140
 
 [batches.content]
 kind = "lines"
@@ -3306,29 +3072,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 100
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 15 })'
-descriptor = "export at packages/d2ql/src/types.ts:15"
-cost_tokens = 44
-cum_tokens = 5508
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 15
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
+position = 87
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/version-index.ts", start_line: 8 })'
 descriptor = "export at packages/d2ts/src/version-index.ts:8"
 cost_tokens = 154
-cum_tokens = 5662
+cum_tokens = 5294
 
 [batches.content]
 kind = "lines"
@@ -3342,11 +3090,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 102
+position = 88
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/database.ts", chunk_index: 0, export_count: 3, type_only_export_count: 2 })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/database.ts"
 cost_tokens = 47
-cum_tokens = 5709
+cum_tokens = 5341
 
 [batches.content]
 kind = "lines"
@@ -3400,11 +3148,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 89
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/database.ts", start_line: 32 })'
 descriptor = "export at packages/d2ts/src/sqlite/database.ts:32"
 cost_tokens = 96
-cum_tokens = 5805
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -3426,11 +3174,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 104
+position = 90
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/context.ts", start_line: 8 })'
 descriptor = "module item at packages/d2ts/src/sqlite/context.ts:8"
 cost_tokens = 69
-cum_tokens = 5874
+cum_tokens = 5506
 
 [batches.content]
 kind = "lines"
@@ -3492,65 +3240,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 105
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 65 })'
-descriptor = "export at packages/d2ql/src/schema.ts:65"
-cost_tokens = 46
-cum_tokens = 5920
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 65
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 80 })'
-descriptor = "export at packages/d2ql/src/schema.ts:80"
-cost_tokens = 46
-cum_tokens = 5966
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 80
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 24 })'
-descriptor = "export at packages/d2ql/src/schema.ts:24"
-cost_tokens = 48
-cum_tokens = 6014
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 24
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
+position = 91
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/key-by.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ql/src/key-by.ts"
 cost_tokens = 12
-cum_tokens = 6026
+cum_tokens = 5518
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3266,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 92
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/order-by.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ql/src/order-by.ts"
 cost_tokens = 12
-cum_tokens = 6038
+cum_tokens = 5530
 
 [batches.content]
 kind = "lines"
@@ -3598,11 +3292,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 93
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/electric/index.ts", start_line: 222, body_start_line: 234 })'
 descriptor = "export body at packages/d2ts/src/electric/index.ts:222 body 234"
 cost_tokens = 948
-cum_tokens = 6986
+cum_tokens = 6478
 
 [batches.content]
 kind = "lines"
@@ -3672,11 +3366,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 111
+position = 94
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/database.ts", start_line: 49 })'
 descriptor = "export at packages/d2ts/src/sqlite/database.ts:49"
 cost_tokens = 102
-cum_tokens = 7088
+cum_tokens = 6580
 
 [batches.content]
 kind = "lines"
@@ -3754,29 +3448,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 112
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 39 })'
-descriptor = "export at packages/d2ql/src/schema.ts:39"
-cost_tokens = 52
-cum_tokens = 7140
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 39
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
+position = 95
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/database.ts", start_line: 32 })'
 descriptor = "export doc at packages/d2ts/src/sqlite/database.ts:32"
 cost_tokens = 21
-cum_tokens = 7161
+cum_tokens = 6601
 
 [batches.content]
 kind = "lines"
@@ -3790,29 +3466,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 114
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 159 })'
-descriptor = "export at packages/d2ql/src/schema.ts:159"
-cost_tokens = 67
-cum_tokens = 7228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 159
-end = 165
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
+position = 96
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/examples/electric" })'
 descriptor = "listing of 'examples/electric'"
 cost_tokens = 24
-cum_tokens = 7252
+cum_tokens = 6625
 
 [batches.content]
 kind = "fs"
@@ -3822,11 +3480,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/examples/electric"
 entries = ["CHANGELOG.md", "README.md", "db", "docker-compose.yml", "package.json", "src"]
 
 [[batches]]
-position = 116
+position = 97
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/examples/electric/src" })'
 descriptor = "listing of 'examples/electric/src'"
 cost_tokens = 8
-cum_tokens = 7260
+cum_tokens = 6633
 
 [batches.content]
 kind = "fs"
@@ -3836,29 +3494,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/examples/electric/src"
 entries = ["index.ts", "types.ts"]
 
 [[batches]]
-position = 117
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts", start_line: 48 })'
-descriptor = "export at packages/d2ql/src/types.ts:48"
-cost_tokens = 55
-cum_tokens = 7315
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/types.ts"
-start = 48
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
+position = 98
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/index.ts" })'
 descriptor = "imports in packages/d2mini/src/operators/index.ts"
 cost_tokens = 218
-cum_tokens = 7533
+cum_tokens = 6851
 
 [batches.content]
 kind = "lines"
@@ -3872,11 +3512,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 119
+position = 99
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filterBy.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/filterBy.ts"
 cost_tokens = 11
-cum_tokens = 7544
+cum_tokens = 6862
 
 [batches.content]
 kind = "lines"
@@ -3898,11 +3538,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 100
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/topK.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/topK.ts"
 cost_tokens = 24
-cum_tokens = 7568
+cum_tokens = 6886
 
 [batches.content]
 kind = "lines"
@@ -3940,11 +3580,11 @@ end = 61
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 101
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/debug.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/debug.ts"
 cost_tokens = 29
-cum_tokens = 7597
+cum_tokens = 6915
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +3622,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 102
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/debug.ts", start_line: 42 })'
 descriptor = "export at packages/d2mini/src/operators/debug.ts:42"
 cost_tokens = 33
-cum_tokens = 7630
+cum_tokens = 6948
 
 [batches.content]
 kind = "lines"
@@ -4008,11 +3648,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 103
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/output.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/output.ts"
 cost_tokens = 29
-cum_tokens = 7659
+cum_tokens = 6977
 
 [batches.content]
 kind = "lines"
@@ -4050,11 +3690,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 104
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/output.ts", start_line: 38 })'
 descriptor = "export at packages/d2mini/src/operators/output.ts:38"
 cost_tokens = 30
-cum_tokens = 7689
+cum_tokens = 7007
 
 [batches.content]
 kind = "lines"
@@ -4076,11 +3716,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 105
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/count.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/count.ts"
 cost_tokens = 34
-cum_tokens = 7723
+cum_tokens = 7041
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +3758,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 106
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/count.ts", start_line: 9 })'
 descriptor = "export at packages/d2mini/src/operators/count.ts:9"
 cost_tokens = 56
-cum_tokens = 7779
+cum_tokens = 7097
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +3784,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 107
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/count.ts", start_line: 30 })'
 descriptor = "export at packages/d2mini/src/operators/count.ts:30"
 cost_tokens = 58
-cum_tokens = 7837
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -4170,11 +3810,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 108
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/concat.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/concat.ts"
 cost_tokens = 39
-cum_tokens = 7876
+cum_tokens = 7194
 
 [batches.content]
 kind = "lines"
@@ -4212,11 +3852,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 109
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/concat.ts", start_line: 9 })'
 descriptor = "export at packages/d2mini/src/operators/concat.ts:9"
 cost_tokens = 9
-cum_tokens = 7885
+cum_tokens = 7203
 
 [batches.content]
 kind = "lines"
@@ -4238,11 +3878,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 110
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/concat.ts", start_line: 25 })'
 descriptor = "export at packages/d2mini/src/operators/concat.ts:25"
 cost_tokens = 29
-cum_tokens = 7914
+cum_tokens = 7232
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +3904,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 111
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/consolidate.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/consolidate.ts"
 cost_tokens = 39
-cum_tokens = 7953
+cum_tokens = 7271
 
 [batches.content]
 kind = "lines"
@@ -4306,11 +3946,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 112
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/consolidate.ts", start_line: 35 })'
 descriptor = "export at packages/d2mini/src/operators/consolidate.ts:35"
 cost_tokens = 0
-cum_tokens = 7953
+cum_tokens = 7271
 
 [batches.content]
 kind = "lines"
@@ -4332,11 +3972,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 113
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/consolidate.ts", start_line: 9 })'
 descriptor = "export at packages/d2mini/src/operators/consolidate.ts:9"
 cost_tokens = 9
-cum_tokens = 7962
+cum_tokens = 7280
 
 [batches.content]
 kind = "lines"
@@ -4358,11 +3998,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 114
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/negate.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/negate.ts"
 cost_tokens = 42
-cum_tokens = 8004
+cum_tokens = 7322
 
 [batches.content]
 kind = "lines"
@@ -4400,11 +4040,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 115
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/negate.ts", start_line: 19 })'
 descriptor = "export at packages/d2mini/src/operators/negate.ts:19"
 cost_tokens = 0
-cum_tokens = 8004
+cum_tokens = 7322
 
 [batches.content]
 kind = "lines"
@@ -4426,11 +4066,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 116
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/negate.ts", start_line: 10 })'
 descriptor = "export at packages/d2mini/src/operators/negate.ts:10"
 cost_tokens = 17
-cum_tokens = 8021
+cum_tokens = 7339
 
 [batches.content]
 kind = "lines"
@@ -4452,11 +4092,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 137
+position = 117
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/negate.ts", start_line: 10, body_start_line: 12 })'
 descriptor = "export body at packages/d2mini/src/operators/negate.ts:10 body 12"
 cost_tokens = 8
-cum_tokens = 8029
+cum_tokens = 7347
 
 [batches.content]
 kind = "lines"
@@ -4470,11 +4110,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 138
+position = 118
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/reduce.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/reduce.ts"
 cost_tokens = 44
-cum_tokens = 8073
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -4512,11 +4152,11 @@ end = 107
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 119
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/output.ts", start_line: 13 })'
 descriptor = "export at packages/d2mini/src/operators/output.ts:13"
 cost_tokens = 94
-cum_tokens = 8167
+cum_tokens = 7485
 
 [batches.content]
 kind = "lines"
@@ -4562,11 +4202,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 120
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/distinct.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/distinct.ts"
 cost_tokens = 49
-cum_tokens = 8216
+cum_tokens = 7534
 
 [batches.content]
 kind = "lines"
@@ -4604,11 +4244,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 121
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/distinct.ts", start_line: 85 })'
 descriptor = "export at packages/d2mini/src/operators/distinct.ts:85"
 cost_tokens = 0
-cum_tokens = 8216
+cum_tokens = 7534
 
 [batches.content]
 kind = "lines"
@@ -4630,11 +4270,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 122
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filter.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/filter.ts"
 cost_tokens = 50
-cum_tokens = 8266
+cum_tokens = 7584
 
 [batches.content]
 kind = "lines"
@@ -4672,11 +4312,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 123
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filter.ts", start_line: 32 })'
 descriptor = "export at packages/d2mini/src/operators/filter.ts:32"
 cost_tokens = 0
-cum_tokens = 8266
+cum_tokens = 7584
 
 [batches.content]
 kind = "lines"
@@ -4698,11 +4338,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 124
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filter.ts", start_line: 10 })'
 descriptor = "export at packages/d2mini/src/operators/filter.ts:10"
 cost_tokens = 98
-cum_tokens = 8364
+cum_tokens = 7682
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +4388,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 125
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filter.ts", start_line: 10, body_start_line: 19 })'
 descriptor = "export body at packages/d2mini/src/operators/filter.ts:10 body 19"
 cost_tokens = 32
-cum_tokens = 8396
+cum_tokens = 7714
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4414,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 146
+position = 126
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/debug.ts", start_line: 12 })'
 descriptor = "export at packages/d2mini/src/operators/debug.ts:12"
 cost_tokens = 99
-cum_tokens = 8495
+cum_tokens = 7813
 
 [batches.content]
 kind = "lines"
@@ -4824,11 +4464,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 127
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/filterBy.ts", start_line: 14 })'
 descriptor = "export at packages/d2mini/src/operators/filterBy.ts:14"
 cost_tokens = 78
-cum_tokens = 8573
+cum_tokens = 7891
 
 [batches.content]
 kind = "lines"
@@ -4850,11 +4490,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 128
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/output.ts", start_line: 13, body_start_line: 22 })'
 descriptor = "export body at packages/d2mini/src/operators/output.ts:13 body 22"
 cost_tokens = 62
-cum_tokens = 8635
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -4876,11 +4516,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 149
+position = 129
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/concat.ts", start_line: 9, body_start_line: 11 })'
 descriptor = "export body at packages/d2mini/src/operators/concat.ts:9 body 11"
 cost_tokens = 64
-cum_tokens = 8699
+cum_tokens = 8017
 
 [batches.content]
 kind = "lines"
@@ -4902,11 +4542,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 150
+position = 130
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/map.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/operators/map.ts"
 cost_tokens = 54
-cum_tokens = 8753
+cum_tokens = 8071
 
 [batches.content]
 kind = "lines"
@@ -4944,11 +4584,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 131
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/map.ts", start_line: 32 })'
 descriptor = "export at packages/d2mini/src/operators/map.ts:32"
 cost_tokens = 0
-cum_tokens = 8753
+cum_tokens = 8071
 
 [batches.content]
 kind = "lines"
@@ -4970,11 +4610,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 132
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/map.ts", start_line: 10 })'
 descriptor = "export at packages/d2mini/src/operators/map.ts:10"
 cost_tokens = 98
-cum_tokens = 8851
+cum_tokens = 8169
 
 [batches.content]
 kind = "lines"
@@ -5020,11 +4660,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 133
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/map.ts", start_line: 10, body_start_line: 19 })'
 descriptor = "export body at packages/d2mini/src/operators/map.ts:10 body 19"
 cost_tokens = 32
-cum_tokens = 8883
+cum_tokens = 8201
 
 [batches.content]
 kind = "lines"
@@ -5046,11 +4686,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 154
+position = 134
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/reduce.ts", start_line: 106 })'
 descriptor = "export at packages/d2mini/src/operators/reduce.ts:106"
 cost_tokens = 85
-cum_tokens = 8968
+cum_tokens = 8286
 
 [batches.content]
 kind = "lines"
@@ -5072,11 +4712,11 @@ end = 112
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 135
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/multiset.ts" })'
 descriptor = "imports in packages/d2ts/src/multiset.ts"
 cost_tokens = 21
-cum_tokens = 8989
+cum_tokens = 8307
 
 [batches.content]
 kind = "lines"
@@ -5090,11 +4730,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 156
+position = 136
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/indexes.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2mini/src/indexes.ts"
 cost_tokens = 14
-cum_tokens = 9003
+cum_tokens = 8321
 
 [batches.content]
 kind = "lines"
@@ -5116,11 +4756,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 137
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 30
-cum_tokens = 9033
+cum_tokens = 8351
 
 [batches.content]
 kind = "lines"
@@ -5134,11 +4774,11 @@ end = 263
 kind = "full"
 
 [[batches]]
-position = 158
+position = 138
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/src/operators/consolidate.ts", start_line: 9 })'
 descriptor = "export doc at packages/d2mini/src/operators/consolidate.ts:9"
 cost_tokens = 21
-cum_tokens = 9054
+cum_tokens = 8372
 
 [batches.content]
 kind = "lines"
@@ -5152,11 +4792,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 159
+position = 139
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/order.ts", start_line: 10, body_start_line: 11 })'
 descriptor = "export body at packages/d2ts/src/order.ts:10 body 11"
 cost_tokens = 91
-cum_tokens = 9145
+cum_tokens = 8463
 
 [batches.content]
 kind = "lines"
@@ -5178,11 +4818,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 160
+position = 140
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 31
-cum_tokens = 9176
+cum_tokens = 8494
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +4836,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 161
+position = 141
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/examples/electric/src/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 1 })'
 descriptor = "export names surface in examples/electric/src/index.ts"
 cost_tokens = 11
-cum_tokens = 9187
+cum_tokens = 8505
 
 [batches.content]
 kind = "lines"
@@ -5222,11 +4862,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 162
+position = 142
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/README.md" })'
 descriptor = "headings outline in packages/d2ts/README.md"
 cost_tokens = 169
-cum_tokens = 9356
+cum_tokens = 8674
 
 [batches.content]
 kind = "lines"
@@ -5488,11 +5128,11 @@ end = 1077
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 143
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/README.md", section_index: 0 })'
 descriptor = "packages/d2ts/README.md section #0"
 cost_tokens = 164
-cum_tokens = 9520
+cum_tokens = 8838
 
 [batches.content]
 kind = "lines"
@@ -5522,11 +5162,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 164
+position = 144
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/electric/index.ts" })'
 descriptor = "imports in packages/d2ts/src/electric/index.ts"
 cost_tokens = 238
-cum_tokens = 9758
+cum_tokens = 9076
 
 [batches.content]
 kind = "lines"
@@ -5540,37 +5180,683 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 165
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 13 })'
-descriptor = "export at packages/d2ql/src/schema.ts:13"
-cost_tokens = 62
-cum_tokens = 9820
+position = 145
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/index.ts" })'
+descriptor = "imports in packages/d2ts/src/operators/index.ts"
+cost_tokens = 240
+cum_tokens = 9316
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 13
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/index.ts"
+start = 1
 end = 20
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 166
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts", start_line: 71 })'
-descriptor = "export at packages/d2ql/src/schema.ts:71"
-cost_tokens = 62
-cum_tokens = 9882
+position = 146
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/filterBy.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/filterBy.ts"
+cost_tokens = 11
+cum_tokens = 9327
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/src/schema.ts"
-start = 71
-end = 78
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/filterBy.ts"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/filterBy.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topK.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/topK.ts"
+cost_tokens = 24
+cum_tokens = 9351
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topK.ts"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topK.ts"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topK.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topK.ts"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 148
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/debug.ts"
+cost_tokens = 29
+cum_tokens = 9380
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts", start_line: 74 })'
+descriptor = "export at packages/d2ts/src/operators/debug.ts:74"
+cost_tokens = 33
+cum_tokens = 9413
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 74
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/debug.ts"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/count.ts"
+cost_tokens = 34
+cum_tokens = 9447
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 151
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/distinct.ts"
+cost_tokens = 35
+cum_tokens = 9482
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts", start_line: 10 })'
+descriptor = "export at packages/d2ts/src/operators/count.ts:10"
+cost_tokens = 69
+cum_tokens = 9551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 10
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts", start_line: 10 })'
+descriptor = "export at packages/d2ts/src/operators/distinct.ts:10"
+cost_tokens = 69
+cum_tokens = 9620
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 10
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/buffer.ts"
+cost_tokens = 38
+cum_tokens = 9658
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts", start_line: 62 })'
+descriptor = "export at packages/d2ts/src/operators/buffer.ts:62"
+cost_tokens = 0
+cum_tokens = 9658
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 156
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts", start_line: 17 })'
+descriptor = "export at packages/d2ts/src/operators/buffer.ts:17"
+cost_tokens = 34
+cum_tokens = 9692
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/buffer.ts"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts", start_line: 32 })'
+descriptor = "export at packages/d2ts/src/operators/count.ts:32"
+cost_tokens = 58
+cum_tokens = 9750
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 32
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/count.ts"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts", start_line: 37 })'
+descriptor = "export at packages/d2ts/src/operators/distinct.ts:37"
+cost_tokens = 58
+cum_tokens = 9808
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 37
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/distinct.ts"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 159
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/concat.ts"
+cost_tokens = 39
+cum_tokens = 9847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts", start_line: 11 })'
+descriptor = "export at packages/d2ts/src/operators/concat.ts:11"
+cost_tokens = 9
+cum_tokens = 9856
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts", start_line: 54 })'
+descriptor = "export at packages/d2ts/src/operators/concat.ts:54"
+cost_tokens = 29
+cum_tokens = 9885
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 54
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/concat.ts"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 162
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/consolidate.ts"
+cost_tokens = 39
+cum_tokens = 9924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts", start_line: 61 })'
+descriptor = "export at packages/d2ts/src/operators/consolidate.ts:61"
+cost_tokens = 0
+cum_tokens = 9924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts", start_line: 16 })'
+descriptor = "export at packages/d2ts/src/operators/consolidate.ts:16"
+cost_tokens = 34
+cum_tokens = 9958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/consolidate.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topKWithFractionalIndex.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+cost_tokens = 39
+cum_tokens = 9997
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 372
+end = 372
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators/topKWithFractionalIndex.ts"
+start = 373
+end = 373
+
+[batches.content.spans.render]
+kind = "ellipsis"

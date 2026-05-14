@@ -795,7 +795,7 @@ fn type_machinery_factor(file: &Path, exports: &[ExportInfo<'_>]) -> f64 {
     }
 }
 
-const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.7;
+const TYPE_MACHINERY_FILE_FACTOR: f64 = 0.35;
 
 /// Local identifier names that appear in any top-level **value**
 /// re-export clause (`export { X }`, `export { X as Y }`). Excludes
