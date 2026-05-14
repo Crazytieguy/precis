@@ -192,10 +192,24 @@ fn check_rendered(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
 
 // ---- comparison + regen ------------------------------------------------
 
+fn remove_sidecar(path: &Path) {
+    match fs::remove_file(path) {
+        Ok(()) => {}
+        Err(e) if e.kind() == std::io::ErrorKind::NotFound => {}
+        Err(e) => panic!("removing stale sidecar {}: {e}", path.display()),
+    }
+}
+
 fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
+    let new_path = path.with_extension(format!(
+        "{}.new",
+        path.extension().and_then(|s| s.to_str()).unwrap_or("")
+    ));
     let existing = fs::read(path).ok();
     let matches = existing.as_deref().map(|b| b == actual).unwrap_or(false);
     if matches {
+        // Drop any stale sidecar from a prior failing run.
+        remove_sidecar(&new_path);
         return;
     }
     if update_baselines() {
@@ -204,12 +218,9 @@ fn compare_or_update(kind: &str, path: &Path, actual: &[u8]) {
                 .unwrap_or_else(|e| panic!("mkdir {}: {e}", parent.display()));
         }
         fs::write(path, actual).unwrap_or_else(|e| panic!("write {}: {e}", path.display()));
+        remove_sidecar(&new_path);
         return;
     }
-    let new_path = path.with_extension(format!(
-        "{}.new",
-        path.extension().and_then(|s| s.to_str()).unwrap_or("")
-    ));
     if let Some(parent) = new_path.parent() {
         fs::create_dir_all(parent).unwrap_or_else(|e| panic!("mkdir {}: {e}", parent.display()));
     }
