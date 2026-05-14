@@ -81,6 +81,14 @@ crates/
                 html.rs
                 mod.rs
                     1→//! Various helpers and utilities.
+                    3→use anyhow::Error;
+                    4→use std::fmt::Write;
+                    5→use tracing::error;
+                    7→pub mod fs;
+                    8→mod html;
+                    9→mod toml_ext;
+                    11→pub(crate) use self::toml_ext::TomlExt;
+                    13→pub use self::html::{escape_html, escape_html_attribute};
                     17→macro_rules! static_regex {
                     …
                     28→/// Prints a "backtrace" of some `Error`.
@@ -221,14 +229,6 @@ guide/
             reading.md
         misc/
 package.json
-    2→  "dependencies": {
-    3→    "browser-ui-test": "0.23.3",
-    4→    "eslint": "^9.34.0"
-    5→  },
-    6→  "scripts": {
-    7→    "lint": "eslint --no-warn-ignored crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js crates/mdbook-html/front-end/**/*js.hbs",
-    8→    "lint-fix": "eslint --fix crates/mdbook-html/front-end/*js crates/mdbook-html/front-end/**/*js"
-    9→  }
 rustfmt.toml
 src/
     cmd/

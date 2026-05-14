@@ -294,13 +294,34 @@ fn is_dependencies_key(k: &str) -> bool {
 
 // --- value ---
 
+/// A `package.json` is secondary metadata when a Python project
+/// manifest (pyproject.toml) or a Rust manifest sits in the same dir.
+/// In those layouts the JS package is almost always a docs/tooling
+/// site (microbootstrap's `microbootstrap-docs` Vuepress shell, etc.)
+/// rather than the primary project surface, so each `package.json`
+/// batch should rank below the primary-language batches in the same
+/// repo.
+const SECONDARY_PACKAGE_JSON_FACTOR: f64 = 0.05;
+
+fn secondary_package_json_factor(file: &Path) -> f64 {
+    let Some(parent) = file.parent() else {
+        return 1.0;
+    };
+    if parent.join("pyproject.toml").is_file() || parent.join("Cargo.toml").is_file() {
+        SECONDARY_PACKAGE_JSON_FACTOR
+    } else {
+        1.0
+    }
+}
+
 fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let m = if ctx.is_js_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
-    mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx))
+    let s = secondary_package_json_factor(file);
+    mix_signals(m, 0.7 * m, 0.85 * m, path_depth_factor(file, ctx)) * s
 }
 
 fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -309,7 +330,8 @@ fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
     } else {
         1.0
     };
-    mix_signals(0.6 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx))
+    let s = secondary_package_json_factor(file);
+    mix_signals(0.6 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx)) * s
 }
 
 fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -321,10 +343,12 @@ fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // catastrophic-omission risk — `precis` users can re-read the
     // file at trivial cost.
     mix_signals(0.55, 0.55, 0.45, path_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn runtime_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.53, 0.55, 0.48, path_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
@@ -334,10 +358,12 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // (Root scripts) does pin Scripts as tier-1, so we don't drop the
     // weight as far as Entry.
     mix_signals(0.5, 0.6, 0.45, path_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx))
+        * secondary_package_json_factor(file)
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {

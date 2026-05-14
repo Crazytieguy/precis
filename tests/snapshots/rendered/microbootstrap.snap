@@ -80,8 +80,14 @@ microbootstrap/
         1→from microbootstrap.instruments.cors_instrument import CorsConfig
         2→from microbootstrap.instruments.health_checks_instrument import HealthChecksConfig
         3→from microbootstrap.instruments.logging_instrument import LoggingConfig
+        4→from microbootstrap.instruments.opentelemetry_instrument import (
+        5→    FastStreamOpentelemetryConfig,
+        6→    FastStreamTelemetryMiddlewareProtocol,
+        7→    OpentelemetryConfig,
+        8→)
         15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
         16→from microbootstrap.instruments.sentry_instrument import SentryConfig
+        17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
         26→__all__ = (
         27→    "CorsConfig",
         28→    "FastApiPrometheusConfig",
@@ -159,6 +165,15 @@ microbootstrap/
     instruments/
         __init__.py
         base.py
+            15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
+            16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+            19→class BaseInstrumentConfig(pydantic.BaseModel):
+            20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
+            23→@dataclasses.dataclass
+            24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
+            25→    instrument_config: InstrumentConfigT
+            26→    instrument_name: typing.ClassVar[str]
+            27→    ready_condition: typing.ClassVar[str]
         cors_instrument.py
             8→class CorsConfig(BaseInstrumentConfig):
             …
@@ -216,7 +231,7 @@ microbootstrap/
             28→    instrument_name = "Pyroscope"
             29→    ready_condition = "Provide pyroscope_endpoint"
             31→    def is_ready(self) -> bool:
-            …
+            32→        return all([self.instrument_config.pyroscope_endpoint, pyroscope])
             34→    def teardown(self) -> None:
             35→        pyroscope.shutdown()
             37→    def bootstrap(self) -> None:
@@ -243,13 +258,19 @@ microbootstrap/
         23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
         …
         28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-        …
+        29→        self.instrument_box.configure_instrument(instrument_config)
+        30→        return self
         32→    def configure_instruments(
         33→        self,
         34→        *instrument_configs: InstrumentConfigT,
         35→    ) -> typing_extensions.Self:
         40→    @classmethod
-        …
+        41→    def use_instrument(
+        42→        cls,
+        43→    ) -> typing.Callable[
+        44→        [type[Instrument[InstrumentConfigT]]],
+        45→        type[Instrument[InstrumentConfigT]],
+        46→    ]:
         51→    def setup(self) -> None:
         …
         57→    def teardown(self) -> None:
@@ -272,26 +293,6 @@ microbootstrap/
     settings.py
 package-lock.json
 package.json
-    2→  "name": "microbootstrap-docs",
-    3→  "version": "1.0.0",
-    4→  "description": "Vuepress documentation for microbootstrap package",
-    5→  "license": "MIT",
-    6→  "type": "module",
-    7→  "scripts": {
-    8→    "docs:build": "vuepress build docs",
-    9→    "docs:clean-dev": "vuepress dev docs --clean-cache",
-    10→    "docs:dev": "vuepress dev docs",
-    11→    "docs:update-package": "npx vp-update"
-    12→  },
-    13→  "devDependencies": {
-    14→    "@vuepress/bundler-vite": "^2.0.0-rc.7",
-    15→    "@vuepress/theme-default": "^2.0.0-rc.11",
-    16→    "vue": "^3.4.0",
-    17→    "vuepress": "^2.0.0-rc.7"
-    18→  },
-    19→  "dependencies": {
-    20→    "vuepress-theme-hope": "^2.0.0-rc.52"
-    21→  }
 pyproject.toml
     1→[project]
     2→name = "microbootstrap"
