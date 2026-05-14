@@ -64,8 +64,6 @@ contribute/
     boost.sh
     build.sh
     conf/
-        demo.json
-        demo.yml
     contribute.md
         1→# Contribute README
         2→Thanks for your contribution, you can follow these step to run this repo and debug it.
@@ -189,15 +187,11 @@ internal/
             62→type HookOutput struct {
             …
         testdata/
-            invalid-hooks.yml
-            valid-hooks.yml
         validator.go
         validator_test.go
     models/
         anthropic/
-            anthropic.go
         gemini/
-            gemini.go
         generate_models.go
             18→type ModelInfo struct {
             …
@@ -245,13 +239,10 @@ internal/
             41→func GetModelsData() map[string]ProviderInfo {
             …
         openai/
-            openai.go
         providers.go
         providers_test.go
         registry.go
     session/
-        manager.go
-        session.go
     tokens/
         anthropic.go
             16→package tokens

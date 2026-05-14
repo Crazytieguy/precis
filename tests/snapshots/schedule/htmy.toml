@@ -1953,24 +1953,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 67
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer" })'
-descriptor = "listing of 'docs/api/renderer'"
-cost_tokens = 12
-cum_tokens = 1516
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer"
-entries = ["baseline.md", "default.md", "typing.md"]
-
-[[batches]]
-position = 68
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 84 })'
 descriptor = "python decl at htmy/tag.py:84"
 cost_tokens = 55
-cum_tokens = 1571
+cum_tokens = 1559
 
 [batches.content]
 kind = "lines"
@@ -1984,11 +1970,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 69
+position = 68
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 84, body_start_line: 100 })'
 descriptor = "python decl body at htmy/tag.py:84 body 100"
 cost_tokens = 22
-cum_tokens = 1593
+cum_tokens = 1581
 
 [batches.content]
 kind = "lines"
@@ -2002,11 +1988,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 5 })'
 descriptor = "python imports #5 in htmy/__init__.py"
 cost_tokens = 16
-cum_tokens = 1609
+cum_tokens = 1597
 
 [batches.content]
 kind = "lines"
@@ -2020,11 +2006,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 11 })'
 descriptor = "README.md section #11"
 cost_tokens = 24
-cum_tokens = 1633
+cum_tokens = 1621
 
 [batches.content]
 kind = "lines"
@@ -2038,11 +2024,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 22
-cum_tokens = 1655
+cum_tokens = 1643
 
 [batches.content]
 kind = "fs"
@@ -2052,11 +2038,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples"
 entries = ["internationalization", "markdown_customization", "markdown_essentials", "snippet-slots-fastapi"]
 
 [[batches]]
-position = 73
+position = 72
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 1 })'
 descriptor = "python imports #1 in htmy/__init__.py"
 cost_tokens = 122
-cum_tokens = 1777
+cum_tokens = 1765
 
 [batches.content]
 kind = "lines"
@@ -2070,11 +2056,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/__init__.py", chunk_index: 4 })'
 descriptor = "python imports #4 in htmy/__init__.py"
 cost_tokens = 26
-cum_tokens = 1803
+cum_tokens = 1791
 
 [batches.content]
 kind = "lines"
@@ -2088,11 +2074,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/md.md", section_index: 0 })'
 descriptor = "docs/api/md.md section #0"
 cost_tokens = 18
-cum_tokens = 1821
+cum_tokens = 1809
 
 [batches.content]
 kind = "lines"
@@ -2114,11 +2100,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 76
+position = 75
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/md/core.py", start_line: 81 })'
 descriptor = "python class body at htmy/md/core.py:81"
 cost_tokens = 32
-cum_tokens = 1853
+cum_tokens = 1841
 
 [batches.content]
 kind = "lines"
@@ -2132,11 +2118,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 27
-cum_tokens = 1880
+cum_tokens = 1868
 
 [batches.content]
 kind = "lines"
@@ -2150,11 +2136,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 24 })'
 descriptor = "python class body at htmy/tag.py:24"
 cost_tokens = 20
-cum_tokens = 1900
+cum_tokens = 1888
 
 [batches.content]
 kind = "lines"
@@ -2168,11 +2154,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/typing.py" })'
 descriptor = "python imports in htmy/typing.py"
 cost_tokens = 35
-cum_tokens = 1935
+cum_tokens = 1923
 
 [batches.content]
 kind = "lines"
@@ -2186,11 +2172,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 41 })'
 descriptor = "README.md section #41"
 cost_tokens = 16
-cum_tokens = 1951
+cum_tokens = 1939
 
 [batches.content]
 kind = "lines"
@@ -2204,11 +2190,11 @@ end = 305
 kind = "full"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/tag.py", start_line: 56 })'
 descriptor = "python decl doc at htmy/tag.py:56"
 cost_tokens = 46
-cum_tokens = 1997
+cum_tokens = 1985
 
 [batches.content]
 kind = "lines"
@@ -2230,11 +2216,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/htmy/io.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at htmy/io.py:11 body 13"
 cost_tokens = 28
-cum_tokens = 2025
+cum_tokens = 2013
 
 [batches.content]
 kind = "lines"
@@ -2248,11 +2234,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/htmy/README.md", section_index: 46 })'
 descriptor = "README.md section #46"
 cost_tokens = 43
-cum_tokens = 2068
+cum_tokens = 2056
 
 [batches.content]
 kind = "lines"
@@ -2274,11 +2260,11 @@ end = 339
 kind = "full"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization" })'
 descriptor = "listing of 'examples/internationalization'"
 cost_tokens = 13
-cum_tokens = 2081
+cum_tokens = 2069
 
 [batches.content]
 kind = "fs"
@@ -2286,6 +2272,20 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/examples/internationalization"
 entries = ["__init__.py", "app.py", "locale"]
+
+[[batches]]
+position = 84
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer" })'
+descriptor = "listing of 'docs/api/renderer'"
+cost_tokens = 12
+cum_tokens = 2081
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/htmy/docs/api/renderer"
+entries = ["baseline.md", "default.md", "typing.md"]
 
 [[batches]]
 position = 85

@@ -16,39 +16,39 @@ Score(3000)=0.366 I=0.443 C=0.302 ns_rows≤3K=19/45 (reached=5 partial=3 missin
 | walker |  | 285 | 18 | export names surface in src/match.ts |  |  | 0.434 |
 | walker |  | 305 | 20 | export at src/match.ts:32 |  |  | 0.438 |
 | walker |  | 319 | 14 | export body at src/match.ts:32 body 35 |  |  | 0.443 |
-| walker |  | 327 | 8 | listing of 'src/internals' |  |  | 0.449 |
-| walker |  | 353 | 26 | listing of 'docs' |  |  | 0.449 |
-| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.369 |
-| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.357 |
-| walker |  | 457 | 104 | README.md section #0 |  |  | 0.357 |
-| walker |  | 496 | 39 | imports in src/index.ts |  |  | 0.405 |
-| walker |  | 506 | 10 | listing of 'examples' |  |  | 0.405 |
-| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.385 |
-| walker |  | 562 | 56 | export names surface in src/is-matching.ts |  |  | 0.387 |
-| walker |  | 587 | 25 | export at src/is-matching.ts:32 |  |  | 0.390 |
-| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.399 |
-| walker |  | 620 | 33 | export at src/is-matching.ts:53 |  |  | 0.399 |
-| walker |  | 659 | 39 | export at src/is-matching.ts:48 |  |  | 0.406 |
-| ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.424 |
-| walker |  | 732 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.427 |
-| walker |  | 753 | 21 | plaintext config .prettierrc |  |  | 0.427 |
-| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.401 |
-| walker |  | 773 | 20 | README.md section #2 |  |  | 0.403 |
-| walker |  | 979 | 206 | package identity metadata in package.json |  |  | 0.403 |
-| ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.362 |
-| walker |  | 1021 | 42 | export doc at src/errors.ts:5 |  |  | 0.364 |
-| ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.341 |
-| walker |  | 1200 | 179 | module item at src/match.ts:47 |  |  | 0.391 |
-| walker |  | 1226 | 26 | listing of 'benchmarks' |  |  | 0.391 |
-| ns | 1278 |  | 163 | match.ts imports + MatchState/unmatched | 2.6 |  | 0.364 |
-| walker |  | 1282 | 56 | listing of 'src/types' |  |  | 0.462 |
-| walker |  | 1292 | 10 | imports in src/types/index.ts |  |  | 0.462 |
-| walker |  | 1317 | 25 | README.md section #7 |  |  | 0.463 |
-| walker |  | 1332 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.463 |
-| ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.431 |
-| walker |  | 1493 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.434 |
-| walker |  | 1521 | 28 | README.md section #8 |  |  | 0.438 |
-| walker |  | 1551 | 30 | README.md section #4 |  |  | 0.444 |
+| walker |  | 345 | 26 | listing of 'docs' |  |  | 0.443 |
+| ns | 364 |  | 93 | src/ + src/types/ + src/internals/ listings | 1.5 |  | 0.352 |
+| ns | 434 |  | 70 | README features — data structures + typesafety | 1.6 |  | 0.340 |
+| walker |  | 449 | 104 | README.md section #0 |  |  | 0.340 |
+| walker |  | 488 | 39 | imports in src/index.ts |  |  | 0.388 |
+| walker |  | 498 | 10 | listing of 'examples' |  |  | 0.388 |
+| ns | 546 |  | 112 | README features — patterns, wildcards, predicates, bundle | 1.7 |  | 0.369 |
+| walker |  | 554 | 56 | export names surface in src/is-matching.ts |  |  | 0.371 |
+| walker |  | 579 | 25 | export at src/is-matching.ts:32 |  |  | 0.374 |
+| ns | 603 |  | 57 | match() exported signature | 2.1 |  | 0.384 |
+| walker |  | 612 | 33 | export at src/is-matching.ts:53 |  |  | 0.384 |
+| walker |  | 651 | 39 | export at src/is-matching.ts:48 |  |  | 0.391 |
+| ns | 706 |  | 103 | isMatching() — both overload signatures | 2.2 |  | 0.410 |
+| walker |  | 724 | 73 | export body at src/errors.ts:5 body 7 |  |  | 0.413 |
+| walker |  | 745 | 21 | plaintext config .prettierrc |  |  | 0.413 |
+| walker |  | 765 | 20 | README.md section #2 |  |  | 0.415 |
+| ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.390 |
+| walker |  | 971 | 206 | package identity metadata in package.json |  |  | 0.390 |
+| ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.350 |
+| walker |  | 1013 | 42 | export doc at src/errors.ts:5 |  |  | 0.353 |
+| ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.331 |
+| walker |  | 1192 | 179 | module item at src/match.ts:47 |  |  | 0.381 |
+| walker |  | 1218 | 26 | listing of 'benchmarks' |  |  | 0.381 |
+| walker |  | 1274 | 56 | listing of 'src/types' |  |  | 0.472 |
+| ns | 1278 |  | 163 | match.ts imports + MatchState/unmatched | 2.6 |  | 0.439 |
+| walker |  | 1284 | 10 | imports in src/types/index.ts |  |  | 0.439 |
+| walker |  | 1309 | 25 | README.md section #7 |  |  | 0.440 |
+| walker |  | 1324 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.440 |
+| walker |  | 1485 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.444 |
+| ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.413 |
+| walker |  | 1513 | 28 | README.md section #8 |  |  | 0.417 |
+| walker |  | 1543 | 30 | README.md section #4 |  |  | 0.423 |
+| walker |  | 1551 | 8 | listing of 'src/internals' |  |  | 0.444 |
 | walker |  | 1585 | 34 | README.md section #3 |  |  | 0.451 |
 | ns | 1764 |  | 275 | MatchExpression.with — selection + dispatch half | 2.8 | 2.7 | 0.406 |
 | walker |  | 1945 | 360 | package entrypoints in package.json |  |  | 0.444 |

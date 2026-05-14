@@ -11,32 +11,32 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | ns | 146 |  | 67 | README — project priorities | 1.4 |  | 0.854 |
 | walker |  | 152 | 48 | listing of 'src' |  |  | 0.886 |
 | walker |  | 159 | 7 | listing of '.github' |  |  | 0.886 |
-| walker |  | 163 | 4 | listing of '.github/workflows' |  |  | 0.886 |
 | ns | 194 |  | 48 | src/ listing | 2.1 |  | 0.909 |
-| walker |  | 201 | 38 | listing of 'include' |  |  | 0.938 |
-| walker |  | 223 | 22 | c decl names surface in include/structures.h |  |  | 0.938 |
+| walker |  | 197 | 38 | listing of 'include' |  |  | 0.938 |
+| walker |  | 219 | 22 | c decl names surface in include/structures.h |  |  | 0.938 |
 | ns | 232 |  | 38 | include/ listing | 2.2 |  | 0.928 |
-| walker |  | 267 | 44 | c decl names surface in include/crafting.h |  |  | 0.933 |
-| walker |  | 277 | 10 | c includes in include/crafting.h |  |  | 0.935 |
-| walker |  | 287 | 10 | c includes in include/serialize.h |  |  | 0.935 |
-| walker |  | 297 | 10 | c includes in include/varnum.h |  |  | 0.936 |
+| walker |  | 263 | 44 | c decl names surface in include/crafting.h |  |  | 0.933 |
+| walker |  | 273 | 10 | c includes in include/crafting.h |  |  | 0.935 |
+| walker |  | 283 | 10 | c includes in include/serialize.h |  |  | 0.935 |
+| walker |  | 293 | 10 | c includes in include/varnum.h |  |  | 0.936 |
 | ns | 298 |  | 66 | Connection state-machine constants (STATE_*) | 3.1 |  | 0.846 |
-| walker |  | 307 | 10 | c includes in include/worldgen.h |  |  | 0.846 |
+| walker |  | 303 | 10 | c includes in include/worldgen.h |  |  | 0.846 |
 | ns | 384 |  | 86 | Tools — mod_abs / div_floor inline helpers | 3.2 |  | 0.777 |
-| walker |  | 402 | 95 | c decl names surface in include/varnum.h |  |  | 0.786 |
-| walker |  | 422 | 20 | c includes in include/globals.h |  |  | 0.786 |
-| walker |  | 442 | 20 | c includes in include/procedures.h |  |  | 0.786 |
-| walker |  | 462 | 20 | c includes in include/tools.h |  |  | 0.786 |
+| walker |  | 398 | 95 | c decl names surface in include/varnum.h |  |  | 0.786 |
+| walker |  | 418 | 20 | c includes in include/globals.h |  |  | 0.786 |
+| walker |  | 438 | 20 | c includes in include/procedures.h |  |  | 0.786 |
+| walker |  | 458 | 20 | c includes in include/tools.h |  |  | 0.786 |
 | ns | 500 |  | 116 | Core runtime config: PORT / MAX_PLAYERS / MAX_MOBS | 3.3 |  | 0.705 |
-| walker |  | 651 | 189 | c decl names surface in include/worldgen.h |  |  | 0.709 |
+| walker |  | 647 | 189 | c decl names surface in include/worldgen.h |  |  | 0.709 |
 | ns | 653 |  | 153 | structures.h + crafting.h — full (tiny) | 3.4 |  | 0.651 |
-| walker |  | 693 | 42 | c decl at include/worldgen.h:6 |  |  | 0.653 |
-| walker |  | 735 | 42 | c decl at include/worldgen.h:13 |  |  | 0.656 |
+| walker |  | 689 | 42 | c decl at include/worldgen.h:6 |  |  | 0.653 |
+| walker |  | 731 | 42 | c decl at include/worldgen.h:13 |  |  | 0.656 |
 | ns | 803 |  | 150 | varnum.h — full | 3.5 |  | 0.648 |
-| walker |  | 862 | 127 | README.md section #0 |  |  | 0.689 |
-| walker |  | 887 | 25 | c decl names surface in src/main.c |  |  | 0.689 |
-| walker |  | 887 | 0 | c decl at src/main.c:68 |  |  | 0.689 |
-| walker |  | 897 | 10 | c includes in src/serialize.c |  |  | 0.689 |
+| walker |  | 858 | 127 | README.md section #0 |  |  | 0.689 |
+| walker |  | 883 | 25 | c decl names surface in src/main.c |  |  | 0.689 |
+| walker |  | 883 | 0 | c decl at src/main.c:68 |  |  | 0.689 |
+| walker |  | 893 | 10 | c includes in src/serialize.c |  |  | 0.689 |
+| walker |  | 897 | 4 | listing of '.github/workflows' |  |  | 0.689 |
 | ns | 899 |  | 96 | README — Configuration intro paragraph | 3.6 |  | 0.671 |
 | walker |  | 944 | 47 | c decl names surface in src/tools.c |  |  | 0.671 |
 | walker |  | 944 | 0 | c decl at src/tools.c:42 |  |  | 0.671 |
@@ -111,31 +111,31 @@ Score(3000)=0.588 I=0.819 C=0.422 ns_rows≤3K=21/42 (reached=9 partial=4 missin
 | walker |  | 2865 | 56 | c decl doc at include/globals.h:71 |  |  | 0.588 |
 | walker |  | 3004 | 139 | c decl at include/globals.h:240 |  |  | 0.590 |
 | walker |  | 3109 | 105 | c decl doc at include/globals.h:93 |  |  | 0.590 |
-| walker |  | 3125 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.590 |
-| walker |  | 3239 | 114 | README.md section #1 |  |  | 0.590 |
-| walker |  | 3267 | 28 | c decl at src/crafting.c:349 |  |  | 0.590 |
-| walker |  | 3290 | 23 | README.md section #5 |  |  | 0.590 |
+| walker |  | 3223 | 114 | README.md section #1 |  |  | 0.590 |
+| walker |  | 3251 | 28 | c decl at src/crafting.c:349 |  |  | 0.590 |
+| walker |  | 3274 | 23 | README.md section #5 |  |  | 0.590 |
 | ns | 3378 |  | 524 | PlayerData struct — full | 4.2 |  | 0.545 |
 | ns | 3526 |  | 148 | MobData struct — full (data-byte bitfield comment) | 4.3 |  | 0.560 |
 | ns | 3629 |  | 103 | EntityData / EntityDataValue (entity metadata serialization) | 4.4 |  | 0.571 |
 | ns | 3794 |  | 165 | globals.h — runtime extern declarations | 4.5 |  | 0.574 |
-| walker |  | 4078 | 788 | c decl names surface in include/procedures.h |  |  | 0.658 |
+| walker |  | 4062 | 788 | c decl names surface in include/procedures.h |  |  | 0.658 |
 | ns | 4079 |  | 285 | src/globals.c — runtime defaults + literal MOTD/brand | 4.6 |  | 0.632 |
 | ns | 4813 |  | 734 | globals.h — feature toggle #defines + their comments | 4.7 |  | 0.588 |
-| walker |  | 5244 | 1166 | c decl names surface in include/packets.h |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:5 |  |  | 0.693 |
-| walker |  | 5244 | 0 | c decl at include/packets.h:28 |  |  | 0.693 |
-| walker |  | 5253 | 9 | c decl doc at include/packets.h:5 |  |  | 0.697 |
-| walker |  | 5262 | 9 | c decl doc at include/packets.h:28 |  |  | 0.700 |
-| walker |  | 5302 | 40 | c includes in src/globals.c |  |  | 0.700 |
-| walker |  | 5336 | 34 | c decl doc at src/tools.c:42 |  |  | 0.700 |
+| walker |  | 5228 | 1166 | c decl names surface in include/packets.h |  |  | 0.693 |
+| walker |  | 5228 | 0 | c decl at include/packets.h:5 |  |  | 0.693 |
+| walker |  | 5228 | 0 | c decl at include/packets.h:28 |  |  | 0.693 |
+| walker |  | 5237 | 9 | c decl doc at include/packets.h:5 |  |  | 0.697 |
+| walker |  | 5246 | 9 | c decl doc at include/packets.h:28 |  |  | 0.700 |
+| walker |  | 5286 | 40 | c includes in src/globals.c |  |  | 0.700 |
+| walker |  | 5320 | 34 | c decl doc at src/tools.c:42 |  |  | 0.700 |
 | ns | 5344 |  | 531 | globals.h — tickrate / RNG seeds / world-gen knobs | 4.8 |  | 0.718 |
-| walker |  | 5376 | 40 | README.md section #6 |  |  | 0.718 |
-| walker |  | 5417 | 41 | README.md section #7 |  |  | 0.718 |
-| walker |  | 5475 | 58 | plaintext config .gitignore |  |  | 0.718 |
-| walker |  | 5683 | 208 | c decl names surface in src/globals.c |  |  | 0.742 |
-| walker |  | 5734 | 51 | c includes in src/varnum.c |  |  | 0.742 |
-| walker |  | 5779 | 45 | README.md section #8 |  |  | 0.742 |
+| walker |  | 5360 | 40 | README.md section #6 |  |  | 0.718 |
+| walker |  | 5401 | 41 | README.md section #7 |  |  | 0.718 |
+| walker |  | 5459 | 58 | plaintext config .gitignore |  |  | 0.718 |
+| walker |  | 5667 | 208 | c decl names surface in src/globals.c |  |  | 0.742 |
+| walker |  | 5718 | 51 | c includes in src/varnum.c |  |  | 0.742 |
+| walker |  | 5763 | 45 | README.md section #8 |  |  | 0.742 |
+| walker |  | 5779 | 16 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.742 |
 | ns | 5889 |  | 545 | globals.h — disk-sync + network buffer knobs (with SYNC_WORLD_TO_DISK gate) | 4.9 |  | 0.720 |
 | ns | 6036 |  | 147 | globals.h — preamble + ESP_PLATFORM gating | 4.10 |  | 0.708 |
 | ns | 6273 |  | 237 | README — Configuration 'important options' bullets | 4.11 |  | 0.705 |

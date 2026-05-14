@@ -27,6 +27,7 @@ README.md
     …
     39→- **File Attachments**: Share files securely with your notes.
     40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
+    41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
     42→- **Minimalistic UI**: Simple and intuitive user interface for quick note sharing.
     43→- **i18n Support**: Available in multiple languages.
     44→- **Authentication**: Optional email/password authentication to create notes.
@@ -128,10 +129,10 @@ packages/
             …
             32→## Deployment
             …
+            34→You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
             36→## This project was created with the [Solid CLI](https://solid-cli.netlify.app)
         components.json
         e2e-tests/
-            create-and-view-note.e2e.test.ts
         eslint.config.js
         index.html
         package.json
@@ -142,10 +143,27 @@ packages/
         src/
             app.css
             assets/
-                favicon.ico
             index.tsx
             locales/
             modules/
+                auth/
+                    auth.models.ts
+                    auth.services.ts
+                    auth.store.ts
+                    pages/
+                config/
+                docs/
+                files/
+                i18n/
+                notes/
+                shared/
+                    files/
+                    hooks/
+                    http/
+                    style/
+                    utils/
+                theme/
+                ui/
             routes.tsx
             scripts/
         tsconfig.json
@@ -167,18 +185,10 @@ packages/
                 notes/
                 shared/
                     errors/
-                        errors.test.ts
-                        errors.ts
                     logger/
                     utils/
-                        random.ts
                     validation/
-                        validation.test.ts
-                        validation.ts
                 storage/
-                    factories/
-                    storage.models.ts
-                    storage.types.ts
                 tasks/
             reset.d.ts
             scripts/
@@ -207,11 +217,11 @@ packages/
             …
             75→## License
             …
+            77→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             79→## Credits and Acknowledgements
             …
             81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
-            enclosed.mjs
         build.config.ts
             3→export default defineBuildConfig({
             …
@@ -225,18 +235,9 @@ packages/
                 config.models.ts
                 config.usecases.ts
             create-note/
-                create-note.command.ts
-                create-note.usecases.test.ts
-                create-note.usecases.ts
             files/
-                files.services.test.ts
-                files.services.ts
             shared/
-                cli.models.ts
-                http.models.ts
             view-note/
-                view-note.command.ts
-                view-note.models.ts
         tsconfig.json
     crypto/
         README.md
@@ -266,13 +267,7 @@ packages/
                 8→export const {
                 …
             node/
-                crypto.node.usecases.test.ts
-                crypto.node.usecases.ts
-                encryption-algorithms/
             web/
-                crypto.web.usecases.test.ts
-                crypto.web.usecases.ts
-                encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
         .nvmrc
@@ -285,18 +280,11 @@ packages/
             config.ts
             plausible.ts
             theme/
-                custom.css
-                icons.ts
-                index.js
         eslint.config.js
         package.json
         src/
             components/
-                credential-inputs.vue
-                toggle.vue
             data/
-                configuration.data.ts
-                i18n.data.ts
             how-it-works.md
             index.md
                 5→# Enclosed
@@ -308,19 +296,8 @@ packages/
                 33→## Get Started
                 …
             integrations/
-                cli.md
-                npm-package.md
-                versioning.md
             public/
             resources/
-                brand-kit.md
-                i18n.md
-                    5→# Language and i18n
-                    …
-                    9→## Supported languages
-                    …
-                    15→## Contributing to translations
-                    …
             self-hosting/
     lib/
         README.md
@@ -357,9 +334,6 @@ packages/
                 encryption-algorithms/
                 serialization/
             files/
-                files.models.ts
-                    4→export { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile };
-                    …
             index.ts
                 10→export {
                 11→  createNote,

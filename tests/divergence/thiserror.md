@@ -102,82 +102,81 @@ Score(3000)=0.684 I=0.860 C=0.545 ns_rows≤3K=12/27 (reached=6 partial=3 missin
 | walker |  | 6878 | 24 | pub item at tests/test_path.rs:29 |  |  | 0.590 |
 | walker |  | 6901 | 23 | pub item at src/aserror.rs:5 |  |  | 0.590 |
 | walker |  | 7095 | 194 | mod/use plumbing in impl/src/fmt.rs |  |  | 0.590 |
-| walker |  | 7104 | 9 | listing of 'tests/no-std' |  |  | 0.590 |
-| walker |  | 7132 | 28 | pub item at src/provide.rs:4 |  |  | 0.590 |
-| walker |  | 7197 | 65 | impl method sigs in impl/src/attr.rs |  |  | 0.590 |
-| walker |  | 7232 | 35 | pub-item names surface in tests/test_source.rs |  |  | 0.590 |
-| walker |  | 7246 | 14 | pub item at tests/test_source.rs:7 |  |  | 0.590 |
-| walker |  | 7275 | 29 | pub item at tests/test_source.rs:21 |  |  | 0.590 |
-| walker |  | 7306 | 31 | pub item at tests/test_source.rs:13 |  |  | 0.590 |
+| walker |  | 7123 | 28 | pub item at src/provide.rs:4 |  |  | 0.590 |
+| walker |  | 7188 | 65 | impl method sigs in impl/src/attr.rs |  |  | 0.590 |
+| walker |  | 7223 | 35 | pub-item names surface in tests/test_source.rs |  |  | 0.590 |
+| walker |  | 7237 | 14 | pub item at tests/test_source.rs:7 |  |  | 0.590 |
+| walker |  | 7266 | 29 | pub item at tests/test_source.rs:21 |  |  | 0.590 |
+| walker |  | 7297 | 31 | pub item at tests/test_source.rs:13 |  |  | 0.590 |
+| walker |  | 7354 | 57 | pub item at tests/test_path.rs:35 |  |  | 0.590 |
 | ns | 7356 |  | 528 | tests/ui/ — trybuild compile-fail test listing | 5.3 |  | 0.553 |
-| walker |  | 7363 | 57 | pub item at tests/test_path.rs:35 |  |  | 0.553 |
-| walker |  | 7490 | 127 | README.md section #9 |  |  | 0.553 |
-| walker |  | 7527 | 37 | pub item body at impl/src/expand.rs:505 body 506 |  |  | 0.553 |
-| walker |  | 7687 | 160 | README.md section #7 |  |  | 0.553 |
+| walker |  | 7481 | 127 | README.md section #9 |  |  | 0.553 |
+| walker |  | 7518 | 37 | pub item body at impl/src/expand.rs:505 body 506 |  |  | 0.553 |
+| walker |  | 7678 | 160 | README.md section #7 |  |  | 0.553 |
 | ns | 7693 |  | 337 | fmt.rs — expand_shorthand entry + state setup | 6.1 | 4.2 | 0.541 |
-| walker |  | 7857 | 170 | README.md section #5 |  |  | 0.541 |
-| walker |  | 7990 | 133 | impl method sigs in impl/src/valid.rs |  |  | 0.542 |
-| walker |  | 8124 | 134 | impl method sigs in impl/src/generics.rs |  |  | 0.544 |
-| walker |  | 8190 | 66 | pub item at src/display.rs:6 |  |  | 0.544 |
-| walker |  | 8383 | 193 | README.md section #8 |  |  | 0.544 |
-| walker |  | 8911 | 528 | listing of 'tests/ui' |  |  | 0.623 |
-| walker |  | 8921 | 10 | pub-item names surface in tests/ui/display-underscore.rs |  |  | 0.623 |
-| walker |  | 8931 | 10 | pub-item names surface in tests/ui/from-backtrace-backtrace.rs |  |  | 0.623 |
-| walker |  | 8941 | 10 | pub-item names surface in tests/ui/from-not-source.rs |  |  | 0.623 |
-| walker |  | 8951 | 10 | pub-item names surface in tests/ui/missing-fmt.rs |  |  | 0.623 |
-| walker |  | 8961 | 10 | pub-item names surface in tests/ui/raw-identifier.rs |  |  | 0.623 |
-| walker |  | 8971 | 10 | pub-item names surface in tests/ui/same-from-type.rs |  |  | 0.623 |
-| walker |  | 8981 | 10 | pub-item names surface in tests/ui/transparent-enum-many.rs |  |  | 0.623 |
-| walker |  | 8991 | 10 | pub-item names surface in tests/ui/transparent-enum-not-error.rs |  |  | 0.623 |
-| walker |  | 9001 | 10 | pub-item names surface in tests/ui/transparent-enum-source.rs |  |  | 0.623 |
-| walker |  | 9011 | 10 | pub-item names surface in tests/ui/transparent-enum-unnamed-field-not-error.rs |  |  | 0.623 |
-| walker |  | 9021 | 10 | pub-item names surface in tests/ui/transparent-struct-many.rs |  |  | 0.623 |
-| walker |  | 9031 | 10 | pub-item names surface in tests/ui/transparent-struct-not-error.rs |  |  | 0.623 |
-| walker |  | 9043 | 12 | pub item at tests/ui/transparent-struct-not-error.rs:5 |  |  | 0.623 |
-| walker |  | 9053 | 10 | pub-item names surface in tests/ui/unconditional-recursion.rs |  |  | 0.623 |
-| walker |  | 9063 | 10 | pub-item names surface in tests/ui/unexpected-field-fmt.rs |  |  | 0.623 |
-| ns | 9072 |  | 1379 | fmt.rs — placeholder loop ({var}/{0}/{:?} mechanic) | 6.2 | 6.1 | 0.573 |
-| walker |  | 9073 | 10 | pub-item names surface in tests/ui/unexpected-struct-source.rs |  |  | 0.573 |
-| walker |  | 9083 | 10 | pub-item names surface in tests/ui/union.rs |  |  | 0.573 |
-| walker |  | 9094 | 11 | pub-item names surface in tests/ui/duplicate-enum-source.rs |  |  | 0.573 |
-| walker |  | 9105 | 11 | pub-item names surface in tests/ui/duplicate-struct-source.rs |  |  | 0.573 |
-| walker |  | 9116 | 11 | pub-item names surface in tests/ui/expression-fallback.rs |  |  | 0.573 |
-| walker |  | 9127 | 11 | pub-item names surface in tests/ui/fallback-impl-with-display.rs |  |  | 0.573 |
-| walker |  | 9138 | 11 | pub-item names surface in tests/ui/invalid-input-impl-anyway.rs |  |  | 0.573 |
-| walker |  | 9149 | 11 | pub-item names surface in tests/ui/missing-display.rs |  |  | 0.573 |
-| walker |  | 9166 | 17 | pub item at tests/ui/missing-display.rs:4 |  |  | 0.573 |
-| walker |  | 9177 | 11 | pub-item names surface in tests/ui/source-struct-not-error.rs |  |  | 0.573 |
-| walker |  | 9190 | 13 | pub item at tests/ui/source-struct-not-error.rs:8 |  |  | 0.573 |
-| walker |  | 9201 | 11 | pub-item names surface in tests/ui/transparent-struct-unnamed-field-not-error.rs |  |  | 0.573 |
-| walker |  | 9213 | 12 | pub-item names surface in tests/ui/numbered-positional-tuple.rs |  |  | 0.573 |
-| walker |  | 9225 | 12 | pub-item names surface in tests/ui/struct-with-fmt.rs |  |  | 0.573 |
-| walker |  | 9241 | 16 | pub item at tests/ui/raw-identifier.rs:5 |  |  | 0.573 |
-| walker |  | 9262 | 21 | pub item at tests/ui/transparent-enum-unnamed-field-not-error.rs:4 |  |  | 0.573 |
-| walker |  | 9276 | 14 | pub-item names surface in tests/ui/duplicate-transparent.rs |  |  | 0.573 |
-| walker |  | 9290 | 14 | pub-item names surface in tests/ui/transparent-display.rs |  |  | 0.573 |
-| walker |  | 9314 | 24 | pub item at tests/ui/transparent-enum-not-error.rs:4 |  |  | 0.573 |
-| walker |  | 9340 | 26 | pub item at tests/ui/transparent-enum-many.rs:4 |  |  | 0.573 |
-| walker |  | 9357 | 17 | pub-item names surface in tests/ui/source-struct-unnamed-field-not-error.rs |  |  | 0.573 |
-| walker |  | 9374 | 17 | pub-item names surface in tests/ui/transparent-struct-source.rs |  |  | 0.573 |
+| walker |  | 7848 | 170 | README.md section #5 |  |  | 0.541 |
+| walker |  | 7981 | 133 | impl method sigs in impl/src/valid.rs |  |  | 0.542 |
+| walker |  | 8115 | 134 | impl method sigs in impl/src/generics.rs |  |  | 0.544 |
+| walker |  | 8181 | 66 | pub item at src/display.rs:6 |  |  | 0.544 |
+| walker |  | 8374 | 193 | README.md section #8 |  |  | 0.544 |
+| walker |  | 8902 | 528 | listing of 'tests/ui' |  |  | 0.623 |
+| walker |  | 8912 | 10 | pub-item names surface in tests/ui/display-underscore.rs |  |  | 0.623 |
+| walker |  | 8922 | 10 | pub-item names surface in tests/ui/from-backtrace-backtrace.rs |  |  | 0.623 |
+| walker |  | 8932 | 10 | pub-item names surface in tests/ui/from-not-source.rs |  |  | 0.623 |
+| walker |  | 8942 | 10 | pub-item names surface in tests/ui/missing-fmt.rs |  |  | 0.623 |
+| walker |  | 8952 | 10 | pub-item names surface in tests/ui/raw-identifier.rs |  |  | 0.623 |
+| walker |  | 8962 | 10 | pub-item names surface in tests/ui/same-from-type.rs |  |  | 0.623 |
+| walker |  | 8972 | 10 | pub-item names surface in tests/ui/transparent-enum-many.rs |  |  | 0.623 |
+| walker |  | 8982 | 10 | pub-item names surface in tests/ui/transparent-enum-not-error.rs |  |  | 0.623 |
+| walker |  | 8992 | 10 | pub-item names surface in tests/ui/transparent-enum-source.rs |  |  | 0.623 |
+| walker |  | 9002 | 10 | pub-item names surface in tests/ui/transparent-enum-unnamed-field-not-error.rs |  |  | 0.623 |
+| walker |  | 9012 | 10 | pub-item names surface in tests/ui/transparent-struct-many.rs |  |  | 0.623 |
+| walker |  | 9022 | 10 | pub-item names surface in tests/ui/transparent-struct-not-error.rs |  |  | 0.623 |
+| walker |  | 9034 | 12 | pub item at tests/ui/transparent-struct-not-error.rs:5 |  |  | 0.623 |
+| walker |  | 9044 | 10 | pub-item names surface in tests/ui/unconditional-recursion.rs |  |  | 0.623 |
+| walker |  | 9054 | 10 | pub-item names surface in tests/ui/unexpected-field-fmt.rs |  |  | 0.623 |
+| walker |  | 9064 | 10 | pub-item names surface in tests/ui/unexpected-struct-source.rs |  |  | 0.623 |
+| ns | 9072 |  | 1379 | fmt.rs — placeholder loop ({var}/{0}/{:?} mechanic) | 6.2 | 6.1 | 0.572 |
+| walker |  | 9074 | 10 | pub-item names surface in tests/ui/union.rs |  |  | 0.572 |
+| walker |  | 9085 | 11 | pub-item names surface in tests/ui/duplicate-enum-source.rs |  |  | 0.572 |
+| walker |  | 9096 | 11 | pub-item names surface in tests/ui/duplicate-struct-source.rs |  |  | 0.572 |
+| walker |  | 9107 | 11 | pub-item names surface in tests/ui/expression-fallback.rs |  |  | 0.572 |
+| walker |  | 9118 | 11 | pub-item names surface in tests/ui/fallback-impl-with-display.rs |  |  | 0.572 |
+| walker |  | 9129 | 11 | pub-item names surface in tests/ui/invalid-input-impl-anyway.rs |  |  | 0.572 |
+| walker |  | 9140 | 11 | pub-item names surface in tests/ui/missing-display.rs |  |  | 0.572 |
+| walker |  | 9157 | 17 | pub item at tests/ui/missing-display.rs:4 |  |  | 0.572 |
+| walker |  | 9168 | 11 | pub-item names surface in tests/ui/source-struct-not-error.rs |  |  | 0.572 |
+| walker |  | 9181 | 13 | pub item at tests/ui/source-struct-not-error.rs:8 |  |  | 0.572 |
+| walker |  | 9192 | 11 | pub-item names surface in tests/ui/transparent-struct-unnamed-field-not-error.rs |  |  | 0.572 |
+| walker |  | 9204 | 12 | pub-item names surface in tests/ui/numbered-positional-tuple.rs |  |  | 0.572 |
+| walker |  | 9216 | 12 | pub-item names surface in tests/ui/struct-with-fmt.rs |  |  | 0.572 |
+| walker |  | 9232 | 16 | pub item at tests/ui/raw-identifier.rs:5 |  |  | 0.572 |
+| walker |  | 9253 | 21 | pub item at tests/ui/transparent-enum-unnamed-field-not-error.rs:4 |  |  | 0.572 |
+| walker |  | 9267 | 14 | pub-item names surface in tests/ui/duplicate-transparent.rs |  |  | 0.572 |
+| walker |  | 9281 | 14 | pub-item names surface in tests/ui/transparent-display.rs |  |  | 0.572 |
+| walker |  | 9305 | 24 | pub item at tests/ui/transparent-enum-not-error.rs:4 |  |  | 0.572 |
+| walker |  | 9331 | 26 | pub item at tests/ui/transparent-enum-many.rs:4 |  |  | 0.572 |
+| walker |  | 9348 | 17 | pub-item names surface in tests/ui/source-struct-unnamed-field-not-error.rs |  |  | 0.572 |
+| walker |  | 9365 | 17 | pub-item names surface in tests/ui/transparent-struct-source.rs |  |  | 0.572 |
+| walker |  | 9392 | 27 | pub item at tests/ui/transparent-enum-source.rs:4 |  |  | 0.561 |
 | ns | 9392 |  | 320 | src/lib.rs — module decls + cfg gates + private include! | 7.1 |  | 0.561 |
-| walker |  | 9401 | 27 | pub item at tests/ui/transparent-enum-source.rs:4 |  |  | 0.561 |
-| walker |  | 9424 | 23 | pub item at tests/ui/transparent-struct-many.rs:5 |  |  | 0.561 |
-| walker |  | 9447 | 23 | pub item at tests/ui/union.rs:4 |  |  | 0.561 |
-| walker |  | 9478 | 31 | pub item at tests/ui/missing-fmt.rs:4 |  |  | 0.561 |
-| walker |  | 9499 | 21 | pub-item names surface in tests/ui/bad-field-attr.rs |  |  | 0.561 |
-| walker |  | 9521 | 22 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.561 |
-| walker |  | 9534 | 13 | pub item at tests/ui/no-display.rs:8 |  |  | 0.561 |
-| walker |  | 9547 | 13 | pub item at tests/ui/no-display.rs:14 |  |  | 0.561 |
-| walker |  | 9569 | 22 | pub-item names surface in tests/ui/source-enum-not-error.rs |  |  | 0.561 |
-| walker |  | 9584 | 15 | pub item at tests/ui/source-enum-not-error.rs:8 |  |  | 0.561 |
-| walker |  | 9606 | 22 | pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs |  |  | 0.561 |
-| walker |  | 9622 | 16 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8 |  |  | 0.561 |
-| walker |  | 9661 | 39 | pub item at tests/ui/unexpected-field-fmt.rs:4 |  |  | 0.561 |
-| walker |  | 9700 | 39 | pub item at tests/ui/from-backtrace-backtrace.rs:8 |  |  | 0.561 |
+| walker |  | 9415 | 23 | pub item at tests/ui/transparent-struct-many.rs:5 |  |  | 0.561 |
+| walker |  | 9438 | 23 | pub item at tests/ui/union.rs:4 |  |  | 0.561 |
+| walker |  | 9469 | 31 | pub item at tests/ui/missing-fmt.rs:4 |  |  | 0.561 |
+| walker |  | 9490 | 21 | pub-item names surface in tests/ui/bad-field-attr.rs |  |  | 0.561 |
+| walker |  | 9512 | 22 | pub-item names surface in tests/ui/no-display.rs |  |  | 0.561 |
+| walker |  | 9525 | 13 | pub item at tests/ui/no-display.rs:8 |  |  | 0.561 |
+| walker |  | 9538 | 13 | pub item at tests/ui/no-display.rs:14 |  |  | 0.561 |
+| walker |  | 9560 | 22 | pub-item names surface in tests/ui/source-enum-not-error.rs |  |  | 0.561 |
+| walker |  | 9575 | 15 | pub item at tests/ui/source-enum-not-error.rs:8 |  |  | 0.561 |
+| walker |  | 9597 | 22 | pub-item names surface in tests/ui/source-enum-unnamed-field-not-error.rs |  |  | 0.561 |
+| walker |  | 9613 | 16 | pub item at tests/ui/source-enum-unnamed-field-not-error.rs:8 |  |  | 0.561 |
+| walker |  | 9652 | 39 | pub item at tests/ui/unexpected-field-fmt.rs:4 |  |  | 0.561 |
+| walker |  | 9691 | 39 | pub item at tests/ui/from-backtrace-backtrace.rs:8 |  |  | 0.561 |
 | ns | 9711 |  | 319 | src/provide.rs + var.rs — runtime helpers | 7.2 |  | 0.552 |
-| walker |  | 9743 | 43 | pub item at tests/ui/duplicate-struct-source.rs:4 |  |  | 0.552 |
-| walker |  | 9786 | 43 | pub item at tests/ui/from-not-source.rs:4 |  |  | 0.552 |
-| ns | 9792 |  | 81 | tests/ listing | 8.1 |  | 0.559 |
-| walker |  | 9843 | 57 | pub item at tests/ui/duplicate-enum-source.rs:4 |  |  | 0.559 |
-| walker |  | 9904 | 61 | pub item at tests/ui/same-from-type.rs:4 |  |  | 0.559 |
-| ns | 9966 |  | 174 | test_source.rs — three source-shape examples | 8.2 |  | 0.558 |
+| walker |  | 9734 | 43 | pub item at tests/ui/duplicate-struct-source.rs:4 |  |  | 0.552 |
+| walker |  | 9777 | 43 | pub item at tests/ui/from-not-source.rs:4 |  |  | 0.552 |
+| ns | 9792 |  | 81 | tests/ listing | 8.1 |  | 0.556 |
+| walker |  | 9834 | 57 | pub item at tests/ui/duplicate-enum-source.rs:4 |  |  | 0.556 |
+| walker |  | 9895 | 61 | pub item at tests/ui/same-from-type.rs:4 |  |  | 0.556 |
+| ns | 9966 |  | 174 | test_source.rs — three source-shape examples | 8.2 |  | 0.555 |

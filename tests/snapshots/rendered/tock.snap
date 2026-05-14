@@ -191,11 +191,7 @@ internal/
                 repository.go
                 repository_test.go
             notes/
-                repository.go
-                repository_test.go
             timewarrior/
-                repository.go
-                repository_test.go
     config/
         config.go
             12→type Config struct {
@@ -303,9 +299,6 @@ internal/
                 …
         ports/
             mocks/
-                mock_activityrepository.go
-                mock_activityresolver.go
-                mock_notesrepository.go
             ports.go
                 11→type ActivityResolver interface {
                 …
@@ -322,8 +315,6 @@ internal/
         extra_test.go
     services/
         activity/
-            service.go
-            service_test.go
         ics/
             generator.go
                 11→// Generate returns a full iCalendar string for a single activity.

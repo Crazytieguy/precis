@@ -241,24 +241,10 @@ kind = "full"
 
 [[batches]]
 position = 11
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/internals" })'
-descriptor = "listing of 'src/internals'"
-cost_tokens = 8
-cum_tokens = 327
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/internals"
-entries = ["helpers.ts", "symbols.ts"]
-
-[[batches]]
-position = 12
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 26
-cum_tokens = 353
+cum_tokens = 345
 
 [batches.content]
 kind = "fs"
@@ -268,11 +254,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/docs"
 entries = ["roadmap.md", "v3-to-v4-migration-guide.md", "v4-to-v5-migration-guide.md"]
 
 [[batches]]
-position = 13
+position = 12
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 104
-cum_tokens = 457
+cum_tokens = 449
 
 [batches.content]
 kind = "lines"
@@ -294,11 +280,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/index.ts" })'
 descriptor = "imports in src/index.ts"
 cost_tokens = 39
-cum_tokens = 496
+cum_tokens = 488
 
 [batches.content]
 kind = "lines"
@@ -320,11 +306,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 10
-cum_tokens = 506
+cum_tokens = 498
 
 [batches.content]
 kind = "fs"
@@ -334,11 +320,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/examples"
 entries = ["gif-fetcher", "one-file-demo"]
 
 [[batches]]
-position = 16
+position = 15
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/is-matching.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
 descriptor = "export names surface in src/is-matching.ts"
 cost_tokens = 56
-cum_tokens = 562
+cum_tokens = 554
 
 [batches.content]
 kind = "lines"
@@ -392,11 +378,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/is-matching.ts", start_line: 32 })'
 descriptor = "export at src/is-matching.ts:32"
 cost_tokens = 25
-cum_tokens = 587
+cum_tokens = 579
 
 [batches.content]
 kind = "lines"
@@ -410,11 +396,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/is-matching.ts", start_line: 53 })'
 descriptor = "export at src/is-matching.ts:53"
 cost_tokens = 33
-cum_tokens = 620
+cum_tokens = 612
 
 [batches.content]
 kind = "lines"
@@ -436,11 +422,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/is-matching.ts", start_line: 48 })'
 descriptor = "export at src/is-matching.ts:48"
 cost_tokens = 39
-cum_tokens = 659
+cum_tokens = 651
 
 [batches.content]
 kind = "lines"
@@ -454,11 +440,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/errors.ts", start_line: 5, body_start_line: 7 })'
 descriptor = "export body at src/errors.ts:5 body 7"
 cost_tokens = 73
-cum_tokens = 732
+cum_tokens = 724
 
 [batches.content]
 kind = "lines"
@@ -472,11 +458,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/.prettierrc" })'
 descriptor = "plaintext config .prettierrc"
 cost_tokens = 21
-cum_tokens = 753
+cum_tokens = 745
 
 [batches.content]
 kind = "lines"
@@ -490,11 +476,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 20
-cum_tokens = 773
+cum_tokens = 765
 
 [batches.content]
 kind = "lines"
@@ -508,11 +494,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 206
-cum_tokens = 979
+cum_tokens = 971
 
 [batches.content]
 kind = "lines"
@@ -534,11 +520,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/errors.ts", start_line: 5 })'
 descriptor = "export doc at src/errors.ts:5"
 cost_tokens = 42
-cum_tokens = 1021
+cum_tokens = 1013
 
 [batches.content]
 kind = "lines"
@@ -552,11 +538,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/match.ts", start_line: 47 })'
 descriptor = "module item at src/match.ts:47"
 cost_tokens = 179
-cum_tokens = 1200
+cum_tokens = 1192
 
 [batches.content]
 kind = "lines"
@@ -682,11 +668,11 @@ end = 129
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 26
-cum_tokens = 1226
+cum_tokens = 1218
 
 [batches.content]
 kind = "fs"
@@ -696,11 +682,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/benchmarks"
 entries = ["always-last-digit.ts", "nested-objects.ts", "package-lock.json", "package.json", "random-digit.ts"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/types" })'
 descriptor = "listing of 'src/types'"
 cost_tokens = 56
-cum_tokens = 1282
+cum_tokens = 1274
 
 [batches.content]
 kind = "fs"
@@ -710,11 +696,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/types"
 entries = ["BuildMany.ts", "DeepExclude.ts", "DistributeUnions.ts", "ExtractPreciseValue.ts", "FindSelected.ts", "InvertPattern.ts", "IsMatching.ts", "Match.ts", "Pattern.ts", "helpers.ts", "index.ts"]
 
 [[batches]]
-position = 28
+position = 27
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/types/index.ts" })'
 descriptor = "imports in src/types/index.ts"
 cost_tokens = 10
-cum_tokens = 1292
+cum_tokens = 1284
 
 [batches.content]
 kind = "lines"
@@ -728,11 +714,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 25
-cum_tokens = 1317
+cum_tokens = 1309
 
 [batches.content]
 kind = "lines"
@@ -746,11 +732,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/examples/gif-fetcher" })'
 descriptor = "listing of 'examples/gif-fetcher'"
 cost_tokens = 15
-cum_tokens = 1332
+cum_tokens = 1324
 
 [batches.content]
 kind = "fs"
@@ -760,11 +746,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/examples/gif-fet
 entries = ["package.json", "public", "src", "tsconfig.json"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/is-matching.ts", start_line: 53, body_start_line: 56 })'
 descriptor = "export body at src/is-matching.ts:53 body 56"
 cost_tokens = 161
-cum_tokens = 1493
+cum_tokens = 1485
 
 [batches.content]
 kind = "lines"
@@ -786,11 +772,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 28
-cum_tokens = 1521
+cum_tokens = 1513
 
 [batches.content]
 kind = "lines"
@@ -804,11 +790,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 30
-cum_tokens = 1551
+cum_tokens = 1543
 
 [batches.content]
 kind = "lines"
@@ -820,6 +806,20 @@ end = 53
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/internals" })'
+descriptor = "listing of 'src/internals'"
+cost_tokens = 8
+cum_tokens = 1551
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/ts-pattern/src/internals"
+entries = ["helpers.ts", "symbols.ts"]
 
 [[batches]]
 position = 34

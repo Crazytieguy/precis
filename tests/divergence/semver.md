@@ -67,76 +67,68 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 2502 | 380 | export at index.js:45 |  |  | 0.708 |
 | walker |  | 2510 | 8 | CHANGELOG.md section #0 |  |  | 0.708 |
 | walker |  | 2567 | 57 | README.md section #24 |  |  | 0.708 |
-| walker |  | 2570 | 3 | listing of 'tap-snapshots/test' |  |  | 0.708 |
-| walker |  | 2641 | 71 | README.md section #27 |  |  | 0.708 |
-| walker |  | 2725 | 84 | listing of 'test/fixtures' |  |  | 0.708 |
-| walker |  | 2797 | 72 | README.md section #31 |  |  | 0.708 |
-| walker |  | 2874 | 77 | README.md section #5 |  |  | 0.709 |
-| walker |  | 2878 | 4 | listing of 'test/integration' |  |  | 0.709 |
+| walker |  | 2638 | 71 | README.md section #27 |  |  | 0.708 |
+| walker |  | 2722 | 84 | listing of 'test/fixtures' |  |  | 0.708 |
+| walker |  | 2794 | 72 | README.md section #31 |  |  | 0.708 |
+| walker |  | 2871 | 77 | README.md section #5 |  |  | 0.709 |
 | ns | 2947 |  | 572 | README — Prerelease Tags semantics | 3.3 | 2.6 | 0.656 |
-| walker |  | 2958 | 80 | README.md section #7 |  |  | 0.662 |
-| walker |  | 3036 | 78 | README.md section #26 |  |  | 0.662 |
-| walker |  | 3125 | 89 | README.md section #9 |  |  | 0.673 |
+| walker |  | 2951 | 80 | README.md section #7 |  |  | 0.662 |
+| walker |  | 3029 | 78 | README.md section #26 |  |  | 0.662 |
+| walker |  | 3118 | 89 | README.md section #9 |  |  | 0.673 |
 | ns | 3219 |  | 272 | README — Hyphen Ranges desugaring | 3.4 | 2.6 | 0.647 |
-| walker |  | 3230 | 105 | listing of 'test/functions' |  |  | 0.647 |
-| walker |  | 3315 | 85 | README.md section #50 |  |  | 0.647 |
-| walker |  | 3320 | 5 | listing of 'test/bin' |  |  | 0.647 |
-| walker |  | 3408 | 88 | README.md section #41 |  |  | 0.647 |
-| walker |  | 3522 | 114 | README.md section #8 |  |  | 0.665 |
+| walker |  | 3223 | 105 | listing of 'test/functions' |  |  | 0.647 |
+| walker |  | 3308 | 85 | README.md section #50 |  |  | 0.647 |
+| walker |  | 3396 | 88 | README.md section #41 |  |  | 0.647 |
+| walker |  | 3510 | 114 | README.md section #8 |  |  | 0.665 |
 | ns | 3533 |  | 314 | README — X-Ranges desugaring | 3.5 | 2.6 | 0.642 |
-| walker |  | 3582 | 60 | README.md section #56 |  |  | 0.642 |
-| walker |  | 3715 | 133 | README.md section #49 |  |  | 0.643 |
-| walker |  | 3788 | 73 | README.md section #32 |  |  | 0.643 |
-| walker |  | 3945 | 157 | README.md section #43 |  |  | 0.643 |
+| walker |  | 3570 | 60 | README.md section #56 |  |  | 0.642 |
+| walker |  | 3703 | 133 | README.md section #49 |  |  | 0.643 |
+| walker |  | 3776 | 73 | README.md section #32 |  |  | 0.643 |
+| walker |  | 3933 | 157 | README.md section #43 |  |  | 0.643 |
 | ns | 4025 |  | 492 | README — Tilde Ranges desugaring | 3.6 | 2.6 | 0.622 |
-| walker |  | 4295 | 350 | json config release-please-config.json |  |  | 0.622 |
-| walker |  | 4668 | 373 | plaintext config .gitignore |  |  | 0.622 |
+| walker |  | 4283 | 350 | json config release-please-config.json |  |  | 0.622 |
+| walker |  | 4656 | 373 | plaintext config .gitignore |  |  | 0.622 |
 | ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.578 |
 | ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.561 |
-| walker |  | 5228 | 560 | README.md section #4 |  |  | 0.614 |
-| walker |  | 5400 | 172 | README.md section #45 |  |  | 0.614 |
-| walker |  | 5587 | 187 | README.md section #6 |  |  | 0.639 |
-| walker |  | 5615 | 28 | listing of '.github' |  |  | 0.639 |
-| walker |  | 5656 | 41 | listing of '.github/workflows' |  |  | 0.639 |
-| walker |  | 5660 | 4 | listing of '.github/matchers' |  |  | 0.639 |
-| walker |  | 5668 | 8 | listing of '.github/ISSUE_TEMPLATE' |  |  | 0.639 |
-| walker |  | 5679 | 11 | listing of '.github/actions' |  |  | 0.639 |
+| walker |  | 5216 | 560 | README.md section #4 |  |  | 0.614 |
+| walker |  | 5388 | 172 | README.md section #45 |  |  | 0.614 |
+| walker |  | 5575 | 187 | README.md section #6 |  |  | 0.639 |
+| walker |  | 5603 | 28 | listing of '.github' |  |  | 0.639 |
+| walker |  | 5644 | 41 | listing of '.github/workflows' |  |  | 0.639 |
 | ns | 5681 |  | 557 | README — Coercion semantics | 3.9 | 2.6 | 0.622 |
-| walker |  | 5683 | 4 | listing of '.github/actions/create-check' |  |  | 0.622 |
-| walker |  | 5687 | 4 | listing of '.github/actions/install-latest-npm' |  |  | 0.622 |
-| walker |  | 5695 | 8 | listing of 'tap-snapshots/test/bin' |  |  | 0.622 |
 | ns | 5749 |  | 68 | SemVer class — method signatures (locations) | 4.1 |  | 0.614 |
 | ns | 5809 |  | 60 | Range class — method signatures (locations) | 4.2 |  | 0.607 |
-| walker |  | 5919 | 224 | README.md section #53 |  |  | 0.607 |
+| walker |  | 5868 | 224 | README.md section #53 |  |  | 0.607 |
 | ns | 5992 |  | 183 | Range module — internal helpers (locations) | 4.3 |  | 0.595 |
 | ns | 6069 |  | 77 | Comparator class — method signatures (locations) | 4.4 |  | 0.588 |
 | ns | 6460 |  | 391 | internal/constants.js — full file | 4.5 |  | 0.562 |
-| walker |  | 6649 | 730 | README.md section #19 |  |  | 0.585 |
-| walker |  | 6904 | 255 | README.md section #14 |  |  | 0.605 |
+| walker |  | 6598 | 730 | README.md section #19 |  |  | 0.585 |
+| walker |  | 6853 | 255 | README.md section #14 |  |  | 0.605 |
 | ns | 7003 |  | 543 | internal/re.js — every token name (locations) | 5.1 |  | 0.577 |
-| walker |  | 7180 | 276 | README.md section #10 |  |  | 0.579 |
-| walker |  | 7288 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.580 |
-| walker |  | 7288 | 0 | CONTRIBUTING.md section #0 |  |  | 0.580 |
+| walker |  | 7129 | 276 | README.md section #10 |  |  | 0.579 |
+| walker |  | 7237 | 108 | headings outline in CONTRIBUTING.md |  |  | 0.580 |
+| walker |  | 7237 | 0 | CONTRIBUTING.md section #0 |  |  | 0.580 |
 | ns | 7475 |  | 472 | internal/re.js — section comments and exports header | 5.2 | 5.1 | 0.557 |
 | ns | 7628 |  | 153 | SemVer.compare — body (entry into compareMain \|\| comparePre) | 5.3 | 4.1 | 0.549 |
 | ns | 7934 |  | 306 | internal/identifiers.js — full file | 5.4 |  | 0.534 |
-| walker |  | 8045 | 757 | README.md section #57 |  |  | 0.534 |
+| walker |  | 7994 | 757 | README.md section #57 |  |  | 0.534 |
 | ns | 8148 |  | 214 | bin/semver.js — CLI flag case lines (truncated) | 5.5 |  | 0.526 |
 | ns | 8372 |  | 224 | functions/ — module.exports lines (locations of every public function) | 6.1 |  | 0.515 |
 | ns | 8490 |  | 118 | ranges/ — module.exports lines (locations of every range function) | 6.2 |  | 0.510 |
-| walker |  | 8621 | 576 | imports in index.js |  |  | 0.510 |
-| walker |  | 8633 | 12 | export names surface in preload.js |  |  | 0.510 |
-| walker |  | 8652 | 19 | export names surface in map.js |  |  | 0.510 |
-| walker |  | 8660 | 8 | imports in map.js |  |  | 0.510 |
-| walker |  | 8668 | 8 | imports in preload.js |  |  | 0.510 |
-| walker |  | 8807 | 139 | README.md section #55 |  |  | 0.510 |
+| walker |  | 8570 | 576 | imports in index.js |  |  | 0.510 |
+| walker |  | 8582 | 12 | export names surface in preload.js |  |  | 0.510 |
+| walker |  | 8601 | 19 | export names surface in map.js |  |  | 0.510 |
+| walker |  | 8609 | 8 | imports in map.js |  |  | 0.510 |
+| walker |  | 8617 | 8 | imports in preload.js |  |  | 0.510 |
+| walker |  | 8756 | 139 | README.md section #55 |  |  | 0.510 |
 | ns | 8897 |  | 407 | functions/cmp.js — operator switch body | 6.3 |  | 0.492 |
-| walker |  | 9105 | 298 | README.md section #11 |  |  | 0.494 |
-| walker |  | 9400 | 295 | README.md section #48 |  |  | 0.514 |
+| walker |  | 9054 | 298 | README.md section #11 |  |  | 0.494 |
+| walker |  | 9349 | 295 | README.md section #48 |  |  | 0.514 |
 | ns | 9449 |  | 552 | functions/diff.js — release-type comparison body | 6.4 |  | 0.495 |
 | ns | 9601 |  | 152 | internal/parse-options.js — full file | 7.1 |  | 0.489 |
-| ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.485 |
-| walker |  | 9716 | 316 | README.md section #15 |  |  | 0.501 |
+| walker |  | 9665 | 316 | README.md section #15 |  |  | 0.506 |
+| walker |  | 9668 | 3 | listing of 'tap-snapshots/test' |  |  | 0.506 |
+| ns | 9711 |  | 110 | internal/debug.js — full file | 7.2 |  | 0.501 |
 | ns | 9778 |  | 67 | internal/lrucache.js — class signature + max constant | 7.3 |  | 0.499 |
 | ns | 9852 |  | 74 | ranges/min-version.js — function signature + 0.0.0 fast path | 7.4 |  | 0.496 |
 | ns | 9924 |  | 72 | LICENSE first line + CONTRIBUTING.md headings | 7.5 |  | 0.499 |

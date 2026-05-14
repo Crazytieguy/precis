@@ -160,7 +160,32 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     } else {
         path_depth_factor(dir, ctx)
     };
-    mix_signals(cat, fu, ztu, depth)
+    let small_listing_factor = if module_source_dir || src_of_sibling_modules || sibling_module_dir
+    {
+        // Module-source directories (htmy/renderer/, sps-core/src/install/)
+        // anchor on their own listings — keep them at full weight.
+        1.0
+    } else {
+        small_listing_decay(children.len(), ctx.depth_from_root(dir))
+    };
+    mix_signals(cat, fu, ztu, depth) * small_listing_factor
+}
+
+/// Damp deeply-nested directory listings whose tiny entry count makes them
+/// redundant with their parent listing. A `crates/foo/` directory containing
+/// just `Cargo.toml` + `src/` adds nothing the parent `crates/` listing
+/// hasn't already named — at depth ≥ 2, it's bibliographic noise. The
+/// damp does not apply at the root or its direct children, where listings
+/// are the orientation surface.
+fn small_listing_decay(child_count: usize, depth: usize) -> f64 {
+    if depth < 2 {
+        return 1.0;
+    }
+    match child_count {
+        0..=2 => 0.45,
+        3 => 0.7,
+        _ => 1.0,
+    }
 }
 
 pub(crate) const JS_MODULE_ENTRYPOINT_FILES: &[&str] = &[

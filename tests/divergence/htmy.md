@@ -80,27 +80,27 @@ Score(3000)=0.496 I=0.749 C=0.329 ns_rows≤3K=17/40 (reached=7 partial=1 missin
 | walker |  | 1435 | 23 | README.md section #2 |  |  | 0.580 |
 | walker |  | 1477 | 42 | listing of 'docs/api' |  |  | 0.582 |
 | walker |  | 1504 | 27 | headings outline in docs/api/md.md |  |  | 0.582 |
-| walker |  | 1516 | 12 | listing of 'docs/api/renderer' |  |  | 0.583 |
-| ns | 1519 |  | 303 | docs/ + tests/ + examples/ directory listings | 1.13 |  | 0.469 |
-| walker |  | 1571 | 55 | python decl at htmy/tag.py:84 |  |  | 0.469 |
-| walker |  | 1593 | 22 | python decl body at htmy/tag.py:84 body 100 |  |  | 0.469 |
-| walker |  | 1609 | 16 | python imports #5 in htmy/__init__.py |  |  | 0.476 |
-| walker |  | 1633 | 24 | README.md section #11 |  |  | 0.487 |
-| walker |  | 1655 | 22 | listing of 'examples' |  |  | 0.499 |
-| ns | 1694 |  | 175 | Component protocol heart (SyncComponent / AsyncComponent) | 2.1 |  | 0.472 |
-| walker |  | 1777 | 122 | python imports #1 in htmy/__init__.py |  |  | 0.520 |
-| walker |  | 1803 | 26 | python imports #4 in htmy/__init__.py |  |  | 0.540 |
-| walker |  | 1821 | 18 | docs/api/md.md section #0 |  |  | 0.540 |
-| walker |  | 1853 | 32 | python class body at htmy/md/core.py:81 |  |  | 0.540 |
-| ns | 1871 |  | 177 | Component / ComponentType / ComponentSequence type aliases | 2.2 |  | 0.517 |
-| walker |  | 1880 | 27 | README.md section #6 |  |  | 0.532 |
-| walker |  | 1900 | 20 | python class body at htmy/tag.py:24 |  |  | 0.532 |
-| walker |  | 1935 | 35 | python imports in htmy/typing.py |  |  | 0.533 |
-| walker |  | 1951 | 16 | README.md section #41 |  |  | 0.533 |
-| walker |  | 1997 | 46 | python decl doc at htmy/tag.py:56 |  |  | 0.533 |
-| walker |  | 2025 | 28 | python decl body at htmy/io.py:11 body 13 |  |  | 0.533 |
-| walker |  | 2068 | 43 | README.md section #46 |  |  | 0.533 |
-| walker |  | 2081 | 13 | listing of 'examples/internationalization' |  |  | 0.542 |
+| ns | 1519 |  | 303 | docs/ + tests/ + examples/ directory listings | 1.13 |  | 0.461 |
+| walker |  | 1559 | 55 | python decl at htmy/tag.py:84 |  |  | 0.461 |
+| walker |  | 1581 | 22 | python decl body at htmy/tag.py:84 body 100 |  |  | 0.461 |
+| walker |  | 1597 | 16 | python imports #5 in htmy/__init__.py |  |  | 0.468 |
+| walker |  | 1621 | 24 | README.md section #11 |  |  | 0.480 |
+| walker |  | 1643 | 22 | listing of 'examples' |  |  | 0.490 |
+| ns | 1694 |  | 175 | Component protocol heart (SyncComponent / AsyncComponent) | 2.1 |  | 0.463 |
+| walker |  | 1765 | 122 | python imports #1 in htmy/__init__.py |  |  | 0.512 |
+| walker |  | 1791 | 26 | python imports #4 in htmy/__init__.py |  |  | 0.531 |
+| walker |  | 1809 | 18 | docs/api/md.md section #0 |  |  | 0.531 |
+| walker |  | 1841 | 32 | python class body at htmy/md/core.py:81 |  |  | 0.531 |
+| walker |  | 1868 | 27 | README.md section #6 |  |  | 0.547 |
+| ns | 1871 |  | 177 | Component / ComponentType / ComponentSequence type aliases | 2.2 |  | 0.524 |
+| walker |  | 1888 | 20 | python class body at htmy/tag.py:24 |  |  | 0.524 |
+| walker |  | 1923 | 35 | python imports in htmy/typing.py |  |  | 0.525 |
+| walker |  | 1939 | 16 | README.md section #41 |  |  | 0.525 |
+| walker |  | 1985 | 46 | python decl doc at htmy/tag.py:56 |  |  | 0.525 |
+| walker |  | 2013 | 28 | python decl body at htmy/io.py:11 body 13 |  |  | 0.525 |
+| walker |  | 2056 | 43 | README.md section #46 |  |  | 0.525 |
+| walker |  | 2069 | 13 | listing of 'examples/internationalization' |  |  | 0.533 |
+| walker |  | 2081 | 12 | listing of 'docs/api/renderer' |  |  | 0.542 |
 | walker |  | 2136 | 55 | python decl doc at htmy/error_boundary.py:15 |  |  | 0.542 |
 | ns | 2190 |  | 319 | Context / Properties / PropertyValue type aliases | 2.3 |  | 0.497 |
 | walker |  | 2205 | 69 | README.md section #16 |  |  | 0.497 |

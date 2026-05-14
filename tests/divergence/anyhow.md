@@ -83,54 +83,54 @@ Score(3000)=0.625 I=0.834 C=0.468 ns_rows≤3K=18/44 (reached=9 partial=2 missin
 | ns | 4950 |  | 180 | wrapper.rs: MessageError / DisplayError / BoxedError | 3.5 |  | 0.460 |
 | ns | 5232 |  | 282 | fmt.rs: ErrorImpl::display body + debug/Indented locations | 3.6 |  | 0.447 |
 | walker |  | 5442 | 1564 | crate-doc body in src/lib.rs |  |  | 0.447 |
-| walker |  | 5446 | 4 | listing of 'tests/common' |  |  | 0.447 |
-| walker |  | 5450 | 4 | listing of 'tests/drop' |  |  | 0.447 |
-| walker |  | 5471 | 21 | pub-item names surface in tests/drop/mod.rs |  |  | 0.447 |
-| walker |  | 5485 | 14 | pub item at tests/drop/mod.rs:26 |  |  | 0.447 |
-| walker |  | 5500 | 15 | pub item at tests/drop/mod.rs:9 |  |  | 0.447 |
-| ns | 5548 |  | 316 | ptr.rs internal pointer newtypes | 3.7 |  | 0.454 |
-| walker |  | 5759 | 259 | README.md section #9 |  |  | 0.454 |
-| walker |  | 5804 | 45 | pub-item names surface in tests/common/mod.rs |  |  | 0.454 |
-| walker |  | 5804 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.454 |
-| walker |  | 5804 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.454 |
-| walker |  | 5804 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.454 |
-| walker |  | 5812 | 8 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.454 |
-| walker |  | 5826 | 14 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.454 |
-| walker |  | 5848 | 22 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.454 |
-| walker |  | 5869 | 21 | mod/use plumbing in tests/common/mod.rs |  |  | 0.454 |
-| walker |  | 5893 | 24 | pub item at src/ensure.rs:10 |  |  | 0.454 |
-| walker |  | 5917 | 24 | pub item at src/ensure.rs:25 |  |  | 0.454 |
-| ns | 6006 |  | 458 | backtrace.rs cfg landscape (locations) | 3.8 |  | 0.436 |
-| walker |  | 6068 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.436 |
-| walker |  | 6192 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.436 |
-| ns | 6235 |  | 229 | nightly.rs locations + signatures | 3.9 |  | 0.435 |
-| walker |  | 6312 | 120 | README.md section #6 |  |  | 0.435 |
-| walker |  | 6350 | 38 | pub item at src/kind.rs:80 |  |  | 0.437 |
-| walker |  | 6488 | 138 | README.md section #3 |  |  | 0.437 |
-| walker |  | 6528 | 40 | pub item at src/kind.rs:58 |  |  | 0.440 |
-| walker |  | 6568 | 40 | pub item at src/kind.rs:104 |  |  | 0.444 |
-| ns | 6577 |  | 342 | ensure.rs orientation header (locations) | 3.10 |  | 0.435 |
-| walker |  | 6582 | 14 | listing of 'tests/crate' |  |  | 0.435 |
-| walker |  | 6649 | 67 | [package] in tests/crate/Cargo.toml |  |  | 0.435 |
-| walker |  | 6703 | 54 | mod/use plumbing in tests/drop/mod.rs |  |  | 0.435 |
-| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.438 |
-| walker |  | 6902 | 199 | README.md section #1 |  |  | 0.438 |
-| walker |  | 6971 | 69 | pub-item names surface in tests/test_ffi.rs |  |  | 0.438 |
-| walker |  | 6971 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.438 |
-| walker |  | 6971 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.438 |
-| walker |  | 6971 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.438 |
-| walker |  | 6980 | 9 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.438 |
-| walker |  | 6990 | 10 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.438 |
-| walker |  | 7003 | 13 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.438 |
-| ns | 7104 |  | 287 | test_context: Low/Mid/High chain helper + fns | 4.2 |  | 0.425 |
-| walker |  | 7208 | 205 | README.md section #5 |  |  | 0.425 |
-| walker |  | 7248 | 40 | [features] in tests/crate/Cargo.toml |  |  | 0.425 |
-| ns | 7307 |  | 203 | test_downcast / test_repr / test_convert fns (locations) | 4.3 |  | 0.418 |
-| ns | 7450 |  | 143 | test_macros + test_chain + test_source fns | 4.4 |  | 0.412 |
-| walker |  | 7463 | 215 | README.md section #4 |  |  | 0.412 |
-| walker |  | 7587 | 124 | impl method sigs in tests/drop/mod.rs |  |  | 0.419 |
-| ns | 7686 |  | 236 | test_fmt: f/g/h chain + EXPECTED_* constants (locations) | 4.5 |  | 0.412 |
-| walker |  | 7828 | 241 | README.md section #2 |  |  | 0.412 |
+| ns | 5548 |  | 316 | ptr.rs internal pointer newtypes | 3.7 |  | 0.453 |
+| walker |  | 5701 | 259 | README.md section #9 |  |  | 0.453 |
+| walker |  | 5725 | 24 | pub item at src/ensure.rs:10 |  |  | 0.453 |
+| walker |  | 5749 | 24 | pub item at src/ensure.rs:25 |  |  | 0.453 |
+| walker |  | 5900 | 151 | pub-item doc body at src/lib.rs:415 |  |  | 0.453 |
+| ns | 6006 |  | 458 | backtrace.rs cfg landscape (locations) | 3.8 |  | 0.435 |
+| walker |  | 6024 | 124 | pub-item doc body at src/lib.rs:468 |  |  | 0.435 |
+| walker |  | 6144 | 120 | README.md section #6 |  |  | 0.435 |
+| walker |  | 6182 | 38 | pub item at src/kind.rs:80 |  |  | 0.437 |
+| ns | 6235 |  | 229 | nightly.rs locations + signatures | 3.9 |  | 0.436 |
+| walker |  | 6320 | 138 | README.md section #3 |  |  | 0.436 |
+| walker |  | 6360 | 40 | pub item at src/kind.rs:58 |  |  | 0.439 |
+| walker |  | 6400 | 40 | pub item at src/kind.rs:104 |  |  | 0.443 |
+| ns | 6577 |  | 342 | ensure.rs orientation header (locations) | 3.10 |  | 0.434 |
+| walker |  | 6599 | 199 | README.md section #1 |  |  | 0.434 |
+| walker |  | 6668 | 69 | pub-item names surface in tests/test_ffi.rs |  |  | 0.434 |
+| walker |  | 6668 | 0 | pub item at tests/test_ffi.rs:7 |  |  | 0.434 |
+| walker |  | 6668 | 0 | pub item at tests/test_ffi.rs:12 |  |  | 0.434 |
+| walker |  | 6668 | 0 | pub item at tests/test_ffi.rs:17 |  |  | 0.434 |
+| walker |  | 6677 | 9 | pub item body at tests/test_ffi.rs:7 body 8 |  |  | 0.434 |
+| walker |  | 6687 | 10 | pub item body at tests/test_ffi.rs:17 body 18 |  |  | 0.434 |
+| walker |  | 6700 | 13 | pub item body at tests/test_ffi.rs:12 body 13 |  |  | 0.434 |
+| ns | 6817 |  | 240 | tests/common + drop helpers | 4.1 |  | 0.424 |
+| walker |  | 6905 | 205 | README.md section #5 |  |  | 0.424 |
+| ns | 7104 |  | 287 | test_context: Low/Mid/High chain helper + fns | 4.2 |  | 0.412 |
+| walker |  | 7120 | 215 | README.md section #4 |  |  | 0.412 |
+| ns | 7307 |  | 203 | test_downcast / test_repr / test_convert fns (locations) | 4.3 |  | 0.405 |
+| walker |  | 7361 | 241 | README.md section #2 |  |  | 0.405 |
+| walker |  | 7375 | 14 | listing of 'tests/crate' |  |  | 0.405 |
+| walker |  | 7442 | 67 | [package] in tests/crate/Cargo.toml |  |  | 0.405 |
+| ns | 7450 |  | 143 | test_macros + test_chain + test_source fns | 4.4 |  | 0.399 |
+| walker |  | 7482 | 40 | [features] in tests/crate/Cargo.toml |  |  | 0.399 |
+| walker |  | 7486 | 4 | listing of 'tests/common' |  |  | 0.399 |
+| walker |  | 7531 | 45 | pub-item names surface in tests/common/mod.rs |  |  | 0.400 |
+| walker |  | 7531 | 0 | pub item at tests/common/mod.rs:4 |  |  | 0.400 |
+| walker |  | 7531 | 0 | pub item at tests/common/mod.rs:8 |  |  | 0.400 |
+| walker |  | 7531 | 0 | pub item at tests/common/mod.rs:12 |  |  | 0.400 |
+| walker |  | 7539 | 8 | pub item body at tests/common/mod.rs:4 body 5 |  |  | 0.401 |
+| walker |  | 7553 | 14 | pub item body at tests/common/mod.rs:8 body 9 |  |  | 0.402 |
+| walker |  | 7575 | 22 | pub item body at tests/common/mod.rs:12 body 13 |  |  | 0.403 |
+| walker |  | 7596 | 21 | mod/use plumbing in tests/common/mod.rs |  |  | 0.405 |
+| walker |  | 7600 | 4 | listing of 'tests/drop' |  |  | 0.405 |
+| walker |  | 7621 | 21 | pub-item names surface in tests/drop/mod.rs |  |  | 0.408 |
+| walker |  | 7635 | 14 | pub item at tests/drop/mod.rs:26 |  |  | 0.410 |
+| walker |  | 7650 | 15 | pub item at tests/drop/mod.rs:9 |  |  | 0.412 |
+| ns | 7686 |  | 236 | test_fmt: f/g/h chain + EXPECTED_* constants (locations) | 4.5 |  | 0.406 |
+| walker |  | 7704 | 54 | mod/use plumbing in tests/drop/mod.rs |  |  | 0.406 |
+| walker |  | 7828 | 124 | impl method sigs in tests/drop/mod.rs |  |  | 0.412 |
 | walker |  | 7854 | 26 | [dependencies] in tests/crate/Cargo.toml |  |  | 0.412 |
 | ns | 7952 |  | 266 | test_autotrait + test_boxed + test_ffi + test_backtrace | 4.6 |  | 0.404 |
 | ns | 8056 |  | 104 | tests/ui + tests/crate listings | 4.7 |  | 0.421 |
