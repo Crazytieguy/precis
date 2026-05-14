@@ -183,13 +183,31 @@ src/
             51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
             52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
             55→class TypeguardLoader(SourceFileLoader):
+            56→    @staticmethod
             …
+            99→    def exec_module(self, module: ModuleType) -> None:
+            100→        # Use a custom optimization marker – the import lock should make this monkey
+            101→        # patch safe
             109→class TypeguardFinder(MetaPathFinder):
+            …
+            120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
+            …
+            124→    def find_spec(
+            …
+            138→    def should_instrument(self, module_name: str) -> bool:
             …
             156→class ImportHookManager:
             157→    """
             158→    A handle that can be used to uninstall the Typeguard import hook.
             159→    """
+            161→    def __init__(self, hook: MetaPathFinder):
+            162→        self.hook = hook
+            164→    def __enter__(self) -> None:
+            165→        pass
+            167→    def __exit__(
+            …
+            175→    def uninstall(self) -> None:
+            176→        """Uninstall the import hook."""
             183→def install_import_hook(
             184→    packages: Iterable[str] | None = None,
             185→    *,
@@ -216,13 +234,6 @@ src/
             75→def pytest_configure(config: Config) -> None:
             …
         _suppression.py
-            1→from __future__ import annotations
-            3→import sys
-            4→from collections.abc import Callable, Generator
-            5→from contextlib import contextmanager
-            6→from functools import update_wrapper
-            7→from threading import Lock
-            8→from typing import ContextManager, TypeVar, overload
             15→P = ParamSpec("P")
             16→T = TypeVar("T")
             18→type_checks_suppressed = 0

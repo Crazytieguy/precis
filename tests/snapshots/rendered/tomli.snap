@@ -99,6 +99,9 @@ README.md
     167→### Is comment preserving round-trip parsing supported?<a name="is-comment-preserving-round-trip-parsing-supported"></a>
     …
     169→No.
+    171→The `tomli.loads` function returns a plain `dict` that is populated with builtin types and types from the standard library only.
+    172→Preserving comments requires a custom type to be returned so will not be supported,
+    173→at least not by the `tomli.loads` and `tomli.load` functions.
     175→Look into [TOML Kit](https://github.com/sdispater/tomlkit) if preservation of style is what you need.
     177→### Is there a `dumps`, `write` or `encode` function?<a name="is-there-a-dumps-write-or-encode-function"></a>
     …
@@ -159,14 +162,7 @@ src/
             8→from ._parser import TOMLDecodeError, load, loads
         _parser.py
         _re.py
-            5→from __future__ import annotations
-            7→from datetime import date, datetime, time, timedelta, timezone, tzinfo
-            8→from functools import lru_cache
-            9→import re
             11→TYPE_CHECKING = False
-            12→if TYPE_CHECKING:
-            13→    from typing import Any, Final
-            15→    from ._types import ParseFloat
             17→_TIME_RE_STR: Final = r"""
             26→RE_NUMBER: Final = re.compile(
             45→RE_LOCALTIME: Final = re.compile(_TIME_RE_STR, flags=re.VERBOSE)

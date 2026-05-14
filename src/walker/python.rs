@@ -996,7 +996,7 @@ fn imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     let (cat, fu) = if is_init_py(file) {
         (0.70, 1.0)
     } else {
-        (0.35, 0.55)
+        (0.25, 0.45)
     };
     mix_signals(cat, fu, 0.30, python_depth_factor(file, ctx))
 }

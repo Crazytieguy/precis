@@ -60,6 +60,13 @@ docs/
         40→html_theme = "alabaster"
     examples/
         eggsample/
+            eggsample/
+                __init__.py
+                    1→import pluggy
+                hookspecs.py
+                host.py
+                lib.py
+            setup.py
         eggsample-spam/
         toy-example.py
     index.rst
@@ -174,17 +181,6 @@ src/
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
-            1→"""
-            2→Hook wrapper "result" utilities.
-            3→"""
-            5→from __future__ import annotations
-            7→from collections.abc import Callable
-            8→from types import TracebackType
-            9→from typing import cast
-            10→from typing import final
-            11→from typing import Generic
-            12→from typing import TypeAlias
-            13→from typing import TypeVar
             16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
             17→ResultType = TypeVar("ResultType")
             20→class HookCallError(Exception):
@@ -261,6 +257,16 @@ src/
             7→    __module__ = "pluggy"
             10→@final
             11→class PluggyTeardownRaisedWarning(PluggyWarning):
+            12→    """A plugin raised an exception during an :ref:`old-style hookwrapper
+            13→    <old_style_hookwrappers>` teardown.
+            15→    Such exceptions are not handled by pluggy, and may cause subsequent
+            16→    teardowns to be executed at unexpected times, or be skipped entirely.
+            18→    This is an issue in the plugin implementation.
+            20→    If the exception is unintended, fix the underlying cause.
+            22→    If the exception is intended, switch to :ref:`new-style hook wrappers
+            23→    <hookwrappers>`, or use :func:`result.force_exception()
+            24→    <pluggy.Result.force_exception>` to set the exception instead of raising.
+            25→    """
             27→    __module__ = "pluggy"
         py.typed
 testing/

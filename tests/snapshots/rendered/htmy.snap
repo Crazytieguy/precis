@@ -147,6 +147,50 @@ docs/
         …
         230→That's it!
     index.md
+        10→# `htmy`
+        …
+        16→## Key features
+        …
+        33→## Testimonials
+        …
+        47→## Support
+        …
+        51→## Installation
+        …
+        63→## Concepts
+        …
+        69→### Components
+        …
+        167→### Built-in components
+        …
+        179→### Rendering
+        …
+        211→### Context
+        …
+        279→### Formatter
+        …
+        291→### Error boundary
+        …
+        299→### Sync or async?
+        …
+        307→## XSS prevention
+        …
+        316→## AI assistance
+        …
+        324→## Compatibility and performance
+        …
+        330→## Framework integrations
+        …
+        337→## Why
+        …
+        349→## Dependencies
+        …
+        357→## Development
+        …
+        363→## Contributing
+        …
+        373→## License - MIT
+        …
 examples/
     internationalization/
         __init__.py
@@ -212,11 +256,6 @@ htmy/
     html.py
     i18n.py
     io.py
-        1→from __future__ import annotations
-        3→from typing import TYPE_CHECKING
-        5→from anyio import open_file as open_file
-        7→if TYPE_CHECKING:
-        8→    from pathlib import Path
         11→async def load_text_file(path: str | Path) -> str:
         12→    """Loads the text content from the given path."""
         13→    async with await open_file(path, "r") as f:
@@ -257,8 +296,6 @@ htmy/
             …
             28→    __slots__ = ("_default_context", "_string_formatter")
         context.py
-            1→from htmy.typing import Context
-            3→from .typing import RendererType, is_renderer
             6→class RendererContext:
             7→    """
             8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
@@ -296,8 +333,6 @@ htmy/
         89→) -> ComponentType:
         100→    return _TagImpl(htmy_name, props, children, htmy_child_separator)
     typing.py
-        1→from collections.abc import Callable, Coroutine, Mapping, MutableMapping
-        2→from typing import Any, Protocol, TypeAlias, TypeVar
     utils.py
 mkdocs.yaml
 pyproject.toml

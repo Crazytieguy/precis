@@ -119,12 +119,6 @@ microbootstrap/
             13→@dataclasses.dataclass
             14→class LitestarConfig(AppConfig):
     console_writer.py
-        1→from __future__ import annotations
-        2→import dataclasses
-        3→import typing
-        5→from rich.console import Console
-        6→from rich.rule import Rule
-        7→from rich.table import Table
         10→@dataclasses.dataclass
         11→class ConsoleWriter:
         12→    writer_enabled: bool = True
@@ -166,9 +160,6 @@ microbootstrap/
         __init__.py
         base.py
         cors_instrument.py
-            1→from __future__ import annotations
-            3→import pydantic
-            5→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
             8→class CorsConfig(BaseInstrumentConfig):
             …
             18→class CorsInstrument(Instrument[CorsConfig]):
@@ -180,9 +171,6 @@ microbootstrap/
             28→    def get_config_type(cls) -> type[CorsConfig]:
             29→        return CorsConfig
         health_checks_instrument.py
-            1→from __future__ import annotations
-            3→import typing_extensions
-            5→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
             8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
             9→    service_version: str | None
             10→    service_name: str | None
@@ -252,6 +240,24 @@ microbootstrap/
         19→class InstrumentsSetupper:
         20→    console_writer: ConsoleWriter
         21→    instrument_box: InstrumentBox
+        23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
+        …
+        28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
+        …
+        32→    def configure_instruments(
+        33→        self,
+        34→        *instrument_configs: InstrumentConfigT,
+        35→    ) -> typing_extensions.Self:
+        40→    @classmethod
+        …
+        51→    def setup(self) -> None:
+        …
+        57→    def teardown(self) -> None:
+        …
+        62→    def __enter__(self) -> None:
+        63→        self.setup()
+        65→    def __exit__(self, *args: object) -> None:
+        66→        self.teardown()
     middlewares/
         __init__.py
         fastapi.py
