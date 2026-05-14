@@ -80,6 +80,8 @@ microbootstrap/
         1→from microbootstrap.instruments.cors_instrument import CorsConfig
         2→from microbootstrap.instruments.health_checks_instrument import HealthChecksConfig
         3→from microbootstrap.instruments.logging_instrument import LoggingConfig
+        15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
+        16→from microbootstrap.instruments.sentry_instrument import SentryConfig
         26→__all__ = (
         27→    "CorsConfig",
         28→    "FastApiPrometheusConfig",
@@ -223,10 +225,6 @@ microbootstrap/
             50→        return self.__initialized_instruments__
         logging_instrument.py
         opentelemetry_instrument.py
-            191→def _is_root_span(span: ReadableSpan) -> bool:
-            …
-            197→class PyroscopeSpanProcessor(SpanProcessor):
-            …
         prometheus_instrument.py
         pyroscope_instrument.py
             15→class PyroscopeConfig(BaseInstrumentConfig):

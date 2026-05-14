@@ -54,13 +54,15 @@ pub fn names_surface_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64
 
 /// Value multiplier for import/re-export-wall chunks. The first chunk keeps
 /// full import-batch value because it unlocks the package surface; later
-/// source groups fall off faster than names surfaces so tail plumbing does
-/// not crowd more precise semantic anchors at small budgets.
+/// source groups fall off at the same shape as names-surface chunks
+/// (`names_surface_chunk_factor` decay) — both are public-surface gates
+/// for the same kind of catalog, so source-order tails stay schedulable
+/// without letting the tail crowd more precise semantic anchors.
 pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f64 {
     if chunk_count <= 1 {
         1.0
     } else {
-        1.0 / (1.0 + chunk_index as f64 * 0.5)
+        1.0 / (1.0 + chunk_index as f64 * 0.35)
     }
 }
 

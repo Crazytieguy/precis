@@ -146,6 +146,9 @@ htmy/
         11→from .core import xml_format_string as xml_format_string
         12→from .error_boundary import ErrorBoundary as ErrorBoundary
         13→from .function_component import component as component
+        14→from .renderer import Renderer as Renderer
+        15→from .renderer import StreamingRenderer as StreamingRenderer
+        16→from .renderer.typing import RendererType as RendererType
         46→join_classes = join
         48→HTMY = Renderer
     core.py
@@ -214,16 +217,6 @@ htmy/
         29→    __slots__ = ("_fallback", "_path")
         31→    _root_keys: ClassVar[frozenset[str]] = frozenset(("", "."))
         32→    """Special keys that represent the "root" object, i.e. the entire translation resource file."""
-        34→    def __init__(self, path: str | Path, fallback: str | Path | None = None) -> None:
-        …
-        45→    @overload
-        …
-        48→    @overload
-        …
-        51→    async def get(self, dotted_path: str, key: str, **kwargs: Any) -> Any:
-        …
-        79→    @classmethod
-        …
         115→@alru_cache()
         116→async def load_translation_resource(path: Path) -> TranslationResource:
         147→def resolve_json_path(root: Path, dotted_subpath: str) -> Path:
