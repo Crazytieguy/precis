@@ -12,6 +12,12 @@ Dockerfile
 Dockerfile.rootless
 LICENSE
 README.md
+    9→<h1 align="center">
+    10→  Enclosed - Send private and secure notes
+    11→</h1>
+    12→<p align="center">
+    13→  Minimalistic web application designed for sending end-to-end encrypted notes and files.
+    14→</p>
     26→## Introduction
     28→**Enclosed** is a minimalistic web application designed for sending private and secure notes.
     30→All notes are end-to-end encrypted, ensuring that the server and storage have zero knowledge of the content. Users can set a password, define an expiration period (TTL), and choose to have the note self-destruct after being read.
@@ -343,14 +349,9 @@ packages/
         src/
             api/
                 api.client.ts
-                    4→export { apiClient };
-                    …
                 api.constants.ts
-                    1→export const DEFAULT_API_BASE_URL = 'https://enclosed.cc';
                 api.models.test.ts
                 api.models.ts
-                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
-                    …
             crypto/
             files/
                 files.models.ts

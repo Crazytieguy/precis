@@ -644,6 +644,14 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     let heading = first_heading_child(section)?;
 
     let mut covered: BTreeSet<usize> = BTreeSet::new();
+    // Prelude content: a README that opens with HTML title blocks /
+    // badges / a one-paragraph lede before the first heading
+    // (microbootstrap, many JS/TS libs) wraps that material in a
+    // heading-less section that `headed_sections` skips. Surface up to
+    // one substantive paragraph (skipping leading decorative
+    // paragraphs / image-only HTML) so the lede's content lines are
+    // covered. The heading and post-heading walk below still apply.
+    extend_prelude_lede(&mut covered, tree.root_node(), section, source);
     extend_rows_inclusive(&mut covered, heading, source);
     let heading_first_row = heading.start_position().row + 1;
 
@@ -1485,6 +1493,55 @@ fn heading_level(heading: Node) -> usize {
         }
     }
     0
+}
+
+/// Collect prelude lede rows for [`headline_spec`]: walk the `section`
+/// children of the root that appear *before* `first_headed` (i.e. the
+/// heading-less prelude tree-sitter-md wraps when the README opens with
+/// HTML title blocks or badges), skip leading decorative paragraphs /
+/// image-only HTML, then include blocks until the first substantive
+/// paragraph (inclusive) or end of prelude. Mirrors the
+/// post-heading-skip-then-include walk inside `headline_spec`.
+fn extend_prelude_lede(
+    covered: &mut BTreeSet<usize>,
+    root: Node<'_>,
+    first_headed: Node<'_>,
+    source: &str,
+) {
+    let mut cursor = root.walk();
+    let prelude_blocks: Vec<Node> = root
+        .children(&mut cursor)
+        .take_while(|c| *c != first_headed)
+        .flat_map(|c| {
+            // The prelude is itself a `section` node wrapping the
+            // pre-heading blocks; descend into it. Top-level blocks
+            // outside any section (rare) are walked as-is.
+            if c.kind() == "section" {
+                let mut inner = c.walk();
+                c.children(&mut inner).collect::<Vec<_>>()
+            } else {
+                vec![c]
+            }
+        })
+        .collect();
+
+    let mut i = 0;
+    while i < prelude_blocks.len() {
+        let block = prelude_blocks[i];
+        match block.kind() {
+            "paragraph" if is_decorative_paragraph(block, source) => {}
+            "html_block" if is_decorative_html_block(block, source) => {}
+            _ => break,
+        }
+        i += 1;
+    }
+    // Include exactly ONE substantive prelude block (a paragraph,
+    // block_quote tagline, or code-block lede) and stop. Larger preludes
+    // are rare; capping at one block keeps the headline batch size
+    // bounded so it still schedules early.
+    if let Some(block) = prelude_blocks.get(i) {
+        extend_rows_inclusive(covered, *block, source);
+    }
 }
 
 /// Top-level `section` children of `node` that have a heading. Tree-sitter-md

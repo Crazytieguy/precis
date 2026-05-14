@@ -147,44 +147,43 @@ Score(3000)=0.587 I=0.731 C=0.472 ns_rows≤3K=19/42 (reached=11 partial=0 missi
 | walker |  | 6330 | 77 | README.md section #15 |  |  | 0.561 |
 | walker |  | 6367 | 37 | README.md section #34 |  |  | 0.561 |
 | walker |  | 6446 | 79 | README.md section #18 |  |  | 0.570 |
-| walker |  | 6465 | 19 | README headline in website/README.md |  |  | 0.570 |
 | ns | 6516 |  | 271 | Playwright config — test dir + dev-server hookup | 8.2 |  | 0.556 |
-| walker |  | 6588 | 123 | plaintext config .gitignore |  |  | 0.556 |
-| walker |  | 6596 | 8 | listing of '.github' |  |  | 0.556 |
-| walker |  | 6600 | 4 | listing of '.github/workflows' |  |  | 0.556 |
-| walker |  | 6612 | 12 | module item at test/pages/index.tsx:3 |  |  | 0.556 |
-| walker |  | 6699 | 87 | README.md section #32 |  |  | 0.556 |
-| walker |  | 6796 | 97 | README.md section #7 |  |  | 0.559 |
-| walker |  | 6898 | 102 | README.md section #14 |  |  | 0.559 |
+| walker |  | 6569 | 123 | plaintext config .gitignore |  |  | 0.556 |
+| walker |  | 6577 | 8 | listing of '.github' |  |  | 0.556 |
+| walker |  | 6581 | 4 | listing of '.github/workflows' |  |  | 0.556 |
+| walker |  | 6593 | 12 | module item at test/pages/index.tsx:3 |  |  | 0.556 |
+| walker |  | 6680 | 87 | README.md section #32 |  |  | 0.556 |
+| walker |  | 6777 | 97 | README.md section #7 |  |  | 0.559 |
+| walker |  | 6879 | 102 | README.md section #14 |  |  | 0.559 |
 | ns | 6992 |  | 476 | test/pages/keybinds — fixture for every keybind spec | 8.3 |  | 0.534 |
-| walker |  | 7013 | 115 | README.md section #16 |  |  | 0.555 |
-| walker |  | 7038 | 25 | module item at website/pages/index.tsx:25 |  |  | 0.555 |
-| walker |  | 7161 | 123 | README.md section #6 |  |  | 0.555 |
-| walker |  | 7184 | 23 | module item at website/pages/index.tsx:84 |  |  | 0.555 |
-| walker |  | 7310 | 126 | README.md section #9 |  |  | 0.556 |
+| walker |  | 6994 | 115 | README.md section #16 |  |  | 0.555 |
+| walker |  | 7019 | 25 | module item at website/pages/index.tsx:25 |  |  | 0.555 |
+| walker |  | 7142 | 123 | README.md section #6 |  |  | 0.555 |
+| walker |  | 7165 | 23 | module item at website/pages/index.tsx:84 |  |  | 0.555 |
+| walker |  | 7291 | 126 | README.md section #9 |  |  | 0.556 |
 | ns | 7365 |  | 373 | index.tsx — Item header (registration + state subscriptions) | 9.1 | 4.3 | 0.570 |
-| walker |  | 7442 | 132 | README.md section #8 |  |  | 0.574 |
-| walker |  | 7462 | 20 | module item at website/pages/index.tsx:27 |  |  | 0.574 |
-| walker |  | 7475 | 13 | imports in test/pages/index.tsx |  |  | 0.574 |
-| walker |  | 7483 | 8 | export names surface in test/pages/dialog.tsx |  |  | 0.574 |
-| walker |  | 7491 | 8 | export names surface in test/pages/group.tsx |  |  | 0.574 |
-| walker |  | 7499 | 8 | export names surface in test/pages/huge.tsx |  |  | 0.574 |
-| walker |  | 7507 | 8 | export names surface in test/pages/item-advanced.tsx |  |  | 0.574 |
-| walker |  | 7515 | 8 | export names surface in test/pages/item.tsx |  |  | 0.574 |
-| walker |  | 7523 | 8 | export names surface in test/pages/keybinds.tsx |  |  | 0.574 |
-| walker |  | 7531 | 8 | export names surface in test/pages/numeric.tsx |  |  | 0.574 |
-| walker |  | 7539 | 8 | export names surface in test/pages/portal.tsx |  |  | 0.574 |
-| walker |  | 7547 | 8 | export names surface in test/pages/props.tsx |  |  | 0.574 |
+| walker |  | 7423 | 132 | README.md section #8 |  |  | 0.574 |
+| walker |  | 7443 | 20 | module item at website/pages/index.tsx:27 |  |  | 0.574 |
+| walker |  | 7456 | 13 | imports in test/pages/index.tsx |  |  | 0.574 |
+| walker |  | 7464 | 8 | export names surface in test/pages/dialog.tsx |  |  | 0.574 |
+| walker |  | 7472 | 8 | export names surface in test/pages/group.tsx |  |  | 0.574 |
+| walker |  | 7480 | 8 | export names surface in test/pages/huge.tsx |  |  | 0.574 |
+| walker |  | 7488 | 8 | export names surface in test/pages/item-advanced.tsx |  |  | 0.574 |
+| walker |  | 7496 | 8 | export names surface in test/pages/item.tsx |  |  | 0.574 |
+| walker |  | 7504 | 8 | export names surface in test/pages/keybinds.tsx |  |  | 0.574 |
+| walker |  | 7512 | 8 | export names surface in test/pages/numeric.tsx |  |  | 0.574 |
+| walker |  | 7520 | 8 | export names surface in test/pages/portal.tsx |  |  | 0.574 |
+| walker |  | 7528 | 8 | export names surface in test/pages/props.tsx |  |  | 0.574 |
 | ns | 7686 |  | 321 | index.tsx — Item render output (the cmdk-item div) | 9.2 | 9.1 | 0.585 |
-| walker |  | 7922 | 375 | README.md section #35 |  |  | 0.593 |
-| walker |  | 7998 | 76 | README.md section #25 |  |  | 0.604 |
-| walker |  | 8144 | 146 | README.md section #12 |  |  | 0.604 |
+| walker |  | 7903 | 375 | README.md section #35 |  |  | 0.593 |
+| walker |  | 7979 | 76 | README.md section #25 |  |  | 0.604 |
+| walker |  | 8125 | 146 | README.md section #12 |  |  | 0.604 |
 | ns | 8154 |  | 468 | index.tsx — Group component body | 9.3 | 4.3 | 0.618 |
-| walker |  | 8292 | 148 | README.md section #11 |  |  | 0.618 |
-| walker |  | 8325 | 33 | module item at website/pages/index.tsx:20 |  |  | 0.618 |
-| walker |  | 8406 | 81 | README.md section #13 |  |  | 0.618 |
+| walker |  | 8273 | 148 | README.md section #11 |  |  | 0.618 |
+| walker |  | 8306 | 33 | module item at website/pages/index.tsx:20 |  |  | 0.618 |
+| walker |  | 8387 | 81 | README.md section #13 |  |  | 0.618 |
 | ns | 8625 |  | 471 | index.tsx — useCmdk + useValue helpers | 9.4 |  | 0.599 |
-| walker |  | 8989 | 583 | README.md section #2 |  |  | 0.659 |
+| walker |  | 8970 | 583 | README.md section #2 |  |  | 0.659 |
 | ns | 9027 |  | 402 | Architecture — Discarded approaches (rejected alternatives) | 10.1 | 3.1 | 0.654 |
 | ns | 9480 |  | 453 | test/pages/group — fixture for the group.test specs | 10.2 |  | 0.635 |
 | ns | 9603 |  | 123 | Architecture — Performance + Groups bodies | 10.3 | 3.1 | 0.636 |

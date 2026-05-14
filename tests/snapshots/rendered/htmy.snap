@@ -7,6 +7,7 @@ expression: rendered
 .gitignore
 LICENSE
 README.md
+    6→**Source code**: [https://github.com/volfpeter/htmy](https://github.com/volfpeter/htmy)
     10→# `htmy`
     12→**Async**, **pure-Python** server-side rendering engine.
     14→Unleash your creativity with the full power and Python, without the hassle of learning a new templating language or dealing with its limitations!
@@ -265,8 +266,6 @@ htmy/
             …
             28→    __slots__ = ("_default_context", "_string_formatter")
         context.py
-            1→from htmy.typing import Context
-            3→from .typing import RendererType, is_renderer
             6→class RendererContext:
             7→    """
             8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
@@ -276,7 +275,6 @@ htmy/
         default.py
             20→class _Node:
             …
-            23→    __slots__ = ("component", "next")
             50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
             53→class _ComponentRenderer:
             …

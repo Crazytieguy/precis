@@ -19,6 +19,12 @@ expression: rendered
 Changelog.md
 License.md
 Readme.md
+    5→<p align="center">
+    6→  A simple and composable way  <br/>
+    7→  to validate data in JavaScript (and TypeScript).
+    8→</p>
+    9→<br/>
+    10→<br/>
     42→### Usage
     44→Superstruct allows you to define the shape of data you want to validate:
     145→### Why?
@@ -92,6 +98,7 @@ docs/
         logo.png
         logo.sketch
     readme.md
+        1→Superstruct makes it easy to define interfaces and then validate JavaScript data against them. Its type annotation API was inspired by [TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html), [Flow](https://flow.org/en/docs/types/), [Go](https://gobyexample.com/structs), and [GraphQL](http://graphql.org/learn/schema/), giving it a familiar and easy to understand API.
         7→### Usage
         9→Superstruct allows you to define the shape of data you want to validate:
     reference/
@@ -338,27 +345,6 @@ src/
             79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
             80→  return coerce(struct, string(), (x) => x.trim())
         refinements.ts
-            8→export function empty<
-            …
-            33→export function max<T extends number | Date, S extends any>(
-            …
-            55→export function min<T extends number | Date, S extends any>(
-            …
-            77→export function nonempty<
-            …
-            93→export function pattern<T extends string, S extends any>(
-            94→  struct: Struct<T, S>,
-            95→  regexp: RegExp
-            96→): Struct<T, S> {
-            …
-            109→export function size<
-            …
-            146→export function refine<T, S>(
-            147→  struct: Struct<T, S>,
-            148→  name: string,
-            149→  refiner: Refiner<T>
-            150→): Struct<T, S> {
-            …
         types.ts
         utilities.ts
             247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
