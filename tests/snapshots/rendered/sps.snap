@@ -18,6 +18,30 @@ Cargo.toml
 LICENSE.md
 NOTICE.md
 README.md
+    1→# sps
+    25→sps is a next‑generation, Rust‑powered package manager inspired by Homebrew. It installs and manages:
+    27→- **Formulae:** command‑line tools, libraries, and languages
+    28→- **Casks:** desktop applications and related artifacts on macOS
+    30→> _ARM only for now, might add x86 support eventually_
+    32→---
+    34→## ⚙️ Project Structure
+    …
+    42→## 🚧 Current Status
+    …
+    54→## 🚀 Roadmap
+    …
+    63→## Trying it out:
+    …
+    77→## 📦 Usage
+    …
+    123→## 🏗️ Building from Source
+    …
+    138→## 📥 Using the Latest Nightly Build
+    …
+    151→## 🤝 Contributing
+    …
+    164→## 📄 License
+    …
 rustfmt.toml
 sps/
     Cargo.toml
@@ -232,30 +256,18 @@ sps-core/
                     37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
                     …
                     43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    44→    config.cask_store_token_path(&cask.token)
+                    …
                     49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
                     …
                     73→pub async fn download_cask(cask: &Cask, cache: &Cache) -> Result<PathBuf> {
-                    74→    download_cask_with_progress(cask, cache, None).await
+                    …
                     77→pub async fn download_cask_with_progress(
-                    78→    cask: &Cask,
-                    79→    cache: &Cache,
-                    80→    progress_callback: Option<ProgressCallback>,
-                    81→) -> Result<PathBuf> {
                     …
                     232→pub fn install_cask(
                     …
                     580→pub fn write_receipt(
-                    581→    cask: &Cask,
-                    582→    cask_version_install_path: &Path,
-                    583→    artifacts: Vec<String>,
-                    584→) -> Result<()> {
                     …
                     612→pub fn write_cask_manifest(
-                    613→    cask: &Cask,
-                    614→    cask_version_install_path: &Path,
-                    615→    artifacts: Vec<InstalledArtifact>,
-                    616→) -> Result<()> {
                     …
                     686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
                     …

@@ -656,9 +656,10 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
     let heading_first_row = heading.start_position().row + 1;
 
     // Walk siblings after the heading, skipping leading decorative
-    // paragraphs / image-only HTML blocks; then include subsequent
-    // blocks until we hit a non-decorative paragraph or a section
-    // boundary.
+    // paragraphs / image-only HTML blocks / admin block_quotes
+    // (`> [!WARNING]` callouts, long deprecation notices); then include
+    // subsequent blocks until we hit a non-decorative paragraph or a
+    // section boundary.
     let post: Vec<Node> = children_after(section, heading);
     let mut i = 0;
     while i < post.len() {
@@ -669,6 +670,7 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         match block.kind() {
             "paragraph" if is_decorative_paragraph(block, source) => {}
             "html_block" if is_decorative_html_block(block, source) => {}
+            "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
         }
         i += 1;
@@ -677,6 +679,10 @@ fn headline_spec(tree: &Tree, source: &str) -> Option<HeadlineSpec> {
         let block = post[i];
         if is_section_boundary(block.kind()) {
             break;
+        }
+        if block.kind() == "block_quote" && is_admin_block_quote(block, source) {
+            i += 1;
+            continue;
         }
         extend_rows_inclusive(&mut covered, block, source);
         if block.kind() == "paragraph" && !is_decorative_paragraph(block, source) {
@@ -873,6 +879,32 @@ fn is_decorative_html_block(block: Node, source: &str) -> bool {
     let raw = &source[block.start_byte()..block.end_byte()];
     let stripped = strip_html_tags(raw);
     stripped.trim().is_empty()
+}
+
+/// True when a `block_quote` is an admin / warning / callout — a
+/// GitHub-flavored callout (`> [!WARNING]`, `> [!NOTE]`, etc.) OR a
+/// multi-paragraph block_quote (4+ source rows). Short single-paragraph
+/// block_quotes (typically taglines — `> Ky is a tiny and elegant HTTP
+/// client...`) are NOT classified as admin and stay in the headline.
+fn is_admin_block_quote(block: Node, source: &str) -> bool {
+    let raw = &source[block.start_byte()..block.end_byte()];
+    // GitHub-style callouts open with `> [!TYPE]`.
+    for line in raw.lines().take(2) {
+        let trimmed = line.trim_start_matches('>').trim();
+        if let Some(rest) = trimmed.strip_prefix("[!")
+            && rest
+                .split_once(']')
+                .is_some_and(|(_, after)| after.trim().is_empty())
+        {
+            return true;
+        }
+    }
+    // Multi-paragraph or long block_quote (4+ lines including the
+    // line numbers of the first row through the last). Single-line
+    // taglines stay.
+    let start = block.start_position().row;
+    let end = block.end_position().row;
+    end.saturating_sub(start) >= 3
 }
 
 fn strip_html_tags(s: &str) -> String {
@@ -1531,6 +1563,7 @@ fn extend_prelude_lede(
         match block.kind() {
             "paragraph" if is_decorative_paragraph(block, source) => {}
             "html_block" if is_decorative_html_block(block, source) => {}
+            "block_quote" if is_admin_block_quote(block, source) => {}
             _ => break,
         }
         i += 1;
