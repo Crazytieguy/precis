@@ -382,7 +382,16 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             if !item.body_parts.is_empty() {
                 let item_predecessor = BatchKey::Typescript(item_key);
                 let parts = item.body_parts;
-                let part_value_factor = body_part_value_factor(parts.len());
+                // Module-level class method bodies are sibling units (one
+                // per method), each independently relevant — unlike
+                // function body fragments which compete as alternatives.
+                // No per-part damping so a method body can compete on
+                // its own merit against orientation batches.
+                let part_value_factor = if matches!(item.kind, ItemKind::Class) {
+                    1.0
+                } else {
+                    body_part_value_factor(parts.len())
+                };
                 for part in parts {
                     let Some(body_start_line) = part.start_line() else {
                         continue;
@@ -391,6 +400,14 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         single_file_lines_content(file, &source, FileLines::new(part.lines))
                     else {
                         continue;
+                    };
+                    // Class method bodies are peer units (one per method);
+                    // bypass the late-body decay that targets long
+                    // function-body chains in catalog files.
+                    let segment_factor = if matches!(item.kind, ItemKind::Class) {
+                        1.0
+                    } else {
+                        body_segment_value_factor(body_segment_index)
                     };
                     out.push(Batch {
                         key: TsKey::ModuleItemBody {
@@ -404,7 +421,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                         value: module_item_body_value(file, item.kind, ctx, js_factor)
                             * per_export_factor
                             * part_value_factor
-                            * body_segment_value_factor(body_segment_index),
+                            * segment_factor,
                     });
                     body_segment_index += 1;
                 }
@@ -1561,8 +1578,16 @@ fn module_item_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64)
 
 fn module_item_body_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
-    let cat = (0.30 * k * entrypoint_boost(file)).min(1.0);
-    let fu = (0.82 * k).min(1.0);
+    // Class method bodies carry per-method query value; lift cat so
+    // each method's body can compete against peer-level orientation
+    // batches in the early budget.
+    let class_boost = if matches!(kind, ItemKind::Class) {
+        1.5
+    } else {
+        1.0
+    };
+    let cat = (0.30 * class_boost * k * entrypoint_boost(file)).min(1.0);
+    let fu = (0.82 * class_boost * k).min(1.0);
     mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
 }
 

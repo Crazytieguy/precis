@@ -35,11 +35,6 @@ examples/
         package.json
         public/
         src/
-            App.tsx
-            constants.ts
-            index.tsx
-            searchGif.ts
-            styles.css
         tsconfig.json
     one-file-demo/
 jest.config.cjs
@@ -118,15 +113,6 @@ package.json
     71→    "url": "https://github.com/gvergnaud/ts-pattern/issues"
     72→  },
     73→  "homepage": "https://github.com/gvergnaud/ts-pattern#readme",
-    74→  "devDependencies": {
-    75→    "@types/jest": "^30.0.0",
-    76→    "jest": "^30.1.3",
-    77→    "microbundle": "^0.15.1",
-    78→    "prettier": "^2.8.8",
-    79→    "rimraf": "^5.0.1",
-    80→    "ts-jest": "^29.4.1",
-    81→    "typescript": "^5.9.2"
-    82→  }
 scripts/
 src/
     errors.ts
@@ -192,64 +178,64 @@ src/
         47→class MatchExpression<input, output> {
         48→  constructor(private input: input, private state: MatchState<output>) {}
         50→  with(...args: any[]): MatchExpression<input, output> {
-        …
+        51→    if (this.state.matched) return this;
+        53→    const handler: (selection: unknown, value: input) => output =
+        54→      args[args.length - 1];
+        56→    const patterns: Pattern<input>[] = [args[0]];
+        57→    let predicate: ((value: input) => unknown) | undefined = undefined;
+        59→    if (args.length === 3 && typeof args[1] === 'function') {
+        60→      // case with guard as second argument
+        61→      predicate = args[1];
+        62→    } else if (args.length > 2) {
+        63→      // case with several patterns
+        64→      patterns.push(...args.slice(1, args.length - 1));
+        65→    }
+        67→    let hasSelections = false;
+        68→    let selected: Record<string, unknown> = {};
+        69→    const select = (key: string, value: unknown) => {
+        70→      hasSelections = true;
+        71→      selected[key] = value;
+        72→    };
+        74→    const matched =
+        75→      patterns.some((pattern) => matchPattern(pattern, this.input, select)) &&
+        76→      (predicate ? Boolean(predicate(this.input)) : true);
+        78→    const selections = hasSelections
+        79→      ? symbols.anonymousSelectKey in selected
+        80→        ? selected[symbols.anonymousSelectKey]
+        81→        : selected
+        82→      : this.input;
+        84→    const state = matched
+        85→      ? {
+        86→          matched: true as const,
+        87→          value: handler(selections, this.input),
+        88→        }
+        89→      : unmatched;
+        91→    return new MatchExpression(this.input, state);
         94→  when(
         95→    predicate: (value: input) => unknown,
         96→    handler: (selection: input, value: input) => output
         97→  ): MatchExpression<input, output> {
-        …
+        98→    if (this.state.matched) return this;
+        100→    const matched = Boolean(predicate(this.input));
+        102→    return new MatchExpression<input, output>(
+        103→      this.input,
+        104→      matched
+        105→        ? { matched: true, value: handler(this.input, this.input) }
+        106→        : unmatched
+        107→    );
         110→  otherwise(handler: (value: input) => output): output {
-        …
+        111→    if (this.state.matched) return this.state.value;
+        112→    return handler(this.input);
         115→  exhaustive(unexpectedValueHandler = defaultCatcher): output {
-        …
+        116→    if (this.state.matched) return this.state.value;
+        117→    return unexpectedValueHandler(this.input);
         120→  run(): output {
-        …
+        121→    return this.exhaustive();
         124→  returnType() {
-        …
+        125→    return this;
         128→  narrow() {
-        …
+        129→    return this;
     patterns.ts
-        48→export type {
-        …
-        65→export { matcher };
-        …
-        81→export type unstable_Matchable<
-        82→  narrowedOrFn,
-        83→  input = unknown,
-        84→  pattern = never
-        85→> = CustomP<input, pattern, narrowedOrFn>;
-        100→export type unstable_Matcher<
-        101→  narrowedOrFn,
-        102→  input = unknown,
-        103→  pattern = never
-        104→> = ReturnType<CustomP<input, pattern, narrowedOrFn>[matcher]>;
-        116→export type infer<pattern> = InvertPattern<NoInfer<pattern>, unknown>;
-        …
-        131→export type narrow<input, pattern> = ExtractPreciseValue<
-        132→  input,
-        133→  InvertPattern<pattern, input>
-        134→>;
-        187→export function optional<
-        188→  input,
-        189→  const pattern extends unknown extends input
-        190→    ? UnknownValuePattern
-        191→    : Pattern<input>
-        192→>(pattern: pattern): Chainable<OptionalP<input, pattern>, 'optional'> {
-        …
-        241→export function array<input>(): ArrayChainable<ArrayP<input, unknown>>;
-        242→export function array<
-        243→  input,
-        244→  const pattern extends Pattern<WithDefault<UnwrapArray<input>, unknown>>
-        245→>(pattern: pattern): ArrayChainable<ArrayP<input, pattern>>;
-        246→export function array(
-        247→  ...args: [pattern?: any]
-        248→): ArrayChainable<ArrayP<any, any>> {
-        …
-        294→export function set<input>(): Chainable<SetP<input, unknown>>;
-        295→export function set<
-        296→  input,
-        297→  const pattern extends Pattern<WithDefault<UnwrapSet<input>, unknown>>
-        298→>(pattern: pattern): Chainable<SetP<input, pattern>>;
     types/
         BuildMany.ts
         DeepExclude.ts

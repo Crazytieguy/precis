@@ -1,7 +1,7 @@
 fixture = "commander"
 budget = 10000
-cumulative_tokens = 9837
-batch_count = 162
+cumulative_tokens = 9896
+batch_count = 163
 
 [[batches]]
 position = 1
@@ -1019,10 +1019,46 @@ kind = "ellipsis"
 
 [[batches]]
 position = 36
+key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts", start_line: 509, body_start_line: 515 })'
+descriptor = "module item body at typings/index.test-d.ts:509 body 515"
+cost_tokens = 7
+cum_tokens = 1709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
+start = 515
+end = 515
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts", start_line: 509, body_start_line: 511 })'
+descriptor = "module item body at typings/index.test-d.ts:509 body 511"
+cost_tokens = 9
+cum_tokens = 1718
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
+start = 511
+end = 511
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/help.js"
 cost_tokens = 41
-cum_tokens = 1743
+cum_tokens = 1759
 
 [batches.content]
 kind = "lines"
@@ -1068,11 +1104,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 39
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 740 })'
 descriptor = "export at lib/help.js:740"
 cost_tokens = 0
-cum_tokens = 1743
+cum_tokens = 1759
 
 [batches.content]
 kind = "lines"
@@ -1094,11 +1130,11 @@ end = 741
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 40
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 228
-cum_tokens = 1971
+cum_tokens = 1987
 
 [batches.content]
 kind = "lines"
@@ -1112,11 +1148,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 39
+position = 41
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/可变参数的选项.md" })'
 descriptor = "headings outline in docs/zh-CN/可变参数的选项.md"
 cost_tokens = 127
-cum_tokens = 2098
+cum_tokens = 2114
 
 [batches.content]
 kind = "lines"
@@ -1234,11 +1270,11 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 42
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", chunk_index: 0, export_count: 11, type_only_export_count: 0 })'
 descriptor = "export names surface in index.js"
 cost_tokens = 150
-cum_tokens = 2248
+cum_tokens = 2264
 
 [batches.content]
 kind = "lines"
@@ -1300,11 +1336,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 41
+position = 43
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", start_line: 17 })'
 descriptor = "export at index.js:17"
 cost_tokens = 0
-cum_tokens = 2248
+cum_tokens = 2264
 
 [batches.content]
 kind = "lines"
@@ -1318,11 +1354,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 42
+position = 44
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js", start_line: 17 })'
 descriptor = "export doc at index.js:17"
 cost_tokens = 19
-cum_tokens = 2267
+cum_tokens = 2283
 
 [batches.content]
 kind = "lines"
@@ -1336,11 +1372,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 43
+position = 45
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/argument.js"
 cost_tokens = 48
-cum_tokens = 2315
+cum_tokens = 2331
 
 [batches.content]
 kind = "lines"
@@ -1386,11 +1422,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 46
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 143 })'
 descriptor = "export at lib/argument.js:143"
 cost_tokens = 0
-cum_tokens = 2315
+cum_tokens = 2331
 
 [batches.content]
 kind = "lines"
@@ -1412,11 +1448,11 @@ end = 144
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 47
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 7 })'
 descriptor = "Readme.md section #7"
 cost_tokens = 78
-cum_tokens = 2393
+cum_tokens = 2409
 
 [batches.content]
 kind = "lines"
@@ -1446,11 +1482,11 @@ end = 964
 kind = "full"
 
 [[batches]]
-position = 46
+position = 48
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/command.js"
 cost_tokens = 51
-cum_tokens = 2444
+cum_tokens = 2460
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1532,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 49
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/command.js", start_line: 2752 })'
 descriptor = "export at lib/command.js:2752"
 cost_tokens = 0
-cum_tokens = 2444
+cum_tokens = 2460
 
 [batches.content]
 kind = "lines"
@@ -1522,11 +1558,11 @@ end = 2753
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 50
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/error.js"
 cost_tokens = 51
-cum_tokens = 2495
+cum_tokens = 2511
 
 [batches.content]
 kind = "lines"
@@ -1572,11 +1608,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 51
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25 })'
 descriptor = "export at lib/error.js:25"
 cost_tokens = 11
-cum_tokens = 2506
+cum_tokens = 2522
 
 [batches.content]
 kind = "lines"
@@ -1606,11 +1642,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 52
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4 })'
 descriptor = "export at lib/error.js:4"
 cost_tokens = 16
-cum_tokens = 2522
+cum_tokens = 2538
 
 [batches.content]
 kind = "lines"
@@ -1640,11 +1676,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 53
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN/不再推荐使用的功能.md" })'
 descriptor = "headings outline in docs/zh-CN/不再推荐使用的功能.md"
 cost_tokens = 163
-cum_tokens = 2685
+cum_tokens = 2701
 
 [batches.content]
 kind = "lines"
@@ -1826,11 +1862,11 @@ end = 188
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 54
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 44
-cum_tokens = 2729
+cum_tokens = 2745
 
 [batches.content]
 kind = "lines"
@@ -1844,11 +1880,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 53
+position = 55
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.js.json" })'
 descriptor = "json config tsconfig.js.json"
 cost_tokens = 164
-cum_tokens = 2893
+cum_tokens = 2909
 
 [batches.content]
 kind = "lines"
@@ -1862,11 +1898,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 54
+position = 56
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25, body_start_line: 31 })'
 descriptor = "export body at lib/error.js:25 body 31"
 cost_tokens = 55
-cum_tokens = 2948
+cum_tokens = 2964
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +1916,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 55
+position = 57
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/Readme.md", section_index: 0 })'
 descriptor = "Readme.md section #0"
 cost_tokens = 825
-cum_tokens = 3773
+cum_tokens = 3789
 
 [batches.content]
 kind = "lines"
@@ -1914,11 +1950,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 56
+position = 58
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 3 })'
 descriptor = "export at lib/argument.js:3"
 cost_tokens = 96
-cum_tokens = 3869
+cum_tokens = 3885
 
 [batches.content]
 kind = "lines"
@@ -2060,11 +2096,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 59
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js", start_line: 143, body_start_line: 144 })'
 descriptor = "export body at lib/argument.js:143 body 144"
 cost_tokens = 48
-cum_tokens = 3917
+cum_tokens = 3933
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +2122,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 58
+position = 60
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js", start_line: 740, body_start_line: 741 })'
 descriptor = "export body at lib/help.js:740 body 741"
 cost_tokens = 50
-cum_tokens = 3967
+cum_tokens = 3983
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2140,11 @@ end = 743
 kind = "full"
 
 [[batches]]
-position = 59
+position = 61
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4 })'
 descriptor = "export doc at lib/error.js:4"
 cost_tokens = 19
-cum_tokens = 3986
+cum_tokens = 4002
 
 [batches.content]
 kind = "lines"
@@ -2122,11 +2158,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 60
+position = 62
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 25 })'
 descriptor = "export doc at lib/error.js:25"
 cost_tokens = 20
-cum_tokens = 4006
+cum_tokens = 4022
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2176,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 61
+position = 63
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/.editorconfig" })'
 descriptor = "plaintext config .editorconfig"
 cost_tokens = 104
-cum_tokens = 4110
+cum_tokens = 4126
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2210,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 62
+position = 64
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/error.js", start_line: 4, body_start_line: 12 })'
 descriptor = "export body at lib/error.js:4 body 12"
 cost_tokens = 80
-cum_tokens = 4190
+cum_tokens = 4206
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2228,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 63
+position = 65
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/argument.js" })'
 descriptor = "imports in lib/argument.js"
 cost_tokens = 16
-cum_tokens = 4206
+cum_tokens = 4222
 
 [batches.content]
 kind = "lines"
@@ -2210,11 +2246,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 64
+position = 66
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js" })'
 descriptor = "imports in lib/option.js"
 cost_tokens = 16
-cum_tokens = 4222
+cum_tokens = 4238
 
 [batches.content]
 kind = "lines"
@@ -2228,11 +2264,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/commander/tsconfig.ts.json" })'
 descriptor = "json config tsconfig.ts.json"
 cost_tokens = 239
-cum_tokens = 4461
+cum_tokens = 4477
 
 [batches.content]
 kind = "lines"
@@ -2246,11 +2282,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 66
+position = 68
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/help.js" })'
 descriptor = "imports in lib/help.js"
 cost_tokens = 17
-cum_tokens = 4478
+cum_tokens = 4494
 
 [batches.content]
 kind = "lines"
@@ -2264,29 +2300,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts", start_line: 509, body_start_line: 515 })'
-descriptor = "module item body at typings/index.test-d.ts:509 body 515"
-cost_tokens = 7
-cum_tokens = 4485
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
-start = 515
-end = 515
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
+position = 69
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/help-in-depth.md", section_index: 0 })'
 descriptor = "docs/help-in-depth.md section #0"
 cost_tokens = 192
-cum_tokens = 4677
+cum_tokens = 4686
 
 [batches.content]
 kind = "lines"
@@ -2332,11 +2350,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/index.js" })'
 descriptor = "imports in index.js"
 cost_tokens = 83
-cum_tokens = 4760
+cum_tokens = 4769
 
 [batches.content]
 kind = "lines"
@@ -2350,11 +2368,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in esm.mjs"
 cost_tokens = 9
-cum_tokens = 4769
+cum_tokens = 4778
 
 [batches.content]
 kind = "lines"
@@ -2376,11 +2394,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs" })'
 descriptor = "imports in esm.mjs"
 cost_tokens = 11
-cum_tokens = 4780
+cum_tokens = 4789
 
 [batches.content]
 kind = "lines"
@@ -2394,11 +2412,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/esm.mjs", start_line: 4 })'
 descriptor = "export at esm.mjs:4"
 cost_tokens = 97
-cum_tokens = 4877
+cum_tokens = 4886
 
 [batches.content]
 kind = "lines"
@@ -2412,11 +2430,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md", section_index: 0 })'
 descriptor = "docs/options-in-depth.md section #0"
 cost_tokens = 215
-cum_tokens = 5092
+cum_tokens = 5101
 
 [batches.content]
 kind = "lines"
@@ -2441,24 +2459,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/options-in-depth.md"
 start = 7
 end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts", start_line: 509, body_start_line: 511 })'
-descriptor = "module item body at typings/index.test-d.ts:509 body 511"
-cost_tokens = 9
-cum_tokens = 5101
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/typings/index.test-d.ts"
-start = 511
-end = 511
 
 [batches.content.spans.render]
 kind = "full"
@@ -5031,10 +5031,28 @@ kind = "full"
 
 [[batches]]
 position = 150
+key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js", start_line: 6, body_start_line: 8 })'
+descriptor = "module item body at examples/custom-command-class.js:6 body 8"
+cost_tokens = 59
+cum_tokens = 9740
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-custom-processing.js" })'
 descriptor = "imports in examples/arguments-custom-processing.js"
 cost_tokens = 12
-cum_tokens = 9693
+cum_tokens = 9752
 
 [batches.content]
 kind = "lines"
@@ -5048,11 +5066,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/arguments-extra.js" })'
 descriptor = "imports in examples/arguments-extra.js"
 cost_tokens = 12
-cum_tokens = 9705
+cum_tokens = 9764
 
 [batches.content]
 kind = "lines"
@@ -5066,11 +5084,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/configure-output.js" })'
 descriptor = "imports in examples/configure-output.js"
 cost_tokens = 12
-cum_tokens = 9717
+cum_tokens = 9776
 
 [batches.content]
 kind = "lines"
@@ -5084,11 +5102,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/custom-command-class.js" })'
 descriptor = "imports in examples/custom-command-class.js"
 cost_tokens = 12
-cum_tokens = 9729
+cum_tokens = 9788
 
 [batches.content]
 kind = "lines"
@@ -5102,11 +5120,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/defaultCommand.js" })'
 descriptor = "imports in examples/defaultCommand.js"
 cost_tokens = 12
-cum_tokens = 9741
+cum_tokens = 9800
 
 [batches.content]
 kind = "lines"
@@ -5120,11 +5138,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/nestedCommands.js" })'
 descriptor = "imports in examples/nestedCommands.js"
 cost_tokens = 12
-cum_tokens = 9753
+cum_tokens = 9812
 
 [batches.content]
 kind = "lines"
@@ -5138,11 +5156,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-boolean-or-value.js" })'
 descriptor = "imports in examples/options-boolean-or-value.js"
 cost_tokens = 12
-cum_tokens = 9765
+cum_tokens = 9824
 
 [batches.content]
 kind = "lines"
@@ -5156,11 +5174,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-common.js" })'
 descriptor = "imports in examples/options-common.js"
 cost_tokens = 12
-cum_tokens = 9777
+cum_tokens = 9836
 
 [batches.content]
 kind = "lines"
@@ -5174,11 +5192,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-custom-processing.js" })'
 descriptor = "imports in examples/options-custom-processing.js"
 cost_tokens = 12
-cum_tokens = 9789
+cum_tokens = 9848
 
 [batches.content]
 kind = "lines"
@@ -5192,11 +5210,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-defaults.js" })'
 descriptor = "imports in examples/options-defaults.js"
 cost_tokens = 12
-cum_tokens = 9801
+cum_tokens = 9860
 
 [batches.content]
 kind = "lines"
@@ -5210,11 +5228,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-negatable.js" })'
 descriptor = "imports in examples/options-negatable.js"
 cost_tokens = 12
-cum_tokens = 9813
+cum_tokens = 9872
 
 [batches.content]
 kind = "lines"
@@ -5228,11 +5246,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-required.js" })'
 descriptor = "imports in examples/options-required.js"
 cost_tokens = 12
-cum_tokens = 9825
+cum_tokens = 9884
 
 [batches.content]
 kind = "lines"
@@ -5246,11 +5264,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/commander/examples/options-variadic.js" })'
 descriptor = "imports in examples/options-variadic.js"
 cost_tokens = 12
-cum_tokens = 9837
+cum_tokens = 9896
 
 [batches.content]
 kind = "lines"
