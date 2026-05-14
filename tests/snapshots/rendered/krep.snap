@@ -97,75 +97,11 @@ README.md
     241→This project is licensed under the BSD-2 License - see the LICENSE file for details.
     243→Copyright © 2025 Davide Santangelo
 aho_corasick.c
-    17→typedef struct ac_node
-    …
-    26→struct ac_trie
-    27→{
-    28→    ac_node_t *root;     // Root node of the trie
-    29→    size_t num_patterns; // Number of patterns in the trie
-    30→    bool case_sensitive; // Whether search is case-sensitive
-    31→};
-    110→// Build the Aho-Corasick Trie
-    111→ac_trie_t *ac_trie_build(const search_params_t *params)
-    112→{
-    …
-    273→// Free the Aho-Corasick Trie
-    274→void ac_trie_free(ac_trie_t *trie)
-    275→{
-    …
-    286→// Check if the root node has outputs (used for empty pattern matching in empty files)
-    287→bool ac_trie_root_has_outputs(const ac_trie_t *trie)
-    288→{
-    289→    return (trie != NULL && trie->root != NULL && trie->root->num_outputs > 0);
-    292→// Forward declarations for helper functions (assuming they exist in krep.c or elsewhere)
-    293→extern size_t find_line_start(const char *text, size_t max_len, size_t pos);
-    294→extern bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end);
-    295→// Match the declaration in krep.h (remove const)
-    296→extern unsigned char lower_table[256];
-    …
-    298→// Corrected Aho-Corasick search function
-    299→uint64_t aho_corasick_search(const search_params_t *params,
-    300→                             const char *text_start,
-    301→                             size_t text_len,
-    302→                             match_result_t *result)
-    303→{
-    …
 aho_corasick.h
     1→/**
     2→ * Aho-Corasick algorithm for multiple pattern search.
     3→ * This header declares the Aho-Corasick trie structure and functions.
     4→ */
-    9→#include <stdbool.h>
-    10→#include <stddef.h> // For size_t
-    11→#include <stdint.h> // For uint64_t
-    13→// Forward declaration for search_params_t instead of including krep.h
-    14→struct search_params;
-    15→typedef struct search_params search_params_t;
-    …
-    17→// Forward declaration for match_result_t (needed by aho_corasick_search)
-    18→// Use the same struct tag as defined in krep.h
-    19→struct match_result_t;
-    20→typedef struct match_result_t match_result_t;
-    …
-    22→// Forward declaration for internal node structure
-    23→struct ac_node;
-    …
-    25→// Forward declaration for Aho-Corasick trie structure
-    26→struct ac_trie;
-    27→typedef struct ac_trie ac_trie_t;
-    …
-    29→// Build the Aho-Corasick Trie from search parameters
-    30→ac_trie_t *ac_trie_build(const search_params_t *params);
-    …
-    32→// Free the Aho-Corasick Trie
-    33→void ac_trie_free(ac_trie_t *trie);
-    …
-    35→// Check if the root node of the trie has any outputs (for empty pattern matching)
-    36→bool ac_trie_root_has_outputs(const ac_trie_t *trie);
-    …
-    38→// Aho-Corasick search function declaration
-    39→uint64_t aho_corasick_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
-    …
 krep.c
 krep.h
     1→/* krep.h - Header file for krep utility
@@ -180,6 +116,101 @@ krep.h
     14→#include <pthread.h>   // For mutex types (though no longer used for counting)
     15→#include <stdatomic.h> // For atomic types used in structs
     16→#include <ctype.h>     // For isalnum function
+    18→// --- Global Variables (declared extern) ---
+    19→extern unsigned char lower_table[256];
+    …
+    21→// Forward declaration for Aho-Corasick trie structure
+    22→struct ac_trie;
+    23→typedef struct ac_trie ac_trie_t;
+    …
+    32→/* --- ANSI Color Codes --- */
+    33→// Define colors consistently
+    34→#define KREP_COLOR_RESET "\033[0m"
+    35→#define KREP_COLOR_FILENAME "\033[1;38;5;81m"   // Bright cyan
+    36→#define KREP_COLOR_SEPARATOR "\033[38;5;244m"   // Muted gray
+    37→#define KREP_COLOR_LINE_NUMBER "\033[1;38;5;111m" // Soft mint
+    38→#define KREP_COLOR_MATCH "\033[1;38;5;222m"     // Warm amber
+    39→#define KREP_COLOR_TEXT "\033[38;5;252m"        // Soft white
+    …
+    41→/* --- Help UI Colors --- */
+    42→#define KREP_COLOR_HELP_TITLE "\033[1;38;5;81m"
+    43→#define KREP_COLOR_HELP_SECTION "\033[1;38;5;222m"
+    44→#define KREP_COLOR_HELP_OPTION "\033[1;38;5;117m"
+    45→#define KREP_COLOR_HELP_MUTED "\033[38;5;244m"
+    …
+    47→/* --- Match tracking structure --- */
+    48→// Define match_position_t BEFORE match_result_t
+    49→typedef struct
+    50→{
+    51→   size_t start_offset; // Starting position of the match
+    52→   size_t end_offset;   // Ending position of the match (exclusive)
+    53→} match_position_t;
+    55→typedef struct match_result_t // Add the struct tag here
+    …
+    65→typedef struct search_params
+    …
+    96→/* --- Function Pointer Type for Search Algorithms --- */
+    97→// Returns count (lines or matches depending on mode). result can be NULL unless track_positions is true.
+    98→typedef uint64_t (*search_func_t)(const search_params_t *params,
+    99→                                  const char *text_start,
+    100→                                  size_t text_len,
+    101→                                  match_result_t *result);
+    104→typedef struct
+    …
+    124→/* --- Thread Pool Implementation --- */
+    125→typedef struct task
+    126→{
+    127→   void *(*func)(void *); // Task function
+    128→   void *arg;             // Function argument
+    129→   struct task *next;     // Next task in queue
+    130→} task_t;
+    132→typedef struct
+    …
+    145→/* --- Thread Pool API --- */
+    146→thread_pool_t *thread_pool_init(int num_threads);
+    147→bool thread_pool_submit(thread_pool_t *pool, void *(*func)(void *), void *arg);
+    148→void thread_pool_wait_all(thread_pool_t *pool);
+    149→void thread_pool_destroy(thread_pool_t *pool);
+    …
+    161→int search_file(const search_params_t *params, const char *filename, int requested_thread_count);
+    …
+    170→int search_string(const search_params_t *params, const char *text);
+    …
+    180→int search_directory_recursive(const char *base_dir, const search_params_t *params, int thread_count);
+    …
+    182→/* --- Match result management functions --- */
+    183→match_result_t *match_result_init(uint64_t initial_capacity);
+    184→bool match_result_add(match_result_t *result, size_t start_offset, size_t end_offset);
+    185→void match_result_free(match_result_t *result);
+    186→bool match_result_merge(match_result_t *dest, const match_result_t *src, size_t chunk_offset);
+    …
+    200→size_t print_matching_items(const char *filename, const char *text, size_t text_len, const match_result_t *result, const search_params_t *params);
+    …
+    202→// Print usage information
+    203→void print_usage(const char *program_name);
+    …
+    207→uint64_t boyer_moore_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+    208→uint64_t kmp_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+    209→uint64_t regex_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+    210→uint64_t memchr_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result);
+    211→uint64_t memchr_short_search(const search_params_t *params, const char *text_start, size_t text_len, match_result_t *result); // New function for short patterns
+    …
+    230→/* --- Helper Functions --- */
+    231→bool memory_equals_case_insensitive(const unsigned char *s1, const unsigned char *s2, size_t n);
+    232→void prepare_bad_char_table(const unsigned char *pattern, size_t pattern_len, int *bad_char_table, bool case_sensitive);
+    233→search_func_t select_search_algorithm(const search_params_t *params);
+    234→const char *get_algorithm_name(search_func_t func);
+    …
+    278→size_t find_line_start(const char *text, size_t max_len, size_t pos);
+    …
+    288→size_t find_line_end(const char *text, size_t text_len, size_t pos);
+    …
+    298→static inline bool is_word_char(char c)
+    299→{
+    300→   return (isalnum((unsigned char)c) || c == '_');
+    312→static inline bool is_whole_word_match(const char *text, size_t text_len, size_t start, size_t end)
+    313→{
+    …
 test/
     benchmark_krep_vs_rg.sh
     test_compat.h

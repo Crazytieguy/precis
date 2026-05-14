@@ -90,6 +90,14 @@ README.md
     912→===
     …
 sds.c
+    33→#include <stdio.h>
+    34→#include <stdlib.h>
+    35→#include <string.h>
+    36→#include <ctype.h>
+    37→#include <assert.h>
+    38→#include <limits.h>
+    39→#include "sds.h"
+    40→#include "sdsalloc.h"
 sds.h
     1→/* SDSLib 2.0 -- A C dynamic strings library
     2→ *
@@ -242,10 +250,4 @@ testhelp.h
     46→    if(_c) printf("PASSED\n"); else {printf("FAILED\n"); __failed_tests++;} \
     47→} while(0);
     48→#define test_report() do { \
-    49→    printf("%d tests, %d passed, %d failed\n", __test_num, \
-    50→                    __test_num-__failed_tests, __failed_tests); \
-    51→    if (__failed_tests) { \
-    52→        printf("=== WARNING === We have failed tests here...\n"); \
-    53→        exit(1); \
-    54→    } \
-    55→} while(0);
+    …

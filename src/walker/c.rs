@@ -476,7 +476,44 @@ fn body_fu_factor(file: &Path) -> f64 {
 }
 
 fn c_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    file_depth_factor(file, ctx, is_header_file(file))
+    file_depth_factor(file, ctx, is_header_file(file)) * secondary_root_pair_factor(file, ctx)
+}
+
+/// Damp depth-1 `.c/.h` files whose stem doesn't match the repo's
+/// basename when a stem-matching primary pair exists. Mirrors the Rust
+/// walker's `secondary_workspace_member_factor`: in a flat C project
+/// with `<repo>.c` + `<repo>.h` plus a sibling vendored algorithm
+/// (krep `aho_corasick.*`, single-file libraries pasted next to the
+/// project's own header), the primary pair is the orientation
+/// surface NS authors anchor on; the secondary stem's deep decl
+/// catalog is reference content for the deeper budget.
+const SECONDARY_ROOT_PAIR_FACTOR: f64 = 0.5;
+
+fn secondary_root_pair_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if ctx.depth_from_root(file) != 1 {
+        return 1.0;
+    }
+    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+        return 1.0;
+    };
+    let Some(repo) = ctx.root().file_name().and_then(|n| n.to_str()) else {
+        return 1.0;
+    };
+    if stem.eq_ignore_ascii_case(repo) {
+        return 1.0;
+    }
+    // Only damp when a stem-matching primary file actually exists at
+    // the root — otherwise this is a single-pair flat project (sds
+    // structure) where every depth-1 file is part of the project's
+    // own surface.
+    let primary_present = ["c", "h"]
+        .iter()
+        .any(|ext| ctx.root().join(format!("{repo}.{ext}")).is_file());
+    if primary_present {
+        SECONDARY_ROOT_PAIR_FACTOR
+    } else {
+        1.0
+    }
 }
 
 fn header_banner_value(file: &Path, ctx: &WalkCtx) -> f64 {
