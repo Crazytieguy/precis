@@ -74,16 +74,16 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | ns | 4724 |  | 239 | test/index_test.ts imports + outer-block tests | 4.9 | 3.7 | 0.661 |
 | ns | 4955 |  | 231 | test/index_test.ts mitt# Events type + beforeEach | 4.10 | 3.7 | 0.639 |
 | walker |  | 5173 | 500 | plaintext config .eslintrc |  |  | 0.644 |
-| walker |  | 5182 | 9 | imports in test/test-types-compilation.ts |  |  | 0.644 |
-| ns | 5244 |  | 289 | README install section | 5.1 |  | 0.650 |
-| walker |  | 5366 | 184 | README.md section #17 |  |  | 0.651 |
-| walker |  | 5381 | 15 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.651 |
-| walker |  | 5397 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.651 |
+| ns | 5244 |  | 289 | README install section | 5.1 |  | 0.649 |
+| walker |  | 5357 | 184 | README.md section #17 |  |  | 0.651 |
+| walker |  | 5372 | 15 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.651 |
+| walker |  | 5388 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.651 |
+| walker |  | 5397 | 9 | imports in test/test-types-compilation.ts |  |  | 0.651 |
 | ns | 5401 |  | 157 | Test body: wildcard '*' invocation | 5.2 | 3.7 | 0.640 |
-| walker |  | 5457 | 60 | imports in test/index_test.ts |  |  | 0.642 |
-| walker |  | 5487 | 30 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.642 |
-| walker |  | 5592 | 105 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.643 |
-| walker |  | 5881 | 289 | plaintext config LICENSE |  |  | 0.643 |
+| walker |  | 5427 | 30 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.641 |
+| walker |  | 5532 | 105 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.641 |
+| walker |  | 5821 | 289 | plaintext config LICENSE |  |  | 0.641 |
+| walker |  | 5881 | 60 | imports in test/index_test.ts |  |  | 0.643 |
 | ns | 5926 |  | 525 | Test bodies: on() registration semantics | 5.3 | 3.7 | 0.607 |
 | ns | 6411 |  | 485 | Test bodies: off() removal semantics | 5.4 | 3.7 | 0.580 |
 | ns | 6664 |  | 253 | Test bodies: emit() typed dispatch + case sensitivity | 5.5 | 3.7 | 0.568 |

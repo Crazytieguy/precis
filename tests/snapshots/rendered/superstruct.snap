@@ -350,8 +350,6 @@ src/
             247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {
             …
     utils.ts
-        1→import { Struct, Infer, Result, Context, Describe } from './struct.js'
-        2→import { Failure } from './error.js'
 test/
     api/
     deprecated.test.ts

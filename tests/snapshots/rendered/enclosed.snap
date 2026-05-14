@@ -109,6 +109,38 @@ package.json
     32→  }
 packages/
     app-client/
+        .env.example
+        .gitignore
+        README.md
+            1→## Usage
+            3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+        components.json
+        e2e-tests/
+            create-and-view-note.e2e.test.ts
+        eslint.config.js
+        index.html
+        package.json
+        playwright.config.ts
+            12→export default defineConfig({
+            …
+        public/
+        src/
+            app.css
+            assets/
+                favicon.ico
+            index.tsx
+            locales/
+            modules/
+            routes.tsx
+            scripts/
+                get-missing-i18n-keys.script.ts
+        tsconfig.json
+        uno.config.ts
+            13→export default defineConfig({
+            …
+        vite.config.ts
+            8→export default defineConfig({
+            …
     app-server/
         eslint.config.js
         package.json
@@ -126,16 +158,12 @@ packages/
                     logger/
                     utils/
                         random.ts
-                            3→export { generateId };
-                            …
                     validation/
                         validation.test.ts
                         validation.ts
                 storage/
                     factories/
                     storage.models.ts
-                        3→export { defineBindableStorageFactory, defineStorage };
-                        …
                     storage.types.ts
                 tasks/
             reset.d.ts
@@ -148,10 +176,31 @@ packages/
         README.md
             1→# Enclosed CLI
             3→This package contains the CLI for [Enclosed](https://enclosed.cc), an open-source project that aims to provide a simple and secure way to share e2e encrypted notes.
+            5→## Getting Started
+            …
+            9→### Create a note
+            …
+            22→### Configure the enclosed instance to use
+            …
+            29→## Usage
+            …
+            31→```bash
+            32→enclosed <command> [options]
+            33→```
+            35→### Create a note
+            …
+            58→### View a note
+            …
+            68→### Configure the enclosed instance to use
+            …
+            75→## License
+            …
+            79→## Credits and Acknowledgements
+            …
+            81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
             enclosed.mjs
         build.config.ts
-            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
             4→  entries: [
             5→    'src/cli',
@@ -167,23 +216,15 @@ packages/
             cli.ts
             config/
                 config.command.ts
-                    8→export const configCommand = defineCommand({
-                    …
                 config.constants.ts
                     3→export const configDefinition = {
                     …
                 config.models.ts
-                    5→export { createConfigBindings, deleteConfig, getConfig, resetConfig, setConfig };
-                    …
                 config.usecases.ts
                     3→export const {
-                    4→  get: getInstanceUrl,
-                    5→  set: setInstanceUrl,
-                    6→} = createConfigBindings({ key: 'instance-url' });
+                    …
             create-note/
                 create-note.command.ts
-                    13→export const createNoteCommand = defineCommand({
-                    …
                 create-note.usecases.test.ts
                 create-note.usecases.ts
                     3→export async function getNoteContent({
@@ -196,12 +237,8 @@ packages/
                     3→export { readFromStdin };
                     …
                 http.models.ts
-                    3→export { looksLikeRateLimitError };
-                    …
             view-note/
                 view-note.command.ts
-                    7→export const viewNoteCommand = defineCommand({
-                    …
                 view-note.models.ts
                     3→export { promptForPassword };
                     …
@@ -214,23 +251,13 @@ packages/
             …
             18→## License
             …
+            20→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             22→## Credits and Acknowledgements
             …
             24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
-            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
-            4→  entries: [
-            5→    'src/index.node',
-            6→    'src/index.web',
-            7→  ],
-            8→  clean: true,
-            9→  declaration: true,
-            10→  sourcemap: true,
-            11→  rollup: {
-            12→    emitCJS: true,
-            13→  },
-            14→});
+            …
         eslint.config.js
         package.json
         src/
@@ -248,14 +275,10 @@ packages/
             node/
                 crypto.node.usecases.test.ts
                 crypto.node.usecases.ts
-                    5→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
-                    …
                 encryption-algorithms/
             web/
                 crypto.web.usecases.test.ts
                 crypto.web.usecases.ts
-                    1→export { base64UrlToBuffer, bufferToBase64Url, createRandomBuffer, deriveMasterKey, generateBaseKey };
-                    …
                 encryption-algorithms/
         tsconfig.json
     deploy-cloudflare/
@@ -285,21 +308,10 @@ packages/
             data/
                 configuration.data.ts
                     55→export default {
-                    56→  watch: ['../../../app-server/src/modules/app/config/config.ts'],
-                    57→  async load() {
-                    58→    return md.render(mdTable);
-                    59→  },
-                    60→};
+                    …
                 i18n.data.ts
                     59→export default {
-                    60→  watch: ['../../../app-client/src/locales/*'],
-                    61→  async load() {
-                    62→    return {
-                    63→      localeConfigs,
-                    64→      table: md.render(mdTable),
-                    65→    };
-                    66→  },
-                    67→};
+                    …
             how-it-works.md
             index.md
                 5→# Enclosed
@@ -318,6 +330,12 @@ packages/
             resources/
                 brand-kit.md
                 i18n.md
+                    5→# Language and i18n
+                    …
+                    9→## Supported languages
+                    …
+                    15→## Contributing to translations
+                    …
             self-hosting/
     lib/
         README.md
@@ -331,28 +349,30 @@ packages/
             …
             37→## Credits and Acknowledgements
             …
+            39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
-            1→import { defineBuildConfig } from 'unbuild';
             3→export default defineBuildConfig({
-            4→  entries: [
-            5→    'src/index',
-            6→  ],
-            7→  clean: true,
-            8→  declaration: true,
-            9→  sourcemap: true,
-            10→  rollup: {
-            11→    emitCJS: true,
-            12→  },
-            13→});
+            …
         eslint.config.js
         package.json
         src/
             api/
                 api.client.ts
+                    4→export { apiClient };
+                    …
                 api.constants.ts
                 api.models.test.ts
                 api.models.ts
+                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
+                    …
             crypto/
+                crypto.constants.ts
+                crypto.types.ts
+                crypto.usecases.ts
+                    7→export { decryptNote, encryptNote };
+                    …
+                encryption-algorithms/
+                serialization/
             files/
                 files.models.ts
                     4→export { filesToNoteAssets, fileToNoteAsset, noteAssetsToFiles, noteAssetToFile };
@@ -378,6 +398,15 @@ packages/
                 27→  storeNote,
                 28→};
             notes/
+                notes.models.test.ts
+                notes.models.ts
+                notes.services.ts
+                    3→export { fetchNote, storeNote };
+                    …
+                notes.types.ts
+                notes.usecases.ts
+                    8→export { createNote };
+                    …
         tsconfig.json
 pnpm-lock.yaml
 pnpm-workspace.yaml

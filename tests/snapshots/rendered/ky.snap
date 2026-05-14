@@ -35,6 +35,13 @@ package.json
     21→	"engines": {
     22→		"node": ">=18"
     23→	},
+    24→	"scripts": {
+    25→		"test": "xo && npm run build && ava",
+    26→		"debug": "PWDEBUG=1 ava --timeout=2m",
+    27→		"release": "np",
+    28→		"build": "del-cli distribution && tsc --project tsconfig.dist.json",
+    29→		"prepare": "npm run build"
+    30→	},
     31→	"files": [
     32→		"distribution"
     33→	],
@@ -130,6 +137,7 @@ readme.md
     …
     1264→### Extending types
     …
+    1290→This approach keeps your types scoped to where they're needed without polluting the global namespace.
     1292→## FAQ
     …
     1339→## Browser support
@@ -193,13 +201,6 @@ source/
             6→export type ResponsePromise<T = unknown> = {
             …
         common.ts
-            2→export type Primitive = null | undefined | string | number | boolean | symbol | bigint;
-            …
-            4→export type Required<T, K extends keyof T = keyof T> = T & {[P in K]-?: T[P]};
-            …
-            6→export type LiteralUnion<LiteralType extends BaseType, BaseType extends Primitive> =
-            7→	| LiteralType
-            8→	| (BaseType & {_?: never});
         hooks.ts
         ky.ts
             5→export type KyInstance = {
@@ -215,7 +216,13 @@ source/
             14→export type Input = string | URL | Request;
             …
             16→export type Progress = {
-            …
+            17→	percent: number;
+            18→	transferredBytes: number;
+            20→	/**
+            21→	Note: If it's not possible to retrieve the body size, it will be `0`.
+            22→	*/
+            23→	totalBytes: number;
+            24→};
             27→export type KyHeadersInit = NonNullable<RequestInit['headers']> | Record<string, string | undefined>;
             …
             33→export type KyOptions = {
@@ -244,14 +251,7 @@ source/
             …
     utils/
         body.ts
-            5→export const getBodySize = (body?: BodyInit | null): number => {
-            …
-            90→export const streamResponse = (response: Response, onDownloadProgress: Options['onDownloadProgress']) => {
-            …
-            119→export const streamRequest = (request: Request, onUploadProgress: Options['onUploadProgress'], originalBody?: BodyInit | null) => {
-            …
         delay.ts
-            3→import {type InternalOptions} from '../types/options.js';
             5→export type DelayOptions = {
             6→	signal?: InternalOptions['signal'];
             7→};
@@ -264,20 +264,8 @@ source/
             2→export const isObject = (value: unknown): value is object => value !== null && typeof value === 'object';
         merge.ts
         normalize.ts
-            5→export const normalizeRequestMethod = (input: string): string =>
-            6→	requestMethods.includes(input as RequestHttpMethod) ? input.toUpperCase() : input;
-            28→export const normalizeRetryOptions = (retry: number | RetryOptions = {}): InternalRetryOptions => {
-            …
         options.ts
-            4→export const findUnknownOptions = (
-            5→	request: Request,
-            6→	options: Record<string, unknown>,
-            7→): Record<string, unknown> => {
-            …
-            30→export const hasSearchParameters = (search: SearchParamsOption): boolean => {
-            …
         timeout.ts
-            1→import {TimeoutError} from '../errors/TimeoutError.js';
             3→export type TimeoutOptions = {
             4→	timeout: number;
             5→	fetch: typeof fetch;
@@ -290,13 +278,15 @@ source/
             14→): Promise<Response> {
             …
         type-guards.ts
+            27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
+            28→	return isHTTPError(error) || isTimeoutError(error) || isForceRetryError(error);
+            49→export function isHTTPError<T = unknown>(error: unknown): error is HTTPError<T> {
+            50→	return error instanceof HTTPError || ((error as any)?.name === HTTPError.name);
+            71→export function isTimeoutError(error: unknown): error is TimeoutError {
+            72→	return error instanceof TimeoutError || ((error as any)?.name === TimeoutError.name);
+            98→export function isForceRetryError(error: unknown): error is ForceRetryError {
+            99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
         types.ts
-            1→export type Mutable<T> = {
-            2→	-readonly[P in keyof T]: T[P]
-            3→};
-            5→export type ObjectEntries<T> = T extends ArrayLike<infer U>
-            6→	? Array<[string, U]>
-            7→	: Array<{[K in keyof T]: [K, T[K]]}[keyof T]>;
 test/
 tsconfig.dist.json
 tsconfig.json

@@ -6,6 +6,12 @@ expression: rendered
 .gitattributes
 .github/
 .gitignore
+    1→.DS_Store
+    2→node_modules
+    3→*.sock
+    4→.idea
+    5→.vscode/
+    6→coverage/
 .prettierignore
 .prettierrc.js
 CHANGELOG.md
@@ -54,6 +60,28 @@ docs/
     terminology.md
     zh-CN/
         不再推荐使用的功能.md
+            1→# 不再推荐使用的功能
+            …
+            18→## .option() 方法的正则表达式参数
+            …
+            30→## noHelp
+            …
+            40→## 默认导入的全局 Command 对象
+            …
+            61→## .help() 与 .outputHelp() 的回调函数参数
+            …
+            79→## .on('--help')
+            …
+            104→## .on('command:*')
+            …
+            114→## .command('*')
+            …
+            134→## cmd.description(cmdDescription, argDescriptions)
+            …
+            157→## InvalidOptionArgumentError
+            …
+            187→## 短选项标志长于单个字符
+            …
         可变参数的选项.md
             1→# 可变参数的选项
             …
@@ -110,8 +138,15 @@ lib/
     error.js
         4→class CommanderError extends Error {
         …
+        11→  constructor(exitCode, code, message) {
+        …
         25→class InvalidArgumentError extends CommanderError {
         …
+        30→  constructor(message) {
+        31→    super(1, 'commander.invalidArgument', message);
+        32→    // properly capture stack trace in Node.js
+        33→    Error.captureStackTrace(this, this.constructor);
+        34→    this.name = this.constructor.name;
         38→exports.CommanderError = CommanderError;
         39→exports.InvalidArgumentError = InvalidArgumentError;
     help.js
@@ -165,9 +200,6 @@ lib/
         379→exports.Option = Option;
         380→exports.DualOptions = DualOptions;
     suggestSimilar.js
-        56→function suggestSimilar(word, candidates) {
-        …
-        101→exports.suggestSimilar = suggestSimilar;
 package-lock.json
 package-support.json
 package.json
@@ -252,77 +284,29 @@ package.json
     80→  },
 tests/
 tsconfig.js.json
+    1→{
+    2→  /* 
+    3→    Simple override including just JavaScript files.
+    4→    Used by npm run-script typecheck:js
+    5→  */
+    6→  /* Visit https://aka.ms/tsconfig to read more about tsconfig configuration. */
+    7→  "extends": "./tsconfig.json",
+    8→  "include": [
+    9→    /* All JavaScript targets from tsconfig.json include. */
+    10→    "*.js",
+    11→    ".prettierrc.js" /* missed by above pattern */,
+    12→    "*.mjs",
+    13→    "lib/**/*.js",
+    14→  ],
+    15→}
 tsconfig.json
 tsconfig.ts.json
 typings/
     esm.d.mts
     index.d.ts
-        16→export class CommanderError extends Error {
-        17→  code: string;
-        18→  exitCode: number;
-        19→  message: string;
-        20→  nestedError?: string;
-        28→  constructor(exitCode: number, code: string, message: string);
-        31→export class InvalidArgumentError extends CommanderError {
-        …
-        36→  constructor(message: string);
-        38→export { InvalidArgumentError as InvalidOptionArgumentError }; // deprecated old name
-        …
-        40→export interface ErrorOptions {
-        41→  // optional parameter for error()
-        42→  /** an id string representing the error */
-        43→  code?: string;
-        44→  /** suggested exit code which could be used with process.exit */
-        45→  exitCode?: number;
-        46→}
-        48→export class Argument {
-        49→  description: string;
-        50→  required: boolean;
-        51→  variadic: boolean;
-        52→  defaultValue?: any;
-        53→  defaultValueDescription?: string;
-        54→  parseArg?: <T>(value: string, previous: T) => T;
-        55→  argChoices?: string[];
-        62→  constructor(arg: string, description?: string);
-        67→  name(): string;
-        72→  default(value: unknown, description?: string): this;
-        77→  argParser<T>(fn: (value: string, previous: T) => T): this;
-        82→  choices(values: readonly string[]): this;
-        87→  argRequired(): this;
-        92→  argOptional(): this;
-        95→export class Option {
-        …
-        210→export class Help {
-        …
-        340→export type HelpConfiguration = Partial<Help>;
-        …
-        342→export interface ParseOptions {
-        343→  from: 'node' | 'electron' | 'user';
-        344→}
-        345→export interface HelpContext {
-        346→  // optional parameter for .help() and .outputHelp()
-        347→  error: boolean;
-        348→}
-        349→export interface AddHelpTextContext {
-        350→  // passed to text function used with .addHelpText()
-        351→  error: boolean;
-        352→  command: Command;
-        353→}
-        354→export interface OutputConfiguration {
-        355→  writeOut?(str: string): void;
-        356→  writeErr?(str: string): void;
-        357→  outputError?(str: string, write: (str: string) => void): void;
-        359→  getOutHelpWidth?(): number;
-        360→  getErrHelpWidth?(): number;
-        362→  getOutHasColors?(): boolean;
-        363→  getErrHasColors?(): boolean;
-        364→  stripColor?(str: string): string;
-        365→}
     index.test-d.ts
-        1→import * as commander from './index';
-        2→import { expectType } from 'tsd';
         509→class MyCommand extends commander.Command {
         510→  createCommand(name?: string): MyCommand {
-        511→    return new MyCommand(name);
+        …
         514→  myFunction(): void {
         515→    // do nothing.

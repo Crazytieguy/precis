@@ -109,6 +109,9 @@ pub struct WalkCtx {
     /// Per-run state owned by `walker::json` — npm/yarn/pnpm
     /// workspace-member resolution.
     json_state: json::JsonState,
+    /// Per-run state owned by `walker::typescript` — project's public
+    /// surface (entrypoint-reachable TS/JS files).
+    typescript_state: typescript::TypescriptState,
 }
 
 impl WalkCtx {
@@ -124,6 +127,7 @@ impl WalkCtx {
             rust_state: rust::RustState::new(),
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
+            typescript_state: typescript::TypescriptState::new(),
         }
     }
 
@@ -211,6 +215,15 @@ impl WalkCtx {
     /// is inherited from / orchestrated by the workspace root.
     pub fn is_js_workspace_member(&self, file: &Path) -> bool {
         self.json_state.is_workspace_member(file, &self.root)
+    }
+
+    /// `true` iff `file` is in the TS/JS public surface — an entrypoint
+    /// (`index.{ts,tsx,js,mjs,cjs}` / `main.*` / `mod.*`) or
+    /// transitively re-exported by one. The TypeScript walker uses this
+    /// to demote items in non-surface files, mirroring a public-vs-
+    /// private visibility distinction.
+    pub fn is_ts_public_surface(&self, file: &Path) -> bool {
+        self.typescript_state.is_in_public_surface(file, self)
     }
 }
 

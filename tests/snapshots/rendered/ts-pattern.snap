@@ -16,7 +16,10 @@ README.md
     44→![ts-pattern](https://user-images.githubusercontent.com/9265418/231688650-7cd957a9-8edc-4db8-a5fe-61e1c2179d91.gif)
     46→<p align="center"><i>Animation by <a target="_blank" href="https://twitter.com/nicoespeon/status/1644342570389061634?s=20">@nicoespeon</a></i></p>
     51→- **Typesafe**, with helpful [type inference](#type-inference).
+    52→- **Exhaustiveness checking** support, enforcing that you are matching every possible case with [`.exhaustive()`](#exhaustive).
+    53→- Use [patterns](#patterns) to **validate** the shape of your data with [`isMatching`](#ismatching).
     56→- Supports properties selection, via the [`P.select(name?)`](#pselect-patterns) function.
+    57→- Tiny bundle footprint ([**only ~2kB**](https://bundlephobia.com/package/ts-pattern)).
 benchmarks/
     always-last-digit.ts
     nested-objects.ts
@@ -87,25 +90,6 @@ src/
         …
     internals/
         helpers.ts
-            12→export const isObject = (value: unknown): value is Object =>
-            13→  Boolean(value && typeof value === 'object');
-            16→export const isMatcher = (
-            17→  x: unknown
-            18→): x is Matcher<unknown, unknown, MatcherType, SelectionType> => {
-            19→  const pattern = x as Matcher<unknown, unknown, MatcherType, SelectionType>;
-            20→  return pattern && !!pattern[symbols.matcher];
-            32→export const matchPattern = (
-            33→  pattern: any,
-            34→  value: any,
-            35→  select: (key: string, value: unknown) => void
-            36→): boolean => {
-            …
-            120→export const getSelectionKeys = (pattern: any): string[] => {
-            …
-            132→export const flatMap = <a, b>(
-            133→  xs: readonly a[],
-            134→  f: (v: a) => readonly b[]
-            135→): b[] => xs.reduce<b[]>((acc, x) => acc.concat(f(x)), []);
         symbols.ts
     is-matching.ts
         32→export function isMatching<const p extends Pattern<unknown>>(
@@ -118,7 +102,18 @@ src/
         53→export function isMatching<const p extends Pattern<any>>(
         54→  ...args: [pattern: p, value?: any]
         55→): boolean | ((vale: any) => boolean) {
-        …
+        56→  if (args.length === 1) {
+        57→    const [pattern] = args;
+        58→    return (value: any): value is MatchedValue<any, P.infer<p>> =>
+        59→      matchPattern(pattern, value, () => {});
+        60→  }
+        61→  if (args.length === 2) {
+        62→    const [pattern, value] = args;
+        63→    return matchPattern(pattern, value, () => {});
+        64→  }
+        66→  throw new Error(
+        67→    `isMatching wasn't given the right number of arguments: expected 1 or 2, received ${args.length}.`
+        68→  );
     match.ts
         32→export function match<const input, output = symbols.unset>(
         33→  value: input
@@ -146,13 +141,7 @@ src/
     patterns.ts
     types/
         BuildMany.ts
-            4→export type BuildMany<data, xs extends readonly any[]> = xs extends any
-            5→  ? BuildOne<data, xs>
-            6→  : never;
-            19→export type SetDeep<data, value, path> = path extends readonly [
-            …
         DeepExclude.ts
-            1→import { DistributeMatchingUnions } from './DistributeUnions';
             3→export type DeepExclude<a, b> = Exclude<DistributeMatchingUnions<a, b>, b>;
         DistributeUnions.ts
         ExtractPreciseValue.ts
@@ -160,16 +149,6 @@ src/
             …
         FindSelected.ts
         InvertPattern.ts
-            106→export type InvertPattern<p, input> = Equal<Pattern<input>, p> extends true
-            107→  ? never
-            108→  : InvertPatternInternal<p, input>;
-            180→export type ReduceIntersectionForExclude<
-            …
-            192→export type ReduceUnionForExclude<
-            …
-            303→export type InvertPatternForExclude<p, i> = Equal<Pattern<i>, p> extends true
-            304→  ? never
-            305→  : InvertPatternForExcludeInternal<p, i>;
         IsMatching.ts
             57→export type IsMatching<a, b> = true extends IsUnion<a> | IsUnion<b>
             …
@@ -220,7 +199,12 @@ src/
             14→export type LeastUpperBound<a, b> = b extends a ? b : a extends b ? a : never;
             …
             16→export type Contains<a, b> = a extends any
-            …
+            17→  ? 'exclude' extends {
+            18→      [k in keyof a]-?: Equal<a[k], b> extends true ? 'exclude' : 'include';
+            19→    }[keyof a]
+            20→    ? true
+            21→    : false
+            22→  : never;
             25→export type UnionToIntersection<union> = (
             26→  union extends any ? (k: union) => void : never
             27→) extends (k: infer intersection) => void
@@ -231,7 +215,11 @@ src/
             33→export type UnionToTuple<
             …
             42→export type Flatten<
-            …
+            43→  xs extends readonly any[],
+            44→  output extends any[] = []
+            45→> = xs extends readonly [infer head, ...infer tail]
+            46→  ? Flatten<tail, [...output, ...Extract<head, readonly any[]>]>
+            47→  : output;
             49→export type Equal<a, b> = (<T>() => T extends a ? 1 : 2) extends <
             50→  T
             51→>() => T extends b ? 1 : 2
@@ -256,7 +244,13 @@ src/
             73→export type Take<
             …
             83→export type Drop<
-            …
+            84→  xs extends readonly any[],
+            85→  n extends any[]
+            86→> = Length<n> extends 0
+            87→  ? xs
+            88→  : xs extends readonly [any, ...infer tail]
+            89→  ? Drop<tail, Prev<n>>
+            90→  : [];
             92→export type UpdateAt<
             …
             105→export type BuiltInObjects =
@@ -267,7 +261,13 @@ src/
             110→  | { readonly [Symbol.toStringTag]: string }
             111→  | any[];
             113→export type IsPlainObject<o, excludeUnion = BuiltInObjects> = o extends object
-            …
+            114→  ? // to excluded branded string types,
+            115→    // like `string & { __brand: "id" }`
+            116→    // and built-in objects
+            117→    o extends string | excludeUnion
+            118→    ? false
+            119→    : true
+            120→  : false;
             122→export type Compute<a extends any> = a extends BuiltInObjects
             123→  ? a
             124→  : { [k in keyof a]: a[k] };

@@ -39,7 +39,8 @@
 //! `.ts`, `.tsx`, `.js`, `.mjs`, and `.cjs` are handled through the
 //! TypeScript grammar family. Parse trees are cached in [`WalkCtx`].
 
-use std::collections::HashSet;
+use std::cell::{OnceCell, RefCell};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -82,6 +83,50 @@ const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
 /// land NS-aligned package.json / README / sibling-file content.
 const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
 
+/// Per-run TypeScript-walker state. Caches the project's "public
+/// surface" — the set of TS/JS files transitively reachable from any
+/// entrypoint file (index / main / mod) via re-export chains. A file
+/// is in the public surface iff it's an entrypoint OR some
+/// public-surface file re-exports content from it (`export ... from
+/// './path'`, `export * from './path'`, or `import ... from './path';
+/// export { ... }` where one of the named exports came from that
+/// import). Plain imports (no matching local re-export) are internal
+/// dependencies and do NOT expand the surface.
+///
+/// Used as a public-vs-private signal: items in non-surface files are
+/// inherently less load-bearing than items in surface files (NS
+/// authors universally rank the public API surface ahead of internal
+/// type machinery / helper modules).
+#[derive(Default)]
+pub struct TypescriptState {
+    public_surface: OnceCell<HashSet<PathBuf>>,
+    in_surface_lookup: RefCell<HashMap<PathBuf, bool>>,
+}
+
+impl TypescriptState {
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// `true` iff `file` is in the project's TS/JS public surface — an
+    /// entrypoint file or transitively re-exported by one. Lookups are
+    /// memoized.
+    pub fn is_in_public_surface(&self, file: &Path, ctx: &WalkCtx) -> bool {
+        if let Some(&hit) = self.in_surface_lookup.borrow().get(file) {
+            return hit;
+        }
+        let surface = self
+            .public_surface
+            .get_or_init(|| compute_public_surface(ctx));
+        let canonical = file.canonicalize().unwrap_or_else(|_| file.to_path_buf());
+        let hit = surface.contains(&canonical);
+        self.in_surface_lookup
+            .borrow_mut()
+            .insert(file.to_path_buf(), hit);
+        hit
+    }
+}
+
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
     if js_like_files.is_empty() {
@@ -98,7 +143,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in &js_like_files {
         let ep = is_entrypoint_file(file);
-        let js_factor = js_value_factor(file, ctx);
+        let js_factor = js_value_factor(file, ctx) * public_surface_factor(file, ctx);
         let module_predecessor = module_entrypoint_gate
             .as_ref()
             .filter(|_| module_entrypoint.as_deref() != Some(file.as_path()))
@@ -1342,6 +1387,22 @@ const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
 const PRIMARY_JS_VALUE_FACTOR: f64 = 0.50;
 const SECONDARY_JS_VALUE_FACTOR: f64 = 0.05;
 
+/// Multiplier applied to every per-file TS/JS batch: full weight for
+/// files in the project's public surface (entrypoint-reachable via
+/// re-export chains), partial weight otherwise. Acts as a public-vs-
+/// private visibility axis — internal-only modules (`src/types/*` in
+/// ts-pattern, `lib/helpers.js` not referenced by `index.js`) still
+/// surface but rank below modules consumers can name from the
+/// package entrypoint. Entrypoint files themselves are always in the
+/// surface so the project's `index.ts` keeps its full boost.
+fn public_surface_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    if ctx.is_ts_public_surface(file) {
+        1.0
+    } else {
+        0.65
+    }
+}
+
 fn js_value_factor(path: &Path, ctx: &WalkCtx) -> f64 {
     if is_js_config_file(path) {
         // Dev-tooling JS should remain discoverable without taking budget
@@ -2031,6 +2092,399 @@ fn is_first_top_level_node(node: Node) -> bool {
         }
     }
     true
+}
+
+// --- public-surface reachability ----------------------------------------
+
+/// Recursively walk `dir` for files whose basename matches any of the
+/// JS/TS module-entrypoint conventions (`index.{ts,tsx,js,mjs,cjs}`,
+/// `main.{...}`, `mod.{...}`). Returns absolute paths; skips heavy /
+/// generated trees (`node_modules`, `dist`, etc.).
+fn find_all_entrypoints(root: &Path) -> Vec<PathBuf> {
+    fn walk(dir: &Path, out: &mut Vec<PathBuf>) {
+        let Ok(read_dir) = std::fs::read_dir(dir) else {
+            return;
+        };
+        for entry in read_dir.flatten() {
+            let path = entry.path();
+            let Ok(file_type) = entry.file_type() else {
+                continue;
+            };
+            if file_type.is_dir() {
+                let name = entry.file_name();
+                let s = name.to_string_lossy();
+                if !matches!(
+                    s.as_ref(),
+                    "target" | "node_modules" | ".git" | "dist" | "build" | ".next" | "__pycache__"
+                ) {
+                    walk(&path, out);
+                }
+            } else if file_type.is_file() {
+                let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+                    continue;
+                };
+                if is_entrypoint_file(&path)
+                    || matches!(
+                        name,
+                        "main.ts" | "main.tsx" | "main.js" | "main.mjs" | "main.cjs"
+                    )
+                {
+                    out.push(path);
+                }
+            }
+        }
+    }
+    let mut out = Vec::new();
+    walk(root, &mut out);
+    out
+}
+
+/// Compute the project's public surface: every TS/JS file transitively
+/// reachable from an entrypoint via re-export chains. Walks each
+/// entrypoint, collects its re-exported source paths, resolves them
+/// to absolute paths, and BFS-expands until fixed point. Result is
+/// canonicalized so it can be compared against arbitrary paths the
+/// walker hands in.
+fn compute_public_surface(ctx: &WalkCtx) -> HashSet<PathBuf> {
+    let entrypoints = find_all_entrypoints(ctx.root());
+    let mut surface: HashSet<PathBuf> = HashSet::new();
+    let mut frontier: VecDeque<PathBuf> = VecDeque::new();
+    for ep in entrypoints {
+        let canonical = ep.canonicalize().unwrap_or_else(|_| ep.clone());
+        if surface.insert(canonical) {
+            frontier.push_back(ep);
+        }
+    }
+    while let Some(file) = frontier.pop_front() {
+        let Some((source, tree)) = parse_ts(ctx, &file) else {
+            continue;
+        };
+        let dir = file.parent().unwrap_or_else(|| Path::new(""));
+        for rel in collect_reexported_source_paths(&tree, &source) {
+            let Some(target) = resolve_ts_relative_path(dir, &rel) else {
+                continue;
+            };
+            let canonical = target.canonicalize().unwrap_or_else(|_| target.clone());
+            if surface.insert(canonical) {
+                frontier.push_back(target);
+            }
+        }
+    }
+    surface
+}
+
+/// Extract source paths that `tree` exposes through its public surface.
+/// Two flavors:
+/// - ESM: `export ... from '...'` clauses (named, star, type re-export)
+///   plus `import ... from '...'` whose bound names appear in a top-level
+///   `export { name }` clause (namespace-, default-, named-import +
+///   re-export patterns).
+/// - CommonJS: `require('...')`-bound locals that are then assigned to
+///   `exports.X = local` or appear in a `module.exports = { local }`
+///   object-literal. Covers commander's `index.js` shape where every
+///   `./lib/X.js` is required + re-exported on the same module.
+fn collect_reexported_source_paths(tree: &Tree, source: &str) -> Vec<String> {
+    let root = tree.root_node();
+    let mut out: Vec<String> = Vec::new();
+
+    // Pass 1a: index ESM import bindings → source string.
+    let mut import_bindings: HashMap<String, String> = HashMap::new();
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "import_statement" {
+            continue;
+        }
+        let Some(src) = source_literal(stmt, source) else {
+            continue;
+        };
+        let src = strip_quotes(&src).to_string();
+        for name in import_clause_bindings(stmt, source) {
+            import_bindings.insert(name, src.clone());
+        }
+    }
+    // Pass 1b: index CommonJS require bindings → source string. Covers
+    // `const X = require('./foo')` and `const { X, Y } = require('./foo')`.
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if !is_require_declaration(stmt, source) {
+            continue;
+        }
+        collect_require_bindings(stmt, source, &mut import_bindings);
+    }
+
+    // Pass 2a: ESM explicit `export ... from` sources + lookup local
+    // re-exports against the import-binding index.
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        if stmt.kind() != "export_statement" {
+            continue;
+        }
+        if has_from_source(stmt) {
+            if let Some(src) = source_literal(stmt, source) {
+                out.push(strip_quotes(&src).to_string());
+            }
+            continue;
+        }
+        for local_name in local_reexport_local_names(stmt, source) {
+            if let Some(src) = import_bindings.get(&local_name) {
+                out.push(src.clone());
+            }
+        }
+    }
+    // Pass 2b: CommonJS `exports.X = local` / `module.exports.X = local`
+    // / `module.exports = { local, ... }` — look up against the
+    // require-binding index.
+    let mut cursor = root.walk();
+    for stmt in root.children(&mut cursor) {
+        let Some((left, right)) = commonjs_assignment_sides(stmt, source) else {
+            continue;
+        };
+        match commonjs_export_target(left, source) {
+            Some(CommonJsExportTarget::Namespace) if right.kind() == "object" => {
+                let mut object_cursor = right.walk();
+                for child in right.named_children(&mut object_cursor) {
+                    let local = match child.kind() {
+                        "shorthand_property_identifier" | "identifier" => {
+                            Some(source[child.start_byte()..child.end_byte()].to_string())
+                        }
+                        "pair" => child
+                            .child_by_field_name("value")
+                            .and_then(|v| identifier_text(v, source).map(str::to_string)),
+                        _ => None,
+                    };
+                    if let Some(name) = local
+                        && let Some(src) = import_bindings.get(&name)
+                    {
+                        out.push(src.clone());
+                    }
+                }
+            }
+            Some(_) => {
+                if let Some(name) = identifier_text(right, source)
+                    && let Some(src) = import_bindings.get(name)
+                {
+                    out.push(src.clone());
+                }
+            }
+            None => {}
+        }
+    }
+
+    out
+}
+
+/// Walk a `const X = require('./foo')` or `const { X, Y } =
+/// require('./foo')` statement and add each bound name → source path
+/// to `bindings`.
+fn collect_require_bindings(stmt: Node, source: &str, bindings: &mut HashMap<String, String>) {
+    let mut cursor = stmt.walk();
+    for child in stmt.children(&mut cursor) {
+        if !matches!(child.kind(), "variable_declarator" | "lexical_binding") {
+            continue;
+        }
+        let Some(value) = child.child_by_field_name("value") else {
+            continue;
+        };
+        if !is_require_call(value, source) {
+            continue;
+        }
+        // The single string argument is the require source.
+        let Some(args) = value.child_by_field_name("arguments") else {
+            continue;
+        };
+        let mut ac = args.walk();
+        let Some(src_node) = args.children(&mut ac).find(|c| c.kind() == "string") else {
+            continue;
+        };
+        let src = strip_quotes(&source[src_node.start_byte()..src_node.end_byte()]).to_string();
+        // Bound name pattern: identifier (default) or object_pattern (destructure).
+        let Some(name_node) = child.child_by_field_name("name") else {
+            continue;
+        };
+        match name_node.kind() {
+            "identifier" => {
+                let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+                bindings.insert(name, src);
+            }
+            "object_pattern" => {
+                let mut pc = name_node.walk();
+                for pat in name_node.named_children(&mut pc) {
+                    let bound = match pat.kind() {
+                        "shorthand_property_identifier_pattern" => {
+                            Some(source[pat.start_byte()..pat.end_byte()].to_string())
+                        }
+                        "pair_pattern" => pat
+                            .child_by_field_name("value")
+                            .and_then(|v| identifier_text(v, source).map(str::to_string)),
+                        _ => None,
+                    };
+                    if let Some(name) = bound {
+                        bindings.insert(name, src.clone());
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+/// Local names (before any `as`) of each specifier in this
+/// `export_statement`'s `export_clause` / `namespace_export`. Type-only
+/// specifiers are kept — they still bring their source into the
+/// surface.
+fn local_reexport_local_names(stmt: Node, source: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut sc = stmt.walk();
+    for clause in stmt.children(&mut sc) {
+        if !matches!(clause.kind(), "export_clause" | "namespace_export") {
+            continue;
+        }
+        let mut cc = clause.walk();
+        for spec in clause.children(&mut cc) {
+            if spec.kind() != "export_specifier" {
+                continue;
+            }
+            if let Some(name_node) = first_identifier_child(spec) {
+                let name = source[name_node.start_byte()..name_node.end_byte()].to_string();
+                out.push(name);
+            }
+        }
+    }
+    out
+}
+
+/// Names bound by an `import_statement`'s import clause:
+/// - `import Foo from '...'` → `["Foo"]`
+/// - `import { A, B as C } from '...'` → `["A", "C"]`
+/// - `import * as N from '...'` → `["N"]`
+/// - `import Foo, { A } from '...'` → `["Foo", "A"]`
+/// - `import Foo, * as N from '...'` → `["Foo", "N"]`
+fn import_clause_bindings(stmt: Node, source: &str) -> Vec<String> {
+    let mut out = Vec::new();
+    let mut cursor = stmt.walk();
+    for child in stmt.children(&mut cursor) {
+        match child.kind() {
+            "import_clause" => collect_import_clause_names(child, source, &mut out),
+            "identifier" => {
+                // Bare `import Foo = require('...')` rare; just in case.
+                let name = source[child.start_byte()..child.end_byte()].to_string();
+                out.push(name);
+            }
+            _ => {}
+        }
+    }
+    out
+}
+
+fn collect_import_clause_names(clause: Node, source: &str, out: &mut Vec<String>) {
+    let mut cursor = clause.walk();
+    for child in clause.children(&mut cursor) {
+        match child.kind() {
+            "identifier" => {
+                // Default import binding.
+                let name = source[child.start_byte()..child.end_byte()].to_string();
+                out.push(name);
+            }
+            "namespace_import" => {
+                // `* as Name`. The identifier child is the bound name.
+                if let Some(id) = first_identifier_child(child) {
+                    let name = source[id.start_byte()..id.end_byte()].to_string();
+                    out.push(name);
+                }
+            }
+            "named_imports" => {
+                let mut nc = child.walk();
+                for spec in child.children(&mut nc) {
+                    if spec.kind() != "import_specifier" {
+                        continue;
+                    }
+                    // import_specifier shape: `name` (and optional `alias`).
+                    // The LOCAL binding is `alias` if present, else `name`.
+                    let alias = spec.child_by_field_name("alias");
+                    let name = spec.child_by_field_name("name");
+                    let bound = alias.or(name);
+                    if let Some(b) = bound {
+                        let s = source[b.start_byte()..b.end_byte()].to_string();
+                        out.push(s);
+                    }
+                }
+            }
+            _ => {}
+        }
+    }
+}
+
+fn strip_quotes(s: &str) -> &str {
+    let s = s.trim();
+    s.strip_prefix('\'')
+        .or_else(|| s.strip_prefix('"'))
+        .or_else(|| s.strip_prefix('`'))
+        .and_then(|s| {
+            s.strip_suffix('\'')
+                .or_else(|| s.strip_suffix('"'))
+                .or_else(|| s.strip_suffix('`'))
+        })
+        .unwrap_or(s)
+}
+
+/// Resolve a relative TS/JS source specifier (`./foo`, `./foo.js`,
+/// `./foo/bar`) against `dir`. Returns the first existing candidate
+/// in extension-precedence order: `.ts` > `.tsx` > `.js` > `.mjs` >
+/// `.cjs`. Falls back to `<rel>/index.<ext>`. Bare specifiers
+/// (`react`, `@scope/pkg`) and non-relative paths return `None`.
+fn resolve_ts_relative_path(dir: &Path, rel: &str) -> Option<PathBuf> {
+    if !(rel.starts_with("./") || rel.starts_with("../") || rel == "." || rel == "..") {
+        return None;
+    }
+    // Strip a `.js` / `.mjs` / `.cjs` suffix that's actually pointing at
+    // a TS source (the post-build extension convention used by ky,
+    // typeguard, etc.).
+    let exts = ["ts", "tsx", "js", "mjs", "cjs"];
+    let candidate_base = dir.join(rel);
+    if candidate_base.is_file() {
+        return Some(candidate_base);
+    }
+    // Try replacing a known ext with each TS-source ext.
+    if let Some(stripped) = strip_ext_suffix(rel) {
+        let stripped_base = dir.join(stripped);
+        for ext in &exts {
+            let with_ext = with_extension(&stripped_base, ext);
+            if with_ext.is_file() {
+                return Some(with_ext);
+            }
+        }
+    }
+    // Try as `<rel>.<ext>` directly (no ext in source string).
+    for ext in &exts {
+        let with_ext = with_extension(&candidate_base, ext);
+        if with_ext.is_file() {
+            return Some(with_ext);
+        }
+    }
+    // Try as `<rel>/index.<ext>`.
+    for ext in &exts {
+        let idx = candidate_base.join(format!("index.{ext}"));
+        if idx.is_file() {
+            return Some(idx);
+        }
+    }
+    None
+}
+
+fn strip_ext_suffix(rel: &str) -> Option<&str> {
+    for ext in [".ts", ".tsx", ".js", ".mjs", ".cjs"] {
+        if let Some(stripped) = rel.strip_suffix(ext) {
+            return Some(stripped);
+        }
+    }
+    None
+}
+
+fn with_extension(base: &Path, ext: &str) -> PathBuf {
+    let mut s = base.as_os_str().to_owned();
+    s.push(".");
+    s.push(ext);
+    PathBuf::from(s)
 }
 
 #[cfg(test)]
