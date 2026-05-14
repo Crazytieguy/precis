@@ -203,6 +203,8 @@ internal/
             …
             37→type Cost struct {
             …
+            48→// Limit represents the context and output limits for a model.
+            49→// Used during code generation to parse token limit data from models.dev.
             50→type Limit struct {
             51→	// Context is the maximum number of input tokens
             52→	Context int `json:"context"`
@@ -264,12 +266,6 @@ internal/
             50→func InitializeTokenCountersWithKeys() {
             51→	// Future provider-specific counters can be registered here
     tools/
-        buffered_logger.go
-        connection_pool.go
-        debug_logger.go
-            1→package tools
-        mcp.go
-        mcp_test.go
     ui/
 main.go
     1→package main

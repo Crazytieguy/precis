@@ -80,6 +80,11 @@ README.md
     121→A `ValueError` will be raised if `parse_float` produces illegal types.
     123→### Building a `tomli`/`tomllib` compatibility layer<a name="building-a-tomlitomllib-compatibility-layer"></a>
     …
+    125→Python versions 3.11+ ship with a version of Tomli:
+    126→the `tomllib` standard library module.
+    127→To build code that uses the standard library if available,
+    128→but still works seamlessly with Python 3.6+,
+    129→do the following.
     152→## FAQ<a name="faq"></a>
     …
     154→### Why this parser?<a name="why-this-parser"></a>
@@ -143,17 +148,6 @@ profiler/
     requirements.txt
 pyproject.toml
 scripts/
-    mypyc_tox
-    requirements.txt
-    use_setuptools.py
-        1→"""Script that switches build backend to setuptools with mypyc support.
-        3→Overwrites pyproject.toml. Does not create a backup.
-        4→"""
-        6→from pathlib import Path
-        7→import tomllib
-        9→import tomli_w  # type: ignore[import-not-found]
-        12→def use_setuptools() -> None:
-        …
 setup.py
     1→import os
     3→from setuptools import setup  # type: ignore[import-untyped]
@@ -198,6 +192,8 @@ src/
         py.typed
 tests/
     __init__.py
+        5→__all__ = ("tomllib",)
+        9→import tomli as tomllib
     burntsushi.py
     data/
     test_data.py
@@ -219,4 +215,5 @@ tomllib.md
     …
     20→### Steps to convert
     …
+    22→- Move everything in `tomli:src/tomli` to `cpython:Lib/tomllib`. Exclude `py.typed`.
     24→- Remove `__version__ = ...` line from `cpython:Lib/tomllib/__init__.py`

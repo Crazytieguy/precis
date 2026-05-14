@@ -131,6 +131,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
             s,
             "tests"
                 | "test"
+                | "testing"
                 | "examples"
                 | "example"
                 | "benches"
@@ -149,6 +150,9 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "showcase"
                 | "storybook"
                 | "fuzz"
+                | "scripts"
+                | "tools"
+                | "tooling"
         ) || s.starts_with("test_")
             || s.starts_with("guide-helper")
             || is_proc_macro_crate_dir_name(s)

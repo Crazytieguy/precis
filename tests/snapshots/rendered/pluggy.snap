@@ -58,6 +58,60 @@ docs/
         36→language = "en"
         38→pygments_style = "sphinx"
         40→html_theme = "alabaster"
+        41→html_theme_options = {
+        42→    "logo": "img/plug.png",
+        43→    "description": "The pytest plugin system",
+        44→    "github_user": "pytest-dev",
+        45→    "github_repo": "pluggy",
+        46→    "github_button": "true",
+        47→    "github_banner": "true",
+        48→    "github_type": "star",
+        49→    "badge_branch": "main",
+        50→    "page_width": "1080px",
+        51→    "sidebar_width": "300px",
+        52→    "fixed_sidebar": "false",
+        53→}
+        54→html_sidebars = {
+        55→    "**": ["about.html", "localtoc.html", "relations.html", "searchbox.html"]
+        56→}
+        57→html_static_path = ["_static"]
+        61→man_pages = [(master_doc, "pluggy", "pluggy Documentation", [author], 1)]
+        63→autodoc_member_order = "bysource"
+        65→nitpicky = True
+        66→nitpick_ignore = {
+        67→    # Don't want to expose this yet (see #428).
+        68→    ("py:class", "pluggy._tracing.TagTracerSub"),
+        69→    # Compat hack, don't want to expose it.
+        70→    ("py:class", "pluggy._manager.DistFacade"),
+        71→    # `types.ModuleType` turns into `module` but then fails to resolve...
+        72→    ("py:class", "module"),
+        73→    # Just a TypeVar.
+        74→    ("py:obj", "pluggy._result.ResultType"),
+        75→    ("py:class", "pluggy._result.ResultType"),
+        76→}
+        83→texinfo_documents = [
+        84→    (
+        85→        master_doc,
+        86→        "pluggy",
+        87→        "pluggy Documentation",
+        88→        author,
+        89→        "pluggy",
+        90→        "One line description of project.",
+        91→        "Miscellaneous",
+        92→    )
+        93→]
+        96→intersphinx_mapping = {
+        97→    "python": ("https://docs.python.org/3", None),
+        98→    "pytest": ("https://docs.pytest.org/en/latest", None),
+        99→    "setuptools": ("https://setuptools.pypa.io/en/latest", None),
+        100→    "tox": ("https://tox.wiki/en/latest", None),
+        101→    "devpi": ("https://devpi.net/docs/devpi/devpi/stable/+doc/", None),
+        102→    "kedro": ("https://docs.kedro.org/en/stable/", None),
+        103→}
+        106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
+        107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
+        130→def setup(app: "sphinx.application.Sphinx") -> None:
+        131→    configure_logging(app)
     examples/
         eggsample/
             eggsample/
@@ -83,43 +137,6 @@ downstream/
     tox.sh
 pyproject.toml
 scripts/
-    release.py
-        1→"""
-        2→Release script.
-        3→"""
-        5→import argparse
-        6→from subprocess import check_call
-        7→import sys
-        9→from colorama import Fore
-        10→from colorama import init
-        11→from git import Remote
-        12→from git import Repo
-        15→def create_branch(version: str) -> Repo:
-        16→    """Create a fresh branch from upstream/main"""
-        30→def get_upstream(repo: Repo) -> Remote:
-        31→    """Find upstream repository for pluggy on the remotes"""
-        39→def pre_release(version: str) -> None:
-        40→    """Generates new docs, release announcements and creates a local tag."""
-        50→def changelog(version: str, write_out: bool = False) -> None:
-        51→    if write_out:
-        52→        addopts = []
-        53→    else:
-        54→        addopts = ["--draft"]
-        55→    print(f"{Fore.CYAN}Generating CHANGELOG")
-        56→    check_call(["towncrier", "build", "--yes", "--version", version] + addopts)
-        59→def main() -> int:
-        …
-    towncrier-draft-to-file.py
-        1→from subprocess import call
-        2→import sys
-        5→def main() -> int:
-        6→    """
-        7→    Platform agnostic wrapper script for towncrier.
-        8→    Fixes the issue (pytest#7251) where windows users are unable to natively
-        9→    run tox -e docs to build pytest docs.
-        10→    """
-        11→    with open("docs/_changelog_towncrier_draft.rst", "w") as draft_file:
-        12→        return call(("towncrier", "--draft"), stdout=draft_file)
 src/
     pluggy/
         __init__.py
@@ -173,7 +190,11 @@ src/
             71→    hook_name: str, hook_impl: HookImpl, e: BaseException
             72→) -> None:
             82→def _multicall(
-            …
+            83→    hook_name: str,
+            84→    hook_impls: Sequence[HookImpl],
+            85→    caller_kwargs: Mapping[str, object],
+            86→    firstresult: bool,
+            87→) -> object | list[object]:
         _hooks.py
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -222,9 +243,15 @@ src/
             67→    def force_result(self, result: ResultType) -> None:
             …
             80→    def force_exception(self, exception: BaseException) -> None:
-            …
+            81→        """Force the result to fail with ``exception``.
+            83→        This overrides any previous result or exception.
+            85→        .. versionadded:: 1.1.0
+            86→        """
             91→    def get_result(self) -> ResultType:
-            …
+            92→        """Get the result(s) for this hook call.
+            94→        If the hook was marked as a ``firstresult`` only a single value
+            95→        will be returned, otherwise a list of results.
+            96→        """
             107→_Result = Result
         _tracing.py
             1→"""
@@ -251,46 +278,7 @@ src/
         py.typed
 testing/
     benchmark.py
-        1→"""
-        2→Benchmarking and performance tests.
-        3→"""
-        5→from typing import Any
-        7→import pytest
-        9→from pluggy import HookimplMarker
-        10→from pluggy import HookspecMarker
-        11→from pluggy import PluginManager
-        12→from pluggy._callers import _multicall
-        13→from pluggy._hooks import HookImpl
-        16→hookspec = HookspecMarker("example")
-        17→hookimpl = HookimplMarker("example")
-        20→@hookimpl
-        21→def hook(arg1, arg2, arg3):
-        22→    return arg1, arg2, arg3
-        25→@hookimpl(wrapper=True)
-        26→def wrapper(arg1, arg2, arg3):
-        27→    return (yield)
-        30→@pytest.fixture(params=[10, 100], ids="hooks={}".format)
-        31→def hooks(request: Any) -> list[object]:
-        32→    return [hook for i in range(request.param)]
-        35→@pytest.fixture(params=[10, 100], ids="wrappers={}".format)
-        36→def wrappers(request: Any) -> list[object]:
-        37→    return [wrapper for i in range(request.param)]
-        40→def test_hook_and_wrappers_speed(benchmark, hooks, wrappers) -> None:
-        …
-        54→@pytest.mark.parametrize(
-        …
     conftest.py
-        1→import pytest
-        3→from pluggy import HookspecMarker
-        4→from pluggy import PluginManager
-        7→@pytest.fixture(
-        8→    params=[lambda spec: spec, lambda spec: spec()],
-        9→    ids=["spec-is-class", "spec-is-instance"],
-        10→)
-        11→def he_pm(request, pm: PluginManager) -> PluginManager:
-        23→@pytest.fixture
-        24→def pm() -> PluginManager:
-        25→    return PluginManager("example")
     test_details.py
     test_helpers.py
     test_hookcaller.py

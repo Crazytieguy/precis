@@ -114,6 +114,10 @@ packages/
         README.md
             1→## Usage
             3→Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+            5→This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+            7→```bash
+            8→$ npm install # or pnpm install or yarn install
+            9→```
             11→### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
             …
             13→## Available Scripts
@@ -144,7 +148,6 @@ packages/
             modules/
             routes.tsx
             scripts/
-                get-missing-i18n-keys.script.ts
         tsconfig.json
         uno.config.ts
             13→export default defineConfig({
@@ -179,8 +182,6 @@ packages/
                 tasks/
             reset.d.ts
             scripts/
-                clear-outdated-cloudflare-kv-keys.script.ts
-                generate-config-table.script.ts
         tsconfig.json
         wrangler.toml
     cli/
