@@ -81,14 +81,6 @@ crates/
                 html.rs
                 mod.rs
                     1→//! Various helpers and utilities.
-                    3→use anyhow::Error;
-                    4→use std::fmt::Write;
-                    5→use tracing::error;
-                    7→pub mod fs;
-                    8→mod html;
-                    9→mod toml_ext;
-                    11→pub(crate) use self::toml_ext::TomlExt;
-                    13→pub use self::html::{escape_html, escape_html_attribute};
                     17→macro_rules! static_regex {
                     …
                     28→/// Prints a "backtrace" of some `Error`.
@@ -310,7 +302,13 @@ src/
         12→use tracing::{error, info};
         14→mod cmd;
         18→fn main() {
-        …
+        19→    init_logger();
+        21→    let command = create_clap_command();
+        23→    // Check which subcommand the user ran...
+        50→    if let Err(e) = res {
+        51→        utils::log_backtrace(&e);
+        53→        std::process::exit(101);
+        54→    }
 tests/
     gui/
     testsuite/

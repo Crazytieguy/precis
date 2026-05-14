@@ -427,7 +427,19 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     }
                     let item_key = BatchKey::Rust(entry_item_key);
                     let parts = body_parts_for_item(item.node, &src_lines);
-                    let part_value_factor = body_part_value_factor(parts.len());
+                    // For src/main.rs entry bodies (single-bin entry
+                    // points), each top-level statement is a distinct
+                    // tutorial-step's worth of state; NS authors
+                    // typically anchor on consecutive ranges of these
+                    // statements (e.g. sps NS 1.6-1.10 split main.rs
+                    // into 5 sections). Use a softer (sqrt) decay so
+                    // peer statements stay competitive against
+                    // orientation batches.
+                    let part_value_factor = if src_main_entry {
+                        1.0
+                    } else {
+                        body_part_value_factor(parts.len())
+                    };
                     for part in parts {
                         let Some(body_start_line) = part.start_line() else {
                             continue;

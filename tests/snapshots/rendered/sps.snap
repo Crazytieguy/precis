@@ -26,9 +26,6 @@ README.md
     32→---
     34→## ⚙️ Project Structure
     …
-    36→- **sps‑core** Core library: fetching, dependency resolution, archive extraction, artifact handling (apps, binaries, pkg installers, fonts, plugins, zap/preflight/uninstall stanzas, etc.)
-    38→- **sps‑cli** Command‑line interface: `sps` executable wrapping the core library.
-    40→---
     42→## 🚧 Current Status
     …
     54→## 🚀 Roadmap
@@ -52,12 +49,7 @@ sps/
         cli/
             info.rs
                 14→pub struct Info {
-                15→    /// Name of the formula or cask
-                16→    pub name: String,
-                18→    /// Show information for a cask, not a formula
-                19→    #[arg(long)]
-                20→    pub cask: bool,
-                21→}
+                …
             init.rs
                 16→pub struct InitArgs {
                 17→    /// Force initialization even if /opt/sps appears to be an sps root already.
@@ -106,7 +98,84 @@ sps/
             54→}
         main.rs
             57→async fn main() -> spResult<()> {
-            …
+            58→    let cli_args = CliArgs::parse();
+            60→    if let Command::Init(ref init_args_ref) = cli_args.command {
+            61→        match run_init_command(init_args_ref, cli_args.verbose).await {
+            62→            Ok(_) => {
+            63→                return Ok(());
+            64→            }
+            65→            Err(e) => {
+            66→                eprintln!("{}: Init command failed: {:#}", "Error".red().bold(), e);
+            67→                process::exit(1);
+            68→            }
+            69→        }
+            70→    }
+            72→    let config = Config::load().map_err(|e| {
+            73→        SpsError::Config(format!(
+            74→            "Could not load config (have you run 'sps init'?): {e}"
+            75→        ))
+            76→    })?;
+            78→    let level_filter = match cli_args.verbose {
+            79→        0 => LevelFilter::INFO,
+            80→        1 => LevelFilter::DEBUG,
+            81→        _ => LevelFilter::TRACE,
+            82→    };
+            83→    let max_log_level = level_filter.into_level().unwrap_or(tracing::Level::INFO);
+            85→    let env_filter = EnvFilter::builder()
+            86→        .with_default_directive(level_filter.into())
+            87→        .with_env_var("SPS_LOG")
+            88→        .from_env_lossy();
+            90→    let log_dir = config.logs_dir();
+            135→    let cache = Arc::new(Cache::new(&config).map_err(|e| {
+            136→        SpsError::Cache(format!(
+            137→            "Could not initialize cache (ensure 'sps init' was successful): {e}"
+            138→        ))
+            139→    })?);
+            141→    let needs_update_check = matches!(
+            142→        cli_args.command,
+            143→        Command::Install(_) | Command::Search { .. } | Command::Info { .. } | Command::Upgrade(_)
+            144→    );
+            146→    if needs_update_check {
+            147→        if let Err(e) = check_and_run_auto_update(&config, Arc::clone(&cache)).await {
+            148→            error!("Error during auto-update check: {}", e); // Use `error!` macro
+            149→        }
+            150→    } else {
+            151→        debug!(
+            152→            // Use `debug!` macro
+            153→            "Skipping auto-update check for command: {:?}",
+            154→            cli_args.command
+            155→        );
+            156→    }
+            158→    // Pass config and cache to the command's run method
+            159→    let command_execution_result = match &cli_args.command {
+            160→        Command::Init(_) => {
+            161→            /* This case is handled above and main exits */
+            162→            unreachable!()
+            163→        }
+            164→        _ => cli_args.command.run(&config, cache).await,
+            165→    };
+            167→    if let Err(e) = command_execution_result {
+            168→        // For pipeline commands (Install, Reinstall, Upgrade), errors are already
+            169→        // displayed via the status system, so only log in verbose mode
+            170→        let is_pipeline_command = matches!(
+            171→            cli_args.command,
+            172→            Command::Install(_) | Command::Reinstall(_) | Command::Upgrade(_)
+            173→        );
+            175→        if is_pipeline_command {
+            176→            // Only show error details in verbose mode
+            177→            if cli_args.verbose > 0 {
+            178→                error!("Command failed: {:#}", e);
+            179→                eprintln!("{}: {:#}", "Error".red().bold(), e);
+            180→            }
+            181→        } else {
+            182→            // For non-pipeline commands, show errors normally
+            183→            error!("Command failed: {:#}", e);
+            184→            eprintln!("{}: {:#}", "Error".red().bold(), e);
+            185→        }
+            186→        process::exit(1);
+            187→    }
+            189→    debug!("Command completed successfully."); // Use `debug!` macro
+            190→    Ok(())
         pipeline/
             downloader.rs
                 21→pub(crate) struct DownloadCoordinator {
@@ -127,7 +196,7 @@ sps-common/
             15→pub struct Config {
             …
             199→pub fn load_config() -> Result<Config> {
-            200→    Config::load()
+            …
         dependency/
             definition.rs
             mod.rs
@@ -141,23 +210,15 @@ sps-common/
                 10→};
             requirement.rs
                 7→pub enum Requirement {
-                8→    MacOS(String),
-                9→    Xcode(String),
-                10→    Other(String),
-                11→}
+                …
             resolver.rs
         error.rs
         formulary.rs
             12→pub struct Formulary {
-            13→    cache: Cache,
-            14→    parsed_cache: std::sync::Mutex<HashMap<String, std::sync::Arc<Formula>>>,
-            15→}
+            …
         keg.rs
             13→pub struct InstalledKeg {
-            14→    pub name: String,
-            15→    pub version_str: String,
-            16→    pub path: PathBuf,
-            17→}
+            …
             21→pub struct KegRegistry {
             22→    config: Config,
             23→}
@@ -216,64 +277,6 @@ sps-core/
         install/
             bottle/
             cask/
-                artifacts/
-                dmg.rs
-                helpers.rs
-                mod.rs
-                    25→pub struct CaskInstallManifest {
-                    26→    pub manifest_format_version: String,
-                    27→    pub token: String,
-                    28→    pub version: String,
-                    29→    pub installed_at: u64,
-                    30→    pub artifacts: Vec<InstalledArtifact>,
-                    31→    pub primary_app_file_name: Option<String>,
-                    32→    pub is_installed: bool,              // New flag for soft uninstall
-                    33→    pub cask_store_path: Option<String>, // Path to private store app, if available
-                    34→}
-                    36→/// Returns the path to the cask's version directory in the private store.
-                    37→pub fn sps_private_cask_version_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    38→    let version = cask.version.clone().unwrap_or_else(|| "latest".to_string());
-                    39→    config.cask_store_version_path(&cask.token, &version)
-                    42→/// Returns the path to the cask's token directory in the private store.
-                    43→pub fn sps_private_cask_token_dir(cask: &Cask, config: &Config) -> PathBuf {
-                    44→    config.cask_store_token_path(&cask.token)
-                    47→/// Returns the path to the main app bundle for a cask in the private store.
-                    48→/// This assumes the primary app bundle is named as specified in the cask's artifacts.
-                    49→pub fn sps_private_cask_app_path(cask: &Cask, config: &Config) -> Option<PathBuf> {
-                    …
-                    70→    None
-                    73→pub async fn download_cask(cask: &Cask, cache: &Cache) -> Result<PathBuf> {
-                    74→    download_cask_with_progress(cask, cache, None).await
-                    77→pub async fn download_cask_with_progress(
-                    78→    cask: &Cask,
-                    79→    cache: &Cache,
-                    80→    progress_callback: Option<ProgressCallback>,
-                    81→) -> Result<PathBuf> {
-                    …
-                    232→pub fn install_cask(
-                    233→    cask: &Cask,
-                    234→    download_path: &Path,
-                    235→    config: &Config,
-                    236→    job_action: &JobAction,
-                    237→) -> Result<()> {
-                    …
-                    580→pub fn write_receipt(
-                    581→    cask: &Cask,
-                    582→    cask_version_install_path: &Path,
-                    583→    artifacts: Vec<String>,
-                    584→) -> Result<()> {
-                    …
-                    612→pub fn write_cask_manifest(
-                    613→    cask: &Cask,
-                    614→    cask_version_install_path: &Path,
-                    615→    artifacts: Vec<InstalledArtifact>,
-                    616→) -> Result<()> {
-                    …
-                    683→/// Recursively cleans up empty parent directories in the private cask store.
-                    684→/// Starts from the given path and walks up, removing empty directories until a non-empty or root is
-                    685→/// found.
-                    686→pub fn cleanup_empty_parent_dirs_in_private_store(start_path: &Path, stop_at: &Path) {
-                    …
             devtools.rs
             extract.rs
             mod.rs
