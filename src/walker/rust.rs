@@ -1356,6 +1356,19 @@ fn collect_private_entry_item(child: Node, source: &str, whole: bool) -> FileLin
 fn collect_item_lines(child: Node, source: &str, whole: bool) -> FileLines {
     if whole {
         let mut full = Vec::new();
+        // Include preceding outer `#[…]` attributes so the rendered span
+        // matches NS rows that anchor on lines starting at the attribute
+        // (e.g. toasty NS 2.1 wants `#[derive(toasty::Model)]` + `struct
+        // User { … }` together as the User-model anchor).
+        let mut cur = child.prev_sibling();
+        while let Some(prev) = cur {
+            if prev.kind() == "attribute_item" {
+                extend_span(&mut full, prev, source);
+                cur = prev.prev_sibling();
+            } else {
+                break;
+            }
+        }
         extend_span(&mut full, child, source);
         return FileLines::new(dedup_sorted(full));
     }

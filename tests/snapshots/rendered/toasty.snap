@@ -139,25 +139,6 @@ crates/
                     statement.rs
                 plan.rs
                 simplify/
-                    association.rs
-                    expr_and.rs
-                    expr_any.rs
-                    expr_binary_op.rs
-                    expr_cast.rs
-                    expr_concat_str.rs
-                    expr_exists.rs
-                    expr_in_list.rs
-                    expr_is_null.rs
-                    expr_list.rs
-                    expr_map.rs
-                    expr_not.rs
-                    expr_or.rs
-                    expr_project.rs
-                    expr_record.rs
-                    lift_in_subquery.rs
-                    lift_pk_select.rs
-                    rewrite_root_path_expr.rs
-                    stmt_query.rs
                 simplify.rs
                 ty.rs
                 verify.rs
@@ -172,13 +153,7 @@ crates/
             relation/
                 belongs_to.rs
                 has_many.rs
-                    8→pub struct HasMany<T> {
-                    9→    values: Option<Vec<T>>,
-                    10→}
                 has_one.rs
-                    8→pub struct HasOne<T> {
-                    9→    value: Option<Box<T>>,
-                    10→}
                 option.rs
             relation.rs
                 16→pub trait Relation {
@@ -197,8 +172,6 @@ crates/
                     4→pub trait IntoSelect {
                     …
                 paginate.rs
-                    8→pub struct Paginate<M> {
-                    …
                 path.rs
                 primitive.rs
                 primitive_jiff.rs

@@ -1,6 +1,6 @@
 fixture = "toasty"
 budget = 10000
-cumulative_tokens = 9615
+cumulative_tokens = 9719
 batch_count = 383
 
 [[batches]]
@@ -61,15 +61,15 @@ entries = ["composite-key", "hello-toasty", "todo-with-cli", "user-has-one-profi
 position = 4
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs", start_line: 2 })'
 descriptor = "entry item at examples/user-has-one-profile/src/main.rs:2"
-cost_tokens = 73
-cum_tokens = 184
+cost_tokens = 86
+cum_tokens = 197
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
-start = 2
+start = 1
 end = 5
 
 [batches.content.spans.render]
@@ -95,15 +95,15 @@ kind = "full"
 position = 5
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs", start_line: 2 })'
 descriptor = "entry item at examples/composite-key/src/main.rs:2"
-cost_tokens = 89
-cum_tokens = 273
+cost_tokens = 102
+cum_tokens = 299
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 2
+start = 1
 end = 5
 
 [batches.content.spans.render]
@@ -135,186 +135,10 @@ kind = "full"
 
 [[batches]]
 position = 6
-key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs", start_line: 18 })'
-descriptor = "entry item at examples/composite-key/src/main.rs:18"
-cost_tokens = 94
-cum_tokens = 367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 18
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 26
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
-start = 29
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs", start_line: 14 })'
-descriptor = "entry item at examples/user-has-one-profile/src/main.rs:14"
-cost_tokens = 94
-cum_tokens = 461
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
-start = 14
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
-start = 19
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
-start = 22
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs", start_line: 2 })'
-descriptor = "entry item at examples/hello-toasty/src/main.rs:2"
-cost_tokens = 99
-cum_tokens = 560
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 2
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 9
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 12
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 15
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs", start_line: 19 })'
-descriptor = "entry item at examples/hello-toasty/src/main.rs:19"
-cost_tokens = 100
-cum_tokens = 660
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 19
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 24
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
-start = 30
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 68
-cum_tokens = 728
+cum_tokens = 367
 
 [batches.content]
 kind = "lines"
@@ -416,11 +240,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 7
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 76
-cum_tokens = 804
+cum_tokens = 443
 
 [batches.content]
 kind = "lines"
@@ -434,11 +258,137 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 12
+position = 8
+key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs", start_line: 14 })'
+descriptor = "entry item at examples/user-has-one-profile/src/main.rs:14"
+cost_tokens = 107
+cum_tokens = 550
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
+start = 13
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
+start = 19
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs", start_line: 2 })'
+descriptor = "entry item at examples/hello-toasty/src/main.rs:2"
+cost_tokens = 112
+cum_tokens = 662
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 1
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs", start_line: 19 })'
+descriptor = "entry item at examples/hello-toasty/src/main.rs:19"
+cost_tokens = 113
+cum_tokens = 775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 18
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 27
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src/main.rs"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 30
-cum_tokens = 834
+cum_tokens = 805
 
 [batches.content]
 kind = "fs"
@@ -448,11 +398,61 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/toasty/docs"
 entries = ["ARCHITECTURE.md", "CHANGE_GUIDE.md", "CONTEXT.md", "architecture", "design", "guide", "roadmap"]
 
 [[batches]]
+position = 12
+key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs", start_line: 18 })'
+descriptor = "entry item at examples/composite-key/src/main.rs:18"
+cost_tokens = 123
+cum_tokens = 928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
+start = 16
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/composite-key/src/main.rs"
+start = 29
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 13
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/CONTEXT.md" })'
 descriptor = "headings outline in docs/CONTEXT.md"
 cost_tokens = 39
-cum_tokens = 873
+cum_tokens = 967
 
 [batches.content]
 kind = "lines"
@@ -526,7 +526,7 @@ position = 14
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/Cargo.toml" })'
 descriptor = "[package] in Cargo.toml"
 cost_tokens = 323
-cum_tokens = 1196
+cum_tokens = 1290
 
 [batches.content]
 kind = "lines"
@@ -592,7 +592,7 @@ position = 15
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md" })'
 descriptor = "headings outline in docs/ARCHITECTURE.md"
 cost_tokens = 114
-cum_tokens = 1310
+cum_tokens = 1404
 
 [batches.content]
 kind = "lines"
@@ -746,7 +746,7 @@ position = 16
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 0 })'
 descriptor = "docs/ARCHITECTURE.md section #0"
 cost_tokens = 0
-cum_tokens = 1310
+cum_tokens = 1404
 
 [batches.content]
 kind = "lines"
@@ -764,7 +764,7 @@ position = 17
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 1 })'
 descriptor = "docs/ARCHITECTURE.md section #1"
 cost_tokens = 33
-cum_tokens = 1343
+cum_tokens = 1437
 
 [batches.content]
 kind = "lines"
@@ -790,7 +790,7 @@ position = 18
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 2 })'
 descriptor = "docs/ARCHITECTURE.md section #2"
 cost_tokens = 11
-cum_tokens = 1354
+cum_tokens = 1448
 
 [batches.content]
 kind = "lines"
@@ -808,7 +808,7 @@ position = 19
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/roadmap" })'
 descriptor = "listing of 'docs/roadmap'"
 cost_tokens = 23
-cum_tokens = 1377
+cum_tokens = 1471
 
 [batches.content]
 kind = "fs"
@@ -822,7 +822,7 @@ position = 20
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/roadmap/README.md" })'
 descriptor = "README headline in docs/roadmap/README.md"
 cost_tokens = 31
-cum_tokens = 1408
+cum_tokens = 1502
 
 [batches.content]
 kind = "lines"
@@ -848,7 +848,7 @@ position = 21
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 11
-cum_tokens = 1419
+cum_tokens = 1513
 
 [batches.content]
 kind = "fs"
@@ -862,7 +862,7 @@ position = 22
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/roadmap/composite-keys.md", section_index: 0 })'
 descriptor = "docs/roadmap/composite-keys.md section #0"
 cost_tokens = 9
-cum_tokens = 1428
+cum_tokens = 1522
 
 [batches.content]
 kind = "lines"
@@ -880,7 +880,7 @@ position = 23
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 13 })'
 descriptor = "docs/ARCHITECTURE.md section #13"
 cost_tokens = 43
-cum_tokens = 1471
+cum_tokens = 1565
 
 [batches.content]
 kind = "lines"
@@ -906,7 +906,7 @@ position = 24
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/CONTEXT.md", section_index: 0 })'
 descriptor = "docs/CONTEXT.md section #0"
 cost_tokens = 18
-cum_tokens = 1489
+cum_tokens = 1583
 
 [batches.content]
 kind = "lines"
@@ -932,7 +932,7 @@ position = 25
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 8 })'
 descriptor = "docs/ARCHITECTURE.md section #8"
 cost_tokens = 16
-cum_tokens = 1505
+cum_tokens = 1599
 
 [batches.content]
 kind = "lines"
@@ -950,7 +950,7 @@ position = 26
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 11 })'
 descriptor = "docs/ARCHITECTURE.md section #11"
 cost_tokens = 16
-cum_tokens = 1521
+cum_tokens = 1615
 
 [batches.content]
 kind = "lines"
@@ -968,7 +968,7 @@ position = 27
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates" })'
 descriptor = "listing of 'crates'"
 cost_tokens = 85
-cum_tokens = 1606
+cum_tokens = 1700
 
 [batches.content]
 kind = "fs"
@@ -982,7 +982,7 @@ position = 28
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty" })'
 descriptor = "listing of 'crates/toasty'"
 cost_tokens = 16
-cum_tokens = 1622
+cum_tokens = 1716
 
 [batches.content]
 kind = "fs"
@@ -996,7 +996,7 @@ position = 29
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src" })'
 descriptor = "listing of 'crates/toasty/src'"
 cost_tokens = 60
-cum_tokens = 1682
+cum_tokens = 1776
 
 [batches.content]
 kind = "fs"
@@ -1010,7 +1010,7 @@ position = 30
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/batch" })'
 descriptor = "listing of 'crates/toasty/src/batch'"
 cost_tokens = 4
-cum_tokens = 1686
+cum_tokens = 1780
 
 [batches.content]
 kind = "fs"
@@ -1024,7 +1024,7 @@ position = 31
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db" })'
 descriptor = "listing of 'crates/toasty/src/db'"
 cost_tokens = 12
-cum_tokens = 1698
+cum_tokens = 1792
 
 [batches.content]
 kind = "fs"
@@ -1038,7 +1038,7 @@ position = 32
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation" })'
 descriptor = "listing of 'crates/toasty/src/relation'"
 cost_tokens = 19
-cum_tokens = 1717
+cum_tokens = 1811
 
 [batches.content]
 kind = "fs"
@@ -1052,7 +1052,7 @@ position = 33
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/db.rs"
 cost_tokens = 10
-cum_tokens = 1727
+cum_tokens = 1821
 
 [batches.content]
 kind = "lines"
@@ -1078,7 +1078,7 @@ position = 34
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/relation.rs"
 cost_tokens = 10
-cum_tokens = 1737
+cum_tokens = 1831
 
 [batches.content]
 kind = "lines"
@@ -1104,7 +1104,7 @@ position = 35
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt" })'
 descriptor = "listing of 'crates/toasty/src/stmt'"
 cost_tokens = 62
-cum_tokens = 1799
+cum_tokens = 1893
 
 [batches.content]
 kind = "fs"
@@ -1118,7 +1118,7 @@ position = 36
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine.rs"
 cost_tokens = 12
-cum_tokens = 1811
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -1144,7 +1144,7 @@ position = 37
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/page.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/page.rs"
 cost_tokens = 12
-cum_tokens = 1823
+cum_tokens = 1917
 
 [batches.content]
 kind = "lines"
@@ -1170,7 +1170,7 @@ position = 38
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt.rs"
 cost_tokens = 12
-cum_tokens = 1835
+cum_tokens = 1929
 
 [batches.content]
 kind = "lines"
@@ -1196,7 +1196,7 @@ position = 39
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine" })'
 descriptor = "listing of 'crates/toasty/src/engine'"
 cost_tokens = 65
-cum_tokens = 1900
+cum_tokens = 1994
 
 [batches.content]
 kind = "fs"
@@ -1210,7 +1210,7 @@ position = 40
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/eval" })'
 descriptor = "listing of 'crates/toasty/src/engine/eval'"
 cost_tokens = 5
-cum_tokens = 1905
+cum_tokens = 1999
 
 [batches.content]
 kind = "fs"
@@ -1224,7 +1224,7 @@ position = 41
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/index" })'
 descriptor = "listing of 'crates/toasty/src/engine/index'"
 cost_tokens = 10
-cum_tokens = 1915
+cum_tokens = 2009
 
 [batches.content]
 kind = "fs"
@@ -1238,7 +1238,7 @@ position = 42
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/plan" })'
 descriptor = "listing of 'crates/toasty/src/engine/plan'"
 cost_tokens = 13
-cum_tokens = 1928
+cum_tokens = 2022
 
 [batches.content]
 kind = "fs"
@@ -1252,7 +1252,7 @@ position = 43
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/lower" })'
 descriptor = "listing of 'crates/toasty/src/engine/lower'"
 cost_tokens = 16
-cum_tokens = 1944
+cum_tokens = 2038
 
 [batches.content]
 kind = "fs"
@@ -1266,7 +1266,7 @@ position = 44
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec" })'
 descriptor = "listing of 'crates/toasty/src/engine/exec'"
 cost_tokens = 78
-cum_tokens = 2022
+cum_tokens = 2116
 
 [batches.content]
 kind = "fs"
@@ -1280,7 +1280,7 @@ position = 45
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir" })'
 descriptor = "listing of 'crates/toasty/src/engine/mir'"
 cost_tokens = 79
-cum_tokens = 2101
+cum_tokens = 2195
 
 [batches.content]
 kind = "fs"
@@ -1294,7 +1294,7 @@ position = 46
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/builder.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/db/builder.rs"
 cost_tokens = 10
-cum_tokens = 2111
+cum_tokens = 2205
 
 [batches.content]
 kind = "lines"
@@ -1320,7 +1320,7 @@ position = 47
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/connect.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/db/connect.rs"
 cost_tokens = 10
-cum_tokens = 2121
+cum_tokens = 2215
 
 [batches.content]
 kind = "lines"
@@ -1346,7 +1346,7 @@ position = 48
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_insert.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/into_insert.rs"
 cost_tokens = 11
-cum_tokens = 2132
+cum_tokens = 2226
 
 [batches.content]
 kind = "lines"
@@ -1372,7 +1372,7 @@ position = 49
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_select.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/into_select.rs"
 cost_tokens = 11
-cum_tokens = 2143
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1398,7 +1398,7 @@ position = 50
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/to_statement.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/to_statement.rs"
 cost_tokens = 11
-cum_tokens = 2154
+cum_tokens = 2248
 
 [batches.content]
 kind = "lines"
@@ -1424,7 +1424,7 @@ position = 51
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core" })'
 descriptor = "listing of 'crates/toasty-core'"
 cost_tokens = 16
-cum_tokens = 2170
+cum_tokens = 2264
 
 [batches.content]
 kind = "fs"
@@ -1438,7 +1438,7 @@ position = 52
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src" })'
 descriptor = "listing of 'crates/toasty-core/src'"
 cost_tokens = 36
-cum_tokens = 2206
+cum_tokens = 2300
 
 [batches.content]
 kind = "fs"
@@ -1452,7 +1452,7 @@ position = 53
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/lib.rs"
 cost_tokens = 25
-cum_tokens = 2231
+cum_tokens = 2325
 
 [batches.content]
 kind = "lines"
@@ -1478,7 +1478,7 @@ position = 54
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/lib.rs", start_line: 16 })'
 descriptor = "pub item at crates/toasty-core/src/lib.rs:16"
 cost_tokens = 0
-cum_tokens = 2231
+cum_tokens = 2325
 
 [batches.content]
 kind = "lines"
@@ -1496,7 +1496,7 @@ position = 55
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver" })'
 descriptor = "listing of 'crates/toasty-core/src/driver'"
 cost_tokens = 15
-cum_tokens = 2246
+cum_tokens = 2340
 
 [batches.content]
 kind = "fs"
@@ -1510,7 +1510,7 @@ position = 56
 key = 'Rust(MacroNames { src_dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src" })'
 descriptor = "macro_export names across crates/toasty-core/src"
 cost_tokens = 11
-cum_tokens = 2257
+cum_tokens = 2351
 
 [batches.content]
 kind = "lines"
@@ -1536,7 +1536,7 @@ position = 57
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema" })'
 descriptor = "listing of 'crates/toasty-core/src/schema'"
 cost_tokens = 39
-cum_tokens = 2296
+cum_tokens = 2390
 
 [batches.content]
 kind = "fs"
@@ -1550,7 +1550,7 @@ position = 58
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/builder" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/builder'"
 cost_tokens = 4
-cum_tokens = 2300
+cum_tokens = 2394
 
 [batches.content]
 kind = "fs"
@@ -1564,7 +1564,7 @@ position = 59
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/verify" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/verify'"
 cost_tokens = 7
-cum_tokens = 2307
+cum_tokens = 2401
 
 [batches.content]
 kind = "fs"
@@ -1578,7 +1578,7 @@ position = 60
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/mapping" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/mapping'"
 cost_tokens = 8
-cum_tokens = 2315
+cum_tokens = 2409
 
 [batches.content]
 kind = "fs"
@@ -1592,7 +1592,7 @@ position = 61
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/db" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/db'"
 cost_tokens = 32
-cum_tokens = 2347
+cum_tokens = 2441
 
 [batches.content]
 kind = "fs"
@@ -1606,7 +1606,7 @@ position = 62
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation" })'
 descriptor = "listing of 'crates/toasty-core/src/driver/operation'"
 cost_tokens = 43
-cum_tokens = 2390
+cum_tokens = 2484
 
 [batches.content]
 kind = "fs"
@@ -1620,7 +1620,7 @@ position = 63
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/app'"
 cost_tokens = 53
-cum_tokens = 2443
+cum_tokens = 2537
 
 [batches.content]
 kind = "fs"
@@ -1634,7 +1634,7 @@ position = 64
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/constraint" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/app/constraint'"
 cost_tokens = 4
-cum_tokens = 2447
+cum_tokens = 2541
 
 [batches.content]
 kind = "fs"
@@ -1648,7 +1648,7 @@ position = 65
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/field" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/app/field'"
 cost_tokens = 4
-cum_tokens = 2451
+cum_tokens = 2545
 
 [batches.content]
 kind = "fs"
@@ -1662,7 +1662,7 @@ position = 66
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/relation" })'
 descriptor = "listing of 'crates/toasty-core/src/schema/app/relation'"
 cost_tokens = 15
-cum_tokens = 2466
+cum_tokens = 2560
 
 [batches.content]
 kind = "fs"
@@ -1676,7 +1676,7 @@ position = 67
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/lib.rs", start_line: 16 })'
 descriptor = "pub-item doc lede at crates/toasty-core/src/lib.rs:16"
 cost_tokens = 18
-cum_tokens = 2484
+cum_tokens = 2578
 
 [batches.content]
 kind = "lines"
@@ -1694,7 +1694,7 @@ position = 68
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error" })'
 descriptor = "listing of 'crates/toasty-core/src/error'"
 cost_tokens = 82
-cum_tokens = 2566
+cum_tokens = 2660
 
 [batches.content]
 kind = "fs"
@@ -1708,7 +1708,7 @@ position = 69
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql" })'
 descriptor = "listing of 'crates/toasty-sql'"
 cost_tokens = 16
-cum_tokens = 2582
+cum_tokens = 2676
 
 [batches.content]
 kind = "fs"
@@ -1722,7 +1722,7 @@ position = 70
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src" })'
 descriptor = "listing of 'crates/toasty-sql/src'"
 cost_tokens = 22
-cum_tokens = 2604
+cum_tokens = 2698
 
 [batches.content]
 kind = "fs"
@@ -1736,7 +1736,7 @@ position = 71
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/serializer" })'
 descriptor = "listing of 'crates/toasty-sql/src/serializer'"
 cost_tokens = 54
-cum_tokens = 2658
+cum_tokens = 2752
 
 [batches.content]
 kind = "fs"
@@ -1750,7 +1750,7 @@ position = 72
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt" })'
 descriptor = "listing of 'crates/toasty-sql/src/stmt'"
 cost_tokens = 71
-cum_tokens = 2729
+cum_tokens = 2823
 
 [batches.content]
 kind = "fs"
@@ -1764,7 +1764,7 @@ position = 73
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-sql/src/lib.rs"
 cost_tokens = 57
-cum_tokens = 2786
+cum_tokens = 2880
 
 [batches.content]
 kind = "lines"
@@ -1798,7 +1798,7 @@ position = 74
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/select.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/select.rs"
 cost_tokens = 12
-cum_tokens = 2798
+cum_tokens = 2892
 
 [batches.content]
 kind = "lines"
@@ -1824,7 +1824,7 @@ position = 75
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/update.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/update.rs"
 cost_tokens = 12
-cum_tokens = 2810
+cum_tokens = 2904
 
 [batches.content]
 kind = "lines"
@@ -1850,7 +1850,7 @@ position = 76
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/connect.rs", start_line: 14 })'
 descriptor = "pub item at crates/toasty/src/db/connect.rs:14"
 cost_tokens = 15
-cum_tokens = 2825
+cum_tokens = 2919
 
 [batches.content]
 kind = "lines"
@@ -1868,7 +1868,7 @@ position = 77
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify" })'
 descriptor = "listing of 'crates/toasty/src/engine/simplify'"
 cost_tokens = 103
-cum_tokens = 2928
+cum_tokens = 3022
 
 [batches.content]
 kind = "fs"
@@ -1882,7 +1882,7 @@ position = 78
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/has_many.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/relation/has_many.rs"
 cost_tokens = 13
-cum_tokens = 2941
+cum_tokens = 3035
 
 [batches.content]
 kind = "lines"
@@ -1908,7 +1908,7 @@ position = 79
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/has_many.rs", start_line: 8 })'
 descriptor = "pub item at crates/toasty/src/relation/has_many.rs:8"
 cost_tokens = 14
-cum_tokens = 2955
+cum_tokens = 3049
 
 [batches.content]
 kind = "lines"
@@ -1926,7 +1926,7 @@ position = 80
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/has_one.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/relation/has_one.rs"
 cost_tokens = 13
-cum_tokens = 2968
+cum_tokens = 3062
 
 [batches.content]
 kind = "lines"
@@ -1952,7 +1952,7 @@ position = 81
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/has_one.rs", start_line: 8 })'
 descriptor = "pub item at crates/toasty/src/relation/has_one.rs:8"
 cost_tokens = 14
-cum_tokens = 2982
+cum_tokens = 3076
 
 [batches.content]
 kind = "lines"
@@ -1970,7 +1970,7 @@ position = 82
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/paginate.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/paginate.rs"
 cost_tokens = 13
-cum_tokens = 2995
+cum_tokens = 3089
 
 [batches.content]
 kind = "lines"
@@ -1996,7 +1996,7 @@ position = 83
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/apply_update.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/apply_update.rs"
 cost_tokens = 21
-cum_tokens = 3016
+cum_tokens = 3110
 
 [batches.content]
 kind = "lines"
@@ -2038,7 +2038,7 @@ position = 84
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/apply_update.rs", start_line: 19 })'
 descriptor = "pub item at crates/toasty/src/apply_update.rs:19"
 cost_tokens = 0
-cum_tokens = 3016
+cum_tokens = 3110
 
 [batches.content]
 kind = "lines"
@@ -2056,7 +2056,7 @@ position = 85
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-core/src/lib.rs"
 cost_tokens = 80
-cum_tokens = 3096
+cum_tokens = 3190
 
 [batches.content]
 kind = "lines"
@@ -2114,7 +2114,7 @@ position = 86
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/belongs_to.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/relation/belongs_to.rs"
 cost_tokens = 14
-cum_tokens = 3110
+cum_tokens = 3204
 
 [batches.content]
 kind = "lines"
@@ -2140,7 +2140,7 @@ position = 87
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/relation/belongs_to.rs", start_line: 8 })'
 descriptor = "pub item at crates/toasty/src/relation/belongs_to.rs:8"
 cost_tokens = 14
-cum_tokens = 3124
+cum_tokens = 3218
 
 [batches.content]
 kind = "lines"
@@ -2158,7 +2158,7 @@ position = 88
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/batch/create.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/batch/create.rs"
 cost_tokens = 15
-cum_tokens = 3139
+cum_tokens = 3233
 
 [batches.content]
 kind = "lines"
@@ -2184,7 +2184,7 @@ position = 89
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/association.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/association.rs"
 cost_tokens = 15
-cum_tokens = 3154
+cum_tokens = 3248
 
 [batches.content]
 kind = "lines"
@@ -2210,7 +2210,7 @@ position = 90
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/delete.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/delete.rs"
 cost_tokens = 15
-cum_tokens = 3169
+cum_tokens = 3263
 
 [batches.content]
 kind = "lines"
@@ -2236,7 +2236,7 @@ position = 91
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/expr.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/expr.rs"
 cost_tokens = 15
-cum_tokens = 3184
+cum_tokens = 3278
 
 [batches.content]
 kind = "lines"
@@ -2262,7 +2262,7 @@ position = 92
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/insert.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/insert.rs"
 cost_tokens = 15
-cum_tokens = 3199
+cum_tokens = 3293
 
 [batches.content]
 kind = "lines"
@@ -2288,7 +2288,7 @@ position = 93
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/path.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/path.rs"
 cost_tokens = 15
-cum_tokens = 3214
+cum_tokens = 3308
 
 [batches.content]
 kind = "lines"
@@ -2314,7 +2314,7 @@ position = 94
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/to_statement.rs", start_line: 3 })'
 descriptor = "pub item at crates/toasty/src/stmt/to_statement.rs:3"
 cost_tokens = 27
-cum_tokens = 3241
+cum_tokens = 3335
 
 [batches.content]
 kind = "lines"
@@ -2340,7 +2340,7 @@ position = 95
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt.rs", start_line: 51 })'
 descriptor = "pub item at crates/toasty/src/stmt.rs:51"
 cost_tokens = 30
-cum_tokens = 3271
+cum_tokens = 3365
 
 [batches.content]
 kind = "lines"
@@ -2358,7 +2358,7 @@ position = 96
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_expr.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/into_expr.rs"
 cost_tokens = 16
-cum_tokens = 3287
+cum_tokens = 3381
 
 [batches.content]
 kind = "lines"
@@ -2384,7 +2384,7 @@ position = 97
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/schema.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/schema.rs"
 cost_tokens = 25
-cum_tokens = 3312
+cum_tokens = 3406
 
 [batches.content]
 kind = "lines"
@@ -2410,7 +2410,7 @@ position = 98
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/schema.rs", start_line: 5 })'
 descriptor = "pub item at crates/toasty/src/schema.rs:5"
 cost_tokens = 0
-cum_tokens = 3312
+cum_tokens = 3406
 
 [batches.content]
 kind = "lines"
@@ -2436,7 +2436,7 @@ position = 99
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/schema.rs", start_line: 5, body_start_line: 6 })'
 descriptor = "pub item body at crates/toasty/src/schema.rs:5 body 6"
 cost_tokens = 11
-cum_tokens = 3323
+cum_tokens = 3417
 
 [batches.content]
 kind = "lines"
@@ -2454,7 +2454,7 @@ position = 100
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_insert.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty/src/stmt/into_insert.rs:4"
 cost_tokens = 29
-cum_tokens = 3352
+cum_tokens = 3446
 
 [batches.content]
 kind = "lines"
@@ -2480,7 +2480,7 @@ position = 101
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_select.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty/src/stmt/into_select.rs:4"
 cost_tokens = 29
-cum_tokens = 3381
+cum_tokens = 3475
 
 [batches.content]
 kind = "lines"
@@ -2506,7 +2506,7 @@ position = 102
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/action.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/action.rs"
 cost_tokens = 12
-cum_tokens = 3393
+cum_tokens = 3487
 
 [batches.content]
 kind = "lines"
@@ -2532,7 +2532,7 @@ position = 103
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/eval.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/eval.rs"
 cost_tokens = 12
-cum_tokens = 3405
+cum_tokens = 3499
 
 [batches.content]
 kind = "lines"
@@ -2558,7 +2558,7 @@ position = 104
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/filter.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/filter.rs"
 cost_tokens = 12
-cum_tokens = 3417
+cum_tokens = 3511
 
 [batches.content]
 kind = "lines"
@@ -2584,7 +2584,7 @@ position = 105
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/output.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/output.rs"
 cost_tokens = 12
-cum_tokens = 3429
+cum_tokens = 3523
 
 [batches.content]
 kind = "lines"
@@ -2610,7 +2610,7 @@ position = 106
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/project.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/project.rs"
 cost_tokens = 12
-cum_tokens = 3441
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -2636,7 +2636,7 @@ position = 107
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/const.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/const.rs"
 cost_tokens = 12
-cum_tokens = 3453
+cum_tokens = 3547
 
 [batches.content]
 kind = "lines"
@@ -2662,7 +2662,7 @@ position = 108
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/eval.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/eval.rs"
 cost_tokens = 12
-cum_tokens = 3465
+cum_tokens = 3559
 
 [batches.content]
 kind = "lines"
@@ -2688,7 +2688,7 @@ position = 109
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/filter.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/filter.rs"
 cost_tokens = 12
-cum_tokens = 3477
+cum_tokens = 3571
 
 [batches.content]
 kind = "lines"
@@ -2714,7 +2714,7 @@ position = 110
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/node.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/node.rs"
 cost_tokens = 12
-cum_tokens = 3489
+cum_tokens = 3583
 
 [batches.content]
 kind = "lines"
@@ -2740,7 +2740,7 @@ position = 111
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/operation.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/operation.rs"
 cost_tokens = 12
-cum_tokens = 3501
+cum_tokens = 3595
 
 [batches.content]
 kind = "lines"
@@ -2766,7 +2766,7 @@ position = 112
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/project.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/project.rs"
 cost_tokens = 12
-cum_tokens = 3513
+cum_tokens = 3607
 
 [batches.content]
 kind = "lines"
@@ -2792,7 +2792,7 @@ position = 113
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/store.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/store.rs"
 cost_tokens = 12
-cum_tokens = 3525
+cum_tokens = 3619
 
 [batches.content]
 kind = "lines"
@@ -2818,7 +2818,7 @@ position = 114
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/eval.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/eval.rs"
 cost_tokens = 18
-cum_tokens = 3543
+cum_tokens = 3637
 
 [batches.content]
 kind = "lines"
@@ -2844,7 +2844,7 @@ position = 115
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema.rs"
 cost_tokens = 10
-cum_tokens = 3553
+cum_tokens = 3647
 
 [batches.content]
 kind = "lines"
@@ -2870,7 +2870,7 @@ position = 116
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt.rs"
 cost_tokens = 10
-cum_tokens = 3563
+cum_tokens = 3657
 
 [batches.content]
 kind = "lines"
@@ -2896,7 +2896,7 @@ position = 117
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt.rs"
 cost_tokens = 10
-cum_tokens = 3573
+cum_tokens = 3667
 
 [batches.content]
 kind = "lines"
@@ -2922,7 +2922,7 @@ position = 118
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_expr.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/into_expr.rs:6"
 cost_tokens = 32
-cum_tokens = 3605
+cum_tokens = 3699
 
 [batches.content]
 kind = "lines"
@@ -2948,7 +2948,7 @@ position = 119
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/eval/as_expr.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/eval/as_expr.rs"
 cost_tokens = 13
-cum_tokens = 3618
+cum_tokens = 3712
 
 [batches.content]
 kind = "lines"
@@ -2974,7 +2974,7 @@ position = 120
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/plan.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/plan.rs"
 cost_tokens = 13
-cum_tokens = 3631
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -3000,7 +3000,7 @@ position = 121
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/query_pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/query_pk.rs"
 cost_tokens = 13
-cum_tokens = 3644
+cum_tokens = 3738
 
 [batches.content]
 kind = "lines"
@@ -3026,7 +3026,7 @@ position = 122
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/set_var.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/set_var.rs"
 cost_tokens = 13
-cum_tokens = 3657
+cum_tokens = 3751
 
 [batches.content]
 kind = "lines"
@@ -3052,7 +3052,7 @@ position = 123
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/exec_statement.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/exec_statement.rs"
 cost_tokens = 13
-cum_tokens = 3670
+cum_tokens = 3764
 
 [batches.content]
 kind = "lines"
@@ -3078,7 +3078,7 @@ position = 124
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/logical_plan.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/logical_plan.rs"
 cost_tokens = 13
-cum_tokens = 3683
+cum_tokens = 3777
 
 [batches.content]
 kind = "lines"
@@ -3104,7 +3104,7 @@ position = 125
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/nested_merge.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/nested_merge.rs"
 cost_tokens = 13
-cum_tokens = 3696
+cum_tokens = 3790
 
 [batches.content]
 kind = "lines"
@@ -3130,7 +3130,7 @@ position = 126
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/query_pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/query_pk.rs"
 cost_tokens = 13
-cum_tokens = 3709
+cum_tokens = 3803
 
 [batches.content]
 kind = "lines"
@@ -3156,7 +3156,7 @@ position = 127
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/cursor.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/cursor.rs"
 cost_tokens = 30
-cum_tokens = 3739
+cum_tokens = 3833
 
 [batches.content]
 kind = "lines"
@@ -3198,7 +3198,7 @@ position = 128
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/delete_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/delete_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3753
+cum_tokens = 3847
 
 [batches.content]
 kind = "lines"
@@ -3224,7 +3224,7 @@ position = 129
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/get_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/get_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3767
+cum_tokens = 3861
 
 [batches.content]
 kind = "lines"
@@ -3250,7 +3250,7 @@ position = 130
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/rmw.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/rmw.rs"
 cost_tokens = 14
-cum_tokens = 3781
+cum_tokens = 3875
 
 [batches.content]
 kind = "lines"
@@ -3276,7 +3276,7 @@ position = 131
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/update_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/update_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3795
+cum_tokens = 3889
 
 [batches.content]
 kind = "lines"
@@ -3302,7 +3302,7 @@ position = 132
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/delete_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/delete_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3809
+cum_tokens = 3903
 
 [batches.content]
 kind = "lines"
@@ -3328,7 +3328,7 @@ position = 133
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/get_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/get_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3823
+cum_tokens = 3917
 
 [batches.content]
 kind = "lines"
@@ -3354,7 +3354,7 @@ position = 134
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/read_modify_write.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/read_modify_write.rs"
 cost_tokens = 14
-cum_tokens = 3837
+cum_tokens = 3931
 
 [batches.content]
 kind = "lines"
@@ -3380,7 +3380,7 @@ position = 135
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/update_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/update_by_key.rs"
 cost_tokens = 14
-cum_tokens = 3851
+cum_tokens = 3945
 
 [batches.content]
 kind = "lines"
@@ -3406,7 +3406,7 @@ position = 136
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/Cargo.toml" })'
 descriptor = "[dependencies] in crates/toasty-sql/Cargo.toml"
 cost_tokens = 18
-cum_tokens = 3869
+cum_tokens = 3963
 
 [batches.content]
 kind = "lines"
@@ -3424,7 +3424,7 @@ position = 137
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/find_pk_by_index.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/find_pk_by_index.rs"
 cost_tokens = 15
-cum_tokens = 3884
+cum_tokens = 3978
 
 [batches.content]
 kind = "lines"
@@ -3450,7 +3450,7 @@ position = 138
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/mir/find_pk_by_index.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/mir/find_pk_by_index.rs"
 cost_tokens = 15
-cum_tokens = 3899
+cum_tokens = 3993
 
 [batches.content]
 kind = "lines"
@@ -3476,7 +3476,7 @@ position = 139
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/cursor.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/cursor.rs:6"
 cost_tokens = 43
-cum_tokens = 3942
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -3494,7 +3494,7 @@ position = 140
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/index/index_plan.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/index/index_plan.rs"
 cost_tokens = 16
-cum_tokens = 3958
+cum_tokens = 4052
 
 [batches.content]
 kind = "lines"
@@ -3520,7 +3520,7 @@ position = 141
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/primitive.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/stmt/primitive.rs"
 cost_tokens = 24
-cum_tokens = 3982
+cum_tokens = 4076
 
 [batches.content]
 kind = "lines"
@@ -3562,7 +3562,7 @@ position = 142
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/primitive.rs", start_line: 78 })'
 descriptor = "pub item at crates/toasty/src/stmt/primitive.rs:78"
 cost_tokens = 16
-cum_tokens = 3998
+cum_tokens = 4092
 
 [batches.content]
 kind = "lines"
@@ -3580,7 +3580,7 @@ position = 143
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/association.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/association.rs:6"
 cost_tokens = 30
-cum_tokens = 4028
+cum_tokens = 4122
 
 [batches.content]
 kind = "lines"
@@ -3598,7 +3598,7 @@ position = 144
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/delete.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/delete.rs:6"
 cost_tokens = 30
-cum_tokens = 4058
+cum_tokens = 4152
 
 [batches.content]
 kind = "lines"
@@ -3616,7 +3616,7 @@ position = 145
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/insert.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/insert.rs:6"
 cost_tokens = 30
-cum_tokens = 4088
+cum_tokens = 4182
 
 [batches.content]
 kind = "lines"
@@ -3634,7 +3634,7 @@ position = 146
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/path.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/path.rs:6"
 cost_tokens = 30
-cum_tokens = 4118
+cum_tokens = 4212
 
 [batches.content]
 kind = "lines"
@@ -3652,7 +3652,7 @@ position = 147
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/update.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/update.rs:6"
 cost_tokens = 30
-cum_tokens = 4148
+cum_tokens = 4242
 
 [batches.content]
 kind = "lines"
@@ -3670,7 +3670,7 @@ position = 148
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/migration.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/migration.rs"
 cost_tokens = 14
-cum_tokens = 4162
+cum_tokens = 4256
 
 [batches.content]
 kind = "lines"
@@ -3696,7 +3696,7 @@ position = 149
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/to_statement.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/stmt/to_statement.rs"
 cost_tokens = 9
-cum_tokens = 4171
+cum_tokens = 4265
 
 [batches.content]
 kind = "lines"
@@ -3714,7 +3714,7 @@ position = 150
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen" })'
 descriptor = "listing of 'crates/toasty-codegen'"
 cost_tokens = 13
-cum_tokens = 4184
+cum_tokens = 4278
 
 [batches.content]
 kind = "fs"
@@ -3728,7 +3728,7 @@ position = 151
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src" })'
 descriptor = "listing of 'crates/toasty-codegen/src'"
 cost_tokens = 18
-cum_tokens = 4202
+cum_tokens = 4296
 
 [batches.content]
 kind = "fs"
@@ -3742,7 +3742,7 @@ position = 152
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/lib.rs"
 cost_tokens = 46
-cum_tokens = 4248
+cum_tokens = 4342
 
 [batches.content]
 kind = "lines"
@@ -3784,7 +3784,7 @@ position = 153
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty-codegen/src/lib.rs:6"
 cost_tokens = 0
-cum_tokens = 4248
+cum_tokens = 4342
 
 [batches.content]
 kind = "lines"
@@ -3810,7 +3810,7 @@ position = 154
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs", start_line: 13 })'
 descriptor = "pub item at crates/toasty-codegen/src/lib.rs:13"
 cost_tokens = 0
-cum_tokens = 4248
+cum_tokens = 4342
 
 [batches.content]
 kind = "lines"
@@ -3836,7 +3836,7 @@ position = 155
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-codegen/src/lib.rs"
 cost_tokens = 26
-cum_tokens = 4274
+cum_tokens = 4368
 
 [batches.content]
 kind = "lines"
@@ -3862,7 +3862,7 @@ position = 156
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/expand" })'
 descriptor = "listing of 'crates/toasty-codegen/src/expand'"
 cost_tokens = 36
-cum_tokens = 4310
+cum_tokens = 4404
 
 [batches.content]
 kind = "fs"
@@ -3876,7 +3876,7 @@ position = 157
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs", start_line: 6, body_start_line: 7 })'
 descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:6 body 7"
 cost_tokens = 50
-cum_tokens = 4360
+cum_tokens = 4454
 
 [batches.content]
 kind = "lines"
@@ -3902,7 +3902,7 @@ position = 158
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/lib.rs", start_line: 13, body_start_line: 14 })'
 descriptor = "pub item body at crates/toasty-codegen/src/lib.rs:13 body 14"
 cost_tokens = 50
-cum_tokens = 4410
+cum_tokens = 4504
 
 [batches.content]
 kind = "lines"
@@ -3928,7 +3928,7 @@ position = 159
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema" })'
 descriptor = "listing of 'crates/toasty-codegen/src/schema'"
 cost_tokens = 61
-cum_tokens = 4471
+cum_tokens = 4565
 
 [batches.content]
 kind = "fs"
@@ -3942,7 +3942,7 @@ position = 160
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-sqlite" })'
 descriptor = "listing of 'crates/toasty-driver-sqlite'"
 cost_tokens = 13
-cum_tokens = 4484
+cum_tokens = 4578
 
 [batches.content]
 kind = "fs"
@@ -3956,7 +3956,7 @@ position = 161
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation.rs"
 cost_tokens = 10
-cum_tokens = 4494
+cum_tokens = 4588
 
 [batches.content]
 kind = "lines"
@@ -3982,7 +3982,7 @@ position = 162
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/builder.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/builder.rs"
 cost_tokens = 10
-cum_tokens = 4504
+cum_tokens = 4598
 
 [batches.content]
 kind = "lines"
@@ -4008,7 +4008,7 @@ position = 163
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/mapping.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/mapping.rs"
 cost_tokens = 10
-cum_tokens = 4514
+cum_tokens = 4608
 
 [batches.content]
 kind = "lines"
@@ -4034,7 +4034,7 @@ position = 164
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/name.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/name.rs"
 cost_tokens = 10
-cum_tokens = 4524
+cum_tokens = 4618
 
 [batches.content]
 kind = "lines"
@@ -4060,7 +4060,7 @@ position = 165
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-sqlite/CONTEXT.md", section_index: 0 })'
 descriptor = "crates/toasty-driver-sqlite/CONTEXT.md section #0"
 cost_tokens = 14
-cum_tokens = 4538
+cum_tokens = 4632
 
 [batches.content]
 kind = "lines"
@@ -4078,7 +4078,7 @@ position = 166
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/apply_update.rs", start_line: 9 })'
 descriptor = "pub item at crates/toasty/src/apply_update.rs:9"
 cost_tokens = 80
-cum_tokens = 4618
+cum_tokens = 4712
 
 [batches.content]
 kind = "lines"
@@ -4096,7 +4096,7 @@ position = 167
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/add_column.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/add_column.rs"
 cost_tokens = 11
-cum_tokens = 4629
+cum_tokens = 4723
 
 [batches.content]
 kind = "lines"
@@ -4122,7 +4122,7 @@ position = 168
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/column_def.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/column_def.rs"
 cost_tokens = 11
-cum_tokens = 4640
+cum_tokens = 4734
 
 [batches.content]
 kind = "lines"
@@ -4148,7 +4148,7 @@ position = 169
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/copy_table.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/copy_table.rs"
 cost_tokens = 11
-cum_tokens = 4651
+cum_tokens = 4745
 
 [batches.content]
 kind = "lines"
@@ -4174,7 +4174,7 @@ position = 170
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/create_index.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/create_index.rs"
 cost_tokens = 11
-cum_tokens = 4662
+cum_tokens = 4756
 
 [batches.content]
 kind = "lines"
@@ -4200,7 +4200,7 @@ position = 171
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/create_table.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/create_table.rs"
 cost_tokens = 11
-cum_tokens = 4673
+cum_tokens = 4767
 
 [batches.content]
 kind = "lines"
@@ -4226,7 +4226,7 @@ position = 172
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/drop_column.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/drop_column.rs"
 cost_tokens = 11
-cum_tokens = 4684
+cum_tokens = 4778
 
 [batches.content]
 kind = "lines"
@@ -4252,7 +4252,7 @@ position = 173
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/drop_index.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/drop_index.rs"
 cost_tokens = 11
-cum_tokens = 4695
+cum_tokens = 4789
 
 [batches.content]
 kind = "lines"
@@ -4278,7 +4278,7 @@ position = 174
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/drop_table.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/drop_table.rs"
 cost_tokens = 11
-cum_tokens = 4706
+cum_tokens = 4800
 
 [batches.content]
 kind = "lines"
@@ -4304,7 +4304,7 @@ position = 175
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/pragma.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/pragma.rs"
 cost_tokens = 11
-cum_tokens = 4717
+cum_tokens = 4811
 
 [batches.content]
 kind = "lines"
@@ -4330,7 +4330,7 @@ position = 176
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/table_name.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/table_name.rs"
 cost_tokens = 11
-cum_tokens = 4728
+cum_tokens = 4822
 
 [batches.content]
 kind = "lines"
@@ -4356,7 +4356,7 @@ position = 177
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/ty.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/ty.rs"
 cost_tokens = 11
-cum_tokens = 4739
+cum_tokens = 4833
 
 [batches.content]
 kind = "lines"
@@ -4382,7 +4382,7 @@ position = 178
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/name.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/schema/name.rs:4"
 cost_tokens = 14
-cum_tokens = 4753
+cum_tokens = 4847
 
 [batches.content]
 kind = "lines"
@@ -4400,7 +4400,7 @@ position = 179
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/docs/ARCHITECTURE.md", section_index: 6 })'
 descriptor = "docs/ARCHITECTURE.md section #6"
 cost_tokens = 20
-cum_tokens = 4773
+cum_tokens = 4867
 
 [batches.content]
 kind = "lines"
@@ -4418,7 +4418,7 @@ position = 180
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/pool.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/db/pool.rs"
 cost_tokens = 32
-cum_tokens = 4805
+cum_tokens = 4899
 
 [batches.content]
 kind = "lines"
@@ -4476,7 +4476,7 @@ position = 181
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/pool.rs", start_line: 119 })'
 descriptor = "pub item at crates/toasty/src/db/pool.rs:119"
 cost_tokens = 19
-cum_tokens = 4824
+cum_tokens = 4918
 
 [batches.content]
 kind = "lines"
@@ -4494,7 +4494,7 @@ position = 182
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/pool.rs", start_line: 18 })'
 descriptor = "pub item at crates/toasty/src/db/pool.rs:18"
 cost_tokens = 26
-cum_tokens = 4850
+cum_tokens = 4944
 
 [batches.content]
 kind = "lines"
@@ -4512,7 +4512,7 @@ position = 183
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/pool.rs", start_line: 41 })'
 descriptor = "pub item at crates/toasty/src/db/pool.rs:41"
 cost_tokens = 30
-cum_tokens = 4880
+cum_tokens = 4974
 
 [batches.content]
 kind = "lines"
@@ -4530,7 +4530,7 @@ position = 184
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/expand/filters.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/expand/filters.rs"
 cost_tokens = 12
-cum_tokens = 4892
+cum_tokens = 4986
 
 [batches.content]
 kind = "lines"
@@ -4556,7 +4556,7 @@ position = 185
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/name.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/name.rs"
 cost_tokens = 12
-cum_tokens = 4904
+cum_tokens = 4998
 
 [batches.content]
 kind = "lines"
@@ -4582,7 +4582,7 @@ position = 186
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/serializer/flavor.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/serializer/flavor.rs"
 cost_tokens = 12
-cum_tokens = 4916
+cum_tokens = 5010
 
 [batches.content]
 kind = "lines"
@@ -4608,7 +4608,7 @@ position = 187
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/batch.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/batch.rs"
 cost_tokens = 18
-cum_tokens = 4934
+cum_tokens = 5028
 
 [batches.content]
 kind = "lines"
@@ -4626,7 +4626,7 @@ position = 188
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/model.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/model.rs"
 cost_tokens = 52
-cum_tokens = 4986
+cum_tokens = 5080
 
 [batches.content]
 kind = "lines"
@@ -4700,7 +4700,7 @@ position = 189
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/model.rs", start_line: 12 })'
 descriptor = "pub item at crates/toasty/src/model.rs:12"
 cost_tokens = 0
-cum_tokens = 4986
+cum_tokens = 5080
 
 [batches.content]
 kind = "lines"
@@ -4726,7 +4726,7 @@ position = 190
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/model.rs", start_line: 65 })'
 descriptor = "pub item at crates/toasty/src/model.rs:65"
 cost_tokens = 30
-cum_tokens = 5016
+cum_tokens = 5110
 
 [batches.content]
 kind = "lines"
@@ -4744,7 +4744,7 @@ position = 191
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/model.rs", start_line: 26 })'
 descriptor = "pub item at crates/toasty/src/model.rs:26"
 cost_tokens = 79
-cum_tokens = 5095
+cum_tokens = 5189
 
 [batches.content]
 kind = "lines"
@@ -4770,7 +4770,7 @@ position = 192
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/Cargo.toml" })'
 descriptor = "[features] in crates/toasty-core/Cargo.toml"
 cost_tokens = 84
-cum_tokens = 5179
+cum_tokens = 5273
 
 [batches.content]
 kind = "lines"
@@ -4788,7 +4788,7 @@ position = 193
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/select.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty/src/stmt/select.rs:6"
 cost_tokens = 43
-cum_tokens = 5222
+cum_tokens = 5316
 
 [batches.content]
 kind = "lines"
@@ -4814,7 +4814,7 @@ position = 194
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty" })'
 descriptor = "listing of 'examples/hello-toasty'"
 cost_tokens = 8
-cum_tokens = 5230
+cum_tokens = 5324
 
 [batches.content]
 kind = "fs"
@@ -4828,7 +4828,7 @@ position = 195
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/hello-toasty/src" })'
 descriptor = "listing of 'examples/hello-toasty/src'"
 cost_tokens = 4
-cum_tokens = 5234
+cum_tokens = 5328
 
 [batches.content]
 kind = "fs"
@@ -4842,7 +4842,7 @@ position = 196
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/error.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/error.rs"
 cost_tokens = 13
-cum_tokens = 5247
+cum_tokens = 5341
 
 [batches.content]
 kind = "lines"
@@ -4868,7 +4868,7 @@ position = 197
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/has_many.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/has_many.rs"
 cost_tokens = 13
-cum_tokens = 5260
+cum_tokens = 5354
 
 [batches.content]
 kind = "lines"
@@ -4894,7 +4894,7 @@ position = 198
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/has_one.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/has_one.rs"
 cost_tokens = 13
-cum_tokens = 5273
+cum_tokens = 5367
 
 [batches.content]
 kind = "lines"
@@ -4920,7 +4920,7 @@ position = 199
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/key_attr.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/key_attr.rs"
 cost_tokens = 13
-cum_tokens = 5286
+cum_tokens = 5380
 
 [batches.content]
 kind = "lines"
@@ -4946,7 +4946,7 @@ position = 200
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/model_attr.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/model_attr.rs"
 cost_tokens = 13
-cum_tokens = 5299
+cum_tokens = 5393
 
 [batches.content]
 kind = "lines"
@@ -4972,7 +4972,7 @@ position = 201
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/pk.rs"
 cost_tokens = 13
-cum_tokens = 5312
+cum_tokens = 5406
 
 [batches.content]
 kind = "lines"
@@ -4998,7 +4998,7 @@ position = 202
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/adhoc.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/adhoc.rs"
 cost_tokens = 13
-cum_tokens = 5325
+cum_tokens = 5419
 
 [batches.content]
 kind = "lines"
@@ -5024,7 +5024,7 @@ position = 203
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/condition_failed.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/condition_failed.rs"
 cost_tokens = 13
-cum_tokens = 5338
+cum_tokens = 5432
 
 [batches.content]
 kind = "lines"
@@ -5050,7 +5050,7 @@ position = 204
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/connection_pool.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/connection_pool.rs"
 cost_tokens = 13
-cum_tokens = 5351
+cum_tokens = 5445
 
 [batches.content]
 kind = "lines"
@@ -5076,7 +5076,7 @@ position = 205
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_result.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_result.rs"
 cost_tokens = 13
-cum_tokens = 5364
+cum_tokens = 5458
 
 [batches.content]
 kind = "lines"
@@ -5102,7 +5102,7 @@ position = 206
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_schema.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_schema.rs"
 cost_tokens = 13
-cum_tokens = 5377
+cum_tokens = 5471
 
 [batches.content]
 kind = "lines"
@@ -5128,7 +5128,7 @@ position = 207
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_statement.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_statement.rs"
 cost_tokens = 13
-cum_tokens = 5390
+cum_tokens = 5484
 
 [batches.content]
 kind = "lines"
@@ -5154,7 +5154,7 @@ position = 208
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/unsupported_feature.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/unsupported_feature.rs"
 cost_tokens = 13
-cum_tokens = 5403
+cum_tokens = 5497
 
 [batches.content]
 kind = "lines"
@@ -5180,7 +5180,7 @@ position = 209
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/serializer/fmt.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/serializer/fmt.rs"
 cost_tokens = 13
-cum_tokens = 5416
+cum_tokens = 5510
 
 [batches.content]
 kind = "lines"
@@ -5206,7 +5206,7 @@ position = 210
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/name.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/name.rs"
 cost_tokens = 13
-cum_tokens = 5429
+cum_tokens = 5523
 
 [batches.content]
 kind = "lines"
@@ -5232,7 +5232,7 @@ position = 211
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/migration.rs", start_line: 12 })'
 descriptor = "pub item at crates/toasty-sql/src/migration.rs:12"
 cost_tokens = 25
-cum_tokens = 5454
+cum_tokens = 5548
 
 [batches.content]
 kind = "lines"
@@ -5250,7 +5250,7 @@ position = 212
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error.rs"
 cost_tokens = 21
-cum_tokens = 5475
+cum_tokens = 5569
 
 [batches.content]
 kind = "lines"
@@ -5292,7 +5292,7 @@ position = 213
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error.rs", start_line: 36 })'
 descriptor = "pub item at crates/toasty-core/src/error.rs:36"
 cost_tokens = 15
-cum_tokens = 5490
+cum_tokens = 5584
 
 [batches.content]
 kind = "lines"
@@ -5310,7 +5310,7 @@ position = 214
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error.rs", start_line: 41 })'
 descriptor = "pub item at crates/toasty-core/src/error.rs:41"
 cost_tokens = 29
-cum_tokens = 5519
+cum_tokens = 5613
 
 [batches.content]
 kind = "lines"
@@ -5328,7 +5328,7 @@ position = 215
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/belongs_to.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/belongs_to.rs"
 cost_tokens = 14
-cum_tokens = 5533
+cum_tokens = 5627
 
 [batches.content]
 kind = "lines"
@@ -5354,7 +5354,7 @@ position = 216
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/src/schema/fk.rs" })'
 descriptor = "pub-item names surface in crates/toasty-codegen/src/schema/fk.rs"
 cost_tokens = 14
-cum_tokens = 5547
+cum_tokens = 5641
 
 [batches.content]
 kind = "lines"
@@ -5380,7 +5380,7 @@ position = 217
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/driver_operation_failed.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/driver_operation_failed.rs"
 cost_tokens = 14
-cum_tokens = 5561
+cum_tokens = 5655
 
 [batches.content]
 kind = "lines"
@@ -5406,7 +5406,7 @@ position = 218
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/expression_evaluation_failed.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/expression_evaluation_failed.rs"
 cost_tokens = 14
-cum_tokens = 5575
+cum_tokens = 5669
 
 [batches.content]
 kind = "lines"
@@ -5432,7 +5432,7 @@ position = 219
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_connection_url.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_connection_url.rs"
 cost_tokens = 14
-cum_tokens = 5589
+cum_tokens = 5683
 
 [batches.content]
 kind = "lines"
@@ -5458,7 +5458,7 @@ position = 220
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_driver_configuration.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_driver_configuration.rs"
 cost_tokens = 14
-cum_tokens = 5603
+cum_tokens = 5697
 
 [batches.content]
 kind = "lines"
@@ -5484,7 +5484,7 @@ position = 221
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_record_count.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_record_count.rs"
 cost_tokens = 14
-cum_tokens = 5617
+cum_tokens = 5711
 
 [batches.content]
 kind = "lines"
@@ -5510,7 +5510,7 @@ position = 222
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/invalid_type_conversion.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/invalid_type_conversion.rs"
 cost_tokens = 14
-cum_tokens = 5631
+cum_tokens = 5725
 
 [batches.content]
 kind = "lines"
@@ -5536,7 +5536,7 @@ position = 223
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/error/record_not_found.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/error/record_not_found.rs"
 cost_tokens = 14
-cum_tokens = 5645
+cum_tokens = 5739
 
 [batches.content]
 kind = "lines"
@@ -5562,7 +5562,7 @@ position = 224
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/exec/exec_statement.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/exec/exec_statement.rs"
 cost_tokens = 27
-cum_tokens = 5672
+cum_tokens = 5766
 
 [batches.content]
 kind = "lines"
@@ -5604,7 +5604,7 @@ position = 225
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/table_name.rs", start_line: 5 })'
 descriptor = "pub item at crates/toasty-sql/src/stmt/table_name.rs:5"
 cost_tokens = 22
-cum_tokens = 5694
+cum_tokens = 5788
 
 [batches.content]
 kind = "lines"
@@ -5622,7 +5622,7 @@ position = 226
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/schema.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/schema.rs"
 cost_tokens = 21
-cum_tokens = 5715
+cum_tokens = 5809
 
 [batches.content]
 kind = "lines"
@@ -5648,7 +5648,7 @@ position = 227
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/lib.rs"
 cost_tokens = 228
-cum_tokens = 5943
+cum_tokens = 6037
 
 [batches.content]
 kind = "lines"
@@ -5786,7 +5786,7 @@ position = 228
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/batch/create.rs", start_line: 3 })'
 descriptor = "pub item at crates/toasty/src/batch/create.rs:3"
 cost_tokens = 49
-cum_tokens = 5992
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5804,7 +5804,7 @@ position = 229
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/insert.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/insert.rs"
 cost_tokens = 10
-cum_tokens = 6002
+cum_tokens = 6096
 
 [batches.content]
 kind = "lines"
@@ -5830,7 +5830,7 @@ position = 230
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/transaction.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/transaction.rs"
 cost_tokens = 10
-cum_tokens = 6012
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -5856,7 +5856,7 @@ position = 231
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/arg.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/app/arg.rs"
 cost_tokens = 10
-cum_tokens = 6022
+cum_tokens = 6116
 
 [batches.content]
 kind = "lines"
@@ -5882,7 +5882,7 @@ position = 232
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/constraint.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/app/constraint.rs"
 cost_tokens = 10
-cum_tokens = 6032
+cum_tokens = 6126
 
 [batches.content]
 kind = "lines"
@@ -5908,7 +5908,7 @@ position = 233
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/constraint.rs", start_line: 7 })'
 descriptor = "pub item at crates/toasty-core/src/schema/app/constraint.rs:7"
 cost_tokens = 13
-cum_tokens = 6045
+cum_tokens = 6139
 
 [batches.content]
 kind = "lines"
@@ -5926,7 +5926,7 @@ position = 234
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/embedded.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/app/embedded.rs"
 cost_tokens = 10
-cum_tokens = 6055
+cum_tokens = 6149
 
 [batches.content]
 kind = "lines"
@@ -5952,7 +5952,7 @@ position = 235
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/schema.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/app/schema.rs"
 cost_tokens = 10
-cum_tokens = 6065
+cum_tokens = 6159
 
 [batches.content]
 kind = "lines"
@@ -5978,7 +5978,7 @@ position = 236
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/db/ty.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/db/ty.rs"
 cost_tokens = 10
-cum_tokens = 6075
+cum_tokens = 6169
 
 [batches.content]
 kind = "lines"
@@ -6004,7 +6004,7 @@ position = 237
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/apply_update.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/apply_update.rs"
 cost_tokens = 22
-cum_tokens = 6097
+cum_tokens = 6191
 
 [batches.content]
 kind = "lines"
@@ -6022,7 +6022,7 @@ position = 238
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/query_pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/query_pk.rs"
 cost_tokens = 11
-cum_tokens = 6108
+cum_tokens = 6202
 
 [batches.content]
 kind = "lines"
@@ -6048,7 +6048,7 @@ position = 239
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/query_sql.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/query_sql.rs"
 cost_tokens = 11
-cum_tokens = 6119
+cum_tokens = 6213
 
 [batches.content]
 kind = "lines"
@@ -6074,7 +6074,7 @@ position = 240
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/app/pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/app/pk.rs"
 cost_tokens = 11
-cum_tokens = 6130
+cum_tokens = 6224
 
 [batches.content]
 kind = "lines"
@@ -6100,7 +6100,7 @@ position = 241
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/schema/db/pk.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/schema/db/pk.rs"
 cost_tokens = 11
-cum_tokens = 6141
+cum_tokens = 6235
 
 [batches.content]
 kind = "lines"
@@ -6126,7 +6126,7 @@ position = 242
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/stmt/ident.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/stmt/ident.rs"
 cost_tokens = 16
-cum_tokens = 6157
+cum_tokens = 6251
 
 [batches.content]
 kind = "lines"
@@ -6152,7 +6152,7 @@ position = 243
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/eval/as_expr.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/engine/eval/as_expr.rs"
 cost_tokens = 11
-cum_tokens = 6168
+cum_tokens = 6262
 
 [batches.content]
 kind = "lines"
@@ -6167,17 +6167,85 @@ kind = "full"
 
 [[batches]]
 position = 244
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs" })'
+descriptor = "pub-item names surface in crates/toasty/src/engine/simplify.rs"
+cost_tokens = 46
+cum_tokens = 6308
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 245
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs", start_line: 55 })'
+descriptor = "pub item at crates/toasty/src/engine/simplify.rs:55"
+cost_tokens = 0
+cum_tokens = 6308
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 246
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs", start_line: 27 })'
 descriptor = "entry item at examples/user-has-one-profile/src/main.rs:27"
-cost_tokens = 282
-cum_tokens = 6450
+cost_tokens = 292
+cum_tokens = 6600
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/toasty/examples/user-has-one-profile/src/main.rs"
-start = 27
+start = 26
 end = 36
 
 [batches.content.spans.render]
@@ -6224,79 +6292,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 245
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs" })'
-descriptor = "pub-item names surface in crates/toasty/src/engine/simplify.rs"
-cost_tokens = 46
-cum_tokens = 6496
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 246
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs", start_line: 55 })'
-descriptor = "pub item at crates/toasty/src/engine/simplify.rs:55"
-cost_tokens = 0
-cum_tokens = 6496
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/simplify.rs"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
 position = 247
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/serializer/column.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/serializer/column.rs"
 cost_tokens = 17
-cum_tokens = 6513
+cum_tokens = 6617
 
 [batches.content]
 kind = "lines"
@@ -6322,7 +6322,7 @@ position = 248
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/delete_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/delete_by_key.rs"
 cost_tokens = 12
-cum_tokens = 6525
+cum_tokens = 6629
 
 [batches.content]
 kind = "lines"
@@ -6348,7 +6348,7 @@ position = 249
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/get_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/get_by_key.rs"
 cost_tokens = 12
-cum_tokens = 6537
+cum_tokens = 6641
 
 [batches.content]
 kind = "lines"
@@ -6374,7 +6374,7 @@ position = 250
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/update_by_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/update_by_key.rs"
 cost_tokens = 12
-cum_tokens = 6549
+cum_tokens = 6653
 
 [batches.content]
 kind = "lines"
@@ -6400,7 +6400,7 @@ position = 251
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/batch/create.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/batch/create.rs"
 cost_tokens = 17
-cum_tokens = 6566
+cum_tokens = 6670
 
 [batches.content]
 kind = "lines"
@@ -6418,7 +6418,7 @@ position = 252
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 72
-cum_tokens = 6638
+cum_tokens = 6742
 
 [batches.content]
 kind = "lines"
@@ -6444,7 +6444,7 @@ position = 253
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/db/pool.rs", start_line: 18 })'
 descriptor = "pub-item doc lede at crates/toasty/src/db/pool.rs:18"
 cost_tokens = 11
-cum_tokens = 6649
+cum_tokens = 6753
 
 [batches.content]
 kind = "lines"
@@ -6462,7 +6462,7 @@ position = 254
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/expr.rs", start_line: 7 })'
 descriptor = "pub item at crates/toasty/src/stmt/expr.rs:7"
 cost_tokens = 61
-cum_tokens = 6710
+cum_tokens = 6814
 
 [batches.content]
 kind = "lines"
@@ -6488,7 +6488,7 @@ position = 255
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-sql/src/serializer/ident.rs" })'
 descriptor = "pub-item names surface in crates/toasty-sql/src/serializer/ident.rs"
 cost_tokens = 18
-cum_tokens = 6728
+cum_tokens = 6832
 
 [batches.content]
 kind = "lines"
@@ -6514,7 +6514,7 @@ position = 256
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/.gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 23
-cum_tokens = 6751
+cum_tokens = 6855
 
 [batches.content]
 kind = "lines"
@@ -6532,7 +6532,7 @@ position = 257
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/engine/hir.rs" })'
 descriptor = "pub-item names surface in crates/toasty/src/engine/hir.rs"
 cost_tokens = 51
-cum_tokens = 6802
+cum_tokens = 6906
 
 [batches.content]
 kind = "lines"
@@ -6606,7 +6606,7 @@ position = 258
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_insert.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/stmt/into_insert.rs"
 cost_tokens = 18
-cum_tokens = 6820
+cum_tokens = 6924
 
 [batches.content]
 kind = "lines"
@@ -6624,7 +6624,7 @@ position = 259
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/stmt/into_select.rs" })'
 descriptor = "mod/use plumbing in crates/toasty/src/stmt/into_select.rs"
 cost_tokens = 18
-cum_tokens = 6838
+cum_tokens = 6942
 
 [batches.content]
 kind = "lines"
@@ -6642,7 +6642,7 @@ position = 260
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt" })'
 descriptor = "listing of 'crates/toasty-core/src/stmt'"
 cost_tokens = 409
-cum_tokens = 7247
+cum_tokens = 7351
 
 [batches.content]
 kind = "fs"
@@ -6656,7 +6656,7 @@ position = 261
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/association.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/association.rs"
 cost_tokens = 10
-cum_tokens = 7257
+cum_tokens = 7361
 
 [batches.content]
 kind = "lines"
@@ -6682,7 +6682,7 @@ position = 262
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/condition.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/condition.rs"
 cost_tokens = 10
-cum_tokens = 7267
+cum_tokens = 7371
 
 [batches.content]
 kind = "lines"
@@ -6708,7 +6708,7 @@ position = 263
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/delete.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/delete.rs"
 cost_tokens = 10
-cum_tokens = 7277
+cum_tokens = 7381
 
 [batches.content]
 kind = "lines"
@@ -6734,7 +6734,7 @@ position = 264
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/direction.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/direction.rs"
 cost_tokens = 10
-cum_tokens = 7287
+cum_tokens = 7391
 
 [batches.content]
 kind = "lines"
@@ -6760,7 +6760,7 @@ position = 265
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr.rs"
 cost_tokens = 10
-cum_tokens = 7297
+cum_tokens = 7401
 
 [batches.content]
 kind = "lines"
@@ -6786,7 +6786,7 @@ position = 266
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/filter.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/filter.rs"
 cost_tokens = 10
-cum_tokens = 7307
+cum_tokens = 7411
 
 [batches.content]
 kind = "lines"
@@ -6812,7 +6812,7 @@ position = 267
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/insert.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/insert.rs"
 cost_tokens = 10
-cum_tokens = 7317
+cum_tokens = 7421
 
 [batches.content]
 kind = "lines"
@@ -6838,7 +6838,7 @@ position = 268
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/limit.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/limit.rs"
 cost_tokens = 10
-cum_tokens = 7327
+cum_tokens = 7431
 
 [batches.content]
 kind = "lines"
@@ -6864,7 +6864,7 @@ position = 269
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/offset.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/offset.rs"
 cost_tokens = 10
-cum_tokens = 7337
+cum_tokens = 7441
 
 [batches.content]
 kind = "lines"
@@ -6890,7 +6890,7 @@ position = 270
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/path.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/path.rs"
 cost_tokens = 10
-cum_tokens = 7347
+cum_tokens = 7451
 
 [batches.content]
 kind = "lines"
@@ -6916,7 +6916,7 @@ position = 271
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/returning.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/returning.rs"
 cost_tokens = 10
-cum_tokens = 7357
+cum_tokens = 7461
 
 [batches.content]
 kind = "lines"
@@ -6942,7 +6942,7 @@ position = 272
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/select.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/select.rs"
 cost_tokens = 10
-cum_tokens = 7367
+cum_tokens = 7471
 
 [batches.content]
 kind = "lines"
@@ -6968,7 +6968,7 @@ position = 273
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/ty.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/ty.rs"
 cost_tokens = 10
-cum_tokens = 7377
+cum_tokens = 7481
 
 [batches.content]
 kind = "lines"
@@ -6994,7 +6994,7 @@ position = 274
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/value.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/value.rs"
 cost_tokens = 10
-cum_tokens = 7387
+cum_tokens = 7491
 
 [batches.content]
 kind = "lines"
@@ -7020,7 +7020,7 @@ position = 275
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/values.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/values.rs"
 cost_tokens = 10
-cum_tokens = 7397
+cum_tokens = 7501
 
 [batches.content]
 kind = "lines"
@@ -7046,7 +7046,7 @@ position = 276
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/with.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/with.rs"
 cost_tokens = 10
-cum_tokens = 7407
+cum_tokens = 7511
 
 [batches.content]
 kind = "lines"
@@ -7072,7 +7072,7 @@ position = 277
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/direction.rs", start_line: 3 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/direction.rs:3"
 cost_tokens = 17
-cum_tokens = 7424
+cum_tokens = 7528
 
 [batches.content]
 kind = "lines"
@@ -7090,7 +7090,7 @@ position = 278
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/cte.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/cte.rs"
 cost_tokens = 11
-cum_tokens = 7435
+cum_tokens = 7539
 
 [batches.content]
 kind = "lines"
@@ -7116,7 +7116,7 @@ position = 279
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/cte.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/cte.rs:4"
 cost_tokens = 13
-cum_tokens = 7448
+cum_tokens = 7552
 
 [batches.content]
 kind = "lines"
@@ -7134,7 +7134,7 @@ position = 280
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry_path.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/entry_path.rs"
 cost_tokens = 11
-cum_tokens = 7459
+cum_tokens = 7563
 
 [batches.content]
 kind = "lines"
@@ -7160,7 +7160,7 @@ position = 281
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_and.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_and.rs"
 cost_tokens = 11
-cum_tokens = 7470
+cum_tokens = 7574
 
 [batches.content]
 kind = "lines"
@@ -7186,7 +7186,7 @@ position = 282
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_any.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_any.rs"
 cost_tokens = 11
-cum_tokens = 7481
+cum_tokens = 7585
 
 [batches.content]
 kind = "lines"
@@ -7212,7 +7212,7 @@ position = 283
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_arg.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_arg.rs"
 cost_tokens = 11
-cum_tokens = 7492
+cum_tokens = 7596
 
 [batches.content]
 kind = "lines"
@@ -7238,7 +7238,7 @@ position = 284
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_cast.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_cast.rs"
 cost_tokens = 11
-cum_tokens = 7503
+cum_tokens = 7607
 
 [batches.content]
 kind = "lines"
@@ -7264,7 +7264,7 @@ position = 285
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_concat.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_concat.rs"
 cost_tokens = 11
-cum_tokens = 7514
+cum_tokens = 7618
 
 [batches.content]
 kind = "lines"
@@ -7290,7 +7290,7 @@ position = 286
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_exists.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_exists.rs"
 cost_tokens = 11
-cum_tokens = 7525
+cum_tokens = 7629
 
 [batches.content]
 kind = "lines"
@@ -7316,7 +7316,7 @@ position = 287
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_func.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_func.rs"
 cost_tokens = 11
-cum_tokens = 7536
+cum_tokens = 7640
 
 [batches.content]
 kind = "lines"
@@ -7342,7 +7342,7 @@ position = 288
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_key.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_key.rs"
 cost_tokens = 11
-cum_tokens = 7547
+cum_tokens = 7651
 
 [batches.content]
 kind = "lines"
@@ -7368,7 +7368,7 @@ position = 289
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_like.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_like.rs"
 cost_tokens = 11
-cum_tokens = 7558
+cum_tokens = 7662
 
 [batches.content]
 kind = "lines"
@@ -7394,7 +7394,7 @@ position = 290
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_list.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_list.rs"
 cost_tokens = 11
-cum_tokens = 7569
+cum_tokens = 7673
 
 [batches.content]
 kind = "lines"
@@ -7420,7 +7420,7 @@ position = 291
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_map.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_map.rs"
 cost_tokens = 11
-cum_tokens = 7580
+cum_tokens = 7684
 
 [batches.content]
 kind = "lines"
@@ -7446,7 +7446,7 @@ position = 292
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_not.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_not.rs"
 cost_tokens = 11
-cum_tokens = 7591
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -7472,7 +7472,7 @@ position = 293
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_or.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_or.rs"
 cost_tokens = 11
-cum_tokens = 7602
+cum_tokens = 7706
 
 [batches.content]
 kind = "lines"
@@ -7498,7 +7498,7 @@ position = 294
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_pattern.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_pattern.rs"
 cost_tokens = 11
-cum_tokens = 7613
+cum_tokens = 7717
 
 [batches.content]
 kind = "lines"
@@ -7524,7 +7524,7 @@ position = 295
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_project.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_project.rs"
 cost_tokens = 11
-cum_tokens = 7624
+cum_tokens = 7728
 
 [batches.content]
 kind = "lines"
@@ -7550,7 +7550,7 @@ position = 296
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_record.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_record.rs"
 cost_tokens = 11
-cum_tokens = 7635
+cum_tokens = 7739
 
 [batches.content]
 kind = "lines"
@@ -7576,7 +7576,7 @@ position = 297
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_set.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_set.rs"
 cost_tokens = 11
-cum_tokens = 7646
+cum_tokens = 7750
 
 [batches.content]
 kind = "lines"
@@ -7602,7 +7602,7 @@ position = 298
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_stmt.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_stmt.rs"
 cost_tokens = 11
-cum_tokens = 7657
+cum_tokens = 7761
 
 [batches.content]
 kind = "lines"
@@ -7628,7 +7628,7 @@ position = 299
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_ty.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_ty.rs"
 cost_tokens = 11
-cum_tokens = 7668
+cum_tokens = 7772
 
 [batches.content]
 kind = "lines"
@@ -7654,7 +7654,7 @@ position = 300
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/func_count.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/func_count.rs"
 cost_tokens = 11
-cum_tokens = 7679
+cum_tokens = 7783
 
 [batches.content]
 kind = "lines"
@@ -7680,7 +7680,7 @@ position = 301
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/insert_table.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/insert_table.rs"
 cost_tokens = 11
-cum_tokens = 7690
+cum_tokens = 7794
 
 [batches.content]
 kind = "lines"
@@ -7706,7 +7706,7 @@ position = 302
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/insert_target.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/insert_target.rs"
 cost_tokens = 11
-cum_tokens = 7701
+cum_tokens = 7805
 
 [batches.content]
 kind = "lines"
@@ -7732,7 +7732,7 @@ position = 303
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/op_binary.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/op_binary.rs"
 cost_tokens = 11
-cum_tokens = 7712
+cum_tokens = 7816
 
 [batches.content]
 kind = "lines"
@@ -7758,7 +7758,7 @@ position = 304
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/op_set.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/op_set.rs"
 cost_tokens = 11
-cum_tokens = 7723
+cum_tokens = 7827
 
 [batches.content]
 kind = "lines"
@@ -7784,7 +7784,7 @@ position = 305
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/order_by.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/order_by.rs"
 cost_tokens = 11
-cum_tokens = 7734
+cum_tokens = 7838
 
 [batches.content]
 kind = "lines"
@@ -7810,7 +7810,7 @@ position = 306
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/source_table.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/source_table.rs"
 cost_tokens = 11
-cum_tokens = 7745
+cum_tokens = 7849
 
 [batches.content]
 kind = "lines"
@@ -7836,7 +7836,7 @@ position = 307
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/sparse_record.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/sparse_record.rs"
 cost_tokens = 11
-cum_tokens = 7756
+cum_tokens = 7860
 
 [batches.content]
 kind = "lines"
@@ -7862,7 +7862,7 @@ position = 308
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_derived.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/table_derived.rs"
 cost_tokens = 11
-cum_tokens = 7767
+cum_tokens = 7871
 
 [batches.content]
 kind = "lines"
@@ -7888,7 +7888,7 @@ position = 309
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_factor.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/table_factor.rs"
 cost_tokens = 11
-cum_tokens = 7778
+cum_tokens = 7882
 
 [batches.content]
 kind = "lines"
@@ -7914,7 +7914,7 @@ position = 310
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_ref.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/table_ref.rs"
 cost_tokens = 11
-cum_tokens = 7789
+cum_tokens = 7893
 
 [batches.content]
 kind = "lines"
@@ -7940,7 +7940,7 @@ position = 311
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/value_record.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/value_record.rs"
 cost_tokens = 11
-cum_tokens = 7800
+cum_tokens = 7904
 
 [batches.content]
 kind = "lines"
@@ -7966,7 +7966,7 @@ position = 312
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/value_stream.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/value_stream.rs"
 cost_tokens = 11
-cum_tokens = 7811
+cum_tokens = 7915
 
 [batches.content]
 kind = "lines"
@@ -7992,7 +7992,7 @@ position = 313
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/value_record.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/value_record.rs:6"
 cost_tokens = 14
-cum_tokens = 7825
+cum_tokens = 7929
 
 [batches.content]
 kind = "lines"
@@ -8010,7 +8010,7 @@ position = 314
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_binary_op.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_binary_op.rs"
 cost_tokens = 12
-cum_tokens = 7837
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -8036,7 +8036,7 @@ position = 315
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_concat_str.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_concat_str.rs"
 cost_tokens = 12
-cum_tokens = 7849
+cum_tokens = 7953
 
 [batches.content]
 kind = "lines"
@@ -8062,7 +8062,7 @@ position = 316
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_in_list.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_in_list.rs"
 cost_tokens = 12
-cum_tokens = 7861
+cum_tokens = 7965
 
 [batches.content]
 kind = "lines"
@@ -8088,7 +8088,7 @@ position = 317
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_is_null.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_is_null.rs"
 cost_tokens = 12
-cum_tokens = 7873
+cum_tokens = 7977
 
 [batches.content]
 kind = "lines"
@@ -8114,7 +8114,7 @@ position = 318
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_set_op.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_set_op.rs"
 cost_tokens = 12
-cum_tokens = 7885
+cum_tokens = 7989
 
 [batches.content]
 kind = "lines"
@@ -8140,7 +8140,7 @@ position = 319
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/order_by_expr.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/order_by_expr.rs"
 cost_tokens = 12
-cum_tokens = 7897
+cum_tokens = 8001
 
 [batches.content]
 kind = "lines"
@@ -8166,7 +8166,7 @@ position = 320
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/condition.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/condition.rs:4"
 cost_tokens = 15
-cum_tokens = 7912
+cum_tokens = 8016
 
 [batches.content]
 kind = "lines"
@@ -8184,7 +8184,7 @@ position = 321
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/filter.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/filter.rs:4"
 cost_tokens = 15
-cum_tokens = 7927
+cum_tokens = 8031
 
 [batches.content]
 kind = "lines"
@@ -8202,7 +8202,7 @@ position = 322
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_derived.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/table_derived.rs:4"
 cost_tokens = 15
-cum_tokens = 7942
+cum_tokens = 8046
 
 [batches.content]
 kind = "lines"
@@ -8220,7 +8220,7 @@ position = 323
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/values.rs", start_line: 5 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/values.rs:5"
 cost_tokens = 15
-cum_tokens = 7957
+cum_tokens = 8061
 
 [batches.content]
 kind = "lines"
@@ -8238,7 +8238,7 @@ position = 324
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/with.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/with.rs:4"
 cost_tokens = 16
-cum_tokens = 7973
+cum_tokens = 8077
 
 [batches.content]
 kind = "lines"
@@ -8256,7 +8256,7 @@ position = 325
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/entry.rs"
 cost_tokens = 13
-cum_tokens = 7986
+cum_tokens = 8090
 
 [batches.content]
 kind = "lines"
@@ -8282,7 +8282,7 @@ position = 326
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_begins_with.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_begins_with.rs"
 cost_tokens = 13
-cum_tokens = 7999
+cum_tokens = 8103
 
 [batches.content]
 kind = "lines"
@@ -8308,7 +8308,7 @@ position = 327
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_in_subquery.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/expr_in_subquery.rs"
 cost_tokens = 13
-cum_tokens = 8012
+cum_tokens = 8116
 
 [batches.content]
 kind = "lines"
@@ -8334,7 +8334,7 @@ position = 328
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/func_last_insert_id.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/func_last_insert_id.rs"
 cost_tokens = 13
-cum_tokens = 8025
+cum_tokens = 8129
 
 [batches.content]
 kind = "lines"
@@ -8360,7 +8360,7 @@ position = 329
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/func_last_insert_id.rs", start_line: 20 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/func_last_insert_id.rs:20"
 cost_tokens = 0
-cum_tokens = 8025
+cum_tokens = 8129
 
 [batches.content]
 kind = "lines"
@@ -8378,7 +8378,7 @@ position = 330
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_with_joins.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/table_with_joins.rs"
 cost_tokens = 13
-cum_tokens = 8038
+cum_tokens = 8142
 
 [batches.content]
 kind = "lines"
@@ -8404,7 +8404,7 @@ position = 331
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/order_by.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/order_by.rs:4"
 cost_tokens = 17
-cum_tokens = 8055
+cum_tokens = 8159
 
 [batches.content]
 kind = "lines"
@@ -8422,7 +8422,7 @@ position = 332
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry_mut.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/entry_mut.rs"
 cost_tokens = 14
-cum_tokens = 8069
+cum_tokens = 8173
 
 [batches.content]
 kind = "lines"
@@ -8448,7 +8448,7 @@ position = 333
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/node.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/node.rs"
 cost_tokens = 14
-cum_tokens = 8083
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -8474,7 +8474,7 @@ position = 334
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/source_table_id.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/source_table_id.rs"
 cost_tokens = 14
-cum_tokens = 8097
+cum_tokens = 8201
 
 [batches.content]
 kind = "lines"
@@ -8500,7 +8500,7 @@ position = 335
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/substitute.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/stmt/substitute.rs"
 cost_tokens = 14
-cum_tokens = 8111
+cum_tokens = 8215
 
 [batches.content]
 kind = "lines"
@@ -8526,7 +8526,7 @@ position = 336
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry.rs", start_line: 6 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/entry.rs:6"
 cost_tokens = 25
-cum_tokens = 8136
+cum_tokens = 8240
 
 [batches.content]
 kind = "lines"
@@ -8544,7 +8544,7 @@ position = 337
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/op_set.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/op_set.rs:4"
 cost_tokens = 25
-cum_tokens = 8161
+cum_tokens = 8265
 
 [batches.content]
 kind = "lines"
@@ -8562,7 +8562,7 @@ position = 338
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry_mut.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/entry_mut.rs:4"
 cost_tokens = 27
-cum_tokens = 8188
+cum_tokens = 8292
 
 [batches.content]
 kind = "lines"
@@ -8580,7 +8580,7 @@ position = 339
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/entry_path.rs", start_line: 3 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/entry_path.rs:3"
 cost_tokens = 31
-cum_tokens = 8219
+cum_tokens = 8323
 
 [batches.content]
 kind = "lines"
@@ -8606,7 +8606,7 @@ position = 340
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/operation/find_pk_by_index.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/operation/find_pk_by_index.rs"
 cost_tokens = 13
-cum_tokens = 8232
+cum_tokens = 8336
 
 [batches.content]
 kind = "lines"
@@ -8632,7 +8632,7 @@ position = 341
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty/src/apply_update.rs", start_line: 19 })'
 descriptor = "pub-item doc lede at crates/toasty/src/apply_update.rs:19"
 cost_tokens = 18
-cum_tokens = 8250
+cum_tokens = 8354
 
 [batches.content]
 kind = "lines"
@@ -8650,7 +8650,7 @@ position = 342
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-codegen/Cargo.toml" })'
 descriptor = "[dependencies] in crates/toasty-codegen/Cargo.toml"
 cost_tokens = 47
-cum_tokens = 8297
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -8668,7 +8668,7 @@ position = 343
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/table_factor.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/table_factor.rs:4"
 cost_tokens = 31
-cum_tokens = 8328
+cum_tokens = 8432
 
 [batches.content]
 kind = "lines"
@@ -8686,7 +8686,7 @@ position = 344
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/response.rs" })'
 descriptor = "pub-item names surface in crates/toasty-core/src/driver/response.rs"
 cost_tokens = 20
-cum_tokens = 8348
+cum_tokens = 8452
 
 [batches.content]
 kind = "lines"
@@ -8728,7 +8728,7 @@ position = 345
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/driver/response.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-core/src/driver/response.rs:4"
 cost_tokens = 13
-cum_tokens = 8361
+cum_tokens = 8465
 
 [batches.content]
 kind = "lines"
@@ -8746,7 +8746,7 @@ position = 346
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-core/src/stmt/expr_stmt.rs", start_line: 14 })'
 descriptor = "pub item at crates/toasty-core/src/stmt/expr_stmt.rs:14"
 cost_tokens = 25
-cum_tokens = 8386
+cum_tokens = 8490
 
 [batches.content]
 kind = "lines"
@@ -8764,7 +8764,7 @@ position = 347
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util" })'
 descriptor = "listing of 'crates/std-util'"
 cost_tokens = 8
-cum_tokens = 8394
+cum_tokens = 8498
 
 [batches.content]
 kind = "fs"
@@ -8778,7 +8778,7 @@ position = 348
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/src" })'
 descriptor = "listing of 'crates/std-util/src'"
 cost_tokens = 24
-cum_tokens = 8418
+cum_tokens = 8522
 
 [batches.content]
 kind = "fs"
@@ -8792,7 +8792,7 @@ position = 349
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/std-util/src/lib.rs"
 cost_tokens = 51
-cum_tokens = 8469
+cum_tokens = 8573
 
 [batches.content]
 kind = "lines"
@@ -8826,7 +8826,7 @@ position = 350
 key = 'Rust(MacroNames { src_dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/src" })'
 descriptor = "macro_export names across crates/std-util/src"
 cost_tokens = 60
-cum_tokens = 8529
+cum_tokens = 8633
 
 [batches.content]
 kind = "lines"
@@ -8916,7 +8916,7 @@ position = 351
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/src/num.rs" })'
 descriptor = "pub-item names surface in crates/std-util/src/num.rs"
 cost_tokens = 18
-cum_tokens = 8547
+cum_tokens = 8651
 
 [batches.content]
 kind = "lines"
@@ -8942,7 +8942,7 @@ position = 352
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/Cargo.toml" })'
 descriptor = "[dependencies] in crates/std-util/Cargo.toml"
 cost_tokens = 35
-cum_tokens = 8582
+cum_tokens = 8686
 
 [batches.content]
 kind = "lines"
@@ -8960,7 +8960,7 @@ position = 353
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/std-util/src/num.rs", start_line: 1 })'
 descriptor = "pub item at crates/std-util/src/num.rs:1"
 cost_tokens = 48
-cum_tokens = 8630
+cum_tokens = 8734
 
 [batches.content]
 kind = "lines"
@@ -8986,7 +8986,7 @@ position = 354
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli" })'
 descriptor = "listing of 'crates/toasty-cli'"
 cost_tokens = 8
-cum_tokens = 8638
+cum_tokens = 8742
 
 [batches.content]
 kind = "fs"
@@ -9000,7 +9000,7 @@ position = 355
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src" })'
 descriptor = "listing of 'crates/toasty-cli/src'"
 cost_tokens = 19
-cum_tokens = 8657
+cum_tokens = 8761
 
 [batches.content]
 kind = "fs"
@@ -9014,7 +9014,7 @@ position = 356
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/lib.rs"
 cost_tokens = 12
-cum_tokens = 8669
+cum_tokens = 8773
 
 [batches.content]
 kind = "lines"
@@ -9040,7 +9040,7 @@ position = 357
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/lib.rs", start_line: 13 })'
 descriptor = "pub item at crates/toasty-cli/src/lib.rs:13"
 cost_tokens = 21
-cum_tokens = 8690
+cum_tokens = 8794
 
 [batches.content]
 kind = "lines"
@@ -9058,7 +9058,7 @@ position = 358
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration" })'
 descriptor = "listing of 'crates/toasty-cli/src/migration'"
 cost_tokens = 34
-cum_tokens = 8724
+cum_tokens = 8828
 
 [batches.content]
 kind = "fs"
@@ -9072,7 +9072,7 @@ position = 359
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/lib.rs", start_line: 13 })'
 descriptor = "pub-item doc lede at crates/toasty-cli/src/lib.rs:13"
 cost_tokens = 16
-cum_tokens = 8740
+cum_tokens = 8844
 
 [batches.content]
 kind = "lines"
@@ -9090,7 +9090,7 @@ position = 360
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-cli/src/lib.rs"
 cost_tokens = 65
-cum_tokens = 8805
+cum_tokens = 8909
 
 [batches.content]
 kind = "lines"
@@ -9124,7 +9124,7 @@ position = 361
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/config.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/config.rs"
 cost_tokens = 10
-cum_tokens = 8815
+cum_tokens = 8919
 
 [batches.content]
 kind = "lines"
@@ -9150,7 +9150,7 @@ position = 362
 key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/lib.rs" })'
 descriptor = "impl method sigs in crates/toasty-cli/src/lib.rs"
 cost_tokens = 177
-cum_tokens = 8992
+cum_tokens = 9096
 
 [batches.content]
 kind = "lines"
@@ -9264,7 +9264,7 @@ position = 363
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration.rs"
 cost_tokens = 11
-cum_tokens = 9003
+cum_tokens = 9107
 
 [batches.content]
 kind = "lines"
@@ -9290,7 +9290,7 @@ position = 364
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/drop.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration/drop.rs"
 cost_tokens = 11
-cum_tokens = 9014
+cum_tokens = 9118
 
 [batches.content]
 kind = "lines"
@@ -9316,7 +9316,7 @@ position = 365
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/generate.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration/generate.rs"
 cost_tokens = 11
-cum_tokens = 9025
+cum_tokens = 9129
 
 [batches.content]
 kind = "lines"
@@ -9342,7 +9342,7 @@ position = 366
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/reset.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration/reset.rs"
 cost_tokens = 11
-cum_tokens = 9036
+cum_tokens = 9140
 
 [batches.content]
 kind = "lines"
@@ -9368,7 +9368,7 @@ position = 367
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/snapshot.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration/snapshot.rs"
 cost_tokens = 11
-cum_tokens = 9047
+cum_tokens = 9151
 
 [batches.content]
 kind = "lines"
@@ -9394,7 +9394,7 @@ position = 368
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/snapshot_file.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/migration/snapshot_file.rs"
 cost_tokens = 11
-cum_tokens = 9058
+cum_tokens = 9162
 
 [batches.content]
 kind = "lines"
@@ -9420,7 +9420,7 @@ position = 369
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/theme.rs" })'
 descriptor = "pub-item names surface in crates/toasty-cli/src/theme.rs"
 cost_tokens = 17
-cum_tokens = 9075
+cum_tokens = 9179
 
 [batches.content]
 kind = "lines"
@@ -9446,7 +9446,7 @@ position = 370
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/theme.rs", start_line: 5 })'
 descriptor = "pub item at crates/toasty-cli/src/theme.rs:5"
 cost_tokens = 0
-cum_tokens = 9075
+cum_tokens = 9179
 
 [batches.content]
 kind = "lines"
@@ -9472,7 +9472,7 @@ position = 371
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/config.rs", start_line: 9 })'
 descriptor = "pub item at crates/toasty-cli/src/config.rs:9"
 cost_tokens = 24
-cum_tokens = 9099
+cum_tokens = 9203
 
 [batches.content]
 kind = "lines"
@@ -9490,7 +9490,7 @@ position = 372
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration/snapshot.rs", start_line: 9 })'
 descriptor = "pub item at crates/toasty-cli/src/migration/snapshot.rs:9"
 cost_tokens = 16
-cum_tokens = 9115
+cum_tokens = 9219
 
 [batches.content]
 kind = "lines"
@@ -9508,7 +9508,7 @@ position = 373
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-cli/src/migration.rs", start_line: 25 })'
 descriptor = "pub item at crates/toasty-cli/src/migration.rs:25"
 cost_tokens = 25
-cum_tokens = 9140
+cum_tokens = 9244
 
 [batches.content]
 kind = "lines"
@@ -9526,7 +9526,7 @@ position = 374
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb" })'
 descriptor = "listing of 'crates/toasty-driver-dynamodb'"
 cost_tokens = 8
-cum_tokens = 9148
+cum_tokens = 9252
 
 [batches.content]
 kind = "fs"
@@ -9540,7 +9540,7 @@ position = 375
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src" })'
 descriptor = "listing of 'crates/toasty-driver-dynamodb/src'"
 cost_tokens = 19
-cum_tokens = 9167
+cum_tokens = 9271
 
 [batches.content]
 kind = "fs"
@@ -9554,7 +9554,7 @@ position = 376
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/toasty-driver-dynamodb/src/lib.rs"
 cost_tokens = 21
-cum_tokens = 9188
+cum_tokens = 9292
 
 [batches.content]
 kind = "lines"
@@ -9596,7 +9596,7 @@ position = 377
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/lib.rs", start_line: 30 })'
 descriptor = "pub item at crates/toasty-driver-dynamodb/src/lib.rs:30"
 cost_tokens = 12
-cum_tokens = 9200
+cum_tokens = 9304
 
 [batches.content]
 kind = "lines"
@@ -9614,7 +9614,7 @@ position = 378
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/lib.rs", start_line: 96 })'
 descriptor = "pub item at crates/toasty-driver-dynamodb/src/lib.rs:96"
 cost_tokens = 25
-cum_tokens = 9225
+cum_tokens = 9329
 
 [batches.content]
 kind = "lines"
@@ -9632,7 +9632,7 @@ position = 379
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/op" })'
 descriptor = "listing of 'crates/toasty-driver-dynamodb/src/op'"
 cost_tokens = 39
-cum_tokens = 9264
+cum_tokens = 9368
 
 [batches.content]
 kind = "fs"
@@ -9646,7 +9646,7 @@ position = 380
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/type.rs" })'
 descriptor = "pub-item names surface in crates/toasty-driver-dynamodb/src/type.rs"
 cost_tokens = 11
-cum_tokens = 9275
+cum_tokens = 9379
 
 [batches.content]
 kind = "lines"
@@ -9672,7 +9672,7 @@ position = 381
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/value.rs" })'
 descriptor = "pub-item names surface in crates/toasty-driver-dynamodb/src/value.rs"
 cost_tokens = 12
-cum_tokens = 9287
+cum_tokens = 9391
 
 [batches.content]
 kind = "lines"
@@ -9698,7 +9698,7 @@ position = 382
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/type.rs", start_line: 4 })'
 descriptor = "pub item at crates/toasty-driver-dynamodb/src/type.rs:4"
 cost_tokens = 39
-cum_tokens = 9326
+cum_tokens = 9430
 
 [batches.content]
 kind = "lines"
@@ -9716,7 +9716,7 @@ position = 383
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/toasty/crates/toasty-driver-dynamodb/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/toasty-driver-dynamodb/src/lib.rs"
 cost_tokens = 289
-cum_tokens = 9615
+cum_tokens = 9719
 
 [batches.content]
 kind = "lines"
