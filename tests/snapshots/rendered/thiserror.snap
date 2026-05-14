@@ -3,6 +3,9 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    FUNDING.yml
+    workflows/
+        ci.yml
 .gitignore
     1→/target/
     2→/Cargo.lock
@@ -140,59 +143,23 @@ impl/
             51→    UnitVariant,
             52→}
         attr.rs
-            11→pub struct Attrs<'a> {
-            12→    pub display: Option<Display<'a>>,
-            13→    pub source: Option<Source<'a>>,
-            14→    pub backtrace: Option<&'a Attribute>,
-            15→    pub from: Option<From<'a>>,
-            16→    pub transparent: Option<Transparent<'a>>,
-            17→    pub fmt: Option<Fmt<'a>>,
-            18→}
-            21→pub struct Display<'a> {
-            22→    pub original: &'a Attribute,
-            23→    pub fmt: LitStr,
-            24→    pub args: TokenStream,
-            25→    pub requires_fmt_machinery: bool,
-            26→    pub has_bonus_display: bool,
-            27→    pub infinite_recursive: bool,
-            28→    pub implied_bounds: Set<(usize, Trait)>,
-            29→    pub bindings: Vec<(Ident, TokenStream)>,
-            30→}
-            33→pub struct Source<'a> {
-            34→    pub original: &'a Attribute,
-            35→    pub span: Span,
-            36→}
-            39→pub struct From<'a> {
-            40→    pub original: &'a Attribute,
-            41→    pub span: Span,
-            42→}
-            45→pub struct Transparent<'a> {
-            46→    pub original: &'a Attribute,
-            47→    pub span: Span,
-            48→}
-            51→pub struct Fmt<'a> {
-            52→    pub original: &'a Attribute,
-            53→    pub path: ExprPath,
-            54→}
-            57→pub enum Trait {
-            58→    Debug,
-            59→    Display,
-            60→    Octal,
-            61→    LowerHex,
-            62→    UpperHex,
-            63→    Pointer,
-            64→    Binary,
-            65→    LowerExp,
-            66→    UpperExp,
-            67→}
-            69→pub fn get(input: &[Attribute]) -> Result<Attrs> {
-            …
         expand.rs
             12→pub fn derive(input: &DeriveInput) -> TokenStream {
-            …
+            13→    match try_expand(input) {
+            14→        Ok(expanded) => expanded,
+            15→        // If there are invalid attributes in the input, expand to an Error impl
+            16→        // anyway to minimize spurious secondary errors in other code that uses
+            17→        // this type as an Error.
+            18→        Err(error) => fallback::expand(input, error),
+            19→    }
             505→pub(crate) fn call_site_ident(ident: &Ident) -> Ident {
             …
         fallback.rs
+            1→use crate::expand::call_site_ident;
+            2→use crate::private;
+            3→use proc_macro2::TokenStream;
+            4→use quote::quote;
+            5→use syn::DeriveInput;
             7→pub(crate) fn expand(input: &DeriveInput, error: syn::Error) -> TokenStream {
             …
         fmt.rs
@@ -231,6 +198,10 @@ impl/
             3→use proc_macro2::Span;
             4→use syn::Type;
         scan_expr.rs
+            1→use self::{Action::*, Input::*};
+            2→use proc_macro2::{Delimiter, Ident, Spacing, TokenTree};
+            3→use syn::parse::{ParseStream, Result};
+            4→use syn::{AngleBracketedGenericArguments, BinOp, Expr, ExprPath, Lifetime, Lit, Token, Type};
             192→pub(crate) fn scan_expr(input: ParseStream) -> Result<()> {
             …
         unraw.rs

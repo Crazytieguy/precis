@@ -814,9 +814,14 @@ fn pub_item_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // File-level visibility applies the same axis as `ApiSurface::factor`
     // (0.4 for Restricted) — a names listing of items that aren't on the
     // public API is structurally less valuable to the agent.
+    // Secondary workspace members' entrypoint files (lib.rs/main.rs/
+    // mod.rs) bypass the non-entrypoint depth damp; apply the same
+    // 0.7 secondary factor here so a workspace with N sub-crates
+    // doesn't flood the early budget with N per-crate name surfaces.
     let s = file_visibility_factor(file, ctx);
+    let secondary = secondary_workspace_member_member_factor(file, ctx);
     let cat = (0.8 * entrypoint_boost(file) * s).min(1.0);
-    mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx))
+    mix_signals(cat, 0.6 * s, 0.35 * s, rust_depth_factor(file, ctx)) * secondary
 }
 
 fn pub_item_value(file: &Path, kind: ItemKind, surface: ApiSurface, ctx: &WalkCtx) -> f64 {

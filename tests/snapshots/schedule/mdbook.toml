@@ -1,7 +1,7 @@
 fixture = "mdbook"
 budget = 10000
-cumulative_tokens = 9975
-batch_count = 221
+cumulative_tokens = 9994
+batch_count = 211
 
 [[batches]]
 position = 1
@@ -971,10 +971,28 @@ entries = ["fonts.rs", "mod.rs", "playground_editor.rs", "searcher.rs"]
 
 [[batches]]
 position = 42
+key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs" })'
+descriptor = "crate-doc lede in crates/mdbook-html/src/theme/mod.rs"
+cost_tokens = 10
+cum_tokens = 1124
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-html/src/theme/mod.rs"
 cost_tokens = 10
-cum_tokens = 1124
+cum_tokens = 1134
 
 [batches.content]
 kind = "lines"
@@ -994,24 +1012,6 @@ end = 41
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 43
-key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs" })'
-descriptor = "crate-doc lede in crates/mdbook-html/src/theme/mod.rs"
-cost_tokens = 10
-cum_tokens = 1134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 44
@@ -1043,10 +1043,250 @@ entries = ["admonitions.rs", "hide_lines.rs", "mod.rs", "print.rs", "serialize.r
 
 [[batches]]
 position = 46
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs" })'
+descriptor = "mod/use plumbing in crates/mdbook-html/src/lib.rs"
+cost_tokens = 48
+cum_tokens = 1238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs"
+start = 3
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs" })'
+descriptor = "mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs"
+cost_tokens = 47
+cum_tokens = 1285
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs" })'
+descriptor = "impl method sigs in crates/mdbook-html/src/html/mod.rs"
+cost_tokens = 77
+cum_tokens = 1362
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
+start = 47
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs" })'
+descriptor = "impl method sigs in crates/mdbook-html/src/theme/mod.rs"
+cost_tokens = 80
+cum_tokens = 1442
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 200
+end = 201
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
+start = 202
+end = 202
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 50
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md" })'
+descriptor = "README headline in crates/mdbook-html/README.md"
+cost_tokens = 68
+cum_tokens = 1510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs" })'
+descriptor = "mod/use plumbing in src/main.rs"
+cost_tokens = 96
+cum_tokens = 1606
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs"
+start = 5
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src" })'
+descriptor = "listing of 'guide/src'"
+cost_tokens = 37
+cum_tokens = 1643
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src"
+entries = ["404.md", "README.md", "SUMMARY.md", "cli", "continuous-integration.md", "for_developers", "format", "guide", "misc"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 11
+cum_tokens = 1654
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples"
+entries = ["nop-preprocessor.rs", "remove-emphasis"]
+
+[[batches]]
+position = 54
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 79
-cum_tokens = 1269
+cum_tokens = 1733
 
 [batches.content]
 kind = "lines"
@@ -1116,270 +1356,30 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 55
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs", start_line: 66 })'
 descriptor = "pub item at crates/mdbook-html/src/html/mod.rs:66"
 cost_tokens = 0
-cum_tokens = 1269
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs" })'
-descriptor = "mod/use plumbing in crates/mdbook-html/src/lib.rs"
-cost_tokens = 48
-cum_tokens = 1317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs"
-start = 3
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/lib.rs"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs" })'
-descriptor = "mod/use plumbing in crates/mdbook-html/src/html_handlebars/mod.rs"
-cost_tokens = 47
-cum_tokens = 1364
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
-start = 4
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/mod.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs" })'
-descriptor = "impl method sigs in crates/mdbook-html/src/html/mod.rs"
-cost_tokens = 77
-cum_tokens = 1441
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
-start = 47
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 51
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs" })'
-descriptor = "impl method sigs in crates/mdbook-html/src/theme/mod.rs"
-cost_tokens = 80
-cum_tokens = 1521
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 166
-end = 166
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 200
-end = 201
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 67
-end = 67
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs"
-start = 202
-end = 202
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 52
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md" })'
-descriptor = "README headline in crates/mdbook-html/README.md"
-cost_tokens = 68
-cum_tokens = 1589
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs" })'
-descriptor = "mod/use plumbing in src/main.rs"
-cost_tokens = 96
-cum_tokens = 1685
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs"
-start = 5
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/main.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src" })'
-descriptor = "listing of 'guide/src'"
-cost_tokens = 37
-cum_tokens = 1722
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src"
-entries = ["404.md", "README.md", "SUMMARY.md", "cli", "continuous-integration.md", "for_developers", "format", "guide", "misc"]
-
-[[batches]]
-position = 55
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 11
 cum_tokens = 1733
 
 [batches.content]
-kind = "fs"
+kind = "lines"
 
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples"
-entries = ["nop-preprocessor.rs", "remove-emphasis"]
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "ellipsis"
 
 [[batches]]
 position = 56
@@ -1755,54 +1755,10 @@ entries = ["tests.rs"]
 
 [[batches]]
 position = 72
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-core/src/lib.rs"
-cost_tokens = 23
-cum_tokens = 2428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 73
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs", start_line: 7 })'
-descriptor = "pub item at crates/mdbook-core/src/lib.rs:7"
-cost_tokens = 0
-cum_tokens = 2428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-core/src/lib.rs"
 cost_tokens = 19
-cum_tokens = 2447
+cum_tokens = 2424
 
 [batches.content]
 kind = "lines"
@@ -1816,11 +1772,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 75
+position = 73
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils" })'
 descriptor = "listing of 'crates/mdbook-core/src/utils'"
 cost_tokens = 18
-cum_tokens = 2465
+cum_tokens = 2442
 
 [batches.content]
 kind = "fs"
@@ -1830,11 +1786,55 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/s
 entries = ["fs.rs", "html.rs", "mod.rs", "toml_ext.rs"]
 
 [[batches]]
-position = 76
+position = 74
+key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs" })'
+descriptor = "crate-doc lede in crates/mdbook-core/src/utils/mod.rs"
+cost_tokens = 10
+cum_tokens = 2452
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-core/src/utils/mod.rs"
 cost_tokens = 17
-cum_tokens = 2482
+cum_tokens = 2469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 76
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs", start_line: 29 })'
+descriptor = "pub item at crates/mdbook-core/src/utils/mod.rs:29"
+cost_tokens = 0
+cum_tokens = 2469
 
 [batches.content]
 kind = "lines"
@@ -1857,44 +1857,44 @@ kind = "ellipsis"
 
 [[batches]]
 position = 77
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs", start_line: 29 })'
-descriptor = "pub item at crates/mdbook-core/src/utils/mod.rs:29"
-cost_tokens = 0
-cum_tokens = 2482
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 78
-key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs" })'
-descriptor = "crate-doc lede in crates/mdbook-core/src/utils/mod.rs"
-cost_tokens = 10
+key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs" })'
+descriptor = "pub-item names surface in crates/mdbook-core/src/lib.rs"
+cost_tokens = 23
 cum_tokens = 2492
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/mod.rs"
-start = 1
-end = 1
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs", start_line: 7 })'
+descriptor = "pub item at crates/mdbook-core/src/lib.rs:7"
+cost_tokens = 0
+cum_tokens = 2492
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/lib.rs"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "full"
@@ -2735,62 +2735,10 @@ kind = "full"
 
 [[batches]]
 position = 116
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/init.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/init.rs"
-cost_tokens = 11
-cum_tokens = 4325
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/init.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/init.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 117
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/mdbook.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/mdbook.rs"
-cost_tokens = 11
-cum_tokens = 4336
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/mdbook.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/mdbook.rs"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 118
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-driver/src/lib.rs"
 cost_tokens = 147
-cum_tokens = 4483
+cum_tokens = 4461
 
 [batches.content]
 kind = "lines"
@@ -2804,11 +2752,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 119
+position = 117
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-driver/src/builtin_renderers/mod.rs"
 cost_tokens = 89
-cum_tokens = 4572
+cum_tokens = 4550
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2786,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 120
+position = 118
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-driver/src/lib.rs"
 cost_tokens = 131
-cum_tokens = 4703
+cum_tokens = 4681
 
 [batches.content]
 kind = "lines"
@@ -2864,11 +2812,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 121
+position = 119
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/mod.rs", start_line: 20 })'
 descriptor = "pub-item doc lede at crates/mdbook-driver/src/builtin_renderers/mod.rs:20"
 cost_tokens = 59
-cum_tokens = 4762
+cum_tokens = 4740
 
 [batches.content]
 kind = "lines"
@@ -2882,11 +2830,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 122
+position = 120
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/for_developers" })'
 descriptor = "listing of 'guide/src/for_developers'"
 cost_tokens = 20
-cum_tokens = 4782
+cum_tokens = 4760
 
 [batches.content]
 kind = "fs"
@@ -2896,11 +2844,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/for_develo
 entries = ["README.md", "backends.md", "mdbook-wordcount", "preprocessors.md"]
 
 [[batches]]
-position = 123
+position = 121
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/watch/native.rs", start_line: 11 })'
 descriptor = "pub item at src/cmd/watch/native.rs:11"
 cost_tokens = 45
-cum_tokens = 4827
+cum_tokens = 4805
 
 [batches.content]
 kind = "lines"
@@ -2922,11 +2870,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 122
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/watch/poller.rs", start_line: 18 })'
 descriptor = "pub item at src/cmd/watch/poller.rs:18"
 cost_tokens = 45
-cum_tokens = 4872
+cum_tokens = 4850
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2896,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 123
 key = 'Toml(Features { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/Cargo.toml" })'
 descriptor = "[features] in Cargo.toml"
 cost_tokens = 257
-cum_tokens = 5129
+cum_tokens = 5107
 
 [batches.content]
 kind = "lines"
@@ -2998,11 +2946,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 126
+position = 124
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/guide/README.md", section_index: 0 })'
 descriptor = "guide/src/guide/README.md section #0"
 cost_tokens = 36
-cum_tokens = 5165
+cum_tokens = 5143
 
 [batches.content]
 kind = "lines"
@@ -3016,11 +2964,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 127
+position = 125
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs" })'
 descriptor = "pub-item names surface in src/cmd/clean.rs"
 cost_tokens = 71
-cum_tokens = 5236
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -3090,11 +3038,11 @@ end = 47
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 126
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs", start_line: 11 })'
 descriptor = "pub item at src/cmd/clean.rs:11"
 cost_tokens = 0
-cum_tokens = 5236
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -3116,11 +3064,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 127
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs", start_line: 19 })'
 descriptor = "pub item at src/cmd/clean.rs:19"
 cost_tokens = 0
-cum_tokens = 5236
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +3090,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 128
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs", start_line: 38 })'
 descriptor = "pub item at src/cmd/clean.rs:38"
 cost_tokens = 0
-cum_tokens = 5236
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -3168,11 +3116,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 131
+position = 129
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs", start_line: 46 })'
 descriptor = "pub item at src/cmd/clean.rs:46"
 cost_tokens = 39
-cum_tokens = 5275
+cum_tokens = 5253
 
 [batches.content]
 kind = "lines"
@@ -3186,11 +3134,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 132
+position = 130
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs", start_line: 10 })'
 descriptor = "entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:10"
 cost_tokens = 183
-cum_tokens = 5458
+cum_tokens = 5436
 
 [batches.content]
 kind = "lines"
@@ -3212,11 +3160,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 133
+position = 131
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 178
-cum_tokens = 5636
+cum_tokens = 5614
 
 [batches.content]
 kind = "lines"
@@ -3230,11 +3178,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 134
+position = 132
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/front-end" })'
 descriptor = "listing of 'crates/mdbook-html/front-end'"
 cost_tokens = 23
-cum_tokens = 5659
+cum_tokens = 5637
 
 [batches.content]
 kind = "fs"
@@ -3244,55 +3192,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/f
 entries = ["css", "fonts", "images", "js", "playground_editor", "searcher", "templates"]
 
 [[batches]]
-position = 135
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs"
-cost_tokens = 11
-cum_tokens = 5670
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 136
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs", start_line: 10 })'
-descriptor = "pub item at crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs:10"
-cost_tokens = 0
-cum_tokens = 5670
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_renderers/markdown_renderer.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
+position = 133
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs", start_line: 49 })'
 descriptor = "entry item at examples/remove-emphasis/mdbook-remove-emphasis/src/main.rs:49"
 cost_tokens = 192
-cum_tokens = 5862
+cum_tokens = 5829
 
 [batches.content]
 kind = "lines"
@@ -3322,11 +3226,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 138
+position = 134
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src" })'
 descriptor = "listing of 'crates/mdbook-compare/src'"
 cost_tokens = 4
-cum_tokens = 5866
+cum_tokens = 5833
 
 [batches.content]
 kind = "fs"
@@ -3336,11 +3240,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compar
 entries = ["main.rs"]
 
 [[batches]]
-position = 139
+position = 135
 key = 'Rust(EntryItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14 })'
 descriptor = "entry item at crates/mdbook-compare/src/main.rs:14"
 cost_tokens = 10
-cum_tokens = 5876
+cum_tokens = 5843
 
 [batches.content]
 kind = "lines"
@@ -3362,11 +3266,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 136
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 28 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 28"
 cost_tokens = 9
-cum_tokens = 5885
+cum_tokens = 5852
 
 [batches.content]
 kind = "lines"
@@ -3380,11 +3284,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 141
+position = 137
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 29 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 29"
 cost_tokens = 9
-cum_tokens = 5894
+cum_tokens = 5861
 
 [batches.content]
 kind = "lines"
@@ -3398,11 +3302,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 142
+position = 138
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 36 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 36"
 cost_tokens = 12
-cum_tokens = 5906
+cum_tokens = 5873
 
 [batches.content]
 kind = "lines"
@@ -3416,11 +3320,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 143
+position = 139
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 30 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 30"
 cost_tokens = 13
-cum_tokens = 5919
+cum_tokens = 5886
 
 [batches.content]
 kind = "lines"
@@ -3434,11 +3338,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 144
+position = 140
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 31 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 31"
 cost_tokens = 13
-cum_tokens = 5932
+cum_tokens = 5899
 
 [batches.content]
 kind = "lines"
@@ -3452,11 +3356,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 145
+position = 141
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 32 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 32"
 cost_tokens = 13
-cum_tokens = 5945
+cum_tokens = 5912
 
 [batches.content]
 kind = "lines"
@@ -3470,11 +3374,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 146
+position = 142
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 34 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 34"
 cost_tokens = 13
-cum_tokens = 5958
+cum_tokens = 5925
 
 [batches.content]
 kind = "lines"
@@ -3488,11 +3392,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 147
+position = 143
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 24 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 24"
 cost_tokens = 16
-cum_tokens = 5974
+cum_tokens = 5941
 
 [batches.content]
 kind = "lines"
@@ -3506,11 +3410,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 148
+position = 144
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 25 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 25"
 cost_tokens = 16
-cum_tokens = 5990
+cum_tokens = 5957
 
 [batches.content]
 kind = "lines"
@@ -3524,11 +3428,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 149
+position = 145
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 26 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 26"
 cost_tokens = 16
-cum_tokens = 6006
+cum_tokens = 5973
 
 [batches.content]
 kind = "lines"
@@ -3542,11 +3446,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 150
+position = 146
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 27 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 27"
 cost_tokens = 16
-cum_tokens = 6022
+cum_tokens = 5989
 
 [batches.content]
 kind = "lines"
@@ -3560,11 +3464,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 151
+position = 147
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 15 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 15"
 cost_tokens = 17
-cum_tokens = 6039
+cum_tokens = 6006
 
 [batches.content]
 kind = "lines"
@@ -3578,11 +3482,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 152
+position = 148
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 22 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 22"
 cost_tokens = 18
-cum_tokens = 6057
+cum_tokens = 6024
 
 [batches.content]
 kind = "lines"
@@ -3596,11 +3500,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 153
+position = 149
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 23 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 23"
 cost_tokens = 18
-cum_tokens = 6075
+cum_tokens = 6042
 
 [batches.content]
 kind = "lines"
@@ -3614,11 +3518,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 154
+position = 150
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 33 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 33"
 cost_tokens = 21
-cum_tokens = 6096
+cum_tokens = 6063
 
 [batches.content]
 kind = "lines"
@@ -3632,11 +3536,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 155
+position = 151
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 35 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 35"
 cost_tokens = 21
-cum_tokens = 6117
+cum_tokens = 6084
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3554,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 156
+position = 152
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-compare/src/main.rs"
 cost_tokens = 18
-cum_tokens = 6135
+cum_tokens = 6102
 
 [batches.content]
 kind = "lines"
@@ -3668,11 +3572,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 157
+position = 153
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-compare/src/main.rs"
 cost_tokens = 22
-cum_tokens = 6157
+cum_tokens = 6124
 
 [batches.content]
 kind = "lines"
@@ -3686,11 +3590,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 158
+position = 154
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-compare/src/main.rs", start_line: 14, body_start_line: 16 })'
 descriptor = "entry item body at crates/mdbook-compare/src/main.rs:14 body 16"
 cost_tokens = 100
-cum_tokens = 6257
+cum_tokens = 6224
 
 [batches.content]
 kind = "lines"
@@ -3704,11 +3608,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 159
+position = 155
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src" })'
 descriptor = "listing of 'crates/mdbook-markdown/src'"
 cost_tokens = 4
-cum_tokens = 6261
+cum_tokens = 6228
 
 [batches.content]
 kind = "fs"
@@ -3718,11 +3622,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdo
 entries = ["lib.rs"]
 
 [[batches]]
-position = 160
+position = 156
 key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs" })'
 descriptor = "impl method sigs in crates/mdbook-markdown/src/lib.rs"
 cost_tokens = 24
-cum_tokens = 6285
+cum_tokens = 6252
 
 [batches.content]
 kind = "lines"
@@ -3744,11 +3648,37 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 157
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs" })'
+descriptor = "mod/use plumbing in crates/mdbook-markdown/src/lib.rs"
+cost_tokens = 27
+cum_tokens = 6279
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-markdown/src/lib.rs"
 cost_tokens = 44
-cum_tokens = 6329
+cum_tokens = 6323
 
 [batches.content]
 kind = "lines"
@@ -3786,11 +3716,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 162
+position = 159
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs", start_line: 44 })'
 descriptor = "pub item at crates/mdbook-markdown/src/lib.rs:44"
 cost_tokens = 0
-cum_tokens = 6329
+cum_tokens = 6323
 
 [batches.content]
 kind = "lines"
@@ -3812,37 +3742,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 163
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs" })'
-descriptor = "mod/use plumbing in crates/mdbook-markdown/src/lib.rs"
-cost_tokens = 27
-cum_tokens = 6356
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
+position = 160
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs", start_line: 44 })'
 descriptor = "pub-item doc lede at crates/mdbook-markdown/src/lib.rs:44"
 cost_tokens = 19
-cum_tokens = 6375
+cum_tokens = 6342
 
 [batches.content]
 kind = "lines"
@@ -3856,11 +3760,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 165
+position = 161
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs", start_line: 15 })'
 descriptor = "pub item at crates/mdbook-markdown/src/lib.rs:15"
 cost_tokens = 176
-cum_tokens = 6551
+cum_tokens = 6518
 
 [batches.content]
 kind = "lines"
@@ -3874,11 +3778,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 166
+position = 162
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs", start_line: 15 })'
 descriptor = "pub-item doc lede at crates/mdbook-markdown/src/lib.rs:15"
 cost_tokens = 10
-cum_tokens = 6561
+cum_tokens = 6528
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +3796,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 167
+position = 163
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-markdown/src/lib.rs"
 cost_tokens = 103
-cum_tokens = 6664
+cum_tokens = 6631
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +3814,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 168
+position = 164
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src" })'
 descriptor = "listing of 'crates/mdbook-preprocessor/src'"
 cost_tokens = 4
-cum_tokens = 6668
+cum_tokens = 6635
 
 [batches.content]
 kind = "fs"
@@ -3924,11 +3828,45 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-prepro
 entries = ["lib.rs"]
 
 [[batches]]
-position = 169
+position = 165
+key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs" })'
+descriptor = "impl method sigs in crates/mdbook-preprocessor/src/lib.rs"
+cost_tokens = 35
+cum_tokens = 6670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 166
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-preprocessor/src/lib.rs"
 cost_tokens = 51
-cum_tokens = 6719
+cum_tokens = 6721
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +3920,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 167
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 82 })'
 descriptor = "pub item at crates/mdbook-preprocessor/src/lib.rs:82"
 cost_tokens = 0
-cum_tokens = 6719
+cum_tokens = 6721
 
 [batches.content]
 kind = "lines"
@@ -4008,11 +3946,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 168
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 82, body_start_line: 83 })'
 descriptor = "pub item body at crates/mdbook-preprocessor/src/lib.rs:82 body 83"
 cost_tokens = 20
-cum_tokens = 6739
+cum_tokens = 6741
 
 [batches.content]
 kind = "lines"
@@ -4026,45 +3964,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 172
-key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs" })'
-descriptor = "impl method sigs in crates/mdbook-preprocessor/src/lib.rs"
-cost_tokens = 35
-cum_tokens = 6774
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 173
+position = 169
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 82 })'
 descriptor = "pub-item doc lede at crates/mdbook-preprocessor/src/lib.rs:82"
 cost_tokens = 14
-cum_tokens = 6788
+cum_tokens = 6755
 
 [batches.content]
 kind = "lines"
@@ -4078,11 +3982,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 174
+position = 170
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 30 })'
 descriptor = "pub item at crates/mdbook-preprocessor/src/lib.rs:30"
 cost_tokens = 178
-cum_tokens = 6966
+cum_tokens = 6933
 
 [batches.content]
 kind = "lines"
@@ -4112,11 +4016,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 175
+position = 171
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 51 })'
 descriptor = "pub item at crates/mdbook-preprocessor/src/lib.rs:51"
 cost_tokens = 191
-cum_tokens = 7157
+cum_tokens = 7124
 
 [batches.content]
 kind = "lines"
@@ -4130,11 +4034,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 176
+position = 172
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 51 })'
 descriptor = "pub-item doc lede at crates/mdbook-preprocessor/src/lib.rs:51"
 cost_tokens = 29
-cum_tokens = 7186
+cum_tokens = 7153
 
 [batches.content]
 kind = "lines"
@@ -4148,11 +4052,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 177
+position = 173
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-preprocessor/src/lib.rs"
 cost_tokens = 101
-cum_tokens = 7287
+cum_tokens = 7254
 
 [batches.content]
 kind = "lines"
@@ -4166,11 +4070,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 178
+position = 174
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-preprocessor/src/lib.rs"
 cost_tokens = 156
-cum_tokens = 7443
+cum_tokens = 7410
 
 [batches.content]
 kind = "lines"
@@ -4192,11 +4096,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 179
+position = 175
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/src/lib.rs", start_line: 30 })'
 descriptor = "pub-item doc lede at crates/mdbook-preprocessor/src/lib.rs:30"
 cost_tokens = 115
-cum_tokens = 7558
+cum_tokens = 7525
 
 [batches.content]
 kind = "lines"
@@ -4210,11 +4114,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 180
+position = 176
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src" })'
 descriptor = "listing of 'crates/mdbook-renderer/src'"
 cost_tokens = 4
-cum_tokens = 7562
+cum_tokens = 7529
 
 [batches.content]
 kind = "fs"
@@ -4224,11 +4128,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-render
 entries = ["lib.rs"]
 
 [[batches]]
-position = 181
+position = 177
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 21
-cum_tokens = 7583
+cum_tokens = 7550
 
 [batches.content]
 kind = "lines"
@@ -4266,11 +4170,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 182
+position = 178
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs", start_line: 28 })'
 descriptor = "pub item at crates/mdbook-renderer/src/lib.rs:28"
 cost_tokens = 81
-cum_tokens = 7664
+cum_tokens = 7631
 
 [batches.content]
 kind = "lines"
@@ -4292,11 +4196,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 183
+position = 179
 key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "impl method sigs in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 121
-cum_tokens = 7785
+cum_tokens = 7752
 
 [batches.content]
 kind = "lines"
@@ -4358,11 +4262,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 184
+position = 180
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs", start_line: 40 })'
 descriptor = "pub item at crates/mdbook-renderer/src/lib.rs:40"
 cost_tokens = 290
-cum_tokens = 8075
+cum_tokens = 8042
 
 [batches.content]
 kind = "lines"
@@ -4376,11 +4280,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 185
+position = 181
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs", start_line: 40 })'
 descriptor = "pub-item doc lede at crates/mdbook-renderer/src/lib.rs:40"
 cost_tokens = 13
-cum_tokens = 8088
+cum_tokens = 8055
 
 [batches.content]
 kind = "lines"
@@ -4394,11 +4298,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 186
+position = 182
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 98
-cum_tokens = 8186
+cum_tokens = 8153
 
 [batches.content]
 kind = "lines"
@@ -4412,11 +4316,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 187
+position = 183
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs", start_line: 28 })'
 descriptor = "pub-item doc lede at crates/mdbook-renderer/src/lib.rs:28"
 cost_tokens = 92
-cum_tokens = 8278
+cum_tokens = 8245
 
 [batches.content]
 kind = "lines"
@@ -4430,11 +4334,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 188
+position = 184
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-renderer/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-renderer/src/lib.rs"
 cost_tokens = 144
-cum_tokens = 8422
+cum_tokens = 8389
 
 [batches.content]
 kind = "lines"
@@ -4456,11 +4360,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 189
+position = 185
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src" })'
 descriptor = "listing of 'crates/mdbook-summary/src'"
 cost_tokens = 4
-cum_tokens = 8426
+cum_tokens = 8393
 
 [batches.content]
 kind = "fs"
@@ -4470,11 +4374,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summar
 entries = ["lib.rs"]
 
 [[batches]]
-position = 190
+position = 186
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs" })'
 descriptor = "pub-item names surface in crates/mdbook-summary/src/lib.rs"
 cost_tokens = 52
-cum_tokens = 8478
+cum_tokens = 8445
 
 [batches.content]
 kind = "lines"
@@ -4544,11 +4448,11 @@ end = 123
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 187
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 59 })'
 descriptor = "pub item at crates/mdbook-summary/src/lib.rs:59"
 cost_tokens = 0
-cum_tokens = 8478
+cum_tokens = 8445
 
 [batches.content]
 kind = "lines"
@@ -4570,11 +4474,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 188
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 122 })'
 descriptor = "pub item at crates/mdbook-summary/src/lib.rs:122"
 cost_tokens = 61
-cum_tokens = 8539
+cum_tokens = 8506
 
 [batches.content]
 kind = "lines"
@@ -4588,11 +4492,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 193
+position = 189
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 59, body_start_line: 60 })'
 descriptor = "pub item body at crates/mdbook-summary/src/lib.rs:59 body 60"
 cost_tokens = 20
-cum_tokens = 8559
+cum_tokens = 8526
 
 [batches.content]
 kind = "lines"
@@ -4606,11 +4510,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 194
+position = 190
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 122 })'
 descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:122"
 cost_tokens = 12
-cum_tokens = 8571
+cum_tokens = 8538
 
 [batches.content]
 kind = "lines"
@@ -4624,11 +4528,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 195
+position = 191
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 84 })'
 descriptor = "pub item at crates/mdbook-summary/src/lib.rs:84"
 cost_tokens = 130
-cum_tokens = 8701
+cum_tokens = 8668
 
 [batches.content]
 kind = "lines"
@@ -4642,11 +4546,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 196
+position = 192
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 67 })'
 descriptor = "pub item at crates/mdbook-summary/src/lib.rs:67"
 cost_tokens = 139
-cum_tokens = 8840
+cum_tokens = 8807
 
 [batches.content]
 kind = "lines"
@@ -4660,11 +4564,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 197
+position = 193
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 67 })'
 descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:67"
 cost_tokens = 20
-cum_tokens = 8860
+cum_tokens = 8827
 
 [batches.content]
 kind = "lines"
@@ -4678,11 +4582,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 198
+position = 194
 key = 'Rust(CrateDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs" })'
 descriptor = "crate-doc lede in crates/mdbook-summary/src/lib.rs"
 cost_tokens = 74
-cum_tokens = 8934
+cum_tokens = 8901
 
 [batches.content]
 kind = "lines"
@@ -4696,11 +4600,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 199
+position = 195
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 59 })'
 descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:59"
 cost_tokens = 43
-cum_tokens = 8977
+cum_tokens = 8944
 
 [batches.content]
 kind = "lines"
@@ -4714,11 +4618,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 200
+position = 196
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs", start_line: 84 })'
 descriptor = "pub-item doc lede at crates/mdbook-summary/src/lib.rs:84"
 cost_tokens = 54
-cum_tokens = 9031
+cum_tokens = 8998
 
 [batches.content]
 kind = "lines"
@@ -4732,11 +4636,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 201
+position = 197
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-summary/src/lib.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-summary/src/lib.rs"
 cost_tokens = 137
-cum_tokens = 9168
+cum_tokens = 9135
 
 [batches.content]
 kind = "lines"
@@ -4766,169 +4670,11 @@ end = 647
 kind = "ellipsis"
 
 [[batches]]
-position = 202
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/cmd.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/builtin_preprocessors/cmd.rs"
-cost_tokens = 12
-cum_tokens = 9180
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/cmd.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/cmd.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 203
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/index.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/builtin_preprocessors/index.rs"
-cost_tokens = 12
-cum_tokens = 9192
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/index.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/index.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 204
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/index.rs", start_line: 12 })'
-descriptor = "pub item at crates/mdbook-driver/src/builtin_preprocessors/index.rs:12"
-cost_tokens = 0
-cum_tokens = 9192
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/index.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 205
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/links.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-driver/src/builtin_preprocessors/links.rs"
-cost_tokens = 12
-cum_tokens = 9204
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/links.rs"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/links.rs"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 206
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/links.rs", start_line: 32 })'
-descriptor = "pub item at crates/mdbook-driver/src/builtin_preprocessors/links.rs:32"
-cost_tokens = 0
-cum_tokens = 9204
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/src/builtin_preprocessors/links.rs"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 207
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/hbs_renderer.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-html/src/html_handlebars/hbs_renderer.rs"
-cost_tokens = 12
-cum_tokens = 9216
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/hbs_renderer.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/hbs_renderer.rs"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 208
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/hbs_renderer.rs", start_line: 22 })'
-descriptor = "pub item at crates/mdbook-html/src/html_handlebars/hbs_renderer.rs:22"
-cost_tokens = 0
-cum_tokens = 9216
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/hbs_renderer.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 209
+position = 198
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/clean.rs", start_line: 11, body_start_line: 12 })'
 descriptor = "pub item body at src/cmd/clean.rs:11 body 12"
 cost_tokens = 42
-cum_tokens = 9258
+cum_tokens = 9177
 
 [batches.content]
 kind = "lines"
@@ -4942,89 +4688,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 210
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/search.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-html/src/html_handlebars/search.rs"
-cost_tokens = 13
-cum_tokens = 9271
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/search.rs"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/search.rs"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 211
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/static_files.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-html/src/html_handlebars/static_files.rs"
-cost_tokens = 13
-cum_tokens = 9284
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/static_files.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html_handlebars/static_files.rs"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 212
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/toml_ext.rs" })'
-descriptor = "pub-item names surface in crates/mdbook-core/src/utils/toml_ext.rs"
-cost_tokens = 14
-cum_tokens = 9298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/toml_ext.rs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/src/utils/toml_ext.rs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 213
+position = 199
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/theme/mod.rs", start_line: 40 })'
 descriptor = "pub-item doc lede at crates/mdbook-html/src/theme/mod.rs:40"
 cost_tokens = 96
-cum_tokens = 9394
+cum_tokens = 9273
 
 [batches.content]
 kind = "lines"
@@ -5038,11 +4706,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 214
+position = 200
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/guide/reading.md" })'
 descriptor = "headings outline in guide/src/guide/reading.md"
 cost_tokens = 49
-cum_tokens = 9443
+cum_tokens = 9322
 
 [batches.content]
 kind = "lines"
@@ -5128,11 +4796,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 215
+position = 201
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/for_developers/README.md" })'
 descriptor = "README headline in guide/src/for_developers/README.md"
 cost_tokens = 111
-cum_tokens = 9554
+cum_tokens = 9433
 
 [batches.content]
 kind = "lines"
@@ -5154,11 +4822,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 216
+position = 202
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/for_developers/README.md" })'
 descriptor = "headings outline in guide/src/for_developers/README.md"
 cost_tokens = 27
-cum_tokens = 9581
+cum_tokens = 9460
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +4864,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 217
+position = 203
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/guide/src/continuous-integration.md" })'
 descriptor = "headings outline in guide/src/continuous-integration.md"
 cost_tokens = 81
-cum_tokens = 9662
+cum_tokens = 9541
 
 [batches.content]
 kind = "lines"
@@ -5318,11 +4986,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 218
+position = 204
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/Cargo.toml" })'
 descriptor = "[dependencies] in crates/mdbook-markdown/Cargo.toml"
 cost_tokens = 39
-cum_tokens = 9701
+cum_tokens = 9580
 
 [batches.content]
 kind = "lines"
@@ -5336,11 +5004,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 219
+position = 205
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/src/html/mod.rs" })'
 descriptor = "mod/use plumbing in crates/mdbook-html/src/html/mod.rs"
 cost_tokens = 184
-cum_tokens = 9885
+cum_tokens = 9764
 
 [batches.content]
 kind = "lines"
@@ -5378,11 +5046,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 220
+position = 206
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/src/cmd/build.rs", start_line: 8, body_start_line: 9 })'
 descriptor = "pub item body at src/cmd/build.rs:8 body 9"
 cost_tokens = 55
-cum_tokens = 9940
+cum_tokens = 9819
 
 [batches.content]
 kind = "lines"
@@ -5396,11 +5064,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 221
+position = 207
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/README.md", section_index: 1 })'
 descriptor = "crates/mdbook-core/README.md section #1"
 cost_tokens = 35
-cum_tokens = 9975
+cum_tokens = 9854
 
 [batches.content]
 kind = "lines"
@@ -5415,6 +5083,110 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-core/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/README.md", section_index: 1 })'
+descriptor = "crates/mdbook-driver/README.md section #1"
+cost_tokens = 35
+cum_tokens = 9889
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-driver/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md", section_index: 1 })'
+descriptor = "crates/mdbook-html/README.md section #1"
+cost_tokens = 35
+cum_tokens = 9924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-html/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 210
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/README.md", section_index: 1 })'
+descriptor = "crates/mdbook-markdown/README.md section #1"
+cost_tokens = 35
+cum_tokens = 9959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-markdown/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 211
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/README.md", section_index: 1 })'
+descriptor = "crates/mdbook-preprocessor/README.md section #1"
+cost_tokens = 35
+cum_tokens = 9994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mdbook/crates/mdbook-preprocessor/README.md"
 start = 13
 end = 13
 

@@ -26,6 +26,9 @@ README.md
     32→---
     34→## ⚙️ Project Structure
     …
+    36→- **sps‑core** Core library: fetching, dependency resolution, archive extraction, artifact handling (apps, binaries, pkg installers, fonts, plugins, zap/preflight/uninstall stanzas, etc.)
+    38→- **sps‑cli** Command‑line interface: `sps` executable wrapping the core library.
+    40→---
     42→## 🚧 Current Status
     …
     54→## 🚀 Roadmap
@@ -49,7 +52,12 @@ sps/
         cli/
             info.rs
                 14→pub struct Info {
-                …
+                15→    /// Name of the formula or cask
+                16→    pub name: String,
+                18→    /// Show information for a cask, not a formula
+                19→    #[arg(long)]
+                20→    pub cask: bool,
+                21→}
             init.rs
                 16→pub struct InitArgs {
                 17→    /// Force initialization even if /opt/sps appears to be an sps root already.
@@ -193,10 +201,6 @@ sps-common/
             15→pub struct Cache {
             …
         config.rs
-            15→pub struct Config {
-            …
-            199→pub fn load_config() -> Result<Config> {
-            …
         dependency/
             definition.rs
             mod.rs
@@ -209,19 +213,10 @@ sps-common/
                 9→    DependencyResolver, ResolutionContext, ResolutionStatus, ResolvedDependency, ResolvedGraph,
                 10→};
             requirement.rs
-                7→pub enum Requirement {
-                …
             resolver.rs
         error.rs
         formulary.rs
-            12→pub struct Formulary {
-            …
         keg.rs
-            13→pub struct InstalledKeg {
-            …
-            21→pub struct KegRegistry {
-            22→    config: Config,
-            23→}
         lib.rs
             2→pub mod cache;
             3→pub mod config;
@@ -237,8 +232,6 @@ sps-common/
             16→pub use model::{Cask, Formula, InstalledArtifact}; // etc.
         model/
             artifact.rs
-                9→pub enum InstalledArtifact {
-                …
             cask.rs
             formula.rs
             mod.rs
@@ -256,11 +249,7 @@ sps-common/
                 19→    Cask(Arc<Cask>),
                 20→}
             tap.rs
-                10→pub struct Tap {
-                …
             version.rs
-                11→pub struct Version(semver::Version);
-                …
         pipeline.rs
 sps-core/
     Cargo.toml
@@ -277,6 +266,10 @@ sps-core/
         install/
             bottle/
             cask/
+                artifacts/
+                dmg.rs
+                helpers.rs
+                mod.rs
             devtools.rs
             extract.rs
             mod.rs
@@ -301,20 +294,14 @@ sps-core/
             19→pub use uninstall::UninstallOptions; // New
         pipeline/
             engine.rs
-                16→pub fn start_worker_pool_manager(
-                …
             mod.rs
                 1→pub mod engine;
                 2→pub mod worker;
             worker.rs
-                21→pub(super) fn execute_sync_job(
-                …
         uninstall/
             cask.rs
             common.rs
             formula.rs
-                10→pub fn uninstall_formula_artifacts(
-                …
             mod.rs
                 3→pub mod cask;
                 4→pub mod common;
@@ -324,11 +311,7 @@ sps-core/
                 10→pub use formula::uninstall_formula_artifacts;
         upgrade/
             bottle.rs
-                20→pub async fn upgrade_bottle_formula(
-                …
             cask.rs
-                15→pub async fn upgrade_cask_package(
-                …
             mod.rs
                 3→pub mod bottle;
                 4→pub mod cask;
@@ -337,8 +320,6 @@ sps-core/
                 9→pub use self::cask::upgrade_cask_package;
                 10→pub use self::source::upgrade_source_formula;
             source.rs
-                19→pub async fn upgrade_source_formula(
-                …
         utils/
             applescript.rs
             mod.rs
