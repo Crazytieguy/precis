@@ -104,15 +104,6 @@ microbootstrap/
     bootstrappers/
         __init__.py
         base.py
-            17→class DataclassInstance(typing.Protocol):
-            18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
-            21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
-            22→DataclassT = typing.TypeVar("DataclassT", bound=DataclassInstance)
-            25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
-            26→    application_type: type[ApplicationT]
-            27→    application_config: DataclassT
-            28→    console_writer: ConsoleWriter
-            29→    instrument_box: InstrumentBox
         fastapi.py
         faststream.py
         litestar.py
@@ -158,6 +149,13 @@ microbootstrap/
         10→    """Raises when attempting to configure instrument, that is not supported yet."""
     granian_server.py
         16→GRANIAN_LOG_LEVELS_MAP = {
+        17→    logging.CRITICAL: LogLevels.critical,
+        18→    logging.ERROR: LogLevels.error,
+        19→    logging.WARNING: LogLevels.warning,
+        20→    logging.WARNING: LogLevels.warn,
+        21→    logging.INFO: LogLevels.info,
+        22→    logging.DEBUG: LogLevels.debug,
+        23→}
         27→def create_granian_server(
         28→    target: str,
         29→    settings: ServerConfig,
@@ -167,16 +165,10 @@ microbootstrap/
     instruments/
         __init__.py
         base.py
-            15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
-            16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
-            19→class BaseInstrumentConfig(pydantic.BaseModel):
-            20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
-            23→@dataclasses.dataclass
-            24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
-            25→    instrument_config: InstrumentConfigT
-            26→    instrument_name: typing.ClassVar[str]
-            27→    ready_condition: typing.ClassVar[str]
         cors_instrument.py
+            1→from __future__ import annotations
+            3→import pydantic
+            5→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
             8→class CorsConfig(BaseInstrumentConfig):
             …
             18→class CorsInstrument(Instrument[CorsConfig]):
@@ -188,6 +180,9 @@ microbootstrap/
             28→    def get_config_type(cls) -> type[CorsConfig]:
             29→        return CorsConfig
         health_checks_instrument.py
+            1→from __future__ import annotations
+            3→import typing_extensions
+            5→from microbootstrap.instruments.base import BaseInstrumentConfig, Instrument
             8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
             9→    service_version: str | None
             10→    service_name: str | None
@@ -296,3 +291,11 @@ pyproject.toml
     2→name = "microbootstrap"
     3→description = "Package for bootstrapping new micro-services"
 tests/
+    __init__.py
+    bootstrappers/
+    conftest.py
+    instruments/
+    test_granian_server.py
+    test_helpers.py
+    test_instruments_setupper.py
+    test_settings.py

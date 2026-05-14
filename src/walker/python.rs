@@ -1010,7 +1010,11 @@ fn is_init_py(file: &Path) -> bool {
 }
 
 fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
-    mix_signals(0.65, 0.55, 0.35, python_depth_factor(file, ctx))
+    // `__init__.py` carries the package's public surface; non-init
+    // modules are implementation detail and their names surface should
+    // not crowd README / public-export batches in the early budget.
+    let cat = if is_init_py(file) { 0.65 } else { 0.5 };
+    mix_signals(cat, 0.55, 0.35, python_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 

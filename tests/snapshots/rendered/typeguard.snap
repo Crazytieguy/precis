@@ -54,17 +54,6 @@ docs/
         21→release = v.public
         23→language = "en"
         25→exclude_patterns = ["_build"]
-        26→pygments_style = "sphinx"
-        27→autodoc_default_options = {"members": True}
-        28→autodoc_type_aliases = {
-        29→    "TypeCheckerCallable": "typeguard.TypeCheckerCallable",
-        30→    "TypeCheckFailCallback": "typeguard.TypeCheckFailCallback",
-        31→    "TypeCheckLookupCallback": "typeguard.TypeCheckLookupCallback",
-        32→}
-        33→todo_include_todos = False
-        35→html_theme = "sphinx_rtd_theme"
-        36→htmlhelp_basename = "typeguarddoc"
-        38→intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
     contributing.rst
     extending.rst
     features.rst
@@ -149,7 +138,13 @@ src/
             146→@overload
             147→def typechecked(target: T_CallableOrType) -> T_CallableOrType: ...
             150→def typechecked(
-            …
+            151→    target: T_CallableOrType | None = None,
+            152→    *,
+            153→    forward_ref_policy: ForwardRefPolicy | Unset = unset,
+            154→    typecheck_fail_callback: TypeCheckFailCallback | Unset = unset,
+            155→    collection_check_strategy: CollectionCheckStrategy | Unset = unset,
+            156→    debug_instrumentation: bool | Unset = unset,
+            157→) -> Any:
         _exceptions.py
             1→from collections import deque
             2→from typing import Deque
@@ -171,7 +166,8 @@ src/
             28→    Raised by typeguard's type checkers when a type mismatch is detected.
             29→    """
             31→    def __init__(self, message: str):
-            …
+            32→        super().__init__(message)
+            33→        self._path: Deque[str] = deque()
             35→    def append_path_element(self, element: str) -> None:
             36→        self._path.append(element)
             38→    def __str__(self) -> str:
@@ -207,13 +203,26 @@ src/
             …
             35→    __slots__ = "globals", "locals", "self_type", "config"
             37→    def __init__(
-            …
+            38→        self,
+            39→        globals: dict[str, Any],
+            40→        locals: dict[str, Any],
+            41→        *,
+            42→        self_type: type | None = None,
+            43→        config: TypeCheckConfiguration = global_config,
+            44→    ):
         _pytest_plugin.py
             16→def pytest_addoption(parser: Parser) -> None:
             …
             75→def pytest_configure(config: Config) -> None:
             …
         _suppression.py
+            1→from __future__ import annotations
+            3→import sys
+            4→from collections.abc import Callable, Generator
+            5→from contextlib import contextmanager
+            6→from functools import update_wrapper
+            7→from threading import Lock
+            8→from typing import ContextManager, TypeVar, overload
             15→P = ParamSpec("P")
             16→T = TypeVar("T")
             18→type_checks_suppressed = 0
@@ -229,27 +238,5 @@ src/
             488→class TypeguardTransformer(NodeTransformer):
             …
         _utils.py
-            66→def get_type_name(type_: Any) -> str:
-            …
-            104→def qualified_name(obj: Any, *, add_class_prefix: bool = False) -> str:
-            …
-            127→def function_name(func: Callable[..., Any]) -> str:
-            128→    """
-            129→    Return the qualified name of the given function.
-            131→    Builtins and types from the :mod:`typing` package get special treatment by having
-            132→    the module name stripped from the generated name.
-            134→    """
-            142→def resolve_reference(reference: str) -> Any:
-            …
-            154→def is_method_of(obj: object, cls: type) -> bool:
-            …
-            162→def get_stacklevel() -> int:
-            …
-            172→@final
-            173→class Unset:
-            174→    __slots__ = ()
-            176→    def __repr__(self) -> str:
-            177→        return "<unset>"
-            180→unset = Unset()
         py.typed
 tests/

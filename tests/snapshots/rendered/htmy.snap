@@ -42,6 +42,7 @@ README.md
     …
     179→### Rendering
     …
+    181→`htmy.Renderer` is the built-in, default renderer of the library.
     211→### Context
     …
     279→### Formatter
@@ -50,6 +51,7 @@ README.md
     …
     299→### Sync or async?
     …
+    301→In general, a component should be async if it must await some async call inside.
     305→In all other cases, it's best to use sync components.
     307→## XSS prevention
     …
@@ -68,6 +70,8 @@ README.md
     …
     361→## Development
     …
+    363→Use `ruff` for linting and formatting, `mypy` for static code analysis, and `pytest` for testing.
+    365→The documentation is built with `zensical` and `mkdocstrings`.
     367→## Contributing
     …
     377→## License - MIT
@@ -76,10 +80,25 @@ README.md
 docs/
     api/
         core.md
+            1→# ::: htmy.core
+            3→    options:
+            4→        show_root_heading: true
         etree.md
+            1→# ::: htmy.etree
+            3→    options:
+            4→        show_root_heading: true
         function_component.md
+            1→# ::: htmy.function_component
+            3→    options:
+            4→        show_root_heading: true
         html.md
+            1→# ::: htmy.html
+            3→    options:
+            4→        show_root_heading: true
         i18n.md
+            1→# ::: htmy.i18n
+            3→    options:
+            4→        show_root_heading: true
         md.md
             1→# ::: htmy.md.core
             …
@@ -92,8 +111,17 @@ docs/
             default.md
             typing.md
         snippet.md
+            1→# ::: htmy.snippet
+            3→    options:
+            4→        show_root_heading: true
         typing.md
+            1→# ::: htmy.typing
+            3→    options:
+            4→        show_root_heading: true
         utils.md
+            1→# ::: htmy.utils
+            3→    options:
+            4→        show_root_heading: true
     components-guide.md
         1→# Components guide
         …
@@ -117,6 +145,7 @@ docs/
         …
         150→### Methods
         …
+        230→That's it!
     index.md
 examples/
     internationalization/
@@ -152,37 +181,6 @@ htmy/
         46→join_classes = join
         48→HTMY = Renderer
     core.py
-        19→class Fragment:
-        20→    """Fragment utility component that simply wraps some children components."""
-        22→    __slots__ = ("_children",)
-        38→class WithContext(Fragment):
-        39→    """
-        40→    A simple, static context provider component.
-        41→    """
-        43→    __slots__ = ("_context",)
-        64→class ContextAware:
-        …
-        100→    __slots__ = ()
-        102→    _base_context_type: ClassVar[type[ContextAware] | None] = None
-        146→class SkipProperty(Exception):
-        147→    """Exception raised by property formatters if the property should be skipped."""
-        149→    ...
-        157→class Text(str):
-        158→    """Marker class for differentiating text content from other strings."""
-        160→    ...
-        163→class SafeStr(Text):
-        …
-        172→    ...
-        175→class XBool(enum.Enum):
-        …
-        183→    true = True
-        184→    false = False
-        196→def xml_format_string(value: str) -> str:
-        197→    """Escapes `<`, `>`, and `&` characters in the given string, unless it's a `SafeStr`."""
-        198→    return value if isinstance(value, SafeStr) else xml_escape(value)
-        201→class Formatter(ContextAware):
-        …
-        220→    __slots__ = ("_default_formatter", "_name_formatter", "_value_formatters")
     error_boundary.py
         15→class ErrorBoundary:
         16→    """
@@ -192,7 +190,11 @@ htmy/
         21→    """
         23→    __slots__ = ("_children", "_errors", "_fallback")
         25→    def __init__(
-        …
+        26→        self,
+        27→        *children: ComponentType,
+        28→        fallback: Component = None,
+        29→        errors: Container[type[Exception]] | None = None,
+        30→    ) -> None:
         45→    async def htmy(self, context: Context) -> Component:
         …
         56→    def _fallback_component(self, error: Exception) -> ComponentType:
@@ -200,28 +202,21 @@ htmy/
     etree.py
         23→class ETreeConverter:
         …
+        38→    __slots__ = ("_rules",)
+        40→    _htmy_fragment: ClassVar[str] = "htmy_fragment"
+        41→    """
+        42→    Placeholder tag name that's used to wrap possibly multi-root XML snippets into a valid
+        43→    XML document with a single root that can be processed by standard tools.
+        44→    """
     function_component.py
     html.py
     i18n.py
-        11→TranslationResource = Mapping[str, Any]
-        15→class I18nError(Exception): ...
-        …
-        18→class I18nKeyError(I18nError): ...
-        …
-        21→class I18nValueError(I18nError): ...
-        …
-        24→class I18n(ContextAware):
-        25→    """
-        26→    Context-aware async internationalization utility.
-        27→    """
-        29→    __slots__ = ("_fallback", "_path")
-        31→    _root_keys: ClassVar[frozenset[str]] = frozenset(("", "."))
-        32→    """Special keys that represent the "root" object, i.e. the entire translation resource file."""
-        115→@alru_cache()
-        116→async def load_translation_resource(path: Path) -> TranslationResource:
-        147→def resolve_json_path(root: Path, dotted_subpath: str) -> Path:
-        …
     io.py
+        1→from __future__ import annotations
+        3→from typing import TYPE_CHECKING
+        5→from anyio import open_file as open_file
+        7→if TYPE_CHECKING:
+        8→    from pathlib import Path
         11→async def load_text_file(path: str | Path) -> str:
         12→    """Loads the text content from the given path."""
         13→    async with await open_file(path, "r") as f:
@@ -237,6 +232,9 @@ htmy/
         core.py
             20→class MarkdownParser(ContextAware):
             …
+            28→    __slots__ = ("_md",)
+            30→    _default: ClassVar[MarkdownParser | None] = None
+            31→    """The default instance or `None` if one hasn't been created already."""
             81→class MD(Snippet):
             …
             98→    __slots__ = (
@@ -259,6 +257,8 @@ htmy/
             …
             28→    __slots__ = ("_default_context", "_string_formatter")
         context.py
+            1→from htmy.typing import Context
+            3→from .typing import RendererType, is_renderer
             6→class RendererContext:
             7→    """
             8→    Context key for storing, and utility for retrieving the renderer instance from the rendering context.
@@ -266,16 +266,6 @@ htmy/
             11→    @classmethod
             12→    def from_context(cls, context: Context) -> RendererType:
         default.py
-            20→class _Node:
-            …
-            50→_NodeAndChildContext: TypeAlias = tuple[_Node, Context]
-            53→class _ComponentRenderer:
-            …
-            205→async def _render_component(
-            …
-            228→class Renderer:
-            …
-            236→    __slots__ = ("_default_context", "_string_formatter")
         typing.py
     snippet.py
         27→class Slots:

@@ -58,60 +58,6 @@ docs/
         36→language = "en"
         38→pygments_style = "sphinx"
         40→html_theme = "alabaster"
-        41→html_theme_options = {
-        42→    "logo": "img/plug.png",
-        43→    "description": "The pytest plugin system",
-        44→    "github_user": "pytest-dev",
-        45→    "github_repo": "pluggy",
-        46→    "github_button": "true",
-        47→    "github_banner": "true",
-        48→    "github_type": "star",
-        49→    "badge_branch": "main",
-        50→    "page_width": "1080px",
-        51→    "sidebar_width": "300px",
-        52→    "fixed_sidebar": "false",
-        53→}
-        54→html_sidebars = {
-        55→    "**": ["about.html", "localtoc.html", "relations.html", "searchbox.html"]
-        56→}
-        57→html_static_path = ["_static"]
-        61→man_pages = [(master_doc, "pluggy", "pluggy Documentation", [author], 1)]
-        63→autodoc_member_order = "bysource"
-        65→nitpicky = True
-        66→nitpick_ignore = {
-        67→    # Don't want to expose this yet (see #428).
-        68→    ("py:class", "pluggy._tracing.TagTracerSub"),
-        69→    # Compat hack, don't want to expose it.
-        70→    ("py:class", "pluggy._manager.DistFacade"),
-        71→    # `types.ModuleType` turns into `module` but then fails to resolve...
-        72→    ("py:class", "module"),
-        73→    # Just a TypeVar.
-        74→    ("py:obj", "pluggy._result.ResultType"),
-        75→    ("py:class", "pluggy._result.ResultType"),
-        76→}
-        83→texinfo_documents = [
-        84→    (
-        85→        master_doc,
-        86→        "pluggy",
-        87→        "pluggy Documentation",
-        88→        author,
-        89→        "pluggy",
-        90→        "One line description of project.",
-        91→        "Miscellaneous",
-        92→    )
-        93→]
-        96→intersphinx_mapping = {
-        97→    "python": ("https://docs.python.org/3", None),
-        98→    "pytest": ("https://docs.pytest.org/en/latest", None),
-        99→    "setuptools": ("https://setuptools.pypa.io/en/latest", None),
-        100→    "tox": ("https://tox.wiki/en/latest", None),
-        101→    "devpi": ("https://devpi.net/docs/devpi/devpi/stable/+doc/", None),
-        102→    "kedro": ("https://docs.kedro.org/en/stable/", None),
-        103→}
-        106→def configure_logging(app: "sphinx.application.Sphinx") -> None:
-        107→    """Configure Sphinx's WarningHandler to handle (expected) missing include."""
-        130→def setup(app: "sphinx.application.Sphinx") -> None:
-        131→    configure_logging(app)
     examples/
         eggsample/
         eggsample-spam/
@@ -120,6 +66,12 @@ docs/
     requirements.txt
 downstream/
     .gitignore
+        1→/conda/
+        2→/datasette/
+        3→/devpi/
+        4→/hatch/
+        5→/pytest/
+        6→/tox/
     README.md
     conda.sh
     datasette.sh
@@ -188,6 +140,10 @@ src/
             85→    caller_kwargs: Mapping[str, object],
             86→    firstresult: bool,
             87→) -> object | list[object]:
+            88→    """Execute a call into multiple python functions/methods and return the
+            89→    result(s).
+            91→    ``caller_kwargs`` comes from HookCaller.__call__().
+            92→    """
         _hooks.py
         _manager.py
             36→_BeforeTrace: TypeAlias = Callable[[str, Sequence[HookImpl], Mapping[str, Any]], None]
@@ -204,10 +160,31 @@ src/
             65→class DistFacade:
             66→    """Emulate a pkg_resources Distribution"""
             83→class PluginManager:
-            …
+            84→    """Core class which manages registration of plugin objects and 1:N hook
+            85→    calling.
+            87→    You can register new hooks by calling :meth:`add_hookspecs(module_or_class)
+            88→    <PluginManager.add_hookspecs>`.
+            90→    You can register plugin objects (which contain hook implementations) by
+            91→    calling :meth:`register(plugin) <PluginManager.register>`.
+            93→    For debugging purposes you can call :meth:`PluginManager.enable_tracing`
+            94→    which will subsequently send debug information to the trace helper.
+            96→    :param project_name:
+            97→        The short project name. Prefer snake case. Make sure it's unique!
+            98→    """
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
+            1→"""
+            2→Hook wrapper "result" utilities.
+            3→"""
+            5→from __future__ import annotations
+            7→from collections.abc import Callable
+            8→from types import TracebackType
+            9→from typing import cast
+            10→from typing import final
+            11→from typing import Generic
+            12→from typing import TypeAlias
+            13→from typing import TypeVar
             16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
             17→ResultType = TypeVar("ResultType")
             20→class HookCallError(Exception):
@@ -257,9 +234,26 @@ src/
             12→_Writer = Callable[[str], object]
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:
+            17→    def __init__(self) -> None:
+            …
+            22→    def get(self, name: str) -> TagTracerSub:
+            23→        return TagTracerSub(self, (name,))
+            25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
+            …
+            42→    def _processmessage(self, tags: tuple[str, ...], args: tuple[object, ...]) -> None:
+            …
+            48→    def setwriter(self, writer: _Writer | None) -> None:
+            49→        self._writer = writer
+            51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
             …
             59→class TagTracerSub:
-            …
+            60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
+            61→        self.root = root
+            62→        self.tags = tags
+            64→    def __call__(self, *args: object) -> None:
+            65→        self.root._processmessage(self.tags, args)
+            67→    def get(self, name: str) -> TagTracerSub:
+            68→        return self.__class__(self.root, self.tags + (name,))
         _warnings.py
             1→from typing import final
             4→class PluggyWarning(UserWarning):
