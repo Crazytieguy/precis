@@ -151,6 +151,7 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
                 | "fuzz"
         ) || s.starts_with("test_")
             || s.starts_with("guide-helper")
+            || is_proc_macro_crate_dir_name(s)
         {
             return 0.2;
         }
@@ -181,6 +182,27 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
         }
     }
     1.0
+}
+
+/// True for crate directory names that match the Rust proc-macro
+/// helper-crate convention — `<name>-macros`, `<name>_macros`,
+/// `<name>-derive`, `<name>_derive`. These are universally
+/// implementation-detail crates: their `lib.rs` is a fan-out of
+/// `#[proc_macro_*]` entrypoints with thin bodies that delegate to a
+/// sibling codegen crate. NS authors anchor on the *user-facing*
+/// crate's re-exports, not the macros crate's `pub fn derive_foo`.
+/// Plain `macros` / `derive` (the suffixes themselves) are excluded —
+/// they're more likely to be a real module name in a non-proc-macro
+/// package (`bevy/macros`, `core::macros`).
+fn is_proc_macro_crate_dir_name(s: &str) -> bool {
+    for suffix in ["-macros", "_macros", "-derive", "_derive"] {
+        if let Some(stem) = s.strip_suffix(suffix)
+            && !stem.is_empty()
+        {
+            return true;
+        }
+    }
+    false
 }
 
 /// Auto-injected agent-instruction files: their bodies are already in

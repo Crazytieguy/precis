@@ -236,15 +236,72 @@ crates/
         Cargo.toml
         src/
             driver/
+                capability.rs
+                operation/
+                    delete_by_key.rs
+                    find_pk_by_index.rs
+                    get_by_key.rs
+                    insert.rs
+                    query_pk.rs
+                    query_sql.rs
+                    transaction.rs
+                    update_by_key.rs
+                operation.rs
+                response.rs
             driver.rs
             error/
             error.rs
             lib.rs
+                16→pub type Result<T, E = Error> = core::result::Result<T, E>;
+                …
             macros.rs
+                2→macro_rules! path {
+                …
             schema/
+                app/
+                    arg.rs
+                    auto.rs
+                    constraint/
+                    constraint.rs
+                    embedded.rs
+                    field/
+                    field.rs
+                    fk.rs
+                    index.rs
+                    model.rs
+                    pk.rs
+                    relation/
+                    relation.rs
+                    schema.rs
+                app.rs
+                builder/
+                    table.rs
+                builder.rs
+                db/
+                    column.rs
+                    diff.rs
+                    index.rs
+                    migration.rs
+                    pk.rs
+                    schema.rs
+                    table.rs
+                    ty.rs
+                db.rs
+                mapping/
+                    field.rs
+                    model.rs
+                mapping.rs
+                name.rs
+                verify/
+                    relations_are_indexed.rs
+                verify.rs
             schema.rs
+                22→pub struct Schema {
+                …
             stmt/
             stmt.rs
+                253→pub enum Statement {
+                …
         tests/
     toasty-driver-dynamodb/
         Cargo.toml
@@ -253,8 +310,6 @@ crates/
         Cargo.toml
         src/
     toasty-driver-integration-suite-macros/
-        Cargo.toml
-        src/
     toasty-driver-mysql/
         Cargo.toml
         src/
@@ -288,27 +343,6 @@ crates/
                 8→pub struct Value(CoreValue);
                 …
     toasty-macros/
-        Cargo.toml
-        src/
-            lib.rs
-                3→use proc_macro::TokenStream;
-                4→use quote::quote;
-                10→pub fn derive_model(input: TokenStream) -> TokenStream {
-                11→    match toasty_codegen::generate_model(input.into()) {
-                12→        Ok(output) => output.into(),
-                13→        Err(e) => e.to_compile_error().into(),
-                14→    }
-                18→pub fn derive_embed(input: TokenStream) -> TokenStream {
-                19→    match toasty_codegen::generate_embed(input.into()) {
-                20→        Ok(output) => output.into(),
-                21→        Err(e) => e.to_compile_error().into(),
-                22→    }
-                26→pub fn include_schema(_input: TokenStream) -> TokenStream {
-                27→    todo!()
-                31→pub fn query(_input: TokenStream) -> TokenStream {
-                32→    quote!(println!("TODO")).into()
-                36→pub fn create(_input: TokenStream) -> TokenStream {
-                37→    quote!(println!("TODO")).into()
     toasty-sql/
 docs/
     ARCHITECTURE.md
