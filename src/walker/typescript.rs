@@ -71,6 +71,16 @@ const FULL_VALUE_BODY_SEGMENTS_PER_FILE: usize = 4;
 // value/cost ratio lose to broader structural candidates in budget pressure.
 const LATE_BODY_SEGMENT_VALUE_FACTOR: f64 = 0.05;
 const JS_CLASS_MEMBER_SPLIT_MIN: usize = 12;
+/// Upper bound on class member count for splitting. A class with 80+
+/// members fragments into 80 per-method `ExportMember` batches at
+/// 10-15 tokens each — combined they dominate the early budget on the
+/// concavity ratio without satisfying any single NS row that groups
+/// method names (commander NS 3.4–3.7 are catalog rows by NS-author
+/// choice). Above this cap we suppress the per-method batches; the
+/// unsplit `Export`'s larger token cost mostly puts it past the
+/// auto-injection budget too, but the freed budget slots reliably
+/// land NS-aligned package.json / README / sibling-file content.
+const JS_CLASS_MEMBER_SPLIT_MAX: usize = 40;
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let js_like_files = files_with_any_extension(dir, &["ts", "tsx", "js", "mjs", "cjs"]);
@@ -480,7 +490,8 @@ fn should_split_js_class_export(file: &Path, item: &ExportInfo<'_>) -> bool {
     is_js_file(file)
         && matches!(item.kind, ItemKind::Class | ItemKind::Default)
         && is_class_node(item.decl)
-        && item.class_members.len() >= JS_CLASS_MEMBER_SPLIT_MIN
+        && (JS_CLASS_MEMBER_SPLIT_MIN..=JS_CLASS_MEMBER_SPLIT_MAX)
+            .contains(&item.class_members.len())
 }
 
 #[derive(Debug, Clone)]
