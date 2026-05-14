@@ -65,10 +65,6 @@ crates/
         Cargo.toml
         src/
             apply_update.rs
-                9→pub trait ApplyUpdate {
-                …
-                19→pub struct Query;
-                …
             batch/
                 create.rs
             batch.rs
@@ -408,6 +404,10 @@ docs/
         order_limit_pagination.md
         query-constraints.md
 examples/
+    composite-key/
+    hello-toasty/
+    todo-with-cli/
+    user-has-one-profile/
 rust-toolchain.toml
 scripts/
 test.db

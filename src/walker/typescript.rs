@@ -357,8 +357,12 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             }
         }
         let module_items = find_module_items(&tree, &source, &src_lines, &export_start_lines);
-        let emit_private_nonclass =
-            is_entrypoint_file(file) && (is_tsx_file(file) || is_js_file(file));
+        // README-cited JS files (canonical example scripts referenced from
+        // the root README) emit private statements as module items even
+        // though they aren't entrypoints — those statements ARE the
+        // example's content the NS author anchored on.
+        let emit_private_nonclass = (is_entrypoint_file(file) || ctx.is_readme_cited(file))
+            && (is_tsx_file(file) || is_js_file(file));
         for item in module_items {
             if !emit_private_nonclass && !matches!(item.kind, ItemKind::Class) {
                 continue;
@@ -1430,9 +1434,11 @@ fn js_value_factor(path: &Path, ctx: &WalkCtx) -> f64 {
         // Dev-tooling JS should remain discoverable without taking budget
         // from source files in TS-first packages.
         JS_CONFIG_VALUE_FACTOR
-    } else if is_primary_js_source_path(path, ctx) {
+    } else if is_primary_js_source_path(path, ctx) || ctx.is_readme_cited(path) {
         // Package JS/MJS/CJS entrypoints are often the whole public API, but
         // still need to rank below equivalent TS so TS fixtures stay stable.
+        // README-cited JS files (e.g. canonical example scripts) are
+        // primary by author intent — promote them out of the secondary tier.
         PRIMARY_JS_VALUE_FACTOR
     } else if is_js_file(path) {
         // Secondary JS helpers/scripts are useful fallback context, not the

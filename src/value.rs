@@ -89,6 +89,27 @@ pub fn depth_factor(depth: usize) -> f64 {
 /// path). When `path` isn't under `root` (a walker bug; not panicked on
 /// for release-mode robustness), the absolute path is used as-is.
 pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f64 {
+    non_essential_factor_inner(path, root, false)
+}
+
+/// Like [`non_essential_factor`] but skips the `examples/`-style
+/// directory-name classifier. Used for files explicitly hyperlinked
+/// from the root README — the NS author treats those as canonical
+/// usage anchors regardless of which directory they live in. Other
+/// non-essential classes (auto-injected docs, peripheral docs,
+/// proc-macro crates, locale suffixes, test files) still apply.
+pub fn non_essential_factor_excluding_examples(
+    path: &std::path::Path,
+    root: &std::path::Path,
+) -> f64 {
+    non_essential_factor_inner(path, root, true)
+}
+
+fn non_essential_factor_inner(
+    path: &std::path::Path,
+    root: &std::path::Path,
+    skip_dir_classifier: bool,
+) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
     let mut comps = target.components();
     if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
@@ -123,41 +144,43 @@ pub fn non_essential_factor(path: &std::path::Path, root: &std::path::Path) -> f
     if is_peripheral_doc(target) || is_localized_readme(target) {
         return 0.2;
     }
-    for component in target.components() {
-        let Some(s) = component.as_os_str().to_str() else {
-            continue;
-        };
-        if matches!(
-            s,
-            "tests"
-                | "test"
-                | "testing"
-                | "examples"
-                | "example"
-                | "benches"
-                | "bench"
-                | "benchmark"
-                | "benchmarks"
-                | "fixtures"
-                | "rfcs"
-                | "xtask"
-                | "ci"
-                | "website"
-                | "docs-site"
-                | "demo"
-                | "demos"
-                | "playground"
-                | "showcase"
-                | "storybook"
-                | "fuzz"
-                | "scripts"
-                | "tools"
-                | "tooling"
-        ) || s.starts_with("test_")
-            || s.starts_with("guide-helper")
-            || is_proc_macro_crate_dir_name(s)
-        {
-            return 0.2;
+    if !skip_dir_classifier {
+        for component in target.components() {
+            let Some(s) = component.as_os_str().to_str() else {
+                continue;
+            };
+            if matches!(
+                s,
+                "tests"
+                    | "test"
+                    | "testing"
+                    | "examples"
+                    | "example"
+                    | "benches"
+                    | "bench"
+                    | "benchmark"
+                    | "benchmarks"
+                    | "fixtures"
+                    | "rfcs"
+                    | "xtask"
+                    | "ci"
+                    | "website"
+                    | "docs-site"
+                    | "demo"
+                    | "demos"
+                    | "playground"
+                    | "showcase"
+                    | "storybook"
+                    | "fuzz"
+                    | "scripts"
+                    | "tools"
+                    | "tooling"
+            ) || s.starts_with("test_")
+                || s.starts_with("guide-helper")
+                || is_proc_macro_crate_dir_name(s)
+            {
+                return 0.2;
+            }
         }
     }
     if let Some(name) = path.file_name().and_then(|n| n.to_str()) {

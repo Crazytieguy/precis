@@ -144,11 +144,17 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
         && !source_dir
         && !module_source_dir
         && is_source_inventory_dir(dir, ctx);
+    let readme_cited = ctx.is_readme_cited(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
     } else if src_of_sibling_modules || sibling_module_dir {
         (0.75, 0.55, 0.35)
-    } else if source_dir || module_source_dir || source_inventory_dir {
+    } else if source_dir || module_source_dir || source_inventory_dir || readme_cited {
+        // README-cited dirs (an `examples/` directory the README links
+        // canonical scripts from) are part of the documented public
+        // surface; treat them on par with source-inventory dirs so the
+        // listing schedules early enough for per-file batches inside it
+        // to compete in the early budget.
         (0.6, 0.5, 0.3)
     } else {
         (0.5, 0.45, 0.25)

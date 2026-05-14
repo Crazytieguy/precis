@@ -10,8 +10,8 @@
 //! parsing in `expand` is fine — every per-file parse is cached on
 //! [`WalkCtx`] and shared across all batches that touch the same file.
 
-use std::cell::RefCell;
-use std::collections::{BTreeSet, HashMap};
+use std::cell::{OnceCell, RefCell};
+use std::collections::{BTreeSet, HashMap, HashSet};
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
@@ -112,6 +112,11 @@ pub struct WalkCtx {
     /// Per-run state owned by `walker::typescript` — project's public
     /// surface (entrypoint-reachable TS/JS files).
     typescript_state: typescript::TypescriptState,
+    /// Files explicitly hyperlinked from the root README. Resolved lazily
+    /// on first access by scanning the root README for relative path links
+    /// to source files. Used to opt examples/ files mentioned in the
+    /// README out of the generic non-essential demotion.
+    readme_cited_paths: OnceCell<HashSet<PathBuf>>,
 }
 
 impl WalkCtx {
@@ -128,6 +133,7 @@ impl WalkCtx {
             fs_state: fs::FsState::default(),
             json_state: json::JsonState::default(),
             typescript_state: typescript::TypescriptState::new(),
+            readme_cited_paths: OnceCell::new(),
         }
     }
 
@@ -149,9 +155,39 @@ impl WalkCtx {
 
     /// Path-aware non-essential discount, scoped to this run's root so
     /// the outer test/tooling dirs of whoever invoked precis don't poison
-    /// every fixture path.
+    /// every fixture path. Files explicitly hyperlinked from the root
+    /// README bypass the discount when their only demotion reason is the
+    /// `examples/`-style component classifier (other discount classes —
+    /// auto-injected docs, peripheral docs, proc-macro crates, locale
+    /// suffixes — still apply).
     pub fn non_essential_factor(&self, path: &Path) -> f64 {
-        crate::value::non_essential_factor(path, &self.root)
+        let base = crate::value::non_essential_factor(path, &self.root);
+        if base < 1.0 && self.is_readme_cited(path) {
+            crate::value::non_essential_factor_excluding_examples(path, &self.root)
+        } else {
+            base
+        }
+    }
+
+    /// True iff `path` is hyperlinked from the seed root's README, OR if
+    /// `path` is a directory containing a hyperlinked file. The directory
+    /// case lets the FS walker schedule the parent dir listing earlier so
+    /// per-language walkers actually get to emit the cited file's batches.
+    pub fn is_readme_cited(&self, path: &Path) -> bool {
+        let cited = self
+            .readme_cited_paths
+            .get_or_init(|| collect_readme_cited_paths(&self.root));
+        if cited.is_empty() {
+            return false;
+        }
+        let canonical = path.canonicalize().unwrap_or_else(|_| path.to_path_buf());
+        if cited.contains(&canonical) {
+            return true;
+        }
+        // Directory case: any cited file lives under this directory.
+        cited
+            .iter()
+            .any(|cited_path| cited_path.starts_with(&canonical))
     }
 
     /// True when `path` is an auto-injected agent doc (AGENTS.md /
@@ -225,6 +261,139 @@ impl WalkCtx {
     pub fn is_ts_public_surface(&self, file: &Path) -> bool {
         self.typescript_state.is_in_public_surface(file, self)
     }
+}
+
+/// Scan the seed root's README for relative-path hyperlinks to source
+/// files (`[label](./examples/foo.js)`). Returns the canonicalized file
+/// paths so callers can look them up regardless of how the path arrived.
+/// Empty set on missing/unreadable README. Recognizes the common
+/// case-insensitive README basenames + `.md` / `.rst` / `.txt` extensions.
+fn collect_readme_cited_paths(root: &Path) -> HashSet<PathBuf> {
+    let Ok(entries) = std::fs::read_dir(root) else {
+        return HashSet::new();
+    };
+    let mut out = HashSet::new();
+    for entry in entries.flatten() {
+        let path = entry.path();
+        let Some(name) = path.file_name().and_then(|n| n.to_str()) else {
+            continue;
+        };
+        let lower = name.to_ascii_lowercase();
+        let is_readme = matches!(
+            lower.as_str(),
+            "readme.md"
+                | "readme.rst"
+                | "readme.txt"
+                | "readme"
+                | "readme.markdown"
+                | "readme.mdown"
+        );
+        if !is_readme {
+            continue;
+        }
+        let Ok(text) = std::fs::read_to_string(&path) else {
+            continue;
+        };
+        for cited in extract_inline_link_targets(&text) {
+            // Only resolve relative references; skip URLs, anchors,
+            // and absolute paths.
+            if cited.starts_with("http")
+                || cited.starts_with("#")
+                || cited.starts_with('/')
+                || cited.starts_with("mailto:")
+            {
+                continue;
+            }
+            // Strip any anchor or query suffix.
+            let path_part = cited.split(['#', '?']).next().unwrap_or("");
+            if path_part.is_empty() {
+                continue;
+            }
+            // Only count source-file extensions to avoid matching
+            // image links / generic documentation links.
+            let lower = path_part.to_ascii_lowercase();
+            let is_source = [
+                ".js", ".mjs", ".cjs", ".ts", ".tsx", ".py", ".rs", ".go", ".c", ".h", ".cc",
+                ".cpp", ".hpp",
+            ]
+            .iter()
+            .any(|ext| lower.ends_with(ext));
+            if !is_source {
+                continue;
+            }
+            let trimmed = path_part.trim_start_matches("./");
+            let resolved = root.join(trimmed);
+            if let Ok(canonical) = resolved.canonicalize() {
+                out.insert(canonical);
+            }
+        }
+    }
+    out
+}
+
+/// Extract `(target)` from `[label](target)` patterns in a markdown
+/// document. Hand-rolled — running a tree-sitter parse on the README
+/// just to get link targets would be overkill, and the bracket/paren
+/// pairing is simple enough that a stateful scanner does it in one
+/// pass. Skips reference-style links and image links (`![alt](src)`)
+/// for simplicity; both conventions cover the majority of inline
+/// example references.
+fn extract_inline_link_targets(text: &str) -> Vec<String> {
+    let bytes = text.as_bytes();
+    let mut out = Vec::new();
+    let mut i = 0;
+    while i < bytes.len() {
+        let c = bytes[i];
+        if c == b'!' {
+            // Skip image-link prefix; the image's `(target)` is rarely a
+            // source file.
+            i += 1;
+            continue;
+        }
+        if c != b'[' {
+            i += 1;
+            continue;
+        }
+        // Find the matching `]` then check for immediately-following `(`.
+        let mut depth = 1;
+        let mut j = i + 1;
+        while j < bytes.len() && depth > 0 {
+            match bytes[j] {
+                b'[' => depth += 1,
+                b']' => depth -= 1,
+                b'\\' => j += 1,
+                _ => {}
+            }
+            j += 1;
+        }
+        if depth != 0 || j >= bytes.len() || bytes[j] != b'(' {
+            i = j;
+            continue;
+        }
+        let target_start = j + 1;
+        let mut k = target_start;
+        let mut paren_depth = 1;
+        while k < bytes.len() && paren_depth > 0 {
+            match bytes[k] {
+                b'(' => paren_depth += 1,
+                b')' => paren_depth -= 1,
+                b'\\' => k += 1,
+                _ => {}
+            }
+            k += 1;
+        }
+        if paren_depth == 0 {
+            let target = &text[target_start..k - 1];
+            // Strip optional `"title"` suffix — `[label](url "title")`.
+            let target = target
+                .split_once(char::is_whitespace)
+                .map(|(t, _)| t)
+                .unwrap_or(target);
+            out.push(target.trim().to_string());
+        }
+        i = k;
+    }
+    out
 }
 
 /// Lines a collector wants to render for one file: `full` = emit the source
