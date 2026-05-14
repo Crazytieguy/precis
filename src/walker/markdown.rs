@@ -48,7 +48,7 @@ use tree_sitter::{Node, Tree};
 use crate::batch::{Batch, BatchKey, MarkdownKey};
 use crate::content::{BatchContent, Render, Span};
 use crate::tokenizer;
-use crate::value::mix_signals;
+use crate::value::{is_orientation_doc, mix_signals};
 
 use super::{
     FileLines, WalkCtx, extend_nonblank_rows, fs::files_with_extension, node_end_row_trimmed,
@@ -278,14 +278,12 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.7, 0.55, 0.4, orientation_aware_depth_factor(file, ctx))
-}
-
-/// Depth factor with orientation-doc pinning: a `docs/ARCHITECTURE.md`
-/// gets the same depth-1 treatment as a root-level one, because the
-/// content is the same kind of orientation anchor wherever it lives.
-fn orientation_aware_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
-    super::file_depth_factor(file, ctx, is_orientation_doc(file))
+    mix_signals(
+        0.7,
+        0.55,
+        0.4,
+        super::file_depth_factor(file, ctx, is_orientation_doc(file)),
+    )
 }
 
 fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
@@ -324,15 +322,12 @@ fn index_decay(idx: usize, exp: f64, floor: f64) -> f64 {
 
 fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     let is_guide = is_changelog_class(file);
-    // A nested orientation doc (`docs/ARCHITECTURE.md`) gets the
-    // depth-1 pin already applied to its headings outline, plus a
-    // cat-omission bump so its sections compete with per-decl batches
-    // from deep workspace crates. Root-level orientation docs
-    // (cmdk's `ARCHITECTURE.md`) skip the bump — they're already at
-    // depth 1, and bumping their cat regresses fixtures whose NS
-    // anchors only specific sections (cmdk NS 3.1 is a single line,
-    // not the whole doc).
-    let is_nested_orientation = is_orientation_doc(file) && ctx.depth_from_root(file) > 1;
+    let is_orientation = is_orientation_doc(file);
+    // Root-level orientation docs (depth 1) don't take the cat bump —
+    // depth-1 already wins the cost race, and bumping them regresses
+    // fixtures whose NS anchors only specific sections rather than the
+    // whole doc.
+    let is_nested_orientation = is_orientation && ctx.depth_from_root(file) > 1;
     // Changelogs are conventionally sorted newest-first, so later
     // sections are ancient release notes of decreasing relevance. Apply
     // an index-based decay only to guide-shape files; for general docs
@@ -353,11 +348,12 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
     } else {
         0.3
     };
-    // Orientation-doc sections share the headings-outline depth-pin —
-    // a `docs/ARCHITECTURE.md` section is as load-bearing as a root-
-    // level one. The depth pin is a no-op for root-level orientation
-    // docs (already depth 1), so this only lifts the nested case.
-    mix_signals(cat, 0.5, 0.5, orientation_aware_depth_factor(file, ctx)) * scale
+    mix_signals(
+        cat,
+        0.5,
+        0.5,
+        super::file_depth_factor(file, ctx, is_orientation),
+    ) * scale
 }
 
 /// Per-section value. Child ranges scale the parent's value — identical
@@ -519,29 +515,6 @@ fn is_readme(file: &Path) -> bool {
     file.file_name()
         .and_then(|n| n.to_str())
         .is_some_and(|n| n.eq_ignore_ascii_case("README.md"))
-}
-
-/// Project-orientation markdown files — the matklad-style `ARCHITECTURE.md`
-/// convention, plus the related `OVERVIEW.md` / `DESIGN.md` / `STRUCTURE.md`
-/// names. These are written specifically to orient a new contributor on
-/// the codebase, so they earn the same depth-1 pinning as code
-/// entrypoints — a `docs/ARCHITECTURE.md` is no less of an orientation
-/// anchor than a root-level one. Matched at any depth so monorepo
-/// `docs/ARCHITECTURE.md` counts too.
-fn is_orientation_doc(file: &Path) -> bool {
-    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
-        return false;
-    };
-    let Some(ext) = file.extension().and_then(|e| e.to_str()) else {
-        return false;
-    };
-    if !ext.eq_ignore_ascii_case("md") {
-        return false;
-    }
-    matches!(
-        stem.to_ascii_uppercase().as_str(),
-        "ARCHITECTURE" | "OVERVIEW" | "DESIGN" | "STRUCTURE"
-    )
 }
 
 fn is_readme_rst(file: &Path) -> bool {
