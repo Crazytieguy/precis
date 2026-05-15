@@ -51,13 +51,6 @@ sps/
     src/
         cli/
             info.rs
-                14→pub struct Info {
-                15→    /// Name of the formula or cask
-                16→    pub name: String,
-                18→    /// Show information for a cask, not a formula
-                19→    #[arg(long)]
-                20→    pub cask: bool,
-                21→}
             init.rs
                 16→pub struct InitArgs {
                 17→    /// Force initialization even if /opt/sps appears to be an sps root already.
@@ -65,27 +58,15 @@ sps/
                 19→    pub force: bool,
                 20→}
             install.rs
-                16→pub struct InstallArgs {
-                …
             list.rs
-                16→pub struct List {
-                …
             reinstall.rs
-                12→pub struct ReinstallArgs {
-                …
             search.rs
             status.rs
                 399→pub async fn handle_events(_config: Config, mut event_rx: broadcast::Receiver<PipelineEvent>) {
                 …
             uninstall.rs
-                17→pub struct Uninstall {
-                …
             update.rs
-                11→pub struct Update;
-                …
             upgrade.rs
-                12→pub struct UpgradeArgs {
-                …
         cli.rs
             35→pub struct CliArgs {
             36→    #[arg(short, long, action = ArgAction::Count, global = true)]
@@ -186,9 +167,13 @@ sps/
             190→    Ok(())
         pipeline/
             downloader.rs
-                21→pub(crate) struct DownloadCoordinator {
-                …
             planner.rs
+                25→pub(crate) type PlanResult<T> = SpsResult<T>;
+                …
+                37→pub(crate) async fn fetch_target_definitions(
+                …
+                184→pub(crate) struct OperationPlanner<'a> {
+                …
             runner.rs
         pipeline.rs
             1→pub mod downloader;
@@ -198,8 +183,6 @@ sps-common/
     Cargo.toml
     src/
         cache.rs
-            15→pub struct Cache {
-            …
         config.rs
         dependency/
             definition.rs
@@ -250,6 +233,7 @@ sps-common/
                 20→}
             tap.rs
             version.rs
+                11→pub struct Version(semver::Version);
         pipeline.rs
 sps-core/
     Cargo.toml
@@ -265,6 +249,22 @@ sps-core/
             update.rs
         install/
             bottle/
+                exec.rs
+                link.rs
+                macho.rs
+                mod.rs
+                    18→pub async fn download_formula(
+                    19→    formula: &Formula,
+                    20→    config: &Config,
+                    21→    client: &reqwest::Client,
+                    22→) -> Result<PathBuf> {
+                    …
+                    34→pub fn has_bottle_for_current_platform(formula: &Formula) -> bool {
+                    …
+                    159→pub fn get_formula_cellar_path(formula: &Formula, config: &Config) -> PathBuf {
+                    …
+                    165→pub fn write_receipt(
+                    …
             cask/
                 artifacts/
                 dmg.rs

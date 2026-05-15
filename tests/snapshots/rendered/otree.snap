@@ -49,8 +49,6 @@ src/
         28→pub fn write_clipboard(text: &str) -> Result<()> {
         …
     cmd.rs
-        13→pub struct CommandArgs {
-        …
     config/
         colors.rs
         keys.rs
@@ -64,7 +62,29 @@ src/
             354→}
         mod.rs
             17→pub struct Config {
-            …
+            18→    #[serde(default = "Tree::default")]
+            19→    pub tree: Tree,
+            21→    #[serde(default = "Editor::default")]
+            22→    pub editor: Editor,
+            24→    #[serde(default = "Data::default")]
+            25→    pub data: Data,
+            27→    #[serde(default = "Layout::default")]
+            28→    pub layout: Layout,
+            30→    #[serde(default = "Header::default")]
+            31→    pub header: Header,
+            33→    #[serde(default = "Footer::default")]
+            34→    pub footer: Footer,
+            36→    #[serde(default = "Filter::default")]
+            37→    pub filter: Filter,
+            39→    #[serde(default = "Config::empty_map")]
+            40→    pub palette: HashMap<String, String>,
+            42→    #[serde(default = "Colors::default")]
+            43→    pub colors: Colors,
+            45→    #[serde(default = "Types::default")]
+            46→    pub types: Types,
+            48→    #[serde(default = "Keys::default")]
+            49→    pub keys: Keys,
+            50→}
             53→pub struct Tree {
             54→    #[serde(default = "Config::disable")]
             55→    pub disable_selected_highlight: bool,
@@ -118,8 +138,6 @@ src/
             124→    pub wrap: bool,
             125→}
         types.rs
-            28→pub struct Types {
-            …
     debug.rs
         8→macro_rules! debug {
         …
@@ -153,16 +171,12 @@ src/
             10→    inner: RefCell<Option<Box<dyn Parser>>>,
             11→}
         hcl.rs
-            8→pub struct HclParser {}
-            …
         json.rs
             6→pub struct JsonParser {}
             …
             26→pub fn highlight(value: &Value, indent: usize, has_next: bool) -> Vec<SyntaxToken> {
             …
         jsonl.rs
-            7→pub struct JsonlParser;
-            …
         mod.rs
             18→pub enum ContentType {
             19→    Json,
@@ -205,16 +219,20 @@ src/
             67→    pub fn new_parser(self) -> Box<dyn Parser> {
             …
         syntax.rs
+            11→pub enum SyntaxToken {
+            …
+            139→pub fn quote_field_name(name: &str) -> String {
+            …
+            151→pub enum StringValue {
+            152→    String(String),
+            153→    MultiLines(Vec<String>),
+            154→}
+            201→pub fn is_value_complex(value: &Value) -> bool {
+            …
         test_cases/
         toml.rs
-            9→pub struct TomlParser {}
-            …
         xml.rs
-            12→pub struct XmlParser {}
-            …
         yaml.rs
-            8→pub struct YamlParser {}
-            …
     tree.rs
         14→pub struct Tree {
         15→    pub parser: Rc<Box<dyn Parser>>,
@@ -255,8 +273,6 @@ src/
             88→    Quit,
             89→}
         data_block.rs
-            16→pub struct DataBlock {
-            …
         filter.rs
             13→pub struct Filter {
             14→    cfg: Rc<Config>,
@@ -314,6 +330,4 @@ src/
             23→    scroll: usize,
             24→}
         tree_overview.rs
-            19→pub struct TreeOverview {
-            …
 typos.toml

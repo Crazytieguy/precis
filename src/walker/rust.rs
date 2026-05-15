@@ -290,10 +290,17 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         let items = find_pub_item_starts(&tree, &source);
         let src_lines: Vec<&str> = source.lines().collect();
         if !items.is_empty() {
+            // For a single-item file the names-surface batch (one line +
+            // ellipsis) is redundant with the per-item batch that
+            // follows: the agent gets the same name from either. Skip
+            // the surface batch and let the lone PubItem stand on its
+            // own with no predecessor.
+            let emit_names_surface = items.len() > 1;
             let names_key = RustKey::PubItemNames { file: file.clone() };
             let parent_names_lines = collect_pub_item_names(&items);
-            if let Some(content) =
-                single_file_lines_content(file, &source, parent_names_lines.clone())
+            if emit_names_surface
+                && let Some(content) =
+                    single_file_lines_content(file, &source, parent_names_lines.clone())
             {
                 out.push(batch(
                     names_key.clone(),
@@ -324,9 +331,14 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     || item_has_descendants)
                     && let Some(content) = single_file_lines_content(file, &source, item_lines)
                 {
+                    let predecessor = if emit_names_surface {
+                        Some(names_predecessor.clone())
+                    } else {
+                        None
+                    };
                     out.push(batch(
                         pub_item_key.clone(),
-                        Some(names_predecessor.clone()),
+                        predecessor,
                         content,
                         pub_item_value(file, item.kind, item.surface, ctx),
                     ));

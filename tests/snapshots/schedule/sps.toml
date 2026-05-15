@@ -1,7 +1,7 @@
 fixture = "sps"
 budget = 10000
-cumulative_tokens = 9831
-batch_count = 189
+cumulative_tokens = 9812
+batch_count = 162
 
 [[batches]]
 position = 1
@@ -403,218 +403,10 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/info.rs"
-cost_tokens = 10
-cum_tokens = 761
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 25
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/list.rs"
-cost_tokens = 10
-cum_tokens = 771
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 26
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/update.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/update.rs"
-cost_tokens = 10
-cum_tokens = 781
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/update.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/update.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 27
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/init.rs"
-cost_tokens = 11
-cum_tokens = 792
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 28
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/install.rs"
-cost_tokens = 11
-cum_tokens = 803
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 29
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/uninstall.rs"
-cost_tokens = 11
-cum_tokens = 814
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 30
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/upgrade.rs"
-cost_tokens = 11
-cum_tokens = 825
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 31
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/reinstall.rs"
-cost_tokens = 12
-cum_tokens = 837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 32
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli.rs" })'
 descriptor = "pub-item names surface in sps/src/cli.rs"
 cost_tokens = 21
-cum_tokens = 858
+cum_tokens = 772
 
 [batches.content]
 kind = "lines"
@@ -652,37 +444,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 33
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/downloader.rs" })'
-descriptor = "pub-item names surface in sps/src/pipeline/downloader.rs"
-cost_tokens = 13
-cum_tokens = 871
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/downloader.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/downloader.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 34
+position = 25
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-net/src" })'
 descriptor = "listing of 'sps-net/src'"
 cost_tokens = 21
-cum_tokens = 892
+cum_tokens = 793
 
 [batches.content]
 kind = "fs"
@@ -692,11 +458,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-net/src"
 entries = ["api.rs", "http.rs", "lib.rs", "oci.rs", "validation.rs"]
 
 [[batches]]
-position = 35
+position = 26
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/main.rs", start_line: 57, body_start_line: 60 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 60"
 cost_tokens = 128
-cum_tokens = 1020
+cum_tokens = 921
 
 [batches.content]
 kind = "lines"
@@ -710,11 +476,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 36
+position = 27
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/main.rs", start_line: 57, body_start_line: 146 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 146"
 cost_tokens = 131
-cum_tokens = 1151
+cum_tokens = 1052
 
 [batches.content]
 kind = "lines"
@@ -728,11 +494,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 37
+position = 28
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src" })'
 descriptor = "listing of 'sps-core/src'"
 cost_tokens = 25
-cum_tokens = 1176
+cum_tokens = 1077
 
 [batches.content]
 kind = "fs"
@@ -742,11 +508,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src"
 entries = ["build", "check", "install", "lib.rs", "pipeline", "uninstall", "upgrade", "utils"]
 
 [[batches]]
-position = 38
+position = 29
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check" })'
 descriptor = "listing of 'sps-core/src/check'"
 cost_tokens = 12
-cum_tokens = 1188
+cum_tokens = 1089
 
 [batches.content]
 kind = "fs"
@@ -756,11 +522,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check"
 entries = ["installed.rs", "mod.rs", "update.rs"]
 
 [[batches]]
-position = 39
+position = 30
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline" })'
 descriptor = "listing of 'sps-core/src/pipeline'"
 cost_tokens = 12
-cum_tokens = 1200
+cum_tokens = 1101
 
 [batches.content]
 kind = "fs"
@@ -770,11 +536,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline"
 entries = ["engine.rs", "mod.rs", "worker.rs"]
 
 [[batches]]
-position = 40
+position = 31
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils" })'
 descriptor = "listing of 'sps-core/src/utils'"
 cost_tokens = 14
-cum_tokens = 1214
+cum_tokens = 1115
 
 [batches.content]
 kind = "fs"
@@ -784,11 +550,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils"
 entries = ["applescript.rs", "mod.rs", "xattr.rs"]
 
 [[batches]]
-position = 41
+position = 32
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall" })'
 descriptor = "listing of 'sps-core/src/uninstall'"
 cost_tokens = 17
-cum_tokens = 1231
+cum_tokens = 1132
 
 [batches.content]
 kind = "fs"
@@ -798,11 +564,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall"
 entries = ["cask.rs", "common.rs", "formula.rs", "mod.rs"]
 
 [[batches]]
-position = 42
+position = 33
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade" })'
 descriptor = "listing of 'sps-core/src/upgrade'"
 cost_tokens = 17
-cum_tokens = 1248
+cum_tokens = 1149
 
 [batches.content]
 kind = "fs"
@@ -812,11 +578,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade"
 entries = ["bottle.rs", "cask.rs", "mod.rs", "source.rs"]
 
 [[batches]]
-position = 43
+position = 34
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/pipeline/mod.rs"
 cost_tokens = 16
-cum_tokens = 1264
+cum_tokens = 1165
 
 [batches.content]
 kind = "lines"
@@ -830,11 +596,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 44
+position = 35
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install" })'
 descriptor = "listing of 'sps-core/src/install'"
 cost_tokens = 20
-cum_tokens = 1284
+cum_tokens = 1185
 
 [batches.content]
 kind = "fs"
@@ -844,11 +610,55 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install"
 entries = ["bottle", "cask", "devtools.rs", "extract.rs", "mod.rs"]
 
 [[batches]]
-position = 45
+position = 36
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs", start_line: 17 })'
+descriptor = "pub item at sps-core/src/install/mod.rs:17"
+cost_tokens = 27
+cum_tokens = 1212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs", start_line: 17, body_start_line: 18 })'
+descriptor = "pub item body at sps-core/src/install/mod.rs:17 body 18"
+cost_tokens = 23
+cum_tokens = 1235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/utils/mod.rs"
 cost_tokens = 18
-cum_tokens = 1302
+cum_tokens = 1253
 
 [batches.content]
 kind = "lines"
@@ -870,81 +680,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 46
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs" })'
-descriptor = "pub-item names surface in sps-core/src/install/mod.rs"
-cost_tokens = 27
-cum_tokens = 1329
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 47
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs", start_line: 17 })'
-descriptor = "pub item at sps-core/src/install/mod.rs:17"
-cost_tokens = 0
-cum_tokens = 1329
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs", start_line: 17, body_start_line: 18 })'
-descriptor = "pub item body at sps-core/src/install/mod.rs:17 body 18"
-cost_tokens = 23
-cum_tokens = 1352
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs"
-start = 18
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
+position = 39
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/check/mod.rs"
 cost_tokens = 42
-cum_tokens = 1394
+cum_tokens = 1295
 
 [batches.content]
 kind = "lines"
@@ -966,11 +706,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 50
+position = 40
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/lib.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/lib.rs"
 cost_tokens = 77
-cum_tokens = 1471
+cum_tokens = 1372
 
 [batches.content]
 kind = "lines"
@@ -1000,11 +740,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 51
+position = 41
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 113
-cum_tokens = 1584
+cum_tokens = 1485
 
 [batches.content]
 kind = "lines"
@@ -1154,11 +894,11 @@ end = 165
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 42
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 60
-cum_tokens = 1644
+cum_tokens = 1545
 
 [batches.content]
 kind = "lines"
@@ -1188,11 +928,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 53
+position = 43
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src" })'
 descriptor = "listing of 'sps-common/src'"
 cost_tokens = 35
-cum_tokens = 1679
+cum_tokens = 1580
 
 [batches.content]
 kind = "fs"
@@ -1202,11 +942,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src"
 entries = ["cache.rs", "config.rs", "dependency", "error.rs", "formulary.rs", "keg.rs", "lib.rs", "model", "pipeline.rs"]
 
 [[batches]]
-position = 54
+position = 44
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency" })'
 descriptor = "listing of 'sps-common/src/dependency'"
 cost_tokens = 16
-cum_tokens = 1695
+cum_tokens = 1596
 
 [batches.content]
 kind = "fs"
@@ -1216,11 +956,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependen
 entries = ["definition.rs", "mod.rs", "requirement.rs", "resolver.rs"]
 
 [[batches]]
-position = 55
+position = 45
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model" })'
 descriptor = "listing of 'sps-common/src/model'"
 cost_tokens = 25
-cum_tokens = 1720
+cum_tokens = 1621
 
 [batches.content]
 kind = "fs"
@@ -1230,37 +970,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model"
 entries = ["artifact.rs", "cask.rs", "formula.rs", "mod.rs", "tap.rs", "version.rs"]
 
 [[batches]]
-position = 56
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/mod.rs" })'
-descriptor = "pub-item names surface in sps-common/src/model/mod.rs"
-cost_tokens = 12
-cum_tokens = 1732
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/mod.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/mod.rs"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 57
+position = 46
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/mod.rs", start_line: 17 })'
 descriptor = "pub item at sps-common/src/model/mod.rs:17"
-cost_tokens = 28
-cum_tokens = 1760
+cost_tokens = 40
+cum_tokens = 1661
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +988,37 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 58
+position = 47
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs", start_line: 399 })'
+descriptor = "pub item at sps/src/cli/status.rs:399"
+cost_tokens = 28
+cum_tokens = 1689
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
+start = 399
+end = 399
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
+start = 400
+end = 400
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 48
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/upgrade/mod.rs"
 cost_tokens = 71
-cum_tokens = 1831
+cum_tokens = 1760
 
 [batches.content]
 kind = "lines"
@@ -1300,11 +1040,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 59
+position = 49
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/uninstall/mod.rs"
 cost_tokens = 73
-cum_tokens = 1904
+cum_tokens = 1833
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +1066,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 60
+position = 50
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/mod.rs"
 cost_tokens = 74
-cum_tokens = 1978
+cum_tokens = 1907
 
 [batches.content]
 kind = "lines"
@@ -1360,11 +1100,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 61
+position = 51
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli.rs", start_line: 35 })'
 descriptor = "pub item at sps/src/cli.rs:35"
 cost_tokens = 56
-cum_tokens = 2034
+cum_tokens = 1963
 
 [batches.content]
 kind = "lines"
@@ -1386,63 +1126,29 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 62
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs" })'
-descriptor = "pub-item names surface in sps/src/cli/status.rs"
-cost_tokens = 28
-cum_tokens = 2062
+position = 52
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs", start_line: 11 })'
+descriptor = "pub item at sps-common/src/model/version.rs:11"
+cost_tokens = 13
+cum_tokens = 1976
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
-start = 399
-end = 399
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
-start = 400
-end = 400
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 63
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs", start_line: 399 })'
-descriptor = "pub item at sps/src/cli/status.rs:399"
-cost_tokens = 0
-cum_tokens = 2062
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
-start = 399
-end = 399
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/status.rs"
-start = 400
-end = 400
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 64
+position = 53
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/lib.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/lib.rs"
 cost_tokens = 118
-cum_tokens = 2180
+cum_tokens = 2094
 
 [batches.content]
 kind = "lines"
@@ -1464,11 +1170,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 65
+position = 54
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/main.rs", start_line: 57, body_start_line: 167 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 167"
 cost_tokens = 267
-cum_tokens = 2447
+cum_tokens = 2361
 
 [batches.content]
 kind = "lines"
@@ -1490,11 +1196,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 66
+position = 55
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/model/mod.rs"
 cost_tokens = 85
-cum_tokens = 2532
+cum_tokens = 2446
 
 [batches.content]
 kind = "lines"
@@ -1524,11 +1230,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 67
+position = 56
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli.rs", start_line: 44 })'
 descriptor = "pub item at sps/src/cli.rs:44"
 cost_tokens = 87
-cum_tokens = 2619
+cum_tokens = 2533
 
 [batches.content]
 kind = "lines"
@@ -1542,11 +1248,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 68
+position = 57
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/mod.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/dependency/mod.rs"
 cost_tokens = 97
-cum_tokens = 2716
+cum_tokens = 2630
 
 [batches.content]
 kind = "lines"
@@ -1568,29 +1274,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs", start_line: 16 })'
-descriptor = "pub item at sps/src/cli/init.rs:16"
-cost_tokens = 45
-cum_tokens = 2761
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
+position = 58
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline.rs" })'
 descriptor = "mod/use plumbing in sps/src/pipeline.rs"
 cost_tokens = 24
-cum_tokens = 2785
+cum_tokens = 2654
 
 [batches.content]
 kind = "lines"
@@ -1604,37 +1292,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 71
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs" })'
-descriptor = "pub-item names surface in sps-common/src/cache.rs"
-cost_tokens = 10
-cum_tokens = 2795
+position = 59
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs", start_line: 16 })'
+descriptor = "pub item at sps/src/cli/init.rs:16"
+cost_tokens = 56
+cum_tokens = 2710
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs"
-start = 15
-end = 15
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/init.rs"
+start = 16
+end = 20
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 72
+position = 60
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask" })'
 descriptor = "listing of 'sps-core/src/install/cask'"
 cost_tokens = 15
-cum_tokens = 2810
+cum_tokens = 2725
 
 [batches.content]
 kind = "fs"
@@ -1644,11 +1324,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/ca
 entries = ["artifacts", "dmg.rs", "helpers.rs", "mod.rs"]
 
 [[batches]]
-position = 73
+position = 61
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 77
-cum_tokens = 2887
+cum_tokens = 2802
 
 [batches.content]
 kind = "lines"
@@ -1686,37 +1366,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 74
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs", start_line: 14 })'
-descriptor = "pub item at sps/src/cli/info.rs:14"
-cost_tokens = 64
-cum_tokens = 2951
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
-start = 14
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
-start = 18
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
+position = 62
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/planner.rs" })'
 descriptor = "pub-item names surface in sps/src/pipeline/planner.rs"
 cost_tokens = 52
-cum_tokens = 3003
+cum_tokens = 2854
 
 [batches.content]
 kind = "lines"
@@ -1770,11 +1424,11 @@ end = 185
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 63
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle" })'
 descriptor = "listing of 'sps-core/src/install/bottle'"
 cost_tokens = 16
-cum_tokens = 3019
+cum_tokens = 2870
 
 [batches.content]
 kind = "fs"
@@ -1784,11 +1438,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bo
 entries = ["exec.rs", "link.rs", "macho.rs", "mod.rs"]
 
 [[batches]]
-position = 77
+position = 64
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs" })'
 descriptor = "pub-item names surface in sps-core/src/install/bottle/mod.rs"
 cost_tokens = 75
-cum_tokens = 3094
+cum_tokens = 2945
 
 [batches.content]
 kind = "lines"
@@ -1858,11 +1512,11 @@ end = 166
 kind = "ellipsis"
 
 [[batches]]
-position = 78
+position = 65
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 34 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:34"
 cost_tokens = 0
-cum_tokens = 3094
+cum_tokens = 2945
 
 [batches.content]
 kind = "lines"
@@ -1884,11 +1538,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 66
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 159 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:159"
 cost_tokens = 0
-cum_tokens = 3094
+cum_tokens = 2945
 
 [batches.content]
 kind = "lines"
@@ -1910,11 +1564,11 @@ end = 160
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 67
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 18 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:18"
 cost_tokens = 44
-cum_tokens = 3138
+cum_tokens = 2989
 
 [batches.content]
 kind = "lines"
@@ -1936,11 +1590,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 68
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 165 })'
 descriptor = "pub item at sps-core/src/install/bottle/mod.rs:165"
 cost_tokens = 50
-cum_tokens = 3188
+cum_tokens = 3039
 
 [batches.content]
 kind = "lines"
@@ -1962,11 +1616,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 69
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 159, body_start_line: 160 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:159 body 160"
 cost_tokens = 23
-cum_tokens = 3211
+cum_tokens = 3062
 
 [batches.content]
 kind = "lines"
@@ -1980,11 +1634,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 83
+position = 70
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 18 })'
 descriptor = "pub-item doc lede at sps-core/src/install/bottle/mod.rs:18"
 cost_tokens = 13
-cum_tokens = 3224
+cum_tokens = 3075
 
 [batches.content]
 kind = "lines"
@@ -1998,11 +1652,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 84
+position = 71
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 34 })'
 descriptor = "pub-item doc lede at sps-core/src/install/bottle/mod.rs:34"
 cost_tokens = 20
-cum_tokens = 3244
+cum_tokens = 3095
 
 [batches.content]
 kind = "lines"
@@ -2016,11 +1670,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 85
+position = 72
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 18, body_start_line: 23 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:18 body 23"
 cost_tokens = 90
-cum_tokens = 3334
+cum_tokens = 3185
 
 [batches.content]
 kind = "lines"
@@ -2034,11 +1688,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 86
+position = 73
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs", start_line: 34, body_start_line: 35 })'
 descriptor = "pub item body at sps-core/src/install/bottle/mod.rs:34 body 35"
 cost_tokens = 115
-cum_tokens = 3449
+cum_tokens = 3300
 
 [batches.content]
 kind = "lines"
@@ -2052,63 +1706,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 87
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs", start_line: 15 })'
-descriptor = "pub item at sps-common/src/cache.rs:15"
-cost_tokens = 39
-cum_tokens = 3488
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs"
-start = 15
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs", start_line: 12 })'
-descriptor = "pub item at sps/src/cli/upgrade.rs:12"
-cost_tokens = 68
-cum_tokens = 3556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
-start = 16
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
-start = 19
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
+position = 74
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/main.rs" })'
 descriptor = "mod/use plumbing in sps/src/main.rs"
 cost_tokens = 209
-cum_tokens = 3765
+cum_tokens = 3509
 
 [batches.content]
 kind = "lines"
@@ -2146,11 +1748,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 90
+position = 75
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/bottle/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/bottle/mod.rs"
 cost_tokens = 152
-cum_tokens = 3917
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -2188,55 +1790,63 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 91
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs" })'
-descriptor = "pub-item names surface in sps-common/src/formulary.rs"
-cost_tokens = 12
-cum_tokens = 3929
+position = 76
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs", start_line: 75 })'
+descriptor = "pub item at sps-core/src/utils/applescript.rs:75"
+cost_tokens = 23
+cum_tokens = 3684
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs"
-start = 12
-end = 12
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
+start = 75
+end = 75
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs"
-start = 13
-end = 13
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
+start = 76
+end = 76
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
-position = 92
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs", start_line: 12 })'
-descriptor = "pub item at sps-common/src/formulary.rs:12"
-cost_tokens = 38
-cum_tokens = 3967
+position = 77
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs", start_line: 14 })'
+descriptor = "pub item at sps/src/cli/info.rs:14"
+cost_tokens = 74
+cum_tokens = 3758
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs"
-start = 12
-end = 15
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/info.rs"
+start = 18
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 93
+position = 78
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/search.rs" })'
 descriptor = "pub-item names surface in sps/src/cli/search.rs"
 cost_tokens = 63
-cum_tokens = 4030
+cum_tokens = 3821
 
 [batches.content]
 kind = "lines"
@@ -2306,11 +1916,11 @@ end = 241
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 79
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/search.rs", start_line: 240 })'
 descriptor = "pub item at sps/src/cli/search.rs:240"
 cost_tokens = 0
-cum_tokens = 4030
+cum_tokens = 3821
 
 [batches.content]
 kind = "lines"
@@ -2332,11 +1942,11 @@ end = 241
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 80
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/search.rs", start_line: 23 })'
 descriptor = "pub item at sps/src/cli/search.rs:23"
 cost_tokens = 25
-cum_tokens = 4055
+cum_tokens = 3846
 
 [batches.content]
 kind = "lines"
@@ -2350,11 +1960,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 96
+position = 81
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/search.rs", start_line: 42 })'
 descriptor = "pub item at sps/src/cli/search.rs:42"
 cost_tokens = 52
-cum_tokens = 4107
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -2376,11 +1986,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 82
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/search.rs", start_line: 15 })'
 descriptor = "pub item at sps/src/cli/search.rs:15"
 cost_tokens = 65
-cum_tokens = 4172
+cum_tokens = 3963
 
 [batches.content]
 kind = "lines"
@@ -2394,11 +2004,45 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 98
+position = 83
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs", start_line: 12 })'
+descriptor = "pub item at sps/src/cli/upgrade.rs:12"
+cost_tokens = 79
+cum_tokens = 4042
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/upgrade.rs"
+start = 19
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/runner.rs" })'
 descriptor = "pub-item names surface in sps/src/pipeline/runner.rs"
 cost_tokens = 64
-cum_tokens = 4236
+cum_tokens = 4106
 
 [batches.content]
 kind = "lines"
@@ -2468,11 +2112,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 85
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/runner.rs", start_line: 56 })'
 descriptor = "pub item at sps/src/pipeline/runner.rs:56"
 cost_tokens = 0
-cum_tokens = 4236
+cum_tokens = 4106
 
 [batches.content]
 kind = "lines"
@@ -2494,11 +2138,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 86
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/runner.rs", start_line: 31 })'
 descriptor = "pub item at sps/src/pipeline/runner.rs:31"
 cost_tokens = 29
-cum_tokens = 4265
+cum_tokens = 4135
 
 [batches.content]
 kind = "lines"
@@ -2512,11 +2156,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 101
+position = 87
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/runner.rs", start_line: 38 })'
 descriptor = "pub item at sps/src/pipeline/runner.rs:38"
 cost_tokens = 38
-cum_tokens = 4303
+cum_tokens = 4173
 
 [batches.content]
 kind = "lines"
@@ -2530,11 +2174,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 102
+position = 88
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/pipeline/runner.rs", start_line: 67 })'
 descriptor = "pub item at sps/src/pipeline/runner.rs:67"
 cost_tokens = 65
-cum_tokens = 4368
+cum_tokens = 4238
 
 [batches.content]
 kind = "lines"
@@ -2556,37 +2200,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 103
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs", start_line: 12 })'
-descriptor = "pub item at sps/src/cli/reinstall.rs:12"
-cost_tokens = 81
-cum_tokens = 4449
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
-start = 16
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
+position = 89
 key = 'Rust(EntryItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/main.rs", start_line: 57, body_start_line: 91 })'
 descriptor = "entry item body at sps/src/main.rs:57 body 91"
 cost_tokens = 568
-cum_tokens = 5017
+cum_tokens = 4806
 
 [batches.content]
 kind = "lines"
@@ -2632,11 +2250,65 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 105
+position = 90
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs", start_line: 15 })'
+descriptor = "pub item at sps-common/src/cache.rs:15"
+cost_tokens = 49
+cum_tokens = 4855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs"
+start = 15
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs", start_line: 12 })'
+descriptor = "pub item at sps-common/src/formulary.rs:12"
+cost_tokens = 50
+cum_tokens = 4905
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/formulary.rs"
+start = 12
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs", start_line: 7 })'
+descriptor = "pub item at sps-common/src/dependency/requirement.rs:7"
+cost_tokens = 39
+cum_tokens = 4944
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs"
+start = 7
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-net/src/lib.rs" })'
 descriptor = "mod/use plumbing in sps-net/src/lib.rs"
 cost_tokens = 275
-cum_tokens = 5292
+cum_tokens = 5219
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +2338,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 106
+position = 94
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs" })'
 descriptor = "pub-item names surface in sps-core/src/install/cask/mod.rs"
 cost_tokens = 218
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2836,11 +2508,11 @@ end = 687
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 95
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 37 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:37"
 cost_tokens = 0
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2862,11 +2534,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 96
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 43 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:43"
 cost_tokens = 0
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2888,11 +2560,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 97
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 49 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:49"
 cost_tokens = 0
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2914,11 +2586,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 98
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 73 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:73"
 cost_tokens = 0
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2940,11 +2612,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 99
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 686 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:686"
 cost_tokens = 0
-cum_tokens = 5510
+cum_tokens = 5437
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2638,11 @@ end = 687
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 100
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 43, body_start_line: 44 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:43 body 44"
 cost_tokens = 14
-cum_tokens = 5524
+cum_tokens = 5451
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2656,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 113
+position = 101
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 73, body_start_line: 74 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:73 body 74"
 cost_tokens = 17
-cum_tokens = 5541
+cum_tokens = 5468
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +2674,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 114
+position = 102
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 580 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:580"
 cost_tokens = 45
-cum_tokens = 5586
+cum_tokens = 5513
 
 [batches.content]
 kind = "lines"
@@ -3028,11 +2700,11 @@ end = 585
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 103
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 77 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:77"
 cost_tokens = 46
-cum_tokens = 5632
+cum_tokens = 5559
 
 [batches.content]
 kind = "lines"
@@ -3054,11 +2726,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 116
+position = 104
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 612 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:612"
 cost_tokens = 47
-cum_tokens = 5679
+cum_tokens = 5606
 
 [batches.content]
 kind = "lines"
@@ -3080,11 +2752,11 @@ end = 617
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 105
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 232 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:232"
 cost_tokens = 54
-cum_tokens = 5733
+cum_tokens = 5660
 
 [batches.content]
 kind = "lines"
@@ -3106,11 +2778,11 @@ end = 238
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 106
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 37, body_start_line: 38 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:37 body 38"
 cost_tokens = 40
-cum_tokens = 5773
+cum_tokens = 5700
 
 [batches.content]
 kind = "lines"
@@ -3124,11 +2796,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 119
+position = 107
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 25 })'
 descriptor = "pub item at sps-core/src/install/cask/mod.rs:25"
 cost_tokens = 118
-cum_tokens = 5891
+cum_tokens = 5818
 
 [batches.content]
 kind = "lines"
@@ -3142,11 +2814,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 120
+position = 108
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 37 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:37"
 cost_tokens = 20
-cum_tokens = 5911
+cum_tokens = 5838
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +2832,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 121
+position = 109
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 43 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:43"
 cost_tokens = 20
-cum_tokens = 5931
+cum_tokens = 5858
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +2850,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 122
+position = 110
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 49 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:49"
 cost_tokens = 44
-cum_tokens = 5975
+cum_tokens = 5902
 
 [batches.content]
 kind = "lines"
@@ -3196,11 +2868,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 123
+position = 111
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 686 })'
 descriptor = "pub-item doc lede at sps-core/src/install/cask/mod.rs:686"
 cost_tokens = 51
-cum_tokens = 6026
+cum_tokens = 5953
 
 [batches.content]
 kind = "lines"
@@ -3214,11 +2886,11 @@ end = 685
 kind = "full"
 
 [[batches]]
-position = 124
+position = 112
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 49, body_start_line: 70 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:49 body 70"
 cost_tokens = 7
-cum_tokens = 6033
+cum_tokens = 5960
 
 [batches.content]
 kind = "lines"
@@ -3232,11 +2904,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 125
+position = 113
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 72
-cum_tokens = 6105
+cum_tokens = 6032
 
 [batches.content]
 kind = "lines"
@@ -3266,125 +2938,37 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 126
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs" })'
-descriptor = "pub-item names surface in sps-common/src/dependency/requirement.rs"
-cost_tokens = 10
-cum_tokens = 6115
+position = 114
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs", start_line: 12 })'
+descriptor = "pub item at sps/src/cli/reinstall.rs:12"
+cost_tokens = 93
+cum_tokens = 6125
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
+start = 12
+end = 14
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 127
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs", start_line: 7 })'
-descriptor = "pub item at sps-common/src/dependency/requirement.rs:7"
-cost_tokens = 29
-cum_tokens = 6144
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs"
-start = 7
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 128
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs" })'
-descriptor = "pub-item names surface in sps-common/src/model/tap.rs"
-cost_tokens = 10
-cum_tokens = 6154
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 129
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/artifact.rs" })'
-descriptor = "pub-item names surface in sps-common/src/model/artifact.rs"
-cost_tokens = 11
-cum_tokens = 6165
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/artifact.rs"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/artifact.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 130
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs", start_line: 16 })'
-descriptor = "pub item at sps/src/cli/list.rs:16"
-cost_tokens = 109
-cum_tokens = 6274
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs"
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs"
 start = 16
-end = 26
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 131
+position = 115
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 96
-cum_tokens = 6370
+cum_tokens = 6221
 
 [batches.content]
 kind = "lines"
@@ -3414,11 +2998,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 132
+position = 116
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/cache.rs", start_line: 15 })'
 descriptor = "pub-item doc lede at sps-common/src/cache.rs:15"
 cost_tokens = 12
-cum_tokens = 6382
+cum_tokens = 6233
 
 [batches.content]
 kind = "lines"
@@ -3432,11 +3016,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 133
+position = 117
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs" })'
 descriptor = "mod/use plumbing in sps-core/src/install/cask/mod.rs"
 cost_tokens = 248
-cum_tokens = 6630
+cum_tokens = 6481
 
 [batches.content]
 kind = "lines"
@@ -3482,89 +3066,29 @@ end = 230
 kind = "full"
 
 [[batches]]
-position = 134
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs" })'
-descriptor = "pub-item names surface in sps-core/src/pipeline/engine.rs"
-cost_tokens = 13
-cum_tokens = 6643
+position = 118
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs", start_line: 16 })'
+descriptor = "pub item at sps/src/cli/list.rs:16"
+cost_tokens = 119
+cum_tokens = 6600
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs"
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/list.rs"
 start = 16
-end = 16
+end = 26
 
 [batches.content.spans.render]
 kind = "full"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
 [[batches]]
-position = 135
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs" })'
-descriptor = "pub-item names surface in sps-core/src/uninstall/formula.rs"
-cost_tokens = 13
-cum_tokens = 6656
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 136
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs" })'
-descriptor = "pub-item names surface in sps-core/src/upgrade/source.rs"
-cost_tokens = 13
-cum_tokens = 6669
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 137
+position = 119
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/error.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/error.rs"
 cost_tokens = 21
-cum_tokens = 6690
+cum_tokens = 6621
 
 [batches.content]
 kind = "lines"
@@ -3586,89 +3110,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 138
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/worker.rs" })'
-descriptor = "pub-item names surface in sps-core/src/pipeline/worker.rs"
-cost_tokens = 14
-cum_tokens = 6704
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/worker.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/worker.rs"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 139
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs" })'
-descriptor = "pub-item names surface in sps-core/src/upgrade/bottle.rs"
-cost_tokens = 14
-cum_tokens = 6718
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 140
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs" })'
-descriptor = "pub-item names surface in sps-core/src/upgrade/cask.rs"
-cost_tokens = 14
-cum_tokens = 6732
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 141
+position = 120
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 68
-cum_tokens = 6800
+cum_tokens = 6689
 
 [batches.content]
 kind = "lines"
@@ -3706,11 +3152,11 @@ end = 171
 kind = "full"
 
 [[batches]]
-position = 142
+position = 121
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/keg.rs" })'
 descriptor = "pub-item names surface in sps-common/src/keg.rs"
 cost_tokens = 24
-cum_tokens = 6824
+cum_tokens = 6713
 
 [batches.content]
 kind = "lines"
@@ -3748,11 +3194,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 122
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/keg.rs", start_line: 21 })'
 descriptor = "pub item at sps-common/src/keg.rs:21"
 cost_tokens = 12
-cum_tokens = 6836
+cum_tokens = 6725
 
 [batches.content]
 kind = "lines"
@@ -3766,11 +3212,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 144
+position = 123
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/keg.rs", start_line: 13 })'
 descriptor = "pub item at sps-common/src/keg.rs:13"
 cost_tokens = 35
-cum_tokens = 6871
+cum_tokens = 6760
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +3230,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 145
+position = 124
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/keg.rs", start_line: 13 })'
 descriptor = "pub-item doc lede at sps-common/src/keg.rs:13"
 cost_tokens = 15
-cum_tokens = 6886
+cum_tokens = 6775
 
 [batches.content]
 kind = "lines"
@@ -3802,11 +3248,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 146
+position = 125
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/keg.rs", start_line: 21 })'
 descriptor = "pub-item doc lede at sps-common/src/keg.rs:21"
 cost_tokens = 15
-cum_tokens = 6901
+cum_tokens = 6790
 
 [batches.content]
 kind = "lines"
@@ -3820,55 +3266,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 147
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs" })'
-descriptor = "pub-item names surface in sps-common/src/model/version.rs"
-cost_tokens = 15
-cum_tokens = 6916
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 148
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs", start_line: 11 })'
-descriptor = "pub item at sps-common/src/model/version.rs:11"
-cost_tokens = 0
-cum_tokens = 6916
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
+position = 126
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 86
-cum_tokens = 7002
+cum_tokens = 6876
 
 [batches.content]
 kind = "lines"
@@ -3914,11 +3316,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 150
+position = 127
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/config.rs" })'
 descriptor = "pub-item names surface in sps-common/src/config.rs"
 cost_tokens = 27
-cum_tokens = 7029
+cum_tokens = 6903
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +3358,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 128
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/config.rs", start_line: 199 })'
 descriptor = "pub item at sps-common/src/config.rs:199"
 cost_tokens = 0
-cum_tokens = 7029
+cum_tokens = 6903
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +3384,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 129
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/config.rs", start_line: 199, body_start_line: 200 })'
 descriptor = "pub item body at sps-common/src/config.rs:199 body 200"
 cost_tokens = 7
-cum_tokens = 7036
+cum_tokens = 6910
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +3402,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 153
+position = 130
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/config.rs", start_line: 15 })'
 descriptor = "pub item at sps-common/src/config.rs:15"
 cost_tokens = 92
-cum_tokens = 7128
+cum_tokens = 7002
 
 [batches.content]
 kind = "lines"
@@ -4018,29 +3420,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 154
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs", start_line: 17 })'
-descriptor = "pub item at sps/src/cli/uninstall.rs:17"
-cost_tokens = 159
-cum_tokens = 7287
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs"
-start = 17
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
+position = 131
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 49, body_start_line: 50 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:49 body 50"
 cost_tokens = 21
-cum_tokens = 7308
+cum_tokens = 7023
 
 [batches.content]
 kind = "lines"
@@ -4054,11 +3438,29 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 156
+position = 132
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs", start_line: 17 })'
+descriptor = "pub item at sps/src/cli/uninstall.rs:17"
+cost_tokens = 170
+cum_tokens = 7193
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/uninstall.rs"
+start = 17
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 89
-cum_tokens = 7397
+cum_tokens = 7282
 
 [batches.content]
 kind = "lines"
@@ -4104,37 +3506,11 @@ end = 149
 kind = "full"
 
 [[batches]]
-position = 157
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs", start_line: 15 })'
-descriptor = "pub item at sps-core/src/upgrade/cask.rs:15"
-cost_tokens = 61
-cum_tokens = 7458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
-start = 15
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 158
+position = 134
 key = 'Rust(PubItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/cask/mod.rs", start_line: 686, body_start_line: 687 })'
 descriptor = "pub item body at sps-core/src/install/cask/mod.rs:686 body 687"
 cost_tokens = 25
-cum_tokens = 7483
+cum_tokens = 7307
 
 [batches.content]
 kind = "lines"
@@ -4148,11 +3524,11 @@ end = 687
 kind = "full"
 
 [[batches]]
-position = 159
+position = 135
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/error.rs" })'
 descriptor = "pub-item names surface in sps-common/src/error.rs"
 cost_tokens = 33
-cum_tokens = 7516
+cum_tokens = 7340
 
 [batches.content]
 kind = "lines"
@@ -4182,11 +3558,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 136
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/requirement.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/dependency/requirement.rs"
 cost_tokens = 20
-cum_tokens = 7536
+cum_tokens = 7360
 
 [batches.content]
 kind = "lines"
@@ -4208,37 +3584,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 161
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs", start_line: 10 })'
-descriptor = "pub item at sps-core/src/uninstall/formula.rs:10"
-cost_tokens = 63
-cum_tokens = 7599
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
-start = 10
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 162
+position = 137
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/definition.rs" })'
 descriptor = "pub-item names surface in sps-common/src/dependency/definition.rs"
 cost_tokens = 21
-cum_tokens = 7620
+cum_tokens = 7381
 
 [batches.content]
 kind = "lines"
@@ -4276,11 +3626,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 138
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/definition.rs", start_line: 31 })'
 descriptor = "pub item at sps-common/src/dependency/definition.rs:31"
 cost_tokens = 33
-cum_tokens = 7653
+cum_tokens = 7414
 
 [batches.content]
 kind = "lines"
@@ -4294,11 +3644,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 164
+position = 139
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/definition.rs", start_line: 53 })'
 descriptor = "pub item at sps-common/src/dependency/definition.rs:53"
 cost_tokens = 61
-cum_tokens = 7714
+cum_tokens = 7475
 
 [batches.content]
 kind = "lines"
@@ -4312,63 +3662,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 165
-key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs" })'
-descriptor = "pub-item names surface in sps-core/src/utils/applescript.rs"
-cost_tokens = 23
-cum_tokens = 7737
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 166
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs", start_line: 75 })'
-descriptor = "pub item at sps-core/src/utils/applescript.rs:75"
-cost_tokens = 0
-cum_tokens = 7737
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/utils/applescript.rs"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 167
+position = 140
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/artifact.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/model/artifact.rs"
 cost_tokens = 23
-cum_tokens = 7760
+cum_tokens = 7498
 
 [batches.content]
 kind = "lines"
@@ -4390,11 +3688,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 168
+position = 141
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/version.rs", start_line: 11 })'
 descriptor = "pub-item doc lede at sps-common/src/model/version.rs:11"
 cost_tokens = 15
-cum_tokens = 7775
+cum_tokens = 7513
 
 [batches.content]
 kind = "lines"
@@ -4408,11 +3706,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 169
+position = 142
 key = 'Rust(PubItemNames { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check/update.rs" })'
 descriptor = "pub-item names surface in sps-core/src/check/update.rs"
 cost_tokens = 24
-cum_tokens = 7799
+cum_tokens = 7537
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +3748,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 143
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check/update.rs", start_line: 89 })'
 descriptor = "pub item at sps-core/src/check/update.rs:89"
 cost_tokens = 46
-cum_tokens = 7845
+cum_tokens = 7583
 
 [batches.content]
 kind = "lines"
@@ -4476,11 +3774,11 @@ end = 94
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 144
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/check/update.rs", start_line: 23 })'
 descriptor = "pub item at sps-core/src/check/update.rs:23"
 cost_tokens = 60
-cum_tokens = 7905
+cum_tokens = 7643
 
 [batches.content]
 kind = "lines"
@@ -4494,11 +3792,63 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 172
+position = 145
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs", start_line: 15 })'
+descriptor = "pub item at sps-core/src/upgrade/cask.rs:15"
+cost_tokens = 75
+cum_tokens = 7718
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
+start = 15
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 146
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs", start_line: 10 })'
+descriptor = "pub item at sps-core/src/uninstall/formula.rs:10"
+cost_tokens = 76
+cum_tokens = 7794
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
+start = 10
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/uninstall/formula.rs"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/update.rs" })'
 descriptor = "mod/use plumbing in sps/src/cli/update.rs"
 cost_tokens = 70
-cum_tokens = 7975
+cum_tokens = 7864
 
 [batches.content]
 kind = "lines"
@@ -4520,37 +3870,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 173
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs", start_line: 19 })'
-descriptor = "pub item at sps-core/src/upgrade/source.rs:19"
-cost_tokens = 80
-cum_tokens = 8055
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
-start = 19
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 174
+position = 148
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sps/README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 115
-cum_tokens = 8170
+cum_tokens = 7979
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +3920,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 175
+position = 149
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-net/Cargo.toml" })'
 descriptor = "[dependencies] in sps-net/Cargo.toml"
 cost_tokens = 226
-cum_tokens = 8396
+cum_tokens = 8205
 
 [batches.content]
 kind = "lines"
@@ -4630,11 +3954,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 176
+position = 150
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/reinstall.rs" })'
 descriptor = "mod/use plumbing in sps/src/cli/reinstall.rs"
 cost_tokens = 78
-cum_tokens = 8474
+cum_tokens = 8283
 
 [batches.content]
 kind = "lines"
@@ -4664,11 +3988,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 177
+position = 151
 key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/Cargo.toml" })'
 descriptor = "[dependencies] in sps-common/Cargo.toml"
 cost_tokens = 236
-cum_tokens = 8710
+cum_tokens = 8519
 
 [batches.content]
 kind = "lines"
@@ -4682,11 +4006,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 178
+position = 152
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/Cargo.toml" })'
 descriptor = "[package] in sps-common/Cargo.toml"
 cost_tokens = 112
-cum_tokens = 8822
+cum_tokens = 8631
 
 [batches.content]
 kind = "lines"
@@ -4700,11 +4024,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 179
+position = 153
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/Cargo.toml" })'
 descriptor = "[package] in sps-core/Cargo.toml"
 cost_tokens = 112
-cum_tokens = 8934
+cum_tokens = 8743
 
 [batches.content]
 kind = "lines"
@@ -4718,11 +4042,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 180
+position = 154
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-net/Cargo.toml" })'
 descriptor = "[package] in sps-net/Cargo.toml"
 cost_tokens = 112
-cum_tokens = 9046
+cum_tokens = 8855
 
 [batches.content]
 kind = "lines"
@@ -4736,89 +4060,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 181
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs", start_line: 10 })'
-descriptor = "pub item at sps-common/src/model/tap.rs:10"
-cost_tokens = 101
-cum_tokens = 9147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 17
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 182
-key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs", start_line: 10 })'
-descriptor = "pub-item doc lede at sps-common/src/model/tap.rs:10"
-cost_tokens = 17
-cum_tokens = 9164
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs", start_line: 16 })'
-descriptor = "pub item at sps-core/src/pipeline/engine.rs:16"
-cost_tokens = 90
-cum_tokens = 9254
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs"
-start = 16
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/engine.rs"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 184
+position = 155
 key = 'Rust(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli.rs" })'
 descriptor = "impl method sigs in sps/src/cli.rs"
 cost_tokens = 36
-cum_tokens = 9290
+cum_tokens = 8891
 
 [batches.content]
 kind = "lines"
@@ -4840,11 +4086,37 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 185
+position = 156
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs", start_line: 19 })'
+descriptor = "pub item at sps-core/src/upgrade/source.rs:19"
+cost_tokens = 93
+cum_tokens = 8984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
+start = 19
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/source.rs"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
 key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/cask.rs", start_line: 15 })'
 descriptor = "pub-item doc lede at sps-core/src/upgrade/cask.rs:15"
 cost_tokens = 18
-cum_tokens = 9308
+cum_tokens = 9002
 
 [batches.content]
 kind = "lines"
@@ -4858,11 +4130,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 186
+position = 158
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/dependency/definition.rs" })'
 descriptor = "mod/use plumbing in sps-common/src/dependency/definition.rs"
 cost_tokens = 31
-cum_tokens = 9339
+cum_tokens = 9033
 
 [batches.content]
 kind = "lines"
@@ -4884,37 +4156,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 187
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs", start_line: 16 })'
-descriptor = "pub item at sps/src/cli/install.rs:16"
-cost_tokens = 306
-cum_tokens = 9645
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs"
-start = 16
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs"
-start = 20
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
+position = 159
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps/src/cli/install.rs" })'
 descriptor = "mod/use plumbing in sps/src/cli/install.rs"
 cost_tokens = 87
-cum_tokens = 9732
+cum_tokens = 9120
 
 [batches.content]
 kind = "lines"
@@ -4944,27 +4190,79 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 189
-key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs", start_line: 20 })'
-descriptor = "pub item at sps-core/src/upgrade/bottle.rs:20"
-cost_tokens = 99
-cum_tokens = 9831
+position = 160
+key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs", start_line: 10 })'
+descriptor = "pub item at sps-common/src/model/tap.rs:10"
+cost_tokens = 111
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs"
-start = 20
-end = 27
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
+start = 10
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/upgrade/bottle.rs"
-start = 28
-end = 28
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
+start = 14
+end = 15
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
+start = 17
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Rust(PubItemDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs", start_line: 10 })'
+descriptor = "pub-item doc lede at sps-common/src/model/tap.rs:10"
+cost_tokens = 17
+cum_tokens = 9248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-common/src/model/tap.rs"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Toml(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/sps/Cargo.toml" })'
+descriptor = "[dependencies] in Cargo.toml"
+cost_tokens = 564
+cum_tokens = 9812
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/Cargo.toml"
+start = 16
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/Cargo.toml"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"

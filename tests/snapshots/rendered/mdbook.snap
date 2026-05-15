@@ -75,7 +75,6 @@ crates/
                 5→/// This is provided as a way for custom preprocessors and renderers to do
                 6→/// compatibility checks.
                 7→pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
-                …
                 9→pub mod book;
                 10→pub mod config;
                 11→pub mod utils;
@@ -154,6 +153,7 @@ crates/
                 tree.rs
             html_handlebars/
                 hbs_renderer.rs
+                    22→pub struct HtmlHandlebars;
                 helpers/
                 mod.rs
                     1→mod hbs_renderer;
@@ -276,11 +276,7 @@ src/
             …
         watch/
             native.rs
-                11→pub fn rebuild_on_change(
-                …
             poller.rs
-                18→pub fn rebuild_on_change(
-                …
         watch.rs
             12→pub fn make_subcommand() -> Command {
             …

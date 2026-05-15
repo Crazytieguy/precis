@@ -65,8 +65,6 @@ build.rs
 rust-toolchain.toml
 src/
     backtrace.rs
-        8→pub(crate) enum Backtrace {}
-        …
     chain.rs
         11→pub(crate) struct Chain<'a> {
         12→    state: ChainState<'a>,

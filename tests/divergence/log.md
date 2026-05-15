@@ -8,10 +8,9 @@ Score(3000)=0.607 I=0.843 C=0.437 ns_rows≤3K=17/44 (reached=9 partial=0 missin
 | walker |  | 94 | 21 | listing of 'src' |  |  | 1.000 |
 | ns | 102 |  | 56 | Cargo name + description | 1.2 |  | 0.854 |
 | walker |  | 114 | 20 | listing of 'src/kv' |  |  | 0.874 |
-| walker |  | 124 | 10 | pub-item names surface in src/kv/error.rs |  |  | 0.874 |
-| walker |  | 136 | 12 | pub item at src/kv/error.rs:5 |  |  | 0.874 |
 | ns | 190 |  | 88 | Crate-doc one-liner | 1.3 |  | 0.731 |
-| walker |  | 225 | 89 | crate-doc lede in src/kv/mod.rs |  |  | 0.732 |
+| walker |  | 203 | 89 | crate-doc lede in src/kv/mod.rs |  |  | 0.732 |
+| walker |  | 225 | 22 | pub item at src/kv/error.rs:5 |  |  | 0.732 |
 | ns | 231 |  | 41 | src/ + src/kv/ listing | 1.4 |  | 0.777 |
 | walker |  | 278 | 53 | headings outline in README.md |  |  | 0.777 |
 | ns | 381 |  | 150 | Crate-doc target/level/body model | 1.5 | 1.3 | 0.669 |
