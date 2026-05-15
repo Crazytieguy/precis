@@ -198,6 +198,7 @@ fn non_essential_factor_inner(
                     | "tools"
                     | "tooling"
             ) || s.starts_with("test_")
+                || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
                 || is_proc_macro_crate_dir_name(s)
             {
@@ -218,7 +219,10 @@ fn non_essential_factor_inner(
             return 0.5;
         }
         // Co-located test files: `foo.test.ts`, `foo.spec.ts`,
-        // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, etc.
+        // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, `_test.py`
+        // (Django / pytest convention), `test_*.py` (Python pytest
+        // module pattern). The `e2e_test_*.py` convention (linkding's
+        // `tests_e2e/e2e_test_*.py`) also matches `_test.py`.
         let lower = name.to_ascii_lowercase();
         if lower.contains(".test.")
             || lower.contains(".test-d.")
@@ -227,6 +231,8 @@ fn non_essential_factor_inner(
             || lower.ends_with("_test.ts")
             || lower.ends_with("_test.js")
             || lower.ends_with("_test.tsx")
+            || lower.ends_with("_test.py")
+            || (lower.starts_with("test_") && lower.ends_with(".py"))
         {
             return 0.2;
         }
