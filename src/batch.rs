@@ -427,8 +427,11 @@ pub enum GoKey {
     /// Surface listing of every top-level declaration's first line —
     /// funcs, methods, types, vars, consts. Catastrophic-omission
     /// hedge. Visibility-blind — lists everything in the file
-    /// regardless of export status. Priority 1.x.
-    DeclNames { file: PathBuf },
+    /// regardless of export status. Chunked at `GO_DECL_NAMES_CHUNK_SIZE`
+    /// only when the file has > `GO_DECL_NAMES_CHUNK_THRESHOLD` decls;
+    /// smaller files stay unchunked (a single `chunk_index = 0` batch).
+    /// Priority 1.x.
+    DeclNames { file: PathBuf, chunk_index: usize },
     /// One top-level declaration. For function / method definitions,
     /// the signature with a body marker. For type / var / const, the
     /// whole declaration including grouped specs. Keyed by start line.
@@ -1041,11 +1044,8 @@ impl GoKey {
                     display_path(file, fixture_root)
                 )
             }
-            GoKey::DeclNames { file } => {
-                format!(
-                    "go decl names surface in {}",
-                    display_path(file, fixture_root)
-                )
+            GoKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("go decl names surface", file, *chunk_index, fixture_root)
             }
             GoKey::Decl { file, start_line } => {
                 format!(

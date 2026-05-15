@@ -23,29 +23,6 @@ commands.go
     3→import (
     4→	"time"
     5→)
-    15→func Batch(cmds ...Cmd) Cmd {
-    16→	return compactCmds[BatchMsg](cmds)
-    19→// BatchMsg is a message used to perform a bunch of commands concurrently with
-    20→// no ordering guarantees. You can send a BatchMsg with Batch.
-    21→type BatchMsg []Cmd
-    …
-    23→// Sequence runs the given commands one at a time, in order. Contrast this with
-    24→// Batch, which runs commands concurrently.
-    25→func Sequence(cmds ...Cmd) Cmd {
-    26→	return compactCmds[sequenceMsg](cmds)
-    29→// sequenceMsg is used internally to run the given commands in order.
-    30→type sequenceMsg []Cmd
-    …
-    36→func compactCmds[T ~[]Cmd](cmds []Cmd) Cmd {
-    …
-    102→func Every(duration time.Duration, fn func(time.Time) Msg) Cmd {
-    …
-    154→func Tick(d time.Duration, fn func(time.Time) Msg) Cmd {
-    …
-    166→type windowSizeMsg struct{}
-    …
-    173→func RequestWindowSize() Msg {
-    174→	return windowSizeMsg{}
 commands_test.go
 cursed_renderer.go
 cursed_renderer_test.go
@@ -96,27 +73,8 @@ focus.go
     8→// This occurs when the terminal loses focus.
     9→type BlurMsg struct{}
 go.mod
-    1→module charm.land/bubbletea/v2
-    3→retract v2.0.0-beta1 // We add a "." after the "beta" in the version number.
-    5→go 1.25.0
-    7→require (
-    8→	github.com/charmbracelet/colorprofile v0.4.3
-    9→	github.com/charmbracelet/ultraviolet v0.0.0-20260416155717-489999b90468
-    10→	github.com/charmbracelet/x/ansi v0.11.7
-    11→	github.com/charmbracelet/x/exp/golden v0.0.0-20241212170349-ad4b7ae0f25f
-    12→	github.com/charmbracelet/x/term v0.2.2
-    13→	github.com/lucasb-eyer/go-colorful v1.4.0
-    14→	github.com/muesli/cancelreader v0.2.2
-    15→	golang.org/x/sys v0.43.0
-    16→)
-    18→require (
-    28→)
 go.sum
 input.go
-    1→package tea
-    3→import (
-    4→	uv "github.com/charmbracelet/ultraviolet"
-    5→)
     7→// translateInputEvent translates an input event into a Bubble Tea Msg.
     8→func (p *Program) translateInputEvent(e uv.Event) Msg {
     …
@@ -236,12 +194,65 @@ screen.go
     68→}
 screen_test.go
 signals_unix.go
-    15→func (p *Program) listenForResize(done chan struct{}) {
-    …
 signals_windows.go
-    8→func (p *Program) listenForResize(done chan struct{}) {
-    …
 tea.go
+    38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
+    39→var ErrProgramPanic = errors.New("program experienced a panic")
+    …
+    41→// ErrProgramKilled is returned by [Program.Run] when the program gets killed.
+    42→var ErrProgramKilled = errors.New("program was killed")
+    …
+    44→// ErrInterrupted is returned by [Program.Run] when the program get a SIGINT
+    45→// signal, or when it receives a [InterruptMsg].
+    46→var ErrInterrupted = errors.New("program was interrupted")
+    …
+    48→// Msg contain data from the result of a IO operation. Msgs trigger the update
+    49→// function and, henceforth, the UI.
+    50→type Msg = uv.Event
+    …
+    52→// Model contains the program's state as well as its core functions.
+    53→type Model interface {
+    54→	// Init is the first function that will be called. It returns an optional
+    55→	// initial command. To not perform an initial command return nil.
+    56→	Init() Cmd
+    58→	// Update is called when a message is received. Use it to inspect messages
+    59→	// and, in response, update the model and/or send a command.
+    60→	Update(Msg) (Model, Cmd)
+    62→	// View renders the program's UI, which can be a string or a [Layer]. The
+    63→	// view is rendered after every Update.
+    64→	View() View
+    65→}
+    67→// NewView is a helper function to create a new [View] with the given styled
+    68→// string. A styled string represents text with styles and hyperlinks encoded
+    69→// as ANSI escape codes.
+    70→//
+    71→// Example:
+    72→//
+    73→//	```go
+    74→//	v := tea.NewView("Hello, World!")
+    75→//	```
+    76→func NewView(s string) View {
+    77→	var view View
+    78→	view.SetContent(s)
+    79→	return view
+    84→type View struct {
+    …
+    241→type KeyboardEnhancements struct {
+    …
+    279→func (v *View) SetContent(s string) {
+    280→	v.Content = s
+    283→// MouseMode represents the mouse mode of a view.
+    284→type MouseMode int
+    …
+    288→	MouseModeNone MouseMode = iota
+    …
+    297→	MouseModeCellMotion
+    …
+    305→	MouseModeAllMotion
+    …
+    308→// ProgressBarState represents the state of the progress bar.
+    309→type ProgressBarState int
+    …
 tea_test.go
 termcap.go
     1→package tea
@@ -259,7 +270,6 @@ termcap.go
     47→	return c.Content
 termios_bsd.go
 termios_other.go
-    8→func (*Program) checkOptimizedMovements(*term.State) {}
 termios_unix.go
 termios_windows.go
 testdata/

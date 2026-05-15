@@ -176,6 +176,10 @@ find.go
     6→	"github.com/samber/lo/internal/constraints"
     7→	"github.com/samber/lo/internal/xrand"
     8→)
+    986→// SamplesBy returns N random unique items from collection, using randomIntGenerator as the random index generator.
+    987→// Play: https://go.dev/play/p/Dy9bGDhD_Gw
+    988→func SamplesBy[T any, Slice ~[]T](collection Slice, count int, randomIntGenerator randomIntGenerator) Slice {
+    …
 find_test.go
 func.go
     1→package lo

@@ -46,7 +46,7 @@ use tree_sitter::{Node, Tree};
 
 use crate::batch::{Batch, BatchKey, GoKey};
 use crate::content::BatchContent;
-use crate::value::mix_signals;
+use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
@@ -183,20 +183,53 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
             continue;
         }
 
-        let names_key = GoKey::DeclNames { file: file.clone() };
-        let parent_names_lines = collect_decl_names_from(&decls);
-        if let Some(content) = single_file_lines_content(file, &source, parent_names_lines.clone())
+        // Names-surface chunking: oversized API files (tea.go's 56
+        // decls × 1439 lines, command.go's 139 decls × 2072 lines)
+        // emit a too-big unchunked surface that loses the value/cost
+        // race to small-sibling-file batches. Chunk only when BOTH
+        // decl count and line count are large: chunking moderately-sized
+        // files (gin.go's 57 decls × 832 lines, migrate.go's 35 decls ×
+        // 979 lines) regressed past iterations because their full
+        // surface DID fit at ~2.5K and chunking displaced delivered
+        // content.
+        let line_count = source.lines().count();
+        let chunk_count = if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
+            && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
         {
-            out.push(Batch {
-                key: names_key.clone().into(),
-                predecessor: None,
-                content,
-                value: decl_names_value(file, ctx),
-            });
+            decls.len().div_ceil(GO_DECL_NAMES_CHUNK_SIZE)
+        } else {
+            1
+        };
+        let names_keys: Vec<GoKey> = (0..chunk_count)
+            .map(|chunk_index| GoKey::DeclNames {
+                file: file.clone(),
+                chunk_index,
+            })
+            .collect();
+        let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
+            vec![collect_decl_names_from(&decls)]
+        } else {
+            decls
+                .chunks(GO_DECL_NAMES_CHUNK_SIZE)
+                .map(collect_decl_names_from)
+                .collect()
+        };
+        for (chunk_index, names_lines) in names_lines_by_chunk.iter().enumerate() {
+            if let Some(content) = single_file_lines_content(file, &source, names_lines.clone()) {
+                out.push(Batch {
+                    key: names_keys[chunk_index].clone().into(),
+                    predecessor: None,
+                    content,
+                    value: decl_names_value(file, ctx, chunk_index, chunk_count),
+                });
+            }
         }
-        let names_predecessor = BatchKey::Go(names_key);
         let src_lines: Vec<&str> = source.lines().collect();
-        for (node, info) in &decls {
+        for (decl_index, (node, info)) in decls.iter().enumerate() {
+            let chunk_index = decl_index / GO_DECL_NAMES_CHUNK_SIZE;
+            let chunk_index = chunk_index.min(chunk_count - 1);
+            let names_predecessor = BatchKey::Go(names_keys[chunk_index].clone());
+            let chunk_names_lines = &names_lines_by_chunk[chunk_index];
             let decl_key = GoKey::Decl {
                 file: file.clone(),
                 start_line: info.start_line,
@@ -209,7 +242,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 FileLines::new(Vec::new())
             };
             let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
-            if (!file_lines_covered_by(&decl_lines, &parent_names_lines) || decl_has_descendants)
+            if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
             {
                 out.push(Batch {
@@ -250,6 +283,27 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
     }
     out
 }
+
+/// Chunk size for Go declaration-name surfaces. Matches the universal
+/// `NAMES_SURFACE_CHUNK_SIZE`: a 24-name chunk often still won't fit
+/// at 3K for an oversized API file (tea.go's 24-name chunk renders ~400
+/// tokens), so the first chunk must be small enough to reach the early
+/// budget. NS authors anchor on per-class / per-flag-group rows that
+/// fit within ~12 names.
+const GO_DECL_NAMES_CHUNK_SIZE: usize = crate::value::NAMES_SURFACE_CHUNK_SIZE;
+
+/// Decl-count threshold below which the names surface stays as a
+/// single coherent batch. Past iterations split at 24 and regressed
+/// xxhash (29 decls). 30 keeps xxhash unchunked.
+const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
+
+/// Line-count co-threshold — chunking also requires the file to be
+/// large enough that its full names surface plausibly won't fit at 3K.
+/// gin.go (832 lines, 57 decls) and migrate.go (979 lines, 35 decls)
+/// have surfaces that DO fit at ~2.5K; chunking them displaced
+/// delivered content and regressed those fixtures. tea.go (1439 lines)
+/// and command.go (2072 lines) are clear chunking candidates.
+const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 1000;
 
 fn is_test_file(file: &Path) -> bool {
     file.file_name()
@@ -534,10 +588,11 @@ fn package_imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
 /// Sits below per-decl `Type`-kind value so the scheduler favours
 /// structural anchors in load-bearing files over a blanket name
 /// surface in every `.go` file.
-fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
     mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx))
         * go_aux_factor(file)
         * go_entry_factor(file, ctx)
+        * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
 fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
