@@ -49,8 +49,8 @@ use crate::content::BatchContent;
 use crate::value::mix_signals;
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by,
+    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
+    extend_span, file_depth_factor, file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -202,7 +202,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 start_line: info.start_line,
             };
             let decl_lines = collect_decl(info);
-            let doc_lines = collect_decl_doc(*node, &source);
+            let doc_lines = collect_doc_comments_above(*node, &source);
             let body_lines = if info.kind.has_body() {
                 collect_decl_body(info, &src_lines)
             } else {
@@ -617,26 +617,6 @@ fn collect_decl_body(info: &DeclInfo, src_lines: &[&str]) -> FileLines {
     FileLines::new(out)
 }
 
-/// Run of consecutive `comment` siblings touching the decl with no
-/// blank-line gap.
-fn collect_decl_doc(node: Node, source: &str) -> FileLines {
-    let mut out = Vec::new();
-    let mut cur = node.prev_sibling();
-    let mut next_start = node.start_position().row;
-    while let Some(prev) = cur {
-        if prev.kind() != "comment" {
-            break;
-        }
-        if next_start.saturating_sub(prev.end_position().row) > 1 {
-            break;
-        }
-        extend_span(&mut out, prev, source);
-        next_start = prev.start_position().row;
-        cur = prev.prev_sibling();
-    }
-    FileLines::new(dedup_sorted(out))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -782,10 +762,10 @@ func Bar() {}
         let decls = find_decls(&tree, &source);
         assert_eq!(decls.len(), 2);
 
-        let foo_doc = collect_decl_doc(decls[0].0, &source);
+        let foo_doc = collect_doc_comments_above(decls[0].0, &source);
         assert_eq!(foo_doc.full, vec![3, 4]);
 
-        let bar_doc = collect_decl_doc(decls[1].0, &source);
+        let bar_doc = collect_doc_comments_above(decls[1].0, &source);
         assert!(
             bar_doc.full.is_empty(),
             "blank-line gap separates the comment from Bar's decl; got {bar_doc:?}"

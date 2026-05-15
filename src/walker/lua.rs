@@ -1,28 +1,10 @@
-//! Lua walker. Per-decl batches for function-like declarations plus a
-//! whole-file batch for LuaCATS spec files (`---@meta` / dense LuaCATS
-//! tags).
+//! Lua walker. LuaCATS-meta files (`---@meta` / dense `---@` tags) get
+//! a whole-file batch; other Lua sources use per-decl breakdown
+//! mirroring the C/Python shape. Three top-level decl shapes are
+//! recognized: `function_declaration`, and `assignment_statement` /
+//! `variable_declaration` whose RHS is a `function_definition`.
 //!
-//! Per-file keys:
-//! - `Banner { file }`: top-of-file comment block.
-//! - `MetaFileWhole { file }`: LuaCATS spec file rendered whole.
-//! - `DeclNames { file }`: surface listing of every top-level function
-//!   name + table-method assignment first line — catastrophic-omission
-//!   hedge.
-//!
-//! Per-decl keys (keyed by start line):
-//! - `Decl { file, start_line }`: signature/header line(s).
-//! - `DeclDoc { file, start_line }`: LuaCATS `---@` block above the
-//!   decl. Predecessor: matching `Decl`.
-//! - `DeclBody { file, start_line }`: function body interior.
-//!   Predecessor: matching `Decl`.
-//!
-//! Three function-like decl shapes are recognized at top level:
-//! - `function_declaration` — `function name() ... end` and
-//!   `local function name() ... end`.
-//! - `assignment_statement` with a function literal on the RHS —
-//!   `M.foo = function(...) ... end` (table-method assignment, idiomatic
-//!   for the `local M = {}; ...; return M` module pattern).
-//! - `variable_declaration` wrapping `local foo = function(...) ... end`.
+//! Batch variants are documented on [`crate::batch::LuaKey`].
 
 use std::path::Path;
 use std::sync::Arc;
@@ -36,17 +18,16 @@ use crate::value::{
 };
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by, fs::files_with_extension, node_end_row_trimmed, path_depth_factor,
-    push_rows, single_file_lines_content,
+    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
+    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_extension,
+    node_end_row_trimmed, path_depth_factor, push_rows, single_file_lines_content,
+    trim_end_before_next_decl,
 };
 
 /// Token cap for `MetaFileWhole`: above this, fall back to per-decl
 /// emission so a large LuaCATS spec doesn't crowd the whole budget with
 /// a single batch.
 const META_FILE_TOKEN_CAP: usize = 400;
-/// Line cap matching the token cap (cheap structural guard).
-const META_FILE_LINE_CAP: usize = 200;
 /// LuaCATS-tag density threshold for treating a file as a meta-file
 /// even without a `---@meta` leader: > 60% of comment lines starting
 /// with `---@`.
@@ -64,13 +45,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         };
 
-        // LuaCATS-spec files (the soluna `docs/*.lua` API contracts)
-        // render as a single whole-file batch. Per-decl emission is
-        // skipped: siblings claiming the same lines as the whole-file
-        // batch would trip the scheduler's non-ancestor-overlap guard,
-        // and folding a fn signature into a 60-line spec adds no value.
+        // LuaCATS-spec files render whole. Per-decl emission is
+        // skipped — sibling batches would non-ancestor-overlap with
+        // the whole-file span.
         if is_meta_file(&source)
-            && source.lines().count() <= META_FILE_LINE_CAP
             && crate::tokenizer::count(&source) <= META_FILE_TOKEN_CAP
             && let Some(content) = collect_meta_file_whole(file, &source)
         {
@@ -134,9 +112,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: info.start_line,
             };
-            let decl_lines = collect_decl(*node, info, &source, &all_starts);
-            let doc_lines = collect_decl_doc(*node, &source);
-            let body_lines = collect_decl_body(*node, &src_lines, info);
+            let decl_lines = collect_decl(*node, &source, &all_starts);
+            let doc_lines = collect_doc_comments_above(*node, &source);
+            let body_lines = collect_decl_body(*node, &src_lines);
             let decl_has_descendants = !doc_lines.full.is_empty() || !body_lines.full.is_empty();
             if (!file_lines_covered_by(&decl_lines, chunk_names_lines) || decl_has_descendants)
                 && let Some(content) = single_file_lines_content(file, &source, decl_lines)
@@ -196,72 +174,30 @@ struct DeclInfo {
 /// function-like declaration we recognize. Sorted by start_line; dups
 /// (rare; e.g. when `declaration` wraps a `function_declaration` that
 /// also surfaces directly) are coalesced.
-fn find_decls<'a>(tree: &'a Tree, source: &str) -> Vec<(Node<'a>, DeclInfo)> {
+fn find_decls<'a>(tree: &'a Tree, _source: &str) -> Vec<(Node<'a>, DeclInfo)> {
     let root = tree.root_node();
     let mut out = Vec::new();
     let mut cursor = root.walk();
     for child in root.children(&mut cursor) {
-        match child.kind() {
-            "function_declaration" => {
-                out.push((
-                    child,
-                    DeclInfo {
-                        start_line: child.start_position().row + 1,
-                    },
-                ));
+        let included = match child.kind() {
+            "function_declaration" => true,
+            "variable_declaration" | "assignment_statement" => {
+                function_definition_rhs(child).is_some()
             }
-            "variable_declaration" => {
-                if has_function_rhs(child, source) {
-                    out.push((
-                        child,
-                        DeclInfo {
-                            start_line: child.start_position().row + 1,
-                        },
-                    ));
-                }
-            }
-            "assignment_statement" => {
-                if has_function_rhs(child, source) {
-                    out.push((
-                        child,
-                        DeclInfo {
-                            start_line: child.start_position().row + 1,
-                        },
-                    ));
-                }
-            }
-            _ => {}
+            _ => false,
+        };
+        if included {
+            out.push((
+                child,
+                DeclInfo {
+                    start_line: child.start_position().row + 1,
+                },
+            ));
         }
     }
     out.sort_by_key(|(_, d)| d.start_line);
     out.dedup_by_key(|(_, d)| d.start_line);
     out
-}
-
-/// Does this statement's RHS contain a `function_definition`? Used to
-/// recognize `M.foo = function(...)` and `local foo = function(...)`
-/// patterns.
-fn has_function_rhs(node: Node, _source: &str) -> bool {
-    let mut cursor = node.walk();
-    for child in node.children(&mut cursor) {
-        match child.kind() {
-            "expression_list" => {
-                let mut inner = child.walk();
-                for expr in child.children(&mut inner) {
-                    if expr.kind() == "function_definition" {
-                        return true;
-                    }
-                }
-            }
-            "assignment_statement" => {
-                if has_function_rhs(child, _source) {
-                    return true;
-                }
-            }
-            _ => {}
-        }
-    }
-    false
 }
 
 /// The `function_definition` node that's the RHS of an `assignment_statement`
@@ -330,7 +266,6 @@ fn collect_decl_names_from_with_global_starts(
 /// anchor (parallel to the C walker's adjacency trim).
 fn collect_decl(
     node: Node,
-    _info: &DeclInfo,
     source: &str,
     all_starts: &std::collections::HashSet<usize>,
 ) -> FileLines {
@@ -360,31 +295,10 @@ fn collect_decl(
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// LuaCATS `---` comment block immediately above a decl. A run of
-/// consecutive `comment` nodes touching the decl (no blank-line gap)
-/// is treated as the doc.
-fn collect_decl_doc(node: Node, source: &str) -> FileLines {
-    let mut out = Vec::new();
-    let mut cur = node.prev_sibling();
-    let mut next_start = node.start_position().row;
-    while let Some(prev) = cur {
-        if prev.kind() != "comment" {
-            break;
-        }
-        if next_start.saturating_sub(prev.end_position().row) > 1 {
-            break;
-        }
-        extend_span(&mut out, prev, source);
-        next_start = prev.start_position().row;
-        cur = prev.prev_sibling();
-    }
-    FileLines::new(dedup_sorted(out))
-}
-
 /// Body interior of a function-like decl: rows strictly between the
 /// body's first and last rows, blank source rows skipped. Returns empty
 /// when the body has no interior to render.
-fn collect_decl_body(node: Node, src_lines: &[&str], _info: &DeclInfo) -> FileLines {
+fn collect_decl_body(node: Node, src_lines: &[&str]) -> FileLines {
     let Some(body) = body_node_for_decl(node) else {
         return FileLines::new(Vec::new());
     };
@@ -413,29 +327,6 @@ fn body_node_for_decl<'a>(node: Node<'a>) -> Option<Node<'a>> {
         }
         _ => None,
     }
-}
-
-/// Same shape as `signature_end_row` in the shared helpers, but
-/// dispatches on Lua's decl shapes. Returns the 0-based row at which
-/// the signature ends (one before the body's `block` starts).
-#[allow(dead_code)]
-fn lua_signature_end_row(node: Node) -> usize {
-    body_node_for_decl(node)
-        .map(|b| b.start_position().row)
-        .unwrap_or_else(|| node.end_position().row)
-}
-
-fn trim_end_before_next_decl(
-    end_row: usize,
-    start_row: usize,
-    all_starts: &std::collections::HashSet<usize>,
-) -> usize {
-    for r in (start_row + 1)..=end_row {
-        if all_starts.contains(&(r + 1)) {
-            return r.saturating_sub(1).max(start_row);
-        }
-    }
-    end_row
 }
 
 // --- meta-file detection ------------------------------------------------
@@ -618,7 +509,7 @@ local function second(x) return x end
             decls.iter().map(|(_, i)| i.start_line).collect();
         let mut claimed: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();
         for (node, info) in &decls {
-            let lines = collect_decl(*node, info, &source, &all_starts);
+            let lines = collect_decl(*node, &source, &all_starts);
             for line in &lines.full {
                 let prev = claimed.insert(*line, info.start_line);
                 assert!(prev.is_none(), "overlap at line {line}");

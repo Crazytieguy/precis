@@ -679,6 +679,49 @@ pub(crate) fn signature_end_row(node: Node) -> usize {
         .unwrap_or_else(|| node.end_position().row)
 }
 
+/// Doc comment(s) immediately above a decl — a run of consecutive
+/// `comment` nodes touching `node` (no blank-line gap between any pair).
+/// Shared across C / Go / Lua walkers, each of which treats top-level
+/// `comment` nodes as the AST shape for documentation.
+pub(crate) fn collect_doc_comments_above(node: Node, source: &str) -> FileLines {
+    let mut out = Vec::new();
+    let mut cur = node.prev_sibling();
+    let mut next_start = node.start_position().row;
+    while let Some(prev) = cur {
+        if prev.kind() != "comment" {
+            break;
+        }
+        if next_start.saturating_sub(prev.end_position().row) > 1 {
+            break;
+        }
+        extend_span(&mut out, prev, source);
+        next_start = prev.start_position().row;
+        cur = prev.prev_sibling();
+    }
+    FileLines::new(dedup_sorted(out))
+}
+
+/// Largest 0-based row `e ∈ [start_row, end_row]` such that no row
+/// `r ∈ (start_row, e]` is the start of another decl (i.e., its
+/// 1-based line `r + 1` is in `all_starts`). Returns `start_row` if a
+/// sibling starts immediately at `start_row + 1`. Walkers use this to
+/// trim span ends so emitted batches never claim a row that's another
+/// decl's anchor — tree-sitter occasionally folds attribute-like
+/// macros into a following function as a type qualifier, producing
+/// nodes that span into the next sibling's line.
+pub(crate) fn trim_end_before_next_decl(
+    end_row: usize,
+    start_row: usize,
+    all_starts: &std::collections::HashSet<usize>,
+) -> usize {
+    for r in (start_row + 1)..=end_row {
+        if all_starts.contains(&(r + 1)) {
+            return r.saturating_sub(1).max(start_row);
+        }
+    }
+    end_row
+}
+
 /// Push 1-based line numbers `start_row+1 ..= end_row+1` onto `out`.
 /// Inputs are 0-based tree-sitter row indices.
 pub(crate) fn push_rows(out: &mut Vec<usize>, start_row: usize, end_row: usize) {

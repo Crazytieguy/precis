@@ -53,9 +53,10 @@ fn c_names_surface_chunk_index(decl_index: usize) -> usize {
 }
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by, fs::files_with_any_extension, node_end_row_trimmed, push_rows,
-    signature_end_row, single_file_lines_content,
+    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
+    extend_span, file_depth_factor, file_lines_covered_by, fs::files_with_any_extension,
+    node_end_row_trimmed, push_rows, signature_end_row, single_file_lines_content,
+    trim_end_before_next_decl,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -139,9 +140,9 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 start_line: info.start_line,
             };
             let decl_lines = collect_decl(*node, info, &source, &all_starts);
-            let doc_lines = collect_decl_doc(*node, &source);
+            let doc_lines = collect_doc_comments_above(*node, &source);
             let init_tables = if info.kind == DeclKind::FunctionDef {
-                find_init_tables_in_body(*node, &source)
+                find_init_tables_in_body(*node)
             } else {
                 Vec::new()
             };
@@ -209,15 +210,10 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                             end_line,
                         }
                         .into(),
-                        // Top-level: the registration table is
-                        // self-contained (table name appears on the
-                        // first emitted row, e.g. `} aFunc[] = {`).
-                        // Tying it to the enclosing function's Decl
-                        // would block it when the function is too
-                        // deep in a large file (e.g. sqlite_vec.c's
-                        // sqlite3_vec_init at line 9751). DeclBody
-                        // separately excludes these rows, so no
-                        // sibling-overlap risk.
+                        // Top-level: tying to the enclosing Decl would block
+                        // emission when the function lives deep in a large
+                        // file (sqlite-vec.c:9751). DeclBody excludes these
+                        // rows already — no sibling overlap.
                         predecessor: None,
                         content,
                         value: init_table_value(file, ctx),
@@ -640,14 +636,10 @@ fn decl_body_value(file: &Path, kind: DeclKind, ctx: &WalkCtx) -> f64 {
 }
 
 fn init_table_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    // Registration tables (sqlite-vec's `aFunc[]`, `aMod[]`) are high-
-    // information but the NS authors typically rank them in tier 2.5+
-    // — i.e. AFTER orientation content. Bumping the value high enough
-    // to enter the 3K prefix displaces tier-1 orientation that the NS
-    // *does* rank in A_3K, lowering the 3K score even though the table
-    // delivery is correct. A modest value keeps the table in the
-    // 4K-10K range, surfacing at the user-facing default budget and
-    // above without hurting tight-budget scores.
+    // Modest value: NS authors rank registration tables in tier 2.5+
+    // (typically NS_cum > 3K), so a high value just displaces tier-1
+    // orientation that the NS *does* score at 3K. Tuned so tables
+    // land between 3K and 10K instead.
     mix_signals(0.25, 0.45, 0.55, c_depth_factor(file, ctx))
 }
 
@@ -763,24 +755,6 @@ fn collect_decl(
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
 }
 
-/// Largest 0-based row `e ∈ [start_row, end_row]` such that no row
-/// `r ∈ (start_row, e]` is the start of another decl (i.e., its 1-based
-/// line `r + 1` is in `all_starts`). Returns `start_row` if a sibling
-/// starts immediately at `start_row + 1`. Counterpart to the existing
-/// adjacency-trimming in [`collect_decl_names_from_with_global_starts`].
-fn trim_end_before_next_decl(
-    end_row: usize,
-    start_row: usize,
-    all_starts: &std::collections::HashSet<usize>,
-) -> usize {
-    for r in (start_row + 1)..=end_row {
-        if all_starts.contains(&(r + 1)) {
-            return r.saturating_sub(1).max(start_row);
-        }
-    }
-    end_row
-}
-
 /// Body interior of a function definition: rows strictly between the
 /// `compound_statement`'s `{` and `}`, with blank source rows skipped.
 /// `excluded` is a list of 1-based inclusive line ranges to leave out —
@@ -833,7 +807,7 @@ const INIT_TABLE_MIN_ENTRIES: usize = 2;
 /// render usefully one-line-per-entry).
 const INIT_TABLE_MAX_INNER_ROWS: usize = 2;
 
-fn find_init_tables_in_body<'a>(node: Node<'a>, source: &str) -> Vec<InitTable<'a>> {
+fn find_init_tables_in_body<'a>(node: Node<'a>) -> Vec<InitTable<'a>> {
     let Some(body) = node.child_by_field_name("body") else {
         return Vec::new();
     };
@@ -841,9 +815,6 @@ fn find_init_tables_in_body<'a>(node: Node<'a>, source: &str) -> Vec<InitTable<'
     let mut cursor = body.walk();
     for child in body.named_children(&mut cursor) {
         if child.kind() != "declaration" {
-            continue;
-        }
-        if !has_static_storage(child) {
             continue;
         }
         let Some(init_decl) = init_declarator_of(child) else {
@@ -870,26 +841,12 @@ fn find_init_tables_in_body<'a>(node: Node<'a>, source: &str) -> Vec<InitTable<'
         }) {
             continue;
         }
-        let _ = source; // (unused — kept for future name extraction)
         out.push(InitTable {
             decl_node: child,
             outer_list,
         });
     }
     out
-}
-
-fn has_static_storage(decl: Node) -> bool {
-    let mut cursor = decl.walk();
-    for child in decl.named_children(&mut cursor) {
-        if child.kind() == "storage_class_specifier"
-            && let Some(kw) = child.child(0)
-            && kw.kind() == "static"
-        {
-            return true;
-        }
-    }
-    false
 }
 
 fn init_declarator_of(decl: Node) -> Option<Node> {
@@ -917,31 +874,6 @@ fn collect_init_table_rows(table: &InitTable) -> FileLines {
         full.push(inner.start_position().row + 1);
     }
     FileLines::new(dedup_sorted(full))
-}
-
-/// Doc comment(s) immediately above a decl. A run of consecutive
-/// `comment` nodes touching the decl (with no blank-line gap between
-/// them) is treated as the doc — matches both `/** */` blocks above one
-/// decl and `// Serverbound packets`-style group headers above a
-/// prototype block.
-fn collect_decl_doc(node: Node, source: &str) -> FileLines {
-    let mut out = Vec::new();
-    let mut cur = node.prev_sibling();
-    let mut next_start = node.start_position().row;
-    while let Some(prev) = cur {
-        if prev.kind() != "comment" {
-            break;
-        }
-        // Blank line between this comment and what it sits above means
-        // it's not a doc comment for the decl.
-        if next_start.saturating_sub(prev.end_position().row) > 1 {
-            break;
-        }
-        extend_span(&mut out, prev, source);
-        next_start = prev.start_position().row;
-        cur = prev.prev_sibling();
-    }
-    FileLines::new(dedup_sorted(out))
 }
 
 #[cfg(test)]
@@ -1086,7 +1018,7 @@ int init(void) {
             .filter(|(_, i)| i.kind == DeclKind::FunctionDef)
             .collect();
         assert_eq!(fn_decls.len(), 1, "expected 1 fn def, got {decls:?}");
-        let tables = find_init_tables_in_body(fn_decls[0].0, &source);
+        let tables = find_init_tables_in_body(fn_decls[0].0);
         assert_eq!(tables.len(), 1, "expected 1 init table");
 
         let rows = collect_init_table_rows(&tables[0]);
@@ -1112,12 +1044,56 @@ int init(void) {
             .iter()
             .find(|(_, i)| i.kind == DeclKind::FunctionDef)
             .expect("fn def");
-        let tables = find_init_tables_in_body(fn_decl.0, &source);
+        let tables = find_init_tables_in_body(fn_decl.0);
         assert!(
             tables.is_empty(),
             "1-entry init list should not match: {tables:?}",
             tables = tables.len()
         );
+    }
+
+    #[test]
+    #[ignore = "diagnostic only; reads fixture data"]
+    fn c_init_table_rows_diagnostic() {
+        // Quick visibility into where the recognizer fires. Run with
+        // `cargo t c_init_table_rows_diagnostic -- --ignored`.
+        for fixture in &[
+            ("sqlite-vec/sqlite-vec.c", "sqlite3_vec_init"),
+            ("soluna/src/entry.c", "luaopen_soluna_app"),
+            ("soluna/src/render.c", "luaopen_soluna_render"),
+        ] {
+            let path = std::env::current_dir()
+                .unwrap()
+                .join("tests/fixtures")
+                .join(fixture.0);
+            if !path.exists() {
+                continue;
+            }
+            let source = std::fs::read_to_string(&path).unwrap();
+            let mut parser = tree_sitter::Parser::new();
+            parser
+                .set_language(&tree_sitter_c::LANGUAGE.into())
+                .unwrap();
+            let tree = parser.parse(&source, None).unwrap();
+            let decls = find_decls(&tree, &source, &path);
+            let mut total = 0;
+            for (node, info) in &decls {
+                if info.kind != DeclKind::FunctionDef {
+                    continue;
+                }
+                let tables = find_init_tables_in_body(*node);
+                if !tables.is_empty() {
+                    eprintln!(
+                        "{}: fn at line {} has {} init tables",
+                        fixture.0,
+                        info.start_line,
+                        tables.len()
+                    );
+                    total += tables.len();
+                }
+            }
+            eprintln!("  ({}: {total} tables total)", fixture.0);
+        }
     }
 
     #[test]
