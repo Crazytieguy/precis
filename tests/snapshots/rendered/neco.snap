@@ -1,0 +1,260 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+.package
+LICENSE
+README.md
+    14→Neco is a C library that provides concurrency using coroutines.
+    15→It's small & fast, and intended to make concurrent I/O & network programming 
+    16→easy.
+    18→## Features
+    20→- [Coroutines](docs/API.md#basic-operations): starting, sleeping, suspending, resuming, yielding, and joining.
+    21→- [Synchronization](docs/API.md#channels): channels, generators, mutexes, condition variables, and waitgroups.
+    22→- Support for [deadlines and cancelation](docs/API.md#deadlines-and-cancelation).
+    23→- [Posix friendly](docs/API.md#posix-wrappers) interface using file descriptors.
+    24→- Additional APIs for [networking](docs/API.md#networking-utilities),
+    25→[signals](docs/API.md#signals), [random data](docs/API.md#random-number-generator), [streams](docs/API.md#streams-and-buffered-io), and [buffered I/O](docs/API.md#streams-and-buffered-io).
+    26→- Lightweight runtime with a fair and deterministic [scheduler](#the-scheduler).
+    27→- [Fast](#fast-context-switching) user-space context switching. Uses assembly in most cases.
+    28→- Stackful coroutines that are nestable, with their life times fully managed by the scheduler.
+    29→- Cross-platform. Linux, Mac, FreeBSD. _(Also WebAssembly and Windows with [some limitations](#platform-notes))_.
+    30→- Single file amalgamation. No dependencies.
+    31→- [Test suite](tests/README.md) with 100% coverage using sanitizers and [Valgrind](https://valgrind.org).
+    33→For a deeper dive, check out the [API reference](docs/API.md).
+    35→It may also be worthwhile to see the [Bluebox](https://github.com/tidwall/bluebox) project for a
+    36→more complete example of using Neco, including benchmarks.
+    38→## Goals
+    …
+    49→## Using
+    …
+    51→Just drop the "neco.c" and "neco.h" files into your project. Most modern C compilers should work.
+    53→```sh
+    54→cc -c neco.c
+    55→```
+    57→## Example 1 (Start a coroutine)
+    …
+    77→## Example 2 (Use neco_main instead of main)
+    …
+    93→## Example 3 (Multiple coroutines)
+    …
+    125→## Example 4 (Coroutine arguments)
+    …
+    181→## Example 5 (Channels)
+    …
+    228→## Example 6 (Generators)
+    …
+    262→## Example 7 (Connect to server)
+    …
+    299→## Example 8 (Create a server)
+    …
+    344→## Example 9 (Echo server and client)
+    …
+    431→## Example 10 (Suspending and resuming a coroutine)
+    …
+    469→### More examples
+    …
+    473→## Platform notes
+    …
+    498→## The scheduler
+    …
+    504→### Fast context switching
+    …
+    511→### Thread local runtime
+    …
+    579→## License
+    …
+    581→Source code is available under the MIT [License](LICENSE).
+deps/
+    .gitignore
+        1→tmp.*
+    .package
+    aat.h
+        1→// https://github.com/tidwall/aatree
+        2→//
+        3→// Copyright 2023 Joshua J Baker. All rights reserved.
+        4→// Use of this source code is governed by an MIT-style
+        5→// license that can be found in the LICENSE file.
+        7→// Single header file for generating aat binary search trees.
+        12→#define AAT_DEF(specifiers, prefix, type)                                      \
+        …
+        24→#define AAT_FIELDS(type, left, right, level)                                   \
+        25→type *left;                                                                    \
+        26→type *right;                                                                   \
+        27→int level;                                                                     \
+        29→#define AAT_IMPL(prefix, type, left, right, level, compare)                    \
+        …
+    embed.sh
+    sco.c
+    sco.h
+        1→// https://github.com/tidwall/sco
+        2→//
+        3→// Copyright 2023 Joshua J Baker. All rights reserved.
+        4→// Use of this source code is governed by an MIT-style
+        5→// license that can be found in the LICENSE file.
+        10→#include <stdbool.h>
+        11→#include <stddef.h>
+        12→#include <stdint.h>
+        14→#define SCO_MINSTACKSIZE 131072 // Recommended minimum stack size
+        …
+        16→struct sco_desc {
+        17→    void *stack;
+        18→    size_t stack_size;
+        19→    void (*entry)(void *udata);
+        20→    void (*cleanup)(void *stack, size_t stack_size, void *udata);
+        21→    void *udata;
+        22→};
+        24→// Starts a new coroutine with the provided description.
+        25→void sco_start(struct sco_desc *desc);
+        …
+        27→// Causes the calling coroutine to relinquish the CPU.
+        28→// This operation should be called from a coroutine, otherwise it does nothing.
+        29→void sco_yield(void);
+        …
+        31→// Get the identifier for the current coroutine.
+        32→// This operation should be called from a coroutine, otherwise it returns zero.
+        33→int64_t sco_id(void);
+        …
+        35→// Pause the current coroutine.
+        36→// This operation should be called from a coroutine, otherwise it does nothing.
+        37→void sco_pause(void);
+        …
+        39→// Resume a paused coroutine.
+        40→// If the id is invalid or does not belong to a paused coroutine then this
+        41→// operation does nothing.
+        42→// Calling sco_resume(0) is a special case that continues a runloop. See the
+        43→// README for an example.
+        44→void sco_resume(int64_t id);
+        …
+        46→// Returns true if there are any coroutines running, yielding, or paused.
+        47→bool sco_active(void);
+        …
+        55→void sco_detach(int64_t id);
+        …
+        57→// Attach a coroutine to a thread.
+        58→// This allows for moving coroutines between threads.
+        59→// If the id is invalid or does not belong to a detached coroutine then this
+        60→// operation does nothing.
+        61→// Once attached, the coroutine will be paused.
+        62→void sco_attach(int64_t id);
+        …
+        64→// Exit a coroutine early.
+        65→// This _will not_ exit the program. Rather, it's for ending the current 
+        66→// coroutine and quickly switching to the thread's runloop before any other
+        67→// scheduled (yielded) coroutines run.
+        68→// This operation should be called from a coroutine, otherwise it does nothing.
+        69→void sco_exit(void);
+        …
+        71→// Returns the user data of the currently running coroutine.
+        72→void *sco_udata(void);
+        …
+        74→// General information and statistics
+        75→size_t sco_info_scheduled(void);
+        76→size_t sco_info_running(void);
+        77→size_t sco_info_paused(void);
+        78→size_t sco_info_detached(void);
+        79→const char *sco_info_method(void);
+        …
+        81→// Coroutine stack unwinding
+        82→struct sco_symbol {
+        83→    void *cfa;            // Canonical Frame Address
+        84→    void *ip;             // Instruction Pointer
+        85→    const char *fname;    // Pathname of shared object
+        86→    void *fbase;          // Base address of shared object
+        87→    const char *sname;    // Name of nearest symbol
+        88→    void *saddr;          // Address of nearest symbol
+        89→};
+        91→// Unwinds the stack and returns the number of symbols
+        92→int sco_unwind(bool (*func)(struct sco_symbol *sym, void *udata), void *udata);
+        …
+    stack.c
+    stack.h
+        1→// https://github.com/tidwall/stack
+        2→//
+        3→// Copyright 2024 Joshua J Baker. All rights reserved.
+        4→// Use of this source code is governed by an MIT-style
+        5→// license that can be found in the LICENSE file.
+        7→// Coroutine stack allocator
+        12→#include <stdbool.h>
+        13→#include <stdlib.h>
+        15→struct stack_opts {
+        …
+        26→struct stack { char _[32]; };
+        27→struct stack_mgr { char _[320]; };
+        …
+        29→void stack_mgr_init(struct stack_mgr *mgr, struct stack_opts *opts);
+        30→void stack_mgr_destroy(struct stack_mgr *mgr);
+        31→int stack_get(struct stack_mgr *mgr, struct stack *stack);
+        32→void stack_put(struct stack_mgr *mgr, struct stack *stack);
+        …
+        34→// The base address of the stack.
+        35→void *stack_addr(struct stack *stack);
+        …
+        37→// Returns the size of the stack.
+        38→size_t stack_size(struct stack *stack);
+        …
+    worker.c
+    worker.h
+        1→// https://github.com/tidwall/worker.c
+        2→//
+        3→// Copyright 2024 Joshua J Baker. All rights reserved.
+        4→// Use of this source code is governed by an MIT-style
+        5→// license that can be found in the LICENSE file.
+        7→// Simple background worker for C
+        12→#include <stdlib.h>
+        13→#include <stdint.h>
+        14→#include <stdbool.h>
+        16→struct worker_opts {
+        17→    int max_threads;           // def: 2
+        18→    int max_thread_entries;    // def: 32
+        19→    int64_t thread_timeout;    // nanoseconds, def: 1 second
+        20→    void*(*malloc)(size_t);    // def: system malloc
+        21→    void(*free)(void*);        // def: system free
+        22→};
+        24→struct worker *worker_new(struct worker_opts *opts);
+        25→void worker_free(struct worker *worker);
+        26→bool worker_submit(struct worker *worker, int64_t pin, void(*work)(void *udata), void *udata);
+        27→bool worker_submit_read(struct worker *worker, int64_t pin, int fd, void *data, size_t count, void(*complete)(int res, void *udata), void *udata);
+        28→bool worker_submit_write(struct worker *worker, int64_t pin, int fd, const void *data, size_t count, void(*complete)(int res, void *udata), void *udata);
+        …
+docs/
+    .gitignore
+        1→tmp/
+    API.md
+    README.md
+        1→# Neco Documentation
+    TECHNICAL.md
+    assets/
+        API_foot.md
+        API_head.md
+            1→# Neco C API
+            …
+            12→## Table of contents
+            …
+            34→## Programming notes
+            …
+            36→### neco_main
+            …
+            57→### Neco errors
+            …
+            99→### Deadlines and cancelation
+            …
+        logo-dark.png
+        logo-light.png
+    tools/
+examples/
+neco.c
+neco.h
+    1→// https://github.com/tidwall/neco
+    2→//
+    3→// Copyright 2024 Joshua J Baker. All rights reserved.
+    4→// Use of this source code is governed by an MIT-style
+    5→// license that can be found in the LICENSE file.
+    6→//
+    7→// Neco -- Coroutine library for C
+    12→#include <stdbool.h>
+    13→#include <stdint.h>
+    14→#include <sys/types.h>
+tests/

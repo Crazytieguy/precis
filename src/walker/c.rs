@@ -54,8 +54,8 @@ fn c_names_surface_chunk_index(decl_index: usize) -> usize {
 
 use super::{
     FileLines, WalkCtx, build_per_file_content, dedup_sorted, extend_span, file_depth_factor,
-    file_lines_covered_by, fs::files_with_any_extension, push_rows, signature_end_row,
-    single_file_lines_content,
+    file_lines_covered_by, fs::files_with_any_extension, node_end_row_trimmed, push_rows,
+    signature_end_row, single_file_lines_content,
 };
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -138,7 +138,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 file: file.clone(),
                 start_line: info.start_line,
             };
-            let decl_lines = collect_decl(*node, info, &source);
+            let decl_lines = collect_decl(*node, info, &source, &all_starts);
             let doc_lines = collect_decl_doc(*node, &source);
             let body_lines = if info.has_body {
                 collect_decl_body(*node, &src_lines)
@@ -632,12 +632,6 @@ fn collect_includes(tree: &Tree, source: &str) -> FileLines {
     FileLines::new(dedup_sorted(lines))
 }
 
-fn collect_decl_names_from(decls: &[(Node, DeclInfo)]) -> FileLines {
-    let starts: std::collections::HashSet<usize> =
-        decls.iter().map(|(_, i)| i.start_line).collect();
-    collect_decl_names_from_with_global_starts(decls, &starts)
-}
-
 fn collect_decl_names_from_with_global_starts(
     decls: &[(Node, DeclInfo)],
     all_starts: &std::collections::HashSet<usize>,
@@ -663,13 +657,27 @@ fn collect_decl_names_from_with_global_starts(
 /// rows to elide). For prototypes / typedefs / variables / `#define`s,
 /// the whole statement. For struct / union / enum at top level, the
 /// whole specifier.
-fn collect_decl(node: Node, info: &DeclInfo, source: &str) -> FileLines {
+///
+/// `all_starts` is the set of 1-based `start_line`s of every sibling decl
+/// in this translation unit (including this decl's own). Spans are
+/// trimmed so they never claim a row that's another decl's start —
+/// tree-sitter occasionally produces overlapping nodes (e.g. when a
+/// macro like `LLCO_EXTERN` is folded into a following function as a
+/// type qualifier and is also surfaced as a sibling node), and the
+/// scheduler's non-ancestor-overlap guard would panic on unfolded
+/// overlap.
+fn collect_decl(
+    node: Node,
+    info: &DeclInfo,
+    source: &str,
+    all_starts: &std::collections::HashSet<usize>,
+) -> FileLines {
     let mut full = Vec::new();
     let mut ellipses = Vec::new();
     let start_row = node.start_position().row;
     match info.kind {
         DeclKind::FunctionDef => {
-            let sig_end = signature_end_row(node);
+            let sig_end = trim_end_before_next_decl(signature_end_row(node), start_row, all_starts);
             push_rows(&mut full, start_row, sig_end);
             // A single-line `void foo() { ... }` has body.start_row ==
             // body.end_row; emitting an ellipsis there would land on the
@@ -677,8 +685,10 @@ fn collect_decl(node: Node, info: &DeclInfo, source: &str) -> FileLines {
             if let Some(body) = node.child_by_field_name("body") {
                 let bs = body.start_position().row;
                 let be = body.end_position().row;
-                if be > bs + 1 {
-                    ellipses.push(sig_end + 2);
+                // 1-based line of the row right after sig_end.
+                let ellipsis_line = sig_end + 2;
+                if be > bs + 1 && !all_starts.contains(&ellipsis_line) {
+                    ellipses.push(ellipsis_line);
                 }
             }
         }
@@ -689,10 +699,33 @@ fn collect_decl(node: Node, info: &DeclInfo, source: &str) -> FileLines {
         | DeclKind::Macro
         | DeclKind::MacroFn
         | DeclKind::Other => {
-            extend_span(&mut full, node, source);
+            let end_row = trim_end_before_next_decl(
+                node_end_row_trimmed(node, source),
+                start_row,
+                all_starts,
+            );
+            push_rows(&mut full, start_row, end_row);
         }
     }
     FileLines::new(dedup_sorted(full)).with_ellipses(dedup_sorted(ellipses))
+}
+
+/// Largest 0-based row `e ∈ [start_row, end_row]` such that no row
+/// `r ∈ (start_row, e]` is the start of another decl (i.e., its 1-based
+/// line `r + 1` is in `all_starts`). Returns `start_row` if a sibling
+/// starts immediately at `start_row + 1`. Counterpart to the existing
+/// adjacency-trimming in [`collect_decl_names_from_with_global_starts`].
+fn trim_end_before_next_decl(
+    end_row: usize,
+    start_row: usize,
+    all_starts: &std::collections::HashSet<usize>,
+) -> usize {
+    for r in (start_row + 1)..=end_row {
+        if all_starts.contains(&(r + 1)) {
+            return r.saturating_sub(1).max(start_row);
+        }
+    }
+    end_row
 }
 
 /// Body interior of a function definition: rows strictly between the
@@ -814,6 +847,53 @@ sds sdsnewlen(const void *init, size_t initlen) { return 0; }
             "decl kinds mismatch; got {:?}\nsource:\n{src}",
             decls.iter().map(|(_, d)| *d).collect::<Vec<_>>()
         );
+    }
+
+    #[test]
+    fn c_macro_modifier_pattern_does_not_overlap_following_decl() {
+        // tree-sitter-c folds `LLCO_EXTERN` (an attribute-like macro) into
+        // the following function as a type qualifier, so the
+        // `function_definition` spans the macro line plus the signature
+        // line. If the catch-all decl for the macro and the FunctionDef
+        // both claim the signature line, the scheduler panics on
+        // non-ancestor overlap. The trim in collect_decl prevents that.
+        let src = "\
+LLCO_EXTERN
+void llco_first(void) { return; }
+LLCO_EXTERN
+void llco_second(void) { return; }
+";
+        let dir = tempfile::tempdir().unwrap();
+        let root = dir.path();
+        std::fs::write(root.join("neco-mini.c"), src).unwrap();
+
+        let scheduler = Scheduler::new(root.to_path_buf(), FsWalker, 4_000, None);
+        // The whole point: this used to panic on non-ancestor overlap.
+        let report = scheduler.run_with_report();
+        assert!(
+            !report.scheduled.is_empty(),
+            "expected at least one scheduled batch"
+        );
+
+        // Stronger guarantee: spans claimed by C::Decl batches in the
+        // same file are pairwise disjoint by row.
+        let (source, tree) = parse(src);
+        let decls = find_decls(&tree, &source, std::path::Path::new("neco-mini.c"));
+        let all_starts: std::collections::HashSet<usize> =
+            decls.iter().map(|(_, i)| i.start_line).collect();
+        let mut claimed: std::collections::HashMap<usize, usize> = std::collections::HashMap::new();
+        for (node, info) in &decls {
+            let lines = collect_decl(*node, info, &source, &all_starts);
+            for line in &lines.full {
+                let prev = claimed.insert(*line, info.start_line);
+                assert!(
+                    prev.is_none(),
+                    "line {line} claimed by decls starting at {} and {} — overlap",
+                    prev.unwrap(),
+                    info.start_line,
+                );
+            }
+        }
     }
 
     #[test]
