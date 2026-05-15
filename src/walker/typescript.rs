@@ -1514,7 +1514,38 @@ fn module_doc_lede_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
 
 fn imports_value(file: &Path, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let cat = (0.3 * entrypoint_boost(file)).min(1.0);
-    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, 0.55, 0.3, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
+}
+
+/// Damp TS files inside a workspace member dir whose basename doesn't
+/// match the workspace root (the convention: the *primary* member
+/// shares the repo basename — `d2ts/packages/d2ts/` in d2ts).
+/// Secondary members are reference implementations or test infra from
+/// the workspace's perspective, so per-package imports/exports rank
+/// below the primary package's surface. Mirrors Rust's
+/// SECONDARY_WORKSPACE_MEMBER_FACTOR.
+fn secondary_ts_workspace_member_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    let Ok(rel) = file.strip_prefix(ctx.root()) else {
+        return 1.0;
+    };
+    let mut comps = rel.components();
+    let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) else {
+        return 1.0;
+    };
+    if first != "packages" {
+        return 1.0;
+    }
+    let Some(member) = comps.next().and_then(|c| c.as_os_str().to_str()) else {
+        return 1.0;
+    };
+    let root_basename = ctx
+        .root()
+        .file_name()
+        .and_then(|n| n.to_str())
+        .unwrap_or_default();
+    if member == root_basename { 1.0 } else { 0.7 }
 }
 
 fn imports_chunk_value(
@@ -1541,13 +1572,16 @@ fn export_names_value(
         * names_surface_chunk_factor(chunk_index, chunk_count)
         * js_factor
         * class_split_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn export_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {
     let k = kind.kind_weight();
     let cat = (0.70 * k * entrypoint_boost(file)).min(1.0);
     let fu = (0.85 * k).min(1.0);
-    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx)) * js_factor
+    mix_signals(cat, fu, 0.65, ts_depth_factor(file, ctx))
+        * js_factor
+        * secondary_ts_workspace_member_factor(file, ctx)
 }
 
 fn export_doc_value(file: &Path, kind: ItemKind, ctx: &WalkCtx, js_factor: f64) -> f64 {

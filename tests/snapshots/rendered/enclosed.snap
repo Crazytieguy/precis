@@ -25,6 +25,7 @@ README.md
     34→[![Enclosed](./.github/enclosed-mockup.png)](https://enclosed.cc)
     36→## Features
     …
+    38→- **End-to-End Encryption**: Your notes are encrypted on the client side, using AES-GCM with a 256-bit key derived using PBKDF2.
     39→- **File Attachments**: Share files securely with your notes.
     40→- **Zero Knowledge**: The server does not have access to the content of the notes or files.
     41→- **Configurable Security Options**: Set a password, expiration time, and choose self-destruction after the note is read.
@@ -137,8 +138,6 @@ packages/
         index.html
         package.json
         playwright.config.ts
-            12→export default defineConfig({
-            …
         public/
         src/
             app.css
@@ -168,20 +167,21 @@ packages/
             scripts/
         tsconfig.json
         uno.config.ts
-            13→export default defineConfig({
-            …
         vite.config.ts
-            8→export default defineConfig({
-            …
     app-server/
         eslint.config.js
         package.json
         src/
             index.cloudflare.ts
-                8→export default app;
             index.node.ts
             modules/
                 app/
+                    auth/
+                    config/
+                    middlewares/
+                    server.ts
+                    server.types.ts
+                    users/
                 notes/
                 shared/
                     errors/
@@ -190,6 +190,10 @@ packages/
                     validation/
                 storage/
                 tasks/
+                    task-scheduler.ts
+                    tasks.models.test.ts
+                    tasks.models.ts
+                    tasks.types.ts
             reset.d.ts
             scripts/
         tsconfig.json
@@ -222,9 +226,8 @@ packages/
             …
             81→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         bin/
+            enclosed.mjs
         build.config.ts
-            3→export default defineBuildConfig({
-            …
         eslint.config.js
         package.json
         src/
@@ -252,20 +255,14 @@ packages/
             …
             24→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
-            3→export default defineBuildConfig({
-            …
         eslint.config.js
         package.json
         src/
             api-definition.ts
             encryption-algorithms/
             index.node.ts
-                8→export const {
-                …
             index.test.ts
             index.web.ts
-                8→export const {
-                …
             node/
             web/
         tsconfig.json
@@ -280,6 +277,9 @@ packages/
             config.ts
             plausible.ts
             theme/
+                custom.css
+                icons.ts
+                index.js
         eslint.config.js
         package.json
         src/
@@ -299,6 +299,26 @@ packages/
             public/
             resources/
             self-hosting/
+                configuration.md
+                    5→# Self-Host Configuration
+                    …
+                    9→## Environment Variables
+                    …
+                    15→## Optional: Native HTTPS Configuration
+                    …
+                    33→## Applying Configuration Changes
+                    …
+                    49→## Next Steps
+                    …
+                docker-compose.md
+                docker.md
+                other-platforms.md
+                troubleshooting.md
+                    1→# Troubleshooting
+                    …
+                    3→## Why do I see a warning about insecure connection?
+                    …
+                users-authentication-key-generator.md
     lib/
         README.md
             1→### Enclosed lib
@@ -309,12 +329,11 @@ packages/
             …
             33→## License
             …
+            35→This project is licensed under the Apache 2.0 License. See the [LICENSE](./LICENSE) file for more information.
             37→## Credits and Acknowledgements
             …
             39→This project is crafted with ❤️ by [Corentin Thomasset](https://corentin.tech).
         build.config.ts
-            3→export default defineBuildConfig({
-            …
         eslint.config.js
         package.json
         src/
@@ -323,8 +342,6 @@ packages/
                 api.constants.ts
                 api.models.test.ts
                 api.models.ts
-                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
-                    …
             crypto/
                 crypto.constants.ts
                 crypto.types.ts
@@ -357,8 +374,6 @@ packages/
             notes/
                 notes.models.test.ts
                 notes.models.ts
-                    4→export { createNoteUrl, createNoteUrlHashFragment, parseNoteUrl, parseNoteUrlHashFragment };
-                    …
                 notes.services.ts
                     3→export { fetchNote, storeNote };
                     …
