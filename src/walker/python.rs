@@ -1064,8 +1064,7 @@ fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, python_depth_factor(file, ctx))
-        * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.65, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
 }
 
 fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
@@ -1086,16 +1085,14 @@ fn class_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let v = info.visibility_factor();
     let cat = (0.35 * v).min(1.0);
     let fu = (0.70 * v).min(1.0);
-    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
-        * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
 }
 
 fn method_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let v = info.visibility_factor();
     let cat = (0.55 * v).min(1.0);
     let fu = (0.75 * v).min(1.0);
-    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
-        * concrete_impl_sibling_factor(file)
+    mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx)) * concrete_impl_sibling_factor(file)
 }
 
 fn method_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {

@@ -395,13 +395,11 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
     // surface, so they don't earn a top-rank slot — but cmdk NS 1.8
     // (Root scripts) does pin Scripts as tier-1, so we don't drop the
     // weight as far as Entry.
-    mix_signals(0.5, 0.6, 0.45, path_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
+    mix_signals(0.5, 0.6, 0.45, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx))
-        * secondary_package_json_factor(file)
+    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {

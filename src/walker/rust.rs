@@ -439,8 +439,7 @@ fn expand_rust_files_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     let body_split_example_main =
                         example_main_entry && is_main_fn && ctx.is_readme_cited(file);
                     let render_whole = example_entry && !body_split_example_main;
-                    let entry_lines =
-                        collect_private_entry_item(item.node, &source, render_whole);
+                    let entry_lines = collect_private_entry_item(item.node, &source, render_whole);
                     if let Some(content) = single_file_lines_content(file, &source, entry_lines) {
                         out.push(batch(
                             entry_item_key.clone(),
