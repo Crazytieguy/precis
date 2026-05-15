@@ -20,13 +20,27 @@ For column semantics and scoring formula, read the module-level
 sampled from the GitHub language distribution. Each file is a single
 `Score(3000)=…` headline line — there is no per-row table, by
 design. **Do not survey, open, or iterate against these files.** The
-calibration loop targets only `tests/divergence/`. Validation scores
-exist as a regression check we look at *after* a change is otherwise
-ready; treating them as a tuning surface defeats their purpose.
+calibration loop targets only `tests/divergence/`.
+
+The holdout extends to anything fixture-specific for validation
+repos. **Off-limits during calibration:**
+
+- `tests/validation/<fixture>.md` (the score files)
+- `tests/north-stars/<fixture>.toml` for any fixture registered with
+  `per_validation_fixture_tests!` — the NS is the answer key, and
+  the dir is shared with training only because building two parallel
+  dirs would be process bloat for the same convention
+- `tests/fixtures/<fixture>/` for the same set — the fixture source
+  is what the answer key is grounded in
 
 If a change moves a validation score, that's information — but the
 debugging step is to read the *training* reports and reason about
-generality, not to read the validation fixture's source.
+generality, not to read any held-out fixture's source or NS.
+Acceptable outcomes when a validation score drops: fix the walker
+in general (using training reports) and re-run; or accept the move
+because the broader change is a net win on training. Not acceptable:
+opening the validation NS to figure out what content the score is
+weighting.
 
 ## Priority
 
@@ -180,9 +194,12 @@ perspectives.
 - Don't change North Star files to match the walker. That's moving
   the goalpost. Frozen NSs are the calibration target; the walker
   has to come to them.
-- **Don't read or iterate against `tests/validation/`.** It's the
-  held-out regression set; opening a validation fixture's source or
-  schedule to debug a low score is overfitting to the holdout.
+- **Don't read or iterate against held-out fixtures.** The holdout
+  covers `tests/validation/<name>.md`, the corresponding
+  `tests/north-stars/<name>.toml`, and `tests/fixtures/<name>/` for
+  any fixture registered with `per_validation_fixture_tests!` in
+  `tests/fixture_baselines.rs`. Opening any of these to debug a low
+  validation score is overfitting to the holdout.
 - Don't ship neutral or marginally-positive changes that *add* code.
   Complexity has to pay for itself.
 - Don't commit a "set of improvements" — each coherent change gets

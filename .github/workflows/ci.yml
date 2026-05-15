@@ -29,7 +29,7 @@ jobs:
         # pending. They must never land on main — running cargo t with
         # `UPDATE_BASELINES=1` accepts and commits the baseline instead.
         run: |
-          if find tests/divergence tests/snapshots -type f \( -name '*.md.new' -o -name '*.toml.new' -o -name '*.snap.new' \) | grep .; then
+          if find tests/divergence tests/validation tests/snapshots -type f \( -name '*.md.new' -o -name '*.toml.new' -o -name '*.snap.new' \) | grep .; then
             echo "::error::Found .new sidecars in the tree. Regenerate with 'UPDATE_BASELINES=1 cargo t' and commit the updated baseline, or delete the stray .new file."
             exit 1
           fi

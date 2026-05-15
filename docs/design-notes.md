@@ -61,7 +61,23 @@ itself is the source of truth for architecture and invariants.
   point is overfit detection — if a value/walker change wins on the
   training set but tanks on validation, the rule isn't general.
   Enforcement is by process (the `iterate-divergence` skill), not by
-  the type system; treat the holdout as load-bearing convention.
+  the type system; treat the holdout as load-bearing convention. The
+  holdout covers more than `tests/validation/`: it also covers the
+  validation fixtures' NS files (which share `tests/north-stars/`
+  with training NSes) and their source under `tests/fixtures/`.
+  Storing validation NSes alongside training NSes is a deliberate
+  process-bloat tradeoff; the alternative — a parallel directory
+  tree — would not strengthen the convention, since both surfaces
+  are equally readable to anyone disregarding the skill.
+- **Validation debugging surface is intentionally thin.** A
+  regression on a validation fixture reports only a headline
+  delta — there is no schedule TOML, rendered snapshot, or per-row
+  diff for held-out fixtures. The acceptable responses to a
+  validation move are: improve the walker generally against the
+  *training* reports and re-run, or accept the move as a real
+  generalization signal. Adding diagnostic artifacts (a validation
+  schedule TOML, etc.) would re-expose the surface the holdout
+  exists to hide.
 - **Training-set archetype gaps to fill (when the design-notes open
   items are exhausted).** Training is library-heavy in TS/Rust and
   small-lib-heavy in C. Five fixtures that would broaden the archetype
