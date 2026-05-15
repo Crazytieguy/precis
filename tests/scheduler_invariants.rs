@@ -381,3 +381,84 @@ fn scheduler_invariants_overlapping_fs_atoms_panic_in_debug() {
     let scheduler = Scheduler::with_source_cache(stub_dir(), OverlapWalker, 10_000, None, cache);
     let _ = scheduler.run();
 }
+
+#[test]
+fn scheduler_invariants_children_index_matches_rebuild() {
+    // Exercise the incremental `children_index` (in `Scheduler`) against
+    // the reference rebuild. Hits both absorb paths — child-before-parent
+    // (pending drain) and the straight parent-then-child case — plus
+    // `schedule()` removal as batches are scheduled. The verifier (turned
+    // on via `enable_children_index_verifier` below) panics on any
+    // mismatch.
+
+    struct ChildBeforeParent;
+    impl Walker for ChildBeforeParent {
+        type Key = BatchKey;
+
+        fn seed(&mut self, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            let gate_file = stub_file("api.ts");
+            let gate = BatchKey::Typescript(TsKey::ExportNames {
+                file: gate_file.clone(),
+                chunk_index: 0,
+                export_count: 6,
+                type_only_export_count: 6,
+            });
+            let mut out = Vec::new();
+            // Three children absorbed BEFORE the parent → must land in
+            // `pending_children` and be drained on the parent's absorb.
+            for line in 2..=4 {
+                out.push(Batch {
+                    key: BatchKey::Typescript(TsKey::Export {
+                        file: gate_file.clone(),
+                        start_line: line,
+                    }),
+                    predecessor: Some(gate.clone()),
+                    content: BatchContent::Lines {
+                        spans: single_span(gate_file.clone(), line, line, Render::Full),
+                    },
+                    value: 80.0,
+                });
+            }
+            // Parent — drains pending children into `children_index`.
+            out.push(Batch {
+                key: gate.clone(),
+                predecessor: None,
+                content: BatchContent::Lines {
+                    spans: single_span(gate_file.clone(), 1, 1, Render::Full),
+                },
+                value: 200.0,
+            });
+            // Two more children absorbed AFTER the parent → must take
+            // the direct-append branch and preserve absorb order.
+            for line in 5..=6 {
+                out.push(Batch {
+                    key: BatchKey::Typescript(TsKey::Export {
+                        file: gate_file.clone(),
+                        start_line: line,
+                    }),
+                    predecessor: Some(gate.clone()),
+                    content: BatchContent::Lines {
+                        spans: single_span(gate_file.clone(), line, line, Render::Full),
+                    },
+                    value: 80.0,
+                });
+            }
+            out
+        }
+
+        fn expand(&mut self, _scheduled: &BatchKey, _ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
+            Vec::new()
+        }
+    }
+
+    let cache = SourceCache::new();
+    let gate_file = stub_file("api.ts");
+    let gate_source: String = (1..=6)
+        .map(|line| format!("export type T{line} = string;\n"))
+        .collect();
+    preload(&cache, &gate_file, &gate_source);
+    let mut scheduler =
+        Scheduler::with_source_cache(stub_dir(), ChildBeforeParent, 10_000, None, cache);
+    scheduler.enable_children_index_verifier();
+    let _ = scheduler.run();
+}

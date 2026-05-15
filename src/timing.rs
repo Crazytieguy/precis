@@ -67,7 +67,6 @@ pub struct Counters {
     pub source_read: Counter,
     pub best_exact: Counter,
     pub best_exact_cost_pass: Counter,
-    pub best_exact_children_rebuild: Counter,
     pub best_exact_rank_pass: Counter,
     pub schedule_apply: Counter,
     pub schedule_expand: Counter,
@@ -96,17 +95,12 @@ pub fn dump_and_reset() {
     COUNTERS.with(|c| {
         let mut c = c.borrow_mut();
         eprintln!("[timing] counters:");
-        let rows: [DumpRow; 9] = [
+        let rows: [DumpRow; 8] = [
             ("tokenizer", |c| &c.tokenizer, true),
             ("parse", |c| &c.parse, true),
             ("source_read", |c| &c.source_read, true),
             ("best_exact", |c| &c.best_exact, false),
             (" \u{2517} cost_pass", |c| &c.best_exact_cost_pass, false),
-            (
-                " \u{2517} children",
-                |c| &c.best_exact_children_rebuild,
-                false,
-            ),
             (" \u{2517} rank_pass", |c| &c.best_exact_rank_pass, false),
             ("sched.apply", |c| &c.schedule_apply, false),
             ("sched.expand", |c| &c.schedule_expand, false),

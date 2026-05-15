@@ -91,6 +91,30 @@ pub struct Scheduler<W: Walker> {
     /// stable: non-ancestor line overlap is rejected during apply, and
     /// debug builds reject overlapping FS atoms at absorb time.
     cost_cache: HashMap<BatchId, Cost>,
+    /// Parent → unscheduled children index, maintained incrementally at
+    /// `absorb`/`schedule`. `best_exact` rebuilt this from scratch on
+    /// every iteration before; that rebuild was the dominant O(N²) cost
+    /// on medium-large fixtures.
+    ///
+    /// Order within each `Vec` matches `entries` order. That ordering
+    /// is observable: `raw_gated_descendant_value` iterates this list
+    /// and accumulates `f64`, and non-associativity could otherwise
+    /// shift ranking ties. Append on absorb, `retain` on schedule.
+    children_index: ChildrenByParent,
+    /// Children whose predecessor key hasn't been absorbed yet.
+    /// Drained into `children_index` when the matching parent is
+    /// absorbed. Mirrors the current `key_to_id.get(pred)` miss
+    /// behavior in the old rebuild — orphans that never see a parent
+    /// stay inert here forever, which is fine (they're also inert in
+    /// eligibility today).
+    pending_children: HashMap<W::Key, Vec<BatchId>>,
+    /// Debug-only verifier toggle. When on, `best_exact` recomputes the
+    /// parent→children index from scratch each call and asserts it
+    /// matches `children_index`. Off by default; tests turn it on via
+    /// [`Self::enable_children_index_verifier`]. Process-local (no env
+    /// var) so concurrent libtest threads can't race.
+    #[cfg(debug_assertions)]
+    verify_children_index: bool,
     /// Debug-only owner map for FS render cells. The production walker
     /// emits one full listing per directory, so overlapping sibling FS
     /// atoms are a walker-contract violation rather than a scheduler case.
@@ -125,9 +149,21 @@ impl<W: Walker> Scheduler<W> {
             scheduled: HashSet::new(),
             scheduled_log: Vec::new(),
             cost_cache: HashMap::new(),
+            children_index: HashMap::new(),
+            pending_children: HashMap::new(),
+            #[cfg(debug_assertions)]
+            verify_children_index: false,
             #[cfg(debug_assertions)]
             fs_atom_owners: BTreeMap::new(),
         }
+    }
+
+    /// Turn on the debug-only `children_index` verifier (recompute and
+    /// assert on every `best_exact` call). For invariant tests; not
+    /// meant for production paths.
+    #[cfg(debug_assertions)]
+    pub fn enable_children_index_verifier(&mut self) {
+        self.verify_children_index = true;
     }
 
     /// Run the scheduler and return just the rendered tree. Back-compat
@@ -141,22 +177,29 @@ impl<W: Walker> Scheduler<W> {
     /// scheduled batches. Used by `render_schedule` and the divergence
     /// test.
     pub fn run_with_report(mut self) -> RunReport<W::Key> {
-        for batch in self.walker.seed(&self.ctx) {
-            self.absorb(batch);
+        crate::time_span!("run_with_report");
+        {
+            crate::time_span!("walker_seed");
+            for batch in self.walker.seed(&self.ctx) {
+                self.absorb(batch);
+            }
         }
 
         // Prefix-monotone scheduling: rank eligible entries by
         // `value / cost^k` and pick the best-fit; if the top-ranked
         // exact doesn't fit, stop (no fallback to smaller batches). This
         // makes the schedule at `T_small` a true prefix of `T_large`'s.
-        loop {
-            let Some((id, _, cost)) = self.best_exact() else {
-                break;
-            };
-            if !self.fits(cost) {
-                break;
+        {
+            crate::time_span!("scheduler_loop");
+            loop {
+                let Some((id, _, cost)) = self.best_exact() else {
+                    break;
+                };
+                if !self.fits(cost) {
+                    break;
+                }
+                self.schedule(id, cost);
             }
-            self.schedule(id, cost);
         }
 
         if cfg!(debug_assertions) {
@@ -210,7 +253,30 @@ impl<W: Walker> Scheduler<W> {
         #[cfg(debug_assertions)]
         self.assert_disjoint_fs_atoms(&batch);
         let id = BatchId::new(self.entries.len());
+
+        if let Some(pred) = batch.predecessor.as_ref() {
+            match self.key_to_id.get(pred) {
+                Some(&parent_id) => {
+                    self.children_index.entry(parent_id).or_default().push(id);
+                }
+                None => {
+                    self.pending_children
+                        .entry(pred.clone())
+                        .or_default()
+                        .push(id);
+                }
+            }
+        }
+
         self.key_to_id.insert(batch.key.clone(), id);
+
+        if let Some(waiting) = self.pending_children.remove(&batch.key) {
+            // The new id has no prior entry in `children_index` (it was
+            // just minted), so direct insert is safe. Pending list is
+            // FIFO over absorb order → entries-order is preserved.
+            self.children_index.insert(id, waiting);
+        }
+
         self.entries.push(batch);
     }
 
@@ -274,25 +340,38 @@ impl<W: Walker> Scheduler<W> {
     /// must mutate only `cost_cache`; no scheduler state transitions
     /// (`scheduled`/`scheduled_log`/`tree.apply`) belong here.
     fn best_exact(&mut self) -> Option<(BatchId, f64, Cost)> {
+        crate::time_counter!(best_exact);
         // Two passes so we can mutate `cost_cache` without holding a
         // borrow into `entries`: first compute any missing costs, then
         // rank using the now-populated cache.
-        for idx in 0..self.entries.len() {
-            let id = BatchId::new(idx);
-            if self.scheduled.contains(&id) {
-                continue;
-            }
-            let entry = &self.entries[idx];
-            if !self.eligible(entry.predecessor.as_ref()) {
-                continue;
-            }
-            if !self.cost_cache.contains_key(&id) {
-                let fresh = self.tree.marginal_cost(&entry.content);
-                self.cost_cache.insert(id, fresh);
+        {
+            crate::time_counter!(best_exact_cost_pass);
+            for idx in 0..self.entries.len() {
+                let id = BatchId::new(idx);
+                if self.scheduled.contains(&id) {
+                    continue;
+                }
+                let entry = &self.entries[idx];
+                if !self.eligible(entry.predecessor.as_ref()) {
+                    continue;
+                }
+                if !self.cost_cache.contains_key(&id) {
+                    let fresh = self.tree.marginal_cost(&entry.content);
+                    self.cost_cache.insert(id, fresh);
+                }
             }
         }
 
-        let children_by_parent = self.children_by_parent();
+        #[cfg(debug_assertions)]
+        if self.verify_children_index {
+            let rebuilt = self.children_by_parent_rebuilt();
+            debug_assert_eq!(
+                rebuilt, self.children_index,
+                "children_index out of sync with rebuild"
+            );
+        }
+        let children_by_parent = &self.children_index;
+        crate::time_counter!(best_exact_rank_pass);
         let mut descendant_value_cache = HashMap::new();
         let mut best: Option<(f64, BatchId, &W::Key, Cost)> = None;
         for (idx, entry) in self.entries.iter().enumerate() {
@@ -305,7 +384,7 @@ impl<W: Walker> Scheduler<W> {
             }
             let cost = self.cost_cache[&id];
             let effective_value =
-                self.effective_value(id, &children_by_parent, &mut descendant_value_cache);
+                self.effective_value(id, children_by_parent, &mut descendant_value_cache);
             let ratio = score_ratio(effective_value, cost.tokens, entry.key.concavity_exponent());
             let better = best
                 .as_ref()
@@ -354,8 +433,12 @@ impl<W: Walker> Scheduler<W> {
         base + bonus
     }
 
-    fn children_by_parent(&self) -> ChildrenByParent {
-        let mut children = HashMap::new();
+    /// Reference implementation: rebuild the parent→children index by
+    /// scanning entries. Used only by the `PRECIS_VERIFY_CHILDREN_INDEX`
+    /// debug verifier; the hot path reads `self.children_index` directly.
+    #[cfg(debug_assertions)]
+    fn children_by_parent_rebuilt(&self) -> ChildrenByParent {
+        let mut children: ChildrenByParent = HashMap::new();
         for (idx, entry) in self.entries.iter().enumerate() {
             let child_id = BatchId::new(idx);
             if self.scheduled.contains(&child_id) {
@@ -367,10 +450,7 @@ impl<W: Walker> Scheduler<W> {
             let Some(parent_id) = self.key_to_id.get(pred) else {
                 continue;
             };
-            children
-                .entry(*parent_id)
-                .or_insert_with(Vec::new)
-                .push(child_id);
+            children.entry(*parent_id).or_default().push(child_id);
         }
         children
     }
@@ -443,9 +523,11 @@ impl<W: Walker> Scheduler<W> {
 
         let ancestors = self.ancestors_of(id);
         let entry_content = self.entries[id.index()].content.clone();
-        let conflicts = self
-            .tree
-            .apply(&entry_content, id, |i| ancestors.contains(&i));
+        let conflicts = {
+            crate::time_counter!(schedule_apply);
+            self.tree
+                .apply(&entry_content, id, |i| ancestors.contains(&i))
+        };
         if cfg!(debug_assertions) && !conflicts.is_empty() {
             let current_key = &self.entries[id.index()].key;
             let conflict_details = conflicts
@@ -470,9 +552,28 @@ impl<W: Walker> Scheduler<W> {
         // before a dependent first becomes eligible/cached.
         self.cost_cache.remove(&id);
 
+        // Remove this id from its parent's child list. `retain` preserves
+        // the order of remaining elements (entries-order matters — see
+        // `children_index` field doc).
+        let parent_id = self.entries[id.index()]
+            .predecessor
+            .as_ref()
+            .and_then(|p| self.key_to_id.get(p).copied());
+        if let Some(parent_id) = parent_id
+            && let Some(siblings) = self.children_index.get_mut(&parent_id)
+        {
+            siblings.retain(|&c| c != id);
+            if siblings.is_empty() {
+                self.children_index.remove(&parent_id);
+            }
+        }
+
         // Walker learns about the new scheduled key; emit successors.
         let key = self.entries[id.index()].key.clone();
-        let successors = self.walker.expand(&key, &self.ctx);
+        let successors = {
+            crate::time_counter!(schedule_expand);
+            self.walker.expand(&key, &self.ctx)
+        };
         for batch in successors {
             self.absorb(batch);
         }
