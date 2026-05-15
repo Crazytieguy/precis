@@ -38,15 +38,6 @@ README.md
     …
     256→## Instruments
     …
-    258→At present, the following instruments are supported for bootstrapping:
-    260→- `sentry`
-    261→- `prometheus`
-    262→- `opentelemetry`
-    263→- `pyroscope`
-    264→- `logging`
-    265→- `cors`
-    266→- `swagger`
-    268→Let's clarify the process required to bootstrap these instruments.
     270→### [Sentry](https://sentry.io/)
     …
     312→### [Prometheus](https://prometheus.io/)
@@ -77,7 +68,6 @@ README.md
     …
     710→### Using microbootstrap without a framework
     …
-    744→Like bootstrappers, you can reconfigure instruments using the `configure_instrument()` and `configure_instruments()` methods.
     746→## Advanced
     …
 examples/
@@ -126,6 +116,49 @@ microbootstrap/
     bootstrappers/
         __init__.py
         base.py
+            17→class DataclassInstance(typing.Protocol):
+            18→    __dataclass_fields__: typing.ClassVar[dict[str, typing.Any]]
+            21→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+            22→DataclassT = typing.TypeVar("DataclassT", bound=DataclassInstance)
+            25→class ApplicationBootstrapper(abc.ABC, typing.Generic[SettingsT, ApplicationT, DataclassT]):
+            26→    application_type: type[ApplicationT]
+            27→    application_config: DataclassT
+            28→    console_writer: ConsoleWriter
+            29→    instrument_box: InstrumentBox
+            31→    def __init__(self, settings: SettingsT) -> None:
+            …
+            39→    def configure_application(
+            40→        self,
+            41→        application_config: DataclassT,
+            42→    ) -> typing_extensions.Self:
+            46→    def configure_instrument(
+            47→        self,
+            48→        instrument_config: InstrumentConfigT,
+            49→    ) -> typing_extensions.Self:
+            53→    def configure_instruments(
+            54→        self,
+            55→        *instrument_configs: InstrumentConfigT,
+            56→    ) -> typing_extensions.Self:
+            61→    @classmethod
+            62→    def use_instrument(
+            63→        cls,
+            64→    ) -> typing.Callable[
+            65→        [type[Instrument[InstrumentConfigT]]],
+            66→        type[Instrument[InstrumentConfigT]],
+            67→    ]:
+            72→    def bootstrap(self) -> ApplicationT:
+            …
+            99→    def bootstrap_before(self) -> dict[str, typing.Any]:
+            100→        """Add some framework-related parameters to final bootstrap result before application creation."""
+            101→        return {}
+            103→    def bootstrap_before_instruments_after_app_created(self, application: ApplicationT) -> ApplicationT:
+            …
+            105→        return application
+            107→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
+            108→        """Add some framework-related parameters to final bootstrap result after application creation."""
+            109→        return application
+            111→    def teardown(self) -> None:
+            …
         fastapi.py
         faststream.py
         litestar.py
@@ -181,82 +214,46 @@ microbootstrap/
     instruments/
         __init__.py
         base.py
+            15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
+            16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
+            19→class BaseInstrumentConfig(pydantic.BaseModel):
+            20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
+            23→@dataclasses.dataclass
+            24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
+            25→    instrument_config: InstrumentConfigT
+            26→    instrument_name: typing.ClassVar[str]
+            27→    ready_condition: typing.ClassVar[str]
+            29→    def configure_instrument(
+            30→        self,
+            31→        incoming_config: InstrumentConfigT,
+            32→    ) -> None:
+            35→    def write_status(self, console_writer: ConsoleWriter) -> None:
+            …
+            42→    @abc.abstractmethod
+            43→    def is_ready(self) -> bool: ...
+            45→    @classmethod
+            46→    @abc.abstractmethod
+            47→    def get_config_type(cls) -> type[InstrumentConfigT]:
+            48→        raise NotImplementedError
+            50→    def bootstrap(self) -> None:
+            51→        return None
+            53→    def teardown(self) -> None:
+            54→        return None
+            56→    def bootstrap_before(self) -> dict[str, typing.Any]:
+            57→        """Add some framework-related parameters to final bootstrap result before application creation."""
+            58→        return {}
+            60→    def bootstrap_after(self, application: ApplicationT) -> ApplicationT:
+            61→        """Add some framework-related parameters to final bootstrap result after application creation."""
+            62→        return application
         cors_instrument.py
-            8→class CorsConfig(BaseInstrumentConfig):
-            …
-            18→class CorsInstrument(Instrument[CorsConfig]):
-            19→    instrument_name = "Cors"
-            20→    ready_condition = "Provide allowed origins or regex"
-            22→    def is_ready(self) -> bool:
-            …
-            27→    @classmethod
-            28→    def get_config_type(cls) -> type[CorsConfig]:
-            29→        return CorsConfig
         health_checks_instrument.py
-            8→class HealthCheckTypedDict(typing_extensions.TypedDict, total=False):
-            9→    service_version: str | None
-            10→    service_name: str | None
-            11→    health_status: bool
-            14→class HealthChecksConfig(BaseInstrumentConfig):
-            …
-            26→class HealthChecksInstrument(Instrument[HealthChecksConfig]):
-            27→    instrument_name = "Health checks"
-            28→    ready_condition = "Set health_checks_enabled to True"
-            30→    def render_health_check_data(self) -> HealthCheckTypedDict:
-            …
-            37→    def is_ready(self) -> bool:
-            …
-            40→    @classmethod
-            …
         instrument_box.py
-            9→@dataclasses.dataclass
-            10→class InstrumentBox:
-            11→    __instruments__: list[type[Instrument[typing.Any]]] = dataclasses.field(default_factory=list)
-            12→    __initialized_instruments__: list[Instrument[typing.Any]] = dataclasses.field(default_factory=list)
-            14→    def initialize(self, settings: SettingsT) -> None:
-            …
-            21→    def configure_instrument(
-            22→        self,
-            23→        instrument_config: InstrumentConfigT,
-            24→    ) -> None:
-            34→    def extend_instruments(
-            35→        self,
-            36→        instrument_class: type[Instrument[InstrumentConfigT]],
-            37→    ) -> type[Instrument[InstrumentConfigT]]:
-            38→        """Extend list of instruments, excluding one whose config is already in use."""
-            48→    @property
-            49→    def instruments(self) -> list[Instrument[typing.Any]]:
-            50→        return self.__initialized_instruments__
         logging_instrument.py
         opentelemetry_instrument.py
         prometheus_instrument.py
         pyroscope_instrument.py
-            15→class PyroscopeConfig(BaseInstrumentConfig):
-            …
-            27→class PyroscopeInstrument(Instrument[PyroscopeConfig]):
-            28→    instrument_name = "Pyroscope"
-            29→    ready_condition = "Provide pyroscope_endpoint"
-            31→    def is_ready(self) -> bool:
-            32→        return all([self.instrument_config.pyroscope_endpoint, pyroscope])
-            34→    def teardown(self) -> None:
-            35→        pyroscope.shutdown()
-            37→    def bootstrap(self) -> None:
-            …
-            52→    @classmethod
-            53→    def get_config_type(cls) -> type[PyroscopeConfig]:
-            54→        return PyroscopeConfig
         sentry_instrument.py
         swagger_instrument.py
-            10→class SwaggerConfig(BaseInstrumentConfig):
-            …
-            21→class SwaggerInstrument(Instrument[SwaggerConfig]):
-            22→    instrument_name = "Swagger"
-            23→    ready_condition = "Provide valid swagger_path"
-            25→    def is_ready(self) -> bool:
-            …
-            28→    @classmethod
-            29→    def get_config_type(cls) -> type[SwaggerConfig]:
-            30→        return SwaggerConfig
     instruments_setupper.py
         19→class InstrumentsSetupper:
         20→    console_writer: ConsoleWriter
@@ -264,19 +261,13 @@ microbootstrap/
         23→    def __init__(self, settings: InstrumentsSetupperSettings) -> None:
         …
         28→    def configure_instrument(self, instrument_config: InstrumentConfigT) -> typing_extensions.Self:
-        29→        self.instrument_box.configure_instrument(instrument_config)
-        30→        return self
+        …
         32→    def configure_instruments(
         33→        self,
         34→        *instrument_configs: InstrumentConfigT,
         35→    ) -> typing_extensions.Self:
         40→    @classmethod
-        41→    def use_instrument(
-        42→        cls,
-        43→    ) -> typing.Callable[
-        44→        [type[Instrument[InstrumentConfigT]]],
-        45→        type[Instrument[InstrumentConfigT]],
-        46→    ]:
+        …
         51→    def setup(self) -> None:
         …
         57→    def teardown(self) -> None:

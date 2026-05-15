@@ -1013,9 +1013,6 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     // `__init__.py` carries the package's public surface; non-init
     // modules are implementation detail and their names surface should
     // not crowd README / public-export batches in the early budget.
-    // Files inside a deeply-nested subdir (depth ≥ 3 from root, e.g.
-    // `microbootstrap/instruments/cors_instrument.py`) are usually
-    // concrete impls of an abstract base — take an extra step down.
     let cat = if is_init_py(file) {
         0.65
     } else if ctx.depth_from_root(file) >= 3 {
@@ -1025,10 +1022,42 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     };
     mix_signals(cat, 0.55, 0.35, python_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
+        * concrete_impl_sibling_factor(file)
+}
+
+/// Damp files that sit alongside a `base.py` sibling in the same dir
+/// (and are not `base.py`/`__init__.py` themselves). The convention
+/// `base.py` + concrete impls (`cors_instrument.py`,
+/// `swagger_instrument.py`, ...) means the abstract base is the
+/// load-bearing anchor for the directory; concrete files repeat the
+/// shape and rarely show up in NS rows. Applied to every per-file
+/// value channel so the whole concrete file ranks below its base.
+fn concrete_impl_sibling_factor(file: &Path) -> f64 {
+    let Some(parent) = file.parent() else {
+        return 1.0;
+    };
+    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+        return 1.0;
+    };
+    if stem == "__init__" {
+        return 1.0;
+    }
+    if stem == "base" && parent.join("base.py").is_file() {
+        // The abstract base of a base.py + concrete impls layout is
+        // the canonical anchor; promote it so it lands before its
+        // concrete neighbors crowd the budget.
+        return 1.5;
+    }
+    if parent.join("base.py").is_file() {
+        0.6
+    } else {
+        1.0
+    }
 }
 
 fn method_sigs_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.55, 0.50, 0.30, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file)
 }
 
 fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
@@ -1036,6 +1065,7 @@ fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
     mix_signals(cat, fu, 0.65, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file)
 }
 
 fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
@@ -1057,6 +1087,7 @@ fn class_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let cat = (0.35 * v).min(1.0);
     let fu = (0.70 * v).min(1.0);
     mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file)
 }
 
 fn method_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
@@ -1064,6 +1095,7 @@ fn method_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let cat = (0.55 * v).min(1.0);
     let fu = (0.75 * v).min(1.0);
     mix_signals(cat, fu, 0.55, python_depth_factor(file, ctx))
+        * concrete_impl_sibling_factor(file)
 }
 
 fn method_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
