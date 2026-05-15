@@ -85,6 +85,12 @@ microbootstrap/
         6→    FastStreamTelemetryMiddlewareProtocol,
         7→    OpentelemetryConfig,
         8→)
+        9→from microbootstrap.instruments.prometheus_instrument import (
+        10→    FastApiPrometheusConfig,
+        11→    FastStreamPrometheusConfig,
+        12→    FastStreamPrometheusMiddlewareProtocol,
+        13→    LitestarPrometheusConfig,
+        14→)
         15→from microbootstrap.instruments.pyroscope_instrument import PyroscopeConfig
         16→from microbootstrap.instruments.sentry_instrument import SentryConfig
         17→from microbootstrap.instruments.swagger_instrument import SwaggerConfig
@@ -168,12 +174,9 @@ microbootstrap/
             15→InstrumentConfigT = typing.TypeVar("InstrumentConfigT", bound="BaseInstrumentConfig")
             16→ApplicationT = typing.TypeVar("ApplicationT", bound=typing.Any)
             19→class BaseInstrumentConfig(pydantic.BaseModel):
-            20→    model_config = pydantic.ConfigDict(arbitrary_types_allowed=True)
+            …
             23→@dataclasses.dataclass
             24→class Instrument(abc.ABC, typing.Generic[InstrumentConfigT]):
-            25→    instrument_config: InstrumentConfigT
-            26→    instrument_name: typing.ClassVar[str]
-            27→    ready_condition: typing.ClassVar[str]
         cors_instrument.py
             8→class CorsConfig(BaseInstrumentConfig):
             …

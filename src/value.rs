@@ -62,7 +62,7 @@ pub fn reexport_import_chunk_factor(chunk_index: usize, chunk_count: usize) -> f
     if chunk_count <= 1 {
         1.0
     } else {
-        1.0 / (1.0 + chunk_index as f64 * 0.35)
+        1.0 / (1.0 + chunk_index as f64 * 0.2)
     }
 }
 
