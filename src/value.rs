@@ -201,6 +201,7 @@ fn non_essential_factor_inner(
         // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, etc.
         let lower = name.to_ascii_lowercase();
         if lower.contains(".test.")
+            || lower.contains(".test-d.")
             || lower.contains(".spec.")
             || lower.ends_with("_test.go")
             || lower.ends_with("_test.ts")

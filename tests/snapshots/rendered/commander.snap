@@ -350,8 +350,3 @@ typings/
     esm.d.mts
     index.d.ts
     index.test-d.ts
-        509→class MyCommand extends commander.Command {
-        510→  createCommand(name?: string): MyCommand {
-        511→    return new MyCommand(name);
-        514→  myFunction(): void {
-        515→    // do nothing.
