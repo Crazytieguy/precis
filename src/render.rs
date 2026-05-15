@@ -37,12 +37,18 @@ impl SourceCache {
 
     /// Read `path`, caching. Returns `None` on I/O error.
     pub fn get(&self, path: &Path) -> Option<Arc<str>> {
+        #[cfg(feature = "timing")]
+        let _start = std::time::Instant::now();
         if let Some(cached) = self.0.borrow().get(path) {
+            #[cfg(feature = "timing")]
+            crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(true));
             return Some(cached.clone());
         }
         let text = std::fs::read_to_string(path).ok()?;
         let arc: Arc<str> = Arc::from(text);
         self.0.borrow_mut().insert(path.to_path_buf(), arc.clone());
+        #[cfg(feature = "timing")]
+        crate::timing::record(|c| &mut c.source_read, _start.elapsed(), Some(false));
         Some(arc)
     }
 

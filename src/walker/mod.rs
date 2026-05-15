@@ -211,8 +211,12 @@ impl WalkCtx {
     /// The grammar is only instantiated on the first parse of a file; the
     /// parsed tree is shared across subsequent materialize calls.
     pub fn parse_tree(&self, path: &Path, language: &Language) -> Option<(Arc<str>, Arc<Tree>)> {
+        #[cfg(feature = "timing")]
+        let _start = std::time::Instant::now();
         let source = self.read_source(path)?;
         if let Some(tree) = self.tree_cache.borrow().get(path) {
+            #[cfg(feature = "timing")]
+            crate::timing::record(|c| &mut c.parse, _start.elapsed(), Some(true));
             return Some((source, tree.clone()));
         }
         let mut parser = tree_sitter::Parser::new();
@@ -224,6 +228,8 @@ impl WalkCtx {
         self.tree_cache
             .borrow_mut()
             .insert(path.to_path_buf(), arc.clone());
+        #[cfg(feature = "timing")]
+        crate::timing::record(|c| &mut c.parse, _start.elapsed(), Some(false));
         Some((source, arc))
     }
 
