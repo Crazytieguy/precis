@@ -1,7 +1,7 @@
 fixture = "neco"
 budget = 10000
-cumulative_tokens = 9985
-batch_count = 222
+cumulative_tokens = 9971
+batch_count = 187
 
 [[batches]]
 position = 1
@@ -51,366 +51,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/deps" })'
-descriptor = "listing of 'deps'"
-cost_tokens = 42
-cum_tokens = 104
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/neco/deps"
-entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
-
-[[batches]]
-position = 5
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/aat.h"
-cost_tokens = 66
-cum_tokens = 170
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 6
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h", start_line: 24 })'
-descriptor = "c decl at deps/aat.h:24"
-cost_tokens = 27
-cum_tokens = 197
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 24
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h" })'
-descriptor = "c includes in deps/stack.h"
-cost_tokens = 20
-cum_tokens = 217
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 12
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 8
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/stack.h"
-cost_tokens = 141
-cum_tokens = 358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 26
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 29
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 9
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", start_line: 35 })'
-descriptor = "c decl at deps/stack.h:35"
-cost_tokens = 0
-cum_tokens = 358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", start_line: 38 })'
-descriptor = "c decl at deps/stack.h:38"
-cost_tokens = 0
-cum_tokens = 358
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", start_line: 35 })'
-descriptor = "c decl doc at deps/stack.h:35"
-cost_tokens = 12
-cum_tokens = 370
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 12
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", start_line: 38 })'
-descriptor = "c decl doc at deps/stack.h:38"
-cost_tokens = 12
-cum_tokens = 382
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 13
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/worker.h"
-cost_tokens = 163
-cum_tokens = 545
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 24
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 14
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h" })'
-descriptor = "c header banner in deps/sco.h"
-cost_tokens = 69
-cum_tokens = 614
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 15
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h" })'
-descriptor = "c header banner in deps/stack.h"
-cost_tokens = 78
-cum_tokens = 692
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 16
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets" })'
 descriptor = "listing of 'docs/assets'"
 cost_tokens = 21
-cum_tokens = 713
+cum_tokens = 83
 
 [batches.content]
 kind = "fs"
@@ -420,73 +64,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets"
 entries = ["API_foot.md", "API_head.md", "logo-dark.png", "logo-light.png"]
 
 [[batches]]
-position = 17
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h" })'
-descriptor = "c includes in deps/sco.h"
-cost_tokens = 30
-cum_tokens = 743
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h" })'
-descriptor = "c includes in deps/worker.h"
-cost_tokens = 30
-cum_tokens = 773
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 12
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h" })'
-descriptor = "c header banner in deps/worker.h"
-cost_tokens = 81
-cum_tokens = 854
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 20
+position = 5
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h" })'
 descriptor = "c includes in neco.h"
 cost_tokens = 31
-cum_tokens = 885
+cum_tokens = 114
 
 [batches.content]
 kind = "lines"
@@ -500,37 +82,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 21
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h" })'
-descriptor = "c header banner in deps/aat.h"
-cost_tokens = 86
-cum_tokens = 971
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
+position = 6
 key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.h" })'
 descriptor = "c header banner in neco.h"
 cost_tokens = 87
-cum_tokens = 1058
+cum_tokens = 201
 
 [batches.content]
 kind = "lines"
@@ -544,693 +100,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 23
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h", start_line: 16 })'
-descriptor = "c decl at deps/worker.h:16"
-cost_tokens = 97
-cum_tokens = 1155
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.h"
-start = 16
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/sco.h"
-cost_tokens = 263
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 75
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 45
-end = 45
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 25
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 25 })'
-descriptor = "c decl at deps/sco.h:25"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 29 })'
-descriptor = "c decl at deps/sco.h:29"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 33 })'
-descriptor = "c decl at deps/sco.h:33"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 37 })'
-descriptor = "c decl at deps/sco.h:37"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 44 })'
-descriptor = "c decl at deps/sco.h:44"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 44
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 47 })'
-descriptor = "c decl at deps/sco.h:47"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 55 })'
-descriptor = "c decl at deps/sco.h:55"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 62 })'
-descriptor = "c decl at deps/sco.h:62"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 69 })'
-descriptor = "c decl at deps/sco.h:69"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 72 })'
-descriptor = "c decl at deps/sco.h:72"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 75 })'
-descriptor = "c decl at deps/sco.h:75"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 75
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 92 })'
-descriptor = "c decl at deps/sco.h:92"
-cost_tokens = 0
-cum_tokens = 1418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 75 })'
-descriptor = "c decl doc at deps/sco.h:75"
-cost_tokens = 10
-cum_tokens = 1428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 25 })'
-descriptor = "c decl doc at deps/sco.h:25"
-cost_tokens = 14
-cum_tokens = 1442
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 72 })'
-descriptor = "c decl doc at deps/sco.h:72"
-cost_tokens = 15
-cum_tokens = 1457
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 71
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 92 })'
-descriptor = "c decl doc at deps/sco.h:92"
-cost_tokens = 16
-cum_tokens = 1473
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 91
-end = 91
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 47 })'
-descriptor = "c decl doc at deps/sco.h:47"
-cost_tokens = 20
-cum_tokens = 1493
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 16 })'
-descriptor = "c decl at deps/sco.h:16"
-cost_tokens = 69
-cum_tokens = 1562
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 16
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 37 })'
-descriptor = "c decl doc at deps/sco.h:37"
-cost_tokens = 29
-cum_tokens = 1591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 35
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 33 })'
-descriptor = "c decl doc at deps/sco.h:33"
-cost_tokens = 32
-cum_tokens = 1623
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 29 })'
-descriptor = "c decl doc at deps/sco.h:29"
-cost_tokens = 34
-cum_tokens = 1657
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 27
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 82 })'
-descriptor = "c decl at deps/sco.h:82"
-cost_tokens = 105
-cum_tokens = 1762
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 82
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 82 })'
-descriptor = "c decl doc at deps/sco.h:82"
-cost_tokens = 10
-cum_tokens = 1772
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
+position = 7
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 408
-cum_tokens = 2180
+cum_tokens = 609
 
 [batches.content]
 kind = "lines"
@@ -1268,29 +142,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 49
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 62 })'
-descriptor = "c decl doc at deps/sco.h:62"
-cost_tokens = 70
-cum_tokens = 2250
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 57
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
+position = 8
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 233
-cum_tokens = 2483
+cum_tokens = 842
 
 [batches.content]
 kind = "lines"
@@ -1584,11 +440,11 @@ end = 580
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 9
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 46
-cum_tokens = 2529
+cum_tokens = 888
 
 [batches.content]
 kind = "lines"
@@ -1602,11 +458,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 52
+position = 10
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 16
-cum_tokens = 2545
+cum_tokens = 904
 
 [batches.content]
 kind = "lines"
@@ -1628,29 +484,11 @@ end = 581
 kind = "full"
 
 [[batches]]
-position = 53
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 44 })'
-descriptor = "c decl doc at deps/sco.h:44"
-cost_tokens = 74
-cum_tokens = 2619
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 39
-end = 43
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
+position = 11
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 55
-cum_tokens = 2674
+cum_tokens = 959
 
 [batches.content]
 kind = "lines"
@@ -1680,11 +518,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 55
+position = 12
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md" })'
 descriptor = "headings outline in docs/assets/API_head.md"
 cost_tokens = 68
-cum_tokens = 2742
+cum_tokens = 1027
 
 [batches.content]
 kind = "lines"
@@ -1786,65 +624,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 56
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 69 })'
-descriptor = "c decl doc at deps/sco.h:69"
-cost_tokens = 84
-cum_tokens = 2826
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 64
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h", start_line: 15 })'
-descriptor = "c decl at deps/stack.h:15"
-cost_tokens = 183
-cum_tokens = 3009
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.h"
-start = 15
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h", start_line: 55 })'
-descriptor = "c decl doc at deps/sco.h:55"
-cost_tokens = 95
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.h"
-start = 49
-end = 54
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
+position = 13
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 15
-cum_tokens = 3119
+cum_tokens = 1042
 
 [batches.content]
 kind = "lines"
@@ -1858,517 +642,25 @@ end = 513
 kind = "full"
 
 [[batches]]
-position = 60
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.c" })'
-descriptor = "c includes in deps/sco.c"
-cost_tokens = 21
-cum_tokens = 3140
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/deps" })'
+descriptor = "listing of 'deps'"
+cost_tokens = 42
+cum_tokens = 1084
 
 [batches.content]
-kind = "lines"
+kind = "fs"
 
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.c"
-start = 9
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/neco/deps"
+entries = [".gitignore", ".package", "aat.h", "embed.sh", "sco.c", "sco.h", "stack.c", "stack.h", "worker.c", "worker.h"]
 
 [[batches]]
-position = 61
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/stack.c"
-cost_tokens = 96
-cum_tokens = 3236
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 79
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 235
-end = 235
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 253
-end = 253
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 345
-end = 345
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 392
-end = 392
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 401
-end = 401
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 410
-end = 410
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 80
-end = 80
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 236
-end = 236
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 254
-end = 254
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 346
-end = 346
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 393
-end = 393
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 402
-end = 402
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 411
-end = 411
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 62
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 401 })'
-descriptor = "c decl at deps/stack.c:401"
-cost_tokens = 14
-cum_tokens = 3250
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 401
-end = 402
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 403
-end = 403
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 63
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 410 })'
-descriptor = "c decl at deps/stack.c:410"
-cost_tokens = 14
-cum_tokens = 3264
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 410
-end = 411
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 412
-end = 412
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 64
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 253 })'
-descriptor = "c decl at deps/stack.c:253"
-cost_tokens = 15
-cum_tokens = 3279
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 253
-end = 254
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 255
-end = 255
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 65
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 345 })'
-descriptor = "c decl at deps/stack.c:345"
-cost_tokens = 19
-cum_tokens = 3298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 345
-end = 346
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 347
-end = 347
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 66
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 392 })'
-descriptor = "c decl at deps/stack.c:392"
-cost_tokens = 19
-cum_tokens = 3317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 392
-end = 393
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 394
-end = 394
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 67
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 235 })'
-descriptor = "c decl at deps/stack.c:235"
-cost_tokens = 21
-cum_tokens = 3338
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 235
-end = 236
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 237
-end = 237
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 68
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 253 })'
-descriptor = "c decl body at deps/stack.c:253"
-cost_tokens = 12
-cum_tokens = 3350
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 255
-end = 255
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 401 })'
-descriptor = "c decl body at deps/stack.c:401"
-cost_tokens = 12
-cum_tokens = 3362
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 403
-end = 403
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 410 })'
-descriptor = "c decl body at deps/stack.c:410"
-cost_tokens = 12
-cum_tokens = 3374
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 412
-end = 412
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 79 })'
-descriptor = "c decl at deps/stack.c:79"
-cost_tokens = 32
-cum_tokens = 3406
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 79
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 72
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 235 })'
-descriptor = "c decl body at deps/stack.c:235"
-cost_tokens = 14
-cum_tokens = 3420
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 237
-end = 237
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 55 })'
-descriptor = "c decl at deps/stack.c:55"
-cost_tokens = 38
-cum_tokens = 3458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 55
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 392 })'
-descriptor = "c decl body at deps/stack.c:392"
-cost_tokens = 16
-cum_tokens = 3474
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 394
-end = 394
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 75
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h", start_line: 12 })'
-descriptor = "c decl at deps/aat.h:12"
-cost_tokens = 194
-cum_tokens = 3668
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/aat.h"
-start = 12
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 345 })'
-descriptor = "c decl body at deps/stack.c:345"
-cost_tokens = 17
-cum_tokens = 3685
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 347
-end = 347
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
+position = 15
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 14 })'
 descriptor = "README.md section #14"
 cost_tokens = 62
-cum_tokens = 3747
+cum_tokens = 1146
 
 [batches.content]
 kind = "lines"
@@ -2390,11 +682,11 @@ end = 502
 kind = "full"
 
 [[batches]]
-position = 78
+position = 16
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 51
-cum_tokens = 3798
+cum_tokens = 1197
 
 [batches.content]
 kind = "fs"
@@ -2404,11 +696,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/neco/examples"
 entries = ["README.md", "channel-buffering.c", "channels.c", "channels2.c", "coroutines.c", "echo-client.c", "echo-server.c", "generators.c", "portscan.c", "select.c", "signals.c"]
 
 [[batches]]
-position = 79
+position = 17
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 122
-cum_tokens = 3920
+cum_tokens = 1319
 
 [batches.content]
 kind = "lines"
@@ -2438,263 +730,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 80
-key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", chunk_index: 0 })'
-descriptor = "c decl names surface in deps/worker.c"
-cost_tokens = 140
-cum_tokens = 4060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 21
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 25
-end = 25
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 55
-end = 55
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 80
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 175
-end = 175
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 176
-end = 176
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 81
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 81 })'
-descriptor = "c decl at deps/worker.c:81"
-cost_tokens = 0
-cum_tokens = 4060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 82
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 55 })'
-descriptor = "c decl at deps/worker.c:55"
-cost_tokens = 13
-cum_tokens = 4073
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 55
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 83
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 33 })'
-descriptor = "c decl at deps/worker.c:33"
-cost_tokens = 27
-cum_tokens = 4100
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 33
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 49 })'
-descriptor = "c decl at deps/worker.c:49"
-cost_tokens = 34
-cum_tokens = 4134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 49
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 85
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 175 })'
-descriptor = "c decl at deps/worker.c:175"
-cost_tokens = 41
-cum_tokens = 4175
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 175
-end = 178
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 179
-end = 179
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 86
+position = 18
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/README.md", section_index: 1 })'
 descriptor = "docs/README.md section #1"
 cost_tokens = 103
-cum_tokens = 4278
+cum_tokens = 1422
 
 [batches.content]
 kind = "lines"
@@ -2724,11 +764,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 87
+position = 19
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 3 })'
 descriptor = "docs/API.md section #3"
 cost_tokens = 11
-cum_tokens = 4289
+cum_tokens = 1433
 
 [batches.content]
 kind = "lines"
@@ -2742,11 +782,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 88
+position = 20
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 15 })'
 descriptor = "docs/API.md section #15"
 cost_tokens = 11
-cum_tokens = 4300
+cum_tokens = 1444
 
 [batches.content]
 kind = "lines"
@@ -2760,11 +800,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 89
+position = 21
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 16 })'
 descriptor = "docs/API.md section #16"
 cost_tokens = 11
-cum_tokens = 4311
+cum_tokens = 1455
 
 [batches.content]
 kind = "lines"
@@ -2778,11 +818,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 90
+position = 22
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 4 })'
 descriptor = "docs/API.md section #4"
 cost_tokens = 12
-cum_tokens = 4323
+cum_tokens = 1467
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +836,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 91
+position = 23
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 0 })'
 descriptor = "docs/API.md section #0"
 cost_tokens = 106
-cum_tokens = 4429
+cum_tokens = 1573
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +878,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 92
+position = 24
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", chunk_index: 0 })'
 descriptor = "c decl names surface in neco.c"
 cost_tokens = 292
-cum_tokens = 4721
+cum_tokens = 1865
 
 [batches.content]
 kind = "lines"
@@ -3216,11 +1256,11 @@ end = 2121
 kind = "ellipsis"
 
 [[batches]]
-position = 93
+position = 25
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1312 })'
 descriptor = "c decl at neco.c:1312"
 cost_tokens = 0
-cum_tokens = 4721
+cum_tokens = 1865
 
 [batches.content]
 kind = "lines"
@@ -3234,11 +1274,11 @@ end = 1312
 kind = "full"
 
 [[batches]]
-position = 94
+position = 26
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1313 })'
 descriptor = "c decl at neco.c:1313"
 cost_tokens = 0
-cum_tokens = 4721
+cum_tokens = 1865
 
 [batches.content]
 kind = "lines"
@@ -3260,11 +1300,11 @@ end = 1314
 kind = "ellipsis"
 
 [[batches]]
-position = 95
+position = 27
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2029 })'
 descriptor = "c decl at neco.c:2029"
 cost_tokens = 11
-cum_tokens = 4732
+cum_tokens = 1876
 
 [batches.content]
 kind = "lines"
@@ -3286,11 +1326,11 @@ end = 2031
 kind = "ellipsis"
 
 [[batches]]
-position = 96
+position = 28
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2065 })'
 descriptor = "c decl at neco.c:2065"
 cost_tokens = 11
-cum_tokens = 4743
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -3312,11 +1352,11 @@ end = 2067
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 29
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2056 })'
 descriptor = "c decl at neco.c:2056"
 cost_tokens = 12
-cum_tokens = 4755
+cum_tokens = 1899
 
 [batches.content]
 kind = "lines"
@@ -3338,11 +1378,11 @@ end = 2058
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 30
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2051 })'
 descriptor = "c decl at neco.c:2051"
 cost_tokens = 13
-cum_tokens = 4768
+cum_tokens = 1912
 
 [batches.content]
 kind = "lines"
@@ -3364,11 +1404,11 @@ end = 2053
 kind = "ellipsis"
 
 [[batches]]
-position = 99
+position = 31
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2074 })'
 descriptor = "c decl at neco.c:2074"
 cost_tokens = 14
-cum_tokens = 4782
+cum_tokens = 1926
 
 [batches.content]
 kind = "lines"
@@ -3390,11 +1430,11 @@ end = 2076
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 32
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2106 })'
 descriptor = "c decl at neco.c:2106"
 cost_tokens = 14
-cum_tokens = 4796
+cum_tokens = 1940
 
 [batches.content]
 kind = "lines"
@@ -3416,11 +1456,11 @@ end = 2108
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 33
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2120 })'
 descriptor = "c decl at neco.c:2120"
 cost_tokens = 14
-cum_tokens = 4810
+cum_tokens = 1954
 
 [batches.content]
 kind = "lines"
@@ -3442,11 +1482,11 @@ end = 2122
 kind = "ellipsis"
 
 [[batches]]
-position = 102
+position = 34
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2037 })'
 descriptor = "c decl at neco.c:2037"
 cost_tokens = 15
-cum_tokens = 4825
+cum_tokens = 1969
 
 [batches.content]
 kind = "lines"
@@ -3468,11 +1508,11 @@ end = 2039
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 35
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2094 })'
 descriptor = "c decl at neco.c:2094"
 cost_tokens = 15
-cum_tokens = 4840
+cum_tokens = 1984
 
 [batches.content]
 kind = "lines"
@@ -3494,11 +1534,11 @@ end = 2096
 kind = "ellipsis"
 
 [[batches]]
-position = 104
+position = 36
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
 descriptor = "c decl at neco.c:1320"
 cost_tokens = 16
-cum_tokens = 4856
+cum_tokens = 2000
 
 [batches.content]
 kind = "lines"
@@ -3520,11 +1560,11 @@ end = 1322
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 37
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1293 })'
 descriptor = "c decl at neco.c:1293"
 cost_tokens = 19
-cum_tokens = 4875
+cum_tokens = 2019
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +1586,11 @@ end = 1295
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 38
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1293 })'
 descriptor = "c decl doc at neco.c:1293"
 cost_tokens = 11
-cum_tokens = 4886
+cum_tokens = 2030
 
 [batches.content]
 kind = "lines"
@@ -3564,11 +1604,11 @@ end = 1292
 kind = "full"
 
 [[batches]]
-position = 107
+position = 39
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
 descriptor = "c decl at neco.c:1282"
 cost_tokens = 20
-cum_tokens = 4906
+cum_tokens = 2050
 
 [batches.content]
 kind = "lines"
@@ -3590,11 +1630,11 @@ end = 1284
 kind = "ellipsis"
 
 [[batches]]
-position = 108
+position = 40
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
 descriptor = "c decl doc at neco.c:1282"
 cost_tokens = 11
-cum_tokens = 4917
+cum_tokens = 2061
 
 [batches.content]
 kind = "lines"
@@ -3608,11 +1648,11 @@ end = 1281
 kind = "full"
 
 [[batches]]
-position = 109
+position = 41
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1814 })'
 descriptor = "c decl at neco.c:1814"
 cost_tokens = 26
-cum_tokens = 4943
+cum_tokens = 2087
 
 [batches.content]
 kind = "lines"
@@ -3626,11 +1666,11 @@ end = 1817
 kind = "full"
 
 [[batches]]
-position = 110
+position = 42
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1899 })'
 descriptor = "c decl at neco.c:1899"
 cost_tokens = 26
-cum_tokens = 4969
+cum_tokens = 2113
 
 [batches.content]
 kind = "lines"
@@ -3644,11 +1684,11 @@ end = 1902
 kind = "full"
 
 [[batches]]
-position = 111
+position = 43
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1875 })'
 descriptor = "c decl at neco.c:1875"
 cost_tokens = 29
-cum_tokens = 4998
+cum_tokens = 2142
 
 [batches.content]
 kind = "lines"
@@ -3662,11 +1702,11 @@ end = 1878
 kind = "full"
 
 [[batches]]
-position = 112
+position = 44
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1880 })'
 descriptor = "c decl at neco.c:1880"
 cost_tokens = 28
-cum_tokens = 5026
+cum_tokens = 2170
 
 [batches.content]
 kind = "lines"
@@ -3680,11 +1720,11 @@ end = 1881
 kind = "full"
 
 [[batches]]
-position = 113
+position = 45
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2051 })'
 descriptor = "c decl body at neco.c:2051"
 cost_tokens = 16
-cum_tokens = 5042
+cum_tokens = 2186
 
 [batches.content]
 kind = "lines"
@@ -3698,11 +1738,11 @@ end = 2053
 kind = "full"
 
 [[batches]]
-position = 114
+position = 46
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2120 })'
 descriptor = "c decl body at neco.c:2120"
 cost_tokens = 16
-cum_tokens = 5058
+cum_tokens = 2202
 
 [batches.content]
 kind = "lines"
@@ -3716,11 +1756,11 @@ end = 2122
 kind = "full"
 
 [[batches]]
-position = 115
+position = 47
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1312 })'
 descriptor = "c decl doc at neco.c:1312"
 cost_tokens = 27
-cum_tokens = 5085
+cum_tokens = 2229
 
 [batches.content]
 kind = "lines"
@@ -3734,11 +1774,11 @@ end = 1311
 kind = "full"
 
 [[batches]]
-position = 116
+position = 48
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
 descriptor = "c decl doc at neco.c:1320"
 cost_tokens = 40
-cum_tokens = 5125
+cum_tokens = 2269
 
 [batches.content]
 kind = "lines"
@@ -3752,11 +1792,11 @@ end = 1319
 kind = "full"
 
 [[batches]]
-position = 117
+position = 49
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1155 })'
 descriptor = "c decl at neco.c:1155"
 cost_tokens = 58
-cum_tokens = 5183
+cum_tokens = 2327
 
 [batches.content]
 kind = "lines"
@@ -3770,11 +1810,11 @@ end = 1160
 kind = "full"
 
 [[batches]]
-position = 118
+position = 50
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1313 })'
 descriptor = "c decl body at neco.c:1313"
 cost_tokens = 32
-cum_tokens = 5215
+cum_tokens = 2359
 
 [batches.content]
 kind = "lines"
@@ -3788,11 +1828,11 @@ end = 1315
 kind = "full"
 
 [[batches]]
-position = 119
+position = 51
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1337 })'
 descriptor = "c decl at neco.c:1337"
 cost_tokens = 91
-cum_tokens = 5306
+cum_tokens = 2450
 
 [batches.content]
 kind = "lines"
@@ -3806,11 +1846,11 @@ end = 1342
 kind = "full"
 
 [[batches]]
-position = 120
+position = 52
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1364 })'
 descriptor = "c decl at neco.c:1364"
 cost_tokens = 99
-cum_tokens = 5405
+cum_tokens = 2549
 
 [batches.content]
 kind = "lines"
@@ -3824,11 +1864,11 @@ end = 1373
 kind = "full"
 
 [[batches]]
-position = 121
+position = 53
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2029 })'
 descriptor = "c decl body at neco.c:2029"
 cost_tokens = 44
-cum_tokens = 5449
+cum_tokens = 2593
 
 [batches.content]
 kind = "lines"
@@ -3842,11 +1882,11 @@ end = 2034
 kind = "full"
 
 [[batches]]
-position = 122
+position = 54
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 31
-cum_tokens = 5480
+cum_tokens = 2624
 
 [batches.content]
 kind = "lines"
@@ -3860,11 +1900,11 @@ end = 523
 kind = "full"
 
 [[batches]]
-position = 123
+position = 55
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/tools" })'
 descriptor = "listing of 'docs/tools'"
 cost_tokens = 14
-cum_tokens = 5494
+cum_tokens = 2638
 
 [batches.content]
 kind = "fs"
@@ -3874,11 +1914,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/tools"
 entries = ["README.md", "build-api.sh", "doxygen-md"]
 
 [[batches]]
-position = 124
+position = 56
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 5 })'
 descriptor = "docs/API.md section #5"
 cost_tokens = 13
-cum_tokens = 5507
+cum_tokens = 2651
 
 [batches.content]
 kind = "lines"
@@ -3892,11 +1932,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 125
+position = 57
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 6 })'
 descriptor = "docs/API.md section #6"
 cost_tokens = 13
-cum_tokens = 5520
+cum_tokens = 2664
 
 [batches.content]
 kind = "lines"
@@ -3910,11 +1950,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 126
+position = 58
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 14 })'
 descriptor = "docs/API.md section #14"
 cost_tokens = 13
-cum_tokens = 5533
+cum_tokens = 2677
 
 [batches.content]
 kind = "lines"
@@ -3928,11 +1968,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 127
+position = 59
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 17 })'
 descriptor = "docs/API.md section #17"
 cost_tokens = 13
-cum_tokens = 5546
+cum_tokens = 2690
 
 [batches.content]
 kind = "lines"
@@ -3946,47 +1986,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 128
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c" })'
-descriptor = "c includes in deps/stack.c"
-cost_tokens = 50
-cum_tokens = 5596
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 9
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c" })'
-descriptor = "c includes in deps/worker.c"
-cost_tokens = 50
-cum_tokens = 5646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 9
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 130
+position = 60
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 2 })'
 descriptor = "docs/API.md section #2"
 cost_tokens = 14
-cum_tokens = 5660
+cum_tokens = 2704
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +2004,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 131
+position = 61
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 7 })'
 descriptor = "docs/API.md section #7"
 cost_tokens = 14
-cum_tokens = 5674
+cum_tokens = 2718
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +2022,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 132
+position = 62
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 10 })'
 descriptor = "docs/API.md section #10"
 cost_tokens = 14
-cum_tokens = 5688
+cum_tokens = 2732
 
 [batches.content]
 kind = "lines"
@@ -4036,11 +2040,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 133
+position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 13 })'
 descriptor = "docs/API.md section #13"
 cost_tokens = 14
-cum_tokens = 5702
+cum_tokens = 2746
 
 [batches.content]
 kind = "lines"
@@ -4054,11 +2058,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 134
+position = 64
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 19 })'
 descriptor = "docs/API.md section #19"
 cost_tokens = 14
-cum_tokens = 5716
+cum_tokens = 2760
 
 [batches.content]
 kind = "lines"
@@ -4072,11 +2076,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 135
+position = 65
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 12 })'
 descriptor = "docs/API.md section #12"
 cost_tokens = 15
-cum_tokens = 5731
+cum_tokens = 2775
 
 [batches.content]
 kind = "lines"
@@ -4090,11 +2094,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 136
+position = 66
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 18 })'
 descriptor = "docs/API.md section #18"
 cost_tokens = 15
-cum_tokens = 5746
+cum_tokens = 2790
 
 [batches.content]
 kind = "lines"
@@ -4108,11 +2112,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 137
+position = 67
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1320 })'
 descriptor = "c decl body at neco.c:1320"
 cost_tokens = 58
-cum_tokens = 5804
+cum_tokens = 2848
 
 [batches.content]
 kind = "lines"
@@ -4126,11 +2130,11 @@ end = 1327
 kind = "full"
 
 [[batches]]
-position = 138
+position = 68
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2065 })'
 descriptor = "c decl body at neco.c:2065"
 cost_tokens = 58
-cum_tokens = 5862
+cum_tokens = 2906
 
 [batches.content]
 kind = "lines"
@@ -4144,11 +2148,11 @@ end = 2071
 kind = "full"
 
 [[batches]]
-position = 139
+position = 69
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 43 })'
 descriptor = "docs/API.md section #43"
 cost_tokens = 47
-cum_tokens = 5909
+cum_tokens = 2953
 
 [batches.content]
 kind = "lines"
@@ -4170,11 +2174,11 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 140
+position = 70
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 44 })'
 descriptor = "docs/API.md section #44"
 cost_tokens = 47
-cum_tokens = 5956
+cum_tokens = 3000
 
 [batches.content]
 kind = "lines"
@@ -4196,29 +2200,11 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 141
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 38 })'
-descriptor = "c decl at deps/worker.c:38"
-cost_tokens = 80
-cum_tokens = 6036
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 38
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 142
+position = 71
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1819 })'
 descriptor = "c decl at neco.c:1819"
 cost_tokens = 147
-cum_tokens = 6183
+cum_tokens = 3147
 
 [batches.content]
 kind = "lines"
@@ -4232,11 +2218,11 @@ end = 1834
 kind = "full"
 
 [[batches]]
-position = 143
+position = 72
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2056 })'
 descriptor = "c decl body at neco.c:2056"
 cost_tokens = 61
-cum_tokens = 6244
+cum_tokens = 3208
 
 [batches.content]
 kind = "lines"
@@ -4250,11 +2236,11 @@ end = 2062
 kind = "full"
 
 [[batches]]
-position = 144
+position = 73
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 1 })'
 descriptor = "docs/API.md section #1"
 cost_tokens = 16
-cum_tokens = 6260
+cum_tokens = 3224
 
 [batches.content]
 kind = "lines"
@@ -4268,11 +2254,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 145
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 163
-cum_tokens = 6423
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -4310,11 +2296,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 146
+position = 75
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 178
-cum_tokens = 6601
+cum_tokens = 3565
 
 [batches.content]
 kind = "lines"
@@ -4368,11 +2354,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 147
+position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/TECHNICAL.md", section_index: 0 })'
 descriptor = "docs/TECHNICAL.md section #0"
 cost_tokens = 160
-cum_tokens = 6761
+cum_tokens = 3725
 
 [batches.content]
 kind = "lines"
@@ -4418,11 +2404,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 148
+position = 77
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 8 })'
 descriptor = "docs/API.md section #8"
 cost_tokens = 17
-cum_tokens = 6778
+cum_tokens = 3742
 
 [batches.content]
 kind = "lines"
@@ -4436,11 +2422,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 149
+position = 78
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 9 })'
 descriptor = "docs/API.md section #9"
 cost_tokens = 17
-cum_tokens = 6795
+cum_tokens = 3759
 
 [batches.content]
 kind = "lines"
@@ -4454,11 +2440,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 150
+position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 3 })'
 descriptor = "docs/assets/API_head.md section #3"
 cost_tokens = 11
-cum_tokens = 6806
+cum_tokens = 3770
 
 [batches.content]
 kind = "lines"
@@ -4472,11 +2458,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 151
+position = 80
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 15 })'
 descriptor = "docs/assets/API_head.md section #15"
 cost_tokens = 11
-cum_tokens = 6817
+cum_tokens = 3781
 
 [batches.content]
 kind = "lines"
@@ -4490,11 +2476,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 152
+position = 81
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 16 })'
 descriptor = "docs/assets/API_head.md section #16"
 cost_tokens = 11
-cum_tokens = 6828
+cum_tokens = 3792
 
 [batches.content]
 kind = "lines"
@@ -4508,11 +2494,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 153
+position = 82
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 0 })'
 descriptor = "docs/assets/API_head.md section #0"
 cost_tokens = 96
-cum_tokens = 6924
+cum_tokens = 3888
 
 [batches.content]
 kind = "lines"
@@ -4550,11 +2536,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 154
+position = 83
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/neco/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 126
-cum_tokens = 7050
+cum_tokens = 4014
 
 [batches.content]
 kind = "fs"
@@ -4564,29 +2550,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/neco/tests"
 entries = ["README.md", "bench.c", "fail_counters.h", "panic.h", "priv_funcs.h", "run.sh", "signals.h", "test_basic.c", "test_cancel.c", "test_chan.c", "test_errors.c", "test_gen.c", "test_join.c", "test_misc.c", "test_net.c", "test_panic.c", "test_pipe.c", "test_rand.c", "test_signal.c", "test_sleep.c", "test_stream.c", "test_suspend.c", "test_sync.c", "test_wait.c", "test_work.c", "tests.h"]
 
 [[batches]]
-position = 155
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 25 })'
-descriptor = "c decl at deps/worker.c:25"
-cost_tokens = 97
-cum_tokens = 7147
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 25
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
+position = 84
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 4 })'
 descriptor = "docs/assets/API_head.md section #4"
 cost_tokens = 12
-cum_tokens = 7159
+cum_tokens = 4026
 
 [batches.content]
 kind = "lines"
@@ -4600,11 +2568,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 157
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 17 })'
 descriptor = "README.md section #17"
 cost_tokens = 48
-cum_tokens = 7207
+cum_tokens = 4074
 
 [batches.content]
 kind = "lines"
@@ -4618,11 +2586,11 @@ end = 517
 kind = "full"
 
 [[batches]]
-position = 158
+position = 86
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 11 })'
 descriptor = "docs/API.md section #11"
 cost_tokens = 20
-cum_tokens = 7227
+cum_tokens = 4094
 
 [batches.content]
 kind = "lines"
@@ -4636,11 +2604,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 159
+position = 87
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1282 })'
 descriptor = "c decl body at neco.c:1282"
 cost_tokens = 78
-cum_tokens = 7305
+cum_tokens = 4172
 
 [batches.content]
 kind = "lines"
@@ -4654,11 +2622,11 @@ end = 1289
 kind = "full"
 
 [[batches]]
-position = 160
+position = 88
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 5 })'
 descriptor = "docs/assets/API_head.md section #5"
 cost_tokens = 13
-cum_tokens = 7318
+cum_tokens = 4185
 
 [batches.content]
 kind = "lines"
@@ -4672,11 +2640,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 161
+position = 89
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 6 })'
 descriptor = "docs/assets/API_head.md section #6"
 cost_tokens = 13
-cum_tokens = 7331
+cum_tokens = 4198
 
 [batches.content]
 kind = "lines"
@@ -4690,11 +2658,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 162
+position = 90
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 14 })'
 descriptor = "docs/assets/API_head.md section #14"
 cost_tokens = 13
-cum_tokens = 7344
+cum_tokens = 4211
 
 [batches.content]
 kind = "lines"
@@ -4708,11 +2676,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 163
+position = 91
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 17 })'
 descriptor = "docs/assets/API_head.md section #17"
 cost_tokens = 13
-cum_tokens = 7357
+cum_tokens = 4224
 
 [batches.content]
 kind = "lines"
@@ -4726,11 +2694,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 164
+position = 92
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in neco.c"
 cost_tokens = 309
-cum_tokens = 7666
+cum_tokens = 4533
 
 [batches.content]
 kind = "lines"
@@ -5104,11 +3072,11 @@ end = 3122
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 93
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3105 })'
 descriptor = "c decl at neco.c:3105"
 cost_tokens = 0
-cum_tokens = 7666
+cum_tokens = 4533
 
 [batches.content]
 kind = "lines"
@@ -5122,11 +3090,11 @@ end = 3105
 kind = "full"
 
 [[batches]]
-position = 166
+position = 94
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
 descriptor = "c decl at neco.c:2154"
 cost_tokens = 11
-cum_tokens = 7677
+cum_tokens = 4544
 
 [batches.content]
 kind = "lines"
@@ -5148,11 +3116,11 @@ end = 2156
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 95
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2135 })'
 descriptor = "c decl at neco.c:2135"
 cost_tokens = 13
-cum_tokens = 7690
+cum_tokens = 4557
 
 [batches.content]
 kind = "lines"
@@ -5174,11 +3142,11 @@ end = 2137
 kind = "ellipsis"
 
 [[batches]]
-position = 168
+position = 96
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2125 })'
 descriptor = "c decl at neco.c:2125"
 cost_tokens = 14
-cum_tokens = 7704
+cum_tokens = 4571
 
 [batches.content]
 kind = "lines"
@@ -5200,11 +3168,11 @@ end = 2127
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 97
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2130 })'
 descriptor = "c decl at neco.c:2130"
 cost_tokens = 14
-cum_tokens = 7718
+cum_tokens = 4585
 
 [batches.content]
 kind = "lines"
@@ -5226,11 +3194,11 @@ end = 2132
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 98
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2145 })'
 descriptor = "c decl at neco.c:2145"
 cost_tokens = 14
-cum_tokens = 7732
+cum_tokens = 4599
 
 [batches.content]
 kind = "lines"
@@ -5252,11 +3220,11 @@ end = 2147
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 99
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2160 })'
 descriptor = "c decl at neco.c:2160"
 cost_tokens = 15
-cum_tokens = 7747
+cum_tokens = 4614
 
 [batches.content]
 kind = "lines"
@@ -5278,11 +3246,11 @@ end = 2162
 kind = "ellipsis"
 
 [[batches]]
-position = 172
+position = 100
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2607 })'
 descriptor = "c decl at neco.c:2607"
 cost_tokens = 15
-cum_tokens = 7762
+cum_tokens = 4629
 
 [batches.content]
 kind = "lines"
@@ -5304,11 +3272,11 @@ end = 2609
 kind = "ellipsis"
 
 [[batches]]
-position = 173
+position = 101
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2616 })'
 descriptor = "c decl at neco.c:2616"
 cost_tokens = 15
-cum_tokens = 7777
+cum_tokens = 4644
 
 [batches.content]
 kind = "lines"
@@ -5330,11 +3298,11 @@ end = 2618
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 102
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2926 })'
 descriptor = "c decl at neco.c:2926"
 cost_tokens = 15
-cum_tokens = 7792
+cum_tokens = 4659
 
 [batches.content]
 kind = "lines"
@@ -5356,11 +3324,11 @@ end = 2928
 kind = "ellipsis"
 
 [[batches]]
-position = 175
+position = 103
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2459 })'
 descriptor = "c decl at neco.c:2459"
 cost_tokens = 16
-cum_tokens = 7808
+cum_tokens = 4675
 
 [batches.content]
 kind = "lines"
@@ -5382,11 +3350,11 @@ end = 2461
 kind = "ellipsis"
 
 [[batches]]
-position = 176
+position = 104
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2130 })'
 descriptor = "c decl body at neco.c:2130"
 cost_tokens = 9
-cum_tokens = 7817
+cum_tokens = 4684
 
 [batches.content]
 kind = "lines"
@@ -5400,11 +3368,11 @@ end = 2132
 kind = "full"
 
 [[batches]]
-position = 177
+position = 105
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2551 })'
 descriptor = "c decl at neco.c:2551"
 cost_tokens = 20
-cum_tokens = 7837
+cum_tokens = 4704
 
 [batches.content]
 kind = "lines"
@@ -5426,11 +3394,11 @@ end = 2553
 kind = "ellipsis"
 
 [[batches]]
-position = 178
+position = 106
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2598 })'
 descriptor = "c decl at neco.c:2598"
 cost_tokens = 20
-cum_tokens = 7857
+cum_tokens = 4724
 
 [batches.content]
 kind = "lines"
@@ -5452,11 +3420,11 @@ end = 2600
 kind = "ellipsis"
 
 [[batches]]
-position = 179
+position = 107
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2125 })'
 descriptor = "c decl body at neco.c:2125"
 cost_tokens = 10
-cum_tokens = 7867
+cum_tokens = 4734
 
 [batches.content]
 kind = "lines"
@@ -5470,11 +3438,11 @@ end = 2127
 kind = "full"
 
 [[batches]]
-position = 180
+position = 108
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2441 })'
 descriptor = "c decl at neco.c:2441"
 cost_tokens = 22
-cum_tokens = 7889
+cum_tokens = 4756
 
 [batches.content]
 kind = "lines"
@@ -5496,11 +3464,11 @@ end = 2443
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 109
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2160 })'
 descriptor = "c decl body at neco.c:2160"
 cost_tokens = 11
-cum_tokens = 7900
+cum_tokens = 4767
 
 [batches.content]
 kind = "lines"
@@ -5514,11 +3482,11 @@ end = 2162
 kind = "full"
 
 [[batches]]
-position = 182
+position = 110
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3105 })'
 descriptor = "c decl doc at neco.c:3105"
 cost_tokens = 14
-cum_tokens = 7914
+cum_tokens = 4781
 
 [batches.content]
 kind = "lines"
@@ -5532,11 +3500,11 @@ end = 3104
 kind = "full"
 
 [[batches]]
-position = 183
+position = 111
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2459 })'
 descriptor = "c decl body at neco.c:2459"
 cost_tokens = 13
-cum_tokens = 7927
+cum_tokens = 4794
 
 [batches.content]
 kind = "lines"
@@ -5550,11 +3518,11 @@ end = 2461
 kind = "full"
 
 [[batches]]
-position = 184
+position = 112
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2607 })'
 descriptor = "c decl body at neco.c:2607"
 cost_tokens = 13
-cum_tokens = 7940
+cum_tokens = 4807
 
 [batches.content]
 kind = "lines"
@@ -5568,11 +3536,11 @@ end = 2609
 kind = "full"
 
 [[batches]]
-position = 185
+position = 113
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2616 })'
 descriptor = "c decl body at neco.c:2616"
 cost_tokens = 13
-cum_tokens = 7953
+cum_tokens = 4820
 
 [batches.content]
 kind = "lines"
@@ -5586,11 +3554,11 @@ end = 2618
 kind = "full"
 
 [[batches]]
-position = 186
+position = 114
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
 descriptor = "c decl doc at neco.c:2154"
 cost_tokens = 21
-cum_tokens = 7974
+cum_tokens = 4841
 
 [batches.content]
 kind = "lines"
@@ -5604,11 +3572,11 @@ end = 2153
 kind = "full"
 
 [[batches]]
-position = 187
+position = 115
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
 descriptor = "c decl at neco.c:2192"
 cost_tokens = 30
-cum_tokens = 8004
+cum_tokens = 4871
 
 [batches.content]
 kind = "lines"
@@ -5630,11 +3598,11 @@ end = 2194
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 116
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
 descriptor = "c decl doc at neco.c:2192"
 cost_tokens = 17
-cum_tokens = 8021
+cum_tokens = 4888
 
 [batches.content]
 kind = "lines"
@@ -5648,11 +3616,11 @@ end = 2191
 kind = "full"
 
 [[batches]]
-position = 189
+position = 117
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
 descriptor = "c decl at neco.c:3121"
 cost_tokens = 30
-cum_tokens = 8051
+cum_tokens = 4918
 
 [batches.content]
 kind = "lines"
@@ -5674,11 +3642,11 @@ end = 3124
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 118
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2285 })'
 descriptor = "c decl at neco.c:2285"
 cost_tokens = 36
-cum_tokens = 8087
+cum_tokens = 4954
 
 [batches.content]
 kind = "lines"
@@ -5692,11 +3660,11 @@ end = 2289
 kind = "full"
 
 [[batches]]
-position = 191
+position = 119
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2441 })'
 descriptor = "c decl body at neco.c:2441"
 cost_tokens = 15
-cum_tokens = 8102
+cum_tokens = 4969
 
 [batches.content]
 kind = "lines"
@@ -5710,11 +3678,11 @@ end = 2443
 kind = "full"
 
 [[batches]]
-position = 192
+position = 120
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2598 })'
 descriptor = "c decl body at neco.c:2598"
 cost_tokens = 17
-cum_tokens = 8119
+cum_tokens = 4986
 
 [batches.content]
 kind = "lines"
@@ -5728,11 +3696,11 @@ end = 2600
 kind = "full"
 
 [[batches]]
-position = 193
+position = 121
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2261 })'
 descriptor = "c decl at neco.c:2261"
 cost_tokens = 42
-cum_tokens = 8161
+cum_tokens = 5028
 
 [batches.content]
 kind = "lines"
@@ -5746,11 +3714,11 @@ end = 2265
 kind = "full"
 
 [[batches]]
-position = 194
+position = 122
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2551 })'
 descriptor = "c decl body at neco.c:2551"
 cost_tokens = 18
-cum_tokens = 8179
+cum_tokens = 5046
 
 [batches.content]
 kind = "lines"
@@ -5764,11 +3732,11 @@ end = 2553
 kind = "full"
 
 [[batches]]
-position = 195
+position = 123
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2165 })'
 descriptor = "c decl at neco.c:2165"
 cost_tokens = 63
-cum_tokens = 8242
+cum_tokens = 5109
 
 [batches.content]
 kind = "lines"
@@ -5782,11 +3750,11 @@ end = 2171
 kind = "full"
 
 [[batches]]
-position = 196
+position = 124
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
 descriptor = "c decl body at neco.c:3121"
 cost_tokens = 31
-cum_tokens = 8273
+cum_tokens = 5140
 
 [batches.content]
 kind = "lines"
@@ -5800,11 +3768,11 @@ end = 3126
 kind = "full"
 
 [[batches]]
-position = 197
+position = 125
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 3121 })'
 descriptor = "c decl doc at neco.c:3121"
 cost_tokens = 70
-cum_tokens = 8343
+cum_tokens = 5210
 
 [batches.content]
 kind = "lines"
@@ -5818,11 +3786,11 @@ end = 3120
 kind = "full"
 
 [[batches]]
-position = 198
+position = 126
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2145 })'
 descriptor = "c decl body at neco.c:2145"
 cost_tokens = 44
-cum_tokens = 8387
+cum_tokens = 5254
 
 [batches.content]
 kind = "lines"
@@ -5836,11 +3804,11 @@ end = 2150
 kind = "full"
 
 [[batches]]
-position = 199
+position = 127
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2154 })'
 descriptor = "c decl body at neco.c:2154"
 cost_tokens = 46
-cum_tokens = 8433
+cum_tokens = 5300
 
 [batches.content]
 kind = "lines"
@@ -5854,11 +3822,11 @@ end = 2157
 kind = "full"
 
 [[batches]]
-position = 200
+position = 128
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2247 })'
 descriptor = "c decl at neco.c:2247"
 cost_tokens = 142
-cum_tokens = 8575
+cum_tokens = 5442
 
 [batches.content]
 kind = "lines"
@@ -5872,11 +3840,11 @@ end = 2259
 kind = "full"
 
 [[batches]]
-position = 201
+position = 129
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2135 })'
 descriptor = "c decl body at neco.c:2135"
 cost_tokens = 61
-cum_tokens = 8636
+cum_tokens = 5503
 
 [batches.content]
 kind = "lines"
@@ -5890,11 +3858,11 @@ end = 2142
 kind = "full"
 
 [[batches]]
-position = 202
+position = 130
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2267 })'
 descriptor = "c decl at neco.c:2267"
 cost_tokens = 187
-cum_tokens = 8823
+cum_tokens = 5690
 
 [batches.content]
 kind = "lines"
@@ -5908,11 +3876,11 @@ end = 2283
 kind = "full"
 
 [[batches]]
-position = 203
+position = 131
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 1124 })'
 descriptor = "c decl at neco.c:1124"
 cost_tokens = 203
-cum_tokens = 9026
+cum_tokens = 5893
 
 [batches.content]
 kind = "lines"
@@ -5926,11 +3894,11 @@ end = 1141
 kind = "full"
 
 [[batches]]
-position = 204
+position = 132
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 45 })'
 descriptor = "docs/API.md section #45"
 cost_tokens = 67
-cum_tokens = 9093
+cum_tokens = 5960
 
 [batches.content]
 kind = "lines"
@@ -5952,11 +3920,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 205
+position = 133
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 18 })'
 descriptor = "README.md section #18"
 cost_tokens = 54
-cum_tokens = 9147
+cum_tokens = 6014
 
 [batches.content]
 kind = "lines"
@@ -5970,11 +3938,11 @@ end = 521
 kind = "full"
 
 [[batches]]
-position = 206
+position = 134
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 2 })'
 descriptor = "docs/assets/API_head.md section #2"
 cost_tokens = 14
-cum_tokens = 9161
+cum_tokens = 6028
 
 [batches.content]
 kind = "lines"
@@ -5988,11 +3956,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 207
+position = 135
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 7 })'
 descriptor = "docs/assets/API_head.md section #7"
 cost_tokens = 14
-cum_tokens = 9175
+cum_tokens = 6042
 
 [batches.content]
 kind = "lines"
@@ -6006,11 +3974,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 208
+position = 136
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 10 })'
 descriptor = "docs/assets/API_head.md section #10"
 cost_tokens = 14
-cum_tokens = 9189
+cum_tokens = 6056
 
 [batches.content]
 kind = "lines"
@@ -6024,11 +3992,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 209
+position = 137
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 13 })'
 descriptor = "docs/assets/API_head.md section #13"
 cost_tokens = 14
-cum_tokens = 9203
+cum_tokens = 6070
 
 [batches.content]
 kind = "lines"
@@ -6042,11 +4010,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 210
+position = 138
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 19 })'
 descriptor = "docs/assets/API_head.md section #19"
 cost_tokens = 14
-cum_tokens = 9217
+cum_tokens = 6084
 
 [batches.content]
 kind = "lines"
@@ -6060,11 +4028,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 211
+position = 139
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/tests/README.md" })'
 descriptor = "README headline in tests/README.md"
 cost_tokens = 21
-cum_tokens = 9238
+cum_tokens = 6105
 
 [batches.content]
 kind = "lines"
@@ -6086,11 +4054,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 212
+position = 140
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 121 })'
 descriptor = "docs/API.md section #121"
 cost_tokens = 73
-cum_tokens = 9311
+cum_tokens = 6178
 
 [batches.content]
 kind = "lines"
@@ -6112,29 +4080,11 @@ end = 1852
 kind = "full"
 
 [[batches]]
-position = 213
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c", start_line: 175 })'
-descriptor = "c decl doc at deps/worker.c:175"
-cost_tokens = 107
-cum_tokens = 9418
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/worker.c"
-start = 168
-end = 174
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 214
+position = 141
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 12 })'
 descriptor = "docs/assets/API_head.md section #12"
 cost_tokens = 15
-cum_tokens = 9433
+cum_tokens = 6193
 
 [batches.content]
 kind = "lines"
@@ -6148,11 +4098,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 215
+position = 142
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 18 })'
 descriptor = "docs/assets/API_head.md section #18"
 cost_tokens = 15
-cum_tokens = 9448
+cum_tokens = 6208
 
 [batches.content]
 kind = "lines"
@@ -6166,11 +4116,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 216
+position = 143
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 135 })'
 descriptor = "docs/API.md section #135"
 cost_tokens = 75
-cum_tokens = 9523
+cum_tokens = 6283
 
 [batches.content]
 kind = "lines"
@@ -6192,11 +4142,11 @@ end = 2130
 kind = "full"
 
 [[batches]]
-position = 217
+position = 144
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 33 })'
 descriptor = "docs/API.md section #33"
 cost_tokens = 76
-cum_tokens = 9599
+cum_tokens = 6359
 
 [batches.content]
 kind = "lines"
@@ -6234,29 +4184,11 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 218
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c", start_line: 41 })'
-descriptor = "c decl at deps/stack.c:41"
-cost_tokens = 130
-cum_tokens = 9729
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/stack.c"
-start = 41
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 219
+position = 145
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/neco/examples/README.md" })'
 descriptor = "README headline in examples/README.md"
 cost_tokens = 23
-cum_tokens = 9752
+cum_tokens = 6382
 
 [batches.content]
 kind = "lines"
@@ -6278,37 +4210,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 220
-key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.c" })'
-descriptor = "c header banner in deps/sco.c"
-cost_tokens = 77
-cum_tokens = 9829
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.c"
-start = 1
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/neco/deps/sco.c"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 221
+position = 146
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 86 })'
 descriptor = "docs/API.md section #86"
 cost_tokens = 78
-cum_tokens = 9907
+cum_tokens = 6460
 
 [batches.content]
 kind = "lines"
@@ -6330,11 +4236,11 @@ end = 1394
 kind = "full"
 
 [[batches]]
-position = 222
+position = 147
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 87 })'
 descriptor = "docs/API.md section #87"
 cost_tokens = 78
-cum_tokens = 9985
+cum_tokens = 6538
 
 [batches.content]
 kind = "lines"
@@ -6351,6 +4257,1038 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
 start = 1400
 end = 1400
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 1 })'
+descriptor = "docs/assets/API_head.md section #1"
+cost_tokens = 16
+cum_tokens = 6554
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 90 })'
+descriptor = "docs/API.md section #90"
+cost_tokens = 79
+cum_tokens = 6633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1413
+end = 1416
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1418
+end = 1418
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 124 })'
+descriptor = "docs/API.md section #124"
+cost_tokens = 79
+cum_tokens = 6712
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1865
+end = 1868
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1870
+end = 1870
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 161 })'
+descriptor = "docs/API.md section #161"
+cost_tokens = 79
+cum_tokens = 6791
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2382
+end = 2385
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2387
+end = 2387
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2389
+end = 2389
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 99 })'
+descriptor = "docs/API.md section #99"
+cost_tokens = 80
+cum_tokens = 6871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1467
+end = 1470
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1472
+end = 1472
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 97 })'
+descriptor = "docs/API.md section #97"
+cost_tokens = 81
+cum_tokens = 6952
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1455
+end = 1458
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1460
+end = 1460
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 100 })'
+descriptor = "docs/API.md section #100"
+cost_tokens = 81
+cum_tokens = 7033
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1473
+end = 1476
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1478
+end = 1478
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 101 })'
+descriptor = "docs/API.md section #101"
+cost_tokens = 81
+cum_tokens = 7114
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1479
+end = 1482
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1484
+end = 1484
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 122 })'
+descriptor = "docs/API.md section #122"
+cost_tokens = 81
+cum_tokens = 7195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1853
+end = 1856
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1858
+end = 1858
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2094 })'
+descriptor = "c decl body at neco.c:2094"
+cost_tokens = 101
+cum_tokens = 7296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+start = 2096
+end = 2103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 89 })'
+descriptor = "docs/API.md section #89"
+cost_tokens = 82
+cum_tokens = 7378
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1407
+end = 1410
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1412
+end = 1412
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 96 })'
+descriptor = "docs/API.md section #96"
+cost_tokens = 82
+cum_tokens = 7460
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1449
+end = 1452
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1454
+end = 1454
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 145 })'
+descriptor = "docs/API.md section #145"
+cost_tokens = 82
+cum_tokens = 7542
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2272
+end = 2275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2277
+end = 2277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 42 })'
+descriptor = "docs/API.md section #42"
+cost_tokens = 83
+cum_tokens = 7625
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 466
+end = 473
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 475
+end = 475
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 91 })'
+descriptor = "docs/API.md section #91"
+cost_tokens = 83
+cum_tokens = 7708
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1419
+end = 1422
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1424
+end = 1424
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 123 })'
+descriptor = "docs/API.md section #123"
+cost_tokens = 83
+cum_tokens = 7791
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1859
+end = 1862
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1864
+end = 1864
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 146 })'
+descriptor = "docs/API.md section #146"
+cost_tokens = 83
+cum_tokens = 7874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2278
+end = 2281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2283
+end = 2283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 160 })'
+descriptor = "docs/API.md section #160"
+cost_tokens = 83
+cum_tokens = 7957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2376
+end = 2379
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2381
+end = 2381
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 8 })'
+descriptor = "docs/assets/API_head.md section #8"
+cost_tokens = 17
+cum_tokens = 7974
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 9 })'
+descriptor = "docs/assets/API_head.md section #9"
+cost_tokens = 17
+cum_tokens = 7991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 88 })'
+descriptor = "docs/API.md section #88"
+cost_tokens = 84
+cum_tokens = 8075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1401
+end = 1404
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1406
+end = 1406
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 93 })'
+descriptor = "docs/API.md section #93"
+cost_tokens = 85
+cum_tokens = 8160
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1431
+end = 1434
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1436
+end = 1436
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 94 })'
+descriptor = "docs/API.md section #94"
+cost_tokens = 86
+cum_tokens = 8246
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1437
+end = 1440
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1442
+end = 1442
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 171
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 102 })'
+descriptor = "docs/API.md section #102"
+cost_tokens = 86
+cum_tokens = 8332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1485
+end = 1488
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1490
+end = 1490
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 95 })'
+descriptor = "docs/API.md section #95"
+cost_tokens = 87
+cum_tokens = 8419
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1443
+end = 1446
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1448
+end = 1448
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 267
+cum_tokens = 8686
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 97
+end = 99
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 101
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 108
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 115
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/README.md"
+start = 119
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 151 })'
+descriptor = "docs/API.md section #151"
+cost_tokens = 90
+cum_tokens = 8776
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2312
+end = 2315
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2317
+end = 2317
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 92 })'
+descriptor = "docs/API.md section #92"
+cost_tokens = 91
+cum_tokens = 8867
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1425
+end = 1428
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1430
+end = 1430
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 98 })'
+descriptor = "docs/API.md section #98"
+cost_tokens = 91
+cum_tokens = 8958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1461
+end = 1464
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1466
+end = 1466
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 103 })'
+descriptor = "docs/API.md section #103"
+cost_tokens = 92
+cum_tokens = 9050
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1491
+end = 1494
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 1496
+end = 1496
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 147 })'
+descriptor = "docs/API.md section #147"
+cost_tokens = 92
+cum_tokens = 9142
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2284
+end = 2288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2291
+end = 2291
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 149 })'
+descriptor = "docs/API.md section #149"
+cost_tokens = 93
+cum_tokens = 9235
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2300
+end = 2303
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2305
+end = 2305
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 153 })'
+descriptor = "docs/API.md section #153"
+cost_tokens = 93
+cum_tokens = 9328
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2324
+end = 2327
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2329
+end = 2329
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 41 })'
+descriptor = "docs/API.md section #41"
+cost_tokens = 94
+cum_tokens = 9422
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 455
+end = 463
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 465
+end = 465
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 158 })'
+descriptor = "docs/API.md section #158"
+cost_tokens = 94
+cum_tokens = 9516
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2360
+end = 2364
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2367
+end = 2367
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 150 })'
+descriptor = "docs/API.md section #150"
+cost_tokens = 95
+cum_tokens = 9611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2306
+end = 2309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2311
+end = 2311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2106 })'
+descriptor = "c decl body at neco.c:2106"
+cost_tokens = 119
+cum_tokens = 9730
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+start = 2108
+end = 2117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c", start_line: 2192 })'
+descriptor = "c decl body at neco.c:2192"
+cost_tokens = 120
+cum_tokens = 9850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/neco.c"
+start = 2194
+end = 2202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md", section_index: 11 })'
+descriptor = "docs/assets/API_head.md section #11"
+cost_tokens = 20
+cum_tokens = 9870
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/assets/API_head.md"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md", section_index: 152 })'
+descriptor = "docs/API.md section #152"
+cost_tokens = 101
+cum_tokens = 9971
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2318
+end = 2321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/neco/docs/API.md"
+start = 2323
+end = 2323
 
 [batches.content.spans.render]
 kind = "full"

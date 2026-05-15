@@ -146,6 +146,16 @@ fn non_essential_factor_inner(
             }
         } else if first.starts_with('.') && first != "." {
             return 0.2;
+        } else if is_root_level_vendor_dir_name(first) {
+            // Vendored / third-party deps at the repo root (neco's
+            // `deps/` of vendored single-header libraries, jq's
+            // `vendor/`). The dir contains upstream source, not the
+            // project's own API surface. Depth-1-only so a project
+            // like chalk that vendors *as part of* its own `source/`
+            // (chalk's `source/vendor/ansi-styles/` is *the* chalk
+            // implementation, not third-party content) keeps full
+            // weight on its vendored modules.
+            return 0.2;
         }
     }
     for component in target.components().skip(1) {
@@ -250,6 +260,19 @@ fn non_essential_factor_inner(
 /// Plain `macros` / `derive` (the suffixes themselves) are excluded —
 /// they're more likely to be a real module name in a non-proc-macro
 /// package (`bevy/macros`, `core::macros`).
+/// True for root-level directory names that conventionally hold
+/// vendored / third-party content. Matched case-insensitively. Only
+/// applied at depth 1 from the repo root — projects that vendor as
+/// part of their *own* source tree (chalk's `source/vendor/ansi-styles/`
+/// holds load-bearing chalk modules, not upstream) keep full weight.
+fn is_root_level_vendor_dir_name(s: &str) -> bool {
+    let lower = s.to_ascii_lowercase();
+    matches!(
+        lower.as_str(),
+        "deps" | "vendor" | "vendored" | "third_party" | "third-party" | "external" | "extern"
+    )
+}
+
 fn is_proc_macro_crate_dir_name(s: &str) -> bool {
     for suffix in ["-macros", "_macros", "-derive", "_derive"] {
         if let Some(stem) = s.strip_suffix(suffix)

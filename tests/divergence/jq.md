@@ -5,11 +5,11 @@ Score(3000)=0.428 I=0.648 C=0.282 ns_rows≤3K=16/40 (reached=2 partial=1 missin
 | ns | 69 |  | 69 | README lede | 1.1 |  | 0.000 |
 | walker |  | 81 | 81 | listing of '.' |  |  | 0.000 |
 | walker |  | 90 | 9 | listing of 'config' |  |  | 0.000 |
-| walker |  | 99 | 9 | listing of 'vendor' |  |  | 0.000 |
 | ns | 150 |  | 81 | Repo root listing | 1.2 |  | 0.698 |
-| walker |  | 163 | 64 | README headline in README.md |  |  | 0.919 |
-| walker |  | 186 | 23 | listing of 'm4' |  |  | 0.919 |
-| walker |  | 257 | 71 | headings outline in README.md |  |  | 0.919 |
+| walker |  | 154 | 64 | README headline in README.md |  |  | 0.919 |
+| walker |  | 177 | 23 | listing of 'm4' |  |  | 0.919 |
+| walker |  | 248 | 71 | headings outline in README.md |  |  | 0.919 |
+| walker |  | 257 | 9 | listing of 'vendor' |  |  | 0.919 |
 | ns | 285 |  | 135 | Manual lede paragraph 1 — what a filter is | 1.3 |  | 0.769 |
 | walker |  | 309 | 52 | listing of 'docs' |  |  | 0.769 |
 | walker |  | 358 | 49 | README headline in docs/README.md |  |  | 0.769 |
@@ -196,30 +196,59 @@ Score(3000)=0.428 I=0.648 C=0.282 ns_rows≤3K=16/40 (reached=2 partial=1 missin
 | walker |  | 8553 | 7 | c decl body at src/jv_alloc.c:149 |  |  | 0.266 |
 | walker |  | 8560 | 7 | c decl body at src/jv_alloc.c:175 |  |  | 0.266 |
 | walker |  | 8585 | 25 | c decl at src/jv_alloc.c:7 |  |  | 0.266 |
+| walker |  | 8612 | 27 | c decl body at src/jv_alloc.c:162 |  |  | 0.266 |
 | ns | 8700 |  | 390 | opcode_list.h — every VM opcode name (truncated) | 5.1 |  | 0.257 |
-| walker |  | 8752 | 167 | listing of 'vendor/decNumber' |  |  | 0.257 |
-| walker |  | 8768 | 16 | c decl names surface in vendor/decNumber/example5.c |  |  | 0.257 |
-| walker |  | 8768 | 0 | c decl at vendor/decNumber/example5.c:13 |  |  | 0.257 |
-| walker |  | 8784 | 16 | c decl names surface in vendor/decNumber/example6.c |  |  | 0.257 |
-| walker |  | 8784 | 0 | c decl at vendor/decNumber/example6.c:14 |  |  | 0.257 |
-| walker |  | 8800 | 16 | c decl names surface in vendor/decNumber/example7.c |  |  | 0.257 |
-| walker |  | 8800 | 0 | c decl at vendor/decNumber/example7.c:15 |  |  | 0.257 |
-| walker |  | 8816 | 16 | c decl names surface in vendor/decNumber/example8.c |  |  | 0.257 |
-| walker |  | 8816 | 0 | c decl at vendor/decNumber/example8.c:17 |  |  | 0.257 |
-| walker |  | 8857 | 41 | c decl names surface in vendor/decNumber/example1.c |  |  | 0.257 |
-| walker |  | 8857 | 0 | c decl at vendor/decNumber/example1.c:15 |  |  | 0.257 |
-| walker |  | 8898 | 41 | c decl names surface in vendor/decNumber/example2.c |  |  | 0.257 |
-| walker |  | 8898 | 0 | c decl at vendor/decNumber/example2.c:15 |  |  | 0.257 |
-| walker |  | 8939 | 41 | c decl names surface in vendor/decNumber/example3.c |  |  | 0.257 |
-| walker |  | 8939 | 0 | c decl at vendor/decNumber/example3.c:15 |  |  | 0.257 |
+| walker |  | 8803 | 191 | c decl names surface in src/inject_errors.c |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:39 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:59 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:69 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:77 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:85 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:93 |  |  | 0.257 |
+| walker |  | 8803 | 0 | c decl at src/inject_errors.c:103 |  |  | 0.257 |
+| walker |  | 8849 | 46 | c includes in src/jv_unicode.c |  |  | 0.257 |
 | ns | 9043 |  | 343 | struct bytecode + struct cfunction (bytecode.h) | 5.2 |  | 0.288 |
-| walker |  | 9212 | 273 | c header banner in vendor/decNumber/decNumber.h |  |  | 0.288 |
+| walker |  | 9094 | 245 | python method sigs in docs/build_manpage.py |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:17 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:24 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:29 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:37 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:46 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:50 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:57 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:67 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:166 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:173 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:176 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:181 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:187 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:194 |  |  | 0.288 |
+| walker |  | 9094 | 0 | python method at docs/build_manpage.py:198 |  |  | 0.288 |
+| walker |  | 9105 | 11 | python method body at docs/build_manpage.py:173 body 174 |  |  | 0.288 |
+| walker |  | 9130 | 25 | python method body at docs/build_manpage.py:17 body 18 |  |  | 0.288 |
+| walker |  | 9159 | 29 | python method body at docs/build_manpage.py:24 body 25 |  |  | 0.288 |
+| walker |  | 9215 | 56 | c decl at src/inject_errors.c:32 |  |  | 0.288 |
 | ns | 9241 |  | 198 | block typedef + IR doc comment (compile.h + compile.c) | 5.3 |  | 0.286 |
-| walker |  | 9485 | 273 | c header banner in vendor/decNumber/decPacked.h |  |  | 0.286 |
+| walker |  | 9266 | 51 | c includes in src/jv_alloc.c |  |  | 0.286 |
+| walker |  | 9319 | 53 | c includes in src/bytecode.c |  |  | 0.286 |
+| walker |  | 9526 | 207 | listing of 'sig/v1.7rc1' |  |  | 0.286 |
 | ns | 9547 |  | 306 | jq_state struct (execute.c) | 5.5 |  | 0.279 |
 | ns | 9600 |  | 53 | jq_next + jq_init + jq_compile entry locations | 5.6 |  | 0.279 |
-| walker |  | 9760 | 275 | c header banner in vendor/decNumber/decimal128.h |  |  | 0.279 |
+| walker |  | 9733 | 207 | listing of 'sig/v1.7rc2' |  |  | 0.279 |
 | ns | 9790 |  | 190 | main.c CLI options enum (flag bits only) | 6.1 |  | 0.276 |
 | ns | 9847 |  | 57 | linker.c — lib_entry struct + load_library signature | 6.2 |  | 0.278 |
 | ns | 9935 |  | 88 | tests/ listing (top-level only) | 7.1 |  | 0.274 |
 | ns | 9974 |  | 39 | tests/jq.test format header | 7.2 |  | 0.274 |
+| walker |  | 9987 | 254 | c decl names surface in src/jv_aux.c |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:80 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:146 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:230 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:372 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:431 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:504 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:554 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:566 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:600 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:711 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:726 |  |  | 0.274 |
+| walker |  | 9987 | 0 | c decl at src/jv_aux.c:754 |  |  | 0.274 |
