@@ -382,26 +382,48 @@ pub fn is_localized_readme(target: &std::path::Path) -> bool {
 }
 
 fn is_known_locale(s: &str) -> bool {
-    // Compare case-insensitively against the whitelist. We accept both
-    // `<lang>-<REGION>` and `<lang>_<REGION>` forms; normalize the
-    // separator before matching.
+    // We accept both `<lang>-<REGION>` and `<lang>_<REGION>` forms;
+    // normalize the separator before matching. Comparison is
+    // case-insensitive because the caller already lowercased the stem.
     let normalized = s.replace('_', "-");
+    if is_locale_language(normalized.as_str()) {
+        return true;
+    }
+    // `<lang>-<region>` form: accept if the language root is a known
+    // language code (e.g. `de-ch`, `pt-pt`, `es-mx`, `zh-hans`). Whitelisting
+    // by the root rather than enumerating every region pair keeps the false-
+    // positive shield (a bare unknown token like `dev` / `api` never matches)
+    // while picking up dialects the per-fixture corpus didn't surface yet.
+    if let Some((lang, region)) = normalized.split_once('-')
+        && !region.is_empty()
+        && is_locale_language(lang)
+    {
+        return true;
+    }
+    false
+}
+
+fn is_locale_language(s: &str) -> bool {
     matches!(
-        normalized.as_str(),
-        "zh" | "zh-cn"
-            | "zh-tw"
-            | "zh-hk"
-            | "ja"
+        s,
+        "zh" | "ja"
             | "ko"
+            // Informal codes seen in the wild: `kr` (Korean), `cn` (Chinese),
+            // `tw` (Taiwanese / Traditional Chinese). Not ISO 639, but README
+            // authors use them.
+            | "kr"
+            | "cn"
+            | "tw"
             | "fr"
             | "de"
             | "es"
             | "it"
             | "pt"
-            | "pt-br"
             | "ru"
             | "ar"
             | "hi"
+            | "bn"
+            | "fa"
             | "nl"
             | "pl"
             | "tr"
@@ -418,9 +440,28 @@ fn is_known_locale(s: &str) -> bool {
             | "ro"
             | "hu"
             | "el"
+            | "az"
+            | "bg"
+            | "hr"
+            | "sk"
+            | "sl"
+            | "et"
+            | "lv"
+            | "lt"
+            | "sr"
+            | "ms"
+            | "ml"
+            | "ta"
+            | "te"
+            | "ur"
+            | "ne"
+            | "my"
+            | "km"
+            | "lo"
+            | "ka"
+            | "hy"
+            | "is"
             | "en"
-            | "en-us"
-            | "en-gb"
     )
 }
 
@@ -688,6 +729,16 @@ mod tests {
             "README.pt_BR.rst",
             "README.fr.md",
             "README.en-US.md",
+            // Informal codes seen in the wild — rich has README.cn.md /
+            // README.kr.md alongside README.zh-tw.md / README.ja.md.
+            "README.cn.md",
+            "README.kr.md",
+            "README.fa.md",
+            // Regional dialect tags accepted via the `<lang>-<region>`
+            // pattern when the language root is in the whitelist.
+            "README.de-ch.md",
+            "README.pt-pt.md",
+            "README.es-mx.md",
         ] {
             assert_eq!(
                 non_essential_factor(&root.join(name), root),

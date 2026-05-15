@@ -61,105 +61,16 @@ FAQ.md
 LICENSE
 Makefile
 README.cn.md
-    38→## 兼容性
-    …
-    40→Rich 适用于 Linux，OSX 和 Windows。真彩色/表情符号可与新的 Windows 终端一起使用，Windows 的经典终端仅限 8 种颜色。
-    42→Rich 还可以与 [Jupyter 笔记本](https://jupyter.org/)一起使用，而无需其他配置。
-    44→## 安装说明
-    …
-    46→使用`pip`或其他 PyPI 软件包管理器进行安装。
-    48→```sh
-    49→python -m pip install rich
-    50→```
-    52→## Rich 的打印功能
-    …
-    64→## 在交互式命令行（REPL）中使用 Rich
-    …
-    75→## 使用控制台
-    …
-    113→## Rich Inspect
-    …
-    127→# Rich 库内容
-    …
-    413→## 使用 Rich 的项目
-    …
 README.de-ch.md
-    38→## Kompatibilität
-    …
-    40→Rich funktioniert mit Linux, OSX ond Windows. True color / emoji funktioniert mit em neue Windows Törminäl, s klassische Törminäl isch of 16 Farbe limitiärt. Rich brucht Python 3.6.3 oder neuer.
-    42→Rich funktioniert mit [Jupyter notebooks](https://jupyter.org/) ohni irgendwelchä zuäsätzloche konfiguration.
-    44→## Installation
-    …
-    58→## Rich Print
-    …
-    70→## Rich REPL
-    …
-    81→## Console bruchä
-    …
-    119→## Rich Inspect
-    …
-    133→# Rich-Bibliothek
-    …
-    425→# Rich für Ondernemä
-    …
-    431→# Projekt wo Rich bruched
-    …
 README.de.md
 README.es.md
 README.fa.md
-    47→## سازگاری
-    …
-    49→ریچ با لینوکس، مک او اس و ویندوز کار می کند.
-    50→رنگ واقعی / ایموجی با ترمینال جدید ویندوز کار می کند، ترمینال کلاسیک به 16 رنگ محدود شده است.
-    51→ریچ به پایتون
-    52→3.6.3
-    53→یا جدیدتر نیاز دارد.
-    55→ریچ با  [ژوپیتر نوت بوک (Jupyter notebooks)](https://jupyter.org/)
-    56→بدون نیازمندی اضافه ای کار می کند.
-    58→## نصب کردن
-    …
-    74→## Rich Print
-    …
-    91→## Rich REPL
-    …
-    104→## استفاده از Console
-    …
-    164→## Rich Inspect
-    …
-    178→# Rich Library
-    …
-    477→# Rich CLI
-    …
-    485→# Textual
-    …
-    491→# پروژه هایی که از ریچ استفاده می کنند
-    …
 README.fr.md
 README.hi.md
 README.id.md
 README.it.md
 README.ja.md
 README.kr.md
-    38→## 호환성
-    …
-    40→Rich는 리눅스, OSX, 윈도우에서 동작합니다. 트루 컬러 / 이모지는 새로운 윈도우 터미널에서 동작하지만 구형 터미널에서는 16가지 색으로 제한됩니다. Rich는 파이썬 3.6.3 버전 혹은 그 이후 버전이 필요합니다.
-    42→Rich는 [Jupyter notebooks](https://jupyter.org/)에서 별도의 설정없이 바로 동작합니다.
-    44→## 설치
-    …
-    58→## Rich Print
-    …
-    71→## Rich REPL
-    …
-    82→## 콘솔 사용하기
-    …
-    120→## Rich Inspect
-    …
-    134→# Rich Library
-    …
-    426→# 엔터프라이즈를 위한 Rich
-    …
-    432→# Rich를 사용하는 프로젝트들
-    …
 README.md
     10→[English readme](https://github.com/textualize/rich/blob/master/README.md)
     11→ • [简体中文 readme](https://github.com/textualize/rich/blob/master/README.cn.md)
@@ -286,36 +197,75 @@ questions/
     tracebacks_installed.question.md
 rich/
     __init__.py
+        1→"""Rich text and beautiful formatting in the terminal."""
+        3→import os
+        4→from typing import IO, TYPE_CHECKING, Any, Callable, Optional, Union
+        6→from ._extension import load_ipython_extension  # noqa: F401
+        8→__all__ = ["get_console", "reconfigure", "print", "inspect", "print_json"]
+        10→if TYPE_CHECKING:
+        11→    from .console import Console
     __main__.py
         18→class ColorBox:
-        …
+        19→    def __rich_console__(
+        20→        self, console: Console, options: ConsoleOptions
+        21→    ) -> RenderResult:
+        33→    def __rich_measure__(
+        34→        self, console: "Console", options: ConsoleOptions
+        35→    ) -> Measurement:
         39→def make_test_card() -> Table:
-        …
+        40→    """Get a renderable that demonstrates a number of features."""
     _emoji_codes.py
         1→EMOJI = {
     _emoji_replace.py
     _export_format.py
     _extension.py
     _fileno.py
+        6→def get_fileno(file_like: IO[str]) -> int | None:
+        …
     _inspect.py
     _log_render.py
+        11→FormatTimeCallable = Callable[[datetime], Text]
+        14→class LogRender:
+        15→    def __init__(
+        …
+        32→    def __call__(
+        …
     _loop.py
     _null_file.py
+        5→class NullFile(IO[str]):
+        …
+        69→NULL_FILE = NullFile()
     _palettes.py
     _pick.py
+        4→def pick_bool(*values: Optional[bool]) -> bool:
+        …
     _ratio.py
     _spinners.py
         22→SPINNERS = {
     _stack.py
+        3→T = TypeVar("T")
+        6→class Stack(List[T]):
+        7→    """A small shim over builtin list."""
+        9→    @property
+        10→    def top(self) -> T:
+        14→    def push(self, item: T) -> None:
+        …
     _timer.py
+        12→@contextlib.contextmanager
+        13→def timer(subject: str = "time") -> Generator[None, None, None]:
     _unicode_data/
     _win32_console.py
     _windows.py
         5→@dataclass
         6→class WindowsConsoleFeatures:
+        7→    """Windows features available."""
     _windows_renderer.py
     _wrap.py
     abc.py
+        4→class RichRenderable(ABC):
+        …
+        15→    @classmethod
+        16→    def __subclasshook__(cls, other: type) -> bool:
     align.py
     ansi.py
     bar.py
@@ -323,16 +273,33 @@ rich/
     cells.py
     color.py
     color_triplet.py
+        4→class ColorTriplet(NamedTuple):
+        5→    """The red, green, and blue components of a color."""
+        14→    @property
+        15→    def hex(self) -> str:
+        20→    @property
+        21→    def rgb(self) -> str:
+        30→    @property
+        31→    def normalized(self) -> Tuple[float, float, float]:
     columns.py
+        16→class Columns(JupyterMixin):
+        …
     console.py
     constrain.py
+        10→class Constrain(JupyterMixin):
+        …
     containers.py
     control.py
     default_styles.py
+        5→DEFAULT_STYLES: Dict[str, Style] = {
     diagnose.py
+        10→def report() -> None:  # pragma: no cover
+        11→    """Print a report to the terminal with debugging information"""
     emoji.py
     errors.py
     file_proxy.py
+        11→class FileProxy(io.TextIOBase):
+        …
     filesize.py
     highlighter.py
     json.py
@@ -343,24 +310,44 @@ rich/
     live.py
     live_render.py
     logging.py
+        24→class RichHandler(Handler):
+        …
     markdown.py
     markup.py
     measure.py
+        11→class Measurement(NamedTuple):
+        …
+        125→def measure_renderables(
+        …
     padding.py
     pager.py
+        5→class Pager(ABC):
+        6→    """Base class for a pager."""
+        17→class SystemPager(Pager):
+        18→    """Uses the pager installed on the system."""
     palette.py
         11→class Palette:
-        …
+        12→    """A palette of available colors."""
+        43→    # This is somewhat inefficient and needs caching
     panel.py
+        17→class Panel(JupyterMixin):
+        …
     pretty.py
     progress.py
     progress_bar.py
+        15→PULSE_SIZE = 20
+        18→class ProgressBar(JupyterMixin):
+        …
     prompt.py
     protocol.py
     py.typed
     region.py
+        4→class Region(NamedTuple):
+        5→    """Defines a rectangular region of the screen."""
     repr.py
     rule.py
+        12→class Rule(JupyterMixin):
+        …
     scope.py
         14→def render_scope(
         …
@@ -368,11 +355,17 @@ rich/
         18→class Screen:
         …
         26→    renderable: "RenderableType"
+        28→    def __init__(
+        …
+        40→    def __rich_console__(
+        …
     segment.py
     spinner.py
         13→class Spinner:
         …
     status.py
+        11→class Status(JupyterMixin):
+        …
     style.py
     styled.py
         11→class Styled:
@@ -383,6 +376,7 @@ rich/
     text.py
     theme.py
     themes.py
+        5→DEFAULT = Theme(DEFAULT_STYLES)
     traceback.py
     tree.py
 setup.py
