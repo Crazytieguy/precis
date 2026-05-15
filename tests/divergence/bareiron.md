@@ -148,36 +148,36 @@ Score(3000)=0.595 I=0.809 C=0.437 ns_rows≤3K=21/42 (reached=8 partial=4 missin
 | walker |  | 6326 | 49 | README.md section #9 |  |  | 0.755 |
 | walker |  | 6388 | 62 | c includes in src/crafting.c |  |  | 0.755 |
 | walker |  | 6451 | 63 | c includes in src/structures.c |  |  | 0.755 |
-| walker |  | 6523 | 72 | c includes in src/tools.c |  |  | 0.755 |
+| walker |  | 6475 | 24 | imports in build_registries.js |  |  | 0.755 |
+| walker |  | 6547 | 72 | c includes in src/tools.c |  |  | 0.755 |
 | ns | 6815 |  | 542 | README — Compilation section | 4.12 |  | 0.747 |
-| walker |  | 6930 | 407 | c decl names surface in src/worldgen.c |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:13 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:24 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:51 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:117 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:126 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:142 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:160 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:173 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:323 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:358 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:374 |  |  | 0.747 |
-| walker |  | 6930 | 0 | c decl at src/worldgen.c:401 |  |  | 0.747 |
-| walker |  | 6957 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.747 |
-| walker |  | 6997 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.747 |
-| walker |  | 7049 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.747 |
-| walker |  | 7152 | 103 | c includes in src/worldgen.c |  |  | 0.747 |
+| walker |  | 6954 | 407 | c decl names surface in src/worldgen.c |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:13 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:24 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:51 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:117 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:126 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:142 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:160 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:173 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:323 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:358 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:374 |  |  | 0.747 |
+| walker |  | 6954 | 0 | c decl at src/worldgen.c:401 |  |  | 0.747 |
+| walker |  | 6981 | 27 | c decl doc at src/worldgen.c:160 |  |  | 0.747 |
+| walker |  | 7021 | 40 | c decl doc at src/worldgen.c:401 |  |  | 0.747 |
+| walker |  | 7073 | 52 | c decl doc at src/worldgen.c:126 |  |  | 0.747 |
+| walker |  | 7176 | 103 | c includes in src/worldgen.c |  |  | 0.747 |
 | ns | 7274 |  | 459 | main.c — handlePacket signature + author's design comment | 4.13 |  | 0.723 |
-| walker |  | 7412 | 260 | README.md section #4 |  |  | 0.723 |
-| walker |  | 7518 | 106 | c includes in src/packets.c |  |  | 0.723 |
+| walker |  | 7436 | 260 | README.md section #4 |  |  | 0.723 |
+| walker |  | 7542 | 106 | c includes in src/packets.c |  |  | 0.723 |
 | ns | 7762 |  | 488 | main() — startup signature + seed/state initialization | 4.14 |  | 0.699 |
-| walker |  | 7832 | 314 | README.md section #3 |  |  | 0.709 |
-| walker |  | 7889 | 57 | c decl body at src/structures.c:9 |  |  | 0.709 |
-| walker |  | 7948 | 59 | c decl body at src/varnum.c:34 |  |  | 0.709 |
+| walker |  | 7856 | 314 | README.md section #3 |  |  | 0.709 |
+| walker |  | 7913 | 57 | c decl body at src/structures.c:9 |  |  | 0.709 |
+| walker |  | 7972 | 59 | c decl body at src/varnum.c:34 |  |  | 0.709 |
 | ns | 8012 |  | 250 | main.c — handlePacket switch case index (truncated) | 4.15 |  | 0.693 |
-| walker |  | 8083 | 135 | c includes in src/main.c |  |  | 0.693 |
-| walker |  | 8218 | 135 | c includes in src/procedures.c |  |  | 0.693 |
-| walker |  | 8242 | 24 | imports in build_registries.js |  |  | 0.693 |
+| walker |  | 8107 | 135 | c includes in src/main.c |  |  | 0.693 |
+| walker |  | 8242 | 135 | c includes in src/procedures.c |  |  | 0.693 |
 | ns | 8244 |  | 232 | getBlockAt body — block_changes overlay + terrain fallback | 5.1 |  | 0.682 |
 | ns | 8443 |  | 199 | getBlockChange body — linear scan with chest skip | 5.2 |  | 0.673 |
 | walker |  | 8756 | 514 | c decl names surface in src/procedures.c |  |  | 0.673 |

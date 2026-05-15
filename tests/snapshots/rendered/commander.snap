@@ -18,13 +18,6 @@ Readme.md
     63→```sh
     64→npm install commander
     65→```
-    956→## Custom event listeners
-    958→You can execute custom actions by listening to `command` and `option` events.
-    960→```js
-    961→program.on('option:verbose', function () {
-    962→  process.env.VERBOSE = this.opts().verbose;
-    963→});
-    964→```
 Readme_zh-CN.md
 SECURITY.md
 docs/
@@ -55,23 +48,23 @@ docs/
     zh-CN/
         不再推荐使用的功能.md
         可变参数的选项.md
-            1→# 可变参数的选项
-            …
-            26→## 解析中的歧义
-            …
-            73→### 方案一：让`--`成为语法的一部分
-            …
-            98→### 方案二：把选项放在最后
-            …
-            120→### 方案三：使用选项替代命令参数
-            …
-            142→## 合并短选项和带有参数的选项
-            …
-            183→### 将短选项视作 boolean 类型选项合并
-            …
         术语表.md
 eslint.config.js
 esm.mjs
+    1→import commander from './index.js';
+    4→export const {
+    5→  program,
+    6→  createCommand,
+    7→  createArgument,
+    8→  createOption,
+    9→  CommanderError,
+    10→  InvalidArgumentError,
+    11→  InvalidOptionArgumentError, // deprecated old name
+    12→  Command,
+    13→  Argument,
+    14→  Option,
+    15→  Help,
+    16→} = commander;
 examples/
     action-this.js
     alias.js
@@ -83,6 +76,9 @@ examples/
     configure-help.js
     configure-output.js
     custom-command-class.js
+        6→class CommandWithTrace extends commander.Command {
+        7→  createCommand(name) {
+        …
     custom-help
     custom-help-description
     custom-help-text.js
@@ -119,6 +115,11 @@ examples/
     string-util.js
     thank.js
 index.js
+    1→const { Argument } = require('./lib/argument.js');
+    2→const { Command } = require('./lib/command.js');
+    3→const { CommanderError, InvalidArgumentError } = require('./lib/error.js');
+    4→const { Help } = require('./lib/help.js');
+    5→const { Option } = require('./lib/option.js');
     7→exports.program = new Command();
     …
     9→exports.createCommand = (name) => new Command(name);
@@ -166,6 +167,10 @@ lib/
     command.js
         13→class Command extends EventEmitter {
         …
+        2748→/**
+        2749→ * @returns {boolean | undefined}
+        2750→ * @package
+        2751→ */
         2752→function useColor() {
         …
         2776→exports.Command = Command;
@@ -251,6 +256,9 @@ lib/
         379→exports.Option = Option;
         380→exports.DualOptions = DualOptions;
     suggestSimilar.js
+        56→function suggestSimilar(word, candidates) {
+        …
+        101→exports.suggestSimilar = suggestSimilar;
 package-lock.json
 package-support.json
 package.json

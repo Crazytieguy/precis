@@ -3515,10 +3515,28 @@ kind = "full"
 
 [[batches]]
 position = 116
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js" })'
+descriptor = "imports in build_registries.js"
+cost_tokens = 24
+cum_tokens = 6475
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/tools.c" })'
 descriptor = "c includes in src/tools.c"
 cost_tokens = 72
-cum_tokens = 6523
+cum_tokens = 6547
 
 [batches.content]
 kind = "lines"
@@ -3540,11 +3558,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/worldgen.c"
 cost_tokens = 407
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3758,11 +3776,11 @@ end = 402
 kind = "ellipsis"
 
 [[batches]]
-position = 118
+position = 119
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 13 })'
 descriptor = "c decl at src/worldgen.c:13"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3784,11 +3802,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 120
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 24 })'
 descriptor = "c decl at src/worldgen.c:24"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3810,11 +3828,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 120
+position = 121
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 51 })'
 descriptor = "c decl at src/worldgen.c:51"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3836,11 +3854,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 122
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 117 })'
 descriptor = "c decl at src/worldgen.c:117"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3862,11 +3880,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 123
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 126 })'
 descriptor = "c decl at src/worldgen.c:126"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3888,11 +3906,11 @@ end = 127
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 124
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 142 })'
 descriptor = "c decl at src/worldgen.c:142"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3914,11 +3932,11 @@ end = 143
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 125
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 160 })'
 descriptor = "c decl at src/worldgen.c:160"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3940,11 +3958,11 @@ end = 161
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 126
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 173 })'
 descriptor = "c decl at src/worldgen.c:173"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3966,11 +3984,11 @@ end = 174
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 127
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 323 })'
 descriptor = "c decl at src/worldgen.c:323"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -3992,11 +4010,11 @@ end = 324
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 128
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 358 })'
 descriptor = "c decl at src/worldgen.c:358"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +4036,11 @@ end = 359
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 129
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 374 })'
 descriptor = "c decl at src/worldgen.c:374"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -4044,11 +4062,11 @@ end = 375
 kind = "ellipsis"
 
 [[batches]]
-position = 129
+position = 130
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 401 })'
 descriptor = "c decl at src/worldgen.c:401"
 cost_tokens = 0
-cum_tokens = 6930
+cum_tokens = 6954
 
 [batches.content]
 kind = "lines"
@@ -4070,11 +4088,11 @@ end = 402
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 131
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 160 })'
 descriptor = "c decl doc at src/worldgen.c:160"
 cost_tokens = 27
-cum_tokens = 6957
+cum_tokens = 6981
 
 [batches.content]
 kind = "lines"
@@ -4088,11 +4106,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 401 })'
 descriptor = "c decl doc at src/worldgen.c:401"
 cost_tokens = 40
-cum_tokens = 6997
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -4106,11 +4124,11 @@ end = 400
 kind = "full"
 
 [[batches]]
-position = 132
+position = 133
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c", start_line: 126 })'
 descriptor = "c decl doc at src/worldgen.c:126"
 cost_tokens = 52
-cum_tokens = 7049
+cum_tokens = 7073
 
 [batches.content]
 kind = "lines"
@@ -4124,11 +4142,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/worldgen.c" })'
 descriptor = "c includes in src/worldgen.c"
 cost_tokens = 103
-cum_tokens = 7152
+cum_tokens = 7176
 
 [batches.content]
 kind = "lines"
@@ -4150,11 +4168,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 260
-cum_tokens = 7412
+cum_tokens = 7436
 
 [batches.content]
 kind = "lines"
@@ -4192,11 +4210,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c" })'
 descriptor = "c includes in src/packets.c"
 cost_tokens = 106
-cum_tokens = 7518
+cum_tokens = 7542
 
 [batches.content]
 kind = "lines"
@@ -4218,11 +4236,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 314
-cum_tokens = 7832
+cum_tokens = 7856
 
 [batches.content]
 kind = "lines"
@@ -4260,11 +4278,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/structures.c", start_line: 9 })'
 descriptor = "c decl body at src/structures.c:9"
 cost_tokens = 57
-cum_tokens = 7889
+cum_tokens = 7913
 
 [batches.content]
 kind = "lines"
@@ -4278,11 +4296,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 138
+position = 139
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/varnum.c", start_line: 34 })'
 descriptor = "c decl body at src/varnum.c:34"
 cost_tokens = 59
-cum_tokens = 7948
+cum_tokens = 7972
 
 [batches.content]
 kind = "lines"
@@ -4296,11 +4314,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/main.c" })'
 descriptor = "c includes in src/main.c"
 cost_tokens = 135
-cum_tokens = 8083
+cum_tokens = 8107
 
 [batches.content]
 kind = "lines"
@@ -4322,11 +4340,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c" })'
 descriptor = "c includes in src/procedures.c"
 cost_tokens = 135
-cum_tokens = 8218
+cum_tokens = 8242
 
 [batches.content]
 kind = "lines"
@@ -4343,24 +4361,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c"
 start = 9
 end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 141
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js" })'
-descriptor = "imports in build_registries.js"
-cost_tokens = 24
-cum_tokens = 8242
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js"
-start = 1
-end = 2
 
 [batches.content.spans.render]
 kind = "full"

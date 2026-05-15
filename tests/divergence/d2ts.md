@@ -10,20 +10,20 @@ Score(3000)=0.573 I=0.760 C=0.433 ns_rows≤3K=21/41 (reached=9 partial=3 missin
 | walker |  | 161 | 35 | listing of 'examples' |  |  | 0.783 |
 | ns | 179 |  | 26 | pnpm workspace globs | 1.4 |  | 0.720 |
 | walker |  | 183 | 22 | listing of 'packages' |  |  | 0.833 |
-| walker |  | 200 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.833 |
-| walker |  | 225 | 25 | listing of 'packages/d2ql' |  |  | 0.833 |
-| walker |  | 245 | 20 | README headline in packages/d2ql/README.md |  |  | 0.834 |
-| walker |  | 275 | 30 | listing of 'packages/d2mini' |  |  | 0.834 |
+| walker |  | 192 | 9 | export names surface in eslint.base.mjs |  |  | 0.833 |
+| walker |  | 209 | 17 | listing of 'packages/d2ts-benchmark' |  |  | 0.833 |
+| walker |  | 234 | 25 | listing of 'packages/d2ql' |  |  | 0.833 |
+| walker |  | 254 | 20 | README headline in packages/d2ql/README.md |  |  | 0.834 |
+| walker |  | 284 | 30 | listing of 'packages/d2mini' |  |  | 0.834 |
 | ns | 313 |  | 134 | README — incremental + Electric pitch | 1.5 |  | 0.775 |
-| walker |  | 327 | 52 | README headline in packages/d2mini/README.md |  |  | 0.780 |
-| walker |  | 366 | 39 | packages/d2mini/README.md section #0 |  |  | 0.787 |
+| walker |  | 336 | 52 | README headline in packages/d2mini/README.md |  |  | 0.780 |
+| walker |  | 375 | 39 | packages/d2mini/README.md section #0 |  |  | 0.787 |
 | ns | 419 |  | 106 | d2mini one-liner | 1.6 |  | 0.744 |
 | ns | 494 |  | 75 | d2ql one-liner | 1.7 |  | 0.687 |
-| walker |  | 533 | 167 | headings outline in README.md |  |  | 0.687 |
 | ns | 538 |  | 44 | d2ts src layout | 2.1 |  | 0.588 |
+| walker |  | 542 | 167 | headings outline in README.md |  |  | 0.588 |
 | ns | 608 |  | 70 | d2ts package re-exports (`index.ts`) | 2.2 |  | 0.548 |
-| walker |  | 697 | 164 | README.md section #0 |  |  | 0.578 |
-| walker |  | 706 | 9 | export names surface in eslint.base.mjs |  |  | 0.472 |
+| walker |  | 706 | 164 | README.md section #0 |  |  | 0.472 |
 | ns | 706 |  | 98 | Operator catalog (operators/ filenames) | 2.3 |  | 0.472 |
 | walker |  | 732 | 26 | plaintext config pnpm-workspace.yaml |  |  | 0.508 |
 | ns | 744 |  | 38 | Version + Antichain class names + factory `v(…)` | 2.4 |  | 0.493 |

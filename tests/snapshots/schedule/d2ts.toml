@@ -73,10 +73,36 @@ entries = ["d2mini", "d2ql", "d2ts", "d2ts-benchmark"]
 
 [[batches]]
 position = 5
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in eslint.base.mjs"
+cost_tokens = 9
+cum_tokens = 192
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts-benchmark" })'
 descriptor = "listing of 'packages/d2ts-benchmark'"
 cost_tokens = 17
-cum_tokens = 200
+cum_tokens = 209
 
 [batches.content]
 kind = "fs"
@@ -86,11 +112,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts-benchmar
 entries = ["CHANGELOG.md", "package.json", "src", "tsconfig.json"]
 
 [[batches]]
-position = 6
+position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql" })'
 descriptor = "listing of 'packages/d2ql'"
 cost_tokens = 25
-cum_tokens = 225
+cum_tokens = 234
 
 [batches.content]
 kind = "fs"
@@ -100,11 +126,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql"
 entries = ["README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
 
 [[batches]]
-position = 7
+position = 8
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ql/README.md" })'
 descriptor = "README headline in packages/d2ql/README.md"
 cost_tokens = 20
-cum_tokens = 245
+cum_tokens = 254
 
 [batches.content]
 kind = "lines"
@@ -126,11 +152,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini" })'
 descriptor = "listing of 'packages/d2mini'"
 cost_tokens = 30
-cum_tokens = 275
+cum_tokens = 284
 
 [batches.content]
 kind = "fs"
@@ -140,11 +166,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini"
 entries = ["CHANGELOG.md", "README.md", "eslint.config.mjs", "package.json", "src", "tests", "tsconfig.json"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/README.md" })'
 descriptor = "README headline in packages/d2mini/README.md"
 cost_tokens = 52
-cum_tokens = 327
+cum_tokens = 336
 
 [batches.content]
 kind = "lines"
@@ -166,11 +192,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 10
+position = 11
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2mini/README.md", section_index: 0 })'
 descriptor = "packages/d2mini/README.md section #0"
 cost_tokens = 39
-cum_tokens = 366
+cum_tokens = 375
 
 [batches.content]
 kind = "lines"
@@ -184,11 +210,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 167
-cum_tokens = 533
+cum_tokens = 542
 
 [batches.content]
 kind = "lines"
@@ -450,11 +476,11 @@ end = 700
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 164
-cum_tokens = 697
+cum_tokens = 706
 
 [batches.content]
 kind = "lines"
@@ -482,32 +508,6 @@ end = 34
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 13
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in eslint.base.mjs"
-cost_tokens = 9
-cum_tokens = 706
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/d2ts/eslint.base.mjs"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
 
 [[batches]]
 position = 14

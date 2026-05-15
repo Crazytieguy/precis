@@ -5,9 +5,9 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | ns | 61 |  | 61 | package.json — name, description, main | 1.1 |  | 0.000 |
 | walker |  | 103 | 103 | listing of '.' |  |  | 0.000 |
 | walker |  | 106 | 3 | listing of 'tap-snapshots' |  |  | 0.000 |
-| walker |  | 130 | 24 | README headline in README.md |  |  | 0.000 |
-| walker |  | 135 | 5 | listing of 'bin' |  |  | 0.000 |
-| walker |  | 145 | 10 | export names surface in index.js |  |  | 0.000 |
+| walker |  | 116 | 10 | export names surface in index.js |  |  | 0.000 |
+| walker |  | 140 | 24 | README headline in README.md |  |  | 0.000 |
+| walker |  | 145 | 5 | listing of 'bin' |  |  | 0.000 |
 | ns | 164 |  | 103 | Repo top-level listing | 1.2 |  | 0.614 |
 | walker |  | 200 | 55 | package identity in package.json |  |  | 0.784 |
 | walker |  | 217 | 17 | listing of 'classes' |  |  | 0.799 |
@@ -30,28 +30,28 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 1003 | 84 | package dependencies in package.json |  |  | 0.645 |
 | ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.591 |
 | walker |  | 1108 | 105 | listing of 'functions' |  |  | 0.775 |
-| walker |  | 1141 | 33 | listing of 'test' |  |  | 0.775 |
-| walker |  | 1158 | 17 | listing of 'test/classes' |  |  | 0.775 |
-| walker |  | 1179 | 21 | README.md section #20 |  |  | 0.775 |
-| walker |  | 1200 | 21 | README.md section #21 |  |  | 0.775 |
-| walker |  | 1221 | 21 | README.md section #22 |  |  | 0.775 |
-| walker |  | 1242 | 21 | README.md section #23 |  |  | 0.775 |
-| walker |  | 1280 | 38 | listing of 'benchmarks' |  |  | 0.775 |
-| walker |  | 1302 | 22 | README.md section #34 |  |  | 0.775 |
-| walker |  | 1324 | 22 | README.md section #42 |  |  | 0.775 |
-| walker |  | 1346 | 22 | README.md section #51 |  |  | 0.775 |
-| walker |  | 1371 | 25 | README.md section #12 |  |  | 0.775 |
-| walker |  | 1395 | 24 | README.md section #47 |  |  | 0.775 |
 | ns | 1401 |  | 390 | index.js — module.exports object body (canonical public API list) | 2.5 |  | 0.634 |
-| walker |  | 1422 | 27 | README.md section #25 |  |  | 0.634 |
-| walker |  | 1451 | 29 | README.md section #13 |  |  | 0.634 |
-| walker |  | 1549 | 98 | README.md section #3 |  |  | 0.637 |
-| walker |  | 1577 | 28 | README.md section #38 |  |  | 0.637 |
-| walker |  | 1606 | 29 | README.md section #35 |  |  | 0.637 |
-| walker |  | 1633 | 27 | listing of 'test/internal' |  |  | 0.637 |
-| ns | 1667 |  | 266 | README — all section heading locations | 2.6 |  | 0.619 |
-| ns | 1775 |  | 108 | README — Versions section (leading = and v) | 3.1 | 2.6 | 0.625 |
-| walker |  | 2013 | 380 | export at index.js:45 |  |  | 0.780 |
+| walker |  | 1488 | 380 | export at index.js:45 |  |  | 0.814 |
+| walker |  | 1521 | 33 | listing of 'test' |  |  | 0.814 |
+| walker |  | 1538 | 17 | listing of 'test/classes' |  |  | 0.814 |
+| walker |  | 1559 | 21 | README.md section #20 |  |  | 0.814 |
+| walker |  | 1580 | 21 | README.md section #21 |  |  | 0.814 |
+| walker |  | 1601 | 21 | README.md section #22 |  |  | 0.814 |
+| walker |  | 1622 | 21 | README.md section #23 |  |  | 0.814 |
+| walker |  | 1660 | 38 | listing of 'benchmarks' |  |  | 0.814 |
+| ns | 1667 |  | 266 | README — all section heading locations | 2.6 |  | 0.778 |
+| walker |  | 1682 | 22 | README.md section #34 |  |  | 0.778 |
+| walker |  | 1704 | 22 | README.md section #42 |  |  | 0.778 |
+| walker |  | 1726 | 22 | README.md section #51 |  |  | 0.778 |
+| walker |  | 1751 | 25 | README.md section #12 |  |  | 0.778 |
+| walker |  | 1775 | 24 | README.md section #47 |  |  | 0.759 |
+| ns | 1775 |  | 108 | README — Versions section (leading = and v) | 3.1 | 2.6 | 0.759 |
+| walker |  | 1802 | 27 | README.md section #25 |  |  | 0.759 |
+| walker |  | 1831 | 29 | README.md section #13 |  |  | 0.759 |
+| walker |  | 1929 | 98 | README.md section #3 |  |  | 0.780 |
+| walker |  | 1957 | 28 | README.md section #38 |  |  | 0.780 |
+| walker |  | 1986 | 29 | README.md section #35 |  |  | 0.780 |
+| walker |  | 2013 | 27 | listing of 'test/internal' |  |  | 0.780 |
 | walker |  | 2044 | 31 | README.md section #30 |  |  | 0.780 |
 | walker |  | 2080 | 36 | README.md section #40 |  |  | 0.780 |
 | walker |  | 2117 | 37 | README.md section #39 |  |  | 0.780 |
@@ -78,18 +78,18 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | ns | 3219 |  | 272 | README — Hyphen Ranges desugaring | 3.4 | 2.6 | 0.647 |
 | walker |  | 3223 | 105 | listing of 'test/functions' |  |  | 0.647 |
 | walker |  | 3308 | 85 | README.md section #50 |  |  | 0.647 |
-| walker |  | 3396 | 88 | README.md section #41 |  |  | 0.647 |
-| walker |  | 3510 | 114 | README.md section #8 |  |  | 0.665 |
-| ns | 3533 |  | 314 | README — X-Ranges desugaring | 3.5 | 2.6 | 0.642 |
-| walker |  | 3570 | 60 | README.md section #56 |  |  | 0.642 |
-| walker |  | 3703 | 133 | README.md section #49 |  |  | 0.643 |
-| walker |  | 3776 | 73 | README.md section #32 |  |  | 0.643 |
-| ns | 4025 |  | 492 | README — Tilde Ranges desugaring | 3.6 | 2.6 | 0.622 |
-| walker |  | 4352 | 576 | imports in index.js |  |  | 0.622 |
-| walker |  | 4364 | 12 | export names surface in preload.js |  |  | 0.622 |
-| walker |  | 4383 | 19 | export names surface in map.js |  |  | 0.622 |
-| walker |  | 4391 | 8 | imports in map.js |  |  | 0.622 |
-| walker |  | 4399 | 8 | imports in preload.js |  |  | 0.622 |
+| ns | 3533 |  | 314 | README — X-Ranges desugaring | 3.5 | 2.6 | 0.624 |
+| walker |  | 3884 | 576 | imports in index.js |  |  | 0.624 |
+| walker |  | 3896 | 12 | export names surface in preload.js |  |  | 0.624 |
+| walker |  | 3915 | 19 | export names surface in map.js |  |  | 0.624 |
+| walker |  | 3923 | 8 | imports in map.js |  |  | 0.624 |
+| walker |  | 3931 | 8 | imports in preload.js |  |  | 0.624 |
+| walker |  | 4019 | 88 | README.md section #41 |  |  | 0.624 |
+| ns | 4025 |  | 492 | README — Tilde Ranges desugaring | 3.6 | 2.6 | 0.604 |
+| walker |  | 4133 | 114 | README.md section #8 |  |  | 0.622 |
+| walker |  | 4193 | 60 | README.md section #56 |  |  | 0.622 |
+| walker |  | 4326 | 133 | README.md section #49 |  |  | 0.622 |
+| walker |  | 4399 | 73 | README.md section #32 |  |  | 0.622 |
 | walker |  | 4556 | 157 | README.md section #43 |  |  | 0.622 |
 | ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.578 |
 | walker |  | 4929 | 373 | plaintext config .gitignore |  |  | 0.578 |
