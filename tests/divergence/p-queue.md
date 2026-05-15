@@ -56,29 +56,29 @@ Score(3000)=0.475 I=0.724 C=0.312 ns_rows≤3K=20/43 (reached=7 partial=2 missin
 | walker |  | 3102 | 92 | package entrypoints in package.json |  |  | 0.461 |
 | walker |  | 3131 | 29 | package runtime metadata in package.json |  |  | 0.478 |
 | walker |  | 3237 | 106 | package scripts in package.json |  |  | 0.478 |
-| ns | 3450 |  | 374 | Readme — .signal AbortSignal cancellation example | 3.7 | 3.2 | 0.447 |
-| walker |  | 3547 | 310 | package dependencies in package.json |  |  | 0.447 |
-| walker |  | 3591 | 44 | readme.md section #8 |  |  | 0.448 |
-| walker |  | 3771 | 180 | readme.md section #2 |  |  | 0.485 |
-| walker |  | 3830 | 59 | readme.md section #26 |  |  | 0.486 |
-| ns | 3891 |  | 441 | Readme — onError fail-fast pattern + .clear() warning | 3.8 | 3.2 | 0.457 |
-| walker |  | 3893 | 63 | readme.md section #10 |  |  | 0.458 |
-| walker |  | 3925 | 32 | export names surface in source/queue.ts |  |  | 0.460 |
-| ns | 4029 |  | 138 | Readme — FAQ headings | 3.9 | 3.1 | 0.454 |
-| walker |  | 4063 | 138 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.455 |
+| walker |  | 3281 | 44 | readme.md section #8 |  |  | 0.480 |
+| ns | 3450 |  | 374 | Readme — .signal AbortSignal cancellation example | 3.7 | 3.2 | 0.448 |
+| walker |  | 3461 | 180 | readme.md section #2 |  |  | 0.485 |
+| walker |  | 3520 | 59 | readme.md section #26 |  |  | 0.486 |
+| walker |  | 3583 | 63 | readme.md section #10 |  |  | 0.488 |
+| walker |  | 3615 | 32 | export names surface in source/queue.ts |  |  | 0.490 |
+| walker |  | 3753 | 138 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.491 |
+| ns | 3891 |  | 441 | Readme — onError fail-fast pattern + .clear() warning | 3.8 | 3.2 | 0.461 |
+| ns | 4029 |  | 138 | Readme — FAQ headings | 3.9 | 3.1 | 0.455 |
 | ns | 4199 |  | 170 | Readme — concurrency / autoStart / queueClass option bodies | 3.10 | 3.2 | 0.442 |
 | ns | 4321 |  | 122 | Readme — onRateLimit / onRateLimitCleared docs | 3.11 | 3.2 | 0.435 |
 | ns | 4545 |  | 224 | Readme — FAQ: concurrency-vs-intervalCap + strict-mode usage | 3.12 | 3.9 | 0.426 |
 | ns | 4766 |  | 221 | Readme — timeout option body + Handling timeouts section intro | 3.13 | 3.2 | 0.414 |
-| ns | 4825 |  | 59 | Readme — .runningTasks debugging example | 3.14 | 3.2 | 0.411 |
-| ns | 5082 |  | 257 | Readme — Events: active / completed / error / empty / idle descriptions | 3.15 | 3.1 | 0.400 |
-| walker |  | 5088 | 1025 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.402 |
-| walker |  | 5251 | 163 | readme.md section #35 |  |  | 0.402 |
-| walker |  | 5258 | 7 | listing of '.github' |  |  | 0.402 |
-| walker |  | 5262 | 4 | listing of '.github/workflows' |  |  | 0.402 |
-| walker |  | 5321 | 59 | imports in bench.ts |  |  | 0.402 |
+| walker |  | 4778 | 1025 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.416 |
+| ns | 4825 |  | 59 | Readme — .runningTasks debugging example | 3.14 | 3.2 | 0.413 |
+| walker |  | 4941 | 163 | readme.md section #35 |  |  | 0.413 |
+| walker |  | 4948 | 7 | listing of '.github' |  |  | 0.413 |
+| walker |  | 4952 | 4 | listing of '.github/workflows' |  |  | 0.413 |
+| walker |  | 5011 | 59 | imports in bench.ts |  |  | 0.413 |
+| ns | 5082 |  | 257 | Readme — Events: active / completed / error / empty / idle descriptions | 3.15 | 3.1 | 0.402 |
+| walker |  | 5235 | 224 | readme.md section #32 |  |  | 0.402 |
 | ns | 5359 |  | 277 | Readme — FAQ: backpressure + cancellation/abort patterns | 3.16 | 3.9 | 0.393 |
-| walker |  | 5545 | 224 | readme.md section #32 |  |  | 0.393 |
+| walker |  | 5545 | 310 | package dependencies in package.json |  |  | 0.393 |
 | walker |  | 5651 | 106 | readme.md section #18 |  |  | 0.396 |
 | walker |  | 5706 | 55 | export names surface in source/options.ts |  |  | 0.412 |
 | ns | 5706 |  | 347 | priority-queue.ts — class declaration + every method signature | 4.1 |  | 0.412 |

@@ -1,4 +1,4 @@
-Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missing=5)
+Score(3000)=0.690 I=0.835 C=0.571 ns_rows≤3K=22/43 (reached=14 partial=3 missing=5)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -50,15 +50,15 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | walker |  | 2826 | 149 | json config tsconfig.json |  |  | 0.685 |
 | ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.696 |
 | ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.677 |
-| ns | 3089 |  | 140 | package.json mocha + prettier blocks | 4.2 |  | 0.654 |
-| walker |  | 3192 | 366 | package dependencies in package.json |  |  | 0.656 |
-| ns | 3238 |  | 149 | tsconfig.json — full | 4.3 |  | 0.669 |
-| walker |  | 3324 | 132 | README.md section #5 |  |  | 0.669 |
-| walker |  | 3351 | 27 | README.md section #6 |  |  | 0.681 |
+| walker |  | 2958 | 132 | README.md section #5 |  |  | 0.677 |
+| walker |  | 2985 | 27 | README.md section #6 |  |  | 0.690 |
+| ns | 3089 |  | 140 | package.json mocha + prettier blocks | 4.2 |  | 0.667 |
+| walker |  | 3227 | 242 | README.md section #2 |  |  | 0.669 |
+| walker |  | 3237 | 10 | listing of '.github' |  |  | 0.669 |
+| ns | 3238 |  | 149 | tsconfig.json — full | 4.3 |  | 0.681 |
+| walker |  | 3246 | 9 | listing of '.github/workflows' |  |  | 0.681 |
 | ns | 3455 |  | 217 | CI workflow (main.yml) | 4.4 |  | 0.649 |
-| walker |  | 3593 | 242 | README.md section #2 |  |  | 0.651 |
-| walker |  | 3603 | 10 | listing of '.github' |  |  | 0.651 |
-| walker |  | 3612 | 9 | listing of '.github/workflows' |  |  | 0.651 |
+| walker |  | 3612 | 366 | package dependencies in package.json |  |  | 0.651 |
 | ns | 3690 |  | 235 | package.json scripts | 4.5 |  | 0.660 |
 | walker |  | 3708 | 96 | README.md section #14 |  |  | 0.661 |
 | walker |  | 3720 | 12 | listing of 'test' |  |  | 0.675 |

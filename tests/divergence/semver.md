@@ -25,28 +25,28 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 748 | 28 | package runtime metadata in package.json |  |  | 0.682 |
 | ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.645 |
 | walker |  | 892 | 144 | package scripts in package.json |  |  | 0.645 |
-| walker |  | 976 | 84 | package dependencies in package.json |  |  | 0.645 |
-| ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.591 |
-| walker |  | 1081 | 105 | listing of 'functions' |  |  | 0.775 |
-| ns | 1401 |  | 390 | index.js — module.exports object body (canonical public API list) | 2.5 |  | 0.634 |
-| walker |  | 1461 | 380 | export at index.js:45 |  |  | 0.814 |
-| walker |  | 1494 | 33 | listing of 'test' |  |  | 0.814 |
-| walker |  | 1511 | 17 | listing of 'test/classes' |  |  | 0.814 |
-| walker |  | 1532 | 21 | README.md section #20 |  |  | 0.814 |
-| walker |  | 1553 | 21 | README.md section #21 |  |  | 0.814 |
-| walker |  | 1574 | 21 | README.md section #22 |  |  | 0.814 |
-| walker |  | 1595 | 21 | README.md section #23 |  |  | 0.814 |
-| walker |  | 1633 | 38 | listing of 'benchmarks' |  |  | 0.814 |
-| walker |  | 1655 | 22 | README.md section #34 |  |  | 0.814 |
+| walker |  | 997 | 105 | listing of 'functions' |  |  | 0.847 |
+| ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.775 |
+| walker |  | 1377 | 380 | export at index.js:45 |  |  | 0.807 |
+| ns | 1401 |  | 390 | index.js — module.exports object body (canonical public API list) | 2.5 |  | 0.814 |
+| walker |  | 1410 | 33 | listing of 'test' |  |  | 0.814 |
+| walker |  | 1427 | 17 | listing of 'test/classes' |  |  | 0.814 |
+| walker |  | 1448 | 21 | README.md section #20 |  |  | 0.814 |
+| walker |  | 1469 | 21 | README.md section #21 |  |  | 0.814 |
+| walker |  | 1490 | 21 | README.md section #22 |  |  | 0.814 |
+| walker |  | 1511 | 21 | README.md section #23 |  |  | 0.814 |
+| walker |  | 1549 | 38 | listing of 'benchmarks' |  |  | 0.814 |
+| walker |  | 1571 | 22 | README.md section #34 |  |  | 0.814 |
+| walker |  | 1593 | 22 | README.md section #42 |  |  | 0.814 |
+| walker |  | 1615 | 22 | README.md section #51 |  |  | 0.814 |
+| walker |  | 1640 | 25 | README.md section #12 |  |  | 0.814 |
+| walker |  | 1664 | 24 | README.md section #47 |  |  | 0.814 |
 | ns | 1667 |  | 266 | README — all section heading locations | 2.6 |  | 0.778 |
-| walker |  | 1677 | 22 | README.md section #42 |  |  | 0.778 |
-| walker |  | 1699 | 22 | README.md section #51 |  |  | 0.778 |
-| walker |  | 1724 | 25 | README.md section #12 |  |  | 0.778 |
-| walker |  | 1748 | 24 | README.md section #47 |  |  | 0.778 |
-| walker |  | 1775 | 27 | README.md section #25 |  |  | 0.759 |
+| walker |  | 1691 | 27 | README.md section #25 |  |  | 0.778 |
+| walker |  | 1720 | 29 | README.md section #13 |  |  | 0.778 |
 | ns | 1775 |  | 108 | README — Versions section (leading = and v) | 3.1 | 2.6 | 0.759 |
-| walker |  | 1804 | 29 | README.md section #13 |  |  | 0.759 |
-| walker |  | 1902 | 98 | README.md section #3 |  |  | 0.780 |
+| walker |  | 1818 | 98 | README.md section #3 |  |  | 0.780 |
+| walker |  | 1902 | 84 | package dependencies in package.json |  |  | 0.780 |
 | walker |  | 1930 | 28 | README.md section #38 |  |  | 0.780 |
 | walker |  | 1959 | 29 | README.md section #35 |  |  | 0.780 |
 | walker |  | 1986 | 27 | listing of 'test/internal' |  |  | 0.780 |

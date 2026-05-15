@@ -1,7 +1,7 @@
 fixture = "audiobookshelf"
 budget = 10000
-cumulative_tokens = 9865
-batch_count = 304
+cumulative_tokens = 9945
+batch_count = 322
 
 [[batches]]
 position = 1
@@ -3687,28 +3687,10 @@ entries = ["index.js"]
 
 [[batches]]
 position = 200
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 440
-cum_tokens = 6741
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/package.json"
-start = 40
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 201
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/static/libarchive" })'
 descriptor = "listing of 'client/static/libarchive'"
 cost_tokens = 10
-cum_tokens = 6751
+cum_tokens = 6311
 
 [batches.content]
 kind = "fs"
@@ -3718,11 +3700,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/stati
 entries = ["wasm-gen", "worker-bundle.js"]
 
 [[batches]]
-position = 202
+position = 201
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/widgets" })'
 descriptor = "listing of 'client/components/widgets'"
 cost_tokens = 98
-cum_tokens = 6849
+cum_tokens = 6409
 
 [batches.content]
 kind = "fs"
@@ -3732,11 +3714,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["AbridgedIndicator.vue", "Alert.vue", "AlreadyInLibraryIndicator.vue", "BookDetailsEdit.vue", "CoverSizeWidget.vue", "CronExpressionBuilder.vue", "EncoderOptionsCard.vue", "ExplicitIndicator.vue", "ItemSlider.vue", "LoadingSpinner.vue", "MoreMenu.vue", "NotificationWidget.vue", "OnlineIndicator.vue", "PodcastDetailsEdit.vue", "PodcastTypeIndicator.vue", "RssFeedMetadataBuilder.vue", "SeriesInputWidget.vue"]
 
 [[batches]]
-position = 203
+position = 202
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/docs/README.md", section_index: 4 })'
 descriptor = "docs/README.md section #4"
 cost_tokens = 81
-cum_tokens = 6930
+cum_tokens = 6490
 
 [batches.content]
 kind = "lines"
@@ -3766,11 +3748,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 204
+position = 203
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/watcher" })'
 descriptor = "listing of 'server/libs/watcher'"
 cost_tokens = 103
-cum_tokens = 7033
+cum_tokens = 6593
 
 [batches.content]
 kind = "fs"
@@ -3780,11 +3762,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "aborter", "are-shallow-equal.js", "atomically", "constants.js", "debounce.js", "enums.js", "is-primitive.js", "promise-concurrency-limiter.js", "ripstat", "string-indexes.js", "tiny-readdir.js", "types.js", "utils.js", "watcher.js", "watcher_handler.js", "watcher_locker.js", "watcher_locks_resolver.js", "watcher_poller.js", "watcher_stats.js"]
 
 [[batches]]
-position = 205
+position = 204
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/watcher/atomically" })'
 descriptor = "listing of 'server/libs/watcher/atomically'"
 cost_tokens = 12
-cum_tokens = 7045
+cum_tokens = 6605
 
 [batches.content]
 kind = "fs"
@@ -3794,11 +3776,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["consts.js", "index.js", "utils"]
 
 [[batches]]
-position = 206
+position = 205
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/watcher/ripstat" })'
 descriptor = "listing of 'server/libs/watcher/ripstat'"
 cost_tokens = 13
-cum_tokens = 7058
+cum_tokens = 6618
 
 [batches.content]
 kind = "fs"
@@ -3808,11 +3790,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["consts.js", "index.js", "stats.js"]
 
 [[batches]]
-position = 207
+position = 206
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/watcher/atomically/utils" })'
 descriptor = "listing of 'server/libs/watcher/atomically/utils'"
 cost_tokens = 37
-cum_tokens = 7095
+cum_tokens = 6655
 
 [batches.content]
 kind = "fs"
@@ -3822,11 +3804,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["attemptify.js", "fs.js", "fs_handlers.js", "lang.js", "retryify.js", "retryify_queue.js", "scheduler.js", "temp.js"]
 
 [[batches]]
-position = 208
+position = 207
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/objects/metadata" })'
 descriptor = "listing of 'server/objects/metadata'"
 cost_tokens = 11
-cum_tokens = 7106
+cum_tokens = 6666
 
 [batches.content]
 kind = "fs"
@@ -3836,11 +3818,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/objec
 entries = ["AudioMetaTags.js", "FileMetadata.js"]
 
 [[batches]]
-position = 209
+position = 208
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/test/server/managers/migrations" })'
 descriptor = "listing of 'test/server/managers/migrations'"
 cost_tokens = 44
-cum_tokens = 7150
+cum_tokens = 6710
 
 [batches.content]
 kind = "fs"
@@ -3850,11 +3832,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/test/server/
 entries = ["v1.0.0-migration.js", "v1.1.0-migration.js", "v1.10.0-migration.js", "v1.2.0-migration.js"]
 
 [[batches]]
-position = 210
+position = 209
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/static/libs/marked" })'
 descriptor = "listing of 'client/static/libs/marked'"
 cost_tokens = 7
-cum_tokens = 7157
+cum_tokens = 6717
 
 [batches.content]
 kind = "fs"
@@ -3864,11 +3846,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/stati
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 211
+position = 210
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/buffer-crc32" })'
 descriptor = "listing of 'server/libs/archiver/buffer-crc32'"
 cost_tokens = 7
-cum_tokens = 7164
+cum_tokens = 6724
 
 [batches.content]
 kind = "fs"
@@ -3878,11 +3860,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 212
+position = 211
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/crc32" })'
 descriptor = "listing of 'server/libs/archiver/crc32'"
 cost_tokens = 7
-cum_tokens = 7171
+cum_tokens = 6731
 
 [batches.content]
 kind = "fs"
@@ -3892,11 +3874,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 213
+position = 212
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/normalize-path" })'
 descriptor = "listing of 'server/libs/archiver/normalize-path'"
 cost_tokens = 7
-cum_tokens = 7178
+cum_tokens = 6738
 
 [batches.content]
 kind = "fs"
@@ -3906,11 +3888,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 214
+position = 213
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/readdir-glob" })'
 descriptor = "listing of 'server/libs/archiver/readdir-glob'"
 cost_tokens = 7
-cum_tokens = 7185
+cum_tokens = 6745
 
 [batches.content]
 kind = "fs"
@@ -3920,11 +3902,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 215
+position = 214
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/zip-stream" })'
 descriptor = "listing of 'server/libs/archiver/zip-stream'"
 cost_tokens = 7
-cum_tokens = 7192
+cum_tokens = 6752
 
 [batches.content]
 kind = "fs"
@@ -3934,11 +3916,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 216
+position = 215
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jwa/buffer-equal-constant-time" })'
 descriptor = "listing of 'server/libs/jwa/buffer-equal-constant-time'"
 cost_tokens = 7
-cum_tokens = 7199
+cum_tokens = 6759
 
 [batches.content]
 kind = "fs"
@@ -3948,11 +3930,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 217
+position = 216
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 53 })'
 descriptor = "readme.md section #53"
 cost_tokens = 44
-cum_tokens = 7243
+cum_tokens = 6803
 
 [batches.content]
 kind = "lines"
@@ -3974,11 +3956,11 @@ end = 367
 kind = "full"
 
 [[batches]]
-position = 218
+position = 217
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/cards" })'
 descriptor = "listing of 'client/components/cards'"
 cost_tokens = 114
-cum_tokens = 7357
+cum_tokens = 6917
 
 [batches.content]
 kind = "fs"
@@ -3988,11 +3970,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["AuthorCard.vue", "AuthorSearchCard.vue", "BookMatchCard.vue", "EpisodeSearchCard.vue", "GenreSearchCard.vue", "GroupCard.vue", "ItemSearchCard.vue", "ItemTaskRunningCard.vue", "ItemUploadCard.vue", "LazyBookCard.vue", "LazyCollectionCard.vue", "LazyPlaylistCard.vue", "LazySeriesCard.vue", "NarratorCard.vue", "NarratorSearchCard.vue", "NotificationCard.vue", "PodcastFeedSummaryCard.vue", "SeriesSearchCard.vue", "TagSearchCard.vue"]
 
 [[batches]]
-position = 219
+position = 218
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations" })'
 descriptor = "listing of 'server/migrations'"
 cost_tokens = 208
-cum_tokens = 7565
+cum_tokens = 7125
 
 [batches.content]
 kind = "fs"
@@ -4002,11 +3984,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migra
 entries = ["changelog.md", "readme.md", "v2.15.0-series-column-unique.js", "v2.15.1-reindex-nocase.js", "v2.15.2-index-creation.js", "v2.17.0-uuid-replacement.js", "v2.17.3-fk-constraints.js", "v2.17.4-use-subfolder-for-oidc-redirect-uris.js", "v2.17.5-remove-host-from-feed-urls.js", "v2.17.6-share-add-isdownloadable.js", "v2.17.7-add-indices.js", "v2.19.1-copy-title-to-library-items.js", "v2.19.4-improve-podcast-queries.js", "v2.20.0-improve-author-sort-queries.js", "v2.26.0-create-auth-tables.js", "v2.33.0-add-discover-query-indexes.js"]
 
 [[batches]]
-position = 220
+position = 219
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md" })'
 descriptor = "README headline in server/migrations/readme.md"
 cost_tokens = 25
-cum_tokens = 7590
+cum_tokens = 7150
 
 [batches.content]
 kind = "lines"
@@ -4028,11 +4010,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 221
+position = 220
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md" })'
 descriptor = "headings outline in server/migrations/readme.md"
 cost_tokens = 36
-cum_tokens = 7626
+cum_tokens = 7186
 
 [batches.content]
 kind = "lines"
@@ -4086,11 +4068,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 221
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md", section_index: 1 })'
 descriptor = "server/migrations/readme.md section #1"
 cost_tokens = 64
-cum_tokens = 7690
+cum_tokens = 7250
 
 [batches.content]
 kind = "lines"
@@ -4112,11 +4094,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 223
+position = 222
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 52 })'
 descriptor = "readme.md section #52"
 cost_tokens = 45
-cum_tokens = 7735
+cum_tokens = 7295
 
 [batches.content]
 kind = "lines"
@@ -4130,11 +4112,11 @@ end = 362
 kind = "full"
 
 [[batches]]
-position = 224
+position = 223
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils'"
 cost_tokens = 72
-cum_tokens = 7807
+cum_tokens = 7367
 
 [batches.content]
 kind = "fs"
@@ -4144,11 +4126,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["balancedMatch", "braceExpansion", "file.js", "fsRealpath", "glob", "index.js", "inflight", "lazystream", "lodash.difference", "lodash.flatten", "lodash.isplainobject", "lodash.union", "minimatch", "readableStream", "safeBuffer", "stringDecoder", "wrappy"]
 
 [[batches]]
-position = 225
+position = 224
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/glob" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/glob'"
 cost_tokens = 15
-cum_tokens = 7822
+cum_tokens = 7382
 
 [batches.content]
 kind = "fs"
@@ -4158,11 +4140,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "common.js", "index.js", "sync.js"]
 
 [[batches]]
-position = 226
+position = 225
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/fsRealpath" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/fsRealpath'"
 cost_tokens = 11
-cum_tokens = 7833
+cum_tokens = 7393
 
 [batches.content]
 kind = "fs"
@@ -4172,11 +4154,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js", "old.js"]
 
 [[batches]]
-position = 227
+position = 226
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lazystream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream'"
 cost_tokens = 11
-cum_tokens = 7844
+cum_tokens = 7404
 
 [batches.content]
 kind = "fs"
@@ -4186,11 +4168,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js", "readable-stream"]
 
 [[batches]]
-position = 228
+position = 227
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages/library/_library/bookshelf" })'
 descriptor = "listing of 'client/pages/library/_library/bookshelf'"
 cost_tokens = 5
-cum_tokens = 7849
+cum_tokens = 7409
 
 [batches.content]
 kind = "fs"
@@ -4200,11 +4182,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages
 entries = ["_id.vue"]
 
 [[batches]]
-position = 229
+position = 228
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages/library/_library/series" })'
 descriptor = "listing of 'client/pages/library/_library/series'"
 cost_tokens = 5
-cum_tokens = 7854
+cum_tokens = 7414
 
 [batches.content]
 kind = "fs"
@@ -4214,11 +4196,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages
 entries = ["_id.vue"]
 
 [[batches]]
-position = 230
+position = 229
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/compress-commons/archivers/zip" })'
 descriptor = "listing of 'server/libs/archiver/compress-commons/archivers/zip'"
 cost_tokens = 34
-cum_tokens = 7888
+cum_tokens = 7448
 
 [batches.content]
 kind = "fs"
@@ -4228,11 +4210,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["constants.js", "general-purpose-bit.js", "unix-stat.js", "util.js", "zip-archive-entry.js", "zip-archive-output-stream.js"]
 
 [[batches]]
-position = 231
+position = 230
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 57 })'
 descriptor = "readme.md section #57"
 cost_tokens = 47
-cum_tokens = 7935
+cum_tokens = 7495
 
 [batches.content]
 kind = "lines"
@@ -4246,11 +4228,11 @@ end = 381
 kind = "full"
 
 [[batches]]
-position = 232
+position = 231
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 58 })'
 descriptor = "readme.md section #58"
 cost_tokens = 47
-cum_tokens = 7982
+cum_tokens = 7542
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +4246,11 @@ end = 389
 kind = "full"
 
 [[batches]]
-position = 233
+position = 232
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages/config/users" })'
 descriptor = "listing of 'client/pages/config/users'"
 cost_tokens = 8
-cum_tokens = 7990
+cum_tokens = 7550
 
 [batches.content]
 kind = "fs"
@@ -4278,11 +4260,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages
 entries = ["_id", "index.vue"]
 
 [[batches]]
-position = 234
+position = 233
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/nodeCron/background-scheduled-task" })'
 descriptor = "listing of 'server/libs/nodeCron/background-scheduled-task'"
 cost_tokens = 8
-cum_tokens = 7998
+cum_tokens = 7558
 
 [batches.content]
 kind = "fs"
@@ -4292,11 +4274,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["daemon.js", "index.js"]
 
 [[batches]]
-position = 235
+position = 234
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/watcher/aborter" })'
 descriptor = "listing of 'server/libs/watcher/aborter'"
 cost_tokens = 8
-cum_tokens = 8006
+cum_tokens = 7566
 
 [batches.content]
 kind = "fs"
@@ -4306,11 +4288,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["controller.js", "signal.js"]
 
 [[batches]]
-position = 236
+position = 235
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lazystream/readable-stream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream'"
 cost_tokens = 13
-cum_tokens = 8019
+cum_tokens = 7579
 
 [batches.content]
 kind = "fs"
@@ -4320,11 +4302,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["lib", "passthrough.js", "readable.js"]
 
 [[batches]]
-position = 237
+position = 236
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lazystream/readable-stream/lib" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib'"
 cost_tokens = 38
-cum_tokens = 8057
+cum_tokens = 7617
 
 [batches.content]
 kind = "fs"
@@ -4334,11 +4316,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["_stream_duplex.js", "_stream_passthrough.js", "_stream_readable.js", "_stream_transform.js", "_stream_writable.js", "internal"]
 
 [[batches]]
-position = 238
+position = 237
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 65 })'
 descriptor = "readme.md section #65"
 cost_tokens = 49
-cum_tokens = 8106
+cum_tokens = 7666
 
 [batches.content]
 kind = "lines"
@@ -4352,11 +4334,37 @@ end = 424
 kind = "full"
 
 [[batches]]
-position = 239
+position = 238
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in server/libs/jws/lib/tostring.js"
 cost_tokens = 15
-cum_tokens = 8121
+cum_tokens = 7681
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 239
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js", start_line: 4 })'
+descriptor = "export at server/libs/jws/lib/tostring.js:4"
+cost_tokens = 0
+cum_tokens = 7681
 
 [batches.content]
 kind = "lines"
@@ -4379,36 +4387,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 240
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js", start_line: 4 })'
-descriptor = "export at server/libs/jws/lib/tostring.js:4"
-cost_tokens = 0
-cum_tokens = 8121
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/tostring.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 241
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/readableStream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream'"
 cost_tokens = 55
-cum_tokens = 8176
+cum_tokens = 7736
 
 [batches.content]
 kind = "fs"
@@ -4418,11 +4400,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "_stream_duplex.js", "_stream_passthrough.js", "_stream_readable.js", "_stream_transform.js", "_stream_writable.js", "index.js", "internal", "ours", "stream", "stream.js"]
 
 [[batches]]
-position = 242
+position = 241
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/readableStream/ours" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/ours'"
 cost_tokens = 18
-cum_tokens = 8194
+cum_tokens = 7754
 
 [batches.content]
 kind = "fs"
@@ -4432,11 +4414,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["browser.js", "errors.js", "primordials.js", "util.js"]
 
 [[batches]]
-position = 243
+position = 242
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 60 })'
 descriptor = "readme.md section #60"
 cost_tokens = 52
-cum_tokens = 8246
+cum_tokens = 7806
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +4432,11 @@ end = 403
 kind = "full"
 
 [[batches]]
-position = 244
+position = 243
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/readableStream/stream" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/stream'"
 cost_tokens = 4
-cum_tokens = 8250
+cum_tokens = 7810
 
 [batches.content]
 kind = "fs"
@@ -4464,11 +4446,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["promises.js"]
 
 [[batches]]
-position = 245
+position = 244
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 41 })'
 descriptor = "readme.md section #41"
 cost_tokens = 60
-cum_tokens = 8310
+cum_tokens = 7870
 
 [batches.content]
 kind = "lines"
@@ -4482,11 +4464,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 246
+position = 245
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/busboy/types" })'
 descriptor = "listing of 'server/libs/busboy/types'"
 cost_tokens = 9
-cum_tokens = 8319
+cum_tokens = 7879
 
 [batches.content]
 kind = "fs"
@@ -4496,11 +4478,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["multipart.js", "urlencoded.js"]
 
 [[batches]]
-position = 247
+position = 246
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/fsExtra/remove" })'
 descriptor = "listing of 'server/libs/fsExtra/remove'"
 cost_tokens = 9
-cum_tokens = 8328
+cum_tokens = 7888
 
 [batches.content]
 kind = "fs"
@@ -4510,11 +4492,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["index.js", "rimraf.js"]
 
 [[batches]]
-position = 248
+position = 247
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/fsExtra/util" })'
 descriptor = "listing of 'server/libs/fsExtra/util'"
 cost_tokens = 9
-cum_tokens = 8337
+cum_tokens = 7897
 
 [batches.content]
 kind = "fs"
@@ -4524,11 +4506,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["stat.js", "utimes.js"]
 
 [[batches]]
-position = 249
+position = 248
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypress/tests" })'
 descriptor = "listing of 'client/cypress/tests'"
 cost_tokens = 6
-cum_tokens = 8343
+cum_tokens = 7903
 
 [batches.content]
 kind = "fs"
@@ -4538,11 +4520,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypre
 entries = ["components", "utils"]
 
 [[batches]]
-position = 250
+position = 249
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypress/tests/components" })'
 descriptor = "listing of 'client/cypress/tests/components'"
 cost_tokens = 3
-cum_tokens = 8346
+cum_tokens = 7906
 
 [batches.content]
 kind = "fs"
@@ -4552,11 +4534,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypre
 entries = ["cards"]
 
 [[batches]]
-position = 251
+position = 250
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypress/tests/components/cards" })'
 descriptor = "listing of 'client/cypress/tests/components/cards'"
 cost_tokens = 33
-cum_tokens = 8379
+cum_tokens = 7939
 
 [batches.content]
 kind = "fs"
@@ -4566,11 +4548,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/cypre
 entries = ["AuthorCard.cy.js", "ItemSlider.cy.js", "LazyBookCard.cy.js", "LazySeriesCard.cy.js", "NarratorCard.cy.js"]
 
 [[batches]]
-position = 252
+position = 251
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals" })'
 descriptor = "listing of 'client/components/modals'"
 cost_tokens = 147
-cum_tokens = 8526
+cum_tokens = 8086
 
 [batches.content]
 kind = "fs"
@@ -4580,11 +4562,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["AccountModal.vue", "AddCustomMetadataProviderModal.vue", "ApiKeyCreatedModal.vue", "ApiKeyModal.vue", "AudioFileDataModal.vue", "BackupScheduleModal.vue", "BatchQuickMatchModel.vue", "BookmarksModal.vue", "ChaptersModal.vue", "Dialog.vue", "EditSeriesInputInnerModal.vue", "ListeningSessionModal.vue", "Modal.vue", "PlayerSettingsModal.vue", "RawCoverPreviewModal.vue", "ShareModal.vue", "SleepTimerModal.vue", "UploadImageModal.vue", "authors", "bookmarks", "changelog", "collections", "emails", "item", "libraries", "notification", "player", "playlists", "podcast", "rssfeed"]
 
 [[batches]]
-position = 253
+position = 252
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/podcast" })'
 descriptor = "listing of 'client/components/modals/podcast'"
 cost_tokens = 35
-cum_tokens = 8561
+cum_tokens = 8121
 
 [batches.content]
 kind = "fs"
@@ -4594,11 +4576,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["EditEpisode.vue", "EpisodeFeed.vue", "NewModal.vue", "OpmlFeedsModal.vue", "RemoveEpisode.vue", "ViewEpisode.vue", "tabs"]
 
 [[batches]]
-position = 254
+position = 253
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/libraries" })'
 descriptor = "listing of 'client/components/modals/libraries'"
 cost_tokens = 37
-cum_tokens = 8598
+cum_tokens = 8158
 
 [batches.content]
 kind = "fs"
@@ -4608,11 +4590,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["EditLibrary.vue", "EditModal.vue", "LazyFolderChooser.vue", "LibraryScannerSettings.vue", "LibrarySettings.vue", "LibraryTools.vue", "ScheduleScan.vue"]
 
 [[batches]]
-position = 255
+position = 254
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/collections" })'
 descriptor = "listing of 'client/components/modals/collections'"
 cost_tokens = 16
-cum_tokens = 8614
+cum_tokens = 8174
 
 [batches.content]
 kind = "fs"
@@ -4622,11 +4604,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["AddCreateModal.vue", "CollectionItem.vue", "EditModal.vue"]
 
 [[batches]]
-position = 256
+position = 255
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/playlists" })'
 descriptor = "listing of 'client/components/modals/playlists'"
 cost_tokens = 17
-cum_tokens = 8631
+cum_tokens = 8191
 
 [batches.content]
 kind = "fs"
@@ -4636,11 +4618,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["AddCreateModal.vue", "EditModal.vue", "UserPlaylistItem.vue"]
 
 [[batches]]
-position = 257
+position = 256
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/authors" })'
 descriptor = "listing of 'client/components/modals/authors'"
 cost_tokens = 5
-cum_tokens = 8636
+cum_tokens = 8196
 
 [batches.content]
 kind = "fs"
@@ -4650,11 +4632,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["EditModal.vue"]
 
 [[batches]]
-position = 258
+position = 257
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/bookmarks" })'
 descriptor = "listing of 'client/components/modals/bookmarks'"
 cost_tokens = 5
-cum_tokens = 8641
+cum_tokens = 8201
 
 [batches.content]
 kind = "fs"
@@ -4664,11 +4646,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["BookmarkItem.vue"]
 
 [[batches]]
-position = 259
+position = 258
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/changelog" })'
 descriptor = "listing of 'client/components/modals/changelog'"
 cost_tokens = 5
-cum_tokens = 8646
+cum_tokens = 8206
 
 [batches.content]
 kind = "fs"
@@ -4678,11 +4660,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["ViewModal.vue"]
 
 [[batches]]
-position = 260
+position = 259
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/notification" })'
 descriptor = "listing of 'client/components/modals/notification'"
 cost_tokens = 6
-cum_tokens = 8652
+cum_tokens = 8212
 
 [batches.content]
 kind = "fs"
@@ -4692,11 +4674,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["NotificationEditModal.vue"]
 
 [[batches]]
-position = 261
+position = 260
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/item" })'
 descriptor = "listing of 'client/components/modals/item'"
 cost_tokens = 8
-cum_tokens = 8660
+cum_tokens = 8220
 
 [batches.content]
 kind = "fs"
@@ -4706,11 +4688,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["EditModal.vue", "tabs"]
 
 [[batches]]
-position = 262
+position = 261
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/item/tabs" })'
 descriptor = "listing of 'client/components/modals/item/tabs'"
 cost_tokens = 32
-cum_tokens = 8692
+cum_tokens = 8252
 
 [batches.content]
 kind = "fs"
@@ -4720,11 +4702,37 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["Chapters.vue", "Cover.vue", "Details.vue", "Episodes.vue", "Files.vue", "Match.vue", "Schedule.vue", "Tools.vue"]
 
 [[batches]]
-position = 263
+position = 262
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in server/libs/jsonwebtoken/lib/timespan.js"
 cost_tokens = 17
-cum_tokens = 8709
+cum_tokens = 8269
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 263
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js", start_line: 3 })'
+descriptor = "export at server/libs/jsonwebtoken/lib/timespan.js:3"
+cost_tokens = 0
+cum_tokens = 8269
 
 [batches.content]
 kind = "lines"
@@ -4747,36 +4755,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 264
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js", start_line: 3 })'
-descriptor = "export at server/libs/jsonwebtoken/lib/timespan.js:3"
-cost_tokens = 0
-cum_tokens = 8709
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/timespan.js"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 265
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 64 })'
 descriptor = "readme.md section #64"
 cost_tokens = 55
-cum_tokens = 8764
+cum_tokens = 8324
 
 [batches.content]
 kind = "lines"
@@ -4790,11 +4772,11 @@ end = 422
 kind = "full"
 
 [[batches]]
-position = 266
+position = 265
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 35 })'
 descriptor = "readme.md section #35"
 cost_tokens = 63
-cum_tokens = 8827
+cum_tokens = 8387
 
 [batches.content]
 kind = "lines"
@@ -4824,11 +4806,11 @@ end = 212
 kind = "full"
 
 [[batches]]
-position = 267
+position = 266
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/ui" })'
 descriptor = "listing of 'client/components/ui'"
 cost_tokens = 154
-cum_tokens = 8981
+cum_tokens = 8541
 
 [batches.content]
 kind = "fs"
@@ -4838,11 +4820,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["Btn.vue", "Checkbox.vue", "ContextMenuDropdown.vue", "Dropdown.vue", "EditableText.vue", "FileInput.vue", "IconBtn.vue", "InputDropdown.vue", "LibrariesDropdown.vue", "LibraryIcon.vue", "LoadingIndicator.vue", "MediaIconPicker.vue", "MultiSelect.vue", "MultiSelectDropdown.vue", "MultiSelectQueryInput.vue", "QueryInput.vue", "RangeInput.vue", "ReadIconBtn.vue", "RichTextEditor.vue", "SelectInput.vue", "TextInput.vue", "TextInputWithLabel.vue", "TextareaInput.vue", "TextareaWithLabel.vue", "TimePicker.vue", "ToggleBtns.vue", "ToggleSwitch.vue", "Tooltip.vue", "VueTrix.vue"]
 
 [[batches]]
-position = 268
+position = 267
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 55 })'
 descriptor = "readme.md section #55"
 cost_tokens = 57
-cum_tokens = 9038
+cum_tokens = 8598
 
 [batches.content]
 kind = "lines"
@@ -4856,11 +4838,11 @@ end = 373
 kind = "full"
 
 [[batches]]
-position = 269
+position = 268
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/test/server/utils/parsers" })'
 descriptor = "listing of 'test/server/utils/parsers'"
 cost_tokens = 23
-cum_tokens = 9061
+cum_tokens = 8621
 
 [batches.content]
 kind = "fs"
@@ -4870,11 +4852,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/test/server/
 entries = ["parseNameString.test.js", "parseNfoMetadata.test.js", "parseOpfMetadata.test.js"]
 
 [[batches]]
-position = 270
+position = 269
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/tables/library" })'
 descriptor = "listing of 'client/components/tables/library'"
 cost_tokens = 10
-cum_tokens = 9071
+cum_tokens = 8631
 
 [batches.content]
 kind = "fs"
@@ -4884,11 +4866,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["LibrariesTable.vue", "LibraryItem.vue"]
 
 [[batches]]
-position = 271
+position = 270
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 33 })'
 descriptor = "readme.md section #33"
 cost_tokens = 35
-cum_tokens = 9106
+cum_tokens = 8666
 
 [batches.content]
 kind = "lines"
@@ -4910,11 +4892,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 272
+position = 271
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 56 })'
 descriptor = "readme.md section #56"
 cost_tokens = 59
-cum_tokens = 9165
+cum_tokens = 8725
 
 [batches.content]
 kind = "lines"
@@ -4928,11 +4910,11 @@ end = 376
 kind = "full"
 
 [[batches]]
-position = 273
+position = 272
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 19 })'
 descriptor = "readme.md section #19"
 cost_tokens = 57
-cum_tokens = 9222
+cum_tokens = 8782
 
 [batches.content]
 kind = "lines"
@@ -4962,11 +4944,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 274
+position = 273
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/balancedMatch" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/balancedMatch'"
 cost_tokens = 7
-cum_tokens = 9229
+cum_tokens = 8789
 
 [batches.content]
 kind = "fs"
@@ -4976,11 +4958,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 275
+position = 274
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/braceExpansion" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/braceExpansion'"
 cost_tokens = 7
-cum_tokens = 9236
+cum_tokens = 8796
 
 [batches.content]
 kind = "fs"
@@ -4990,11 +4972,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 276
+position = 275
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/inflight" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/inflight'"
 cost_tokens = 7
-cum_tokens = 9243
+cum_tokens = 8803
 
 [batches.content]
 kind = "fs"
@@ -5004,11 +4986,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 277
+position = 276
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lodash.difference" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.difference'"
 cost_tokens = 7
-cum_tokens = 9250
+cum_tokens = 8810
 
 [batches.content]
 kind = "fs"
@@ -5018,11 +5000,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 278
+position = 277
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lodash.flatten" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.flatten'"
 cost_tokens = 7
-cum_tokens = 9257
+cum_tokens = 8817
 
 [batches.content]
 kind = "fs"
@@ -5032,11 +5014,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 279
+position = 278
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lodash.isplainobject" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.isplainobject'"
 cost_tokens = 7
-cum_tokens = 9264
+cum_tokens = 8824
 
 [batches.content]
 kind = "fs"
@@ -5046,11 +5028,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 280
+position = 279
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lodash.union" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lodash.union'"
 cost_tokens = 7
-cum_tokens = 9271
+cum_tokens = 8831
 
 [batches.content]
 kind = "fs"
@@ -5060,11 +5042,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 281
+position = 280
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/minimatch" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/minimatch'"
 cost_tokens = 7
-cum_tokens = 9278
+cum_tokens = 8838
 
 [batches.content]
 kind = "fs"
@@ -5074,11 +5056,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 282
+position = 281
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/safeBuffer" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/safeBuffer'"
 cost_tokens = 7
-cum_tokens = 9285
+cum_tokens = 8845
 
 [batches.content]
 kind = "fs"
@@ -5088,11 +5070,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 283
+position = 282
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/stringDecoder" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/stringDecoder'"
 cost_tokens = 7
-cum_tokens = 9292
+cum_tokens = 8852
 
 [batches.content]
 kind = "fs"
@@ -5102,11 +5084,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 284
+position = 283
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/wrappy" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/wrappy'"
 cost_tokens = 7
-cum_tokens = 9299
+cum_tokens = 8859
 
 [batches.content]
 kind = "fs"
@@ -5116,11 +5098,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["LICENSE", "index.js"]
 
 [[batches]]
-position = 285
+position = 284
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 66 })'
 descriptor = "readme.md section #66"
 cost_tokens = 61
-cum_tokens = 9360
+cum_tokens = 8920
 
 [batches.content]
 kind = "lines"
@@ -5142,11 +5124,11 @@ end = 434
 kind = "full"
 
 [[batches]]
-position = 286
+position = 285
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 21 })'
 descriptor = "readme.md section #21"
 cost_tokens = 59
-cum_tokens = 9419
+cum_tokens = 8979
 
 [batches.content]
 kind = "lines"
@@ -5176,11 +5158,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 287
+position = 286
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 37 })'
 descriptor = "readme.md section #37"
 cost_tokens = 71
-cum_tokens = 9490
+cum_tokens = 9050
 
 [batches.content]
 kind = "lines"
@@ -5202,11 +5184,11 @@ end = 231
 kind = "full"
 
 [[batches]]
-position = 288
+position = 287
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/static/fonts/Ubuntu_Mono" })'
 descriptor = "listing of 'client/static/fonts/Ubuntu_Mono'"
 cost_tokens = 11
-cum_tokens = 9501
+cum_tokens = 9061
 
 [batches.content]
 kind = "fs"
@@ -5216,11 +5198,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/stati
 entries = ["UFL.txt", "UbuntuMono-Regular.ttf"]
 
 [[batches]]
-position = 289
+position = 288
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/static/libarchive/wasm-gen" })'
 descriptor = "listing of 'client/static/libarchive/wasm-gen'"
 cost_tokens = 11
-cum_tokens = 9512
+cum_tokens = 9072
 
 [batches.content]
 kind = "fs"
@@ -5230,11 +5212,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/stati
 entries = ["libarchive.js", "libarchive.wasm"]
 
 [[batches]]
-position = 290
+position = 289
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/data-stream.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in server/libs/jws/lib/data-stream.js"
 cost_tokens = 22
-cum_tokens = 9534
+cum_tokens = 9094
 
 [batches.content]
 kind = "lines"
@@ -5264,11 +5246,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 291
+position = 290
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/data-stream.js", start_line: 6 })'
 descriptor = "export at server/libs/jws/lib/data-stream.js:6"
 cost_tokens = 0
-cum_tokens = 9534
+cum_tokens = 9094
 
 [batches.content]
 kind = "lines"
@@ -5290,11 +5272,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 292
+position = 291
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/sign-stream.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in server/libs/jws/lib/sign-stream.js"
 cost_tokens = 22
-cum_tokens = 9556
+cum_tokens = 9116
 
 [batches.content]
 kind = "lines"
@@ -5324,11 +5306,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 293
+position = 292
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/sign-stream.js", start_line: 36 })'
 descriptor = "export at server/libs/jws/lib/sign-stream.js:36"
 cost_tokens = 0
-cum_tokens = 9556
+cum_tokens = 9116
 
 [batches.content]
 kind = "lines"
@@ -5350,11 +5332,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 294
+position = 293
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/verify-stream.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in server/libs/jws/lib/verify-stream.js"
 cost_tokens = 22
-cum_tokens = 9578
+cum_tokens = 9138
 
 [batches.content]
 kind = "lines"
@@ -5384,11 +5366,11 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 295
+position = 294
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jws/lib/verify-stream.js", start_line: 80 })'
 descriptor = "export at server/libs/jws/lib/verify-stream.js:80"
 cost_tokens = 0
-cum_tokens = 9578
+cum_tokens = 9138
 
 [batches.content]
 kind = "lines"
@@ -5410,11 +5392,11 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 296
+position = 295
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/player" })'
 descriptor = "listing of 'client/components/modals/player'"
 cost_tokens = 12
-cum_tokens = 9590
+cum_tokens = 9150
 
 [batches.content]
 kind = "fs"
@@ -5424,11 +5406,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["QueueItemRow.vue", "QueueItemsModal.vue"]
 
 [[batches]]
-position = 297
+position = 296
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/rssfeed" })'
 descriptor = "listing of 'client/components/modals/rssfeed'"
 cost_tokens = 12
-cum_tokens = 9602
+cum_tokens = 9162
 
 [batches.content]
 kind = "fs"
@@ -5438,11 +5420,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/compo
 entries = ["OpenCloseModal.vue", "ViewFeedModal.vue"]
 
 [[batches]]
-position = 298
+position = 297
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal'"
 cost_tokens = 3
-cum_tokens = 9605
+cum_tokens = 9165
 
 [batches.content]
 kind = "fs"
@@ -5452,11 +5434,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["streams"]
 
 [[batches]]
-position = 299
+position = 298
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams" })'
 descriptor = "listing of 'server/libs/archiver/archiverUtils/lazystream/readable-stream/lib/internal/streams'"
 cost_tokens = 18
-cum_tokens = 9623
+cum_tokens = 9183
 
 [batches.content]
 kind = "fs"
@@ -5466,11 +5448,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["BufferList.js", "destroy.js", "stream-browser.js", "stream.js"]
 
 [[batches]]
-position = 300
+position = 299
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages/config/users/_id" })'
 descriptor = "listing of 'client/pages/config/users/_id'"
 cost_tokens = 8
-cum_tokens = 9631
+cum_tokens = 9191
 
 [batches.content]
 kind = "fs"
@@ -5480,11 +5462,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/pages
 entries = ["index.vue", "sessions.vue"]
 
 [[batches]]
-position = 301
+position = 300
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins" })'
 descriptor = "listing of 'server/libs/archiver/lib/plugins'"
 cost_tokens = 8
-cum_tokens = 9639
+cum_tokens = 9199
 
 [batches.content]
 kind = "fs"
@@ -5494,11 +5476,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/
 entries = ["json.js", "zip.js"]
 
 [[batches]]
-position = 302
+position = 301
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 29 })'
 descriptor = "readme.md section #29"
 cost_tokens = 78
-cum_tokens = 9717
+cum_tokens = 9277
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5502,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 303
+position = 302
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 69 })'
 descriptor = "readme.md section #69"
 cost_tokens = 69
-cum_tokens = 9786
+cum_tokens = 9346
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +5520,11 @@ end = 442
 kind = "full"
 
 [[batches]]
-position = 304
+position = 303
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 42 })'
 descriptor = "readme.md section #42"
 cost_tokens = 79
-cum_tokens = 9865
+cum_tokens = 9425
 
 [batches.content]
 kind = "lines"
@@ -5554,3 +5536,573 @@ end = 256
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 304
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 22 })'
+descriptor = "readme.md section #22"
+cost_tokens = 68
+cum_tokens = 9493
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 305
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/emails" })'
+descriptor = "listing of 'client/components/modals/emails'"
+cost_tokens = 15
+cum_tokens = 9508
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/emails"
+entries = ["EReaderDeviceModal.vue", "UserEReaderDeviceModal.vue"]
+
+[[batches]]
+position = 306
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 38 })'
+descriptor = "readme.md section #38"
+cost_tokens = 91
+cum_tokens = 9599
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 233
+end = 233
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 235
+end = 236
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 238
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 307
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md", section_index: 3 })'
+descriptor = "server/migrations/readme.md section #3"
+cost_tokens = 110
+cum_tokens = 9709
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/migrations/readme.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 308
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/podcast/tabs" })'
+descriptor = "listing of 'client/components/modals/podcast/tabs'"
+cost_tokens = 10
+cum_tokens = 9719
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/client/components/modals/podcast/tabs"
+entries = ["EpisodeDetails.vue", "EpisodeMatch.vue"]
+
+[[batches]]
+position = 309
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/readableStream/internal" })'
+descriptor = "listing of 'server/libs/archiver/archiverUtils/readableStream/internal'"
+cost_tokens = 7
+cum_tokens = 9726
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/archiverUtils/readableStream/internal"
+entries = ["streams", "validators.js"]
+
+[[batches]]
+position = 310
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/archiver/lib/core.js"
+cost_tokens = 29
+cum_tokens = 9755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 918
+end = 918
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 919
+end = 919
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 311
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js", start_line: 25 })'
+descriptor = "export at server/libs/archiver/lib/core.js:25"
+cost_tokens = 0
+cum_tokens = 9755
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/core.js"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 312
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/jsonwebtoken/lib/NotBeforeError.js"
+cost_tokens = 29
+cum_tokens = 9784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 313
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js", start_line: 3 })'
+descriptor = "export at server/libs/jsonwebtoken/lib/NotBeforeError.js:3"
+cost_tokens = 0
+cum_tokens = 9784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/NotBeforeError.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 314
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md", section_index: 43 })'
+descriptor = "readme.md section #43"
+cost_tokens = 50
+cum_tokens = 9834
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 258
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/readme.md"
+start = 260
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 315
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+cost_tokens = 30
+cum_tokens = 9864
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 316
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js", start_line: 3 })'
+descriptor = "export at server/libs/jsonwebtoken/lib/TokenExpiredError.js:3"
+cost_tokens = 0
+cum_tokens = 9864
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/TokenExpiredError.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 317
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+cost_tokens = 31
+cum_tokens = 9895
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 318
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js", start_line: 1 })'
+descriptor = "export at server/libs/jsonwebtoken/lib/JsonWebTokenError.js:1"
+cost_tokens = 0
+cum_tokens = 9895
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/jsonwebtoken/lib/JsonWebTokenError.js"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 319
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/archiver/lib/plugins/json.js"
+cost_tokens = 25
+cum_tokens = 9920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 320
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js", start_line: 18 })'
+descriptor = "export at server/libs/archiver/lib/plugins/json.js:18"
+cost_tokens = 0
+cum_tokens = 9920
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/json.js"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 321
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in server/libs/archiver/lib/plugins/zip.js"
+cost_tokens = 25
+cum_tokens = 9945
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 322
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js", start_line: 21 })'
+descriptor = "export at server/libs/archiver/lib/plugins/zip.js:21"
+cost_tokens = 0
+cum_tokens = 9945
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/audiobookshelf/server/libs/archiver/lib/plugins/zip.js"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"

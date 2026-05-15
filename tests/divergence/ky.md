@@ -84,52 +84,52 @@ Score(3000)=0.614 I=0.858 C=0.439 ns_rows≤3K=17/38 (reached=8 partial=0 missin
 | walker |  | 2921 | 105 | package entrypoints in package.json |  |  | 0.601 |
 | walker |  | 2950 | 29 | package runtime metadata in package.json |  |  | 0.614 |
 | walker |  | 3053 | 103 | package scripts in package.json |  |  | 0.614 |
+| walker |  | 3081 | 28 | export names surface in source/utils/is.ts |  |  | 0.614 |
+| walker |  | 3127 | 46 | imports in source/types/options.ts |  |  | 0.614 |
+| walker |  | 3176 | 49 | imports in source/errors/HTTPError.ts |  |  | 0.614 |
 | ns | 3186 |  | 285 | ForceRetryOptions type + RetryMarker + retry() factory signature | 2.9 |  | 0.579 |
-| walker |  | 3424 | 371 | package dependencies in package.json |  |  | 0.579 |
-| walker |  | 3452 | 28 | export names surface in source/utils/is.ts |  |  | 0.579 |
-| walker |  | 3498 | 46 | imports in source/types/options.ts |  |  | 0.579 |
-| walker |  | 3547 | 49 | imports in source/errors/HTTPError.ts |  |  | 0.579 |
-| walker |  | 3559 | 12 | export names surface in source/types/ky.ts |  |  | 0.579 |
-| walker |  | 3609 | 50 | imports in source/types/ky.ts |  |  | 0.579 |
+| walker |  | 3188 | 12 | export names surface in source/types/ky.ts |  |  | 0.579 |
+| walker |  | 3238 | 50 | imports in source/types/ky.ts |  |  | 0.579 |
+| walker |  | 3291 | 53 | imports in source/utils/type-guards.ts |  |  | 0.579 |
+| walker |  | 3337 | 46 | readme.md section #28 |  |  | 0.579 |
+| walker |  | 3392 | 55 | imports in source/types/hooks.ts |  |  | 0.579 |
+| walker |  | 3427 | 35 | export names surface in source/utils/options.ts |  |  | 0.579 |
+| walker |  | 3427 | 0 | export at source/utils/options.ts:30 |  |  | 0.579 |
+| walker |  | 3458 | 31 | export at source/utils/options.ts:4 |  |  | 0.579 |
+| walker |  | 3506 | 48 | readme.md section #3 |  |  | 0.579 |
+| walker |  | 3555 | 49 | readme.md section #14 |  |  | 0.579 |
+| walker |  | 3606 | 51 | readme.md section #27 |  |  | 0.579 |
+| walker |  | 3622 | 16 | export names surface in source/types/ResponsePromise.ts |  |  | 0.579 |
+| walker |  | 3638 | 16 | export names surface in source/types/request.ts |  |  | 0.579 |
 | ns | 3658 |  | 472 | kyOptionKeys + vendor/request option registries | 2.10 |  | 0.534 |
-| walker |  | 3662 | 53 | imports in source/utils/type-guards.ts |  |  | 0.534 |
-| walker |  | 3708 | 46 | readme.md section #28 |  |  | 0.534 |
-| walker |  | 3763 | 55 | imports in source/types/hooks.ts |  |  | 0.534 |
-| walker |  | 3798 | 35 | export names surface in source/utils/options.ts |  |  | 0.534 |
-| walker |  | 3798 | 0 | export at source/utils/options.ts:30 |  |  | 0.534 |
-| walker |  | 3829 | 31 | export at source/utils/options.ts:4 |  |  | 0.534 |
-| ns | 3855 |  | 197 | KyOptions: every option's name + type signature (location batch) | 3.1 |  | 0.521 |
-| walker |  | 3877 | 48 | readme.md section #3 |  |  | 0.521 |
-| walker |  | 3926 | 49 | readme.md section #14 |  |  | 0.521 |
-| walker |  | 3977 | 51 | readme.md section #27 |  |  | 0.521 |
-| walker |  | 3993 | 16 | export names surface in source/types/ResponsePromise.ts |  |  | 0.521 |
-| walker |  | 4009 | 16 | export names surface in source/types/request.ts |  |  | 0.521 |
+| walker |  | 3659 | 21 | export at source/types/request.ts:1 |  |  | 0.534 |
+| walker |  | 3675 | 16 | export names surface in source/types/response.ts |  |  | 0.534 |
+| walker |  | 3697 | 22 | export at source/types/response.ts:1 |  |  | 0.534 |
+| walker |  | 3743 | 46 | export names surface in source/utils/normalize.ts |  |  | 0.534 |
+| walker |  | 3743 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.534 |
+| walker |  | 3763 | 20 | export at source/utils/normalize.ts:5 |  |  | 0.534 |
+| walker |  | 3826 | 63 | readme.md section #37 |  |  | 0.534 |
+| ns | 3855 |  | 197 | KyOptions: every option's name + type signature (location batch) | 3.1 |  | 0.522 |
+| walker |  | 3938 | 112 | json config tsconfig.dist.json |  |  | 0.522 |
+| walker |  | 4015 | 77 | readme.md section #31 |  |  | 0.522 |
 | ns | 4024 |  | 169 | RetryOptions: every field + ShouldRetryState (location batch) | 3.2 |  | 0.510 |
-| walker |  | 4030 | 21 | export at source/types/request.ts:1 |  |  | 0.510 |
-| walker |  | 4046 | 16 | export names surface in source/types/response.ts |  |  | 0.510 |
-| walker |  | 4068 | 22 | export at source/types/response.ts:1 |  |  | 0.510 |
-| walker |  | 4114 | 46 | export names surface in source/utils/normalize.ts |  |  | 0.510 |
-| walker |  | 4114 | 0 | export at source/utils/normalize.ts:28 |  |  | 0.510 |
-| walker |  | 4134 | 20 | export at source/utils/normalize.ts:5 |  |  | 0.510 |
-| walker |  | 4197 | 63 | readme.md section #37 |  |  | 0.510 |
-| walker |  | 4309 | 112 | json config tsconfig.dist.json |  |  | 0.510 |
-| ns | 4324 |  | 300 | Hooks types: every state + hook type alias (location batch) | 3.3 |  | 0.492 |
-| walker |  | 4386 | 77 | readme.md section #31 |  |  | 0.492 |
-| walker |  | 4427 | 41 | readme.md section #32 |  |  | 0.492 |
-| walker |  | 4452 | 25 | export names surface in source/types/retry.ts |  |  | 0.493 |
-| walker |  | 4531 | 79 | readme.md section #23 |  |  | 0.493 |
-| walker |  | 4547 | 16 | imports in source/utils/delay.ts |  |  | 0.493 |
-| walker |  | 4564 | 17 | imports in source/utils/timeout.ts |  |  | 0.493 |
-| ns | 4587 |  | 263 | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | 3.4 |  | 0.480 |
-| walker |  | 4871 | 307 | readme.md section #2 |  |  | 0.494 |
-| walker |  | 5036 | 165 | export doc at source/utils/type-guards.ts:49 |  |  | 0.494 |
+| walker |  | 4056 | 41 | readme.md section #32 |  |  | 0.510 |
+| walker |  | 4081 | 25 | export names surface in source/types/retry.ts |  |  | 0.511 |
+| walker |  | 4160 | 79 | readme.md section #23 |  |  | 0.511 |
+| walker |  | 4176 | 16 | imports in source/utils/delay.ts |  |  | 0.511 |
+| walker |  | 4193 | 17 | imports in source/utils/timeout.ts |  |  | 0.511 |
+| ns | 4324 |  | 300 | Hooks types: every state + hook type alias (location batch) | 3.3 |  | 0.493 |
+| walker |  | 4500 | 307 | readme.md section #2 |  |  | 0.507 |
+| ns | 4587 |  | 263 | Type aliases: Input, SearchParams*, Progress, KyHeadersInit, RequestHttpMethod, HttpMethod | 3.4 |  | 0.494 |
+| walker |  | 4665 | 165 | export doc at source/utils/type-guards.ts:49 |  |  | 0.494 |
+| walker |  | 4837 | 172 | export doc at source/utils/type-guards.ts:71 |  |  | 0.494 |
+| walker |  | 4932 | 95 | readme.md section #9 |  |  | 0.494 |
+| walker |  | 5029 | 97 | readme.md section #26 |  |  | 0.494 |
 | ns | 5127 |  | 540 | Options interface (extends KyOptions + RequestInit) + InternalOptions + NormalizedOptions | 3.5 | 3.1 | 0.470 |
-| walker |  | 5208 | 172 | export doc at source/utils/type-guards.ts:71 |  |  | 0.470 |
+| walker |  | 5128 | 99 | readme.md section #5 |  |  | 0.470 |
 | ns | 5252 |  | 125 | ResponsePromise type signature (no examples) | 3.6 |  | 0.463 |
-| walker |  | 5303 | 95 | readme.md section #9 |  |  | 0.463 |
-| walker |  | 5400 | 97 | readme.md section #26 |  |  | 0.463 |
 | ns | 5448 |  | 196 | KyRequest + KyResponse + common Primitive/LiteralUnion types | 3.7 |  | 0.459 |
-| walker |  | 5499 | 99 | readme.md section #5 |  |  | 0.459 |
+| walker |  | 5499 | 371 | package dependencies in package.json |  |  | 0.459 |
 | walker |  | 5586 | 87 | export names surface in source/utils/body.ts |  |  | 0.459 |
 | walker |  | 5586 | 0 | export at source/utils/body.ts:5 |  |  | 0.459 |
 | walker |  | 5586 | 0 | export at source/utils/body.ts:90 |  |  | 0.459 |

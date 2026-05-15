@@ -3377,28 +3377,10 @@ kind = "full"
 
 [[batches]]
 position = 131
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 224
-cum_tokens = 4227
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/dockly/package.json"
-start = 68
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 132
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/dockly/.devcontainer" })'
 descriptor = "listing of '.devcontainer'"
 cost_tokens = 5
-cum_tokens = 4232
+cum_tokens = 4008
 
 [batches.content]
 kind = "fs"
@@ -3408,37 +3390,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/dockly/.devcontainer"
 entries = ["devcontainer.json"]
 
 [[batches]]
-position = 133
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json" })'
-descriptor = "package dependencies in docs/package.json"
-cost_tokens = 288
-cum_tokens = 4520
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json"
-start = 6
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json"
-start = 32
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
+position = 132
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/assets/scss/components" })'
 descriptor = "listing of 'docs/src/assets/scss/components'"
 cost_tokens = 56
-cum_tokens = 4576
+cum_tokens = 4064
 
 [batches.content]
 kind = "fs"
@@ -3448,11 +3404,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/assets/scss
 entries = ["_box.scss", "_button.scss", "_features.scss", "_form.scss", "_icon.scss", "_image.scss", "_list.scss", "_section.scss", "_spotlight.scss", "_statistics.scss", "_table.scss"]
 
 [[batches]]
-position = 135
+position = 133
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/widgetsTemplates/list.widget.template.js", start_line: 8, member_start_line: 9 })'
 descriptor = "export member at src/widgetsTemplates/list.widget.template.js:8 member 9"
 cost_tokens = 21
-cum_tokens = 4597
+cum_tokens = 4085
 
 [batches.content]
 kind = "lines"
@@ -3474,11 +3430,29 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 134
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 224
+cum_tokens = 4309
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/dockly/package.json"
+start = 68
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/enum.js", start_line: 1 })'
 descriptor = "export at src/enum.js:1"
 cost_tokens = 91
-cum_tokens = 4688
+cum_tokens = 4400
 
 [batches.content]
 kind = "lines"
@@ -3492,11 +3466,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/widgetsTemplates/logs.widget.template.js", start_line: 7 })'
 descriptor = "export at src/widgetsTemplates/logs.widget.template.js:7"
 cost_tokens = 86
-cum_tokens = 4774
+cum_tokens = 4486
 
 [batches.content]
 kind = "lines"
@@ -3614,11 +3588,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 345
-cum_tokens = 5119
+cum_tokens = 4831
 
 [batches.content]
 kind = "lines"
@@ -3696,11 +3670,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/screen.js", start_line: 18, body_start_line: 20 })'
 descriptor = "export body at src/screen.js:18 body 20"
 cost_tokens = 109
-cum_tokens = 5228
+cum_tokens = 4940
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3712,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/dockerUtil.js" })'
 descriptor = "imports in src/dockerUtil.js"
 cost_tokens = 21
-cum_tokens = 5249
+cum_tokens = 4961
 
 [batches.content]
 kind = "lines"
@@ -3764,11 +3738,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/screen.js", start_line: 18, body_start_line: 36 })'
 descriptor = "export body at src/screen.js:18 body 36"
 cost_tokens = 113
-cum_tokens = 5362
+cum_tokens = 5074
 
 [batches.content]
 kind = "lines"
@@ -3790,11 +3764,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 142
+position = 141
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/baseWidget.js" })'
 descriptor = "imports in src/baseWidget.js"
 cost_tokens = 22
-cum_tokens = 5384
+cum_tokens = 5096
 
 [batches.content]
 kind = "lines"
@@ -3808,11 +3782,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 143
+position = 142
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 265
-cum_tokens = 5649
+cum_tokens = 5361
 
 [batches.content]
 kind = "lines"
@@ -3866,11 +3840,11 @@ end = 156
 kind = "full"
 
 [[batches]]
-position = 144
+position = 143
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/assets/scss/base" })'
 descriptor = "listing of 'docs/src/assets/scss/base'"
 cost_tokens = 11
-cum_tokens = 5660
+cum_tokens = 5372
 
 [batches.content]
 kind = "fs"
@@ -3880,11 +3854,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/assets/scss
 entries = ["_page.scss", "_typography.scss"]
 
 [[batches]]
-position = 145
+position = 144
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/widgetsTemplates/info.widget.template.js", start_line: 6 })'
 descriptor = "export at src/widgetsTemplates/info.widget.template.js:6"
 cost_tokens = 107
-cum_tokens = 5767
+cum_tokens = 5479
 
 [batches.content]
 kind = "lines"
@@ -4018,11 +3992,11 @@ end = 116
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/widgetsTemplates/help.widget.template.js", start_line: 5 })'
 descriptor = "export at src/widgetsTemplates/help.widget.template.js:5"
 cost_tokens = 119
-cum_tokens = 5886
+cum_tokens = 5598
 
 [batches.content]
 kind = "lines"
@@ -4172,11 +4146,11 @@ end = 139
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 146
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/layout.js", start_line: 6 })'
 descriptor = "module item at docs/src/components/layout.js:6"
 cost_tokens = 55
-cum_tokens = 5941
+cum_tokens = 5653
 
 [batches.content]
 kind = "lines"
@@ -4246,11 +4220,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 147
 key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/layout.js", start_line: 6, body_start_line: 21 })'
 descriptor = "module item body at docs/src/components/layout.js:6 body 21"
 cost_tokens = 27
-cum_tokens = 5968
+cum_tokens = 5680
 
 [batches.content]
 kind = "lines"
@@ -4264,11 +4238,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 149
+position = 148
 key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/layout.js", start_line: 6, body_start_line: 8 })'
 descriptor = "module item body at docs/src/components/layout.js:6 body 8"
 cost_tokens = 32
-cum_tokens = 6000
+cum_tokens = 5712
 
 [batches.content]
 kind = "lines"
@@ -4282,11 +4256,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/layout.js", start_line: 6, body_start_line: 15 })'
 descriptor = "module item body at docs/src/components/layout.js:6 body 15"
 cost_tokens = 34
-cum_tokens = 6034
+cum_tokens = 5746
 
 [batches.content]
 kind = "lines"
@@ -4300,11 +4274,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/themes/theme.selector.js", start_line: 13, body_start_line: 14 })'
 descriptor = "export body at src/themes/theme.selector.js:13 body 14"
 cost_tokens = 67
-cum_tokens = 6101
+cum_tokens = 5813
 
 [batches.content]
 kind = "lines"
@@ -4318,11 +4292,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/widgetsTemplates/list.widget.template.js", start_line: 8, body_start_line: 10 })'
 descriptor = "export body at src/widgetsTemplates/list.widget.template.js:8 body 10"
 cost_tokens = 85
-cum_tokens = 6186
+cum_tokens = 5898
 
 [batches.content]
 kind = "lines"
@@ -4344,11 +4318,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/Footer.js" })'
 descriptor = "imports in docs/src/components/Footer.js"
 cost_tokens = 10
-cum_tokens = 6196
+cum_tokens = 5908
 
 [batches.content]
 kind = "lines"
@@ -4362,11 +4336,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/src/components/HeaderGeneric.js" })'
 descriptor = "imports in docs/src/components/HeaderGeneric.js"
 cost_tokens = 10
-cum_tokens = 6206
+cum_tokens = 5918
 
 [batches.content]
 kind = "lines"
@@ -4380,11 +4354,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 155
+position = 154
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/src/assetsLoader.js" })'
 descriptor = "imports in src/assetsLoader.js"
 cost_tokens = 30
-cum_tokens = 6236
+cum_tokens = 5948
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +4380,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/SECURITY.md" })'
 descriptor = "headings outline in SECURITY.md"
 cost_tokens = 34
-cum_tokens = 6270
+cum_tokens = 5982
 
 [batches.content]
 kind = "lines"
@@ -4464,11 +4438,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/SECURITY.md", section_index: 0 })'
 descriptor = "SECURITY.md section #0"
 cost_tokens = 0
-cum_tokens = 6270
+cum_tokens = 5982
 
 [batches.content]
 kind = "lines"
@@ -4477,6 +4451,32 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/dockly/SECURITY.md"
 start = 1
 end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json" })'
+descriptor = "package dependencies in docs/package.json"
+cost_tokens = 288
+cum_tokens = 6270
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json"
+start = 6
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/dockly/docs/package.json"
+start = 32
+end = 35
 
 [batches.content.spans.render]
 kind = "full"

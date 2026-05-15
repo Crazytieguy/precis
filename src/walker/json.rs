@@ -399,7 +399,7 @@ fn scripts_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.4, 0.7, 0.4, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
+    mix_signals(0.25, 0.5, 0.25, path_depth_factor(file, ctx)) * secondary_package_json_factor(file)
 }
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {

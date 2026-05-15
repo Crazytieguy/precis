@@ -659,28 +659,10 @@ kind = "full"
 
 [[batches]]
 position = 16
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/debug/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 272
-cum_tokens = 1096
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/debug/package.json"
-start = 33
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/debug/src/browser.js", chunk_index: 1, export_count: 13, type_only_export_count: 0 })'
 descriptor = "export names surface #1 in src/browser.js"
 cost_tokens = 15
-cum_tokens = 1111
+cum_tokens = 839
 
 [batches.content]
 kind = "lines"
@@ -702,11 +684,11 @@ end = 259
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/debug/test.js" })'
 descriptor = "imports in test.js"
 cost_tokens = 22
-cum_tokens = 1133
+cum_tokens = 861
 
 [batches.content]
 kind = "lines"
@@ -720,11 +702,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/debug/README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 40
-cum_tokens = 1173
+cum_tokens = 901
 
 [batches.content]
 kind = "lines"
@@ -741,6 +723,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/debug/README.md"
 start = 381
 end = 384
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/debug/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 272
+cum_tokens = 1173
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/debug/package.json"
+start = 33
+end = 53
 
 [batches.content.spans.render]
 kind = "full"

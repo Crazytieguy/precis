@@ -1423,28 +1423,10 @@ kind = "full"
 
 [[batches]]
 position = 54
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 732
-cum_tokens = 3699
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
-start = 34
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 4 })'
 descriptor = "Readme.md section #4"
 cost_tokens = 197
-cum_tokens = 3896
+cum_tokens = 3164
 
 [batches.content]
 kind = "lines"
@@ -1538,11 +1520,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-router" })'
 descriptor = "listing of 'examples/multi-router'"
 cost_tokens = 7
-cum_tokens = 3903
+cum_tokens = 3171
 
 [batches.content]
 kind = "fs"
@@ -1552,11 +1534,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-rout
 entries = ["controllers", "index.js"]
 
 [[batches]]
-position = 57
+position = 56
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", chunk_index: 0, export_count: 10, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/express.js"
 cost_tokens = 106
-cum_tokens = 4009
+cum_tokens = 3277
 
 [batches.content]
 kind = "lines"
@@ -1602,11 +1584,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 57
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 62 })'
 descriptor = "export at lib/express.js:62"
 cost_tokens = 0
-cum_tokens = 4009
+cum_tokens = 3277
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +1602,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 59
+position = 58
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 70 })'
 descriptor = "export at lib/express.js:70"
 cost_tokens = 0
-cum_tokens = 4009
+cum_tokens = 3277
 
 [batches.content]
 kind = "lines"
@@ -1638,11 +1620,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 77 })'
 descriptor = "export at lib/express.js:77"
 cost_tokens = 0
-cum_tokens = 4009
+cum_tokens = 3277
 
 [batches.content]
 kind = "lines"
@@ -1656,11 +1638,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md" })'
 descriptor = "README headline in examples/README.md"
 cost_tokens = 21
-cum_tokens = 4030
+cum_tokens = 3298
 
 [batches.content]
 kind = "lines"
@@ -1682,11 +1664,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 4038
+cum_tokens = 3306
 
 [batches.content]
 kind = "fs"
@@ -1696,11 +1678,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/.github"
 entries = ["dependabot.yml", "workflows"]
 
 [[batches]]
-position = 63
+position = 62
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 18
-cum_tokens = 4056
+cum_tokens = 3324
 
 [batches.content]
 kind = "fs"
@@ -1710,11 +1692,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/.github/workflows"
 entries = ["ci.yml", "codeql.yml", "legacy.yml", "scorecard.yml"]
 
 [[batches]]
-position = 64
+position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 8 })'
 descriptor = "Readme.md section #8"
 cost_tokens = 34
-cum_tokens = 4090
+cum_tokens = 3358
 
 [batches.content]
 kind = "lines"
@@ -1736,11 +1718,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 70 })'
 descriptor = "export doc at lib/express.js:70"
 cost_tokens = 19
-cum_tokens = 4109
+cum_tokens = 3377
 
 [batches.content]
 kind = "lines"
@@ -1754,11 +1736,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 66
+position = 65
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 77 })'
 descriptor = "export doc at lib/express.js:77"
 cost_tokens = 19
-cum_tokens = 4128
+cum_tokens = 3396
 
 [batches.content]
 kind = "lines"
@@ -1772,11 +1754,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 67
+position = 66
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 62 })'
 descriptor = "export doc at lib/express.js:62"
 cost_tokens = 20
-cum_tokens = 4148
+cum_tokens = 3416
 
 [batches.content]
 kind = "lines"
@@ -1790,11 +1772,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js" })'
 descriptor = "imports in lib/request.js"
 cost_tokens = 20
-cum_tokens = 4168
+cum_tokens = 3436
 
 [batches.content]
 kind = "lines"
@@ -1809,6 +1791,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js" })'
+descriptor = "imports in lib/application.js"
+cost_tokens = 21
+cum_tokens = 3457
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
 start = 16
 end = 16
 
@@ -1817,36 +1825,10 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js" })'
-descriptor = "imports in lib/application.js"
-cost_tokens = 21
-cum_tokens = 4189
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js" })'
 descriptor = "imports in lib/express.js"
 cost_tokens = 21
-cum_tokens = 4210
+cum_tokens = 3478
 
 [batches.content]
 kind = "lines"
@@ -1868,11 +1850,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", chunk_index: 0, export_count: 9, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/utils.js"
 cost_tokens = 150
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2022,11 +2004,11 @@ end = 226
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 29 })'
 descriptor = "export at lib/utils.js:29"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2040,11 +2022,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 40 })'
 descriptor = "export at lib/utils.js:40"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2058,11 +2040,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 51 })'
 descriptor = "export at lib/utils.js:51"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2076,11 +2058,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 61 })'
 descriptor = "export at lib/utils.js:61"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2102,11 +2084,11 @@ end = 62
 kind = "ellipsis"
 
 [[batches]]
-position = 76
+position = 75
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 75 })'
 descriptor = "export at lib/utils.js:75"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2128,11 +2110,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 130 })'
 descriptor = "export at lib/utils.js:130"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +2136,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 162 })'
 descriptor = "export at lib/utils.js:162"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2180,11 +2162,11 @@ end = 163
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 194 })'
 descriptor = "export at lib/utils.js:194"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2206,11 +2188,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 225 })'
 descriptor = "export at lib/utils.js:225"
 cost_tokens = 0
-cum_tokens = 4360
+cum_tokens = 3628
 
 [batches.content]
 kind = "lines"
@@ -2232,11 +2214,11 @@ end = 226
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 75, body_start_line: 76 })'
 descriptor = "export body at lib/utils.js:75 body 76"
 cost_tokens = 10
-cum_tokens = 4370
+cum_tokens = 3638
 
 [batches.content]
 kind = "lines"
@@ -2250,11 +2232,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 61, body_start_line: 62 })'
 descriptor = "export body at lib/utils.js:61 body 62"
 cost_tokens = 43
-cum_tokens = 4413
+cum_tokens = 3681
 
 [batches.content]
 kind = "lines"
@@ -2268,11 +2250,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js", start_line: 37 })'
 descriptor = "export doc at lib/request.js:37"
 cost_tokens = 26
-cum_tokens = 4439
+cum_tokens = 3707
 
 [batches.content]
 kind = "lines"
@@ -2286,11 +2268,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js", start_line: 49 })'
 descriptor = "export doc at lib/response.js:49"
 cost_tokens = 26
-cum_tokens = 4465
+cum_tokens = 3733
 
 [batches.content]
 kind = "lines"
@@ -2304,11 +2286,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 36 })'
 descriptor = "export doc at lib/view.js:36"
 cost_tokens = 26
-cum_tokens = 4491
+cum_tokens = 3759
 
 [batches.content]
 kind = "lines"
@@ -2322,11 +2304,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/History.md", section_index: 0 })'
 descriptor = "History.md section #0"
 cost_tokens = 9
-cum_tokens = 4500
+cum_tokens = 3768
 
 [batches.content]
 kind = "lines"
@@ -2340,11 +2322,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js" })'
 descriptor = "imports in lib/response.js"
 cost_tokens = 35
-cum_tokens = 4535
+cum_tokens = 3803
 
 [batches.content]
 kind = "lines"
@@ -2366,11 +2348,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 34 })'
 descriptor = "Readme.md section #34"
 cost_tokens = 332
-cum_tokens = 4867
+cum_tokens = 4135
 
 [batches.content]
 kind = "lines"
@@ -2400,11 +2382,11 @@ end = 278
 kind = "full"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 376
-cum_tokens = 5243
+cum_tokens = 4511
 
 [batches.content]
 kind = "fs"
@@ -2414,11 +2396,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/test"
 entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
 
 [[batches]]
-position = 90
+position = 89
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/support" })'
 descriptor = "listing of 'test/support'"
 cost_tokens = 12
-cum_tokens = 5255
+cum_tokens = 4523
 
 [batches.content]
 kind = "fs"
@@ -2428,11 +2410,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/support"
 entries = ["env.js", "tmpl.js", "utils.js"]
 
 [[batches]]
-position = 91
+position = 90
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/acceptance" })'
 descriptor = "listing of 'test/acceptance'"
 cost_tokens = 86
-cum_tokens = 5341
+cum_tokens = 4609
 
 [batches.content]
 kind = "fs"
@@ -2442,11 +2424,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/acceptance"
 entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
 
 [[batches]]
-position = 92
+position = 91
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 29 })'
 descriptor = "export doc at lib/utils.js:29"
 cost_tokens = 39
-cum_tokens = 5380
+cum_tokens = 4648
 
 [batches.content]
 kind = "lines"
@@ -2460,11 +2442,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 130, body_start_line: 131 })'
 descriptor = "export body at lib/utils.js:130 body 131"
 cost_tokens = 163
-cum_tokens = 5543
+cum_tokens = 4811
 
 [batches.content]
 kind = "lines"
@@ -2502,11 +2484,11 @@ end = 151
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 162, body_start_line: 163 })'
 descriptor = "export body at lib/utils.js:162 body 163"
 cost_tokens = 164
-cum_tokens = 5707
+cum_tokens = 4975
 
 [batches.content]
 kind = "lines"
@@ -2544,11 +2526,11 @@ end = 183
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 9 })'
 descriptor = "Readme.md section #9"
 cost_tokens = 66
-cum_tokens = 5773
+cum_tokens = 5041
 
 [batches.content]
 kind = "lines"
@@ -2589,6 +2571,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
 start = 169
 end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 732
+cum_tokens = 5773
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 34
+end = 81
 
 [batches.content.spans.render]
 kind = "full"

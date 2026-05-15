@@ -72,55 +72,55 @@ Score(3000)=0.456 I=0.735 C=0.283 ns_rows≤3K=16/40 (reached=6 partial=1 missin
 | walker |  | 2753 | 4 | listing of 'examples/mvc/lib' |  |  | 0.456 |
 | walker |  | 2967 | 214 | Readme.md section #1 |  |  | 0.456 |
 | ns | 3060 |  | 548 | Default app configuration body | 3.3 | 2.1 | 0.408 |
-| ns | 3323 |  | 263 | app.handle — request entry | 3.4 | 2.1 | 0.388 |
-| walker |  | 3699 | 732 | package dependencies in package.json |  |  | 0.388 |
-| ns | 3870 |  | 547 | app.use body | 3.5 | 2.1 | 0.354 |
-| walker |  | 3896 | 197 | Readme.md section #4 |  |  | 0.354 |
-| walker |  | 3903 | 7 | listing of 'examples/multi-router' |  |  | 0.354 |
-| walker |  | 4009 | 106 | export names surface in lib/express.js |  |  | 0.369 |
-| walker |  | 4009 | 0 | export at lib/express.js:62 |  |  | 0.369 |
-| walker |  | 4009 | 0 | export at lib/express.js:70 |  |  | 0.369 |
-| walker |  | 4009 | 0 | export at lib/express.js:77 |  |  | 0.369 |
-| walker |  | 4030 | 21 | README headline in examples/README.md |  |  | 0.369 |
-| walker |  | 4038 | 8 | listing of '.github' |  |  | 0.369 |
-| walker |  | 4056 | 18 | listing of '.github/workflows' |  |  | 0.369 |
-| walker |  | 4090 | 34 | Readme.md section #8 |  |  | 0.369 |
-| walker |  | 4109 | 19 | export doc at lib/express.js:70 |  |  | 0.369 |
-| walker |  | 4128 | 19 | export doc at lib/express.js:77 |  |  | 0.369 |
-| walker |  | 4148 | 20 | export doc at lib/express.js:62 |  |  | 0.369 |
-| walker |  | 4168 | 20 | imports in lib/request.js |  |  | 0.369 |
-| ns | 4178 |  | 308 | app.set body | 3.6 | 2.1 | 0.352 |
-| walker |  | 4189 | 21 | imports in lib/application.js |  |  | 0.352 |
-| walker |  | 4210 | 21 | imports in lib/express.js |  |  | 0.355 |
-| walker |  | 4360 | 150 | export names surface in lib/utils.js |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:29 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:40 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:51 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:61 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:75 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:130 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:162 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:194 |  |  | 0.375 |
-| walker |  | 4360 | 0 | export at lib/utils.js:225 |  |  | 0.375 |
-| walker |  | 4370 | 10 | export body at lib/utils.js:75 body 76 |  |  | 0.375 |
+| walker |  | 3164 | 197 | Readme.md section #4 |  |  | 0.408 |
+| walker |  | 3171 | 7 | listing of 'examples/multi-router' |  |  | 0.408 |
+| walker |  | 3277 | 106 | export names surface in lib/express.js |  |  | 0.425 |
+| walker |  | 3277 | 0 | export at lib/express.js:62 |  |  | 0.425 |
+| walker |  | 3277 | 0 | export at lib/express.js:70 |  |  | 0.425 |
+| walker |  | 3277 | 0 | export at lib/express.js:77 |  |  | 0.425 |
+| walker |  | 3298 | 21 | README headline in examples/README.md |  |  | 0.425 |
+| walker |  | 3306 | 8 | listing of '.github' |  |  | 0.425 |
+| ns | 3323 |  | 263 | app.handle — request entry | 3.4 | 2.1 | 0.404 |
+| walker |  | 3324 | 18 | listing of '.github/workflows' |  |  | 0.404 |
+| walker |  | 3358 | 34 | Readme.md section #8 |  |  | 0.404 |
+| walker |  | 3377 | 19 | export doc at lib/express.js:70 |  |  | 0.404 |
+| walker |  | 3396 | 19 | export doc at lib/express.js:77 |  |  | 0.404 |
+| walker |  | 3416 | 20 | export doc at lib/express.js:62 |  |  | 0.404 |
+| walker |  | 3436 | 20 | imports in lib/request.js |  |  | 0.404 |
+| walker |  | 3457 | 21 | imports in lib/application.js |  |  | 0.404 |
+| walker |  | 3478 | 21 | imports in lib/express.js |  |  | 0.408 |
+| walker |  | 3628 | 150 | export names surface in lib/utils.js |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:29 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:40 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:51 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:61 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:75 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:130 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:162 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:194 |  |  | 0.431 |
+| walker |  | 3628 | 0 | export at lib/utils.js:225 |  |  | 0.431 |
+| walker |  | 3638 | 10 | export body at lib/utils.js:75 body 76 |  |  | 0.431 |
+| walker |  | 3681 | 43 | export body at lib/utils.js:61 body 62 |  |  | 0.431 |
+| walker |  | 3707 | 26 | export doc at lib/request.js:37 |  |  | 0.431 |
+| walker |  | 3733 | 26 | export doc at lib/response.js:49 |  |  | 0.431 |
+| walker |  | 3759 | 26 | export doc at lib/view.js:36 |  |  | 0.431 |
+| walker |  | 3768 | 9 | History.md section #0 |  |  | 0.431 |
+| walker |  | 3803 | 35 | imports in lib/response.js |  |  | 0.431 |
+| ns | 3870 |  | 547 | app.use body | 3.5 | 2.1 | 0.393 |
+| walker |  | 4135 | 332 | Readme.md section #34 |  |  | 0.393 |
+| ns | 4178 |  | 308 | app.set body | 3.6 | 2.1 | 0.375 |
 | ns | 4387 |  | 209 | app.listen + verb dispatch loop | 3.7 | 2.1 | 0.364 |
-| walker |  | 4413 | 43 | export body at lib/utils.js:61 body 62 |  |  | 0.364 |
-| walker |  | 4439 | 26 | export doc at lib/request.js:37 |  |  | 0.364 |
-| walker |  | 4465 | 26 | export doc at lib/response.js:49 |  |  | 0.364 |
-| walker |  | 4491 | 26 | export doc at lib/view.js:36 |  |  | 0.364 |
-| walker |  | 4500 | 9 | History.md section #0 |  |  | 0.364 |
-| walker |  | 4535 | 35 | imports in lib/response.js |  |  | 0.364 |
-| ns | 4740 |  | 353 | app.engine, app.param, app.route, app.all | 3.8 | 2.1 | 0.346 |
-| ns | 4850 |  | 110 | app.enabled/disabled/enable/disable + app.path | 3.9 | 2.1 | 0.339 |
-| walker |  | 4867 | 332 | Readme.md section #34 |  |  | 0.339 |
-| ns | 4981 |  | 131 | examples/hello-world/index.js | 3.10 |  | 0.333 |
-| walker |  | 5243 | 376 | listing of 'test' |  |  | 0.336 |
-| walker |  | 5255 | 12 | listing of 'test/support' |  |  | 0.336 |
-| walker |  | 5341 | 86 | listing of 'test/acceptance' |  |  | 0.337 |
-| walker |  | 5380 | 39 | export doc at lib/utils.js:29 |  |  | 0.337 |
-| walker |  | 5543 | 163 | export body at lib/utils.js:130 body 131 |  |  | 0.337 |
-| walker |  | 5707 | 164 | export body at lib/utils.js:162 body 163 |  |  | 0.338 |
-| walker |  | 5773 | 66 | Readme.md section #9 |  |  | 0.338 |
+| walker |  | 4511 | 376 | listing of 'test' |  |  | 0.367 |
+| walker |  | 4523 | 12 | listing of 'test/support' |  |  | 0.367 |
+| walker |  | 4609 | 86 | listing of 'test/acceptance' |  |  | 0.368 |
+| walker |  | 4648 | 39 | export doc at lib/utils.js:29 |  |  | 0.368 |
+| ns | 4740 |  | 353 | app.engine, app.param, app.route, app.all | 3.8 | 2.1 | 0.349 |
+| walker |  | 4811 | 163 | export body at lib/utils.js:130 body 131 |  |  | 0.350 |
+| ns | 4850 |  | 110 | app.enabled/disabled/enable/disable + app.path | 3.9 | 2.1 | 0.343 |
+| walker |  | 4975 | 164 | export body at lib/utils.js:162 body 163 |  |  | 0.344 |
+| ns | 4981 |  | 131 | examples/hello-world/index.js | 3.10 |  | 0.338 |
+| walker |  | 5041 | 66 | Readme.md section #9 |  |  | 0.338 |
+| walker |  | 5773 | 732 | package dependencies in package.json |  |  | 0.338 |
 | walker |  | 5836 | 63 | export doc at lib/utils.js:162 |  |  | 0.338 |
 | walker |  | 5900 | 64 | export doc at lib/utils.js:130 |  |  | 0.338 |
 | ns | 5922 |  | 941 | res.send body | 3.11 | 2.2 | 0.307 |

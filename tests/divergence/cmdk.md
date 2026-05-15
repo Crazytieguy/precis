@@ -89,28 +89,28 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | walker |  | 2736 | 105 | imports in cmdk/src/index.tsx |  |  | 0.603 |
 | ns | 2755 |  | 239 | README — Command (root) value/filter/keywords/loop prose | 5.2 | 2.2 | 0.587 |
 | walker |  | 2938 | 202 | package scripts in package.json |  |  | 0.618 |
-| walker |  | 3052 | 114 | package dependencies in package.json |  |  | 0.618 |
-| walker |  | 3090 | 38 | package identity in cmdk/package.json |  |  | 0.618 |
+| walker |  | 2976 | 38 | package identity in cmdk/package.json |  |  | 0.618 |
 | ns | 3157 |  | 402 | README — Dialog usage with ⌘K keybind | 5.3 | 2.1 | 0.570 |
 | ns | 3397 |  | 240 | FAQ — accessibility, virtualization, RSC, etc. | 5.4 | 2.1 | 0.558 |
-| walker |  | 3525 | 435 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.561 |
-| walker |  | 3551 | 26 | README.md section #19 |  |  | 0.561 |
-| walker |  | 3577 | 26 | README.md section #22 |  |  | 0.562 |
-| walker |  | 3650 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.562 |
-| walker |  | 3666 | 16 | README.md section #24 |  |  | 0.562 |
+| walker |  | 3411 | 435 | export body at cmdk/src/index.tsx:729 body 730 |  |  | 0.561 |
+| walker |  | 3437 | 26 | README.md section #19 |  |  | 0.561 |
+| walker |  | 3463 | 26 | README.md section #22 |  |  | 0.562 |
+| walker |  | 3536 | 73 | export at cmdk/tsup.config.ts:3 |  |  | 0.562 |
+| walker |  | 3552 | 16 | README.md section #24 |  |  | 0.562 |
 | ns | 3705 |  | 308 | README — Group / Separator / Empty / Loading subsections | 5.5 | 2.2 | 0.537 |
 | ns | 3856 |  | 151 | useCommandState — state slice subscription hook | 5.6 | 2.2 | 0.528 |
-| walker |  | 4302 | 636 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.533 |
-| walker |  | 4337 | 35 | README.md section #21 |  |  | 0.537 |
-| walker |  | 4391 | 54 | listing of 'website' |  |  | 0.551 |
-| walker |  | 4405 | 14 | listing of 'website/components' |  |  | 0.561 |
-| walker |  | 4428 | 23 | listing of 'website/components/cmdk' |  |  | 0.575 |
-| walker |  | 4447 | 19 | imports in playwright.config.ts |  |  | 0.575 |
-| ns | 4490 |  | 634 | index.tsx — onKeyDown switch (next/prev/Home/End/Enter) | 6.1 |  | 0.523 |
-| walker |  | 4505 | 58 | listing of 'test' |  |  | 0.543 |
-| walker |  | 4529 | 24 | export names surface in cmdk/src/command-score.ts |  |  | 0.543 |
-| walker |  | 4529 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.543 |
-| walker |  | 4551 | 22 | README.md section #23 |  |  | 0.546 |
+| walker |  | 4188 | 636 | export body at cmdk/src/index.tsx:664 body 665 |  |  | 0.533 |
+| walker |  | 4223 | 35 | README.md section #21 |  |  | 0.537 |
+| walker |  | 4277 | 54 | listing of 'website' |  |  | 0.551 |
+| walker |  | 4291 | 14 | listing of 'website/components' |  |  | 0.561 |
+| walker |  | 4314 | 23 | listing of 'website/components/cmdk' |  |  | 0.575 |
+| walker |  | 4333 | 19 | imports in playwright.config.ts |  |  | 0.575 |
+| walker |  | 4391 | 58 | listing of 'test' |  |  | 0.596 |
+| walker |  | 4415 | 24 | export names surface in cmdk/src/command-score.ts |  |  | 0.596 |
+| walker |  | 4415 | 0 | export at cmdk/src/command-score.ts:155 |  |  | 0.596 |
+| walker |  | 4437 | 22 | README.md section #23 |  |  | 0.600 |
+| ns | 4490 |  | 634 | index.tsx — onKeyDown switch (next/prev/Home/End/Enter) | 6.1 |  | 0.546 |
+| walker |  | 4551 | 114 | package dependencies in package.json |  |  | 0.546 |
 | walker |  | 4616 | 65 | ARCHITECTURE.md section #3 |  |  | 0.546 |
 | walker |  | 4729 | 113 | README.md section #37 |  |  | 0.546 |
 | walker |  | 4743 | 14 | imports in cmdk/tsup.config.ts |  |  | 0.546 |

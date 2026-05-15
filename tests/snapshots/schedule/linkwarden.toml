@@ -1,7 +1,7 @@
 fixture = "linkwarden"
 budget = 10000
-cumulative_tokens = 9836
-batch_count = 308
+cumulative_tokens = 9502
+batch_count = 305
 
 [[batches]]
 position = 1
@@ -2275,28 +2275,36 @@ kind = "full"
 
 [[batches]]
 position = 110
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 181
-cum_tokens = 4428
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/worker/workers/trialEndEmailWorker.ts"
+cost_tokens = 15
+cum_tokens = 4262
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/package.json"
-start = 28
-end = 41
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts"
+start = 21
+end = 21
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
 [[batches]]
 position = 111
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/trialEndEmailWorker.ts"
-cost_tokens = 15
-cum_tokens = 4443
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts", start_line: 21 })'
+descriptor = "export at apps/worker/workers/trialEndEmailWorker.ts:21"
+cost_tokens = 0
+cum_tokens = 4262
 
 [batches.content]
 kind = "lines"
@@ -2319,36 +2327,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 112
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts", start_line: 21 })'
-descriptor = "export at apps/worker/workers/trialEndEmailWorker.ts:21"
-cost_tokens = 0
-cum_tokens = 4443
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/trialEndEmailWorker.ts"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 113
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/package.json" })'
 descriptor = "package identity in apps/mobile/package.json"
 cost_tokens = 38
-cum_tokens = 4481
+cum_tokens = 4300
 
 [batches.content]
 kind = "lines"
@@ -2378,11 +2360,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/package.json" })'
 descriptor = "package entrypoints in apps/mobile/package.json"
 cost_tokens = 14
-cum_tokens = 4495
+cum_tokens = 4314
 
 [batches.content]
 kind = "lines"
@@ -2396,11 +2378,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 115
+position = 114
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/package.json" })'
 descriptor = "package scripts in apps/mobile/package.json"
 cost_tokens = 95
-cum_tokens = 4590
+cum_tokens = 4409
 
 [batches.content]
 kind = "lines"
@@ -2414,11 +2396,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json" })'
 descriptor = "package identity in packages/lib/package.json"
 cost_tokens = 38
-cum_tokens = 4628
+cum_tokens = 4447
 
 [batches.content]
 kind = "lines"
@@ -2427,70 +2409,70 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json"
 start = 2
 end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json" })'
+descriptor = "package entrypoints in packages/lib/package.json"
+cost_tokens = 12
+cum_tokens = 4459
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 117
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json" })'
-descriptor = "package entrypoints in packages/lib/package.json"
-cost_tokens = 12
-cum_tokens = 4640
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json" })'
+descriptor = "package identity in packages/router/package.json"
+cost_tokens = 38
+cum_tokens = 4497
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/package.json"
-start = 5
-end = 5
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json"
+start = 2
+end = 4
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 118
-key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json" })'
-descriptor = "package identity in packages/router/package.json"
-cost_tokens = 38
-cum_tokens = 4678
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json" })'
+descriptor = "package entrypoints in packages/router/package.json"
+cost_tokens = 12
+cum_tokens = 4509
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json"
-start = 2
-end = 4
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 119
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json" })'
-descriptor = "package entrypoints in packages/router/package.json"
-cost_tokens = 12
-cum_tokens = 4690
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/router/package.json"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/types/package.json" })'
 descriptor = "package identity in packages/types/package.json"
 cost_tokens = 38
-cum_tokens = 4728
+cum_tokens = 4547
 
 [batches.content]
 kind = "lines"
@@ -2504,11 +2486,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/types/package.json" })'
 descriptor = "package entrypoints in packages/types/package.json"
 cost_tokens = 12
-cum_tokens = 4740
+cum_tokens = 4559
 
 [batches.content]
 kind = "lines"
@@ -2522,29 +2504,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 122
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/types/package.json" })'
-descriptor = "package dependencies in packages/types/package.json"
-cost_tokens = 43
-cum_tokens = 4783
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/types/package.json"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
+position = 121
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme" })'
 descriptor = "listing of 'apps/worker/lib/preservationScheme'"
 cost_tokens = 42
-cum_tokens = 4825
+cum_tokens = 4601
 
 [batches.content]
 kind = "fs"
@@ -2554,11 +2518,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/
 entries = ["handleArchivePreview.ts", "handleMonolith.ts", "handleReadability.ts", "handleScreenshotAndPdf.ts", "imageHandler.ts", "pdfHandler.ts", "sendToWayback.ts"]
 
 [[batches]]
-position = 124
+position = 122
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/imageHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/imageHandler.ts"
 cost_tokens = 9
-cum_tokens = 4834
+cum_tokens = 4610
 
 [batches.content]
 kind = "lines"
@@ -2572,11 +2536,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 125
+position = 123
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/pdfHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/pdfHandler.ts"
 cost_tokens = 9
-cum_tokens = 4843
+cum_tokens = 4619
 
 [batches.content]
 kind = "lines"
@@ -2590,11 +2554,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 126
+position = 124
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/handleArchivePreview.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/handleArchivePreview.ts"
 cost_tokens = 10
-cum_tokens = 4853
+cum_tokens = 4629
 
 [batches.content]
 kind = "lines"
@@ -2608,11 +2572,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 127
+position = 125
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/handleReadability.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/handleReadability.ts"
 cost_tokens = 10
-cum_tokens = 4863
+cum_tokens = 4639
 
 [batches.content]
 kind = "lines"
@@ -2626,11 +2590,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 128
+position = 126
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/package.json" })'
 descriptor = "package identity in apps/worker/package.json"
 cost_tokens = 39
-cum_tokens = 4902
+cum_tokens = 4678
 
 [batches.content]
 kind = "lines"
@@ -2644,11 +2608,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 129
+position = 127
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/package.json" })'
 descriptor = "package entrypoints in apps/worker/package.json"
 cost_tokens = 12
-cum_tokens = 4914
+cum_tokens = 4690
 
 [batches.content]
 kind = "lines"
@@ -2662,11 +2626,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 130
+position = 128
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/package.json" })'
 descriptor = "package scripts in apps/worker/package.json"
 cost_tokens = 58
-cum_tokens = 4972
+cum_tokens = 4748
 
 [batches.content]
 kind = "lines"
@@ -2680,11 +2644,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 131
+position = 129
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json" })'
 descriptor = "package identity in packages/filesystem/package.json"
 cost_tokens = 39
-cum_tokens = 5011
+cum_tokens = 4787
 
 [batches.content]
 kind = "lines"
@@ -2698,11 +2662,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 132
+position = 130
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json" })'
 descriptor = "package entrypoints in packages/filesystem/package.json"
 cost_tokens = 12
-cum_tokens = 5023
+cum_tokens = 4799
 
 [batches.content]
 kind = "lines"
@@ -2716,29 +2680,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 133
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json" })'
-descriptor = "package dependencies in packages/filesystem/package.json"
-cost_tokens = 34
-cum_tokens = 5057
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 134
+position = 131
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json" })'
 descriptor = "package identity in packages/prisma/package.json"
 cost_tokens = 39
-cum_tokens = 5096
+cum_tokens = 4838
 
 [batches.content]
 kind = "lines"
@@ -2752,11 +2698,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 135
+position = 132
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json" })'
 descriptor = "package entrypoints in packages/prisma/package.json"
 cost_tokens = 25
-cum_tokens = 5121
+cum_tokens = 4863
 
 [batches.content]
 kind = "lines"
@@ -2778,11 +2724,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 136
+position = 133
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json" })'
 descriptor = "package scripts in packages/prisma/package.json"
 cost_tokens = 69
-cum_tokens = 5190
+cum_tokens = 4932
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +2742,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 137
+position = 134
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/README.md", section_index: 31 })'
 descriptor = "README.md section #31"
 cost_tokens = 85
-cum_tokens = 5275
+cum_tokens = 5017
 
 [batches.content]
 kind = "lines"
@@ -2822,11 +2768,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 138
+position = 135
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/_layout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/_layout.tsx"
 cost_tokens = 16
-cum_tokens = 5291
+cum_tokens = 5033
 
 [batches.content]
 kind = "lines"
@@ -2848,11 +2794,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 139
+position = 136
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/getLinkBatchFairly.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/getLinkBatchFairly.ts"
 cost_tokens = 16
-cum_tokens = 5307
+cum_tokens = 5049
 
 [batches.content]
 kind = "lines"
@@ -2874,11 +2820,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 137
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/getLinkBatchFairly.ts", start_line: 12 })'
 descriptor = "export at apps/worker/lib/getLinkBatchFairly.ts:12"
 cost_tokens = 26
-cum_tokens = 5333
+cum_tokens = 5075
 
 [batches.content]
 kind = "lines"
@@ -2900,11 +2846,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 141
+position = 138
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts"
 cost_tokens = 11
-cum_tokens = 5344
+cum_tokens = 5086
 
 [batches.content]
 kind = "lines"
@@ -2918,11 +2864,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 142
+position = 139
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/getOriginalFormat.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/getOriginalFormat.ts"
 cost_tokens = 10
-cum_tokens = 5354
+cum_tokens = 5096
 
 [batches.content]
 kind = "lines"
@@ -2936,11 +2882,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 143
+position = 140
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/README.md", section_index: 28 })'
 descriptor = "README.md section #28"
 cost_tokens = 101
-cum_tokens = 5455
+cum_tokens = 5197
 
 [batches.content]
 kind = "lines"
@@ -2962,11 +2908,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 144
+position = 141
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/lib/queryPersister.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/lib/queryPersister.ts"
 cost_tokens = 17
-cum_tokens = 5472
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -2983,276 +2929,276 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/lib/queryPersister.ts"
 start = 7
 end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/hooks/usePermissions.tsx"
+cost_tokens = 17
+cum_tokens = 5231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx", start_line: 6 })'
+descriptor = "export at apps/web/hooks/usePermissions.tsx:6"
+cost_tokens = 0
+cum_tokens = 5231
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 144
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/layouts/AdminLayout.tsx"
+cost_tokens = 17
+cum_tokens = 5248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 145
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/usePermissions.tsx"
-cost_tokens = 17
-cum_tokens = 5489
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx", start_line: 12 })'
+descriptor = "export at apps/web/layouts/AdminLayout.tsx:12"
+cost_tokens = 0
+cum_tokens = 5248
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 146
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx", start_line: 6 })'
-descriptor = "export at apps/web/hooks/usePermissions.tsx:6"
-cost_tokens = 0
-cum_tokens = 5489
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/layouts/AuthRedirect.tsx"
+cost_tokens = 17
+cum_tokens = 5265
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
+start = 15
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/usePermissions.tsx"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 147
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/AdminLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5506
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx", start_line: 15 })'
+descriptor = "export at apps/web/layouts/AuthRedirect.tsx:15"
+cost_tokens = 0
+cum_tokens = 5265
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
-start = 12
-end = 12
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
+start = 15
+end = 15
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
-start = 13
-end = 13
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 148
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx", start_line: 12 })'
-descriptor = "export at apps/web/layouts/AdminLayout.tsx:12"
-cost_tokens = 0
-cum_tokens = 5506
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/layouts/MainLayout.tsx"
+cost_tokens = 17
+cum_tokens = 5282
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
-start = 12
-end = 12
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AdminLayout.tsx"
-start = 13
-end = 13
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 149
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/AuthRedirect.tsx"
-cost_tokens = 17
-cum_tokens = 5523
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx", start_line: 13 })'
+descriptor = "export at apps/web/layouts/MainLayout.tsx:13"
+cost_tokens = 0
+cum_tokens = 5282
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
-start = 15
-end = 15
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
-start = 16
-end = 16
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
+start = 14
+end = 14
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 150
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx", start_line: 15 })'
-descriptor = "export at apps/web/layouts/AuthRedirect.tsx:15"
-cost_tokens = 0
-cum_tokens = 5523
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/layouts/SettingsLayout.tsx"
+cost_tokens = 17
+cum_tokens = 5299
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
-start = 15
-end = 15
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/AuthRedirect.tsx"
-start = 16
-end = 16
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 151
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/MainLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5540
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx", start_line: 12 })'
+descriptor = "export at apps/web/layouts/SettingsLayout.tsx:12"
+cost_tokens = 0
+cum_tokens = 5299
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
-start = 13
-end = 13
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
-start = 14
-end = 14
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 152
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx", start_line: 13 })'
-descriptor = "export at apps/web/layouts/MainLayout.tsx:13"
-cost_tokens = 0
-cum_tokens = 5540
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/MainLayout.tsx"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 153
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/layouts/SettingsLayout.tsx"
-cost_tokens = 17
-cum_tokens = 5557
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 154
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx", start_line: 12 })'
-descriptor = "export at apps/web/layouts/SettingsLayout.tsx:12"
-cost_tokens = 0
-cum_tokens = 5557
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/layouts/SettingsLayout.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 155
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/countUnprocessedBillableLinks.ts"
 cost_tokens = 17
-cum_tokens = 5574
+cum_tokens = 5316
 
 [batches.content]
 kind = "lines"
@@ -3267,6 +3213,84 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts", start_line: 3 })'
+descriptor = "export at apps/worker/lib/countUnprocessedBillableLinks.ts:3"
+cost_tokens = 0
+cum_tokens = 5316
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/worker/lib/fetchHeaders.ts"
+cost_tokens = 17
+cum_tokens = 5333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts", start_line: 3 })'
+descriptor = "export at apps/worker/lib/fetchHeaders.ts:3"
+cost_tokens = 0
+cum_tokens = 5333
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
 start = 4
 end = 4
 
@@ -3275,140 +3299,62 @@ kind = "ellipsis"
 
 [[batches]]
 position = 156
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts", start_line: 3 })'
-descriptor = "export at apps/worker/lib/countUnprocessedBillableLinks.ts:3"
-cost_tokens = 0
-cum_tokens = 5574
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/worker/workers/linkProcessing.ts"
+cost_tokens = 17
+cum_tokens = 5350
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 3
-end = 3
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/countUnprocessedBillableLinks.ts"
-start = 4
-end = 4
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 157
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/fetchHeaders.ts"
-cost_tokens = 17
-cum_tokens = 5591
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts", start_line: 11 })'
+descriptor = "export at apps/worker/workers/linkProcessing.ts:11"
+cost_tokens = 0
+cum_tokens = 5350
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
-start = 3
-end = 3
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
-start = 4
-end = 4
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 158
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts", start_line: 3 })'
-descriptor = "export at apps/worker/lib/fetchHeaders.ts:3"
-cost_tokens = 0
-cum_tokens = 5591
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/fetchHeaders.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 159
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/linkProcessing.ts"
-cost_tokens = 17
-cum_tokens = 5608
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 160
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts", start_line: 11 })'
-descriptor = "export at apps/worker/workers/linkProcessing.ts:11"
-cost_tokens = 0
-cum_tokens = 5608
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkProcessing.ts"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 161
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/plugins" })'
 descriptor = "listing of 'apps/mobile/plugins'"
 cost_tokens = 8
-cum_tokens = 5616
+cum_tokens = 5358
 
 [batches.content]
 kind = "fs"
@@ -3418,11 +3364,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/plug
 entries = ["with-daynight-transparent-nav.js"]
 
 [[batches]]
-position = 162
+position = 159
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public" })'
 descriptor = "listing of 'apps/web/public'"
 cost_tokens = 79
-cum_tokens = 5695
+cum_tokens = 5437
 
 [batches.content]
 kind = "fs"
@@ -3432,11 +3378,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public"
 entries = ["android-chrome-192x192.png", "android-chrome-512x512.png", "apple-touch-icon.png", "favicon-16x16.png", "favicon-32x32.png", "favicon.ico", "icon.png", "linkwarden_dark.png", "linkwarden_light.png", "locales", "logo_maskable.png", "screenshots", "site.webmanifest"]
 
 [[batches]]
-position = 163
+position = 160
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/index.ts" })'
 descriptor = "imports in packages/filesystem/index.ts"
 cost_tokens = 100
-cum_tokens = 5795
+cum_tokens = 5537
 
 [batches.content]
 kind = "lines"
@@ -3450,11 +3396,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 164
+position = 161
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/s3Client.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/filesystem/s3Client.ts"
 cost_tokens = 10
-cum_tokens = 5805
+cum_tokens = 5547
 
 [batches.content]
 kind = "lines"
@@ -3468,11 +3414,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 165
+position = 162
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/filesystem/createFile.ts"
 cost_tokens = 12
-cum_tokens = 5817
+cum_tokens = 5559
 
 [batches.content]
 kind = "lines"
@@ -3487,6 +3433,84 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFile.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 163
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/readFile.ts"
+cost_tokens = 17
+cum_tokens = 5576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 164
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts", start_line: 19 })'
+descriptor = "export at packages/filesystem/readFile.ts:19"
+cost_tokens = 0
+cum_tokens = 5576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 165
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/fileExists.ts"
+cost_tokens = 20
+cum_tokens = 5596
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts"
 start = 7
 end = 7
 
@@ -3495,62 +3519,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 166
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/readFile.ts"
-cost_tokens = 17
-cum_tokens = 5834
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 167
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts", start_line: 19 })'
-descriptor = "export at packages/filesystem/readFile.ts:19"
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts", start_line: 6 })'
+descriptor = "export at packages/filesystem/fileExists.ts:6"
 cost_tokens = 0
-cum_tokens = 5834
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/readFile.ts"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 168
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/fileExists.ts"
-cost_tokens = 20
-cum_tokens = 5854
+cum_tokens = 5596
 
 [batches.content]
 kind = "lines"
@@ -3565,6 +3537,58 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 167
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/moveFile.ts"
+cost_tokens = 20
+cum_tokens = 5616
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts", start_line: 6 })'
+descriptor = "export at packages/filesystem/moveFile.ts:6"
+cost_tokens = 0
+cum_tokens = 5616
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
 start = 7
 end = 7
 
@@ -3573,68 +3597,68 @@ kind = "ellipsis"
 
 [[batches]]
 position = 169
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/fileExists.ts:6"
-cost_tokens = 0
-cum_tokens = 5854
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/createFolder.ts"
+cost_tokens = 21
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 170
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/moveFile.ts"
-cost_tokens = 20
-cum_tokens = 5874
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts", start_line: 5 })'
+descriptor = "export at packages/filesystem/createFolder.ts:5"
+cost_tokens = 0
+cum_tokens = 5637
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
+start = 5
+end = 5
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 171
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/moveFile.ts:6"
-cost_tokens = 0
-cum_tokens = 5874
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/removeFile.ts"
+cost_tokens = 22
+cum_tokens = 5659
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
 start = 6
 end = 6
 
@@ -3642,7 +3666,7 @@ end = 6
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/moveFile.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
 start = 7
 end = 7
 
@@ -3651,166 +3675,88 @@ kind = "ellipsis"
 
 [[batches]]
 position = 172
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/createFolder.ts"
-cost_tokens = 21
-cum_tokens = 5895
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts", start_line: 6 })'
+descriptor = "export at packages/filesystem/removeFile.ts:6"
+cost_tokens = 0
+cum_tokens = 5659
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
-start = 5
-end = 5
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
+start = 6
+end = 6
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
+start = 7
+end = 7
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 173
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts", start_line: 5 })'
-descriptor = "export at packages/filesystem/createFolder.ts:5"
-cost_tokens = 0
-cum_tokens = 5895
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/filesystem/removeFolder.ts"
+cost_tokens = 22
+cum_tokens = 5681
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
-start = 5
-end = 5
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
+start = 40
+end = 40
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
+start = 41
+end = 41
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 174
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/removeFile.ts"
-cost_tokens = 22
-cum_tokens = 5917
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts", start_line: 40 })'
+descriptor = "export at packages/filesystem/removeFolder.ts:40"
+cost_tokens = 0
+cum_tokens = 5681
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
-start = 6
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
+start = 40
+end = 40
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
-start = 7
-end = 7
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
+start = 41
+end = 41
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 175
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts", start_line: 6 })'
-descriptor = "export at packages/filesystem/removeFile.ts:6"
-cost_tokens = 0
-cum_tokens = 5917
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 176
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/filesystem/removeFolder.ts"
-cost_tokens = 22
-cum_tokens = 5939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 177
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts", start_line: 40 })'
-descriptor = "export at packages/filesystem/removeFolder.ts:40"
-cost_tokens = 0
-cum_tokens = 5939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 178
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFolder.ts", start_line: 5, body_start_line: 6 })'
 descriptor = "export body at packages/filesystem/createFolder.ts:5 body 6"
 cost_tokens = 124
-cum_tokens = 6063
+cum_tokens = 5805
 
 [batches.content]
 kind = "lines"
@@ -3832,11 +3778,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 179
+position = 176
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/createFile.ts", start_line: 6 })'
 descriptor = "export at packages/filesystem/createFile.ts:6"
 cost_tokens = 74
-cum_tokens = 6137
+cum_tokens = 5879
 
 [batches.content]
 kind = "lines"
@@ -3858,11 +3804,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 180
+position = 177
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/fileExists.ts", start_line: 6, body_start_line: 7 })'
 descriptor = "export body at packages/filesystem/fileExists.ts:6 body 7"
 cost_tokens = 164
-cum_tokens = 6301
+cum_tokens = 6043
 
 [batches.content]
 kind = "lines"
@@ -3900,11 +3846,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 181
+position = 178
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/manageFiles.ts", chunk_index: 0, export_count: 3, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/filesystem/manageFiles.ts"
 cost_tokens = 63
-cum_tokens = 6364
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -3950,11 +3896,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 182
+position = 179
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/manageFiles.ts", start_line: 4 })'
 descriptor = "export at packages/filesystem/manageFiles.ts:4"
 cost_tokens = 0
-cum_tokens = 6364
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -3976,11 +3922,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 183
+position = 180
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/manageFiles.ts", start_line: 33 })'
 descriptor = "export at packages/filesystem/manageFiles.ts:33"
 cost_tokens = 0
-cum_tokens = 6364
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -4002,11 +3948,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 184
+position = 181
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales" })'
 descriptor = "listing of 'apps/web/public/locales'"
 cost_tokens = 49
-cum_tokens = 6413
+cum_tokens = 6155
 
 [batches.content]
 kind = "fs"
@@ -4016,11 +3962,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["de", "en", "es", "fr", "it", "ja", "nl", "pl", "pt-BR", "ro", "ru", "tr", "uk", "zh", "zh-TW"]
 
 [[batches]]
-position = 185
+position = 182
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/e2e/data/user.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/e2e/data/user.ts"
 cost_tokens = 12
-cum_tokens = 6425
+cum_tokens = 6167
 
 [batches.content]
 kind = "lines"
@@ -4042,11 +3988,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 186
+position = 183
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ui" })'
 descriptor = "listing of 'apps/mobile/components/ui'"
 cost_tokens = 50
-cum_tokens = 6475
+cum_tokens = 6217
 
 [batches.content]
 kind = "fs"
@@ -4056,11 +4002,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/comp
 entries = ["Button.tsx", "IconSymbol.ios.tsx", "IconSymbol.tsx", "Icons.tsx", "Input.tsx", "Spinner.tsx", "TabBarBackground.ios.tsx", "TabBarBackground.tsx"]
 
 [[batches]]
-position = 187
+position = 184
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ui/Input.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/components/ui/Input.tsx"
 cost_tokens = 8
-cum_tokens = 6483
+cum_tokens = 6225
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4020,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 188
+position = 185
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ui/Spinner.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/components/ui/Spinner.tsx"
 cost_tokens = 8
-cum_tokens = 6491
+cum_tokens = 6233
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4038,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 189
+position = 186
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ui/IconSymbol.ios.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/components/ui/IconSymbol.ios.tsx"
 cost_tokens = 11
-cum_tokens = 6502
+cum_tokens = 6244
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +4064,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 187
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/transporter.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/transporter.ts"
 cost_tokens = 11
-cum_tokens = 6513
+cum_tokens = 6255
 
 [batches.content]
 kind = "lines"
@@ -4137,6 +4083,84 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/transporter.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 188
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/components/Links.tsx"
+cost_tokens = 18
+cum_tokens = 6273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 189
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx", start_line: 26 })'
+descriptor = "export at apps/mobile/components/Links.tsx:26"
+cost_tokens = 0
+cum_tokens = 6273
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 190
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/web/hooks/useMediaQuery.tsx"
+cost_tokens = 18
+cum_tokens = 6291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
 start = 4
 end = 4
 
@@ -4145,166 +4169,88 @@ kind = "ellipsis"
 
 [[batches]]
 position = 191
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/Links.tsx"
-cost_tokens = 18
-cum_tokens = 6531
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx", start_line: 3 })'
+descriptor = "export at apps/web/hooks/useMediaQuery.tsx:3"
+cost_tokens = 0
+cum_tokens = 6291
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
-start = 26
-end = 26
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
+start = 3
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
-start = 27
-end = 27
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
+start = 4
+end = 4
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 192
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx", start_line: 26 })'
-descriptor = "export at apps/mobile/components/Links.tsx:26"
-cost_tokens = 0
-cum_tokens = 6531
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/worker/workers/linkIndexing.ts"
+cost_tokens = 18
+cum_tokens = 6309
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
-start = 26
-end = 26
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
+start = 63
+end = 63
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/Links.tsx"
-start = 27
-end = 27
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
+start = 64
+end = 64
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 193
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/web/hooks/useMediaQuery.tsx"
-cost_tokens = 18
-cum_tokens = 6549
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts", start_line: 63 })'
+descriptor = "export at apps/worker/workers/linkIndexing.ts:63"
+cost_tokens = 0
+cum_tokens = 6309
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
-start = 3
-end = 3
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
+start = 63
+end = 63
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
-start = 4
-end = 4
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
+start = 64
+end = 64
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 194
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx", start_line: 3 })'
-descriptor = "export at apps/web/hooks/useMediaQuery.tsx:3"
-cost_tokens = 0
-cum_tokens = 6549
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useMediaQuery.tsx"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 195
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/workers/linkIndexing.ts"
-cost_tokens = 18
-cum_tokens = 6567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 196
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts", start_line: 63 })'
-descriptor = "export at apps/worker/workers/linkIndexing.ts:63"
-cost_tokens = 0
-cum_tokens = 6567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/linkIndexing.ts"
-start = 64
-end = 64
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 197
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages" })'
 descriptor = "listing of 'apps/web/pages'"
 cost_tokens = 86
-cum_tokens = 6653
+cum_tokens = 6395
 
 [batches.content]
 kind = "fs"
@@ -4314,11 +4260,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages"
 entries = ["_app.tsx", "_document.tsx", "admin", "api", "auth", "collections", "confirmation.tsx", "dashboard.tsx", "forgot.tsx", "index.tsx", "links", "login.tsx", "member-onboarding.tsx", "preserved", "public", "register.tsx", "search.tsx", "settings", "subscribe.tsx", "tags"]
 
 [[batches]]
-position = 198
+position = 195
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/index.tsx"
 cost_tokens = 12
-cum_tokens = 6665
+cum_tokens = 6407
 
 [batches.content]
 kind = "lines"
@@ -4340,11 +4286,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 196
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 6665
+cum_tokens = 6407
 
 [batches.content]
 kind = "lines"
@@ -4366,11 +4312,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 200
+position = 197
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/index.tsx", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at apps/web/pages/index.tsx:4 body 5"
 cost_tokens = 36
-cum_tokens = 6701
+cum_tokens = 6443
 
 [batches.content]
 kind = "lines"
@@ -4392,11 +4338,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 201
+position = 198
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/index.tsx" })'
 descriptor = "imports in apps/web/pages/index.tsx"
 cost_tokens = 27
-cum_tokens = 6728
+cum_tokens = 6470
 
 [batches.content]
 kind = "lines"
@@ -4410,11 +4356,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 202
+position = 199
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/public" })'
 descriptor = "listing of 'apps/web/pages/public'"
 cost_tokens = 9
-cum_tokens = 6737
+cum_tokens = 6479
 
 [batches.content]
 kind = "fs"
@@ -4424,11 +4370,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/p
 entries = ["collections", "links", "preserved"]
 
 [[batches]]
-position = 203
+position = 200
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/_document.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/_document.tsx"
 cost_tokens = 12
-cum_tokens = 6749
+cum_tokens = 6491
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +4396,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 204
+position = 201
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/_document.tsx", start_line: 3 })'
 descriptor = "export at apps/web/pages/_document.tsx:3"
 cost_tokens = 0
-cum_tokens = 6749
+cum_tokens = 6491
 
 [batches.content]
 kind = "lines"
@@ -4476,11 +4422,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 202
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/links" })'
 descriptor = "listing of 'apps/web/pages/links'"
 cost_tokens = 16
-cum_tokens = 6765
+cum_tokens = 6507
 
 [batches.content]
 kind = "fs"
@@ -4490,11 +4436,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/l
 entries = ["[id].tsx", "index.tsx", "pinned.tsx"]
 
 [[batches]]
-position = 206
+position = 203
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/links/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/links/index.tsx"
 cost_tokens = 21
-cum_tokens = 6786
+cum_tokens = 6528
 
 [batches.content]
 kind = "lines"
@@ -4524,11 +4470,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 207
+position = 204
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/links/index.tsx", start_line: 14 })'
 descriptor = "module item at apps/web/pages/links/index.tsx:14"
 cost_tokens = 17
-cum_tokens = 6803
+cum_tokens = 6545
 
 [batches.content]
 kind = "lines"
@@ -4550,11 +4496,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 208
+position = 205
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/links/index.tsx" })'
 descriptor = "imports in apps/web/pages/links/index.tsx"
 cost_tokens = 192
-cum_tokens = 6995
+cum_tokens = 6737
 
 [batches.content]
 kind = "lines"
@@ -4568,11 +4514,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 209
+position = 206
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin" })'
 descriptor = "listing of 'apps/web/pages/admin'"
 cost_tokens = 19
-cum_tokens = 7014
+cum_tokens = 6756
 
 [batches.content]
 kind = "fs"
@@ -4582,11 +4528,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/a
 entries = ["background-jobs.tsx", "index.tsx", "user-administration.tsx"]
 
 [[batches]]
-position = 210
+position = 207
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/admin/index.tsx"
 cost_tokens = 35
-cum_tokens = 7049
+cum_tokens = 6791
 
 [batches.content]
 kind = "lines"
@@ -4624,11 +4570,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 208
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx", start_line: 3 })'
 descriptor = "export at apps/web/pages/admin/index.tsx:3"
 cost_tokens = 0
-cum_tokens = 7049
+cum_tokens = 6791
 
 [batches.content]
 kind = "lines"
@@ -4650,11 +4596,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 212
+position = 209
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx", start_line: 12 })'
 descriptor = "export at apps/web/pages/admin/index.tsx:12"
 cost_tokens = 0
-cum_tokens = 7049
+cum_tokens = 6791
 
 [batches.content]
 kind = "lines"
@@ -4676,11 +4622,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 210
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx", start_line: 12, body_start_line: 13 })'
 descriptor = "export body at apps/web/pages/admin/index.tsx:12 body 13"
 cost_tokens = 6
-cum_tokens = 7055
+cum_tokens = 6797
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4640,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 214
+position = 211
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at apps/web/pages/admin/index.tsx:3 body 4"
 cost_tokens = 47
-cum_tokens = 7102
+cum_tokens = 6844
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4658,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 215
+position = 212
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/admin/index.tsx" })'
 descriptor = "imports in apps/web/pages/admin/index.tsx"
 cost_tokens = 16
-cum_tokens = 7118
+cum_tokens = 6860
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4676,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 216
+position = 213
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/s3Client.ts" })'
 descriptor = "imports in packages/filesystem/s3Client.ts"
 cost_tokens = 17
-cum_tokens = 7135
+cum_tokens = 6877
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +4694,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 217
+position = 214
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/hooks/useCollectivePermissions.ts"
 cost_tokens = 19
-cum_tokens = 7154
+cum_tokens = 6896
 
 [batches.content]
 kind = "lines"
@@ -4769,94 +4715,94 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts"
 start = 7
 end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 215
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts", start_line: 6 })'
+descriptor = "export at apps/web/hooks/useCollectivePermissions.ts:6"
+cost_tokens = 0
+cum_tokens = 6896
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 216
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/worker/lib/protectPageRequests.ts"
+cost_tokens = 19
+cum_tokens = 6915
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 217
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts", start_line: 15 })'
+descriptor = "export at apps/worker/lib/protectPageRequests.ts:15"
+cost_tokens = 0
+cum_tokens = 6915
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
+start = 16
+end = 16
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 218
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts", start_line: 6 })'
-descriptor = "export at apps/web/hooks/useCollectivePermissions.ts:6"
-cost_tokens = 0
-cum_tokens = 7154
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useCollectivePermissions.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 219
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/worker/lib/protectPageRequests.ts"
-cost_tokens = 19
-cum_tokens = 7173
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 220
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts", start_line: 15 })'
-descriptor = "export at apps/worker/lib/protectPageRequests.ts:15"
-cost_tokens = 0
-cum_tokens = 7173
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/protectPageRequests.ts"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 221
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/store" })'
 descriptor = "listing of 'apps/web/store'"
 cost_tokens = 9
-cum_tokens = 7182
+cum_tokens = 6924
 
 [batches.content]
 kind = "fs"
@@ -4866,11 +4812,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/store"
 entries = ["links.ts", "localSettings.ts"]
 
 [[batches]]
-position = 222
+position = 219
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/store/links.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/store/links.ts"
 cost_tokens = 10
-cum_tokens = 7192
+cum_tokens = 6934
 
 [batches.content]
 kind = "lines"
@@ -4884,11 +4830,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 223
+position = 220
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/store/localSettings.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/store/localSettings.ts"
 cost_tokens = 11
-cum_tokens = 7203
+cum_tokens = 6945
 
 [batches.content]
 kind = "lines"
@@ -4902,11 +4848,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 224
+position = 221
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/client" })'
 descriptor = "listing of 'packages/prisma/client'"
 cost_tokens = 9
-cum_tokens = 7212
+cum_tokens = 6954
 
 [batches.content]
 kind = "fs"
@@ -4916,11 +4862,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/
 entries = ["index.d.ts", "index.js"]
 
 [[batches]]
-position = 225
+position = 222
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/(tabs)/_layout.tsx"
 cost_tokens = 13
-cum_tokens = 7225
+cum_tokens = 6967
 
 [batches.content]
 kind = "lines"
@@ -4937,94 +4883,94 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx"
 start = 10
 end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx", start_line: 9 })'
+descriptor = "export at apps/mobile/app/(tabs)/_layout.tsx:9"
+cost_tokens = 0
+cum_tokens = 6967
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 224
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/components/ActionSheets/SupportSheet.tsx"
+cost_tokens = 13
+cum_tokens = 6980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 225
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx", start_line: 10 })'
+descriptor = "export at apps/mobile/components/ActionSheets/SupportSheet.tsx:10"
+cost_tokens = 0
+cum_tokens = 6980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
+start = 11
+end = 11
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 226
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx", start_line: 9 })'
-descriptor = "export at apps/mobile/app/(tabs)/_layout.tsx:9"
-cost_tokens = 0
-cum_tokens = 7225
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/_layout.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 227
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/SupportSheet.tsx"
-cost_tokens = 13
-cum_tokens = 7238
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 228
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx", start_line: 10 })'
-descriptor = "export at apps/mobile/components/ActionSheets/SupportSheet.tsx:10"
-cost_tokens = 0
-cum_tokens = 7238
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/SupportSheet.tsx"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 229
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/e2e/fixtures/base" })'
 descriptor = "listing of 'apps/web/e2e/fixtures/base'"
 cost_tokens = 13
-cum_tokens = 7251
+cum_tokens = 6993
 
 [batches.content]
 kind = "fs"
@@ -5034,11 +4980,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/e2e/fix
 entries = ["dashboard-page.ts", "modal.ts", "page.ts"]
 
 [[batches]]
-position = 230
+position = 227
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/lib/shared" })'
 descriptor = "listing of 'apps/web/lib/shared'"
 cost_tokens = 20
-cum_tokens = 7271
+cum_tokens = 7013
 
 [batches.content]
 kind = "fs"
@@ -5048,11 +4994,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/lib/sha
 entries = ["fetchTitleAndHeaders.ts", "getSuffixFromFormat.ts", "isValidUrl.ts"]
 
 [[batches]]
-position = 231
+position = 228
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/getFormatBasedOnPreference.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/getFormatBasedOnPreference.ts"
 cost_tokens = 12
-cum_tokens = 7283
+cum_tokens = 7025
 
 [batches.content]
 kind = "lines"
@@ -5066,11 +5012,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 232
+position = 229
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/getFormatFromContentType.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/getFormatFromContentType.ts"
 cost_tokens = 12
-cum_tokens = 7295
+cum_tokens = 7037
 
 [batches.content]
 kind = "lines"
@@ -5084,11 +5030,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 233
+position = 230
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/getLinkTypeFromFormat.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/getLinkTypeFromFormat.ts"
 cost_tokens = 12
-cum_tokens = 7307
+cum_tokens = 7049
 
 [batches.content]
 kind = "lines"
@@ -5102,11 +5048,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 234
+position = 231
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/safeFetch.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/safeFetch.ts"
 cost_tokens = 12
-cum_tokens = 7319
+cum_tokens = 7061
 
 [batches.content]
 kind = "lines"
@@ -5128,11 +5074,11 @@ end = 96
 kind = "ellipsis"
 
 [[batches]]
-position = 235
+position = 232
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/settings" })'
 descriptor = "listing of 'apps/web/pages/settings'"
 cost_tokens = 56
-cum_tokens = 7375
+cum_tokens = 7117
 
 [batches.content]
 kind = "fs"
@@ -5142,11 +5088,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/s
 entries = ["access-tokens.tsx", "account.tsx", "background-jobs.tsx", "billing.tsx", "delete.tsx", "index.tsx", "password.tsx", "preference.tsx", "rss-subscriptions.tsx", "worker.tsx"]
 
 [[batches]]
-position = 236
+position = 233
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/settings/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/settings/index.tsx"
 cost_tokens = 12
-cum_tokens = 7387
+cum_tokens = 7129
 
 [batches.content]
 kind = "lines"
@@ -5168,11 +5114,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 237
+position = 234
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/settings/index.tsx", start_line: 4 })'
 descriptor = "export at apps/web/pages/settings/index.tsx:4"
 cost_tokens = 0
-cum_tokens = 7387
+cum_tokens = 7129
 
 [batches.content]
 kind = "lines"
@@ -5194,11 +5140,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 235
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/settings/index.tsx", start_line: 4, body_start_line: 5 })'
 descriptor = "export body at apps/web/pages/settings/index.tsx:4 body 5"
 cost_tokens = 37
-cum_tokens = 7424
+cum_tokens = 7166
 
 [batches.content]
 kind = "lines"
@@ -5220,11 +5166,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 239
+position = 236
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/settings/index.tsx" })'
 descriptor = "imports in apps/web/pages/settings/index.tsx"
 cost_tokens = 27
-cum_tokens = 7451
+cum_tokens = 7193
 
 [batches.content]
 kind = "lines"
@@ -5238,11 +5184,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 240
+position = 237
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/autoTagPreservedLinks.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/workers/autoTagPreservedLinks.ts"
 cost_tokens = 20
-cum_tokens = 7471
+cum_tokens = 7213
 
 [batches.content]
 kind = "lines"
@@ -5264,11 +5210,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 241
+position = 238
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/workers/autoTagPreservedLinks.ts", start_line: 19 })'
 descriptor = "export at apps/worker/workers/autoTagPreservedLinks.ts:19"
 cost_tokens = 0
-cum_tokens = 7471
+cum_tokens = 7213
 
 [batches.content]
 kind = "lines"
@@ -5290,37 +5236,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 242
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json" })'
-descriptor = "package dependencies in packages/prisma/package.json"
-cost_tokens = 110
-cum_tokens = 7581
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/prisma/package.json"
-start = 16
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 243
+position = 239
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/e2e/fixtures/index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/e2e/fixtures/index.ts"
 cost_tokens = 15
-cum_tokens = 7596
+cum_tokens = 7228
 
 [batches.content]
 kind = "lines"
@@ -5342,11 +5262,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 244
+position = 240
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/links" })'
 descriptor = "listing of 'apps/mobile/app/links'"
 cost_tokens = 6
-cum_tokens = 7602
+cum_tokens = 7234
 
 [batches.content]
 kind = "fs"
@@ -5356,11 +5276,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 245
+position = 241
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/links/[id].tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/links/[id].tsx"
 cost_tokens = 13
-cum_tokens = 7615
+cum_tokens = 7247
 
 [batches.content]
 kind = "lines"
@@ -5382,11 +5302,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 246
+position = 242
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/links/[id].tsx", start_line: 16 })'
 descriptor = "export at apps/mobile/app/links/[id].tsx:16"
 cost_tokens = 0
-cum_tokens = 7615
+cum_tokens = 7247
 
 [batches.content]
 kind = "lines"
@@ -5408,11 +5328,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 247
+position = 243
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/assets/fonts" })'
 descriptor = "listing of 'apps/mobile/assets/fonts'"
 cost_tokens = 6
-cum_tokens = 7621
+cum_tokens = 7253
 
 [batches.content]
 kind = "fs"
@@ -5422,11 +5342,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/asse
 entries = ["SpaceMono-Regular.ttf"]
 
 [[batches]]
-position = 248
+position = 244
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/preserved" })'
 descriptor = "listing of 'apps/web/pages/preserved'"
 cost_tokens = 6
-cum_tokens = 7627
+cum_tokens = 7259
 
 [batches.content]
 kind = "fs"
@@ -5436,11 +5356,29 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/p
 entries = ["[id].tsx"]
 
 [[batches]]
-position = 249
+position = 245
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json" })'
+descriptor = "package dependencies in packages/filesystem/package.json"
+cost_tokens = 34
+cum_tokens = 7293
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/package.json"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/AddLinkSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
 cost_tokens = 14
-cum_tokens = 7641
+cum_tokens = 7307
 
 [batches.content]
 kind = "lines"
@@ -5462,11 +5400,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 250
+position = 247
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/AddLinkSheet.tsx", start_line: 12 })'
 descriptor = "export at apps/mobile/components/ActionSheets/AddLinkSheet.tsx:12"
 cost_tokens = 0
-cum_tokens = 7641
+cum_tokens = 7307
 
 [batches.content]
 kind = "lines"
@@ -5481,6 +5419,84 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/AddLinkSheet.tsx"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 248
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
+cost_tokens = 14
+cum_tokens = 7321
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
+start = 471
+end = 471
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
+start = 472
+end = 472
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 249
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx", start_line: 471 })'
+descriptor = "export at apps/mobile/components/ActionSheets/EditLinkSheet.tsx:471"
+cost_tokens = 0
+cum_tokens = 7321
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
+start = 471
+end = 471
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
+start = 472
+end = 472
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 250
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
+cost_tokens = 14
+cum_tokens = 7335
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
 start = 13
 end = 13
 
@@ -5489,114 +5505,36 @@ kind = "ellipsis"
 
 [[batches]]
 position = 251
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-cost_tokens = 14
-cum_tokens = 7655
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", start_line: 12 })'
+descriptor = "export at apps/mobile/components/ActionSheets/NewCollectionSheet.tsx:12"
+cost_tokens = 0
+cum_tokens = 7335
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 471
-end = 471
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
+start = 12
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 472
-end = 472
+path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
+start = 13
+end = 13
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 252
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx", start_line: 471 })'
-descriptor = "export at apps/mobile/components/ActionSheets/EditLinkSheet.tsx:471"
-cost_tokens = 0
-cum_tokens = 7655
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 471
-end = 471
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/EditLinkSheet.tsx"
-start = 472
-end = 472
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 253
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-cost_tokens = 14
-cum_tokens = 7669
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 254
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx", start_line: 12 })'
-descriptor = "export at apps/mobile/components/ActionSheets/NewCollectionSheet.tsx:12"
-cost_tokens = 0
-cum_tokens = 7669
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/ActionSheets/NewCollectionSheet.tsx"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 255
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/handleMonolith.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/preservationScheme/handleMonolith.ts"
 cost_tokens = 14
-cum_tokens = 7683
+cum_tokens = 7349
 
 [batches.content]
 kind = "lines"
@@ -5618,11 +5556,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 256
+position = 253
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/de" })'
 descriptor = "listing of 'apps/web/public/locales/de'"
 cost_tokens = 4
-cum_tokens = 7687
+cum_tokens = 7353
 
 [batches.content]
 kind = "fs"
@@ -5632,11 +5570,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 257
+position = 254
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/en" })'
 descriptor = "listing of 'apps/web/public/locales/en'"
 cost_tokens = 4
-cum_tokens = 7691
+cum_tokens = 7357
 
 [batches.content]
 kind = "fs"
@@ -5646,11 +5584,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 258
+position = 255
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/es" })'
 descriptor = "listing of 'apps/web/public/locales/es'"
 cost_tokens = 4
-cum_tokens = 7695
+cum_tokens = 7361
 
 [batches.content]
 kind = "fs"
@@ -5660,11 +5598,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 259
+position = 256
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/fr" })'
 descriptor = "listing of 'apps/web/public/locales/fr'"
 cost_tokens = 4
-cum_tokens = 7699
+cum_tokens = 7365
 
 [batches.content]
 kind = "fs"
@@ -5674,11 +5612,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 260
+position = 257
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/it" })'
 descriptor = "listing of 'apps/web/public/locales/it'"
 cost_tokens = 4
-cum_tokens = 7703
+cum_tokens = 7369
 
 [batches.content]
 kind = "fs"
@@ -5688,11 +5626,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 261
+position = 258
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/ja" })'
 descriptor = "listing of 'apps/web/public/locales/ja'"
 cost_tokens = 4
-cum_tokens = 7707
+cum_tokens = 7373
 
 [batches.content]
 kind = "fs"
@@ -5702,11 +5640,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 262
+position = 259
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/nl" })'
 descriptor = "listing of 'apps/web/public/locales/nl'"
 cost_tokens = 4
-cum_tokens = 7711
+cum_tokens = 7377
 
 [batches.content]
 kind = "fs"
@@ -5716,11 +5654,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 263
+position = 260
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/pl" })'
 descriptor = "listing of 'apps/web/public/locales/pl'"
 cost_tokens = 4
-cum_tokens = 7715
+cum_tokens = 7381
 
 [batches.content]
 kind = "fs"
@@ -5730,11 +5668,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 264
+position = 261
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/pt-BR" })'
 descriptor = "listing of 'apps/web/public/locales/pt-BR'"
 cost_tokens = 4
-cum_tokens = 7719
+cum_tokens = 7385
 
 [batches.content]
 kind = "fs"
@@ -5744,11 +5682,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 265
+position = 262
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/ro" })'
 descriptor = "listing of 'apps/web/public/locales/ro'"
 cost_tokens = 4
-cum_tokens = 7723
+cum_tokens = 7389
 
 [batches.content]
 kind = "fs"
@@ -5758,11 +5696,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 266
+position = 263
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/ru" })'
 descriptor = "listing of 'apps/web/public/locales/ru'"
 cost_tokens = 4
-cum_tokens = 7727
+cum_tokens = 7393
 
 [batches.content]
 kind = "fs"
@@ -5772,11 +5710,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 267
+position = 264
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/tr" })'
 descriptor = "listing of 'apps/web/public/locales/tr'"
 cost_tokens = 4
-cum_tokens = 7731
+cum_tokens = 7397
 
 [batches.content]
 kind = "fs"
@@ -5786,11 +5724,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 268
+position = 265
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/uk" })'
 descriptor = "listing of 'apps/web/public/locales/uk'"
 cost_tokens = 4
-cum_tokens = 7735
+cum_tokens = 7401
 
 [batches.content]
 kind = "fs"
@@ -5800,11 +5738,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 269
+position = 266
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/zh" })'
 descriptor = "listing of 'apps/web/public/locales/zh'"
 cost_tokens = 4
-cum_tokens = 7739
+cum_tokens = 7405
 
 [batches.content]
 kind = "fs"
@@ -5814,11 +5752,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 270
+position = 267
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/locales/zh-TW" })'
 descriptor = "listing of 'apps/web/public/locales/zh-TW'"
 cost_tokens = 4
-cum_tokens = 7743
+cum_tokens = 7409
 
 [batches.content]
 kind = "fs"
@@ -5828,11 +5766,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/public/
 entries = ["common.json"]
 
 [[batches]]
-position = 271
+position = 268
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFile.ts", start_line: 6, body_start_line: 7 })'
 descriptor = "export body at packages/filesystem/removeFile.ts:6 body 7"
 cost_tokens = 225
-cum_tokens = 7968
+cum_tokens = 7634
 
 [batches.content]
 kind = "lines"
@@ -5862,11 +5800,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 272
+position = 269
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/HapticTab.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/components/HapticTab.tsx"
 cost_tokens = 21
-cum_tokens = 7989
+cum_tokens = 7655
 
 [batches.content]
 kind = "lines"
@@ -5888,11 +5826,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 273
+position = 270
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/components/HapticTab.tsx", start_line: 5 })'
 descriptor = "export at apps/mobile/components/HapticTab.tsx:5"
 cost_tokens = 0
-cum_tokens = 7989
+cum_tokens = 7655
 
 [batches.content]
 kind = "lines"
@@ -5914,11 +5852,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 274
+position = 271
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/search.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/search.tsx"
 cost_tokens = 21
-cum_tokens = 8010
+cum_tokens = 7676
 
 [batches.content]
 kind = "lines"
@@ -5948,11 +5886,11 @@ end = 74
 kind = "ellipsis"
 
 [[batches]]
-position = 275
+position = 272
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/generatePreview.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/generatePreview.ts"
 cost_tokens = 13
-cum_tokens = 8023
+cum_tokens = 7689
 
 [batches.content]
 kind = "lines"
@@ -5974,11 +5912,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 276
+position = 273
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/rssHandler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/rssHandler.ts"
 cost_tokens = 13
-cum_tokens = 8036
+cum_tokens = 7702
 
 [batches.content]
 kind = "lines"
@@ -6000,11 +5938,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 277
+position = 274
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/package.json" })'
 descriptor = "package identity in apps/web/package.json"
 cost_tokens = 55
-cum_tokens = 8091
+cum_tokens = 7757
 
 [batches.content]
 kind = "lines"
@@ -6026,11 +5964,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 278
+position = 275
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useSort.tsx", start_line: 19 })'
 descriptor = "export at apps/web/hooks/useSort.tsx:19"
 cost_tokens = 53
-cum_tokens = 8144
+cum_tokens = 7810
 
 [batches.content]
 kind = "lines"
@@ -6052,11 +5990,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 279
+position = 276
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useOnScreen.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/hooks/useOnScreen.tsx"
 cost_tokens = 22
-cum_tokens = 8166
+cum_tokens = 7832
 
 [batches.content]
 kind = "lines"
@@ -6078,11 +6016,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 280
+position = 277
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/hooks/useOnScreen.tsx", start_line: 3 })'
 descriptor = "export at apps/web/hooks/useOnScreen.tsx:3"
 cost_tokens = 0
-cum_tokens = 8166
+cum_tokens = 7832
 
 [batches.content]
 kind = "lines"
@@ -6104,11 +6042,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 281
+position = 278
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/lib/shared/fetchTitleAndHeaders.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/lib/shared/fetchTitleAndHeaders.ts"
 cost_tokens = 15
-cum_tokens = 8181
+cum_tokens = 7847
 
 [batches.content]
 kind = "lines"
@@ -6130,11 +6068,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 282
+position = 279
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/lib/shared/fetchTitleAndHeaders.ts", start_line: 3 })'
 descriptor = "export at apps/web/lib/shared/fetchTitleAndHeaders.ts:3"
 cost_tokens = 24
-cum_tokens = 8205
+cum_tokens = 7871
 
 [batches.content]
 kind = "lines"
@@ -6156,11 +6094,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 283
+position = 280
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/.vscode" })'
 descriptor = "listing of '.vscode'"
 cost_tokens = 4
-cum_tokens = 8209
+cum_tokens = 7875
 
 [batches.content]
 kind = "fs"
@@ -6170,11 +6108,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/.vscode"
 entries = ["settings.json"]
 
 [[batches]]
-position = 284
+position = 281
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/playwright.config.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/playwright.config.ts"
 cost_tokens = 35
-cum_tokens = 8244
+cum_tokens = 7910
 
 [batches.content]
 kind = "lines"
@@ -6212,11 +6150,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 285
+position = 282
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/filesystem/removeFolder.ts", start_line: 40, body_start_line: 41 })'
 descriptor = "export body at packages/filesystem/removeFolder.ts:40 body 41"
 cost_tokens = 242
-cum_tokens = 8486
+cum_tokens = 8152
 
 [batches.content]
 kind = "lines"
@@ -6238,11 +6176,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 286
+position = 283
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/constants.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/constants.ts"
 cost_tokens = 14
-cum_tokens = 8500
+cum_tokens = 8166
 
 [batches.content]
 kind = "lines"
@@ -6256,11 +6194,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 287
+position = 284
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/verifyCapacity.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/verifyCapacity.ts"
 cost_tokens = 14
-cum_tokens = 8514
+cum_tokens = 8180
 
 [batches.content]
 kind = "lines"
@@ -6282,11 +6220,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 288
+position = 285
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/types" })'
 descriptor = "listing of 'apps/mobile/types'"
 cost_tokens = 11
-cum_tokens = 8525
+cum_tokens = 8191
 
 [batches.content]
 kind = "fs"
@@ -6296,11 +6234,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/type
 entries = ["global.ts", "nativewind-env.d.ts"]
 
 [[batches]]
-position = 289
+position = 286
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/dashboard.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/dashboard.tsx"
 cost_tokens = 23
-cum_tokens = 8548
+cum_tokens = 8214
 
 [batches.content]
 kind = "lines"
@@ -6338,11 +6276,11 @@ end = 214
 kind = "ellipsis"
 
 [[batches]]
-position = 290
+position = 287
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/forgot.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/forgot.tsx"
 cost_tokens = 23
-cum_tokens = 8571
+cum_tokens = 8237
 
 [batches.content]
 kind = "lines"
@@ -6372,11 +6310,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 291
+position = 288
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/forgot.tsx", start_line: 15 })'
 descriptor = "export at apps/web/pages/forgot.tsx:15"
 cost_tokens = 0
-cum_tokens = 8571
+cum_tokens = 8237
 
 [batches.content]
 kind = "lines"
@@ -6398,11 +6336,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 292
+position = 289
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/subscribe.tsx", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/web/pages/subscribe.tsx"
 cost_tokens = 23
-cum_tokens = 8594
+cum_tokens = 8260
 
 [batches.content]
 kind = "lines"
@@ -6432,11 +6370,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 293
+position = 290
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/web/pages/subscribe.tsx", start_line: 18 })'
 descriptor = "export at apps/web/pages/subscribe.tsx:18"
 cost_tokens = 0
-cum_tokens = 8594
+cum_tokens = 8260
 
 [batches.content]
 kind = "lines"
@@ -6458,11 +6396,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 294
+position = 291
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/autoTagLink.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/worker/lib/autoTagLink.ts"
 cost_tokens = 23
-cum_tokens = 8617
+cum_tokens = 8283
 
 [batches.content]
 kind = "lines"
@@ -6484,11 +6422,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 295
+position = 292
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/autoTagLink.ts", start_line: 69 })'
 descriptor = "export at apps/worker/lib/autoTagLink.ts:69"
 cost_tokens = 0
-cum_tokens = 8617
+cum_tokens = 8283
 
 [batches.content]
 kind = "lines"
@@ -6510,11 +6448,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 296
+position = 293
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/worker/lib/preservationScheme/handleMonolith.ts", start_line: 6 })'
 descriptor = "export at apps/worker/lib/preservationScheme/handleMonolith.ts:6"
 cost_tokens = 39
-cum_tokens = 8656
+cum_tokens = 8322
 
 [batches.content]
 kind = "lines"
@@ -6536,11 +6474,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 297
+position = 294
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/packages/lib/meilisearchClient.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/meilisearchClient.ts"
 cost_tokens = 15
-cum_tokens = 8671
+cum_tokens = 8337
 
 [batches.content]
 kind = "lines"
@@ -6562,11 +6500,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 298
+position = 295
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections" })'
 descriptor = "listing of 'apps/mobile/app/(tabs)/collections'"
 cost_tokens = 17
-cum_tokens = 8688
+cum_tokens = 8354
 
 [batches.content]
 kind = "fs"
@@ -6576,11 +6514,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/
 entries = ["[id].tsx", "_layout.tsx", "index.tsx"]
 
 [[batches]]
-position = 299
+position = 296
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/(tabs)/collections/index.tsx"
 cost_tokens = 13
-cum_tokens = 8701
+cum_tokens = 8367
 
 [batches.content]
 kind = "lines"
@@ -6602,11 +6540,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 300
+position = 297
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections/index.tsx", start_line: 19 })'
 descriptor = "export at apps/mobile/app/(tabs)/collections/index.tsx:19"
 cost_tokens = 0
-cum_tokens = 8701
+cum_tokens = 8367
 
 [batches.content]
 kind = "lines"
@@ -6628,11 +6566,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 301
+position = 298
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections/index.tsx", start_line: 87 })'
 descriptor = "module item at apps/mobile/app/(tabs)/collections/index.tsx:87"
 cost_tokens = 65
-cum_tokens = 8766
+cum_tokens = 8432
 
 [batches.content]
 kind = "lines"
@@ -6646,11 +6584,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 302
+position = 299
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections/index.tsx", start_line: 19, body_start_line: 20 })'
 descriptor = "export body at apps/mobile/app/(tabs)/collections/index.tsx:19 body 20"
 cost_tokens = 683
-cum_tokens = 9449
+cum_tokens = 9115
 
 [batches.content]
 kind = "lines"
@@ -6704,11 +6642,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 303
+position = 300
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/collections/index.tsx" })'
 descriptor = "imports in apps/mobile/app/(tabs)/collections/index.tsx"
 cost_tokens = 204
-cum_tokens = 9653
+cum_tokens = 9319
 
 [batches.content]
 kind = "lines"
@@ -6722,11 +6660,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 304
+position = 301
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/dashboard" })'
 descriptor = "listing of 'apps/mobile/app/(tabs)/dashboard'"
 cost_tokens = 17
-cum_tokens = 9670
+cum_tokens = 9336
 
 [batches.content]
 kind = "fs"
@@ -6736,11 +6674,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/
 entries = ["[section].tsx", "_layout.tsx", "index.tsx"]
 
 [[batches]]
-position = 305
+position = 302
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/dashboard/index.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx"
 cost_tokens = 13
-cum_tokens = 9683
+cum_tokens = 9349
 
 [batches.content]
 kind = "lines"
@@ -6762,11 +6700,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 306
+position = 303
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 24 })'
 descriptor = "export at apps/mobile/app/(tabs)/dashboard/index.tsx:24"
 cost_tokens = 0
-cum_tokens = 9683
+cum_tokens = 9349
 
 [batches.content]
 kind = "lines"
@@ -6788,11 +6726,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 307
+position = 304
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 22 })'
 descriptor = "module item at apps/mobile/app/(tabs)/dashboard/index.tsx:22"
 cost_tokens = 18
-cum_tokens = 9701
+cum_tokens = 9367
 
 [batches.content]
 kind = "lines"
@@ -6806,11 +6744,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 308
+position = 305
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/linkwarden/apps/mobile/app/(tabs)/dashboard/index.tsx", start_line: 153 })'
 descriptor = "module item at apps/mobile/app/(tabs)/dashboard/index.tsx:153"
 cost_tokens = 135
-cum_tokens = 9836
+cum_tokens = 9502
 
 [batches.content]
 kind = "lines"

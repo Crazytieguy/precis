@@ -1101,28 +1101,10 @@ kind = "full"
 
 [[batches]]
 position = 35
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 389
-cum_tokens = 2007
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
-start = 46
-end = 71
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in src/where-operators.ts"
 cost_tokens = 52
-cum_tokens = 2059
+cum_tokens = 1670
 
 [batches.content]
 kind = "lines"
@@ -1176,11 +1158,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 16 })'
 descriptor = "export at src/where-operators.ts:16"
 cost_tokens = 0
-cum_tokens = 2059
+cum_tokens = 1670
 
 [batches.content]
 kind = "lines"
@@ -1202,11 +1184,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 16, body_start_line: 17 })'
 descriptor = "export body at src/where-operators.ts:16 body 17"
 cost_tokens = 16
-cum_tokens = 2075
+cum_tokens = 1686
 
 [batches.content]
 kind = "lines"
@@ -1220,11 +1202,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 132
-cum_tokens = 2207
+cum_tokens = 1818
 
 [batches.content]
 kind = "lines"
@@ -1262,11 +1244,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 8 })'
 descriptor = "README.md section #8"
 cost_tokens = 142
-cum_tokens = 2349
+cum_tokens = 1960
 
 [batches.content]
 kind = "lines"
@@ -1328,11 +1310,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/random-id.ts" })'
 descriptor = "imports in src/random-id.ts"
 cost_tokens = 15
-cum_tokens = 2364
+cum_tokens = 1975
 
 [batches.content]
 kind = "lines"
@@ -1346,11 +1328,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 15 })'
 descriptor = "README.md section #15"
 cost_tokens = 48
-cum_tokens = 2412
+cum_tokens = 2023
 
 [batches.content]
 kind = "lines"
@@ -1364,11 +1346,11 @@ end = 218
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/where-operators.ts", start_line: 1 })'
 descriptor = "export at src/where-operators.ts:1"
 cost_tokens = 88
-cum_tokens = 2500
+cum_tokens = 2111
 
 [batches.content]
 kind = "lines"
@@ -1382,11 +1364,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.husky" })'
 descriptor = "listing of '.husky'"
 cost_tokens = 5
-cum_tokens = 2505
+cum_tokens = 2116
 
 [batches.content]
 kind = "fs"
@@ -1396,11 +1378,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.husky"
 entries = ["pre-commit"]
 
 [[batches]]
-position = 45
+position = 44
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", chunk_index: 0, export_count: 5, type_only_export_count: 3 })'
 descriptor = "export names surface in src/service.ts"
 cost_tokens = 77
-cum_tokens = 2582
+cum_tokens = 2193
 
 [batches.content]
 kind = "lines"
@@ -1486,11 +1468,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 13 })'
 descriptor = "export at src/service.ts:13"
 cost_tokens = 0
-cum_tokens = 2582
+cum_tokens = 2193
 
 [batches.content]
 kind = "lines"
@@ -1512,11 +1494,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/service.ts", start_line: 13, body_start_line: 14 })'
 descriptor = "export body at src/service.ts:13 body 14"
 cost_tokens = 21
-cum_tokens = 2603
+cum_tokens = 2214
 
 [batches.content]
 kind = "lines"
@@ -1530,11 +1512,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/schema.json" })'
 descriptor = "json config schema.json"
 cost_tokens = 102
-cum_tokens = 2705
+cum_tokens = 2316
 
 [batches.content]
 kind = "lines"
@@ -1548,11 +1530,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 162
-cum_tokens = 2867
+cum_tokens = 2478
 
 [batches.content]
 kind = "lines"
@@ -1590,11 +1572,11 @@ end = 263
 kind = "full"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/parse-where.ts", start_line: 58, body_start_line: 59 })'
 descriptor = "export body at src/parse-where.ts:58 body 59"
 cost_tokens = 105
-cum_tokens = 2972
+cum_tokens = 2583
 
 [batches.content]
 kind = "lines"
@@ -1624,11 +1606,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", chunk_index: 0, export_count: 3, type_only_export_count: 1 })'
 descriptor = "export names surface in src/adapters/normalized-adapter.ts"
 cost_tokens = 59
-cum_tokens = 3031
+cum_tokens = 2642
 
 [batches.content]
 kind = "lines"
@@ -1666,11 +1648,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 51
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", start_line: 7 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:7"
 cost_tokens = 13
-cum_tokens = 3044
+cum_tokens = 2655
 
 [batches.content]
 kind = "lines"
@@ -1684,11 +1666,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/normalized-adapter.ts", start_line: 11 })'
 descriptor = "export at src/adapters/normalized-adapter.ts:11"
 cost_tokens = 60
-cum_tokens = 3104
+cum_tokens = 2715
 
 [batches.content]
 kind = "lines"
@@ -1750,11 +1732,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts" })'
 descriptor = "imports in src/adapters/observer.ts"
 cost_tokens = 14
-cum_tokens = 3118
+cum_tokens = 2729
 
 [batches.content]
 kind = "lines"
@@ -1768,11 +1750,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 37
-cum_tokens = 3155
+cum_tokens = 2766
 
 [batches.content]
 kind = "lines"
@@ -1794,11 +1776,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 8
-cum_tokens = 3163
+cum_tokens = 2774
 
 [batches.content]
 kind = "fs"
@@ -1808,11 +1790,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.github"
 entries = ["FUNDING.yml", "workflows"]
 
 [[batches]]
-position = 57
+position = 56
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 3172
+cum_tokens = 2783
 
 [batches.content]
 kind = "fs"
@@ -1822,11 +1804,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/.github/workflo
 entries = ["node.js.yml", "publish.yml"]
 
 [[batches]]
-position = 58
+position = 57
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/json-server/fixtures" })'
 descriptor = "listing of 'fixtures'"
 cost_tokens = 9
-cum_tokens = 3181
+cum_tokens = 2792
 
 [batches.content]
 kind = "fs"
@@ -1836,11 +1818,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/json-server/fixtures"
 entries = ["db.json", "db.json5"]
 
 [[batches]]
-position = 59
+position = 58
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts", start_line: 4 })'
 descriptor = "export at src/adapters/observer.ts:4"
 cost_tokens = 158
-cum_tokens = 3339
+cum_tokens = 2950
 
 [batches.content]
 kind = "lines"
@@ -1910,11 +1892,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/adapters/observer.ts", start_line: 4, body_start_line: 21 })'
 descriptor = "export body at src/adapters/observer.ts:4 body 21"
 cost_tokens = 80
-cum_tokens = 3419
+cum_tokens = 3030
 
 [batches.content]
 kind = "lines"
@@ -1944,11 +1926,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts" })'
 descriptor = "imports in src/matches-where.ts"
 cost_tokens = 37
-cum_tokens = 3456
+cum_tokens = 3067
 
 [batches.content]
 kind = "lines"
@@ -1965,6 +1947,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/json-server/src/matches-where.ts"
 start = 3
 end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 389
+cum_tokens = 3456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/json-server/package.json"
+start = 46
+end = 71
 
 [batches.content.spans.render]
 kind = "full"

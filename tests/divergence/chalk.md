@@ -46,18 +46,18 @@ Score(3000)=0.555 I=0.799 C=0.385 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | ns | 1444 |  | 172 | Readme: Background colors list | 2.6 | 2.1 | 0.570 |
 | walker |  | 1460 | 44 | package runtime metadata in package.json |  |  | 0.570 |
 | walker |  | 1509 | 49 | package scripts in package.json |  |  | 0.570 |
-| walker |  | 1696 | 187 | package dependencies in package.json |  |  | 0.570 |
-| ns | 1698 |  | 254 | Readme: supportsColor / FORCE_COLOR / flags / chalkStderr | 2.7 | 2.1 | 0.548 |
-| walker |  | 1726 | 30 | readme.md section #25 |  |  | 0.559 |
-| walker |  | 1863 | 137 | readme.md section #1 |  |  | 0.559 |
-| walker |  | 1897 | 34 | readme.md section #11 |  |  | 0.563 |
-| walker |  | 1931 | 34 | readme.md section #13 |  |  | 0.568 |
-| walker |  | 1963 | 32 | readme.md section #26 |  |  | 0.582 |
-| walker |  | 2000 | 37 | readme.md section #15 |  |  | 0.582 |
-| walker |  | 2009 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.604 |
-| walker |  | 2051 | 42 | readme.md section #8 |  |  | 0.611 |
+| walker |  | 1539 | 30 | readme.md section #25 |  |  | 0.581 |
+| walker |  | 1676 | 137 | readme.md section #1 |  |  | 0.581 |
+| ns | 1698 |  | 254 | Readme: supportsColor / FORCE_COLOR / flags / chalkStderr | 2.7 | 2.1 | 0.559 |
+| walker |  | 1710 | 34 | readme.md section #11 |  |  | 0.563 |
+| walker |  | 1744 | 34 | readme.md section #13 |  |  | 0.568 |
+| walker |  | 1776 | 32 | readme.md section #26 |  |  | 0.582 |
+| walker |  | 1813 | 37 | readme.md section #15 |  |  | 0.582 |
+| walker |  | 1822 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.604 |
+| walker |  | 1864 | 42 | readme.md section #8 |  |  | 0.611 |
+| walker |  | 1948 | 84 | code-of-conduct.md section #6 |  |  | 0.611 |
 | ns | 2123 |  | 425 | Readme: 256/Truecolor section | 2.8 | 2.1 | 0.569 |
-| walker |  | 2135 | 84 | code-of-conduct.md section #6 |  |  | 0.569 |
+| walker |  | 2135 | 187 | package dependencies in package.json |  |  | 0.569 |
 | walker |  | 2191 | 56 | readme.md section #5 |  |  | 0.569 |
 | ns | 2236 |  | 113 | index.js helper signatures (locations) | 3.1 | 2.2 | 0.557 |
 | walker |  | 2289 | 98 | code-of-conduct.md section #1 |  |  | 0.557 |

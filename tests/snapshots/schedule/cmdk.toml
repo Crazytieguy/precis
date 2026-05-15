@@ -2018,28 +2018,10 @@ kind = "full"
 
 [[batches]]
 position = 69
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 114
-cum_tokens = 3052
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
-start = 14
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/package.json" })'
 descriptor = "package identity in cmdk/package.json"
 cost_tokens = 38
-cum_tokens = 3090
+cum_tokens = 2976
 
 [batches.content]
 kind = "lines"
@@ -2053,11 +2035,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 729, body_start_line: 730 })'
 descriptor = "export body at cmdk/src/index.tsx:729 body 730"
 cost_tokens = 435
-cum_tokens = 3525
+cum_tokens = 3411
 
 [batches.content]
 kind = "lines"
@@ -2103,11 +2085,11 @@ end = 767
 kind = "full"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 19 })'
 descriptor = "README.md section #19"
 cost_tokens = 26
-cum_tokens = 3551
+cum_tokens = 3437
 
 [batches.content]
 kind = "lines"
@@ -2121,11 +2103,11 @@ end = 240
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 26
-cum_tokens = 3577
+cum_tokens = 3463
 
 [batches.content]
 kind = "lines"
@@ -2139,11 +2121,11 @@ end = 254
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/tsup.config.ts", start_line: 3 })'
 descriptor = "export at cmdk/tsup.config.ts:3"
 cost_tokens = 73
-cum_tokens = 3650
+cum_tokens = 3536
 
 [batches.content]
 kind = "lines"
@@ -2157,11 +2139,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 24 })'
 descriptor = "README.md section #24"
 cost_tokens = 16
-cum_tokens = 3666
+cum_tokens = 3552
 
 [batches.content]
 kind = "lines"
@@ -2183,11 +2165,11 @@ end = 262
 kind = "full"
 
 [[batches]]
-position = 76
+position = 75
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/index.tsx", start_line: 664, body_start_line: 665 })'
 descriptor = "export body at cmdk/src/index.tsx:664 body 665"
 cost_tokens = 636
-cum_tokens = 4302
+cum_tokens = 4188
 
 [batches.content]
 kind = "lines"
@@ -2273,11 +2255,11 @@ end = 722
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 35
-cum_tokens = 4337
+cum_tokens = 4223
 
 [batches.content]
 kind = "lines"
@@ -2291,11 +2273,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cmdk/website" })'
 descriptor = "listing of 'website'"
 cost_tokens = 54
-cum_tokens = 4391
+cum_tokens = 4277
 
 [batches.content]
 kind = "fs"
@@ -2305,11 +2287,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/cmdk/website"
 entries = [".eslintrc.json", ".gitignore", "README.md", "components", "next-env.d.ts", "next.config.js", "package.json", "pages", "public", "styles", "tsconfig.json", "vercel.json"]
 
 [[batches]]
-position = 79
+position = 78
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cmdk/website/components" })'
 descriptor = "listing of 'website/components'"
 cost_tokens = 14
-cum_tokens = 4405
+cum_tokens = 4291
 
 [batches.content]
 kind = "fs"
@@ -2319,11 +2301,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/cmdk/website/components"
 entries = ["cmdk", "code", "icons", "index.ts"]
 
 [[batches]]
-position = 80
+position = 79
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cmdk/website/components/cmdk" })'
 descriptor = "listing of 'website/components/cmdk'"
 cost_tokens = 23
-cum_tokens = 4428
+cum_tokens = 4314
 
 [batches.content]
 kind = "fs"
@@ -2333,11 +2315,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/cmdk/website/components/cmd
 entries = ["framer.tsx", "linear.tsx", "raycast.tsx", "vercel.tsx"]
 
 [[batches]]
-position = 81
+position = 80
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/playwright.config.ts" })'
 descriptor = "imports in playwright.config.ts"
 cost_tokens = 19
-cum_tokens = 4447
+cum_tokens = 4333
 
 [batches.content]
 kind = "lines"
@@ -2351,11 +2333,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cmdk/test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 58
-cum_tokens = 4505
+cum_tokens = 4391
 
 [batches.content]
 kind = "fs"
@@ -2365,11 +2347,37 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/cmdk/test"
 entries = ["basic.test.ts", "dialog.test.ts", "group.test.ts", "item.test.ts", "keybind.test.ts", "next-env.d.ts", "numeric.test.ts", "package.json", "pages", "props.test.ts", "style.css", "tsconfig.json"]
 
 [[batches]]
-position = 83
+position = 82
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in cmdk/src/command-score.ts"
 cost_tokens = 24
-cum_tokens = 4529
+cum_tokens = 4415
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts", start_line: 155 })'
+descriptor = "export at cmdk/src/command-score.ts:155"
+cost_tokens = 0
+cum_tokens = 4415
 
 [batches.content]
 kind = "lines"
@@ -2392,36 +2400,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 84
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts", start_line: 155 })'
-descriptor = "export at cmdk/src/command-score.ts:155"
-cost_tokens = 0
-cum_tokens = 4529
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/cmdk/src/command-score.ts"
-start = 156
-end = 156
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 22
-cum_tokens = 4551
+cum_tokens = 4437
 
 [batches.content]
 kind = "lines"
@@ -2438,6 +2420,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md"
 start = 258
 end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 114
+cum_tokens = 4551
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/package.json"
+start = 14
+end = 21
 
 [batches.content.spans.render]
 kind = "full"

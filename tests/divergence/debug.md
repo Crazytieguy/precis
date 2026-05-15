@@ -31,13 +31,13 @@ Score(3000)=0.404 I=0.714 C=0.228 ns_rows≤3K=23/44 (reached=8 partial=2 missin
 | ns | 762 |  | 50 | browser.js exports table (top of file) | 2.7 |  | 0.468 |
 | ns | 816 |  | 54 | browser.js function-name locations | 2.8 |  | 0.449 |
 | walker |  | 824 | 108 | package scripts in package.json |  |  | 0.450 |
-| ns | 852 |  | 36 | browser.js bottom wiring + formatters.j | 2.9 |  | 0.441 |
-| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.519 |
-| walker |  | 1096 | 272 | package dependencies in package.json |  |  | 0.548 |
-| walker |  | 1111 | 15 | export names surface #1 in src/browser.js |  |  | 0.551 |
-| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.510 |
-| walker |  | 1133 | 22 | imports in test.js |  |  | 0.510 |
-| walker |  | 1173 | 40 | README.md section #15 |  |  | 0.510 |
+| walker |  | 839 | 15 | export names surface #1 in src/browser.js |  |  | 0.450 |
+| ns | 852 |  | 36 | browser.js bottom wiring + formatters.j | 2.9 |  | 0.445 |
+| walker |  | 861 | 22 | imports in test.js |  |  | 0.445 |
+| walker |  | 901 | 40 | README.md section #15 |  |  | 0.445 |
+| ns | 985 |  | 133 | README H2 heading locations | 2.10 |  | 0.522 |
+| ns | 1114 |  | 129 | enabled(name): namespace match loop | 3.1 | 2.2 | 0.484 |
+| walker |  | 1173 | 272 | package dependencies in package.json |  |  | 0.510 |
 | walker |  | 1297 | 124 | README.md section #5 |  |  | 0.511 |
 | ns | 1316 |  | 202 | enable(namespaces): comma/whitespace split + names/skips partition | 3.2 | 2.2 | 0.466 |
 | walker |  | 1345 | 48 | export names surface #1 in src/node.js |  |  | 0.475 |

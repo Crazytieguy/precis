@@ -130,223 +130,220 @@ Score(3000)=0.324 I=0.717 C=0.147 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | ns | 3900 |  | 224 | schema.prisma datasource + prisma client singleton | 2.10 | 2.1 | 0.288 |
 | ns | 4067 |  | 167 | apps/web subtree — top-level files + key dirs | 3.1 |  | 0.301 |
 | walker |  | 4247 | 377 | package scripts in package.json |  |  | 0.345 |
-| walker |  | 4428 | 181 | package dependencies in package.json |  |  | 0.345 |
-| walker |  | 4443 | 15 | export names surface in apps/worker/workers/trialEndEmailWorker.ts |  |  | 0.345 |
-| walker |  | 4443 | 0 | export at apps/worker/workers/trialEndEmailWorker.ts:21 |  |  | 0.345 |
-| walker |  | 4481 | 38 | package identity in apps/mobile/package.json |  |  | 0.345 |
-| walker |  | 4495 | 14 | package entrypoints in apps/mobile/package.json |  |  | 0.345 |
-| walker |  | 4590 | 95 | package scripts in apps/mobile/package.json |  |  | 0.345 |
-| walker |  | 4628 | 38 | package identity in packages/lib/package.json |  |  | 0.345 |
-| walker |  | 4640 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.345 |
-| walker |  | 4678 | 38 | package identity in packages/router/package.json |  |  | 0.345 |
-| walker |  | 4690 | 12 | package entrypoints in packages/router/package.json |  |  | 0.345 |
-| walker |  | 4728 | 38 | package identity in packages/types/package.json |  |  | 0.345 |
-| walker |  | 4740 | 12 | package entrypoints in packages/types/package.json |  |  | 0.345 |
-| walker |  | 4783 | 43 | package dependencies in packages/types/package.json |  |  | 0.345 |
-| ns | 4801 |  | 734 | apps/web subtree — pages/api, lib, components, hooks | 3.2 |  | 0.292 |
-| walker |  | 4825 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.293 |
-| walker |  | 4834 | 9 | export names surface in apps/worker/lib/preservationScheme/imageHandler.ts |  |  | 0.293 |
-| walker |  | 4843 | 9 | export names surface in apps/worker/lib/preservationScheme/pdfHandler.ts |  |  | 0.293 |
-| walker |  | 4853 | 10 | export names surface in apps/worker/lib/preservationScheme/handleArchivePreview.ts |  |  | 0.293 |
-| walker |  | 4863 | 10 | export names surface in apps/worker/lib/preservationScheme/handleReadability.ts |  |  | 0.293 |
-| walker |  | 4902 | 39 | package identity in apps/worker/package.json |  |  | 0.293 |
-| walker |  | 4914 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.293 |
+| walker |  | 4262 | 15 | export names surface in apps/worker/workers/trialEndEmailWorker.ts |  |  | 0.345 |
+| walker |  | 4262 | 0 | export at apps/worker/workers/trialEndEmailWorker.ts:21 |  |  | 0.345 |
+| walker |  | 4300 | 38 | package identity in apps/mobile/package.json |  |  | 0.345 |
+| walker |  | 4314 | 14 | package entrypoints in apps/mobile/package.json |  |  | 0.345 |
+| walker |  | 4409 | 95 | package scripts in apps/mobile/package.json |  |  | 0.345 |
+| walker |  | 4447 | 38 | package identity in packages/lib/package.json |  |  | 0.345 |
+| walker |  | 4459 | 12 | package entrypoints in packages/lib/package.json |  |  | 0.345 |
+| walker |  | 4497 | 38 | package identity in packages/router/package.json |  |  | 0.345 |
+| walker |  | 4509 | 12 | package entrypoints in packages/router/package.json |  |  | 0.345 |
+| walker |  | 4547 | 38 | package identity in packages/types/package.json |  |  | 0.345 |
+| walker |  | 4559 | 12 | package entrypoints in packages/types/package.json |  |  | 0.345 |
+| walker |  | 4601 | 42 | listing of 'apps/worker/lib/preservationScheme' |  |  | 0.346 |
+| walker |  | 4610 | 9 | export names surface in apps/worker/lib/preservationScheme/imageHandler.ts |  |  | 0.346 |
+| walker |  | 4619 | 9 | export names surface in apps/worker/lib/preservationScheme/pdfHandler.ts |  |  | 0.346 |
+| walker |  | 4629 | 10 | export names surface in apps/worker/lib/preservationScheme/handleArchivePreview.ts |  |  | 0.346 |
+| walker |  | 4639 | 10 | export names surface in apps/worker/lib/preservationScheme/handleReadability.ts |  |  | 0.346 |
+| walker |  | 4678 | 39 | package identity in apps/worker/package.json |  |  | 0.346 |
+| walker |  | 4690 | 12 | package entrypoints in apps/worker/package.json |  |  | 0.346 |
+| walker |  | 4748 | 58 | package scripts in apps/worker/package.json |  |  | 0.346 |
+| walker |  | 4787 | 39 | package identity in packages/filesystem/package.json |  |  | 0.346 |
+| walker |  | 4799 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.346 |
+| ns | 4801 |  | 734 | apps/web subtree — pages/api, lib, components, hooks | 3.2 |  | 0.293 |
+| walker |  | 4838 | 39 | package identity in packages/prisma/package.json |  |  | 0.293 |
+| walker |  | 4863 | 25 | package entrypoints in packages/prisma/package.json |  |  | 0.293 |
+| walker |  | 4932 | 69 | package scripts in packages/prisma/package.json |  |  | 0.293 |
 | ns | 4962 |  | 161 | apps/worker subtree — entry, workers, lib | 3.3 |  | 0.343 |
-| walker |  | 4972 | 58 | package scripts in apps/worker/package.json |  |  | 0.343 |
-| walker |  | 5011 | 39 | package identity in packages/filesystem/package.json |  |  | 0.343 |
-| walker |  | 5023 | 12 | package entrypoints in packages/filesystem/package.json |  |  | 0.343 |
-| walker |  | 5057 | 34 | package dependencies in packages/filesystem/package.json |  |  | 0.343 |
-| walker |  | 5096 | 39 | package identity in packages/prisma/package.json |  |  | 0.343 |
-| walker |  | 5121 | 25 | package entrypoints in packages/prisma/package.json |  |  | 0.343 |
-| walker |  | 5190 | 69 | package scripts in packages/prisma/package.json |  |  | 0.343 |
+| walker |  | 5017 | 85 | README.md section #31 |  |  | 0.343 |
+| walker |  | 5033 | 16 | export names surface in apps/mobile/app/_layout.tsx |  |  | 0.343 |
+| walker |  | 5049 | 16 | export names surface in apps/worker/lib/getLinkBatchFairly.ts |  |  | 0.343 |
+| walker |  | 5075 | 26 | export at apps/worker/lib/getLinkBatchFairly.ts:12 |  |  | 0.343 |
+| walker |  | 5086 | 11 | export names surface in apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts |  |  | 0.343 |
+| walker |  | 5096 | 10 | export names surface in packages/lib/getOriginalFormat.ts |  |  | 0.343 |
+| walker |  | 5197 | 101 | README.md section #28 |  |  | 0.343 |
+| walker |  | 5214 | 17 | export names surface in apps/mobile/lib/queryPersister.ts |  |  | 0.343 |
+| walker |  | 5231 | 17 | export names surface in apps/web/hooks/usePermissions.tsx |  |  | 0.335 |
+| walker |  | 5231 | 0 | export at apps/web/hooks/usePermissions.tsx:6 |  |  | 0.335 |
 | ns | 5231 |  | 269 | apps/worker — worker.ts initializer (full) | 3.4 | 3.3 | 0.335 |
-| walker |  | 5275 | 85 | README.md section #31 |  |  | 0.335 |
-| walker |  | 5291 | 16 | export names surface in apps/mobile/app/_layout.tsx |  |  | 0.335 |
-| walker |  | 5307 | 16 | export names surface in apps/worker/lib/getLinkBatchFairly.ts |  |  | 0.335 |
-| walker |  | 5333 | 26 | export at apps/worker/lib/getLinkBatchFairly.ts:12 |  |  | 0.335 |
-| walker |  | 5344 | 11 | export names surface in apps/worker/lib/preservationScheme/handleScreenshotAndPdf.ts |  |  | 0.335 |
-| walker |  | 5354 | 10 | export names surface in packages/lib/getOriginalFormat.ts |  |  | 0.335 |
-| walker |  | 5455 | 101 | README.md section #28 |  |  | 0.335 |
+| walker |  | 5248 | 17 | export names surface in apps/web/layouts/AdminLayout.tsx |  |  | 0.335 |
+| walker |  | 5248 | 0 | export at apps/web/layouts/AdminLayout.tsx:12 |  |  | 0.335 |
+| walker |  | 5265 | 17 | export names surface in apps/web/layouts/AuthRedirect.tsx |  |  | 0.335 |
+| walker |  | 5265 | 0 | export at apps/web/layouts/AuthRedirect.tsx:15 |  |  | 0.335 |
+| walker |  | 5282 | 17 | export names surface in apps/web/layouts/MainLayout.tsx |  |  | 0.335 |
+| walker |  | 5282 | 0 | export at apps/web/layouts/MainLayout.tsx:13 |  |  | 0.335 |
+| walker |  | 5299 | 17 | export names surface in apps/web/layouts/SettingsLayout.tsx |  |  | 0.335 |
+| walker |  | 5299 | 0 | export at apps/web/layouts/SettingsLayout.tsx:12 |  |  | 0.335 |
+| walker |  | 5316 | 17 | export names surface in apps/worker/lib/countUnprocessedBillableLinks.ts |  |  | 0.335 |
+| walker |  | 5316 | 0 | export at apps/worker/lib/countUnprocessedBillableLinks.ts:3 |  |  | 0.335 |
+| walker |  | 5333 | 17 | export names surface in apps/worker/lib/fetchHeaders.ts |  |  | 0.335 |
+| walker |  | 5333 | 0 | export at apps/worker/lib/fetchHeaders.ts:3 |  |  | 0.335 |
+| walker |  | 5350 | 17 | export names surface in apps/worker/workers/linkProcessing.ts |  |  | 0.335 |
+| walker |  | 5350 | 0 | export at apps/worker/workers/linkProcessing.ts:11 |  |  | 0.335 |
+| walker |  | 5358 | 8 | listing of 'apps/mobile/plugins' |  |  | 0.335 |
+| walker |  | 5437 | 79 | listing of 'apps/web/public' |  |  | 0.335 |
 | ns | 5468 |  | 237 | apps/mobile subtree — Expo router structure | 3.5 |  | 0.394 |
-| walker |  | 5472 | 17 | export names surface in apps/mobile/lib/queryPersister.ts |  |  | 0.394 |
-| walker |  | 5489 | 17 | export names surface in apps/web/hooks/usePermissions.tsx |  |  | 0.394 |
-| walker |  | 5489 | 0 | export at apps/web/hooks/usePermissions.tsx:6 |  |  | 0.394 |
-| walker |  | 5506 | 17 | export names surface in apps/web/layouts/AdminLayout.tsx |  |  | 0.394 |
-| walker |  | 5506 | 0 | export at apps/web/layouts/AdminLayout.tsx:12 |  |  | 0.394 |
-| walker |  | 5523 | 17 | export names surface in apps/web/layouts/AuthRedirect.tsx |  |  | 0.394 |
-| walker |  | 5523 | 0 | export at apps/web/layouts/AuthRedirect.tsx:15 |  |  | 0.394 |
-| walker |  | 5540 | 17 | export names surface in apps/web/layouts/MainLayout.tsx |  |  | 0.394 |
-| walker |  | 5540 | 0 | export at apps/web/layouts/MainLayout.tsx:13 |  |  | 0.394 |
-| walker |  | 5557 | 17 | export names surface in apps/web/layouts/SettingsLayout.tsx |  |  | 0.394 |
-| walker |  | 5557 | 0 | export at apps/web/layouts/SettingsLayout.tsx:12 |  |  | 0.394 |
-| walker |  | 5574 | 17 | export names surface in apps/worker/lib/countUnprocessedBillableLinks.ts |  |  | 0.394 |
-| walker |  | 5574 | 0 | export at apps/worker/lib/countUnprocessedBillableLinks.ts:3 |  |  | 0.394 |
-| walker |  | 5591 | 17 | export names surface in apps/worker/lib/fetchHeaders.ts |  |  | 0.394 |
-| walker |  | 5591 | 0 | export at apps/worker/lib/fetchHeaders.ts:3 |  |  | 0.394 |
-| walker |  | 5608 | 17 | export names surface in apps/worker/workers/linkProcessing.ts |  |  | 0.394 |
-| walker |  | 5608 | 0 | export at apps/worker/workers/linkProcessing.ts:11 |  |  | 0.394 |
-| walker |  | 5616 | 8 | listing of 'apps/mobile/plugins' |  |  | 0.394 |
-| walker |  | 5695 | 79 | listing of 'apps/web/public' |  |  | 0.394 |
+| walker |  | 5537 | 100 | imports in packages/filesystem/index.ts |  |  | 0.395 |
+| walker |  | 5547 | 10 | export names surface in packages/filesystem/s3Client.ts |  |  | 0.395 |
+| walker |  | 5559 | 12 | export names surface in packages/filesystem/createFile.ts |  |  | 0.395 |
+| walker |  | 5576 | 17 | export names surface in packages/filesystem/readFile.ts |  |  | 0.395 |
+| walker |  | 5576 | 0 | export at packages/filesystem/readFile.ts:19 |  |  | 0.395 |
+| walker |  | 5596 | 20 | export names surface in packages/filesystem/fileExists.ts |  |  | 0.395 |
+| walker |  | 5596 | 0 | export at packages/filesystem/fileExists.ts:6 |  |  | 0.395 |
+| walker |  | 5616 | 20 | export names surface in packages/filesystem/moveFile.ts |  |  | 0.395 |
+| walker |  | 5616 | 0 | export at packages/filesystem/moveFile.ts:6 |  |  | 0.395 |
+| walker |  | 5637 | 21 | export names surface in packages/filesystem/createFolder.ts |  |  | 0.395 |
+| walker |  | 5637 | 0 | export at packages/filesystem/createFolder.ts:5 |  |  | 0.395 |
+| walker |  | 5659 | 22 | export names surface in packages/filesystem/removeFile.ts |  |  | 0.395 |
+| walker |  | 5659 | 0 | export at packages/filesystem/removeFile.ts:6 |  |  | 0.395 |
+| walker |  | 5681 | 22 | export names surface in packages/filesystem/removeFolder.ts |  |  | 0.395 |
+| walker |  | 5681 | 0 | export at packages/filesystem/removeFolder.ts:40 |  |  | 0.395 |
 | ns | 5739 |  | 271 | packages/* — package contents | 3.6 |  | 0.440 |
-| walker |  | 5795 | 100 | imports in packages/filesystem/index.ts |  |  | 0.440 |
-| walker |  | 5805 | 10 | export names surface in packages/filesystem/s3Client.ts |  |  | 0.440 |
-| walker |  | 5817 | 12 | export names surface in packages/filesystem/createFile.ts |  |  | 0.440 |
-| walker |  | 5834 | 17 | export names surface in packages/filesystem/readFile.ts |  |  | 0.440 |
-| walker |  | 5834 | 0 | export at packages/filesystem/readFile.ts:19 |  |  | 0.440 |
+| walker |  | 5805 | 124 | export body at packages/filesystem/createFolder.ts:5 body 6 |  |  | 0.440 |
 | ns | 5839 |  | 100 | packages/filesystem index — re-export surface | 3.7 |  | 0.447 |
-| walker |  | 5854 | 20 | export names surface in packages/filesystem/fileExists.ts |  |  | 0.447 |
-| walker |  | 5854 | 0 | export at packages/filesystem/fileExists.ts:6 |  |  | 0.447 |
-| walker |  | 5874 | 20 | export names surface in packages/filesystem/moveFile.ts |  |  | 0.447 |
-| walker |  | 5874 | 0 | export at packages/filesystem/moveFile.ts:6 |  |  | 0.447 |
-| walker |  | 5895 | 21 | export names surface in packages/filesystem/createFolder.ts |  |  | 0.447 |
-| walker |  | 5895 | 0 | export at packages/filesystem/createFolder.ts:5 |  |  | 0.447 |
-| walker |  | 5917 | 22 | export names surface in packages/filesystem/removeFile.ts |  |  | 0.447 |
-| walker |  | 5917 | 0 | export at packages/filesystem/removeFile.ts:6 |  |  | 0.447 |
-| walker |  | 5939 | 22 | export names surface in packages/filesystem/removeFolder.ts |  |  | 0.447 |
-| walker |  | 5939 | 0 | export at packages/filesystem/removeFolder.ts:40 |  |  | 0.447 |
-| walker |  | 6063 | 124 | export body at packages/filesystem/createFolder.ts:5 body 6 |  |  | 0.447 |
-| walker |  | 6137 | 74 | export at packages/filesystem/createFile.ts:6 |  |  | 0.447 |
+| walker |  | 5879 | 74 | export at packages/filesystem/createFile.ts:6 |  |  | 0.447 |
+| walker |  | 6043 | 164 | export body at packages/filesystem/fileExists.ts:6 body 7 |  |  | 0.447 |
+| walker |  | 6106 | 63 | export names surface in packages/filesystem/manageFiles.ts |  |  | 0.447 |
+| walker |  | 6106 | 0 | export at packages/filesystem/manageFiles.ts:4 |  |  | 0.447 |
+| walker |  | 6106 | 0 | export at packages/filesystem/manageFiles.ts:33 |  |  | 0.447 |
+| walker |  | 6155 | 49 | listing of 'apps/web/public/locales' |  |  | 0.447 |
+| walker |  | 6167 | 12 | export names surface in apps/web/e2e/data/user.ts |  |  | 0.447 |
 | ns | 6206 |  | 367 | apps/web/lib/api/controllers — bracketed leaves + stripe | 3.8 |  | 0.425 |
-| walker |  | 6301 | 164 | export body at packages/filesystem/fileExists.ts:6 body 7 |  |  | 0.425 |
-| walker |  | 6364 | 63 | export names surface in packages/filesystem/manageFiles.ts |  |  | 0.425 |
-| walker |  | 6364 | 0 | export at packages/filesystem/manageFiles.ts:4 |  |  | 0.425 |
-| walker |  | 6364 | 0 | export at packages/filesystem/manageFiles.ts:33 |  |  | 0.425 |
-| walker |  | 6413 | 49 | listing of 'apps/web/public/locales' |  |  | 0.425 |
-| walker |  | 6425 | 12 | export names surface in apps/web/e2e/data/user.ts |  |  | 0.425 |
-| walker |  | 6475 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.425 |
-| walker |  | 6483 | 8 | export names surface in apps/mobile/components/ui/Input.tsx |  |  | 0.425 |
-| walker |  | 6491 | 8 | export names surface in apps/mobile/components/ui/Spinner.tsx |  |  | 0.425 |
-| walker |  | 6502 | 11 | export names surface in apps/mobile/components/ui/IconSymbol.ios.tsx |  |  | 0.425 |
-| walker |  | 6513 | 11 | export names surface in packages/lib/transporter.ts |  |  | 0.425 |
-| walker |  | 6531 | 18 | export names surface in apps/mobile/components/Links.tsx |  |  | 0.425 |
-| walker |  | 6531 | 0 | export at apps/mobile/components/Links.tsx:26 |  |  | 0.425 |
-| walker |  | 6549 | 18 | export names surface in apps/web/hooks/useMediaQuery.tsx |  |  | 0.425 |
-| walker |  | 6549 | 0 | export at apps/web/hooks/useMediaQuery.tsx:3 |  |  | 0.425 |
-| walker |  | 6567 | 18 | export names surface in apps/worker/workers/linkIndexing.ts |  |  | 0.425 |
-| walker |  | 6567 | 0 | export at apps/worker/workers/linkIndexing.ts:63 |  |  | 0.425 |
-| walker |  | 6653 | 86 | listing of 'apps/web/pages' |  |  | 0.459 |
-| walker |  | 6665 | 12 | export names surface in apps/web/pages/index.tsx |  |  | 0.459 |
-| walker |  | 6665 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.459 |
-| walker |  | 6701 | 36 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.459 |
-| walker |  | 6728 | 27 | imports in apps/web/pages/index.tsx |  |  | 0.459 |
-| walker |  | 6737 | 9 | listing of 'apps/web/pages/public' |  |  | 0.459 |
-| walker |  | 6749 | 12 | export names surface in apps/web/pages/_document.tsx |  |  | 0.459 |
-| walker |  | 6749 | 0 | export at apps/web/pages/_document.tsx:3 |  |  | 0.459 |
-| walker |  | 6765 | 16 | listing of 'apps/web/pages/links' |  |  | 0.459 |
-| walker |  | 6786 | 21 | export names surface in apps/web/pages/links/index.tsx |  |  | 0.459 |
-| walker |  | 6803 | 17 | module item at apps/web/pages/links/index.tsx:14 |  |  | 0.459 |
+| walker |  | 6217 | 50 | listing of 'apps/mobile/components/ui' |  |  | 0.425 |
+| walker |  | 6225 | 8 | export names surface in apps/mobile/components/ui/Input.tsx |  |  | 0.425 |
+| walker |  | 6233 | 8 | export names surface in apps/mobile/components/ui/Spinner.tsx |  |  | 0.425 |
+| walker |  | 6244 | 11 | export names surface in apps/mobile/components/ui/IconSymbol.ios.tsx |  |  | 0.425 |
+| walker |  | 6255 | 11 | export names surface in packages/lib/transporter.ts |  |  | 0.425 |
+| walker |  | 6273 | 18 | export names surface in apps/mobile/components/Links.tsx |  |  | 0.425 |
+| walker |  | 6273 | 0 | export at apps/mobile/components/Links.tsx:26 |  |  | 0.425 |
+| walker |  | 6291 | 18 | export names surface in apps/web/hooks/useMediaQuery.tsx |  |  | 0.425 |
+| walker |  | 6291 | 0 | export at apps/web/hooks/useMediaQuery.tsx:3 |  |  | 0.425 |
+| walker |  | 6309 | 18 | export names surface in apps/worker/workers/linkIndexing.ts |  |  | 0.425 |
+| walker |  | 6309 | 0 | export at apps/worker/workers/linkIndexing.ts:63 |  |  | 0.425 |
+| walker |  | 6395 | 86 | listing of 'apps/web/pages' |  |  | 0.459 |
+| walker |  | 6407 | 12 | export names surface in apps/web/pages/index.tsx |  |  | 0.459 |
+| walker |  | 6407 | 0 | export at apps/web/pages/index.tsx:4 |  |  | 0.459 |
+| walker |  | 6443 | 36 | export body at apps/web/pages/index.tsx:4 body 5 |  |  | 0.459 |
+| walker |  | 6470 | 27 | imports in apps/web/pages/index.tsx |  |  | 0.459 |
+| walker |  | 6479 | 9 | listing of 'apps/web/pages/public' |  |  | 0.459 |
+| walker |  | 6491 | 12 | export names surface in apps/web/pages/_document.tsx |  |  | 0.459 |
+| walker |  | 6491 | 0 | export at apps/web/pages/_document.tsx:3 |  |  | 0.459 |
+| walker |  | 6507 | 16 | listing of 'apps/web/pages/links' |  |  | 0.459 |
+| walker |  | 6528 | 21 | export names surface in apps/web/pages/links/index.tsx |  |  | 0.459 |
+| walker |  | 6545 | 17 | module item at apps/web/pages/links/index.tsx:14 |  |  | 0.459 |
+| walker |  | 6737 | 192 | imports in apps/web/pages/links/index.tsx |  |  | 0.459 |
+| walker |  | 6756 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.459 |
+| walker |  | 6791 | 35 | export names surface in apps/web/pages/admin/index.tsx |  |  | 0.459 |
+| walker |  | 6791 | 0 | export at apps/web/pages/admin/index.tsx:3 |  |  | 0.459 |
+| walker |  | 6791 | 0 | export at apps/web/pages/admin/index.tsx:12 |  |  | 0.459 |
+| walker |  | 6797 | 6 | export body at apps/web/pages/admin/index.tsx:12 body 13 |  |  | 0.459 |
+| walker |  | 6844 | 47 | export body at apps/web/pages/admin/index.tsx:3 body 4 |  |  | 0.459 |
+| walker |  | 6860 | 16 | imports in apps/web/pages/admin/index.tsx |  |  | 0.459 |
+| walker |  | 6877 | 17 | imports in packages/filesystem/s3Client.ts |  |  | 0.459 |
+| walker |  | 6896 | 19 | export names surface in apps/web/hooks/useCollectivePermissions.ts |  |  | 0.459 |
+| walker |  | 6896 | 0 | export at apps/web/hooks/useCollectivePermissions.ts:6 |  |  | 0.459 |
 | ns | 6908 |  | 702 | verifyUser middleware (full) | 4.1 |  | 0.435 |
-| walker |  | 6995 | 192 | imports in apps/web/pages/links/index.tsx |  |  | 0.435 |
-| walker |  | 7014 | 19 | listing of 'apps/web/pages/admin' |  |  | 0.435 |
-| walker |  | 7049 | 35 | export names surface in apps/web/pages/admin/index.tsx |  |  | 0.435 |
-| walker |  | 7049 | 0 | export at apps/web/pages/admin/index.tsx:3 |  |  | 0.435 |
-| walker |  | 7049 | 0 | export at apps/web/pages/admin/index.tsx:12 |  |  | 0.435 |
-| walker |  | 7055 | 6 | export body at apps/web/pages/admin/index.tsx:12 body 13 |  |  | 0.435 |
-| walker |  | 7102 | 47 | export body at apps/web/pages/admin/index.tsx:3 body 4 |  |  | 0.435 |
-| walker |  | 7118 | 16 | imports in apps/web/pages/admin/index.tsx |  |  | 0.435 |
-| walker |  | 7135 | 17 | imports in packages/filesystem/s3Client.ts |  |  | 0.435 |
-| walker |  | 7154 | 19 | export names surface in apps/web/hooks/useCollectivePermissions.ts |  |  | 0.435 |
-| walker |  | 7154 | 0 | export at apps/web/hooks/useCollectivePermissions.ts:6 |  |  | 0.435 |
-| walker |  | 7173 | 19 | export names surface in apps/worker/lib/protectPageRequests.ts |  |  | 0.435 |
-| walker |  | 7173 | 0 | export at apps/worker/lib/protectPageRequests.ts:15 |  |  | 0.435 |
-| walker |  | 7182 | 9 | listing of 'apps/web/store' |  |  | 0.436 |
-| walker |  | 7192 | 10 | export names surface in apps/web/store/links.ts |  |  | 0.436 |
-| walker |  | 7203 | 11 | export names surface in apps/web/store/localSettings.ts |  |  | 0.436 |
-| walker |  | 7212 | 9 | listing of 'packages/prisma/client' |  |  | 0.436 |
-| walker |  | 7225 | 13 | export names surface in apps/mobile/app/(tabs)/_layout.tsx |  |  | 0.436 |
-| walker |  | 7225 | 0 | export at apps/mobile/app/(tabs)/_layout.tsx:9 |  |  | 0.436 |
-| walker |  | 7238 | 13 | export names surface in apps/mobile/components/ActionSheets/SupportSheet.tsx |  |  | 0.436 |
-| walker |  | 7238 | 0 | export at apps/mobile/components/ActionSheets/SupportSheet.tsx:10 |  |  | 0.436 |
-| walker |  | 7251 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.436 |
-| walker |  | 7271 | 20 | listing of 'apps/web/lib/shared' |  |  | 0.437 |
-| walker |  | 7283 | 12 | export names surface in packages/lib/getFormatBasedOnPreference.ts |  |  | 0.437 |
-| walker |  | 7295 | 12 | export names surface in packages/lib/getFormatFromContentType.ts |  |  | 0.437 |
-| walker |  | 7307 | 12 | export names surface in packages/lib/getLinkTypeFromFormat.ts |  |  | 0.437 |
-| walker |  | 7319 | 12 | export names surface in packages/lib/safeFetch.ts |  |  | 0.437 |
-| ns | 7357 |  | 449 | links REST handler — verifyUser + GET dispatch | 4.2 |  | 0.428 |
-| walker |  | 7375 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.428 |
-| walker |  | 7387 | 12 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.428 |
-| walker |  | 7387 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.428 |
-| walker |  | 7424 | 37 | export body at apps/web/pages/settings/index.tsx:4 body 5 |  |  | 0.428 |
-| walker |  | 7451 | 27 | imports in apps/web/pages/settings/index.tsx |  |  | 0.428 |
-| walker |  | 7471 | 20 | export names surface in apps/worker/workers/autoTagPreservedLinks.ts |  |  | 0.428 |
-| walker |  | 7471 | 0 | export at apps/worker/workers/autoTagPreservedLinks.ts:19 |  |  | 0.428 |
-| walker |  | 7581 | 110 | package dependencies in packages/prisma/package.json |  |  | 0.428 |
-| walker |  | 7596 | 15 | export names surface in apps/web/e2e/fixtures/index.ts |  |  | 0.428 |
-| ns | 7599 |  | 242 | links/[id] REST handler — imports + signature | 4.3 |  | 0.423 |
-| walker |  | 7602 | 6 | listing of 'apps/mobile/app/links' |  |  | 0.425 |
-| walker |  | 7615 | 13 | export names surface in apps/mobile/app/links/[id].tsx |  |  | 0.425 |
-| walker |  | 7615 | 0 | export at apps/mobile/app/links/[id].tsx:16 |  |  | 0.425 |
-| walker |  | 7621 | 6 | listing of 'apps/mobile/assets/fonts' |  |  | 0.425 |
-| walker |  | 7627 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.425 |
-| walker |  | 7641 | 14 | export names surface in apps/mobile/components/ActionSheets/AddLinkSheet.tsx |  |  | 0.425 |
-| walker |  | 7641 | 0 | export at apps/mobile/components/ActionSheets/AddLinkSheet.tsx:12 |  |  | 0.425 |
-| walker |  | 7655 | 14 | export names surface in apps/mobile/components/ActionSheets/EditLinkSheet.tsx |  |  | 0.425 |
-| walker |  | 7655 | 0 | export at apps/mobile/components/ActionSheets/EditLinkSheet.tsx:471 |  |  | 0.425 |
-| walker |  | 7669 | 14 | export names surface in apps/mobile/components/ActionSheets/NewCollectionSheet.tsx |  |  | 0.425 |
-| walker |  | 7669 | 0 | export at apps/mobile/components/ActionSheets/NewCollectionSheet.tsx:12 |  |  | 0.425 |
-| walker |  | 7683 | 14 | export names surface in apps/worker/lib/preservationScheme/handleMonolith.ts |  |  | 0.425 |
-| walker |  | 7687 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.425 |
-| walker |  | 7691 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.425 |
-| walker |  | 7695 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.425 |
-| walker |  | 7699 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.425 |
-| walker |  | 7703 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.425 |
-| walker |  | 7707 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.425 |
-| walker |  | 7711 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.425 |
-| walker |  | 7715 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.425 |
-| walker |  | 7719 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.425 |
-| walker |  | 7723 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.425 |
-| walker |  | 7727 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.425 |
-| walker |  | 7731 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.425 |
-| walker |  | 7735 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.425 |
-| walker |  | 7739 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.425 |
-| walker |  | 7743 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.425 |
-| walker |  | 7968 | 225 | export body at packages/filesystem/removeFile.ts:6 body 7 |  |  | 0.425 |
-| walker |  | 7989 | 21 | export names surface in apps/mobile/components/HapticTab.tsx |  |  | 0.425 |
-| walker |  | 7989 | 0 | export at apps/mobile/components/HapticTab.tsx:5 |  |  | 0.425 |
-| walker |  | 8010 | 21 | export names surface in apps/web/pages/search.tsx |  |  | 0.425 |
-| walker |  | 8023 | 13 | export names surface in packages/lib/generatePreview.ts |  |  | 0.425 |
-| walker |  | 8036 | 13 | export names surface in packages/lib/rssHandler.ts |  |  | 0.425 |
+| walker |  | 6915 | 19 | export names surface in apps/worker/lib/protectPageRequests.ts |  |  | 0.435 |
+| walker |  | 6915 | 0 | export at apps/worker/lib/protectPageRequests.ts:15 |  |  | 0.435 |
+| walker |  | 6924 | 9 | listing of 'apps/web/store' |  |  | 0.436 |
+| walker |  | 6934 | 10 | export names surface in apps/web/store/links.ts |  |  | 0.436 |
+| walker |  | 6945 | 11 | export names surface in apps/web/store/localSettings.ts |  |  | 0.436 |
+| walker |  | 6954 | 9 | listing of 'packages/prisma/client' |  |  | 0.436 |
+| walker |  | 6967 | 13 | export names surface in apps/mobile/app/(tabs)/_layout.tsx |  |  | 0.436 |
+| walker |  | 6967 | 0 | export at apps/mobile/app/(tabs)/_layout.tsx:9 |  |  | 0.436 |
+| walker |  | 6980 | 13 | export names surface in apps/mobile/components/ActionSheets/SupportSheet.tsx |  |  | 0.436 |
+| walker |  | 6980 | 0 | export at apps/mobile/components/ActionSheets/SupportSheet.tsx:10 |  |  | 0.436 |
+| walker |  | 6993 | 13 | listing of 'apps/web/e2e/fixtures/base' |  |  | 0.436 |
+| walker |  | 7013 | 20 | listing of 'apps/web/lib/shared' |  |  | 0.437 |
+| walker |  | 7025 | 12 | export names surface in packages/lib/getFormatBasedOnPreference.ts |  |  | 0.437 |
+| walker |  | 7037 | 12 | export names surface in packages/lib/getFormatFromContentType.ts |  |  | 0.437 |
+| walker |  | 7049 | 12 | export names surface in packages/lib/getLinkTypeFromFormat.ts |  |  | 0.437 |
+| walker |  | 7061 | 12 | export names surface in packages/lib/safeFetch.ts |  |  | 0.437 |
+| walker |  | 7117 | 56 | listing of 'apps/web/pages/settings' |  |  | 0.437 |
+| walker |  | 7129 | 12 | export names surface in apps/web/pages/settings/index.tsx |  |  | 0.437 |
+| walker |  | 7129 | 0 | export at apps/web/pages/settings/index.tsx:4 |  |  | 0.437 |
+| walker |  | 7166 | 37 | export body at apps/web/pages/settings/index.tsx:4 body 5 |  |  | 0.437 |
+| walker |  | 7193 | 27 | imports in apps/web/pages/settings/index.tsx |  |  | 0.437 |
+| walker |  | 7213 | 20 | export names surface in apps/worker/workers/autoTagPreservedLinks.ts |  |  | 0.437 |
+| walker |  | 7213 | 0 | export at apps/worker/workers/autoTagPreservedLinks.ts:19 |  |  | 0.437 |
+| walker |  | 7228 | 15 | export names surface in apps/web/e2e/fixtures/index.ts |  |  | 0.437 |
+| walker |  | 7234 | 6 | listing of 'apps/mobile/app/links' |  |  | 0.439 |
+| walker |  | 7247 | 13 | export names surface in apps/mobile/app/links/[id].tsx |  |  | 0.439 |
+| walker |  | 7247 | 0 | export at apps/mobile/app/links/[id].tsx:16 |  |  | 0.439 |
+| walker |  | 7253 | 6 | listing of 'apps/mobile/assets/fonts' |  |  | 0.439 |
+| walker |  | 7259 | 6 | listing of 'apps/web/pages/preserved' |  |  | 0.439 |
+| walker |  | 7293 | 34 | package dependencies in packages/filesystem/package.json |  |  | 0.439 |
+| walker |  | 7307 | 14 | export names surface in apps/mobile/components/ActionSheets/AddLinkSheet.tsx |  |  | 0.439 |
+| walker |  | 7307 | 0 | export at apps/mobile/components/ActionSheets/AddLinkSheet.tsx:12 |  |  | 0.439 |
+| walker |  | 7321 | 14 | export names surface in apps/mobile/components/ActionSheets/EditLinkSheet.tsx |  |  | 0.439 |
+| walker |  | 7321 | 0 | export at apps/mobile/components/ActionSheets/EditLinkSheet.tsx:471 |  |  | 0.439 |
+| walker |  | 7335 | 14 | export names surface in apps/mobile/components/ActionSheets/NewCollectionSheet.tsx |  |  | 0.439 |
+| walker |  | 7335 | 0 | export at apps/mobile/components/ActionSheets/NewCollectionSheet.tsx:12 |  |  | 0.439 |
+| walker |  | 7349 | 14 | export names surface in apps/worker/lib/preservationScheme/handleMonolith.ts |  |  | 0.439 |
+| walker |  | 7353 | 4 | listing of 'apps/web/public/locales/de' |  |  | 0.439 |
+| walker |  | 7357 | 4 | listing of 'apps/web/public/locales/en' |  |  | 0.430 |
+| ns | 7357 |  | 449 | links REST handler — verifyUser + GET dispatch | 4.2 |  | 0.430 |
+| walker |  | 7361 | 4 | listing of 'apps/web/public/locales/es' |  |  | 0.430 |
+| walker |  | 7365 | 4 | listing of 'apps/web/public/locales/fr' |  |  | 0.430 |
+| walker |  | 7369 | 4 | listing of 'apps/web/public/locales/it' |  |  | 0.430 |
+| walker |  | 7373 | 4 | listing of 'apps/web/public/locales/ja' |  |  | 0.430 |
+| walker |  | 7377 | 4 | listing of 'apps/web/public/locales/nl' |  |  | 0.430 |
+| walker |  | 7381 | 4 | listing of 'apps/web/public/locales/pl' |  |  | 0.430 |
+| walker |  | 7385 | 4 | listing of 'apps/web/public/locales/pt-BR' |  |  | 0.430 |
+| walker |  | 7389 | 4 | listing of 'apps/web/public/locales/ro' |  |  | 0.430 |
+| walker |  | 7393 | 4 | listing of 'apps/web/public/locales/ru' |  |  | 0.430 |
+| walker |  | 7397 | 4 | listing of 'apps/web/public/locales/tr' |  |  | 0.430 |
+| walker |  | 7401 | 4 | listing of 'apps/web/public/locales/uk' |  |  | 0.430 |
+| walker |  | 7405 | 4 | listing of 'apps/web/public/locales/zh' |  |  | 0.430 |
+| walker |  | 7409 | 4 | listing of 'apps/web/public/locales/zh-TW' |  |  | 0.430 |
+| ns | 7599 |  | 242 | links/[id] REST handler — imports + signature | 4.3 |  | 0.425 |
+| walker |  | 7634 | 225 | export body at packages/filesystem/removeFile.ts:6 body 7 |  |  | 0.425 |
+| walker |  | 7655 | 21 | export names surface in apps/mobile/components/HapticTab.tsx |  |  | 0.425 |
+| walker |  | 7655 | 0 | export at apps/mobile/components/HapticTab.tsx:5 |  |  | 0.425 |
+| walker |  | 7676 | 21 | export names surface in apps/web/pages/search.tsx |  |  | 0.425 |
+| walker |  | 7689 | 13 | export names surface in packages/lib/generatePreview.ts |  |  | 0.425 |
+| walker |  | 7702 | 13 | export names surface in packages/lib/rssHandler.ts |  |  | 0.425 |
+| walker |  | 7757 | 55 | package identity in apps/web/package.json |  |  | 0.425 |
+| walker |  | 7810 | 53 | export at apps/web/hooks/useSort.tsx:19 |  |  | 0.425 |
+| walker |  | 7832 | 22 | export names surface in apps/web/hooks/useOnScreen.tsx |  |  | 0.425 |
+| walker |  | 7832 | 0 | export at apps/web/hooks/useOnScreen.tsx:3 |  |  | 0.425 |
+| walker |  | 7847 | 15 | export names surface in apps/web/lib/shared/fetchTitleAndHeaders.ts |  |  | 0.425 |
+| walker |  | 7871 | 24 | export at apps/web/lib/shared/fetchTitleAndHeaders.ts:3 |  |  | 0.425 |
+| walker |  | 7875 | 4 | listing of '.vscode' |  |  | 0.425 |
+| walker |  | 7910 | 35 | export names surface in apps/web/playwright.config.ts |  |  | 0.425 |
 | ns | 8072 |  | 473 | packages/router — hook declaration locations (12 files) | 4.4 |  | 0.416 |
-| walker |  | 8091 | 55 | package identity in apps/web/package.json |  |  | 0.416 |
-| walker |  | 8144 | 53 | export at apps/web/hooks/useSort.tsx:19 |  |  | 0.416 |
-| walker |  | 8166 | 22 | export names surface in apps/web/hooks/useOnScreen.tsx |  |  | 0.416 |
-| walker |  | 8166 | 0 | export at apps/web/hooks/useOnScreen.tsx:3 |  |  | 0.416 |
-| walker |  | 8181 | 15 | export names surface in apps/web/lib/shared/fetchTitleAndHeaders.ts |  |  | 0.416 |
-| walker |  | 8205 | 24 | export at apps/web/lib/shared/fetchTitleAndHeaders.ts:3 |  |  | 0.416 |
-| walker |  | 8209 | 4 | listing of '.vscode' |  |  | 0.416 |
+| walker |  | 8152 | 242 | export body at packages/filesystem/removeFolder.ts:40 body 41 |  |  | 0.416 |
+| walker |  | 8166 | 14 | export names surface in packages/lib/constants.ts |  |  | 0.416 |
+| walker |  | 8180 | 14 | export names surface in packages/lib/verifyCapacity.ts |  |  | 0.416 |
+| walker |  | 8191 | 11 | listing of 'apps/mobile/types' |  |  | 0.416 |
 | ns | 8213 |  | 141 | packages/router/links — 11 hook declaration locations | 4.5 |  | 0.413 |
-| walker |  | 8244 | 35 | export names surface in apps/web/playwright.config.ts |  |  | 0.413 |
-| walker |  | 8486 | 242 | export body at packages/filesystem/removeFolder.ts:40 body 41 |  |  | 0.413 |
-| walker |  | 8500 | 14 | export names surface in packages/lib/constants.ts |  |  | 0.413 |
+| walker |  | 8214 | 23 | export names surface in apps/web/pages/dashboard.tsx |  |  | 0.413 |
+| walker |  | 8237 | 23 | export names surface in apps/web/pages/forgot.tsx |  |  | 0.413 |
+| walker |  | 8237 | 0 | export at apps/web/pages/forgot.tsx:15 |  |  | 0.413 |
+| walker |  | 8260 | 23 | export names surface in apps/web/pages/subscribe.tsx |  |  | 0.413 |
+| walker |  | 8260 | 0 | export at apps/web/pages/subscribe.tsx:18 |  |  | 0.413 |
+| walker |  | 8283 | 23 | export names surface in apps/worker/lib/autoTagLink.ts |  |  | 0.413 |
+| walker |  | 8283 | 0 | export at apps/worker/lib/autoTagLink.ts:69 |  |  | 0.413 |
+| walker |  | 8322 | 39 | export at apps/worker/lib/preservationScheme/handleMonolith.ts:6 |  |  | 0.413 |
+| walker |  | 8337 | 15 | export names surface in packages/lib/meilisearchClient.ts |  |  | 0.413 |
+| walker |  | 8354 | 17 | listing of 'apps/mobile/app/(tabs)/collections' |  |  | 0.413 |
+| walker |  | 8367 | 13 | export names surface in apps/mobile/app/(tabs)/collections/index.tsx |  |  | 0.413 |
+| walker |  | 8367 | 0 | export at apps/mobile/app/(tabs)/collections/index.tsx:19 |  |  | 0.413 |
+| walker |  | 8432 | 65 | module item at apps/mobile/app/(tabs)/collections/index.tsx:87 |  |  | 0.413 |
 | ns | 8507 |  | 294 | packages/lib/schemaValidation — zod schema declaration locations | 4.6 |  | 0.408 |
-| walker |  | 8514 | 14 | export names surface in packages/lib/verifyCapacity.ts |  |  | 0.408 |
-| walker |  | 8525 | 11 | listing of 'apps/mobile/types' |  |  | 0.408 |
-| walker |  | 8548 | 23 | export names surface in apps/web/pages/dashboard.tsx |  |  | 0.408 |
-| walker |  | 8571 | 23 | export names surface in apps/web/pages/forgot.tsx |  |  | 0.408 |
-| walker |  | 8571 | 0 | export at apps/web/pages/forgot.tsx:15 |  |  | 0.408 |
-| walker |  | 8594 | 23 | export names surface in apps/web/pages/subscribe.tsx |  |  | 0.408 |
-| walker |  | 8594 | 0 | export at apps/web/pages/subscribe.tsx:18 |  |  | 0.408 |
-| walker |  | 8617 | 23 | export names surface in apps/worker/lib/autoTagLink.ts |  |  | 0.408 |
-| walker |  | 8617 | 0 | export at apps/worker/lib/autoTagLink.ts:69 |  |  | 0.408 |
-| walker |  | 8656 | 39 | export at apps/worker/lib/preservationScheme/handleMonolith.ts:6 |  |  | 0.408 |
-| walker |  | 8671 | 15 | export names surface in packages/lib/meilisearchClient.ts |  |  | 0.408 |
 | ns | 8672 |  | 165 | apps/worker/index.ts — spawn-respawn supervisor | 5.1 |  | 0.404 |
-| walker |  | 8688 | 17 | listing of 'apps/mobile/app/(tabs)/collections' |  |  | 0.404 |
-| walker |  | 8701 | 13 | export names surface in apps/mobile/app/(tabs)/collections/index.tsx |  |  | 0.404 |
-| walker |  | 8701 | 0 | export at apps/mobile/app/(tabs)/collections/index.tsx:19 |  |  | 0.404 |
-| walker |  | 8766 | 65 | module item at apps/mobile/app/(tabs)/collections/index.tsx:87 |  |  | 0.404 |
 | ns | 8809 |  | 137 | packages/lib/ssrf — public export locations | 5.2 |  | 0.402 |
 | ns | 8936 |  | 127 | packages/lib/ssrf — blocked hostname lists | 5.3 | 5.2 | 0.399 |
 | ns | 9078 |  | 142 | searchQueryBuilder — supported search conditions | 5.4 |  | 0.395 |
+| walker |  | 9115 | 683 | export body at apps/mobile/app/(tabs)/collections/index.tsx:19 body 20 |  |  | 0.395 |
+| walker |  | 9319 | 204 | imports in apps/mobile/app/(tabs)/collections/index.tsx |  |  | 0.395 |
+| walker |  | 9336 | 17 | listing of 'apps/mobile/app/(tabs)/dashboard' |  |  | 0.395 |
+| walker |  | 9349 | 13 | export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx |  |  | 0.395 |
+| walker |  | 9349 | 0 | export at apps/mobile/app/(tabs)/dashboard/index.tsx:24 |  |  | 0.395 |
 | ns | 9355 |  | 277 | archiveHandler — worker preservation pipeline signature | 5.5 |  | 0.391 |
-| walker |  | 9449 | 683 | export body at apps/mobile/app/(tabs)/collections/index.tsx:19 body 20 |  |  | 0.391 |
+| walker |  | 9367 | 18 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:22 |  |  | 0.391 |
+| walker |  | 9502 | 135 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:153 |  |  | 0.391 |
 | ns | 9603 |  | 248 | _app.tsx — Next.js root provider stack | 5.6 |  | 0.387 |
-| walker |  | 9653 | 204 | imports in apps/mobile/app/(tabs)/collections/index.tsx |  |  | 0.387 |
-| walker |  | 9670 | 17 | listing of 'apps/mobile/app/(tabs)/dashboard' |  |  | 0.387 |
-| walker |  | 9683 | 13 | export names surface in apps/mobile/app/(tabs)/dashboard/index.tsx |  |  | 0.387 |
-| walker |  | 9683 | 0 | export at apps/mobile/app/(tabs)/dashboard/index.tsx:24 |  |  | 0.387 |
-| walker |  | 9701 | 18 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:22 |  |  | 0.387 |
 | ns | 9721 |  | 118 | packages/types/global — export locations | 6.1 |  | 0.385 |
-| walker |  | 9836 | 135 | module item at apps/mobile/app/(tabs)/dashboard/index.tsx:153 |  |  | 0.385 |
 | ns | 9887 |  | 166 | packages/types/global — key runtime enum values | 6.2 | 6.1 | 0.380 |

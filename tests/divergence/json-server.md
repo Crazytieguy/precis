@@ -1,4 +1,4 @@
-Score(3000)=0.599 I=0.819 C=0.438 ns_rows≤3K=21/51 (reached=8 partial=2 missing=11)
+Score(3000)=0.610 I=0.824 C=0.451 ns_rows≤3K=21/51 (reached=8 partial=2 missing=11)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -47,46 +47,46 @@ Score(3000)=0.599 I=0.819 C=0.438 ns_rows≤3K=21/51 (reached=8 partial=2 missin
 | walker |  | 1519 | 152 | json config tsconfig.json |  |  | 0.531 |
 | walker |  | 1618 | 99 | README.md section #19 |  |  | 0.534 |
 | ns | 1642 |  | 257 | Pagination response shape | 2.4 |  | 0.491 |
-| ns | 1826 |  | 184 | Embed + _where + dependent-delete syntax | 2.5 |  | 0.474 |
-| walker |  | 2007 | 389 | package dependencies in package.json |  |  | 0.475 |
-| ns | 2017 |  | 191 | Migration notes (v0 → v1) | 2.6 |  | 0.461 |
-| walker |  | 2059 | 52 | export names surface in src/where-operators.ts |  |  | 0.462 |
-| walker |  | 2059 | 0 | export at src/where-operators.ts:16 |  |  | 0.462 |
-| walker |  | 2075 | 16 | export body at src/where-operators.ts:16 body 17 |  |  | 0.462 |
-| ns | 2144 |  | 127 | Static files docs | 2.7 |  | 0.482 |
-| walker |  | 2207 | 132 | README.md section #7 |  |  | 0.526 |
-| walker |  | 2349 | 142 | README.md section #8 |  |  | 0.603 |
-| ns | 2352 |  | 208 | service.ts public types (Item, Data, PaginatedItems, isItem) | 3.1 |  | 0.577 |
-| walker |  | 2364 | 15 | imports in src/random-id.ts |  |  | 0.577 |
-| walker |  | 2412 | 48 | README.md section #15 |  |  | 0.588 |
-| ns | 2487 |  | 135 | Service class — every method name | 3.2 |  | 0.567 |
-| walker |  | 2500 | 88 | export at src/where-operators.ts:1 |  |  | 0.570 |
-| walker |  | 2505 | 5 | listing of '.husky' |  |  | 0.570 |
-| walker |  | 2582 | 77 | export names surface in src/service.ts |  |  | 0.576 |
-| walker |  | 2582 | 0 | export at src/service.ts:13 |  |  | 0.576 |
-| ns | 2598 |  | 111 | Service public reads: findById + find signatures (full) | 3.3 | 3.2 | 0.562 |
-| walker |  | 2603 | 21 | export body at src/service.ts:13 body 14 |  |  | 0.566 |
-| ns | 2669 |  | 71 | Service top-level helpers (embed, nullifyForeignKey, deleteDependents) signatures | 3.4 |  | 0.562 |
-| walker |  | 2705 | 102 | json config schema.json |  |  | 0.562 |
-| ns | 2838 |  | 169 | where-operators.ts — full file | 4.1 |  | 0.582 |
-| walker |  | 2867 | 162 | README.md section #20 |  |  | 0.603 |
-| ns | 2879 |  | 41 | parse-where.ts public signature + key helpers | 4.2 |  | 0.600 |
-| ns | 2916 |  | 37 | matches-where.ts — exported entry point | 4.3 |  | 0.597 |
-| walker |  | 2972 | 105 | export body at src/parse-where.ts:58 body 59 |  |  | 0.599 |
-| walker |  | 3031 | 59 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.599 |
-| ns | 3038 |  | 122 | parseWhere body (full) | 4.4 | 4.2 | 0.605 |
-| walker |  | 3044 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.606 |
-| walker |  | 3104 | 60 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.606 |
-| walker |  | 3118 | 14 | imports in src/adapters/observer.ts |  |  | 0.606 |
-| walker |  | 3155 | 37 | README.md section #16 |  |  | 0.615 |
-| walker |  | 3163 | 8 | listing of '.github' |  |  | 0.601 |
-| ns | 3163 |  | 125 | coerceValue body — string→primitive coercion rules | 4.5 | 4.2 | 0.601 |
-| walker |  | 3172 | 9 | listing of '.github/workflows' |  |  | 0.602 |
-| walker |  | 3181 | 9 | listing of 'fixtures' |  |  | 0.602 |
-| ns | 3244 |  | 81 | app.ts — createApp signature + AppOptions | 5.1 |  | 0.602 |
-| walker |  | 3339 | 158 | export at src/adapters/observer.ts:4 |  |  | 0.603 |
-| walker |  | 3419 | 80 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.604 |
-| walker |  | 3456 | 37 | imports in src/matches-where.ts |  |  | 0.604 |
+| walker |  | 1670 | 52 | export names surface in src/where-operators.ts |  |  | 0.491 |
+| walker |  | 1670 | 0 | export at src/where-operators.ts:16 |  |  | 0.491 |
+| walker |  | 1686 | 16 | export body at src/where-operators.ts:16 body 17 |  |  | 0.492 |
+| walker |  | 1818 | 132 | README.md section #7 |  |  | 0.545 |
+| ns | 1826 |  | 184 | Embed + _where + dependent-delete syntax | 2.5 |  | 0.524 |
+| walker |  | 1960 | 142 | README.md section #8 |  |  | 0.609 |
+| walker |  | 1975 | 15 | imports in src/random-id.ts |  |  | 0.609 |
+| ns | 2017 |  | 191 | Migration notes (v0 → v1) | 2.6 |  | 0.592 |
+| walker |  | 2023 | 48 | README.md section #15 |  |  | 0.604 |
+| walker |  | 2111 | 88 | export at src/where-operators.ts:1 |  |  | 0.607 |
+| walker |  | 2116 | 5 | listing of '.husky' |  |  | 0.607 |
+| ns | 2144 |  | 127 | Static files docs | 2.7 |  | 0.616 |
+| walker |  | 2193 | 77 | export names surface in src/service.ts |  |  | 0.616 |
+| walker |  | 2193 | 0 | export at src/service.ts:13 |  |  | 0.616 |
+| walker |  | 2214 | 21 | export body at src/service.ts:13 body 14 |  |  | 0.617 |
+| walker |  | 2316 | 102 | json config schema.json |  |  | 0.617 |
+| ns | 2352 |  | 208 | service.ts public types (Item, Data, PaginatedItems, isItem) | 3.1 |  | 0.600 |
+| walker |  | 2478 | 162 | README.md section #20 |  |  | 0.625 |
+| ns | 2487 |  | 135 | Service class — every method name | 3.2 |  | 0.604 |
+| walker |  | 2583 | 105 | export body at src/parse-where.ts:58 body 59 |  |  | 0.605 |
+| ns | 2598 |  | 111 | Service public reads: findById + find signatures (full) | 3.3 | 3.2 | 0.590 |
+| walker |  | 2642 | 59 | export names surface in src/adapters/normalized-adapter.ts |  |  | 0.590 |
+| walker |  | 2655 | 13 | export at src/adapters/normalized-adapter.ts:7 |  |  | 0.590 |
+| ns | 2669 |  | 71 | Service top-level helpers (embed, nullifyForeignKey, deleteDependents) signatures | 3.4 |  | 0.586 |
+| walker |  | 2715 | 60 | export at src/adapters/normalized-adapter.ts:11 |  |  | 0.587 |
+| walker |  | 2729 | 14 | imports in src/adapters/observer.ts |  |  | 0.587 |
+| walker |  | 2766 | 37 | README.md section #16 |  |  | 0.598 |
+| walker |  | 2774 | 8 | listing of '.github' |  |  | 0.598 |
+| walker |  | 2783 | 9 | listing of '.github/workflows' |  |  | 0.598 |
+| walker |  | 2792 | 9 | listing of 'fixtures' |  |  | 0.598 |
+| ns | 2838 |  | 169 | where-operators.ts — full file | 4.1 |  | 0.615 |
+| ns | 2879 |  | 41 | parse-where.ts public signature + key helpers | 4.2 |  | 0.611 |
+| ns | 2916 |  | 37 | matches-where.ts — exported entry point | 4.3 |  | 0.609 |
+| walker |  | 2950 | 158 | export at src/adapters/observer.ts:4 |  |  | 0.610 |
+| walker |  | 3030 | 80 | export body at src/adapters/observer.ts:4 body 21 |  |  | 0.611 |
+| ns | 3038 |  | 122 | parseWhere body (full) | 4.4 | 4.2 | 0.617 |
+| walker |  | 3067 | 37 | imports in src/matches-where.ts |  |  | 0.617 |
+| ns | 3163 |  | 125 | coerceValue body — string→primitive coercion rules | 4.5 | 4.2 | 0.603 |
+| ns | 3244 |  | 81 | app.ts — createApp signature + AppOptions | 5.1 |  | 0.603 |
+| walker |  | 3456 | 389 | package dependencies in package.json |  |  | 0.604 |
 | walker |  | 3508 | 52 | README.md section #12 |  |  | 0.604 |
 | ns | 3520 |  | 276 | app.ts — body-less route bindings (POST/PUT/PATCH/DELETE + GET /:name/:id) | 5.2 |  | 0.583 |
 | walker |  | 3560 | 52 | imports in src/parse-where.ts |  |  | 0.583 |

@@ -4,6 +4,10 @@ expression: rendered
 ---
 .gitattributes
 .github/
+    FUNDING.yml
+    workflows/
+        node.js.yml
+        publish.yml
 .gitignore
 .husky/
     pre-commit
@@ -81,6 +85,10 @@ README.md
     218→- Invalid `_page` or `_per_page` values are automatically normalized to valid ranges
     220→### Embed
     …
+    222→```http
+    223→GET /posts?_embed=comments
+    224→GET /comments?_embed=post
+    225→```
     227→### Complex filter with `_where`
     …
     235→## Delete dependents
@@ -106,6 +114,8 @@ README.md
     261→- **Request delays:** Use browser DevTools (Network tab > throttling) instead of the removed `--delay` CLI option
     263→> **New to json-server?** These notes are for users migrating from v0. If this is your first time using json-server, you can ignore this section.
 fixtures/
+    db.json
+    db.json5
 package.json
     2→  "name": "json-server",
     3→  "version": "1.0.0-beta.15",
@@ -151,32 +161,6 @@ package.json
     43→    "fmt:check": "oxfmt --check",
     44→    "prepare": "husky"
     45→  },
-    46→  "dependencies": {
-    47→    "@tinyhttp/app": "^3.0.1",
-    48→    "@tinyhttp/cors": "^2.0.1",
-    49→    "@tinyhttp/logger": "^2.1.0",
-    50→    "chalk": "^5.6.2",
-    51→    "chokidar": "^5.0.0",
-    52→    "dot-prop": "^10.1.0",
-    53→    "eta": "^4.5.0",
-    54→    "inflection": "^3.0.2",
-    55→    "json5": "^2.2.3",
-    56→    "lowdb": "^7.0.1",
-    57→    "milliparsec": "^5.1.0",
-    58→    "sirv": "^3.0.2",
-    59→    "sort-on": "^7.0.0"
-    60→  },
-    61→  "devDependencies": {
-    62→    "@types/node": "^25.0.8",
-    63→    "concurrently": "^9.2.1",
-    64→    "get-port": "^7.1.0",
-    65→    "husky": "^9.1.7",
-    66→    "oxfmt": "^0.24.0",
-    67→    "oxlint": "^1.39.0",
-    68→    "tempy": "^3.1.0",
-    69→    "type-fest": "^5.4.0",
-    70→    "typescript": "^5.9.3"
-    71→  },
     72→  "engines": {
     73→    "node": ">=22.12.0"
     74→  }
@@ -198,8 +182,39 @@ src/
     adapters/
         normalized-adapter.test.ts
         normalized-adapter.ts
+            6→export const DEFAULT_SCHEMA_PATH = './node_modules/json-server/schema.json'
+            7→export type RawData = Record<string, Item[] | Item | string | undefined> & {
+            8→  $schema?: string
+            9→}
+            11→export class NormalizedAdapter implements Adapter<Data> {
+            12→  #adapter: Adapter<RawData>
+            14→  constructor(adapter: Adapter<RawData>) {
+            …
+            18→  async read(): Promise<Data | null> {
+            …
+            44→  async write(data: Data): Promise<void> {
+            …
         observer.ts
+            1→import type { Adapter } from 'lowdb'
             4→export class Observer<T> {
+            5→  #adapter: Adapter<T>
+            7→  onReadStart = function () {
+            8→    return
+            9→  }
+            10→  onReadEnd: (data: T | null) => void = function () {
+            11→    return
+            12→  }
+            13→  onWriteStart = function () {
+            14→    return
+            15→  }
+            16→  onWriteEnd = function () {
+            17→    return
+            18→  }
+            20→  constructor(adapter: Adapter<T>) {
+            …
+            24→  async read() {
+            …
+            31→  async write(arg: T) {
             …
     app.test.ts
     app.ts

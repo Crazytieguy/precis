@@ -153,42 +153,42 @@ Score(3000)=0.353 I=0.669 C=0.186 ns_rows≤3K=17/39 (reached=3 partial=2 missin
 | walker |  | 3849 | 107 | package entrypoints in package.json |  |  | 0.330 |
 | walker |  | 3881 | 32 | package runtime metadata in package.json |  |  | 0.330 |
 | walker |  | 4003 | 122 | package scripts in package.json |  |  | 0.330 |
+| walker |  | 4008 | 5 | listing of '.devcontainer' |  |  | 0.330 |
+| walker |  | 4064 | 56 | listing of 'docs/src/assets/scss/components' |  |  | 0.330 |
+| walker |  | 4085 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.330 |
 | ns | 4104 |  | 273 | logs.widget.template: expand toggle | 4.5 |  | 0.319 |
-| walker |  | 4227 | 224 | package dependencies in package.json |  |  | 0.374 |
-| walker |  | 4232 | 5 | listing of '.devcontainer' |  |  | 0.374 |
+| walker |  | 4309 | 224 | package dependencies in package.json |  |  | 0.374 |
+| walker |  | 4400 | 91 | export at src/enum.js:1 |  |  | 0.374 |
 | ns | 4404 |  | 300 | base.hook.template: copyItemIdToClipboard | 4.6 |  | 0.358 |
-| walker |  | 4520 | 288 | package dependencies in docs/package.json |  |  | 0.358 |
-| walker |  | 4576 | 56 | listing of 'docs/src/assets/scss/components' |  |  | 0.358 |
-| walker |  | 4597 | 21 | export member at src/widgetsTemplates/list.widget.template.js:8 member 9 |  |  | 0.358 |
-| walker |  | 4688 | 91 | export at src/enum.js:1 |  |  | 0.358 |
+| walker |  | 4486 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.358 |
 | ns | 4740 |  | 336 | help.widget.template: key reference | 4.7 |  | 0.345 |
 | ns | 4764 |  | 24 | hooks/ listing | 5.1 |  | 0.353 |
-| walker |  | 4774 | 86 | export at src/widgetsTemplates/logs.widget.template.js:7 |  |  | 0.353 |
+| walker |  | 4831 | 345 | README.md section #1 |  |  | 0.353 |
 | ns | 4896 |  | 132 | widgets/ tree listing (top-level + 3 mode subdirs) | 5.2 |  | 0.389 |
 | ns | 4935 |  | 39 | src/ listing | 5.3 |  | 0.402 |
-| walker |  | 5119 | 345 | README.md section #1 |  |  | 0.402 |
-| ns | 5135 |  | 200 | Screen: initWidgets (widget construction args) | 5.4 | 2.6 | 0.393 |
-| walker |  | 5228 | 109 | export body at src/screen.js:18 body 20 |  |  | 0.416 |
-| walker |  | 5249 | 21 | imports in src/dockerUtil.js |  |  | 0.425 |
-| walker |  | 5362 | 113 | export body at src/screen.js:18 body 36 |  |  | 0.425 |
-| walker |  | 5384 | 22 | imports in src/baseWidget.js |  |  | 0.426 |
-| ns | 5550 |  | 415 | Screen: mode toggle + global keys (v, q) | 5.5 | 2.6 | 0.408 |
-| walker |  | 5649 | 265 | README.md section #5 |  |  | 0.408 |
-| walker |  | 5660 | 11 | listing of 'docs/src/assets/scss/base' |  |  | 0.408 |
-| walker |  | 5767 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.409 |
-| walker |  | 5886 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.409 |
-| walker |  | 5941 | 55 | module item at docs/src/components/layout.js:6 |  |  | 0.409 |
+| walker |  | 4940 | 109 | export body at src/screen.js:18 body 20 |  |  | 0.426 |
+| walker |  | 4961 | 21 | imports in src/dockerUtil.js |  |  | 0.436 |
+| walker |  | 5074 | 113 | export body at src/screen.js:18 body 36 |  |  | 0.436 |
+| walker |  | 5096 | 22 | imports in src/baseWidget.js |  |  | 0.437 |
+| ns | 5135 |  | 200 | Screen: initWidgets (widget construction args) | 5.4 | 2.6 | 0.426 |
+| walker |  | 5361 | 265 | README.md section #5 |  |  | 0.426 |
+| walker |  | 5372 | 11 | listing of 'docs/src/assets/scss/base' |  |  | 0.426 |
+| walker |  | 5479 | 107 | export at src/widgetsTemplates/info.widget.template.js:6 |  |  | 0.428 |
+| ns | 5550 |  | 415 | Screen: mode toggle + global keys (v, q) | 5.5 | 2.6 | 0.409 |
+| walker |  | 5598 | 119 | export at src/widgetsTemplates/help.widget.template.js:5 |  |  | 0.409 |
+| walker |  | 5653 | 55 | module item at docs/src/components/layout.js:6 |  |  | 0.409 |
+| walker |  | 5680 | 27 | module item body at docs/src/components/layout.js:6 body 21 |  |  | 0.409 |
+| walker |  | 5712 | 32 | module item body at docs/src/components/layout.js:6 body 8 |  |  | 0.409 |
+| walker |  | 5746 | 34 | module item body at docs/src/components/layout.js:6 body 15 |  |  | 0.409 |
+| walker |  | 5813 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.409 |
+| walker |  | 5898 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.409 |
+| walker |  | 5908 | 10 | imports in docs/src/components/Footer.js |  |  | 0.409 |
+| walker |  | 5918 | 10 | imports in docs/src/components/HeaderGeneric.js |  |  | 0.409 |
+| walker |  | 5948 | 30 | imports in src/assetsLoader.js |  |  | 0.409 |
 | ns | 5954 |  | 404 | containers.hook: key dispatch + emitted events | 6.1 |  | 0.392 |
-| walker |  | 5968 | 27 | module item body at docs/src/components/layout.js:6 body 21 |  |  | 0.392 |
-| walker |  | 6000 | 32 | module item body at docs/src/components/layout.js:6 body 8 |  |  | 0.392 |
-| walker |  | 6034 | 34 | module item body at docs/src/components/layout.js:6 body 15 |  |  | 0.392 |
-| walker |  | 6101 | 67 | export body at src/themes/theme.selector.js:13 body 14 |  |  | 0.392 |
-| walker |  | 6186 | 85 | export body at src/widgetsTemplates/list.widget.template.js:8 body 10 |  |  | 0.392 |
-| walker |  | 6196 | 10 | imports in docs/src/components/Footer.js |  |  | 0.392 |
-| walker |  | 6206 | 10 | imports in docs/src/components/HeaderGeneric.js |  |  | 0.392 |
-| walker |  | 6236 | 30 | imports in src/assetsLoader.js |  |  | 0.392 |
-| walker |  | 6270 | 34 | headings outline in SECURITY.md |  |  | 0.392 |
-| walker |  | 6270 | 0 | SECURITY.md section #0 |  |  | 0.392 |
+| walker |  | 5982 | 34 | headings outline in SECURITY.md |  |  | 0.392 |
+| walker |  | 5982 | 0 | SECURITY.md section #0 |  |  | 0.392 |
+| walker |  | 6270 | 288 | package dependencies in docs/package.json |  |  | 0.392 |
 | walker |  | 6474 | 204 | export body at src/assetsLoader.js:10 body 12 |  |  | 0.403 |
 | ns | 6530 |  | 576 | containers.hook: 500ms polling + restart pattern | 6.2 | 6.1 | 0.384 |
 | walker |  | 6638 | 164 | export body at src/baseWidget.js:4 body 5 |  |  | 0.413 |

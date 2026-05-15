@@ -945,28 +945,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
-descriptor = "package dependencies in package.json"
-cost_tokens = 366
-cum_tokens = 3192
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
-start = 62
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 5 })'
 descriptor = "README.md section #5"
 cost_tokens = 132
-cum_tokens = 3324
+cum_tokens = 2958
 
 [batches.content]
 kind = "lines"
@@ -1004,11 +986,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 6 })'
 descriptor = "README.md section #6"
 cost_tokens = 27
-cum_tokens = 3351
+cum_tokens = 2985
 
 [batches.content]
 kind = "lines"
@@ -1038,11 +1020,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 242
-cum_tokens = 3593
+cum_tokens = 3227
 
 [batches.content]
 kind = "lines"
@@ -1120,11 +1102,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 10
-cum_tokens = 3603
+cum_tokens = 3237
 
 [batches.content]
 kind = "fs"
@@ -1134,11 +1116,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github"
 entries = ["PULL_REQUEST_TEMPLATE.md", "workflows"]
 
 [[batches]]
-position = 32
+position = 31
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 9
-cum_tokens = 3612
+cum_tokens = 3246
 
 [batches.content]
 kind = "fs"
@@ -1146,6 +1128,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/mitt/.github/workflows"
 entries = ["compressed-size.yml", "main.yml"]
+
+[[batches]]
+position = 32
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 366
+cum_tokens = 3612
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/package.json"
+start = 62
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 33
