@@ -111,50 +111,29 @@ fn non_essential_factor_inner(
     skip_dir_classifier: bool,
 ) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
-    // Auto-injected agent docs: AGENTS.md / CLAUDE.md at the root, plus
-    // text-content files under .claude/skills/, .agent/skills/,
-    // .cursor/rules/. The harness already loads these into the model's
-    // context, so spending precis budget on their headings/lede is
-    // pure waste. (Section + SummaryWhole batches are dropped entirely
-    // in `walker::markdown`; this discount is defense-in-depth for the
-    // residual HeadingsOutline / ReadmeHeadline.) Checked before the
-    // dot-dir rule below so SKILL.md / rules.mdc get the stronger 0.1
-    // tier rather than the generic 0.2.
+    // Auto-injected docs are already in the model's context. Checked
+    // first so SKILL.md / rules.mdc get the stronger 0.1 tier rather
+    // than the generic dot-dir 0.2.
     if is_auto_injected_doc_file(path, root) {
         return 0.1;
     }
-    // Dot-prefixed directories at any depth (`site/.vitepress/...`,
-    // `docs/.vitepress/...`, `packages/foo/.changeset`, root-level
-    // `.husky` / `.devcontainer` / `.idea` / `.vscode` / `.faq` /
-    // `.circleci` / `.cargo` / `.codex` / `.yarn`) are IDE / tooling /
-    // CI / admin / docs-site plumbing. Demote uniformly so their
-    // contents don't crowd source. The two exceptions:
-    //  - `.github/workflows/...` at the repo root: CI workflows are
-    //    load-bearing operational config (failures page someone).
-    //  - Auto-injected skill subtrees (`.claude/skills`, `.agent/skills`,
-    //    `.cursor/rules`): doc-extension files are caught above with the
-    //    stronger 0.1; remaining helpers / listings inherit the 0.2.
+    // Dot-prefixed dirs at any depth are tooling / CI / admin /
+    // docs-site plumbing. Exceptions: `.github/workflows/...` (CI
+    // config, paging-relevant) and the auto-injected skill subtrees
+    // already handled above.
     let mut comps = target.components();
     if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
         if first.eq_ignore_ascii_case(".github") {
             let second = comps.next().and_then(|c| c.as_os_str().to_str());
-            if second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
-                // No further dot-dir check — `.github/workflows/...` is
-                // load-bearing CI config.
-            } else {
+            if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
         } else if first.starts_with('.') && first != "." {
             return 0.2;
         } else if is_root_level_vendor_dir_name(first) {
-            // Vendored / third-party deps at the repo root (neco's
-            // `deps/` of vendored single-header libraries, jq's
-            // `vendor/`). The dir contains upstream source, not the
-            // project's own API surface. Depth-1-only so a project
-            // like chalk that vendors *as part of* its own `source/`
-            // (chalk's `source/vendor/ansi-styles/` is *the* chalk
-            // implementation, not third-party content) keeps full
-            // weight on its vendored modules.
+            // Depth-1-only: a project that vendors *as part of* its
+            // own `source/` (chalk) keeps full weight on its vendored
+            // modules.
             return 0.2;
         }
     }
@@ -228,15 +207,9 @@ fn non_essential_factor_inner(
         if name == "inner.rs" || (ext == Some("rs") && name.starts_with("__")) {
             return 0.5;
         }
-        // Python scripts under a `docs/` subtree are Sphinx config
-        // (`conf.py`), site builders (jq's `build_*.py`), or schema
-        // validators — uniformly aux to the project's API surface.
-        // Demote so they don't crowd source-code anchors. Pluggy's
-        // `docs/examples/*.py` survives because the `examples` dir
-        // classifier already returns 0.2 in the loop above (the
-        // existing `non_essential_factor` flow checks dir components
-        // before this file-level rule fires, so once the loop returns
-        // we know the file's directory chain didn't contain `examples`).
+        // Python under a `docs/` subtree is Sphinx config / site
+        // builders / schema validators. (`docs/examples/*.py` survives
+        // because the `examples` dir classifier ran first.)
         if ext == Some("py")
             && target
                 .components()
@@ -244,11 +217,8 @@ fn non_essential_factor_inner(
         {
             return 0.3;
         }
-        // Co-located test files: `foo.test.ts`, `foo.spec.ts`,
-        // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, `_test.py`
-        // (Django / pytest convention), `test_*.py` (Python pytest
-        // module pattern). The `e2e_test_*.py` convention (linkding's
-        // `tests_e2e/e2e_test_*.py`) also matches `_test.py`.
+        // Co-located test file conventions: `*.test.*`, `*.spec.*`,
+        // `*_test.<go|ts|js|tsx|py>`, `test_*.py`.
         let lower = name.to_ascii_lowercase();
         if lower.contains(".test.")
             || lower.contains(".test-d.")
@@ -266,28 +236,14 @@ fn non_essential_factor_inner(
     1.0
 }
 
-/// True for crate directory names that match the Rust proc-macro
-/// helper-crate convention — `<name>-macros`, `<name>_macros`,
-/// `<name>-derive`, `<name>_derive`. These are universally
-/// implementation-detail crates: their `lib.rs` is a fan-out of
-/// `#[proc_macro_*]` entrypoints with thin bodies that delegate to a
-/// sibling codegen crate. NS authors anchor on the *user-facing*
-/// crate's re-exports, not the macros crate's `pub fn derive_foo`.
-/// Plain `macros` / `derive` (the suffixes themselves) are excluded —
-/// they're more likely to be a real module name in a non-proc-macro
-/// package (`bevy/macros`, `core::macros`).
-/// True for root-level directory names that conventionally hold
-/// vendored / third-party content, release artifacts, or other
-/// repo-level admin subtrees that NS authors don't anchor on.
-/// Matched case-insensitively. Only applied at depth 1 from the repo
-/// root — projects that vendor as part of their *own* source tree
-/// (chalk's `source/vendor/ansi-styles/` holds load-bearing chalk
-/// modules, not upstream) keep full weight.
+/// Root-level dirs holding vendored / third-party content, release
+/// artifacts, or repo-level admin. Depth-1-only: projects that vendor
+/// as part of their *own* source tree (chalk's `source/vendor/`)
+/// keep full weight on those nested vendored modules.
 fn is_root_level_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
         lower.as_str(),
-        // Vendored / third-party deps.
         "deps"
             | "vendor"
             | "vendored"
@@ -297,17 +253,17 @@ fn is_root_level_vendor_dir_name(s: &str) -> bool {
             | "3rdparty"
             | "external"
             | "extern"
-            // Release artifacts / signatures (jq's `sig/`).
             | "sig"
             | "signatures"
-            // Test snapshot frameworks at the repo root (semver's
-            // `tap-snapshots/`). Snapshot dirs nested under `tests/`
-            // are already caught by the existing `tests`/`test_*`
-            // classifier.
             | "tap-snapshots"
     )
 }
 
+/// Rust proc-macro helper-crate convention (`<name>-macros`,
+/// `<name>_macros`, `<name>-derive`, `<name>_derive`). NS authors
+/// anchor on the user-facing crate's re-exports rather than the
+/// macros crate's `pub fn derive_foo`. Plain `macros` / `derive`
+/// excluded — they're more likely a real module name (`bevy/macros`).
 fn is_proc_macro_crate_dir_name(s: &str) -> bool {
     for suffix in ["-macros", "_macros", "-derive", "_derive"] {
         if let Some(stem) = s.strip_suffix(suffix)

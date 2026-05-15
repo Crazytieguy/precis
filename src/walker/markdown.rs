@@ -154,6 +154,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     if md_files.is_empty() {
         return out;
     }
+    let sibling_md_count = md_files.len();
     for file in md_files {
         let name = file
             .file_name()
@@ -218,7 +219,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                 key: o.clone().into(),
                 predecessor: headline_emitted.clone(),
                 content,
-                value: headings_outline_value(&file, ctx),
+                value: headings_outline_value(&file, ctx, sibling_md_count),
             });
             outline_emitted = Some(BatchKey::Markdown(o.clone()));
         }
@@ -229,12 +230,6 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
-        // Total H2 count is the cardinality of distinct `parent_index`
-        // values among H2-derived ranges; the synthetic H1-unwrap intro
-        // (parent_idx 0 when present) doesn't count. Used by README
-        // section index decay so projects with kitchen-sink READMEs
-        // (axios 31 H2s, debug 18 H2s) get a steeper tail demotion
-        // without changing the shape for normal READMEs.
         let total_h2_count = section_h2_count(&ranges);
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
@@ -284,55 +279,29 @@ fn readme_headline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.9, 0.6, 0.8, path_depth_factor(file, ctx))
 }
 
-fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn headings_outline_value(file: &Path, ctx: &WalkCtx, sibling_md_count: usize) -> f64 {
     mix_signals(
         0.7,
         0.55,
         0.4,
         super::file_depth_factor(file, ctx, is_orientation_doc(file)),
-    ) * dense_md_sibling_factor(file)
+    ) * dense_md_sibling_factor(file, sibling_md_count)
 }
 
-/// Damp the per-file outline value for markdown files that sit in a
-/// directory with many `.md` siblings (`click/docs/` has 35, axios's
-/// translated `docs/<lang>/pages/advanced/` has 25 each). The
-/// directory *listing* already names every file; emitting a heading
-/// outline for each as a separate ranked batch crowds source content
-/// when NS authors typically anchor on at most a few of them. The
-/// `sqrt(threshold/N)` shape leaves dirs with ≤10 .md siblings at
-/// full weight and gently saturates above that. Root-level READMEs
-/// and `is_orientation_doc` files (ARCHITECTURE / OVERVIEW / DESIGN /
-/// STRUCTURE) are always exempt — their parent dir's count never
-/// applies to *them*; they're the anchor, not the noise.
-fn dense_md_sibling_factor(file: &Path) -> f64 {
+/// Saturate the per-file outline value when the file sits in a dir
+/// with many `.md` siblings: the directory listing already names
+/// every file, so emitting a ranked outline per file crowds source
+/// content. README and orientation docs are exempt — they're the
+/// anchor, not the noise.
+fn dense_md_sibling_factor(file: &Path, sibling_md_count: usize) -> f64 {
     if is_readme(file) || is_orientation_doc(file) {
         return 1.0;
     }
-    let Some(parent) = file.parent() else {
-        return 1.0;
-    };
     const DENSE_THRESHOLD: usize = 6;
-    let Ok(read_dir) = std::fs::read_dir(parent) else {
-        return 1.0;
-    };
-    let mut count = 0usize;
-    for entry in read_dir.flatten() {
-        let path = entry.path();
-        if path
-            .extension()
-            .and_then(|e| e.to_str())
-            .is_some_and(|ext| ext.eq_ignore_ascii_case("md"))
-        {
-            count += 1;
-            if count > DENSE_THRESHOLD * 4 {
-                break;
-            }
-        }
-    }
-    if count <= DENSE_THRESHOLD {
+    if sibling_md_count <= DENSE_THRESHOLD {
         return 1.0;
     }
-    ((DENSE_THRESHOLD as f64) / (count as f64)).sqrt()
+    ((DENSE_THRESHOLD as f64) / (sibling_md_count as f64)).sqrt()
 }
 
 fn readme_section_value(
@@ -341,29 +310,13 @@ fn readme_section_value(
     ctx: &WalkCtx,
     total_h2_count: usize,
 ) -> f64 {
-    // README sections share a flat base (catastrophic 0.55,
-    // follow-up 0.8, ztu 0.7) — a single section is a piece of
-    // README body that just fits more often when split. Index decay
-    // tilts toward earlier sections (install / quick-start / "how
-    // it works") without pushing late ones (License, Contributing,
-    // FAQ appendix) out of the schedule entirely. Decay shape is
-    // adaptive in [`readme_index_decay`] — long-README projects get
-    // a steeper falloff so mid-to-late sections don't crowd source
-    // anchors.
     mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
         * readme_index_decay(range, total_h2_count)
 }
 
-/// Index decay for README sections. Returns 1.0 for the first real
-/// H2 in every case. For short / medium READMEs keeps the mild
-/// 0.15-exponent / 0.7-floor shape, which is metric-safe across the
-/// fixtures whose README *is* the canonical content (chalk, mitt,
-/// beszel, neco, json-server, semver — all regressed under a
-/// blanket steeper decay). For long READMEs the shape switches to a
-/// faster falloff so kitchen-sink documentation READMEs (axios 31
-/// H2s, debug 18) don't displace source content at small budgets —
-/// source-anchored NSes universally treat the tail sections as
-/// appendix.
+/// Index decay for README sections. Long READMEs (>= 18 H2s) switch
+/// to a steeper falloff so kitchen-sink documentation projects' tail
+/// sections don't crowd source-code anchors.
 fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     let h2_idx = if range.synthetic_intro_present {
         range.parent_index.saturating_sub(1)
@@ -377,22 +330,18 @@ fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     }
 }
 
-/// Count of real H2 sections in a logical-sections result. The
-/// synthetic H1-unwrap intro (always parent_idx 0 when present) is
-/// excluded so a `# Title` README's H2 count matches the heading-line
-/// count. Multiple ranges can share the same `parent_index` when a
-/// section is split (Intro + H3Children, or BulletItem rows); dedup
-/// by parent_index so the count stays one-per-H2.
+/// Count of real H2 sections — `parent_index` is monotonic per
+/// `logical_sections`, so `max(parent_index) + 1` gives the H2
+/// cardinality (minus one when a synthetic H1-unwrap intro occupies
+/// `parent_idx 0`).
 fn section_h2_count(ranges: &[SectionRange]) -> usize {
     let synthetic_intro_present = ranges.first().is_some_and(|r| r.synthetic_intro_present);
-    let mut unique = std::collections::BTreeSet::new();
-    for r in ranges {
-        unique.insert(r.parent_index);
+    let max_parent = ranges.iter().map(|r| r.parent_index).max();
+    match max_parent {
+        Some(max) if synthetic_intro_present => max,
+        Some(max) => max + 1,
+        None => 0,
     }
-    if synthetic_intro_present {
-        unique.remove(&0);
-    }
-    unique.len()
 }
 
 /// Index-based signal-channel scale factor: `(idx + 1)^-exp`, floored

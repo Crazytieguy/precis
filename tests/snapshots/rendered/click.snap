@@ -73,16 +73,6 @@ docs/
     advanced.md
     api.md
     arguments.md
-        3→# Arguments
-        …
-        20→## Basic Arguments
-        …
-        58→## Multiple Arguments
-        …
-        92→## Argument Escape Sequences
-        …
-        140→## Environment Variables
-        …
     changes.rst
     click-concepts.md
         1→# Click Concepts
@@ -232,14 +222,6 @@ docs/
     shell-completion.md
     standalone-apps.md
     support-multiple-versions.md
-        1→# Supporting Multiple Versions
-        …
-        13→## Use Feature Detection
-        …
-        22→## Changes in 8.2
-        …
-        24→### `ParamType` methods require `ctx`
-        …
     testing.md
     unicode-support.md
         1→# Unicode Support
@@ -340,6 +322,10 @@ src/
         _compat.py
         _termui_impl.py
         _textwrap.py
+            1→from __future__ import annotations
+            3→import collections.abc as cabc
+            4→import textwrap
+            5→from contextlib import contextmanager
             8→class TextWrapper(textwrap.TextWrapper):
             9→    def _handle_long_word(
             …
