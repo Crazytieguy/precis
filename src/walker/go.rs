@@ -331,11 +331,11 @@ const GO_DECL_NAMES_CHUNK_THRESHOLD: usize = 30;
 
 /// Line-count co-threshold — chunking also requires the file to be
 /// large enough that its full names surface plausibly won't fit at 3K.
-/// gin.go (832 lines, 57 decls) and migrate.go (979 lines, 35 decls)
-/// have surfaces that DO fit at ~2.5K; chunking them displaced
-/// delivered content and regressed those fixtures. tea.go (1439 lines)
-/// and command.go (2072 lines) are clear chunking candidates.
-const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 1000;
+/// migrate.go (979 lines, 35 decls) has a surface that DOES fit at
+/// ~2.5K; chunking it regressed past iterations. gin.go (832 lines)
+/// and tea.go / command.go all benefit from chunking — their full
+/// surfaces don't fit in the 10K-budget schedule at all without it.
+const GO_DECL_NAMES_CHUNK_LINE_THRESHOLD: usize = 850;
 
 fn is_test_file(file: &Path) -> bool {
     file.file_name()

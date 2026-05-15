@@ -95,12 +95,6 @@ database/
         cassandra_test.go
         examples/
     clickhouse/
-        README.md
-            1→# ClickHouse
-            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
-        clickhouse.go
-        clickhouse_test.go
-        examples/
     cockroachdb/
     crate/
     driver.go
@@ -111,12 +105,6 @@ database/
         22→func (e Error) Error() string {
         …
     firebird/
-        README.md
-            1→# firebird
-            3→`firebirdsql://user:password@servername[:port_number]/database_name_or_file[?params1=value1[&param2=value2]...]`
-        examples/
-        firebird.go
-        firebird_test.go
     mongodb/
         README.md
         examples/
@@ -127,10 +115,6 @@ database/
         README.md
             1→# MySQL
             3→`mysql://user:password@tcp(host:port)/dbname?query`
-            21→## Use with existing client
-            …
-            50→## Upgrading from v1
-            …
         examples/
         mysql.go
         mysql_test.go
@@ -139,33 +123,12 @@ database/
     pgx/
     postgres/
     ql/
-        README.md
-        examples/
-        ql.go
-        ql_test.go
     redshift/
-        README.md
-            1→# Redshift
-            3→`redshift://user:password@host:port/dbname?query`
-        examples/
-        redshift.go
-        redshift_test.go
     rqlite/
     shell/
     snowflake/
     spanner/
-        README.md
-            1→# Google Cloud Spanner
-        examples/
-        spanner.go
-        spanner_test.go
     sqlcipher/
-        README.md
-            1→# sqlcipher
-            3→This is just a copy of the [sqlite3](https://github.com/golang-migrate/migrate/blob/master/database/sqlite3) driver except that it imports `github.com/mutecomm/go-sqlcipher`.
-        examples/
-        sqlcipher.go
-        sqlcipher_test.go
     sqlite/
         README.md
             1→# sqlite
@@ -174,17 +137,7 @@ database/
         sqlite.go
         sqlite_test.go
     sqlite3/
-        README.md
-            1→# sqlite3
-            3→`sqlite3://path/to/database?query`
-        examples/
-        sqlite3.go
-        sqlite3_test.go
     sqlserver/
-        README.md
-        examples/
-        sqlserver.go
-        sqlserver_test.go
     stub/
     testing/
     util.go
@@ -237,6 +190,38 @@ migrate.go
     15→	iurl "github.com/golang-migrate/migrate/v4/internal/url"
     16→	"github.com/golang-migrate/migrate/v4/source"
     17→)
+    19→// DefaultPrefetchMigrations sets the number of migrations to pre-read
+    20→// from the source. This is helpful if the source is remote, but has little
+    21→// effect for a local source (i.e. file system).
+    22→// Please note that this setting has a major impact on the memory usage,
+    23→// since each pre-read migration is buffered in memory. See DefaultBufferSize.
+    24→var DefaultPrefetchMigrations = uint(10)
+    …
+    26→// DefaultLockTimeout sets the max time a database driver has to acquire a lock.
+    27→var DefaultLockTimeout = 15 * time.Second
+    …
+    29→var (
+    30→	ErrNoChange       = errors.New("no change")
+    31→	ErrNilVersion     = errors.New("no migration")
+    32→	ErrInvalidVersion = errors.New("version must be >= -1")
+    33→	ErrLocked         = errors.New("database locked")
+    34→	ErrLockTimeout    = errors.New("timeout: can't acquire database lock")
+    35→)
+    37→// ErrShortLimit is an error returned when not enough migrations
+    38→// can be returned by a source for a given limit.
+    39→type ErrShortLimit struct {
+    40→	Short uint
+    41→}
+    43→// Error implements the error interface.
+    44→func (e ErrShortLimit) Error() string {
+    45→	return fmt.Sprintf("limit %v short", e.Short)
+    48→type ErrDirty struct {
+    49→	Version int
+    50→}
+    52→func (e ErrDirty) Error() string {
+    53→	return fmt.Sprintf("Dirty database version %v. Fix and force version.", e.Version)
+    56→type Migrate struct {
+    …
 migrate_test.go
 migration.go
     11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every
