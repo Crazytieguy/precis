@@ -1,4 +1,4 @@
-Score(3000)=0.614 I=0.717 C=0.526 ns_rows≤3K=21/39 (reached=10 partial=2 missing=9)
+Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missing=9)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -70,86 +70,86 @@ Score(3000)=0.614 I=0.717 C=0.526 ns_rows≤3K=21/39 (reached=10 partial=2 missi
 | walker |  | 2375 | 24 | docs/reference/typescript.md section #0 |  |  | 0.597 |
 | ns | 2380 |  | 210 | docs/reference/types.md — H3 catalog (all 27 entries) | 4.1 |  | 0.559 |
 | walker |  | 2413 | 38 | imports in src/struct.ts |  |  | 0.559 |
-| ns | 2578 |  | 198 | docs/reference/{refinements,coercions,utilities,core,typescript}.md headings | 4.2 |  | 0.583 |
-| walker |  | 2718 | 305 | package identity metadata in package.json |  |  | 0.597 |
-| walker |  | 2794 | 76 | package entrypoints in package.json |  |  | 0.626 |
-| walker |  | 2826 | 32 | package runtime metadata in package.json |  |  | 0.642 |
-| walker |  | 2853 | 27 | docs/reference/utilities.md section #0 |  |  | 0.642 |
-| ns | 2854 |  | 276 | Canonical usage — examples/basic-validation.js (full file) | 4.3 |  | 0.603 |
-| walker |  | 2898 | 45 | plaintext config .prettierrc |  |  | 0.603 |
-| walker |  | 2906 | 8 | listing of 'docs/resources' |  |  | 0.614 |
-| walker |  | 2924 | 18 | headings outline in docs/resources/links.md |  |  | 0.614 |
-| walker |  | 2970 | 46 | headings outline in docs/resources/faq.md |  |  | 0.614 |
-| walker |  | 2986 | 16 | docs/resources/faq.md section #0 |  |  | 0.614 |
-| walker |  | 3002 | 16 | docs/resources/links.md section #0 |  |  | 0.614 |
-| walker |  | 3101 | 99 | export names surface in src/structs/refinements.ts |  |  | 0.631 |
-| walker |  | 3134 | 33 | export at src/structs/refinements.ts:93 |  |  | 0.631 |
-| walker |  | 3178 | 44 | export at src/structs/refinements.ts:146 |  |  | 0.631 |
-| walker |  | 3226 | 48 | export at src/structs/refinements.ts:8 |  |  | 0.631 |
-| walker |  | 3274 | 48 | export at src/structs/refinements.ts:77 |  |  | 0.631 |
-| ns | 3305 |  | 451 | errors.md — StructError property table | 4.4 |  | 0.615 |
-| walker |  | 3331 | 57 | export at src/structs/refinements.ts:33 |  |  | 0.615 |
-| walker |  | 3388 | 57 | export at src/structs/refinements.ts:55 |  |  | 0.615 |
-| walker |  | 3450 | 62 | export at src/structs/refinements.ts:109 |  |  | 0.615 |
-| walker |  | 3522 | 72 | export body at src/structs/refinements.ts:77 body 81 |  |  | 0.615 |
-| walker |  | 3546 | 24 | export doc at src/structs/refinements.ts:93 |  |  | 0.615 |
-| walker |  | 3628 | 82 | export body at src/structs/refinements.ts:8 body 12 |  |  | 0.615 |
-| walker |  | 3654 | 26 | export doc at src/structs/refinements.ts:33 |  |  | 0.615 |
-| walker |  | 3680 | 26 | export doc at src/structs/refinements.ts:55 |  |  | 0.615 |
-| walker |  | 3709 | 29 | export doc at src/structs/refinements.ts:8 |  |  | 0.615 |
-| walker |  | 3738 | 29 | export doc at src/structs/refinements.ts:77 |  |  | 0.615 |
-| walker |  | 3765 | 27 | json config .vscode/settings.json |  |  | 0.615 |
-| walker |  | 3872 | 107 | export body at src/structs/refinements.ts:33 body 40 |  |  | 0.615 |
-| ns | 3875 |  | 570 | core.md — `assert` / `create` / `validate` definitions | 4.5 | 4.2 | 0.580 |
-| walker |  | 3979 | 107 | export body at src/structs/refinements.ts:55 body 62 |  |  | 0.580 |
-| walker |  | 4013 | 34 | docs/guides/02-validating-data.md section #0 |  |  | 0.580 |
-| walker |  | 4048 | 35 | docs/reference/errors.md section #0 |  |  | 0.580 |
-| ns | 4064 |  | 189 | coercions.md — `defaulted` worked example | 4.6 | 4.2 | 0.566 |
-| walker |  | 4078 | 30 | imports in src/structs/refinements.ts |  |  | 0.566 |
-| walker |  | 4402 | 324 | package scripts in package.json |  |  | 0.566 |
-| walker |  | 4437 | 35 | plaintext config .gitignore |  |  | 0.566 |
-| walker |  | 4706 | 269 | package dependencies in package.json |  |  | 0.566 |
-| walker |  | 4804 | 98 | Readme.md section #7 |  |  | 0.566 |
-| ns | 4816 |  | 752 | utils.ts run() — the central traversal generator | 5.1 |  | 0.514 |
-| walker |  | 4829 | 25 | listing of 'test/api' |  |  | 0.533 |
-| walker |  | 4876 | 47 | export doc at src/structs/utilities.ts:247 |  |  | 0.533 |
-| walker |  | 4924 | 48 | export doc at src/structs/refinements.ts:109 |  |  | 0.533 |
-| walker |  | 5033 | 109 | export doc at src/error.ts:25 |  |  | 0.533 |
-| ns | 5074 |  | 258 | struct.ts validate() body | 5.2 | 3.5 | 0.515 |
-| walker |  | 5241 | 208 | export names surface in src/struct.ts |  |  | 0.532 |
-| walker |  | 5241 | 0 | export at src/struct.ts:175 |  |  | 0.532 |
-| walker |  | 5241 | 0 | export at src/struct.ts:231 |  |  | 0.532 |
-| walker |  | 5241 | 0 | export at src/struct.ts:237 |  |  | 0.532 |
-| walker |  | 5241 | 0 | export at src/struct.ts:253 |  |  | 0.532 |
-| walker |  | 5241 | 0 | export at src/struct.ts:259 |  |  | 0.532 |
-| walker |  | 5273 | 32 | export at src/struct.ts:221 |  |  | 0.539 |
-| walker |  | 5312 | 39 | export at src/struct.ts:243 |  |  | 0.549 |
-| walker |  | 5349 | 37 | export at src/struct.ts:139 |  |  | 0.549 |
-| walker |  | 5386 | 37 | export at src/struct.ts:157 |  |  | 0.549 |
-| walker |  | 5426 | 40 | export at src/struct.ts:123 |  |  | 0.549 |
-| walker |  | 5468 | 42 | export body at src/struct.ts:123 body 128 |  |  | 0.549 |
-| walker |  | 5551 | 83 | export at src/struct.ts:185 |  |  | 0.554 |
-| ns | 5610 |  | 536 | struct.ts Struct class constructor + 4 hook fields | 5.3 |  | 0.522 |
-| walker |  | 5616 | 65 | export body at src/struct.ts:139 body 144 |  |  | 0.522 |
-| walker |  | 5685 | 69 | export body at src/struct.ts:157 body 162 |  |  | 0.522 |
-| walker |  | 5710 | 25 | export doc at src/struct.ts:243 |  |  | 0.522 |
-| walker |  | 5733 | 23 | export doc at src/struct.ts:175 |  |  | 0.522 |
-| walker |  | 5760 | 27 | export doc at src/struct.ts:259 |  |  | 0.522 |
-| walker |  | 5789 | 29 | export doc at src/struct.ts:231 |  |  | 0.522 |
-| walker |  | 5818 | 29 | export doc at src/struct.ts:237 |  |  | 0.522 |
-| walker |  | 5848 | 30 | export doc at src/struct.ts:253 |  |  | 0.522 |
-| walker |  | 5876 | 28 | export doc at src/struct.ts:123 |  |  | 0.522 |
-| walker |  | 5905 | 29 | export doc at src/struct.ts:139 |  |  | 0.522 |
-| walker |  | 5935 | 30 | export doc at src/struct.ts:157 |  |  | 0.522 |
-| walker |  | 5981 | 46 | export doc at src/struct.ts:185 |  |  | 0.522 |
-| ns | 6093 |  | 483 | object() implementation | 5.4 | 3.1 | 0.495 |
-| walker |  | 6357 | 376 | export at src/struct.ts:10 |  |  | 0.515 |
-| walker |  | 6426 | 69 | export doc at src/struct.ts:10 |  |  | 0.515 |
-| ns | 6541 |  | 448 | union() implementation | 5.5 | 3.1 | 0.492 |
-| ns | 6716 |  | 175 | refine() implementation | 5.6 | 3.2 | 0.485 |
-| walker |  | 6765 | 339 | export body at src/struct.ts:10 body 30 |  |  | 0.531 |
-| walker |  | 6862 | 97 | export doc at src/struct.ts:221 |  |  | 0.531 |
-| walker |  | 6912 | 50 | docs/reference/refinements.md section #0 |  |  | 0.531 |
+| walker |  | 2440 | 27 | docs/reference/utilities.md section #0 |  |  | 0.559 |
+| walker |  | 2485 | 45 | plaintext config .prettierrc |  |  | 0.559 |
+| walker |  | 2493 | 8 | listing of 'docs/resources' |  |  | 0.572 |
+| walker |  | 2511 | 18 | headings outline in docs/resources/links.md |  |  | 0.572 |
+| walker |  | 2557 | 46 | headings outline in docs/resources/faq.md |  |  | 0.572 |
+| walker |  | 2573 | 16 | docs/resources/faq.md section #0 |  |  | 0.572 |
+| ns | 2578 |  | 198 | docs/reference/{refinements,coercions,utilities,core,typescript}.md headings | 4.2 |  | 0.595 |
+| walker |  | 2589 | 16 | docs/resources/links.md section #0 |  |  | 0.595 |
+| walker |  | 2688 | 99 | export names surface in src/structs/refinements.ts |  |  | 0.612 |
+| walker |  | 2721 | 33 | export at src/structs/refinements.ts:93 |  |  | 0.612 |
+| walker |  | 2765 | 44 | export at src/structs/refinements.ts:146 |  |  | 0.612 |
+| walker |  | 2813 | 48 | export at src/structs/refinements.ts:8 |  |  | 0.612 |
+| ns | 2854 |  | 276 | Canonical usage — examples/basic-validation.js (full file) | 4.3 |  | 0.575 |
+| walker |  | 2861 | 48 | export at src/structs/refinements.ts:77 |  |  | 0.575 |
+| walker |  | 2918 | 57 | export at src/structs/refinements.ts:33 |  |  | 0.575 |
+| walker |  | 2975 | 57 | export at src/structs/refinements.ts:55 |  |  | 0.575 |
+| walker |  | 3037 | 62 | export at src/structs/refinements.ts:109 |  |  | 0.575 |
+| walker |  | 3109 | 72 | export body at src/structs/refinements.ts:77 body 81 |  |  | 0.575 |
+| walker |  | 3133 | 24 | export doc at src/structs/refinements.ts:93 |  |  | 0.575 |
+| walker |  | 3215 | 82 | export body at src/structs/refinements.ts:8 body 12 |  |  | 0.575 |
+| walker |  | 3241 | 26 | export doc at src/structs/refinements.ts:33 |  |  | 0.575 |
+| walker |  | 3267 | 26 | export doc at src/structs/refinements.ts:55 |  |  | 0.575 |
+| walker |  | 3296 | 29 | export doc at src/structs/refinements.ts:8 |  |  | 0.575 |
+| ns | 3305 |  | 451 | errors.md — StructError property table | 4.4 |  | 0.561 |
+| walker |  | 3325 | 29 | export doc at src/structs/refinements.ts:77 |  |  | 0.561 |
+| walker |  | 3352 | 27 | json config .vscode/settings.json |  |  | 0.561 |
+| walker |  | 3459 | 107 | export body at src/structs/refinements.ts:33 body 40 |  |  | 0.561 |
+| walker |  | 3566 | 107 | export body at src/structs/refinements.ts:55 body 62 |  |  | 0.561 |
+| walker |  | 3600 | 34 | docs/guides/02-validating-data.md section #0 |  |  | 0.561 |
+| walker |  | 3635 | 35 | docs/reference/errors.md section #0 |  |  | 0.561 |
+| walker |  | 3665 | 30 | imports in src/structs/refinements.ts |  |  | 0.561 |
+| walker |  | 3700 | 35 | plaintext config .gitignore |  |  | 0.561 |
+| walker |  | 3798 | 98 | Readme.md section #7 |  |  | 0.561 |
+| walker |  | 3823 | 25 | listing of 'test/api' |  |  | 0.584 |
+| walker |  | 3870 | 47 | export doc at src/structs/utilities.ts:247 |  |  | 0.584 |
+| ns | 3875 |  | 570 | core.md — `assert` / `create` / `validate` definitions | 4.5 | 4.2 | 0.551 |
+| walker |  | 3918 | 48 | export doc at src/structs/refinements.ts:109 |  |  | 0.551 |
+| walker |  | 4027 | 109 | export doc at src/error.ts:25 |  |  | 0.551 |
+| ns | 4064 |  | 189 | coercions.md — `defaulted` worked example | 4.6 | 4.2 | 0.538 |
+| walker |  | 4235 | 208 | export names surface in src/struct.ts |  |  | 0.558 |
+| walker |  | 4235 | 0 | export at src/struct.ts:175 |  |  | 0.558 |
+| walker |  | 4235 | 0 | export at src/struct.ts:231 |  |  | 0.558 |
+| walker |  | 4235 | 0 | export at src/struct.ts:237 |  |  | 0.558 |
+| walker |  | 4235 | 0 | export at src/struct.ts:253 |  |  | 0.558 |
+| walker |  | 4235 | 0 | export at src/struct.ts:259 |  |  | 0.558 |
+| walker |  | 4267 | 32 | export at src/struct.ts:221 |  |  | 0.566 |
+| walker |  | 4306 | 39 | export at src/struct.ts:243 |  |  | 0.577 |
+| walker |  | 4343 | 37 | export at src/struct.ts:139 |  |  | 0.577 |
+| walker |  | 4380 | 37 | export at src/struct.ts:157 |  |  | 0.577 |
+| walker |  | 4420 | 40 | export at src/struct.ts:123 |  |  | 0.577 |
+| walker |  | 4462 | 42 | export body at src/struct.ts:123 body 128 |  |  | 0.577 |
+| walker |  | 4545 | 83 | export at src/struct.ts:185 |  |  | 0.578 |
+| walker |  | 4610 | 65 | export body at src/struct.ts:139 body 144 |  |  | 0.578 |
+| walker |  | 4679 | 69 | export body at src/struct.ts:157 body 162 |  |  | 0.578 |
+| walker |  | 4704 | 25 | export doc at src/struct.ts:243 |  |  | 0.578 |
+| walker |  | 4727 | 23 | export doc at src/struct.ts:175 |  |  | 0.578 |
+| walker |  | 4754 | 27 | export doc at src/struct.ts:259 |  |  | 0.578 |
+| walker |  | 4783 | 29 | export doc at src/struct.ts:231 |  |  | 0.578 |
+| walker |  | 4812 | 29 | export doc at src/struct.ts:237 |  |  | 0.578 |
+| ns | 4816 |  | 752 | utils.ts run() — the central traversal generator | 5.1 |  | 0.524 |
+| walker |  | 4842 | 30 | export doc at src/struct.ts:253 |  |  | 0.524 |
+| walker |  | 4870 | 28 | export doc at src/struct.ts:123 |  |  | 0.524 |
+| walker |  | 4899 | 29 | export doc at src/struct.ts:139 |  |  | 0.524 |
+| walker |  | 4929 | 30 | export doc at src/struct.ts:157 |  |  | 0.524 |
+| walker |  | 4975 | 46 | export doc at src/struct.ts:185 |  |  | 0.524 |
+| ns | 5074 |  | 258 | struct.ts validate() body | 5.2 | 3.5 | 0.511 |
+| walker |  | 5351 | 376 | export at src/struct.ts:10 |  |  | 0.522 |
+| walker |  | 5420 | 69 | export doc at src/struct.ts:10 |  |  | 0.522 |
+| ns | 5610 |  | 536 | struct.ts Struct class constructor + 4 hook fields | 5.3 |  | 0.501 |
+| walker |  | 5759 | 339 | export body at src/struct.ts:10 body 30 |  |  | 0.553 |
+| walker |  | 5856 | 97 | export doc at src/struct.ts:221 |  |  | 0.553 |
+| walker |  | 5906 | 50 | docs/reference/refinements.md section #0 |  |  | 0.553 |
+| ns | 6093 |  | 483 | object() implementation | 5.4 | 3.1 | 0.525 |
+| walker |  | 6211 | 305 | package identity metadata in package.json |  |  | 0.534 |
+| walker |  | 6287 | 76 | package entrypoints in package.json |  |  | 0.553 |
+| walker |  | 6319 | 32 | package runtime metadata in package.json |  |  | 0.564 |
+| ns | 6541 |  | 448 | union() implementation | 5.5 | 3.1 | 0.538 |
+| walker |  | 6643 | 324 | package scripts in package.json |  |  | 0.538 |
+| ns | 6716 |  | 175 | refine() implementation | 5.6 | 3.2 | 0.531 |
+| walker |  | 6912 | 269 | package dependencies in package.json |  |  | 0.531 |
 | walker |  | 6999 | 87 | plaintext config .editorconfig |  |  | 0.531 |
 | ns | 7243 |  | 527 | coerce() + defaulted() implementations | 5.7 | 3.3 | 0.513 |
 | ns | 7434 |  | 191 | error.ts StructError constructor | 5.8 | 3.7 | 0.520 |

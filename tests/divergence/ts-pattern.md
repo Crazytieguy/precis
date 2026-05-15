@@ -33,44 +33,44 @@ Score(3000)=0.520 I=0.507 C=0.534 ns_rows≤3K=19/45 (reached=7 partial=5 missin
 | walker |  | 745 | 21 | plaintext config .prettierrc |  |  | 0.413 |
 | walker |  | 765 | 20 | README.md section #2 |  |  | 0.415 |
 | ns | 772 |  | 66 | MatchExpression — method-name catalog | 2.3 |  | 0.390 |
-| walker |  | 971 | 206 | package identity metadata in package.json |  |  | 0.390 |
-| ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.350 |
-| walker |  | 1013 | 42 | export doc at src/errors.ts:5 |  |  | 0.353 |
-| walker |  | 1039 | 26 | listing of 'benchmarks' |  |  | 0.353 |
-| walker |  | 1095 | 56 | listing of 'src/types' |  |  | 0.451 |
-| walker |  | 1105 | 10 | imports in src/types/index.ts |  |  | 0.451 |
-| ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.423 |
-| walker |  | 1130 | 25 | README.md section #7 |  |  | 0.425 |
-| walker |  | 1145 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.425 |
-| ns | 1278 |  | 163 | match.ts imports + MatchState/unmatched | 2.6 |  | 0.395 |
-| walker |  | 1306 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.398 |
-| walker |  | 1334 | 28 | README.md section #8 |  |  | 0.402 |
-| walker |  | 1364 | 30 | README.md section #4 |  |  | 0.410 |
-| walker |  | 1372 | 8 | listing of 'src/internals' |  |  | 0.433 |
-| ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.402 |
-| walker |  | 1665 | 293 | module item at src/match.ts:47 |  |  | 0.490 |
-| walker |  | 1671 | 6 | module item body at src/match.ts:47 body 125 |  |  | 0.490 |
-| walker |  | 1677 | 6 | module item body at src/match.ts:47 body 129 |  |  | 0.490 |
-| walker |  | 1686 | 9 | module item body at src/match.ts:47 body 121 |  |  | 0.491 |
-| walker |  | 1697 | 11 | module item body at src/match.ts:47 body 67 |  |  | 0.491 |
-| walker |  | 1710 | 13 | module item body at src/match.ts:47 body 51 |  |  | 0.492 |
-| walker |  | 1724 | 14 | module item body at src/match.ts:47 body 91 |  |  | 0.492 |
-| walker |  | 1739 | 15 | module item body at src/match.ts:47 body 68 |  |  | 0.492 |
-| walker |  | 1756 | 17 | module item body at src/match.ts:47 body 56 |  |  | 0.494 |
-| ns | 1764 |  | 275 | MatchExpression.with — selection + dispatch half | 2.8 | 2.7 | 0.446 |
-| walker |  | 1777 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.449 |
-| walker |  | 1802 | 25 | module item body at src/match.ts:47 body 111 |  |  | 0.450 |
-| walker |  | 1829 | 27 | module item body at src/match.ts:47 body 116 |  |  | 0.451 |
-| walker |  | 1862 | 33 | module item body at src/match.ts:47 body 53 |  |  | 0.457 |
-| walker |  | 1907 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.464 |
-| walker |  | 1953 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.475 |
-| walker |  | 2009 | 56 | module item body at src/match.ts:47 body 84 |  |  | 0.497 |
-| ns | 2017 |  | 253 | MatchExpression.when / otherwise / exhaustive bodies | 2.9 | 2.3 | 0.473 |
-| walker |  | 2066 | 57 | module item body at src/match.ts:47 body 78 |  |  | 0.499 |
-| ns | 2115 |  | 98 | MatchExpression.run / returnType / narrow + defaultCatcher | 2.10 | 2.3 | 0.483 |
-| walker |  | 2155 | 89 | module item body at src/match.ts:47 body 98 |  |  | 0.515 |
-| walker |  | 2254 | 99 | module item body at src/match.ts:47 body 59 |  |  | 0.542 |
-| walker |  | 2288 | 34 | README.md section #3 |  |  | 0.547 |
+| walker |  | 807 | 42 | export doc at src/errors.ts:5 |  |  | 0.393 |
+| walker |  | 833 | 26 | listing of 'benchmarks' |  |  | 0.393 |
+| walker |  | 889 | 56 | listing of 'src/types' |  |  | 0.503 |
+| walker |  | 899 | 10 | imports in src/types/index.ts |  |  | 0.503 |
+| walker |  | 924 | 25 | README.md section #7 |  |  | 0.504 |
+| walker |  | 939 | 15 | listing of 'examples/gif-fetcher' |  |  | 0.504 |
+| ns | 981 |  | 209 | match() JSDoc | 2.4 | 2.1 | 0.453 |
+| walker |  | 1100 | 161 | export body at src/is-matching.ts:53 body 56 |  |  | 0.457 |
+| ns | 1115 |  | 134 | MatchExpression class doc + constructor | 2.5 | 2.3 | 0.428 |
+| walker |  | 1128 | 28 | README.md section #8 |  |  | 0.433 |
+| walker |  | 1158 | 30 | README.md section #4 |  |  | 0.441 |
+| walker |  | 1166 | 8 | listing of 'src/internals' |  |  | 0.465 |
+| ns | 1278 |  | 163 | match.ts imports + MatchState/unmatched | 2.6 |  | 0.433 |
+| walker |  | 1459 | 293 | module item at src/match.ts:47 |  |  | 0.526 |
+| walker |  | 1465 | 6 | module item body at src/match.ts:47 body 125 |  |  | 0.527 |
+| walker |  | 1471 | 6 | module item body at src/match.ts:47 body 129 |  |  | 0.527 |
+| walker |  | 1480 | 9 | module item body at src/match.ts:47 body 121 |  |  | 0.528 |
+| ns | 1489 |  | 211 | MatchExpression.with — argument parsing half | 2.7 | 2.3 | 0.491 |
+| walker |  | 1491 | 11 | module item body at src/match.ts:47 body 67 |  |  | 0.491 |
+| walker |  | 1504 | 13 | module item body at src/match.ts:47 body 51 |  |  | 0.492 |
+| walker |  | 1518 | 14 | module item body at src/match.ts:47 body 91 |  |  | 0.492 |
+| walker |  | 1533 | 15 | module item body at src/match.ts:47 body 68 |  |  | 0.492 |
+| walker |  | 1550 | 17 | module item body at src/match.ts:47 body 56 |  |  | 0.494 |
+| walker |  | 1571 | 21 | module item body at src/match.ts:47 body 57 |  |  | 0.497 |
+| walker |  | 1596 | 25 | module item body at src/match.ts:47 body 111 |  |  | 0.498 |
+| walker |  | 1623 | 27 | module item body at src/match.ts:47 body 116 |  |  | 0.499 |
+| walker |  | 1656 | 33 | module item body at src/match.ts:47 body 53 |  |  | 0.506 |
+| walker |  | 1701 | 45 | module item body at src/match.ts:47 body 74 |  |  | 0.507 |
+| walker |  | 1747 | 46 | module item body at src/match.ts:47 body 69 |  |  | 0.510 |
+| ns | 1764 |  | 275 | MatchExpression.with — selection + dispatch half | 2.8 | 2.7 | 0.475 |
+| walker |  | 1803 | 56 | module item body at src/match.ts:47 body 84 |  |  | 0.497 |
+| walker |  | 1860 | 57 | module item body at src/match.ts:47 body 78 |  |  | 0.526 |
+| walker |  | 1949 | 89 | module item body at src/match.ts:47 body 98 |  |  | 0.533 |
+| ns | 2017 |  | 253 | MatchExpression.when / otherwise / exhaustive bodies | 2.9 | 2.3 | 0.532 |
+| walker |  | 2048 | 99 | module item body at src/match.ts:47 body 59 |  |  | 0.562 |
+| walker |  | 2082 | 34 | README.md section #3 |  |  | 0.567 |
+| ns | 2115 |  | 98 | MatchExpression.run / returnType / narrow + defaultCatcher | 2.10 | 2.3 | 0.547 |
+| walker |  | 2288 | 206 | package identity metadata in package.json |  |  | 0.547 |
 | ns | 2477 |  | 362 | isMatching — JSDoc + PatternConstraint helper | 2.11 | 2.2 | 0.504 |
 | walker |  | 2648 | 360 | package entrypoints in package.json |  |  | 0.540 |
 | ns | 2851 |  | 374 | isMatching — JSDoc for two-arg + runtime body | 2.12 | 2.2 | 0.520 |

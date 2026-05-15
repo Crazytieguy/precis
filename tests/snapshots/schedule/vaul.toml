@@ -705,90 +705,10 @@ kind = "full"
 
 [[batches]]
 position = 25
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
-descriptor = "package identity metadata in package.json"
-cost_tokens = 178
-cum_tokens = 1490
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
-start = 31
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
-start = 39
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
-descriptor = "package entrypoints in package.json"
-cost_tokens = 174
-cum_tokens = 1664
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
-start = 5
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
-descriptor = "package runtime metadata in package.json"
-cost_tokens = 19
-cum_tokens = 1683
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
-descriptor = "package scripts in package.json"
-cost_tokens = 135
-cum_tokens = 1818
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
-start = 22
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 803, body_start_line: 805 })'
 descriptor = "export body at src/index.tsx:803 body 805"
 cost_tokens = 305
-cum_tokens = 2123
+cum_tokens = 1617
 
 [batches.content]
 kind = "lines"
@@ -818,11 +738,11 @@ end = 825
 kind = "full"
 
 [[batches]]
-position = 30
+position = 26
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 50 })'
 descriptor = "export at src/index.tsx:50"
 cost_tokens = 1170
-cum_tokens = 3293
+cum_tokens = 2787
 
 [batches.content]
 kind = "lines"
@@ -836,11 +756,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 31
+position = 27
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 111
-cum_tokens = 3404
+cum_tokens = 2898
 
 [batches.content]
 kind = "lines"
@@ -854,11 +774,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 32
+position = 28
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json" })'
 descriptor = "json config .vscode/settings.json"
 cost_tokens = 27
-cum_tokens = 3431
+cum_tokens = 2925
 
 [batches.content]
 kind = "lines"
@@ -867,6 +787,86 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json"
 start = 1
 end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package identity metadata in package.json"
+cost_tokens = 178
+cum_tokens = 3103
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 31
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 39
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 174
+cum_tokens = 3277
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 5
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 19
+cum_tokens = 3296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 135
+cum_tokens = 3431
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json"
+start = 22
+end = 30
 
 [batches.content.spans.render]
 kind = "full"

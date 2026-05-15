@@ -1,4 +1,4 @@
-Score(3000)=0.541 I=0.814 C=0.359 ns_rows≤3K=17/38 (reached=7 partial=0 missing=10)
+Score(3000)=0.573 I=0.837 C=0.392 ns_rows≤3K=17/38 (reached=7 partial=0 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -46,47 +46,47 @@ Score(3000)=0.541 I=0.814 C=0.359 ns_rows≤3K=17/38 (reached=7 partial=0 missin
 | ns | 1356 |  | 223 | KyInstance: every member's signature (location batch) | 2.3 |  | 0.641 |
 | walker |  | 1394 | 81 | readme.md section #1 |  |  | 0.641 |
 | walker |  | 1416 | 22 | readme.md section #12 |  |  | 0.641 |
-| walker |  | 1717 | 301 | package identity metadata in package.json |  |  | 0.641 |
-| ns | 1768 |  | 412 | source/index.ts named-export block | 2.4 |  | 0.561 |
-| walker |  | 1822 | 105 | package entrypoints in package.json |  |  | 0.598 |
-| walker |  | 1851 | 29 | package runtime metadata in package.json |  |  | 0.615 |
-| ns | 1953 |  | 185 | source/index.ts imports + createInstance signature + default export | 2.5 |  | 0.602 |
-| walker |  | 1954 | 103 | package scripts in package.json |  |  | 0.602 |
-| walker |  | 2049 | 95 | export names surface in source/utils/type-guards.ts |  |  | 0.602 |
-| walker |  | 2049 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.602 |
-| walker |  | 2049 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.602 |
-| walker |  | 2049 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.602 |
-| walker |  | 2049 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.602 |
-| walker |  | 2068 | 19 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.602 |
-| walker |  | 2087 | 19 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.602 |
-| walker |  | 2108 | 21 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.602 |
-| walker |  | 2129 | 21 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.603 |
-| walker |  | 2151 | 22 | readme.md section #45 |  |  | 0.603 |
-| walker |  | 2159 | 8 | listing of 'source/core' |  |  | 0.620 |
-| walker |  | 2169 | 10 | export names surface in source/core/Ky.ts |  |  | 0.620 |
-| ns | 2246 |  | 293 | source/index.ts createInstance body | 2.6 | 2.5 | 0.588 |
-| walker |  | 2281 | 112 | json config tsconfig.dist.json |  |  | 0.588 |
-| walker |  | 2417 | 136 | export body at source/errors/HTTPError.ts:5 body 11 |  |  | 0.589 |
-| walker |  | 2446 | 29 | plaintext config .gitignore |  |  | 0.589 |
-| ns | 2473 |  | 227 | Default ky() body-method behavior + body shortcuts list | 2.7 |  | 0.584 |
-| walker |  | 2477 | 31 | export at source/errors/NonError.ts:6 |  |  | 0.585 |
-| walker |  | 2543 | 66 | readme.md section #50 |  |  | 0.585 |
-| walker |  | 2614 | 71 | readme.md section #49 |  |  | 0.585 |
-| walker |  | 2661 | 47 | export doc at source/errors/ForceRetryError.ts:8 |  |  | 0.585 |
-| walker |  | 2693 | 32 | imports in source/errors/ForceRetryError.ts |  |  | 0.585 |
-| walker |  | 2866 | 173 | export body at source/errors/ForceRetryError.ts:8 body 15 |  |  | 0.586 |
-| walker |  | 2899 | 33 | readme.md section #8 |  |  | 0.586 |
-| ns | 2901 |  | 428 | core/constants.ts: feature-detection flags | 2.8 |  | 0.541 |
-| walker |  | 2923 | 24 | export names surface in source/utils/delay.ts |  |  | 0.541 |
-| walker |  | 2938 | 15 | export at source/utils/delay.ts:5 |  |  | 0.541 |
-| walker |  | 2966 | 28 | export at source/utils/delay.ts:9 |  |  | 0.541 |
-| walker |  | 2990 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.541 |
-| walker |  | 3011 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.541 |
-| walker |  | 3059 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.541 |
-| walker |  | 3096 | 37 | readme.md section #19 |  |  | 0.541 |
-| walker |  | 3162 | 66 | listing of 'test' |  |  | 0.579 |
-| ns | 3186 |  | 285 | ForceRetryOptions type + RetryMarker + retry() factory signature | 2.9 |  | 0.546 |
-| walker |  | 3194 | 32 | listing of 'test/helpers' |  |  | 0.579 |
+| walker |  | 1511 | 95 | export names surface in source/utils/type-guards.ts |  |  | 0.642 |
+| walker |  | 1511 | 0 | export at source/utils/type-guards.ts:27 |  |  | 0.642 |
+| walker |  | 1511 | 0 | export at source/utils/type-guards.ts:49 |  |  | 0.642 |
+| walker |  | 1511 | 0 | export at source/utils/type-guards.ts:71 |  |  | 0.642 |
+| walker |  | 1511 | 0 | export at source/utils/type-guards.ts:98 |  |  | 0.642 |
+| walker |  | 1530 | 19 | export body at source/utils/type-guards.ts:49 body 50 |  |  | 0.642 |
+| walker |  | 1549 | 19 | export body at source/utils/type-guards.ts:71 body 72 |  |  | 0.642 |
+| walker |  | 1570 | 21 | export body at source/utils/type-guards.ts:27 body 28 |  |  | 0.642 |
+| walker |  | 1591 | 21 | export body at source/utils/type-guards.ts:98 body 99 |  |  | 0.642 |
+| walker |  | 1613 | 22 | readme.md section #45 |  |  | 0.642 |
+| walker |  | 1621 | 8 | listing of 'source/core' |  |  | 0.665 |
+| walker |  | 1631 | 10 | export names surface in source/core/Ky.ts |  |  | 0.665 |
+| walker |  | 1743 | 112 | json config tsconfig.dist.json |  |  | 0.665 |
+| ns | 1768 |  | 412 | source/index.ts named-export block | 2.4 |  | 0.581 |
+| walker |  | 1879 | 136 | export body at source/errors/HTTPError.ts:5 body 11 |  |  | 0.582 |
+| walker |  | 1908 | 29 | plaintext config .gitignore |  |  | 0.582 |
+| walker |  | 1939 | 31 | export at source/errors/NonError.ts:6 |  |  | 0.582 |
+| ns | 1953 |  | 185 | source/index.ts imports + createInstance signature + default export | 2.5 |  | 0.572 |
+| walker |  | 2005 | 66 | readme.md section #50 |  |  | 0.572 |
+| walker |  | 2076 | 71 | readme.md section #49 |  |  | 0.572 |
+| walker |  | 2123 | 47 | export doc at source/errors/ForceRetryError.ts:8 |  |  | 0.572 |
+| walker |  | 2155 | 32 | imports in source/errors/ForceRetryError.ts |  |  | 0.572 |
+| ns | 2246 |  | 293 | source/index.ts createInstance body | 2.6 | 2.5 | 0.541 |
+| walker |  | 2328 | 173 | export body at source/errors/ForceRetryError.ts:8 body 15 |  |  | 0.543 |
+| walker |  | 2361 | 33 | readme.md section #8 |  |  | 0.543 |
+| walker |  | 2385 | 24 | export names surface in source/utils/delay.ts |  |  | 0.543 |
+| walker |  | 2400 | 15 | export at source/utils/delay.ts:5 |  |  | 0.543 |
+| walker |  | 2428 | 28 | export at source/utils/delay.ts:9 |  |  | 0.543 |
+| walker |  | 2452 | 24 | export names surface in source/utils/timeout.ts |  |  | 0.543 |
+| walker |  | 2473 | 21 | export at source/utils/timeout.ts:3 |  |  | 0.539 |
+| ns | 2473 |  | 227 | Default ky() body-method behavior + body shortcuts list | 2.7 |  | 0.539 |
+| walker |  | 2521 | 48 | export at source/utils/timeout.ts:9 |  |  | 0.539 |
+| walker |  | 2558 | 37 | readme.md section #19 |  |  | 0.539 |
+| walker |  | 2624 | 66 | listing of 'test' |  |  | 0.581 |
+| walker |  | 2656 | 32 | listing of 'test/helpers' |  |  | 0.621 |
+| ns | 2901 |  | 428 | core/constants.ts: feature-detection flags | 2.8 |  | 0.573 |
+| walker |  | 2957 | 301 | package identity metadata in package.json |  |  | 0.573 |
+| walker |  | 3062 | 105 | package entrypoints in package.json |  |  | 0.601 |
+| walker |  | 3091 | 29 | package runtime metadata in package.json |  |  | 0.614 |
+| ns | 3186 |  | 285 | ForceRetryOptions type + RetryMarker + retry() factory signature | 2.9 |  | 0.579 |
+| walker |  | 3194 | 103 | package scripts in package.json |  |  | 0.579 |
 | walker |  | 3565 | 371 | package dependencies in package.json |  |  | 0.579 |
 | walker |  | 3593 | 28 | export names surface in source/utils/is.ts |  |  | 0.579 |
 | walker |  | 3639 | 46 | imports in source/types/options.ts |  |  | 0.579 |

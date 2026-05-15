@@ -191,6 +191,7 @@ docs/
         links.md
             1→# Resources
             …
+            3→A few resources that are helpful for building with Superstruct.
             5→## Libraries
             …
     summary.md
@@ -231,52 +232,7 @@ package.json
     3→  "description": "A simple and composable way to validate data in JavaScript (and TypeScript).",
     4→  "version": "2.0.2",
     5→  "license": "MIT",
-    6→  "repository": "git://github.com/ianstormtaylor/superstruct.git",
     7→  "type": "module",
-    8→  "main": "./dist/index.cjs",
-    9→  "module": "./dist/index.mjs",
-    10→  "types": "./dist/index.d.ts",
-    11→  "sideEffects": false,
-    12→  "files": [
-    13→    "dist"
-    14→  ],
-    15→  "publishConfig": {
-    16→    "registry": "https://registry.npmjs.org"
-    17→  },
-    18→  "engines": {
-    19→    "node": ">=14.0.0"
-    20→  },
-    54→  "keywords": [
-    55→    "api",
-    56→    "array",
-    57→    "assert",
-    58→    "cast",
-    59→    "check",
-    60→    "checker",
-    61→    "collection",
-    62→    "data",
-    63→    "error",
-    64→    "express",
-    65→    "hapi",
-    66→    "interface",
-    67→    "invalid",
-    68→    "joi",
-    69→    "json",
-    70→    "list",
-    71→    "model",
-    72→    "object",
-    73→    "orm",
-    74→    "scalar",
-    75→    "schema",
-    76→    "struct",
-    77→    "throw",
-    78→    "type",
-    79→    "types",
-    80→    "valid",
-    81→    "validate",
-    82→    "validation",
-    83→    "validator"
-    84→  ]
 rollup.config.js
 src/
     error.ts
@@ -355,6 +311,45 @@ src/
             79→export function trimmed<T, S>(struct: Struct<T, S>): Struct<T, S> {
             80→  return coerce(struct, string(), (x) => x.trim())
         refinements.ts
+            8→export function empty<
+            9→  T extends string | any[] | Map<any, any> | Set<any>,
+            10→  S extends any,
+            11→>(struct: Struct<T, S>): Struct<T, S> {
+            …
+            33→export function max<T extends number | Date, S extends any>(
+            34→  struct: Struct<T, S>,
+            35→  threshold: T,
+            36→  options: {
+            37→    exclusive?: boolean
+            38→  } = {}
+            39→): Struct<T, S> {
+            …
+            55→export function min<T extends number | Date, S extends any>(
+            56→  struct: Struct<T, S>,
+            57→  threshold: T,
+            58→  options: {
+            59→    exclusive?: boolean
+            60→  } = {}
+            61→): Struct<T, S> {
+            …
+            77→export function nonempty<
+            78→  T extends string | any[] | Map<any, any> | Set<any>,
+            79→  S extends any,
+            80→>(struct: Struct<T, S>): Struct<T, S> {
+            …
+            93→export function pattern<T extends string, S extends any>(
+            94→  struct: Struct<T, S>,
+            95→  regexp: RegExp
+            96→): Struct<T, S> {
+            …
+            109→export function size<
+            …
+            146→export function refine<T, S>(
+            147→  struct: Struct<T, S>,
+            148→  name: string,
+            149→  refiner: Refiner<T>
+            150→): Struct<T, S> {
+            …
         types.ts
         utilities.ts
             247→export function struct<T>(name: string, validator: Validator): Struct<T, null> {

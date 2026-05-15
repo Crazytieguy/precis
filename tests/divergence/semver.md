@@ -13,11 +13,11 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 217 | 17 | listing of 'classes' |  |  | 0.799 |
 | walker |  | 244 | 27 | listing of 'internal' |  |  | 0.815 |
 | ns | 281 |  | 117 | package.json — bin entry and Node engines floor | 1.3 |  | 0.680 |
-| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.688 |
-| walker |  | 304 | 60 | package identity metadata in package.json |  |  | 0.725 |
-| ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.727 |
-| ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.727 |
-| walker |  | 360 | 56 | listing of 'ranges' |  |  | 0.732 |
+| walker |  | 300 | 56 | listing of 'ranges' |  |  | 0.685 |
+| ns | 303 |  | 22 | classes/ + bin/ listings | 1.4 |  | 0.692 |
+| ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.698 |
+| ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.699 |
+| walker |  | 360 | 60 | package identity metadata in package.json |  |  | 0.732 |
 | walker |  | 384 | 24 | json config .release-please-manifest.json |  |  | 0.732 |
 | ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.567 |
 | walker |  | 566 | 182 | headings outline in README.md |  |  | 0.572 |

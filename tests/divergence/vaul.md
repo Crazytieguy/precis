@@ -1,4 +1,4 @@
-Score(3000)=0.591 I=0.683 C=0.512 ns_rows≤3K=14/33 (reached=7 partial=1 missing=6)
+Score(3000)=0.823 I=0.771 C=0.878 ns_rows≤3K=14/33 (reached=10 partial=1 missing=3)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -36,19 +36,19 @@ Score(3000)=0.591 I=0.683 C=0.512 ns_rows≤3K=14/33 (reached=7 partial=1 missin
 | walker |  | 1298 | 0 | export at src/use-scale-background.ts:8 |  |  | 0.823 |
 | walker |  | 1312 | 14 | export names surface in src/use-composed-refs.ts |  |  | 0.823 |
 | ns | 1393 |  | 373 | DialogProps — every prop name (signatures only, no JSDoc) | 2.4 | 2.1 | 0.710 |
-| walker |  | 1490 | 178 | package identity metadata in package.json |  |  | 0.710 |
-| walker |  | 1664 | 174 | package entrypoints in package.json |  |  | 0.710 |
-| walker |  | 1683 | 19 | package runtime metadata in package.json |  |  | 0.711 |
-| ns | 1711 |  | 318 | Root signature — full destructuring with every default value | 2.5 | 2.4 | 0.730 |
-| walker |  | 1818 | 135 | package scripts in package.json |  |  | 0.730 |
-| ns | 2011 |  | 300 | Overlay + Content render — what data-vaul-* attributes appear on DOM | 2.6 |  | 0.681 |
-| walker |  | 2123 | 305 | export body at src/index.tsx:803 body 805 |  |  | 0.699 |
-| ns | 2405 |  | 394 | DialogProps — JSDoc for the high-traffic props | 2.7 | 2.4 | 0.638 |
-| ns | 2810 |  | 405 | DialogProps — JSDoc for the lower-traffic props | 2.8 | 2.4 | 0.591 |
-| ns | 3228 |  | 418 | NestedRoot + Portal — nested-drawer wiring + container override | 2.9 | 2.1 | 0.543 |
-| walker |  | 3293 | 1170 | export at src/index.tsx:50 |  |  | 0.756 |
-| walker |  | 3404 | 111 | json config tsconfig.json |  |  | 0.756 |
-| walker |  | 3431 | 27 | json config .vscode/settings.json |  |  | 0.756 |
+| walker |  | 1617 | 305 | export body at src/index.tsx:803 body 805 |  |  | 0.713 |
+| ns | 1711 |  | 318 | Root signature — full destructuring with every default value | 2.5 | 2.4 | 0.732 |
+| ns | 2011 |  | 300 | Overlay + Content render — what data-vaul-* attributes appear on DOM | 2.6 |  | 0.698 |
+| ns | 2405 |  | 394 | DialogProps — JSDoc for the high-traffic props | 2.7 | 2.4 | 0.637 |
+| walker |  | 2787 | 1170 | export at src/index.tsx:50 |  |  | 0.824 |
+| ns | 2810 |  | 405 | DialogProps — JSDoc for the lower-traffic props | 2.8 | 2.4 | 0.823 |
+| walker |  | 2898 | 111 | json config tsconfig.json |  |  | 0.823 |
+| walker |  | 2925 | 27 | json config .vscode/settings.json |  |  | 0.823 |
+| walker |  | 3103 | 178 | package identity metadata in package.json |  |  | 0.823 |
+| ns | 3228 |  | 418 | NestedRoot + Portal — nested-drawer wiring + container override | 2.9 | 2.1 | 0.755 |
+| walker |  | 3277 | 174 | package entrypoints in package.json |  |  | 0.755 |
+| walker |  | 3296 | 19 | package runtime metadata in package.json |  |  | 0.756 |
+| walker |  | 3431 | 135 | package scripts in package.json |  |  | 0.756 |
 | walker |  | 3465 | 34 | export names surface in src/context.ts |  |  | 0.756 |
 | walker |  | 3465 | 0 | export at src/context.ts:69 |  |  | 0.756 |
 | walker |  | 3500 | 35 | export names surface in src/use-controllable-state.ts |  |  | 0.756 |

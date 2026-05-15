@@ -24,13 +24,13 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | walker |  | 889 | 146 | headings outline in README.md |  |  | 0.680 |
 | ns | 889 |  | 222 | README quickstart code example | 2.3 |  | 0.680 |
 | ns | 912 |  | 23 | mitt() default-export signature | 2.4 | 2.1 | 0.687 |
-| ns | 989 |  | 77 | Handler / WildcardHandler type aliases | 2.5 | 2.1 | 0.679 |
-| walker |  | 1004 | 115 | package identity metadata in package.json |  |  | 0.679 |
-| walker |  | 1032 | 28 | README.md section #18 |  |  | 0.679 |
-| walker |  | 1067 | 35 | README.md section #15 |  |  | 0.679 |
-| walker |  | 1080 | 13 | README.md section #8 |  |  | 0.680 |
+| walker |  | 917 | 28 | README.md section #18 |  |  | 0.687 |
+| walker |  | 952 | 35 | README.md section #15 |  |  | 0.687 |
+| walker |  | 965 | 13 | README.md section #8 |  |  | 0.688 |
+| ns | 989 |  | 77 | Handler / WildcardHandler type aliases | 2.5 | 2.1 | 0.680 |
+| walker |  | 1045 | 80 | README.md section #1 |  |  | 0.680 |
 | ns | 1096 |  | 107 | EventHandlerMap type | 2.6 | 2.1 | 0.670 |
-| walker |  | 1160 | 80 | README.md section #1 |  |  | 0.670 |
+| walker |  | 1160 | 115 | package identity metadata in package.json |  |  | 0.670 |
 | walker |  | 1177 | 17 | README.md section #13 |  |  | 0.671 |
 | ns | 1302 |  | 206 | README API one-line method descriptions | 2.7 |  | 0.618 |
 | walker |  | 1389 | 212 | package entrypoints in package.json |  |  | 0.669 |

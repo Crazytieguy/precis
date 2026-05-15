@@ -17,32 +17,32 @@ Score(3000)=0.459 I=0.614 C=0.343 ns_rows≤3K=20/41 (reached=5 partial=2 missin
 | walker |  | 349 | 42 | headings outline in docs/help-in-depth.md |  |  | 0.769 |
 | ns | 383 |  | 83 | index.js — class exports | 2.1 |  | 0.704 |
 | walker |  | 416 | 67 | headings outline in docs/options-in-depth.md |  |  | 0.704 |
-| ns | 542 |  | 159 | index.js — imports, program, factories | 2.2 |  | 0.635 |
-| walker |  | 567 | 151 | package identity metadata in package.json |  |  | 0.635 |
-| walker |  | 607 | 40 | export names surface in lib/option.js |  |  | 0.636 |
-| walker |  | 607 | 0 | export at lib/option.js:3 |  |  | 0.636 |
-| walker |  | 617 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.636 |
-| walker |  | 628 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.636 |
-| walker |  | 639 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.636 |
-| walker |  | 650 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.636 |
-| walker |  | 661 | 11 | export member at lib/option.js:3 member 181 |  |  | 0.637 |
-| walker |  | 672 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.637 |
-| walker |  | 683 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.637 |
-| walker |  | 694 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.638 |
-| ns | 710 |  | 168 | Terminology doc — definitions | 2.3 |  | 0.584 |
-| walker |  | 720 | 26 | export at lib/option.js:268 |  |  | 0.585 |
-| walker |  | 732 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.585 |
-| walker |  | 745 | 13 | export member at lib/option.js:3 member 11 |  |  | 0.586 |
-| walker |  | 758 | 13 | export member at lib/option.js:3 member 47 |  |  | 0.586 |
-| walker |  | 771 | 13 | export member at lib/option.js:3 member 230 |  |  | 0.587 |
-| walker |  | 785 | 14 | export member at lib/option.js:3 member 100 |  |  | 0.587 |
-| ns | 791 |  | 81 | Terminology doc — example | 2.4 |  | 0.559 |
-| walker |  | 800 | 15 | export member at lib/option.js:3 member 156 |  |  | 0.559 |
-| walker |  | 815 | 15 | export member at lib/option.js:3 member 165 |  |  | 0.560 |
-| walker |  | 840 | 25 | listing of 'docs/zh-CN' |  |  | 0.560 |
-| ns | 1040 |  | 249 | Quick Start — split subcommand | 2.5 |  | 0.493 |
-| walker |  | 1077 | 237 | listing of 'examples' |  |  | 0.497 |
-| walker |  | 1094 | 17 | export member at lib/option.js:3 member 144 |  |  | 0.498 |
+| walker |  | 456 | 40 | export names surface in lib/option.js |  |  | 0.705 |
+| walker |  | 456 | 0 | export at lib/option.js:3 |  |  | 0.705 |
+| walker |  | 466 | 10 | export member at lib/option.js:3 member 203 |  |  | 0.705 |
+| walker |  | 477 | 11 | export member at lib/option.js:3 member 65 |  |  | 0.705 |
+| walker |  | 488 | 11 | export member at lib/option.js:3 member 82 |  |  | 0.705 |
+| walker |  | 499 | 11 | export member at lib/option.js:3 member 120 |  |  | 0.706 |
+| walker |  | 510 | 11 | export member at lib/option.js:3 member 181 |  |  | 0.706 |
+| walker |  | 521 | 11 | export member at lib/option.js:3 member 217 |  |  | 0.706 |
+| walker |  | 532 | 11 | export member at lib/option.js:3 member 243 |  |  | 0.707 |
+| ns | 542 |  | 159 | index.js — imports, program, factories | 2.2 |  | 0.637 |
+| walker |  | 543 | 11 | export member at lib/option.js:3 member 256 |  |  | 0.638 |
+| walker |  | 569 | 26 | export at lib/option.js:268 |  |  | 0.638 |
+| walker |  | 581 | 12 | export member at lib/option.js:3 member 132 |  |  | 0.639 |
+| walker |  | 594 | 13 | export member at lib/option.js:3 member 11 |  |  | 0.639 |
+| walker |  | 607 | 13 | export member at lib/option.js:3 member 47 |  |  | 0.640 |
+| walker |  | 620 | 13 | export member at lib/option.js:3 member 230 |  |  | 0.640 |
+| walker |  | 634 | 14 | export member at lib/option.js:3 member 100 |  |  | 0.641 |
+| walker |  | 649 | 15 | export member at lib/option.js:3 member 156 |  |  | 0.641 |
+| walker |  | 664 | 15 | export member at lib/option.js:3 member 165 |  |  | 0.642 |
+| walker |  | 689 | 25 | listing of 'docs/zh-CN' |  |  | 0.642 |
+| ns | 710 |  | 168 | Terminology doc — definitions | 2.3 |  | 0.588 |
+| ns | 791 |  | 81 | Terminology doc — example | 2.4 |  | 0.560 |
+| walker |  | 926 | 237 | listing of 'examples' |  |  | 0.565 |
+| walker |  | 943 | 17 | export member at lib/option.js:3 member 144 |  |  | 0.566 |
+| ns | 1040 |  | 249 | Quick Start — split subcommand | 2.5 |  | 0.498 |
+| walker |  | 1094 | 151 | package identity metadata in package.json |  |  | 0.498 |
 | ns | 1240 |  | 200 | Quick Start — join subcommand and parse | 2.6 |  | 0.457 |
 | walker |  | 1376 | 282 | package entrypoints in package.json |  |  | 0.436 |
 | ns | 1376 |  | 136 | esm.mjs wrapper | 2.7 |  | 0.436 |

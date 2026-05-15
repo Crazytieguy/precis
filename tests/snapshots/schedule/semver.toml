@@ -145,10 +145,24 @@ entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-o
 
 [[batches]]
 position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/ranges" })'
+descriptor = "listing of 'ranges'"
+cost_tokens = 56
+cum_tokens = 300
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/semver/ranges"
+entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
+
+[[batches]]
+position = 10
 key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 60
-cum_tokens = 304
+cum_tokens = 360
 
 [batches.content]
 kind = "lines"
@@ -168,20 +182,6 @@ end = 52
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 10
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/ranges" })'
-descriptor = "listing of 'ranges'"
-cost_tokens = 56
-cum_tokens = 360
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/semver/ranges"
-entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
 position = 11

@@ -358,13 +358,18 @@ fn identity_value(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn identity_meta_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // IdentityMeta (author/homepage/keywords/license/repository) is
+    // appendix-shape: NS authors anchor on it occasionally, but most
+    // anchor only on the core identity block. Dropped cat 0.6 → 0.4
+    // so primary-source batches reliably win the early budget across
+    // fixtures.
     let m = if ctx.is_js_workspace_member(file) {
         WORKSPACE_MEMBER_IDENTITY_FACTOR
     } else {
         1.0
     };
     let s = secondary_package_json_factor(file);
-    mix_signals(0.6 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx)) * s
+    mix_signals(0.4 * m, 0.5 * m, 0.5 * m, path_depth_factor(file, ctx)) * s
 }
 
 fn entry_value(file: &Path, ctx: &WalkCtx) -> f64 {

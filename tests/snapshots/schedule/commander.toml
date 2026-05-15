@@ -311,36 +311,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 10
-key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
-descriptor = "package identity metadata in package.json"
-cost_tokens = 151
-cum_tokens = 567
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
-start = 5
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in lib/option.js"
 cost_tokens = 40
-cum_tokens = 607
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -386,11 +360,11 @@ end = 269
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3 })'
 descriptor = "export at lib/option.js:3"
 cost_tokens = 0
-cum_tokens = 607
+cum_tokens = 456
 
 [batches.content]
 kind = "lines"
@@ -412,11 +386,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 203 })'
 descriptor = "export member at lib/option.js:3 member 203"
 cost_tokens = 10
-cum_tokens = 617
+cum_tokens = 466
 
 [batches.content]
 kind = "lines"
@@ -438,11 +412,11 @@ end = 204
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 65 })'
 descriptor = "export member at lib/option.js:3 member 65"
 cost_tokens = 11
-cum_tokens = 628
+cum_tokens = 477
 
 [batches.content]
 kind = "lines"
@@ -464,11 +438,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 82 })'
 descriptor = "export member at lib/option.js:3 member 82"
 cost_tokens = 11
-cum_tokens = 639
+cum_tokens = 488
 
 [batches.content]
 kind = "lines"
@@ -490,11 +464,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 120 })'
 descriptor = "export member at lib/option.js:3 member 120"
 cost_tokens = 11
-cum_tokens = 650
+cum_tokens = 499
 
 [batches.content]
 kind = "lines"
@@ -516,11 +490,11 @@ end = 121
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 181 })'
 descriptor = "export member at lib/option.js:3 member 181"
 cost_tokens = 11
-cum_tokens = 661
+cum_tokens = 510
 
 [batches.content]
 kind = "lines"
@@ -542,11 +516,11 @@ end = 182
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 217 })'
 descriptor = "export member at lib/option.js:3 member 217"
 cost_tokens = 11
-cum_tokens = 672
+cum_tokens = 521
 
 [batches.content]
 kind = "lines"
@@ -568,11 +542,11 @@ end = 218
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 243 })'
 descriptor = "export member at lib/option.js:3 member 243"
 cost_tokens = 11
-cum_tokens = 683
+cum_tokens = 532
 
 [batches.content]
 kind = "lines"
@@ -594,11 +568,11 @@ end = 244
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 256 })'
 descriptor = "export member at lib/option.js:3 member 256"
 cost_tokens = 11
-cum_tokens = 694
+cum_tokens = 543
 
 [batches.content]
 kind = "lines"
@@ -620,11 +594,11 @@ end = 257
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 268 })'
 descriptor = "export at lib/option.js:268"
 cost_tokens = 26
-cum_tokens = 720
+cum_tokens = 569
 
 [batches.content]
 kind = "lines"
@@ -670,11 +644,11 @@ end = 298
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 132 })'
 descriptor = "export member at lib/option.js:3 member 132"
 cost_tokens = 12
-cum_tokens = 732
+cum_tokens = 581
 
 [batches.content]
 kind = "lines"
@@ -696,11 +670,11 @@ end = 133
 kind = "ellipsis"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 11 })'
 descriptor = "export member at lib/option.js:3 member 11"
 cost_tokens = 13
-cum_tokens = 745
+cum_tokens = 594
 
 [batches.content]
 kind = "lines"
@@ -722,11 +696,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 47 })'
 descriptor = "export member at lib/option.js:3 member 47"
 cost_tokens = 13
-cum_tokens = 758
+cum_tokens = 607
 
 [batches.content]
 kind = "lines"
@@ -748,11 +722,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 230 })'
 descriptor = "export member at lib/option.js:3 member 230"
 cost_tokens = 13
-cum_tokens = 771
+cum_tokens = 620
 
 [batches.content]
 kind = "lines"
@@ -774,11 +748,11 @@ end = 231
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 100 })'
 descriptor = "export member at lib/option.js:3 member 100"
 cost_tokens = 14
-cum_tokens = 785
+cum_tokens = 634
 
 [batches.content]
 kind = "lines"
@@ -800,11 +774,11 @@ end = 101
 kind = "ellipsis"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 156 })'
 descriptor = "export member at lib/option.js:3 member 156"
 cost_tokens = 15
-cum_tokens = 800
+cum_tokens = 649
 
 [batches.content]
 kind = "lines"
@@ -826,11 +800,11 @@ end = 157
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 165 })'
 descriptor = "export member at lib/option.js:3 member 165"
 cost_tokens = 15
-cum_tokens = 815
+cum_tokens = 664
 
 [batches.content]
 kind = "lines"
@@ -852,11 +826,11 @@ end = 166
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN" })'
 descriptor = "listing of 'docs/zh-CN'"
 cost_tokens = 25
-cum_tokens = 840
+cum_tokens = 689
 
 [batches.content]
 kind = "fs"
@@ -866,11 +840,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/commander/docs/zh-CN"
 entries = ["不再推荐使用的功能.md", "可变参数的选项.md", "术语表.md"]
 
 [[batches]]
-position = 30
+position = 29
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/commander/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 237
-cum_tokens = 1077
+cum_tokens = 926
 
 [batches.content]
 kind = "fs"
@@ -880,11 +854,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/commander/examples"
 entries = ["action-this.js", "alias.js", "argument.js", "arguments-custom-processing.js", "arguments-extra.js", "color-help-replacement.mjs", "color-help.mjs", "configure-help.js", "configure-output.js", "custom-command-class.js", "custom-help", "custom-help-description", "custom-help-text.js", "custom-version", "defaultCommand.js", "deploy", "description", "global-options-added.js", "global-options-nested.js", "help-centered.mjs", "help-groups.js", "help-subcommands-usage.js", "hook.js", "man-style-help.mjs", "nestedCommands.js", "options-boolean-or-value.js", "options-common.js", "options-conflicts.js", "options-custom-processing.js", "options-defaults.js", "options-env.js", "options-extra.js", "options-implies.js", "options-negatable.js", "options-required.js", "options-variadic.js", "pass-through-options.js", "pizza", "pm", "pm-install", "pm-list.js", "positional-options.js", "split.js", "string-util.js", "thank.js"]
 
 [[batches]]
-position = 31
+position = 30
 key = 'Typescript(ExportMember { file: "/Users/yoav/projects/precis/tests/fixtures/commander/lib/option.js", start_line: 3, member_start_line: 144 })'
 descriptor = "export member at lib/option.js:3 member 144"
 cost_tokens = 17
-cum_tokens = 1094
+cum_tokens = 943
 
 [batches.content]
 kind = "lines"
@@ -904,6 +878,32 @@ end = 145
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 31
+key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/commander/package.json" })'
+descriptor = "package identity metadata in package.json"
+cost_tokens = 151
+cum_tokens = 1094
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 5
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/commander/package.json"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 32

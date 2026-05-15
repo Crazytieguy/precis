@@ -29,26 +29,6 @@ package.json
     11→		"url": "https://sindresorhus.com"
     12→	},
     13→	"type": "module",
-    14→	"exports": {
-    15→		"types": "./distribution/index.d.ts",
-    16→		"default": "./distribution/index.js"
-    17→	},
-    18→	"main": "./distribution/index.js",
-    19→	"types": "./distribution/index.d.ts",
-    20→	"sideEffects": false,
-    21→	"engines": {
-    22→		"node": ">=18"
-    23→	},
-    24→	"scripts": {
-    25→		"test": "xo && npm run build && ava",
-    26→		"debug": "PWDEBUG=1 ava --timeout=2m",
-    27→		"release": "np",
-    28→		"build": "del-cli distribution && tsc --project tsconfig.dist.json",
-    29→		"prepare": "npm run build"
-    30→	},
-    31→	"files": [
-    32→		"distribution"
-    33→	],
     34→	"keywords": [
     35→		"fetch",
     36→		"request",
@@ -119,6 +99,7 @@ readme.md
     831→Type: `object`
     833→### ky.stop
     …
+    835→A `Symbol` that can be returned by a `beforeRetry` hook to stop the retry. This will also short circuit the remaining `beforeRetry` hooks.
     864→### ky.retry(options?)
     …
     866→Force a retry from an `afterResponse` hook.
@@ -258,8 +239,15 @@ source/
         options.ts
         timeout.ts
             3→export type TimeoutOptions = {
-            …
+            4→	timeout: number;
+            5→	fetch: typeof fetch;
+            6→};
             9→export default async function timeout(
+            10→	request: Request,
+            11→	init: RequestInit,
+            12→	abortController: AbortController | undefined,
+            13→	options: TimeoutOptions,
+            14→): Promise<Response> {
             …
         type-guards.ts
             27→export function isKyError(error: unknown): error is HTTPError | TimeoutError | ForceRetryError {
@@ -272,6 +260,27 @@ source/
             99→	return error instanceof ForceRetryError || ((error as any)?.name === ForceRetryError.name);
         types.ts
 test/
+    browser.ts
+    bytes.ts
+    context.ts
+    fetch.ts
+    formdata-searchparams.ts
+    headers.ts
+    helpers/
+        create-http-test-server.ts
+        create-large-file.ts
+        index.ts
+        parse-body.ts
+        with-page.ts
+        with-performance.ts
+    hooks.ts
+    http-error.ts
+    main.ts
+    memory-leak.ts
+    methods.ts
+    prefix-url.ts
+    retry.ts
+    stream.ts
 tsconfig.dist.json
     1→{
     2→	"extends": "./tsconfig",
