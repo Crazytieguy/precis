@@ -54,6 +54,17 @@ docs/
         21→release = v.public
         23→language = "en"
         25→exclude_patterns = ["_build"]
+        26→pygments_style = "sphinx"
+        27→autodoc_default_options = {"members": True}
+        28→autodoc_type_aliases = {
+        29→    "TypeCheckerCallable": "typeguard.TypeCheckerCallable",
+        30→    "TypeCheckFailCallback": "typeguard.TypeCheckFailCallback",
+        31→    "TypeCheckLookupCallback": "typeguard.TypeCheckLookupCallback",
+        32→}
+        33→todo_include_todos = False
+        35→html_theme = "sphinx_rtd_theme"
+        36→htmlhelp_basename = "typeguarddoc"
+        38→intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
     contributing.rst
     extending.rst
     features.rst
@@ -99,7 +110,13 @@ src/
         _config.py
             11→T = TypeVar("T")
             14→class ForwardRefPolicy(Enum):
-            …
+            15→    """
+            16→    Defines how unresolved forward references are handled.
+            18→    Members:
+            20→    * ``ERROR``: propagate the :exc:`NameError` when the forward reference lookup fails
+            21→    * ``WARN``: emit a :class:`~.TypeHintWarning` if the forward reference lookup fails
+            22→    * ``IGNORE``: silently skip checks for unresolveable forward references
+            23→    """
             25→    ERROR = auto()
             26→    WARN = auto()
             27→    IGNORE = auto()
@@ -174,45 +191,6 @@ src/
             …
         _functions.py
         _importhook.py
-            40→P = ParamSpec("P")
-            41→T = TypeVar("T")
-            45→def _call_with_frames_removed(
-            46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
-            47→) -> T:
-            48→    return f(*args, **kwargs)
-            51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
-            52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
-            55→class TypeguardLoader(SourceFileLoader):
-            56→    @staticmethod
-            …
-            99→    def exec_module(self, module: ModuleType) -> None:
-            100→        # Use a custom optimization marker – the import lock should make this monkey
-            101→        # patch safe
-            109→class TypeguardFinder(MetaPathFinder):
-            …
-            120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
-            …
-            124→    def find_spec(
-            …
-            138→    def should_instrument(self, module_name: str) -> bool:
-            …
-            156→class ImportHookManager:
-            157→    """
-            158→    A handle that can be used to uninstall the Typeguard import hook.
-            159→    """
-            161→    def __init__(self, hook: MetaPathFinder):
-            162→        self.hook = hook
-            164→    def __enter__(self) -> None:
-            165→        pass
-            167→    def __exit__(
-            …
-            175→    def uninstall(self) -> None:
-            176→        """Uninstall the import hook."""
-            183→def install_import_hook(
-            184→    packages: Iterable[str] | None = None,
-            185→    *,
-            186→    cls: type[TypeguardFinder] = TypeguardFinder,
-            187→) -> ImportHookManager:
         _memo.py
             1→from __future__ import annotations
             3→from typing import Any
@@ -251,3 +229,22 @@ src/
         _utils.py
         py.typed
 tests/
+    __init__.py
+    conftest.py
+    deferredannos.py
+    dummymodule.py
+    dummymodule_py312.py
+    mypy/
+        negative.py
+        positive.py
+        test_type_annotations.py
+    test_checkers.py
+    test_importhook.py
+    test_instrumentation.py
+    test_plugins.py
+    test_pytest_plugin.py
+    test_suppression.py
+    test_transformer.py
+    test_typechecked.py
+    test_utils.py
+    test_warn_on_error.py

@@ -1013,7 +1013,16 @@ fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count:
     // `__init__.py` carries the package's public surface; non-init
     // modules are implementation detail and their names surface should
     // not crowd README / public-export batches in the early budget.
-    let cat = if is_init_py(file) { 0.65 } else { 0.5 };
+    // Files inside a deeply-nested subdir (depth ≥ 3 from root, e.g.
+    // `microbootstrap/instruments/cors_instrument.py`) are usually
+    // concrete impls of an abstract base — take an extra step down.
+    let cat = if is_init_py(file) {
+        0.65
+    } else if ctx.depth_from_root(file) >= 3 {
+        0.4
+    } else {
+        0.5
+    };
     mix_signals(cat, 0.55, 0.35, python_depth_factor(file, ctx))
         * names_surface_chunk_factor(chunk_index, chunk_count)
 }
