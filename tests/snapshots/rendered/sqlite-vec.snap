@@ -70,12 +70,6 @@ benchmarks/
     README.md
     exhaustive-memory/
     micro/
-        .gitignore
-        Cargo.lock
-        Cargo.toml
-        benches/
-        build.rs
-        src/
     profiling/
     self-params/
 bindings/
@@ -329,6 +323,8 @@ sqlite-dist.toml
     7→authors = ["Alex Garcia"]
     8→git_tag_format = "v$VERSION"
 sqlite-vec.c
+    9807→    {"vec0",          &vec0Module,          NULL, NULL},
+    9808→    {"vec_each",      &vec_eachModule,      NULL, NULL},
 sqlite-vec.h.tmpl
 test.sql
 tests/

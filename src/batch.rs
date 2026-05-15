@@ -379,6 +379,19 @@ pub enum CKey {
     /// Doc comment(s) immediately above a declaration. Predecessor:
     /// matching [`CKey::Decl`]. Priority 3.x.
     DeclDoc { file: PathBuf, start_line: usize },
+    /// Rows of a `static struct { ... } X[] = { ... };` registration
+    /// table declared inside a function body — captures the table's
+    /// opening header line, one row per inner initializer, and the
+    /// closing `};`. Predecessor: enclosing [`CKey::Decl`]. Sibling of
+    /// [`CKey::DeclBody`] for the same function; the two are kept
+    /// disjoint (DeclBody excludes the table's row range). Priority
+    /// 2.x — sqlite-vec's `aFunc[]` / `aMod[]` are the load-bearing
+    /// case.
+    InitTableRows {
+        file: PathBuf,
+        start_line: usize,
+        end_line: usize,
+    },
 }
 
 /// Go batches. Mirrors the C walker shape — per-file orientation
@@ -1222,6 +1235,18 @@ impl CKey {
                     "c decl doc at {}:{}",
                     display_path(file, fixture_root),
                     start_line
+                )
+            }
+            CKey::InitTableRows {
+                file,
+                start_line,
+                end_line,
+            } => {
+                format!(
+                    "c init table rows at {}:{}-{}",
+                    display_path(file, fixture_root),
+                    start_line,
+                    end_line
                 )
             }
         }
