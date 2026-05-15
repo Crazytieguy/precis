@@ -189,10 +189,9 @@ impl Scores {
         self.vector[PRIMARY_BUDGET_INDEX].score
     }
 
-    /// One-line headline rendering: the same first line emitted at the
-    /// top of `tests/divergence/<fixture>.md`. Used by the divergence
-    /// report and by the validation-tier baseline (which only commits
-    /// this line — no per-row table).
+    /// Single line that appears verbatim as the first line of any
+    /// divergence report (and as the entire contents of a
+    /// validation-tier baseline).
     pub fn headline(&self) -> String {
         let primary = &self.vector[PRIMARY_BUDGET_INDEX];
         format!(

@@ -2,20 +2,9 @@
 // test consumers. Includers must define a `with_fixtures!` macro that accepts
 // `($dir, $url, $rev)` tuples.
 //
-// Listing here only declares a fixture as cloneable. Fixtures become *active*
-// snapshot targets when added to `tests/snapshots.rs::FIXTURES` — typically
-// after a North Star at `tests/north-stars/<name>.md` is in place. See
-// `Skill(add-fixture)` for the full integration flow.
-//
-// The list is split into two tiers:
-//
-//   - **Training fixtures** drive walker / value calibration via the
-//     divergence reports in `tests/divergence/`. Registered in
-//     `tests/fixture_baselines.rs` with `per_fixture_tests!`.
-//   - **Validation fixtures** are held out: they get a North Star and a
-//     single Score(3000) line in `tests/validation/<name>.md`, but no
-//     per-row divergence report — the calibration loop must not target
-//     them. Registered with `per_validation_fixture_tests!`.
+// Declaring a fixture here only makes it cloneable. To activate it, register
+// it in `tests/fixture_baselines.rs` with `per_fixture_tests!` (training) or
+// `per_validation_fixture_tests!` (held-out). See `Skill(add-fixture)`.
 
 with_fixtures! {
     // Rust
@@ -93,9 +82,7 @@ with_fixtures! {
     // Lua
     ("middleclass",         "https://github.com/kikito/middleclass.git",          "359f0e27"),
 
-    // ====================================================================
     // Validation fixtures (held out — see per_validation_fixture_tests!)
-    // ====================================================================
 
     // Python (validation)
     ("aiogram",             "https://github.com/aiogram/aiogram.git",             "f6b2cd53"),
