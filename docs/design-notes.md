@@ -300,13 +300,6 @@ than a single fixture but the gradient is shallow:
 
 What did **not** generalize cleanly and is unlikely to without more
 structural work:
-
-- **Go `DeclNames` chunking** — split tea.go / context.go / command.go
-  into chunks. The chunked-first-chunk factor 0.9 ended up regressing
-  xxhash (29 decls, just over a 24-decl threshold) because the
-  unchunked surface was tuned to win the ratio race. Reverted; the
-  large-file case (tea.go's decl names never fit at 10K) remains
-  unaddressed.
 - **JS / TS `module.exports` CommonJS** — audiobookshelf's
   `server/Server.js` is CommonJS and the TS walker doesn't recognize
   `class Server` from a `class_declaration` outside an `export`
@@ -320,6 +313,69 @@ structural work:
   threshold can't distinguish "lots of medium-depth H3 splits" from
   "kitchen-sink documentation". Audiobookshelf's 0.45-ish ceiling
   remains a structural limit.
+
+## v0.2 Go-walker batch (May 2026)
+
+A second wave of changes focused on the Go walker after the broader
+fixture corpus surfaced several Go-shaped patterns the walker couldn't
+deliver cleanly. Each generalizes an existing pattern from another
+walker rather than adding fixture-specific knobs:
+
+- **`go_entry_factor`** in `walker::go` parallels Rust's
+  `entrypoint_boost`. A root-level Go file qualifies for a 1.4×
+  multiplier on every per-file batch value when either (a) the stem
+  matches the file's `package` clause (`tea.go` in `package tea`,
+  `cobra.go` in `package cobra`) or (b) the file holds an exported
+  single-spec `type X struct { … }` with ≥ 60 body lines and ≥ 3
+  blank-line-separated field groups (cobra's `command.go` is the
+  canonical case — package-name doesn't match but the API anchor
+  lives there). Depth-1-only is load-bearing: monorepos with many
+  internal/sub-packages each have a package-name-matched file at
+  depth 2+ and a blanket boost crowds the early budget.
+- **`GoKey::PackageDocLede`** — the contiguous `//` comment block
+  above a file's `package` clause emits as its own batch (analogous
+  to TS's `ModuleDocLede`, C's `HeaderBanner`). Folding it into
+  `PackageImports` made the combined batch too big to schedule
+  early on API-anchor files. Gated to entry-shaped files + `doc.go`
+  so internal subpackage doc ledes (which carry low orientation
+  value) don't crowd the schedule.
+- **`GoKey::DeclNames` chunking** — re-introduced with a dual gate
+  (decls > 30 AND lines > 850). Past attempts split at 24 alone and
+  regressed `xxhash` (29 decls); the line-count co-threshold keeps
+  moderately-sized files (gin.go 57 × 832, migrate.go 35 × 979)
+  unchunked. Chunk size 8 (smaller than the universal 12) because
+  Go method-decl name rows render long (`func (c *Cmd) Foo(...)`
+  ~22 tokens each).
+- **`GoKey::StructFieldGroup`** — when `grouped_type_info` finds an
+  oversized struct with multiple blank-line groups, emit per-group
+  batches with the parent `Decl` as predecessor; the parent Decl's
+  rendered span is trimmed to just the `type X struct {` header
+  row + `}` closer row so child group spans don't overlap as
+  non-ancestor.
+
+What did **not** generalize:
+
+- **Per-group "leading bump"** for the first 1-3 field groups —
+  cobra's leading `Use` field group has a doc comment so big that
+  even with the bump the group is too costly to fit early; bubbletea
+  regressed because its `View` struct's leading group also has a
+  big doc and the bump displaced NS-aligned content from sibling
+  files. Reverted.
+- **TS class member splitting for TS files (not just JS)** — split
+  logic is gated on `is_js_file`; enabling for TS didn't fire the
+  split (max class-member count 40 < p-queue's PQueue 41) and a
+  bump to 50 risks over-fragmenting other TS classes.
+- **App-style JS entrypoint surface fallback** — when an entrypoint
+  has zero re-exports AND zero exports, expand surface via all
+  requires. Helps dockly (+0.06) and audiobookshelf (+0.02) but
+  regressed vaul (-0.23), d2ts (-0.07), semver (-0.15) — vaul has
+  local `export function` declarations without re-exports, so
+  detecting "app" vs "lib" by no-exports is too coarse. Reverted.
+- **Python boost based on `from .X import` re-exports** — regressed
+  pluggy / typeguard / htmy / peepdb where the re-exported modules
+  weren't NS-relevant anchors.
+- **Asset-only-subtree damp** at depth ≥ 3 — regressed beets
+  (test/rsrc subtree had NS-relevant per-fixture markers).
 
 ## Min-tokens lower bound
 
