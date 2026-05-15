@@ -207,6 +207,62 @@ set rather than land it on the first try.
   fixture-root-relative paths in the walker state. Not blocking; the
   user-visible artifact (divergence reports) is clean.
 
+## NS-rank vs walker-rank: the 3K headline measures what the NS ranks, not what the walker delivers
+
+`Score(3000)` evaluates only NS rows whose **NS** cumulative-tokens fall
+within 3000 (`A_3K`). Pushing content earlier in the walker's schedule
+does not lift the score if the matching NS row is ranked past 3K. Two
+load-bearing instances observed during the v0.2 batch:
+
+- **sqlite-vec aFunc[] / aMod[] are at NS tier 2.7 / 2.8** (NS_cum
+  3242 / 3380). The Phase-4 `CKey::InitTableRows` recognizer surfaces
+  them at walker_cum < 200, but the 3K score doesn't change — those
+  rows aren't in `A_3K`. The recognizer pays off at the user-facing
+  4K+ budgets, not the 3K headline.
+
+  Implication: any future "lift sqlite-vec's 3K score" work should
+  target the actual `A_3K` rows (mostly README / ARCHITECTURE.md / site
+  docs / TODO + two "location roster" rows for scalar-fn definitions
+  and the init entrypoint). Registration tables are the wrong shape.
+
+- **NS placement decisions are sticky.** NSes are frozen; the walker
+  iterates against them. When the metric is misaligned with what
+  walker work is feasible at a given budget, the answer is either (a)
+  pick walker work that matches the metric's view of the budget, or
+  (b) accept the score gap and surface the new content at larger
+  budgets. Don't bump `value` to force a batch into a budget tier
+  where it doesn't earn `A_B` credit — it just displaces walker
+  batches that do.
+
+## Python facade-API method-sig surfacing — simple value lever is too narrow
+
+For py3xui-style facade APIs (`ClientApi` / `AsyncClientApi`),
+`PythonKey::MethodSigs` batches currently land at rank ~225 /
+cum_tokens ~8500, far outside any reasonable 3K prefix. A pre-commit
+sweep over `k ∈ {0.3 … 2.0}` of a `tanh`-bounded arg-richness multiplier
+on `method_sigs_value` failed to lift py3xui's Score(3000) while
+canary Python fixtures (`pluggy`, `microbootstrap`, `typeguard`,
+`htmy`, `tomli`) regressed.
+
+Concretely: a +50% value bump on MethodSigs cannot move a 215-token
+batch from rank 225 (cum 8488) to inside rank ~50 (cum < 3000) when
+the surrounding 50 batches share comparable value/cost ratios — the
+gradient is too narrow.
+
+If revisited, options to consider before another sweep:
+- **Drop `concrete_impl_sibling_factor` on the MethodSigs path** when
+  the chunk's classes look facade-shaped (≥6 methods with non-self
+  args). That 0.6 multiplier is the largest single demotion currently
+  applied; py3xui's API directory has no `base.py` but does have a
+  parallel async sibling layout that may trigger it.
+- **Restructure MethodSigs predecessor** for arg-rich classes — make
+  it a top-level sibling of `DeclNames` rather than a descendant, so
+  it doesn't have to wait for the DeclNames chunk to schedule first.
+  Larger architectural change.
+
+Don't re-attempt the simple multiplier in isolation; the sweep already
+demonstrated it's structurally insufficient.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost

@@ -1053,50 +1053,6 @@ int init(void) {
     }
 
     #[test]
-    #[ignore = "diagnostic only; reads fixture data"]
-    fn c_init_table_rows_diagnostic() {
-        // Quick visibility into where the recognizer fires. Run with
-        // `cargo t c_init_table_rows_diagnostic -- --ignored`.
-        for fixture in &[
-            ("sqlite-vec/sqlite-vec.c", "sqlite3_vec_init"),
-            ("soluna/src/entry.c", "luaopen_soluna_app"),
-            ("soluna/src/render.c", "luaopen_soluna_render"),
-        ] {
-            let path = std::env::current_dir()
-                .unwrap()
-                .join("tests/fixtures")
-                .join(fixture.0);
-            if !path.exists() {
-                continue;
-            }
-            let source = std::fs::read_to_string(&path).unwrap();
-            let mut parser = tree_sitter::Parser::new();
-            parser
-                .set_language(&tree_sitter_c::LANGUAGE.into())
-                .unwrap();
-            let tree = parser.parse(&source, None).unwrap();
-            let decls = find_decls(&tree, &source, &path);
-            let mut total = 0;
-            for (node, info) in &decls {
-                if info.kind != DeclKind::FunctionDef {
-                    continue;
-                }
-                let tables = find_init_tables_in_body(*node);
-                if !tables.is_empty() {
-                    eprintln!(
-                        "{}: fn at line {} has {} init tables",
-                        fixture.0,
-                        info.start_line,
-                        tables.len()
-                    );
-                    total += tables.len();
-                }
-            }
-            eprintln!("  ({}: {total} tables total)", fixture.0);
-        }
-    }
-
-    #[test]
     fn c_init_table_rows_disjoint_from_decl_body() {
         // The DeclBody for the enclosing function MUST exclude rows
         // claimed by InitTableRows (siblings under the same Decl
