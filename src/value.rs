@@ -302,6 +302,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
         "CHANGELOG",
         "CHANGES",
         "HISTORY",
+        "NEWS",
         "RELEASING",
         "RELEASES",
         "RELEASE_NOTES",
@@ -314,6 +315,7 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
         "CODEOWNERS",
         "SUPPORT",
         "GOVERNANCE",
+        "FAQ",
     ]
     .iter()
     .any(|s| stem.eq_ignore_ascii_case(s))
@@ -325,9 +327,14 @@ pub fn is_peripheral_doc(target: &std::path::Path) -> bool {
     // load-bearing for orienting on the current API. NS authors
     // universally treat these as tier-2 reference at best. Matched as
     // substrings so `v3-to-v4-migration-guide.md`, `migrate-from-foo.md`,
-    // `deprecated.md`, `deprecation-policy.rst` are all caught.
+    // `deprecated.md`, `deprecation-policy.rst`, `UPGRADE_GUIDE_V2.md`
+    // are all caught.
     let lower = stem.to_ascii_lowercase();
-    if lower.contains("migration") || lower.contains("migrate") || lower.contains("deprecated") {
+    if lower.contains("migration")
+        || lower.contains("migrate")
+        || lower.contains("deprecated")
+        || lower.contains("upgrade")
+    {
         return true;
     }
     false
@@ -595,6 +602,14 @@ mod tests {
             "CODEOWNERS.md",
             "SUPPORT.md",
             "GOVERNANCE.md",
+            // NEWS — release-notes content; jq's NEWS.md, htop's NEWS.
+            "NEWS.md",
+            "news.rst",
+            // FAQ — rich's .faq/FAQ.md.
+            "FAQ.md",
+            // Upgrade / migration guides — bubbletea's UPGRADE_GUIDE_V2.md.
+            "UPGRADE_GUIDE_V2.md",
+            "upgrade-guide.md",
         ] {
             assert_eq!(
                 non_essential_factor(&root.join(name), root),

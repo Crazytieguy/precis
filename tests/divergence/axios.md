@@ -223,106 +223,104 @@ Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | ns | 6756 |  | 351 | lib/core/mergeConfig.js — signature + null-proto bootstrap | 3.3 | 3.2 | 0.273 |
 | walker |  | 6777 | 80 | headings outline in docs/fr/pages/getting-started/features.md |  |  | 0.273 |
 | walker |  | 6863 | 86 | README.md section #65 |  |  | 0.273 |
-| walker |  | 6986 | 123 | headings outline in docs/pages/getting-started/upgrade-guide.md |  |  | 0.273 |
-| walker |  | 7067 | 81 | headings outline in docs/es/pages/getting-started/features.md |  |  | 0.273 |
-| walker |  | 7090 | 23 | export names surface in lib/core/buildFullPath.js |  |  | 0.273 |
-| walker |  | 7090 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.273 |
+| walker |  | 6944 | 81 | headings outline in docs/es/pages/getting-started/features.md |  |  | 0.273 |
+| walker |  | 6967 | 23 | export names surface in lib/core/buildFullPath.js |  |  | 0.273 |
+| walker |  | 6967 | 0 | export at lib/core/buildFullPath.js:16 |  |  | 0.273 |
+| walker |  | 7030 | 63 | export at index.d.ts:251 |  |  | 0.273 |
 | ns | 7133 |  | 377 | lib/defaults/index.js — defaults shell (no transform bodies) | 3.4 |  | 0.264 |
-| walker |  | 7153 | 63 | export at index.d.ts:251 |  |  | 0.264 |
 | ns | 7204 |  | 71 | lib/defaults/transitional.js — full file | 3.5 |  | 0.262 |
-| walker |  | 7329 | 176 | package dependencies in docs/package.json |  |  | 0.262 |
-| walker |  | 7412 | 83 | headings outline in docs/zh/pages/getting-started/features.md |  |  | 0.262 |
-| walker |  | 7424 | 12 | listing of 'tests/smoke/cjs' |  |  | 0.262 |
-| walker |  | 7448 | 24 | export names surface in lib/adapters/fetch.js |  |  | 0.262 |
-| walker |  | 7448 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.262 |
-| walker |  | 7464 | 16 | listing of 'docs/patches' |  |  | 0.262 |
-| walker |  | 7477 | 13 | listing of 'tests/smoke/deno' |  |  | 0.262 |
-| ns | 7495 |  | 291 | lib/core/settle.js — full file | 3.6 |  | 0.256 |
-| walker |  | 7512 | 35 | listing of 'tests/smoke/deno/tests' |  |  | 0.256 |
-| walker |  | 7561 | 49 | export at lib/defaults/transitional.js:3 |  |  | 0.263 |
-| walker |  | 7588 | 27 | module item at lib/cancel/CanceledError.js:5 |  |  | 0.263 |
-| walker |  | 7625 | 37 | docs/pages/getting-started/first-steps.md section #0 |  |  | 0.263 |
-| walker |  | 7652 | 27 | export names surface in lib/adapters/http.js |  |  | 0.263 |
-| walker |  | 7726 | 74 | CONTRIBUTORS.md section #1 |  |  | 0.263 |
+| walker |  | 7206 | 176 | package dependencies in docs/package.json |  |  | 0.262 |
+| walker |  | 7289 | 83 | headings outline in docs/zh/pages/getting-started/features.md |  |  | 0.262 |
+| walker |  | 7301 | 12 | listing of 'tests/smoke/cjs' |  |  | 0.262 |
+| walker |  | 7325 | 24 | export names surface in lib/adapters/fetch.js |  |  | 0.262 |
+| walker |  | 7325 | 0 | export at lib/adapters/fetch.js:448 |  |  | 0.262 |
+| walker |  | 7341 | 16 | listing of 'docs/patches' |  |  | 0.262 |
+| walker |  | 7354 | 13 | listing of 'tests/smoke/deno' |  |  | 0.262 |
+| walker |  | 7389 | 35 | listing of 'tests/smoke/deno/tests' |  |  | 0.262 |
+| walker |  | 7438 | 49 | export at lib/defaults/transitional.js:3 |  |  | 0.269 |
+| walker |  | 7465 | 27 | module item at lib/cancel/CanceledError.js:5 |  |  | 0.269 |
+| ns | 7495 |  | 291 | lib/core/settle.js — full file | 3.6 |  | 0.263 |
+| walker |  | 7502 | 37 | docs/pages/getting-started/first-steps.md section #0 |  |  | 0.263 |
+| walker |  | 7529 | 27 | export names surface in lib/adapters/http.js |  |  | 0.263 |
+| walker |  | 7603 | 74 | CONTRIBUTORS.md section #1 |  |  | 0.263 |
 | ns | 7782 |  | 287 | lib/core/transformData.js — full file | 3.7 |  | 0.257 |
-| walker |  | 7916 | 190 | listing of 'lib/helpers' |  |  | 0.315 |
+| walker |  | 7793 | 190 | listing of 'lib/helpers' |  |  | 0.315 |
+| walker |  | 7859 | 66 | README headline in lib/helpers/README.md |  |  | 0.315 |
+| walker |  | 7885 | 26 | lib/helpers/README.md section #0 |  |  | 0.315 |
+| walker |  | 7893 | 8 | export names surface in lib/helpers/null.js |  |  | 0.315 |
+| walker |  | 7901 | 8 | export names surface in lib/helpers/throttle.js |  |  | 0.315 |
+| walker |  | 7910 | 9 | export names surface in lib/helpers/callbackify.js |  |  | 0.315 |
+| walker |  | 7919 | 9 | export names surface in lib/helpers/composeSignals.js |  |  | 0.315 |
+| walker |  | 7928 | 9 | export names surface in lib/helpers/readBlob.js |  |  | 0.315 |
+| walker |  | 7937 | 9 | export names surface in lib/helpers/speedometer.js |  |  | 0.315 |
 | ns | 7942 |  | 160 | lib/core/AxiosHeaders.js — instance + static method signatures | 3.8 |  | 0.312 |
-| walker |  | 7982 | 66 | README headline in lib/helpers/README.md |  |  | 0.312 |
-| walker |  | 8008 | 26 | lib/helpers/README.md section #0 |  |  | 0.312 |
-| walker |  | 8016 | 8 | export names surface in lib/helpers/null.js |  |  | 0.312 |
-| walker |  | 8024 | 8 | export names surface in lib/helpers/throttle.js |  |  | 0.312 |
-| walker |  | 8033 | 9 | export names surface in lib/helpers/callbackify.js |  |  | 0.312 |
-| walker |  | 8042 | 9 | export names surface in lib/helpers/composeSignals.js |  |  | 0.312 |
-| walker |  | 8051 | 9 | export names surface in lib/helpers/readBlob.js |  |  | 0.312 |
-| walker |  | 8060 | 9 | export names surface in lib/helpers/speedometer.js |  |  | 0.312 |
-| walker |  | 8069 | 9 | export names surface in lib/helpers/validator.js |  |  | 0.312 |
-| walker |  | 8087 | 18 | export at lib/helpers/validator.js:109 |  |  | 0.312 |
-| walker |  | 8097 | 10 | export names surface in lib/helpers/AxiosTransformStream.js |  |  | 0.312 |
-| walker |  | 8107 | 10 | export names surface in lib/helpers/HttpStatusCode.js |  |  | 0.312 |
-| walker |  | 8117 | 10 | export names surface in lib/helpers/toFormData.js |  |  | 0.312 |
-| walker |  | 8128 | 11 | export names surface in lib/helpers/AxiosURLSearchParams.js |  |  | 0.312 |
-| walker |  | 8139 | 11 | export names surface in lib/helpers/formDataToJSON.js |  |  | 0.312 |
-| walker |  | 8150 | 11 | export names surface in lib/helpers/formDataToStream.js |  |  | 0.312 |
-| walker |  | 8162 | 12 | export names surface in lib/helpers/ZlibHeaderTransformStream.js |  |  | 0.312 |
+| walker |  | 7946 | 9 | export names surface in lib/helpers/validator.js |  |  | 0.312 |
+| walker |  | 7964 | 18 | export at lib/helpers/validator.js:109 |  |  | 0.312 |
+| walker |  | 7974 | 10 | export names surface in lib/helpers/AxiosTransformStream.js |  |  | 0.312 |
+| walker |  | 7984 | 10 | export names surface in lib/helpers/HttpStatusCode.js |  |  | 0.312 |
+| walker |  | 7994 | 10 | export names surface in lib/helpers/toFormData.js |  |  | 0.312 |
+| walker |  | 8005 | 11 | export names surface in lib/helpers/AxiosURLSearchParams.js |  |  | 0.312 |
+| walker |  | 8016 | 11 | export names surface in lib/helpers/formDataToJSON.js |  |  | 0.312 |
+| walker |  | 8027 | 11 | export names surface in lib/helpers/formDataToStream.js |  |  | 0.312 |
+| walker |  | 8039 | 12 | export names surface in lib/helpers/ZlibHeaderTransformStream.js |  |  | 0.312 |
+| walker |  | 8052 | 13 | export names surface in lib/helpers/resolveConfig.js |  |  | 0.312 |
+| walker |  | 8052 | 0 | export at lib/helpers/resolveConfig.js:38 |  |  | 0.312 |
+| walker |  | 8065 | 13 | export names surface in lib/helpers/spread.js |  |  | 0.312 |
+| walker |  | 8065 | 0 | export at lib/helpers/spread.js:24 |  |  | 0.312 |
+| walker |  | 8079 | 14 | export names surface in lib/helpers/cookies.js |  |  | 0.312 |
+| walker |  | 8093 | 14 | export names surface in lib/helpers/isURLSameOrigin.js |  |  | 0.312 |
+| walker |  | 8107 | 14 | export names surface in lib/helpers/parseHeaders.js |  |  | 0.312 |
+| walker |  | 8107 | 0 | export at lib/helpers/parseHeaders.js:41 |  |  | 0.312 |
+| walker |  | 8121 | 14 | export names surface in lib/helpers/parseProtocol.js |  |  | 0.312 |
+| walker |  | 8121 | 0 | export at lib/helpers/parseProtocol.js:3 |  |  | 0.312 |
+| walker |  | 8136 | 15 | export names surface in lib/helpers/isAbsoluteURL.js |  |  | 0.312 |
+| walker |  | 8136 | 0 | export at lib/helpers/isAbsoluteURL.js:10 |  |  | 0.312 |
+| walker |  | 8151 | 15 | export names surface in lib/helpers/isAxiosError.js |  |  | 0.312 |
+| walker |  | 8151 | 0 | export at lib/helpers/isAxiosError.js:12 |  |  | 0.312 |
 | ns | 8163 |  | 221 | lib/core/AxiosHeaders.js — accessor registration list | 3.9 | 3.8 | 0.306 |
-| walker |  | 8175 | 13 | export names surface in lib/helpers/resolveConfig.js |  |  | 0.306 |
-| walker |  | 8175 | 0 | export at lib/helpers/resolveConfig.js:38 |  |  | 0.306 |
-| walker |  | 8188 | 13 | export names surface in lib/helpers/spread.js |  |  | 0.306 |
-| walker |  | 8188 | 0 | export at lib/helpers/spread.js:24 |  |  | 0.306 |
-| walker |  | 8202 | 14 | export names surface in lib/helpers/cookies.js |  |  | 0.306 |
-| walker |  | 8216 | 14 | export names surface in lib/helpers/isURLSameOrigin.js |  |  | 0.306 |
-| walker |  | 8230 | 14 | export names surface in lib/helpers/parseHeaders.js |  |  | 0.306 |
-| walker |  | 8230 | 0 | export at lib/helpers/parseHeaders.js:41 |  |  | 0.306 |
-| walker |  | 8244 | 14 | export names surface in lib/helpers/parseProtocol.js |  |  | 0.306 |
-| walker |  | 8244 | 0 | export at lib/helpers/parseProtocol.js:3 |  |  | 0.306 |
-| walker |  | 8259 | 15 | export names surface in lib/helpers/isAbsoluteURL.js |  |  | 0.306 |
-| walker |  | 8259 | 0 | export at lib/helpers/isAbsoluteURL.js:10 |  |  | 0.306 |
-| walker |  | 8274 | 15 | export names surface in lib/helpers/isAxiosError.js |  |  | 0.306 |
-| walker |  | 8274 | 0 | export at lib/helpers/isAxiosError.js:12 |  |  | 0.306 |
-| walker |  | 8291 | 17 | export body at lib/helpers/isAxiosError.js:12 body 13 |  |  | 0.306 |
-| walker |  | 8307 | 16 | export names surface in lib/helpers/bind.js |  |  | 0.306 |
-| walker |  | 8307 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.306 |
-| walker |  | 8323 | 16 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.306 |
-| walker |  | 8323 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.306 |
-| walker |  | 8340 | 17 | export names surface in lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.306 |
-| walker |  | 8340 | 0 | export at lib/helpers/estimateDataURLDecodedBytes.js:10 |  |  | 0.306 |
-| walker |  | 8358 | 18 | export names surface in lib/helpers/combineURLs.js |  |  | 0.306 |
-| walker |  | 8358 | 0 | export at lib/helpers/combineURLs.js:11 |  |  | 0.306 |
-| walker |  | 8376 | 18 | export names surface in lib/helpers/deprecatedMethod.js |  |  | 0.306 |
-| walker |  | 8376 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.306 |
-| walker |  | 8395 | 19 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.306 |
-| walker |  | 8395 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.306 |
-| walker |  | 8415 | 20 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.306 |
-| walker |  | 8415 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.306 |
-| walker |  | 8442 | 27 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.306 |
+| walker |  | 8168 | 17 | export body at lib/helpers/isAxiosError.js:12 body 13 |  |  | 0.306 |
+| walker |  | 8184 | 16 | export names surface in lib/helpers/bind.js |  |  | 0.306 |
+| walker |  | 8184 | 0 | export at lib/helpers/bind.js:10 |  |  | 0.306 |
+| walker |  | 8200 | 16 | export names surface in lib/helpers/shouldBypassProxy.js |  |  | 0.306 |
+| walker |  | 8200 | 0 | export at lib/helpers/shouldBypassProxy.js:127 |  |  | 0.306 |
+| walker |  | 8217 | 17 | export names surface in lib/helpers/estimateDataURLDecodedBytes.js |  |  | 0.306 |
+| walker |  | 8217 | 0 | export at lib/helpers/estimateDataURLDecodedBytes.js:10 |  |  | 0.306 |
+| walker |  | 8235 | 18 | export names surface in lib/helpers/combineURLs.js |  |  | 0.306 |
+| walker |  | 8235 | 0 | export at lib/helpers/combineURLs.js:11 |  |  | 0.306 |
+| walker |  | 8253 | 18 | export names surface in lib/helpers/deprecatedMethod.js |  |  | 0.306 |
+| walker |  | 8253 | 0 | export at lib/helpers/deprecatedMethod.js:15 |  |  | 0.306 |
+| walker |  | 8272 | 19 | export names surface in lib/helpers/toURLEncodedForm.js |  |  | 0.306 |
+| walker |  | 8272 | 0 | export at lib/helpers/toURLEncodedForm.js:7 |  |  | 0.306 |
+| walker |  | 8292 | 20 | export names surface in lib/helpers/fromDataURI.js |  |  | 0.306 |
+| walker |  | 8292 | 0 | export at lib/helpers/fromDataURI.js:21 |  |  | 0.306 |
+| walker |  | 8319 | 27 | export body at lib/helpers/bind.js:10 body 11 |  |  | 0.306 |
+| walker |  | 8346 | 27 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.306 |
+| walker |  | 8376 | 30 | export names surface in lib/helpers/buildURL.js |  |  | 0.306 |
+| walker |  | 8376 | 0 | export at lib/helpers/buildURL.js:14 |  |  | 0.306 |
+| walker |  | 8376 | 0 | export at lib/helpers/buildURL.js:31 |  |  | 0.306 |
 | ns | 8455 |  | 292 | lib/cancel/CanceledError.js + lib/cancel/isCancel.js — full files | 4.1 |  | 0.301 |
-| walker |  | 8469 | 27 | export body at lib/helpers/spread.js:24 body 25 |  |  | 0.301 |
-| walker |  | 8499 | 30 | export names surface in lib/helpers/buildURL.js |  |  | 0.301 |
-| walker |  | 8499 | 0 | export at lib/helpers/buildURL.js:14 |  |  | 0.301 |
-| walker |  | 8499 | 0 | export at lib/helpers/buildURL.js:31 |  |  | 0.301 |
+| walker |  | 8498 | 122 | README.md section #46 |  |  | 0.301 |
+| walker |  | 8524 | 26 | THREATMODEL.md section #52 |  |  | 0.301 |
+| walker |  | 8558 | 34 | module item at lib/adapters/http.js:137 |  |  | 0.301 |
+| walker |  | 8566 | 8 | module item body at lib/adapters/http.js:137 body 169 |  |  | 0.301 |
+| walker |  | 8574 | 8 | module item body at lib/adapters/http.js:137 body 236 |  |  | 0.301 |
+| walker |  | 8584 | 10 | module item body at lib/adapters/http.js:137 body 139 |  |  | 0.301 |
 | ns | 8592 |  | 137 | lib/cancel/CancelToken.js — constructor + public method signatures | 4.2 | 4.1 | 0.298 |
-| walker |  | 8621 | 122 | README.md section #46 |  |  | 0.298 |
-| walker |  | 8647 | 26 | THREATMODEL.md section #52 |  |  | 0.298 |
+| walker |  | 8597 | 13 | module item body at lib/adapters/http.js:137 body 197 |  |  | 0.298 |
+| walker |  | 8610 | 13 | module item body at lib/adapters/http.js:137 body 199 |  |  | 0.298 |
+| walker |  | 8623 | 13 | module item body at lib/adapters/http.js:137 body 228 |  |  | 0.298 |
+| walker |  | 8636 | 13 | module item body at lib/adapters/http.js:137 body 230 |  |  | 0.298 |
+| walker |  | 8650 | 14 | module item body at lib/adapters/http.js:137 body 150 |  |  | 0.298 |
+| walker |  | 8666 | 16 | module item body at lib/adapters/http.js:137 body 167 |  |  | 0.298 |
 | ns | 8672 |  | 80 | AGENTS.md — Cancellation rules | 4.3 |  | 0.297 |
-| walker |  | 8681 | 34 | module item at lib/adapters/http.js:137 |  |  | 0.297 |
-| walker |  | 8689 | 8 | module item body at lib/adapters/http.js:137 body 169 |  |  | 0.297 |
-| walker |  | 8697 | 8 | module item body at lib/adapters/http.js:137 body 236 |  |  | 0.297 |
-| walker |  | 8707 | 10 | module item body at lib/adapters/http.js:137 body 139 |  |  | 0.297 |
-| walker |  | 8720 | 13 | module item body at lib/adapters/http.js:137 body 197 |  |  | 0.297 |
-| walker |  | 8733 | 13 | module item body at lib/adapters/http.js:137 body 199 |  |  | 0.297 |
-| walker |  | 8746 | 13 | module item body at lib/adapters/http.js:137 body 228 |  |  | 0.297 |
-| walker |  | 8759 | 13 | module item body at lib/adapters/http.js:137 body 230 |  |  | 0.297 |
-| walker |  | 8773 | 14 | module item body at lib/adapters/http.js:137 body 150 |  |  | 0.297 |
-| walker |  | 8789 | 16 | module item body at lib/adapters/http.js:137 body 167 |  |  | 0.297 |
-| walker |  | 8835 | 46 | docs/pages/misc/semver.md section #0 |  |  | 0.297 |
-| walker |  | 8862 | 27 | ECOSYSTEM.md section #16 |  |  | 0.297 |
-| walker |  | 8889 | 27 | ECOSYSTEM.md section #28 |  |  | 0.297 |
-| walker |  | 8910 | 21 | export names surface in lib/env/classes/FormData.js |  |  | 0.297 |
-| walker |  | 8948 | 38 | export body at lib/helpers/parseProtocol.js:3 body 4 |  |  | 0.297 |
-| walker |  | 8999 | 51 | docs/pages/getting-started/upgrade-guide.md section #0 |  |  | 0.297 |
+| walker |  | 8712 | 46 | docs/pages/misc/semver.md section #0 |  |  | 0.297 |
+| walker |  | 8739 | 27 | ECOSYSTEM.md section #16 |  |  | 0.297 |
+| walker |  | 8766 | 27 | ECOSYSTEM.md section #28 |  |  | 0.297 |
+| walker |  | 8787 | 21 | export names surface in lib/env/classes/FormData.js |  |  | 0.297 |
+| walker |  | 8825 | 38 | export body at lib/helpers/parseProtocol.js:3 body 4 |  |  | 0.297 |
+| walker |  | 8949 | 124 | README.md section #67 |  |  | 0.297 |
 | ns | 9067 |  | 395 | lib/adapters/adapters.js — knownAdapters table | 4.4 |  | 0.289 |
-| walker |  | 9123 | 124 | README.md section #67 |  |  | 0.289 |
-| walker |  | 9606 | 483 | package identity metadata in package.json |  |  | 0.289 |
+| walker |  | 9432 | 483 | package identity metadata in package.json |  |  | 0.289 |
 | ns | 9832 |  | 765 | lib/adapters/adapters.js — getAdapter() body | 4.5 | 4.4 | 0.276 |
 | ns | 9922 |  | 90 | AGENTS.md — Security-Sensitive Code | 5.1 |  | 0.275 |
 | ns | 9972 |  | 50 | URL-building helper signatures (buildFullPath, isAbsoluteURL, combineURLs) | 5.2 |  | 0.278 |

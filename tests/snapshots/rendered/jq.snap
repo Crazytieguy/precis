@@ -13,62 +13,6 @@ Dockerfile
 KEYS
 Makefile.am
 NEWS.md
-    1→# 1.8.1
-    …
-    6→## Security fixes
-    …
-    13→## CLI changes
-    …
-    17→## Changes to existing functions
-    …
-    21→## Language changes
-    …
-    26→## Documentation changes
-    …
-    30→## Build improvements
-    …
-    34→# 1.8.0
-    …
-    42→## Releasing
-    …
-    52→## Security fixes
-    …
-    67→## CLI changes
-    …
-    117→## New functions
-    …
-    164→## Changes to existing functions
-    …
-    187→## Language changes
-    …
-    239→## Documentation changes
-    …
-    251→## Build improvements
-    …
-    267→## Test improvements
-    …
-    276→# 1.7.1
-    …
-    278→## Security
-    …
-    283→## CLI changes
-    …
-    290→## Language changes
-    …
-    306→## Documentation changes
-    …
-    311→## libjq
-    …
-    315→## Build and test changes
-    …
-    324→# 1.7
-    …
-    348→## CLI changes
-    …
-    411→## Language changes
-    …
-    554→# Previous releases
-    …
 README.md
     1→# jq
     3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
@@ -221,6 +165,10 @@ src/
     builtin.jq
     bytecode.c
     bytecode.h
+        3→#include <stdint.h>
+        5→#include "jq.h"
+        9→#include "opcode_list.h"
+        16→#include "opcode_list.h"
         20→enum {
         …
         32→struct opcode_description {
@@ -253,6 +201,10 @@ src/
         …
     compile.c
     compile.h
+        3→#include <stdint.h>
+        4→#include "jv.h"
+        5→#include "bytecode.h"
+        6→#include "locfile.h"
     exec_stack.h
         40→struct determine_alignment {
         41→  char x;
@@ -299,6 +251,24 @@ src/
     jv_aux.c
     jv_dtoa.c
     jv_dtoa.h
+        3→#define Kmax 7
+        …
+        5→struct Bigint;
+        6→struct dtoa_context {
+        7→  struct Bigint *freelist[Kmax+1];
+        8→  struct Bigint *p5s;
+        9→};
+        11→void jvp_dtoa_context_init(struct dtoa_context* ctx);
+        12→void jvp_dtoa_context_free(struct dtoa_context* ctx);
+        …
+        14→double jvp_strtod(struct dtoa_context* C, const char* s, char** se);
+        …
+        17→char* jvp_dtoa(struct dtoa_context* C, double dd, int mode, int ndigits, int *decpt, int *sign, char **rve);
+        18→void jvp_freedtoa(struct dtoa_context* C, char *s);
+        …
+        20→#define JVP_DTOA_FMT_MAX_LEN 64
+        21→char* jvp_dtoa_fmt(struct dtoa_context* C, register char *b, double x);
+        …
     jv_dtoa_tsd.c
     jv_dtoa_tsd.h
         3→struct dtoa_context *tsd_dtoa_context_get(void);
@@ -331,6 +301,10 @@ src/
         …
     lexer.c
     lexer.h
+        258→#include <stdio.h>
+        259→#include <string.h>
+        260→#include <errno.h>
+        261→#include <stdlib.h>
     lexer.l
     libm.h
     linker.c
