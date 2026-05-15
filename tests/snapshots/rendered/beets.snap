@@ -257,6 +257,20 @@ beets/
             write.py
     util/
         __init__.py
+            15→"""Miscellaneous utility functions."""
+            17→from __future__ import annotations
+            19→import contextvars
+            20→import errno
+            21→import fnmatch
+            22→import os
+            23→import platform
+            24→import re
+            25→import shlex
+            26→import shutil
+            27→import subprocess
+            28→import sys
+            29→import tempfile
+            30→import traceback
         artresizer.py
         bluelet.py
         color.py

@@ -596,9 +596,18 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
     let mut first_real_statement_seen = false;
     let mut other_statements = 0usize;
     let mut other_lines = 0usize;
+    // Tail tolerance: once we leave the contiguous imports prefix, allow the
+    // tail to be carried as a top-level Decl batch (handled elsewhere) and
+    // stop collecting import groups. Common case: `def __getattr__` shims
+    // for deprecated-name handling at the end of an __init__.py. The prefix
+    // itself is still a re-export wall.
+    let mut imports_prefix_ended = false;
     for child in root.children(&mut cursor) {
         match child.kind() {
             "import_statement" | "import_from_statement" | "future_import_statement" => {
+                if imports_prefix_ended {
+                    return None;
+                }
                 push_import_group(
                     &mut groups,
                     import_source_key(child, source),
@@ -614,18 +623,26 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
                 } else if let Some(target) = const_assignment_target(child, source)
                     && is_dunder(target)
                 {
+                    if imports_prefix_ended {
+                        return None;
+                    }
                     push_import_group(&mut groups, target.to_string(), false, child, source);
                 } else if !tolerate_reexport_wall_other(
                     child,
                     &mut other_statements,
                     &mut other_lines,
                 ) {
-                    return None;
+                    // Significant tail content — stop collecting but keep
+                    // the imports prefix we've already seen.
+                    imports_prefix_ended = true;
                 }
                 first_real_statement_seen = true;
             }
             "if_statement" => {
                 if is_type_checking_import_block(child, source) {
+                    if imports_prefix_ended {
+                        return None;
+                    }
                     push_import_group(
                         &mut groups,
                         "TYPE_CHECKING".to_string(),
@@ -634,13 +651,13 @@ fn collect_import_groups(tree: &Tree, source: &str) -> Option<Vec<ImportGroup>> 
                         source,
                     );
                 } else {
-                    return None;
+                    imports_prefix_ended = true;
                 }
                 first_real_statement_seen = true;
             }
             "comment" => {}
             _ if !tolerate_reexport_wall_other(child, &mut other_statements, &mut other_lines) => {
-                return None;
+                imports_prefix_ended = true;
             }
             _ => {}
         }
