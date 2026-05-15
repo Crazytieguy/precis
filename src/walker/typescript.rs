@@ -1427,7 +1427,7 @@ fn ts_depth_factor(path: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 const JS_CONFIG_VALUE_FACTOR: f64 = 0.001;
-const PRIMARY_JS_VALUE_FACTOR: f64 = 0.50;
+const PRIMARY_JS_VALUE_FACTOR: f64 = 0.65;
 const SECONDARY_JS_VALUE_FACTOR: f64 = 0.05;
 
 /// Multiplier applied to every per-file TS/JS batch: full weight for

@@ -1,6 +1,6 @@
 fixture = "bareiron"
 budget = 10000
-cumulative_tokens = 9981
+cumulative_tokens = 9986
 batch_count = 227
 
 [[batches]]
@@ -4349,10 +4349,28 @@ kind = "full"
 
 [[batches]]
 position = 141
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js" })'
+descriptor = "imports in build_registries.js"
+cost_tokens = 24
+cum_tokens = 8242
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/build_registries.js"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/procedures.c"
 cost_tokens = 514
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4742,11 +4760,11 @@ end = 776
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 143
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 21 })'
 descriptor = "c decl at src/procedures.c:21"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4768,11 +4786,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 143
+position = 144
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 37 })'
 descriptor = "c decl at src/procedures.c:37"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4794,11 +4812,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 145
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 45 })'
 descriptor = "c decl at src/procedures.c:45"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4820,11 +4838,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 145
+position = 146
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 54 })'
 descriptor = "c decl at src/procedures.c:54"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4864,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 146
+position = 147
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 75 })'
 descriptor = "c decl at src/procedures.c:75"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4872,11 +4890,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 148
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 119 })'
 descriptor = "c decl at src/procedures.c:119"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4898,11 +4916,11 @@ end = 120
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 149
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 130 })'
 descriptor = "c decl at src/procedures.c:130"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4924,11 +4942,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 149
+position = 150
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 146 })'
 descriptor = "c decl at src/procedures.c:146"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4950,11 +4968,11 @@ end = 147
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 151
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 177 })'
 descriptor = "c decl at src/procedures.c:177"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -4976,11 +4994,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 199 })'
 descriptor = "c decl at src/procedures.c:199"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5002,11 +5020,11 @@ end = 200
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 153
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 214 })'
 descriptor = "c decl at src/procedures.c:214"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5028,11 +5046,11 @@ end = 215
 kind = "ellipsis"
 
 [[batches]]
-position = 153
+position = 154
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 239 })'
 descriptor = "c decl at src/procedures.c:239"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5054,11 +5072,11 @@ end = 240
 kind = "ellipsis"
 
 [[batches]]
-position = 154
+position = 155
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 286 })'
 descriptor = "c decl at src/procedures.c:286"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5080,11 +5098,11 @@ end = 287
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 156
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 321 })'
 descriptor = "c decl at src/procedures.c:321"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5106,11 +5124,11 @@ end = 322
 kind = "ellipsis"
 
 [[batches]]
-position = 156
+position = 157
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 396 })'
 descriptor = "c decl at src/procedures.c:396"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5132,11 +5150,11 @@ end = 397
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 158
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 434 })'
 descriptor = "c decl at src/procedures.c:434"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5158,11 +5176,11 @@ end = 435
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 159
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 478 })'
 descriptor = "c decl at src/procedures.c:478"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5184,11 +5202,11 @@ end = 479
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 160
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 495 })'
 descriptor = "c decl at src/procedures.c:495"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5210,11 +5228,11 @@ end = 496
 kind = "ellipsis"
 
 [[batches]]
-position = 160
+position = 161
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 512 })'
 descriptor = "c decl at src/procedures.c:512"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5236,11 +5254,11 @@ end = 513
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 162
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 652 })'
 descriptor = "c decl at src/procedures.c:652"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5262,11 +5280,11 @@ end = 653
 kind = "ellipsis"
 
 [[batches]]
-position = 162
+position = 163
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 721 })'
 descriptor = "c decl at src/procedures.c:721"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5288,11 +5306,11 @@ end = 722
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 164
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 746 })'
 descriptor = "c decl at src/procedures.c:746"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5314,11 +5332,11 @@ end = 747
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 165
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 775 })'
 descriptor = "c decl at src/procedures.c:775"
 cost_tokens = 0
-cum_tokens = 8732
+cum_tokens = 8756
 
 [batches.content]
 kind = "lines"
@@ -5340,11 +5358,11 @@ end = 776
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 166
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 495 })'
 descriptor = "c decl doc at src/procedures.c:495"
 cost_tokens = 15
-cum_tokens = 8747
+cum_tokens = 8771
 
 [batches.content]
 kind = "lines"
@@ -5358,11 +5376,11 @@ end = 494
 kind = "full"
 
 [[batches]]
-position = 166
+position = 167
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 54 })'
 descriptor = "c decl doc at src/procedures.c:54"
 cost_tokens = 16
-cum_tokens = 8763
+cum_tokens = 8787
 
 [batches.content]
 kind = "lines"
@@ -5376,11 +5394,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 167
+position = 168
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 75 })'
 descriptor = "c decl doc at src/procedures.c:75"
 cost_tokens = 16
-cum_tokens = 8779
+cum_tokens = 8803
 
 [batches.content]
 kind = "lines"
@@ -5394,11 +5412,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 146 })'
 descriptor = "c decl doc at src/procedures.c:146"
 cost_tokens = 16
-cum_tokens = 8795
+cum_tokens = 8819
 
 [batches.content]
 kind = "lines"
@@ -5412,11 +5430,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 321 })'
 descriptor = "c decl doc at src/procedures.c:321"
 cost_tokens = 17
-cum_tokens = 8812
+cum_tokens = 8836
 
 [batches.content]
 kind = "lines"
@@ -5430,11 +5448,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 775 })'
 descriptor = "c decl doc at src/procedures.c:775"
 cost_tokens = 17
-cum_tokens = 8829
+cum_tokens = 8853
 
 [batches.content]
 kind = "lines"
@@ -5448,11 +5466,11 @@ end = 774
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 177 })'
 descriptor = "c decl doc at src/procedures.c:177"
 cost_tokens = 18
-cum_tokens = 8847
+cum_tokens = 8871
 
 [batches.content]
 kind = "lines"
@@ -5466,11 +5484,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 721 })'
 descriptor = "c decl doc at src/procedures.c:721"
 cost_tokens = 18
-cum_tokens = 8865
+cum_tokens = 8889
 
 [batches.content]
 kind = "lines"
@@ -5484,11 +5502,11 @@ end = 720
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 130 })'
 descriptor = "c decl doc at src/procedures.c:130"
 cost_tokens = 19
-cum_tokens = 8884
+cum_tokens = 8908
 
 [batches.content]
 kind = "lines"
@@ -5502,11 +5520,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 746 })'
 descriptor = "c decl doc at src/procedures.c:746"
 cost_tokens = 19
-cum_tokens = 8903
+cum_tokens = 8927
 
 [batches.content]
 kind = "lines"
@@ -5520,11 +5538,11 @@ end = 745
 kind = "full"
 
 [[batches]]
-position = 175
+position = 176
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 396 })'
 descriptor = "c decl doc at src/procedures.c:396"
 cost_tokens = 23
-cum_tokens = 8926
+cum_tokens = 8950
 
 [batches.content]
 kind = "lines"
@@ -5538,11 +5556,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 176
+position = 177
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 434 })'
 descriptor = "c decl doc at src/procedures.c:434"
 cost_tokens = 33
-cum_tokens = 8959
+cum_tokens = 8983
 
 [batches.content]
 kind = "lines"
@@ -5556,11 +5574,11 @@ end = 433
 kind = "full"
 
 [[batches]]
-position = 177
+position = 178
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 652 })'
 descriptor = "c decl doc at src/procedures.c:652"
 cost_tokens = 45
-cum_tokens = 9004
+cum_tokens = 9028
 
 [batches.content]
 kind = "lines"
@@ -5574,11 +5592,11 @@ end = 651
 kind = "full"
 
 [[batches]]
-position = 178
+position = 179
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 45 })'
 descriptor = "c decl body at src/procedures.c:45"
 cost_tokens = 66
-cum_tokens = 9070
+cum_tokens = 9094
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +5610,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/procedures.c", start_line: 37 })'
 descriptor = "c decl body at src/procedures.c:37"
 cost_tokens = 71
-cum_tokens = 9141
+cum_tokens = 9165
 
 [batches.content]
 kind = "lines"
@@ -5610,11 +5628,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 180
+position = 181
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", chunk_index: 0 })'
 descriptor = "c decl names surface in src/packets.c"
 cost_tokens = 548
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -5999,42 +6017,42 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
 start = 529
 end = 529
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 181
-key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 28 })'
-descriptor = "c decl at src/packets.c:28"
-cost_tokens = 0
-cum_tokens = 9689
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
-start = 29
-end = 29
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 182
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 28 })'
+descriptor = "c decl at src/packets.c:28"
+cost_tokens = 0
+cum_tokens = 9713
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 183
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 49 })'
 descriptor = "c decl at src/packets.c:49"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6056,11 +6074,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 183
+position = 184
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 66 })'
 descriptor = "c decl at src/packets.c:66"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6082,11 +6100,11 @@ end = 67
 kind = "ellipsis"
 
 [[batches]]
-position = 184
+position = 185
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 85 })'
 descriptor = "c decl at src/packets.c:85"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6108,11 +6126,11 @@ end = 86
 kind = "ellipsis"
 
 [[batches]]
-position = 185
+position = 186
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 99 })'
 descriptor = "c decl at src/packets.c:99"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6134,11 +6152,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 186
+position = 187
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 137 })'
 descriptor = "c decl at src/packets.c:137"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6160,11 +6178,11 @@ end = 138
 kind = "ellipsis"
 
 [[batches]]
-position = 187
+position = 188
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 151 })'
 descriptor = "c decl at src/packets.c:151"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6186,11 +6204,11 @@ end = 152
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 189
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 166 })'
 descriptor = "c decl at src/packets.c:166"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6212,11 +6230,11 @@ end = 167
 kind = "ellipsis"
 
 [[batches]]
-position = 189
+position = 190
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 183 })'
 descriptor = "c decl at src/packets.c:183"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6238,11 +6256,11 @@ end = 184
 kind = "ellipsis"
 
 [[batches]]
-position = 190
+position = 191
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 190 })'
 descriptor = "c decl at src/packets.c:190"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6264,11 +6282,11 @@ end = 191
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 192
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 245 })'
 descriptor = "c decl at src/packets.c:245"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6290,11 +6308,11 @@ end = 246
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 193
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 275 })'
 descriptor = "c decl at src/packets.c:275"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6316,11 +6334,11 @@ end = 276
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 194
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 287 })'
 descriptor = "c decl at src/packets.c:287"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6342,11 +6360,11 @@ end = 288
 kind = "ellipsis"
 
 [[batches]]
-position = 194
+position = 195
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 300 })'
 descriptor = "c decl at src/packets.c:300"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6368,11 +6386,11 @@ end = 301
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 196
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 314 })'
 descriptor = "c decl at src/packets.c:314"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6394,11 +6412,11 @@ end = 315
 kind = "ellipsis"
 
 [[batches]]
-position = 196
+position = 197
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 323 })'
 descriptor = "c decl at src/packets.c:323"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6420,11 +6438,11 @@ end = 324
 kind = "ellipsis"
 
 [[batches]]
-position = 197
+position = 198
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 332 })'
 descriptor = "c decl at src/packets.c:332"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6464,11 @@ end = 333
 kind = "ellipsis"
 
 [[batches]]
-position = 198
+position = 199
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 433 })'
 descriptor = "c decl at src/packets.c:433"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6472,11 +6490,11 @@ end = 434
 kind = "ellipsis"
 
 [[batches]]
-position = 199
+position = 200
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 444 })'
 descriptor = "c decl at src/packets.c:444"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6498,11 +6516,11 @@ end = 445
 kind = "ellipsis"
 
 [[batches]]
-position = 200
+position = 201
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 471 })'
 descriptor = "c decl at src/packets.c:471"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6524,11 +6542,11 @@ end = 472
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 202
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 480 })'
 descriptor = "c decl at src/packets.c:480"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6550,11 +6568,11 @@ end = 481
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 203
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 488 })'
 descriptor = "c decl at src/packets.c:488"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6576,11 +6594,11 @@ end = 489
 kind = "ellipsis"
 
 [[batches]]
-position = 203
+position = 204
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 512 })'
 descriptor = "c decl at src/packets.c:512"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6602,11 +6620,11 @@ end = 513
 kind = "ellipsis"
 
 [[batches]]
-position = 204
+position = 205
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 528 })'
 descriptor = "c decl at src/packets.c:528"
 cost_tokens = 0
-cum_tokens = 9689
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -6628,11 +6646,11 @@ end = 529
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 206
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 49 })'
 descriptor = "c decl doc at src/packets.c:49"
 cost_tokens = 11
-cum_tokens = 9700
+cum_tokens = 9724
 
 [batches.content]
 kind = "lines"
@@ -6646,11 +6664,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 66 })'
 descriptor = "c decl doc at src/packets.c:66"
 cost_tokens = 11
-cum_tokens = 9711
+cum_tokens = 9735
 
 [batches.content]
 kind = "lines"
@@ -6664,11 +6682,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 85 })'
 descriptor = "c decl doc at src/packets.c:85"
 cost_tokens = 11
-cum_tokens = 9722
+cum_tokens = 9746
 
 [batches.content]
 kind = "lines"
@@ -6682,11 +6700,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 208
+position = 209
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 183 })'
 descriptor = "c decl doc at src/packets.c:183"
 cost_tokens = 11
-cum_tokens = 9733
+cum_tokens = 9757
 
 [batches.content]
 kind = "lines"
@@ -6700,11 +6718,11 @@ end = 182
 kind = "full"
 
 [[batches]]
-position = 209
+position = 210
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 300 })'
 descriptor = "c decl doc at src/packets.c:300"
 cost_tokens = 11
-cum_tokens = 9744
+cum_tokens = 9768
 
 [batches.content]
 kind = "lines"
@@ -6718,11 +6736,11 @@ end = 299
 kind = "full"
 
 [[batches]]
-position = 210
+position = 211
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 471 })'
 descriptor = "c decl doc at src/packets.c:471"
 cost_tokens = 11
-cum_tokens = 9755
+cum_tokens = 9779
 
 [batches.content]
 kind = "lines"
@@ -6736,11 +6754,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 211
+position = 212
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 488 })'
 descriptor = "c decl doc at src/packets.c:488"
 cost_tokens = 11
-cum_tokens = 9766
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -6754,11 +6772,11 @@ end = 487
 kind = "full"
 
 [[batches]]
-position = 212
+position = 213
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 512 })'
 descriptor = "c decl doc at src/packets.c:512"
 cost_tokens = 11
-cum_tokens = 9777
+cum_tokens = 9801
 
 [batches.content]
 kind = "lines"
@@ -6772,11 +6790,11 @@ end = 511
 kind = "full"
 
 [[batches]]
-position = 213
+position = 214
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 528 })'
 descriptor = "c decl doc at src/packets.c:528"
 cost_tokens = 11
-cum_tokens = 9788
+cum_tokens = 9812
 
 [batches.content]
 kind = "lines"
@@ -6790,11 +6808,11 @@ end = 527
 kind = "full"
 
 [[batches]]
-position = 214
+position = 215
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 190 })'
 descriptor = "c decl doc at src/packets.c:190"
 cost_tokens = 12
-cum_tokens = 9800
+cum_tokens = 9824
 
 [batches.content]
 kind = "lines"
@@ -6808,11 +6826,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 215
+position = 216
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 323 })'
 descriptor = "c decl doc at src/packets.c:323"
 cost_tokens = 12
-cum_tokens = 9812
+cum_tokens = 9836
 
 [batches.content]
 kind = "lines"
@@ -6826,11 +6844,11 @@ end = 322
 kind = "full"
 
 [[batches]]
-position = 216
+position = 217
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 444 })'
 descriptor = "c decl doc at src/packets.c:444"
 cost_tokens = 12
-cum_tokens = 9824
+cum_tokens = 9848
 
 [batches.content]
 kind = "lines"
@@ -6844,11 +6862,11 @@ end = 443
 kind = "full"
 
 [[batches]]
-position = 217
+position = 218
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 137 })'
 descriptor = "c decl doc at src/packets.c:137"
 cost_tokens = 13
-cum_tokens = 9837
+cum_tokens = 9861
 
 [batches.content]
 kind = "lines"
@@ -6862,11 +6880,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 218
+position = 219
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 151 })'
 descriptor = "c decl doc at src/packets.c:151"
 cost_tokens = 13
-cum_tokens = 9850
+cum_tokens = 9874
 
 [batches.content]
 kind = "lines"
@@ -6880,11 +6898,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 219
+position = 220
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 166 })'
 descriptor = "c decl doc at src/packets.c:166"
 cost_tokens = 13
-cum_tokens = 9863
+cum_tokens = 9887
 
 [batches.content]
 kind = "lines"
@@ -6898,11 +6916,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 220
+position = 221
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 245 })'
 descriptor = "c decl doc at src/packets.c:245"
 cost_tokens = 13
-cum_tokens = 9876
+cum_tokens = 9900
 
 [batches.content]
 kind = "lines"
@@ -6916,11 +6934,11 @@ end = 244
 kind = "full"
 
 [[batches]]
-position = 221
+position = 222
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 275 })'
 descriptor = "c decl doc at src/packets.c:275"
 cost_tokens = 13
-cum_tokens = 9889
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"
@@ -6934,11 +6952,11 @@ end = 274
 kind = "full"
 
 [[batches]]
-position = 222
+position = 223
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 332 })'
 descriptor = "c decl doc at src/packets.c:332"
 cost_tokens = 14
-cum_tokens = 9903
+cum_tokens = 9927
 
 [batches.content]
 kind = "lines"
@@ -6952,11 +6970,11 @@ end = 331
 kind = "full"
 
 [[batches]]
-position = 223
+position = 224
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 480 })'
 descriptor = "c decl doc at src/packets.c:480"
 cost_tokens = 14
-cum_tokens = 9917
+cum_tokens = 9941
 
 [batches.content]
 kind = "lines"
@@ -6970,11 +6988,11 @@ end = 479
 kind = "full"
 
 [[batches]]
-position = 224
+position = 225
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 28 })'
 descriptor = "c decl doc at src/packets.c:28"
 cost_tokens = 15
-cum_tokens = 9932
+cum_tokens = 9956
 
 [batches.content]
 kind = "lines"
@@ -6988,11 +7006,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 225
+position = 226
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 287 })'
 descriptor = "c decl doc at src/packets.c:287"
 cost_tokens = 15
-cum_tokens = 9947
+cum_tokens = 9971
 
 [batches.content]
 kind = "lines"
@@ -7006,11 +7024,11 @@ end = 286
 kind = "full"
 
 [[batches]]
-position = 226
+position = 227
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 433 })'
 descriptor = "c decl doc at src/packets.c:433"
 cost_tokens = 15
-cum_tokens = 9962
+cum_tokens = 9986
 
 [batches.content]
 kind = "lines"
@@ -7019,24 +7037,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
 start = 432
 end = 432
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 227
-key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c", start_line: 314 })'
-descriptor = "c decl doc at src/packets.c:314"
-cost_tokens = 19
-cum_tokens = 9981
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bareiron/src/packets.c"
-start = 313
-end = 313
 
 [batches.content.spans.render]
 kind = "full"

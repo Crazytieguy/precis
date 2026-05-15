@@ -6,12 +6,6 @@ expression: rendered
 .gitattributes
 .github/
 .gitignore
-    1→.DS_Store
-    2→node_modules
-    3→*.sock
-    4→.idea
-    5→.vscode/
-    6→coverage/
 .prettierignore
 .prettierrc.js
 CHANGELOG.md
@@ -60,28 +54,6 @@ docs/
     terminology.md
     zh-CN/
         不再推荐使用的功能.md
-            1→# 不再推荐使用的功能
-            …
-            18→## .option() 方法的正则表达式参数
-            …
-            30→## noHelp
-            …
-            40→## 默认导入的全局 Command 对象
-            …
-            61→## .help() 与 .outputHelp() 的回调函数参数
-            …
-            79→## .on('--help')
-            …
-            104→## .on('command:*')
-            …
-            114→## .command('*')
-            …
-            134→## cmd.description(cmdDescription, argDescriptions)
-            …
-            157→## InvalidOptionArgumentError
-            …
-            187→## 短选项标志长于单个字符
-            …
         可变参数的选项.md
             1→# 可变参数的选项
             …
@@ -167,10 +139,28 @@ index.js
 jest.config.js
 lib/
     argument.js
+        1→const { InvalidArgumentError } = require('./error.js');
         3→class Argument {
         …
-        143→function humanReadableArgName(arg) {
+        13→  constructor(name, description) {
         …
+        48→  name() {
+        …
+        56→  _collectValue(value, previous) {
+        …
+        73→  default(value, description) {
+        …
+        86→  argParser(fn) {
+        …
+        98→  choices(values) {
+        …
+        119→  argRequired() {
+        …
+        129→  argOptional() {
+        …
+        143→function humanReadableArgName(arg) {
+        144→  const nameOutput = arg.name() + (arg.variadic === true ? '...' : '');
+        146→  return arg.required ? '<' + nameOutput + '>' : '[' + nameOutput + ']';
         149→exports.Argument = Argument;
         150→exports.humanReadableArgName = humanReadableArgName;
     command.js
@@ -181,10 +171,22 @@ lib/
         2776→exports.Command = Command;
         2777→exports.useColor = useColor; // exporting for tests
     error.js
+        1→/**
+        2→ * CommanderError class
+        3→ */
         4→class CommanderError extends Error {
         …
         11→  constructor(exitCode, code, message) {
-        …
+        12→    super(message);
+        13→    // properly capture stack trace in Node.js
+        14→    Error.captureStackTrace(this, this.constructor);
+        15→    this.name = this.constructor.name;
+        16→    this.code = code;
+        17→    this.exitCode = exitCode;
+        18→    this.nestedError = undefined;
+        22→/**
+        23→ * InvalidArgumentError class
+        24→ */
         25→class InvalidArgumentError extends CommanderError {
         …
         30→  constructor(message) {
@@ -195,13 +197,17 @@ lib/
         38→exports.CommanderError = CommanderError;
         39→exports.InvalidArgumentError = InvalidArgumentError;
     help.js
+        1→const { humanReadableArgName } = require('./argument.js');
         12→class Help {
         …
         740→function stripColor(str) {
-        …
+        741→  // eslint-disable-next-line no-control-regex
+        742→  const sgrPattern = /\x1b\[\d*(;\d*)*m/g;
+        743→  return str.replace(sgrPattern, '');
         746→exports.Help = Help;
         747→exports.stripColor = stripColor;
     option.js
+        1→const { InvalidArgumentError } = require('./error.js');
         3→class Option {
         …
         11→  constructor(flags, description) {
