@@ -446,8 +446,20 @@ Score(3000)=0.469 I=0.594 C=0.370 ns_rows≤3K=20/46 (reached=5 partial=0 missin
 | walker |  | 9790 | 6 | go decl body at binding/form.go:20 |  |  | 0.355 |
 | walker |  | 9797 | 7 | go decl body at binding/form.go:37 |  |  | 0.355 |
 | walker |  | 9805 | 8 | go decl body at binding/form.go:51 |  |  | 0.355 |
-| walker |  | 9813 | 8 | listing of 'testdata/certificate' |  |  | 0.358 |
-| walker |  | 9836 | 23 | go decl doc at binding/default_validator.go:44 |  |  | 0.358 |
-| walker |  | 9879 | 43 | go package + imports in binding/header.go |  |  | 0.358 |
-| ns | 9895 |  | 156 | auth.go — Accounts + BasicAuth* signatures | 5.7 |  | 0.367 |
-| ns | 9991 |  | 96 | ginS — package-level singleton engine | 6.1 |  | 0.368 |
+| ns | 9895 |  | 156 | auth.go — Accounts + BasicAuth* signatures | 5.7 |  | 0.365 |
+| walker |  | 9939 | 134 | go decl names surface #1 in context.go |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:122 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:149 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:155 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:167 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:177 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:188 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:199 |  |  | 0.366 |
+| walker |  | 9939 | 0 | go decl at context.go:207 |  |  | 0.366 |
+| walker |  | 9946 | 7 | go decl body at context.go:167 |  |  | 0.366 |
+| walker |  | 9953 | 7 | go decl body at context.go:177 |  |  | 0.366 |
+| walker |  | 9961 | 8 | go decl body at context.go:207 |  |  | 0.366 |
+| walker |  | 9970 | 9 | go decl body at context.go:199 |  |  | 0.366 |
+| walker |  | 9981 | 11 | go decl doc at context.go:167 |  |  | 0.366 |
+| walker |  | 9991 | 10 | go decl body at context.go:149 |  |  | 0.367 |
+| ns | 9991 |  | 96 | ginS — package-level singleton engine | 6.1 |  | 0.367 |

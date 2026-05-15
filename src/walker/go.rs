@@ -314,13 +314,15 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
     out
 }
 
-/// Chunk size for Go declaration-name surfaces. Matches the universal
-/// `NAMES_SURFACE_CHUNK_SIZE`: a 24-name chunk often still won't fit
-/// at 3K for an oversized API file (tea.go's 24-name chunk renders ~400
-/// tokens), so the first chunk must be small enough to reach the early
-/// budget. NS authors anchor on per-class / per-flag-group rows that
-/// fit within ~12 names.
-const GO_DECL_NAMES_CHUNK_SIZE: usize = crate::value::NAMES_SURFACE_CHUNK_SIZE;
+/// Chunk size for Go declaration-name surfaces. Smaller than the
+/// universal `NAMES_SURFACE_CHUNK_SIZE` (12) because Go method-
+/// declaration name rows render long (`func (c *Command) Foo(...)`
+/// ~22 tokens each) — a 12-name chunk often still won't fit at 3K for
+/// an oversized API file (command.go's 12-name chunk is 261 tokens),
+/// so the first chunk must hold fewer names. NS authors anchor on
+/// per-class / per-flag-group rows that comfortably fit within ~8
+/// names.
+const GO_DECL_NAMES_CHUNK_SIZE: usize = 8;
 
 /// Decl-count threshold below which the names surface stays as a
 /// single coherent batch. Past iterations split at 24 and regressed
@@ -787,20 +789,24 @@ fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 
         * go_entry_factor(file, ctx)
 }
 
-/// Boost Go files whose stem matches the file's own `package` clause —
-/// the long-standing Go convention for "the file the agent looks at
-/// first" (`tea.go` in `package tea`, `cobra.go` in `package cobra`,
-/// `gin.go` in `package gin`). Analogous to Rust's `lib.rs`/`main.rs`
-/// `entrypoint_boost`. NS authors universally rank this file's content
-/// (package doc, top-level types, package-level helpers) ahead of
-/// sibling utility files.
+/// Boost Go files that anchor the package's API surface. Two
+/// conditions, either alone sufficient:
 ///
-/// Restricted to root-level files (depth ≤ 1): in monorepos with
-/// many internal/sub-packages (`internal/foo/foo.go`, `internal/bar/bar.go`,
-/// `pkg/baz/baz.go`), every subpackage would match this rule and the
-/// boost would crowd the early budget with private-implementation
-/// content. The convention's load-bearing case is the package-root
-/// orientation file, not a stem match in any internal subdir.
+/// - **Package-name match**: file stem matches the file's `package`
+///   clause (`tea.go` in `package tea`, `cobra.go` in `package
+///   cobra`). The long-standing "the file the agent looks at first"
+///   convention. Analogous to Rust's `lib.rs`/`main.rs`
+///   `entrypoint_boost`.
+/// - **Has a big-struct anchor**: the file contains a single-spec
+///   `type X struct { … }` whose body spans ≥ `STRUCT_FIELD_GROUP_MIN_LINES`
+///   lines. Cobra's `command.go` is the canonical case — the
+///   package's `Command` struct is the API anchor even though the
+///   file stem doesn't match `package cobra`.
+///
+/// Restricted to root-level files (depth ≤ 1): in monorepos with many
+/// internal/sub-packages, every subpackage would match the package-
+/// name rule and the boost would crowd the early budget with
+/// private-implementation content.
 fn go_entry_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     const BOOST: f64 = 1.4;
     if ctx.depth_from_root(file) > 1 {
@@ -812,10 +818,51 @@ fn go_entry_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     let Some((source, tree)) = parse_go(ctx, file) else {
         return 1.0;
     };
-    let Some(pkg) = package_name(&tree, &source) else {
-        return 1.0;
-    };
-    if stem == pkg { BOOST } else { 1.0 }
+    let pkg = package_name(&tree, &source);
+    if pkg.as_deref() == Some(stem) {
+        return BOOST;
+    }
+    if file_has_big_struct_anchor(&tree) {
+        return BOOST;
+    }
+    1.0
+}
+
+/// True if any top-level `type_declaration` in the file is a single-
+/// spec struct whose body spans at least `STRUCT_FIELD_GROUP_MIN_LINES`
+/// rows. Marks the file as the package's API-anchor file (cobra's
+/// `command.go`, gin's `gin.go` — the latter is also package-name
+/// matched, so this rule is a generalization, not a duplicate).
+fn file_has_big_struct_anchor(tree: &Tree) -> bool {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() != "type_declaration" {
+            continue;
+        }
+        let mut spec_cursor = child.walk();
+        let mut spec_count = 0;
+        let mut single_spec: Option<Node> = None;
+        for spec in child.children(&mut spec_cursor) {
+            if matches!(spec.kind(), "type_spec" | "type_alias") {
+                spec_count += 1;
+                single_spec = Some(spec);
+            }
+        }
+        if spec_count != 1 {
+            continue;
+        }
+        let Some(spec) = single_spec else { continue };
+        let Some(body) = find_struct_body(spec) else {
+            continue;
+        };
+        let body_start = body.start_position().row;
+        let body_end = body.end_position().row;
+        if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
+            return true;
+        }
+    }
+    false
 }
 
 fn package_name(tree: &Tree, source: &str) -> Option<String> {

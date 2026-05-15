@@ -1,7 +1,7 @@
 fixture = "bubbletea"
 budget = 10000
-cumulative_tokens = 9927
-batch_count = 343
+cumulative_tokens = 9994
+batch_count = 341
 
 [[batches]]
 position = 1
@@ -1199,10 +1199,498 @@ kind = "full"
 
 [[batches]]
 position = 52
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", chunk_index: 0 })'
+descriptor = "go decl names surface in tea.go"
+cost_tokens = 113
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 241
+end = 241
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 242
+end = 242
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 53
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 39 })'
+descriptor = "go decl at tea.go:39"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 42 })'
+descriptor = "go decl at tea.go:42"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 46 })'
+descriptor = "go decl at tea.go:46"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 50 })'
+descriptor = "go decl at tea.go:50"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 76 })'
+descriptor = "go decl at tea.go:76"
+cost_tokens = 0
+cum_tokens = 1095
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84 })'
+descriptor = "go decl at tea.go:84"
+cost_tokens = 5
+cum_tokens = 1100
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 59
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 172 })'
+descriptor = "go struct field group at tea.go:84 group 172"
+cost_tokens = 32
+cum_tokens = 1132
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 172
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 141 })'
+descriptor = "go struct field group at tea.go:84 group 141"
+cost_tokens = 36
+cum_tokens = 1168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 141
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 42 })'
+descriptor = "go decl doc at tea.go:42"
+cost_tokens = 21
+cum_tokens = 1189
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 50 })'
+descriptor = "go decl doc at tea.go:50"
+cost_tokens = 36
+cum_tokens = 1225
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 48
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 76 })'
+descriptor = "go decl body at tea.go:76"
+cost_tokens = 22
+cum_tokens = 1247
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 77
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 64
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84 })'
+descriptor = "go decl doc at tea.go:84"
+cost_tokens = 39
+cum_tokens = 1286
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 82
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 39 })'
+descriptor = "go decl doc at tea.go:39"
+cost_tokens = 25
+cum_tokens = 1311
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 133 })'
+descriptor = "go struct field group at tea.go:84 group 133"
+cost_tokens = 47
+cum_tokens = 1358
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 133
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 137 })'
+descriptor = "go struct field group at tea.go:84 group 137"
+cost_tokens = 48
+cum_tokens = 1406
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 137
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 145 })'
+descriptor = "go struct field group at tea.go:84 group 145"
+cost_tokens = 48
+cum_tokens = 1454
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 145
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 175 })'
+descriptor = "go struct field group at tea.go:84 group 175"
+cost_tokens = 56
+cum_tokens = 1510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 175
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 128 })'
+descriptor = "go struct field group at tea.go:84 group 128"
+cost_tokens = 57
+cum_tokens = 1567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 128
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 46 })'
+descriptor = "go decl doc at tea.go:46"
+cost_tokens = 38
+cum_tokens = 1605
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", chunk_index: 0 })'
 descriptor = "go decl names surface in environ.go"
 cost_tokens = 60
-cum_tokens = 1042
+cum_tokens = 1665
 
 [batches.content]
 kind = "lines"
@@ -1256,11 +1744,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 73
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 19 })'
 descriptor = "go decl at environ.go:19"
 cost_tokens = 0
-cum_tokens = 1042
+cum_tokens = 1665
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +1762,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 54
+position = 74
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 24 })'
 descriptor = "go decl at environ.go:24"
 cost_tokens = 0
-cum_tokens = 1042
+cum_tokens = 1665
 
 [batches.content]
 kind = "lines"
@@ -1292,11 +1780,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 55
+position = 75
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 32 })'
 descriptor = "go decl at environ.go:32"
 cost_tokens = 0
-cum_tokens = 1042
+cum_tokens = 1665
 
 [batches.content]
 kind = "lines"
@@ -1310,11 +1798,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 56
+position = 76
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 24 })'
 descriptor = "go decl body at environ.go:24"
 cost_tokens = 12
-cum_tokens = 1054
+cum_tokens = 1677
 
 [batches.content]
 kind = "lines"
@@ -1328,11 +1816,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 57
+position = 77
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 32 })'
 descriptor = "go decl body at environ.go:32"
 cost_tokens = 12
-cum_tokens = 1066
+cum_tokens = 1689
 
 [batches.content]
 kind = "lines"
@@ -1346,11 +1834,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 58
+position = 78
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/focus.go", start_line: 5 })'
 descriptor = "go decl doc at focus.go:5"
 cost_tokens = 26
-cum_tokens = 1092
+cum_tokens = 1715
 
 [batches.content]
 kind = "lines"
@@ -1364,11 +1852,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 59
+position = 79
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/focus.go", start_line: 9 })'
 descriptor = "go decl doc at focus.go:9"
 cost_tokens = 26
-cum_tokens = 1118
+cum_tokens = 1741
 
 [batches.content]
 kind = "lines"
@@ -1382,11 +1870,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 60
+position = 80
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", chunk_index: 0 })'
 descriptor = "go decl names surface in logging.go"
 cost_tokens = 64
-cum_tokens = 1182
+cum_tokens = 1805
 
 [batches.content]
 kind = "lines"
@@ -1440,11 +1928,11 @@ end = 36
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 81
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 23 })'
 descriptor = "go decl at logging.go:23"
 cost_tokens = 0
-cum_tokens = 1182
+cum_tokens = 1805
 
 [batches.content]
 kind = "lines"
@@ -1458,11 +1946,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 62
+position = 82
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 35 })'
 descriptor = "go decl at logging.go:35"
 cost_tokens = 0
-cum_tokens = 1182
+cum_tokens = 1805
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1964,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 63
+position = 83
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 29 })'
 descriptor = "go decl at logging.go:29"
 cost_tokens = 20
-cum_tokens = 1202
+cum_tokens = 1825
 
 [batches.content]
 kind = "lines"
@@ -1494,11 +1982,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 64
+position = 84
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 23 })'
 descriptor = "go decl body at logging.go:23"
 cost_tokens = 14
-cum_tokens = 1216
+cum_tokens = 1839
 
 [batches.content]
 kind = "lines"
@@ -1512,11 +2000,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 65
+position = 85
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 35 })'
 descriptor = "go decl doc at logging.go:35"
 cost_tokens = 23
-cum_tokens = 1239
+cum_tokens = 1862
 
 [batches.content]
 kind = "lines"
@@ -1530,11 +2018,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 66
+position = 86
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/logging.go", start_line: 29 })'
 descriptor = "go decl doc at logging.go:29"
 cost_tokens = 29
-cum_tokens = 1268
+cum_tokens = 1891
 
 [batches.content]
 kind = "lines"
@@ -1548,11 +2036,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 67
+position = 87
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/paste.go", start_line: 5 })'
 descriptor = "go decl doc at paste.go:5"
 cost_tokens = 31
-cum_tokens = 1299
+cum_tokens = 1922
 
 [batches.content]
 kind = "lines"
@@ -1566,11 +2054,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 68
+position = 88
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/paste.go", start_line: 16 })'
 descriptor = "go decl doc at paste.go:16"
 cost_tokens = 31
-cum_tokens = 1330
+cum_tokens = 1953
 
 [batches.content]
 kind = "lines"
@@ -1584,11 +2072,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 69
+position = 89
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/paste.go", start_line: 20 })'
 descriptor = "go decl doc at paste.go:20"
 cost_tokens = 31
-cum_tokens = 1361
+cum_tokens = 1984
 
 [batches.content]
 kind = "lines"
@@ -1602,11 +2090,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 70
+position = 90
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/raw.go", start_line: 5 })'
 descriptor = "go decl doc at raw.go:5"
 cost_tokens = 31
-cum_tokens = 1392
+cum_tokens = 2015
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +2108,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 71
+position = 91
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/profile.go" })'
 descriptor = "go package + imports in profile.go"
 cost_tokens = 22
-cum_tokens = 1414
+cum_tokens = 2037
 
 [batches.content]
 kind = "lines"
@@ -1646,11 +2134,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 72
+position = 92
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/screen.go" })'
 descriptor = "go package + imports in screen.go"
 cost_tokens = 23
-cum_tokens = 1437
+cum_tokens = 2060
 
 [batches.content]
 kind = "lines"
@@ -1672,11 +2160,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 73
+position = 93
 key = 'Go(GoMod { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/go.mod" })'
 descriptor = "go module file tutorials/go.mod"
 cost_tokens = 88
-cum_tokens = 1525
+cum_tokens = 2148
 
 [batches.content]
 kind = "lines"
@@ -1738,11 +2226,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 74
+position = 94
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/raw.go", start_line: 33 })'
 descriptor = "go decl body at raw.go:33"
 cost_tokens = 24
-cum_tokens = 1549
+cum_tokens = 2172
 
 [batches.content]
 kind = "lines"
@@ -1756,11 +2244,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 75
+position = 95
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termcap.go", start_line: 30 })'
 descriptor = "go decl body at termcap.go:30"
 cost_tokens = 24
-cum_tokens = 1573
+cum_tokens = 2196
 
 [batches.content]
 kind = "lines"
@@ -1774,11 +2262,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 76
+position = 96
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cursor.go"
 cost_tokens = 95
-cum_tokens = 1668
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +2368,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 97
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 4 })'
 descriptor = "go decl at cursor.go:4"
 cost_tokens = 0
-cum_tokens = 1668
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1898,11 +2386,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 78
+position = 98
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 12 })'
 descriptor = "go decl at cursor.go:12"
 cost_tokens = 0
-cum_tokens = 1668
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1916,11 +2404,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 79
+position = 99
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 22 })'
 descriptor = "go decl at cursor.go:22"
 cost_tokens = 0
-cum_tokens = 1668
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1934,11 +2422,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 80
+position = 100
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 26 })'
 descriptor = "go decl at cursor.go:26"
 cost_tokens = 0
-cum_tokens = 1668
+cum_tokens = 2291
 
 [batches.content]
 kind = "lines"
@@ -1952,11 +2440,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 81
+position = 101
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 7 })'
 descriptor = "go decl at cursor.go:7"
 cost_tokens = 12
-cum_tokens = 1680
+cum_tokens = 2303
 
 [batches.content]
 kind = "lines"
@@ -1970,11 +2458,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 82
+position = 102
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 15 })'
 descriptor = "go decl at cursor.go:15"
 cost_tokens = 9
-cum_tokens = 1689
+cum_tokens = 2312
 
 [batches.content]
 kind = "lines"
@@ -1988,11 +2476,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 83
+position = 103
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 26 })'
 descriptor = "go decl body at cursor.go:26"
 cost_tokens = 8
-cum_tokens = 1697
+cum_tokens = 2320
 
 [batches.content]
 kind = "lines"
@@ -2006,11 +2494,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 84
+position = 104
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 15 })'
 descriptor = "go decl doc at cursor.go:15"
 cost_tokens = 8
-cum_tokens = 1705
+cum_tokens = 2328
 
 [batches.content]
 kind = "lines"
@@ -2024,11 +2512,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 85
+position = 105
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 4 })'
 descriptor = "go decl doc at cursor.go:4"
 cost_tokens = 13
-cum_tokens = 1718
+cum_tokens = 2341
 
 [batches.content]
 kind = "lines"
@@ -2042,11 +2530,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 86
+position = 106
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 12 })'
 descriptor = "go decl doc at cursor.go:12"
 cost_tokens = 13
-cum_tokens = 1731
+cum_tokens = 2354
 
 [batches.content]
 kind = "lines"
@@ -2060,11 +2548,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 87
+position = 107
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 7 })'
 descriptor = "go decl doc at cursor.go:7"
 cost_tokens = 18
-cum_tokens = 1749
+cum_tokens = 2372
 
 [batches.content]
 kind = "lines"
@@ -2078,11 +2566,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 88
+position = 108
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go" })'
 descriptor = "go package + imports in commands.go"
 cost_tokens = 25
-cum_tokens = 1774
+cum_tokens = 2397
 
 [batches.content]
 kind = "lines"
@@ -2104,11 +2592,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 89
+position = 109
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go" })'
 descriptor = "go package + imports in environ.go"
 cost_tokens = 25
-cum_tokens = 1799
+cum_tokens = 2422
 
 [batches.content]
 kind = "lines"
@@ -2130,11 +2618,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 90
+position = 110
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go" })'
 descriptor = "go package + imports in mod.go"
 cost_tokens = 25
-cum_tokens = 1824
+cum_tokens = 2447
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2644,63 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 91
+position = 111
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 53 })'
+descriptor = "go decl at tea.go:53"
+cost_tokens = 150
+cum_tokens = 2597
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 53
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 58
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 62
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 112
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 53 })'
+descriptor = "go decl doc at tea.go:53"
+cost_tokens = 18
+cum_tokens = 2615
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", chunk_index: 0 })'
 descriptor = "go decl names surface in renderer.go"
 cost_tokens = 97
-cum_tokens = 1921
+cum_tokens = 2712
 
 [batches.content]
 kind = "lines"
@@ -2262,11 +2802,11 @@ end = 97
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 114
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", start_line: 70 })'
 descriptor = "go decl at renderer.go:70"
 cost_tokens = 0
-cum_tokens = 1921
+cum_tokens = 2712
 
 [batches.content]
 kind = "lines"
@@ -2280,11 +2820,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 93
+position = 115
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", start_line: 86 })'
 descriptor = "go decl at renderer.go:86"
 cost_tokens = 0
-cum_tokens = 1921
+cum_tokens = 2712
 
 [batches.content]
 kind = "lines"
@@ -2298,11 +2838,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 94
+position = 116
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", start_line: 96 })'
 descriptor = "go decl at renderer.go:96"
 cost_tokens = 0
-cum_tokens = 1921
+cum_tokens = 2712
 
 [batches.content]
 kind = "lines"
@@ -2316,11 +2856,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 95
+position = 117
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", start_line: 59 })'
 descriptor = "go decl at renderer.go:59"
 cost_tokens = 11
-cum_tokens = 1932
+cum_tokens = 2723
 
 [batches.content]
 kind = "lines"
@@ -2334,755 +2874,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 96
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", chunk_index: 0 })'
-descriptor = "go decl names surface in tea.go"
-cost_tokens = 194
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 241
-end = 241
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 279
-end = 279
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 288
-end = 288
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 297
-end = 297
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 305
-end = 305
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 309
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 85
-end = 85
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 242
-end = 242
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 280
-end = 280
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 285
-end = 285
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 289
-end = 289
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 298
-end = 298
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 306
-end = 306
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 310
-end = 310
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 97
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 39 })'
-descriptor = "go decl at tea.go:39"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 39
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 42 })'
-descriptor = "go decl at tea.go:42"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 46 })'
-descriptor = "go decl at tea.go:46"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 46
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 50 })'
-descriptor = "go decl at tea.go:50"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 76 })'
-descriptor = "go decl at tea.go:76"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
-descriptor = "go decl at tea.go:279"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 279
-end = 279
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 284 })'
-descriptor = "go decl at tea.go:284"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 284
-end = 284
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 309 })'
-descriptor = "go decl at tea.go:309"
-cost_tokens = 0
-cum_tokens = 2126
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 309
-end = 309
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84 })'
-descriptor = "go decl at tea.go:84"
-cost_tokens = 5
-cum_tokens = 2131
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 84
-end = 84
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 190
-end = 190
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
-descriptor = "go decl body at tea.go:279"
-cost_tokens = 7
-cum_tokens = 2138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 280
-end = 280
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 284 })'
-descriptor = "go decl doc at tea.go:284"
-cost_tokens = 15
-cum_tokens = 2153
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 283
-end = 283
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 309 })'
-descriptor = "go decl doc at tea.go:309"
-cost_tokens = 16
-cum_tokens = 2169
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 308
-end = 308
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 172 })'
-descriptor = "go struct field group at tea.go:84 group 172"
-cost_tokens = 32
-cum_tokens = 2201
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 172
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 141 })'
-descriptor = "go struct field group at tea.go:84 group 141"
-cost_tokens = 36
-cum_tokens = 2237
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 141
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 42 })'
-descriptor = "go decl doc at tea.go:42"
-cost_tokens = 21
-cum_tokens = 2258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 50 })'
-descriptor = "go decl doc at tea.go:50"
-cost_tokens = 36
-cum_tokens = 2294
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 48
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 76 })'
-descriptor = "go decl body at tea.go:76"
-cost_tokens = 22
-cum_tokens = 2316
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 77
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84 })'
-descriptor = "go decl doc at tea.go:84"
-cost_tokens = 39
-cum_tokens = 2355
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 82
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 39 })'
-descriptor = "go decl doc at tea.go:39"
-cost_tokens = 25
-cum_tokens = 2380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 133 })'
-descriptor = "go struct field group at tea.go:84 group 133"
-cost_tokens = 47
-cum_tokens = 2427
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 133
-end = 135
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 137 })'
-descriptor = "go struct field group at tea.go:84 group 137"
-cost_tokens = 48
-cum_tokens = 2475
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 137
-end = 139
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 118
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 145 })'
-descriptor = "go struct field group at tea.go:84 group 145"
-cost_tokens = 48
-cum_tokens = 2523
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 145
-end = 147
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 119
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 175 })'
-descriptor = "go struct field group at tea.go:84 group 175"
-cost_tokens = 56
-cum_tokens = 2579
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 175
-end = 177
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 120
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 128 })'
-descriptor = "go struct field group at tea.go:84 group 128"
-cost_tokens = 57
-cum_tokens = 2636
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 128
-end = 131
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 121
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 46 })'
-descriptor = "go decl doc at tea.go:46"
-cost_tokens = 38
-cum_tokens = 2674
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 44
-end = 45
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 122
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 53 })'
-descriptor = "go decl at tea.go:53"
-cost_tokens = 150
-cum_tokens = 2824
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 53
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 58
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 62
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 123
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 53 })'
-descriptor = "go decl doc at tea.go:53"
-cost_tokens = 18
-cum_tokens = 2842
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 22 })'
 descriptor = "go decl doc at cursor.go:22"
 cost_tokens = 18
-cum_tokens = 2860
+cum_tokens = 2741
 
 [batches.content]
 kind = "lines"
@@ -3096,11 +2892,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 125
+position = 119
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/cursor.go", start_line: 26 })'
 descriptor = "go decl doc at cursor.go:26"
 cost_tokens = 37
-cum_tokens = 2897
+cum_tokens = 2778
 
 [batches.content]
 kind = "lines"
@@ -3114,11 +2910,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 126
+position = 120
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 76 })'
 descriptor = "go decl doc at tea.go:76"
 cost_tokens = 100
-cum_tokens = 2997
+cum_tokens = 2878
 
 [batches.content]
 kind = "lines"
@@ -3132,11 +2928,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 127
+position = 121
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", chunk_index: 0 })'
 descriptor = "go decl names surface in keyboard.go"
 cost_tokens = 118
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3238,11 +3034,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 128
+position = 122
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 33 })'
 descriptor = "go decl at keyboard.go:33"
 cost_tokens = 0
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3256,11 +3052,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 129
+position = 123
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 39 })'
 descriptor = "go decl at keyboard.go:39"
 cost_tokens = 0
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3274,11 +3070,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 130
+position = 124
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 45 })'
 descriptor = "go decl at keyboard.go:45"
 cost_tokens = 0
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3292,11 +3088,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 131
+position = 125
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 51 })'
 descriptor = "go decl at keyboard.go:51"
 cost_tokens = 0
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3310,11 +3106,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 132
+position = 126
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 57 })'
 descriptor = "go decl at keyboard.go:57"
 cost_tokens = 0
-cum_tokens = 3115
+cum_tokens = 2996
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3124,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 133
+position = 127
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 33 })'
 descriptor = "go decl body at keyboard.go:33"
 cost_tokens = 9
-cum_tokens = 3124
+cum_tokens = 3005
 
 [batches.content]
 kind = "lines"
@@ -3346,11 +3142,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 134
+position = 128
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 39 })'
 descriptor = "go decl body at keyboard.go:39"
 cost_tokens = 16
-cum_tokens = 3140
+cum_tokens = 3021
 
 [batches.content]
 kind = "lines"
@@ -3364,11 +3160,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 135
+position = 129
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 45 })'
 descriptor = "go decl body at keyboard.go:45"
 cost_tokens = 16
-cum_tokens = 3156
+cum_tokens = 3037
 
 [batches.content]
 kind = "lines"
@@ -3382,11 +3178,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 136
+position = 130
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 57 })'
 descriptor = "go decl body at keyboard.go:57"
 cost_tokens = 16
-cum_tokens = 3172
+cum_tokens = 3053
 
 [batches.content]
 kind = "lines"
@@ -3400,11 +3196,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 137
+position = 131
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 45 })'
 descriptor = "go decl doc at keyboard.go:45"
 cost_tokens = 24
-cum_tokens = 3196
+cum_tokens = 3077
 
 [batches.content]
 kind = "lines"
@@ -3418,11 +3214,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 138
+position = 132
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 51 })'
 descriptor = "go decl body at keyboard.go:51"
 cost_tokens = 19
-cum_tokens = 3215
+cum_tokens = 3096
 
 [batches.content]
 kind = "lines"
@@ -3436,11 +3232,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 139
+position = 133
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 57 })'
 descriptor = "go decl doc at keyboard.go:57"
 cost_tokens = 26
-cum_tokens = 3241
+cum_tokens = 3122
 
 [batches.content]
 kind = "lines"
@@ -3454,11 +3250,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 140
+position = 134
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 51 })'
 descriptor = "go decl doc at keyboard.go:51"
 cost_tokens = 29
-cum_tokens = 3270
+cum_tokens = 3151
 
 [batches.content]
 kind = "lines"
@@ -3472,11 +3268,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 141
+position = 135
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 39 })'
 descriptor = "go decl doc at keyboard.go:39"
 cost_tokens = 33
-cum_tokens = 3303
+cum_tokens = 3184
 
 [batches.content]
 kind = "lines"
@@ -3490,11 +3286,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 142
+position = 136
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go", start_line: 33 })'
 descriptor = "go decl doc at keyboard.go:33"
 cost_tokens = 35
-cum_tokens = 3338
+cum_tokens = 3219
 
 [batches.content]
 kind = "lines"
@@ -3508,11 +3304,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 143
+position = 137
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/xterm.go", start_line: 20 })'
 descriptor = "go decl doc at xterm.go:20"
 cost_tokens = 45
-cum_tokens = 3383
+cum_tokens = 3264
 
 [batches.content]
 kind = "lines"
@@ -3526,11 +3322,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 144
+position = 138
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/keyboard.go" })'
 descriptor = "go package + imports in keyboard.go"
 cost_tokens = 33
-cum_tokens = 3416
+cum_tokens = 3297
 
 [batches.content]
 kind = "lines"
@@ -3552,11 +3348,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 145
+position = 139
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/input.go", start_line: 8 })'
 descriptor = "go decl doc at input.go:8"
 cost_tokens = 18
-cum_tokens = 3434
+cum_tokens = 3315
 
 [batches.content]
 kind = "lines"
@@ -3570,29 +3366,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 146
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
-descriptor = "go decl doc at tea.go:279"
-cost_tokens = 109
-cum_tokens = 3543
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 269
-end = 278
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
+position = 140
 key = 'Go(GoMod { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/go.mod" })'
 descriptor = "go module file go.mod"
 cost_tokens = 269
-cum_tokens = 3812
+cum_tokens = 3584
 
 [batches.content]
 kind = "lines"
@@ -3646,11 +3424,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 148
+position = 141
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_other.go", chunk_index: 0 })'
 descriptor = "go decl names surface in termios_other.go"
 cost_tokens = 18
-cum_tokens = 3830
+cum_tokens = 3602
 
 [batches.content]
 kind = "lines"
@@ -3664,11 +3442,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 149
+position = 142
 key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 163 })'
 descriptor = "go struct field group at tea.go:84 group 163"
 cost_tokens = 117
-cum_tokens = 3947
+cum_tokens = 3719
 
 [batches.content]
 kind = "lines"
@@ -3682,11 +3460,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 150
+position = 143
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/input.go" })'
 descriptor = "go package + imports in input.go"
 cost_tokens = 36
-cum_tokens = 3983
+cum_tokens = 3755
 
 [batches.content]
 kind = "lines"
@@ -3708,11 +3486,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 151
+position = 144
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", chunk_index: 0 })'
 descriptor = "go decl names surface in commands.go"
 cost_tokens = 143
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3862,11 +3640,11 @@ end = 174
 kind = "ellipsis"
 
 [[batches]]
-position = 152
+position = 145
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 15 })'
 descriptor = "go decl at commands.go:15"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3880,11 +3658,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 153
+position = 146
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 21 })'
 descriptor = "go decl at commands.go:21"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3898,11 +3676,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 154
+position = 147
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 25 })'
 descriptor = "go decl at commands.go:25"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3916,11 +3694,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 155
+position = 148
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 30 })'
 descriptor = "go decl at commands.go:30"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3934,11 +3712,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 156
+position = 149
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 36 })'
 descriptor = "go decl at commands.go:36"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3952,11 +3730,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 157
+position = 150
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 102 })'
 descriptor = "go decl at commands.go:102"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3970,11 +3748,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 158
+position = 151
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 154 })'
 descriptor = "go decl at commands.go:154"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -3988,11 +3766,11 @@ end = 154
 kind = "full"
 
 [[batches]]
-position = 159
+position = 152
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 173 })'
 descriptor = "go decl at commands.go:173"
 cost_tokens = 0
-cum_tokens = 4126
+cum_tokens = 3898
 
 [batches.content]
 kind = "lines"
@@ -4006,11 +3784,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 160
+position = 153
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 173 })'
 descriptor = "go decl body at commands.go:173"
 cost_tokens = 7
-cum_tokens = 4133
+cum_tokens = 3905
 
 [batches.content]
 kind = "lines"
@@ -4024,11 +3802,11 @@ end = 174
 kind = "full"
 
 [[batches]]
-position = 161
+position = 154
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 15 })'
 descriptor = "go decl body at commands.go:15"
 cost_tokens = 13
-cum_tokens = 4146
+cum_tokens = 3918
 
 [batches.content]
 kind = "lines"
@@ -4042,11 +3820,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 162
+position = 155
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 25 })'
 descriptor = "go decl body at commands.go:25"
 cost_tokens = 13
-cum_tokens = 4159
+cum_tokens = 3931
 
 [batches.content]
 kind = "lines"
@@ -4060,11 +3838,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 163
+position = 156
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 21 })'
 descriptor = "go decl doc at commands.go:21"
 cost_tokens = 38
-cum_tokens = 4197
+cum_tokens = 3969
 
 [batches.content]
 kind = "lines"
@@ -4078,11 +3856,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 164
+position = 157
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 25 })'
 descriptor = "go decl doc at commands.go:25"
 cost_tokens = 34
-cum_tokens = 4231
+cum_tokens = 4003
 
 [batches.content]
 kind = "lines"
@@ -4096,11 +3874,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 165
+position = 158
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/commands.go", start_line: 30 })'
 descriptor = "go decl doc at commands.go:30"
 cost_tokens = 18
-cum_tokens = 4249
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -4114,11 +3892,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 166
+position = 159
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/signals_unix.go", chunk_index: 0 })'
 descriptor = "go decl names surface in signals_unix.go"
 cost_tokens = 20
-cum_tokens = 4269
+cum_tokens = 4041
 
 [batches.content]
 kind = "lines"
@@ -4140,11 +3918,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 160
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/signals_unix.go", start_line: 15 })'
 descriptor = "go decl at signals_unix.go:15"
 cost_tokens = 0
-cum_tokens = 4269
+cum_tokens = 4041
 
 [batches.content]
 kind = "lines"
@@ -4158,11 +3936,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 168
+position = 161
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/signals_windows.go", chunk_index: 0 })'
 descriptor = "go decl names surface in signals_windows.go"
 cost_tokens = 20
-cum_tokens = 4289
+cum_tokens = 4061
 
 [batches.content]
 kind = "lines"
@@ -4184,11 +3962,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 162
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/signals_windows.go", start_line: 8 })'
 descriptor = "go decl at signals_windows.go:8"
 cost_tokens = 0
-cum_tokens = 4289
+cum_tokens = 4061
 
 [batches.content]
 kind = "lines"
@@ -4202,11 +3980,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 170
+position = 163
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", chunk_index: 0 })'
 descriptor = "go decl names surface in clipboard.go"
 cost_tokens = 147
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4388,11 +4166,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 164
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 15 })'
 descriptor = "go decl at clipboard.go:15"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4406,11 +4184,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 172
+position = 165
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 20 })'
 descriptor = "go decl at clipboard.go:20"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4424,11 +4202,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 173
+position = 166
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 26 })'
 descriptor = "go decl at clipboard.go:26"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4442,11 +4220,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 174
+position = 167
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 30 })'
 descriptor = "go decl at clipboard.go:30"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4460,11 +4238,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 175
+position = 168
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 38 })'
 descriptor = "go decl at clipboard.go:38"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4478,11 +4256,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 176
+position = 169
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 42 })'
 descriptor = "go decl at clipboard.go:42"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4496,11 +4274,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 177
+position = 170
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 48 })'
 descriptor = "go decl at clipboard.go:48"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4514,11 +4292,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 178
+position = 171
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 54 })'
 descriptor = "go decl at clipboard.go:54"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4532,11 +4310,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 179
+position = 172
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 62 })'
 descriptor = "go decl at clipboard.go:62"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4550,11 +4328,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 180
+position = 173
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 68 })'
 descriptor = "go decl at clipboard.go:68"
 cost_tokens = 0
-cum_tokens = 4436
+cum_tokens = 4208
 
 [batches.content]
 kind = "lines"
@@ -4568,11 +4346,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 181
+position = 174
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 15 })'
 descriptor = "go decl body at clipboard.go:15"
 cost_tokens = 6
-cum_tokens = 4442
+cum_tokens = 4214
 
 [batches.content]
 kind = "lines"
@@ -4586,11 +4364,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 182
+position = 175
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 20 })'
 descriptor = "go decl body at clipboard.go:20"
 cost_tokens = 6
-cum_tokens = 4448
+cum_tokens = 4220
 
 [batches.content]
 kind = "lines"
@@ -4604,11 +4382,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 183
+position = 176
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 5 })'
 descriptor = "go decl at clipboard.go:5"
 cost_tokens = 19
-cum_tokens = 4467
+cum_tokens = 4239
 
 [batches.content]
 kind = "lines"
@@ -4622,11 +4400,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 184
+position = 177
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 42 })'
 descriptor = "go decl body at clipboard.go:42"
 cost_tokens = 7
-cum_tokens = 4474
+cum_tokens = 4246
 
 [batches.content]
 kind = "lines"
@@ -4640,11 +4418,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 185
+position = 178
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 68 })'
 descriptor = "go decl body at clipboard.go:68"
 cost_tokens = 8
-cum_tokens = 4482
+cum_tokens = 4254
 
 [batches.content]
 kind = "lines"
@@ -4658,11 +4436,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 186
+position = 179
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 20 })'
 descriptor = "go decl doc at clipboard.go:20"
 cost_tokens = 15
-cum_tokens = 4497
+cum_tokens = 4269
 
 [batches.content]
 kind = "lines"
@@ -4676,11 +4454,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 187
+position = 180
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 5 })'
 descriptor = "go decl doc at clipboard.go:5"
 cost_tokens = 36
-cum_tokens = 4533
+cum_tokens = 4305
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4472,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 188
+position = 181
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 30 })'
 descriptor = "go decl body at clipboard.go:30"
 cost_tokens = 24
-cum_tokens = 4557
+cum_tokens = 4329
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4490,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 189
+position = 182
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 30 })'
 descriptor = "go decl doc at clipboard.go:30"
 cost_tokens = 35
-cum_tokens = 4592
+cum_tokens = 4364
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4508,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 190
+position = 183
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 42 })'
 descriptor = "go decl doc at clipboard.go:42"
 cost_tokens = 35
-cum_tokens = 4627
+cum_tokens = 4399
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +4526,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 191
+position = 184
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 54 })'
 descriptor = "go decl body at clipboard.go:54"
 cost_tokens = 25
-cum_tokens = 4652
+cum_tokens = 4424
 
 [batches.content]
 kind = "lines"
@@ -4766,11 +4544,11 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 192
+position = 185
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go", chunk_index: 0 })'
 descriptor = "go decl names surface in mod.go"
 cost_tokens = 150
-cum_tokens = 4802
+cum_tokens = 4574
 
 [batches.content]
 kind = "lines"
@@ -4840,11 +4618,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 193
+position = 186
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go", start_line: 6 })'
 descriptor = "go decl at mod.go:6"
 cost_tokens = 0
-cum_tokens = 4802
+cum_tokens = 4574
 
 [batches.content]
 kind = "lines"
@@ -4858,11 +4636,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 194
+position = 187
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go", start_line: 6 })'
 descriptor = "go decl doc at mod.go:6"
 cost_tokens = 11
-cum_tokens = 4813
+cum_tokens = 4585
 
 [batches.content]
 kind = "lines"
@@ -4876,11 +4654,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 195
+position = 188
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/environ.go", start_line: 24 })'
 descriptor = "go decl doc at environ.go:24"
 cost_tokens = 50
-cum_tokens = 4863
+cum_tokens = 4635
 
 [batches.content]
 kind = "lines"
@@ -4894,11 +4672,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 196
+position = 189
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go", start_line: 9 })'
 descriptor = "go decl at mod.go:9"
 cost_tokens = 70
-cum_tokens = 4933
+cum_tokens = 4705
 
 [batches.content]
 kind = "lines"
@@ -4944,11 +4722,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 197
+position = 190
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mod.go", start_line: 9 })'
 descriptor = "go decl doc at mod.go:9"
 cost_tokens = 8
-cum_tokens = 4941
+cum_tokens = 4713
 
 [batches.content]
 kind = "lines"
@@ -4962,11 +4740,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 198
+position = 191
 key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 85 })'
 descriptor = "go struct field group at tea.go:84 group 85"
 cost_tokens = 133
-cum_tokens = 5074
+cum_tokens = 4846
 
 [batches.content]
 kind = "lines"
@@ -4980,11 +4758,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 199
+position = 192
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go" })'
 descriptor = "go package + imports in exec.go"
 cost_tokens = 41
-cum_tokens = 5115
+cum_tokens = 4887
 
 [batches.content]
 kind = "lines"
@@ -5006,11 +4784,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 200
+position = 193
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", chunk_index: 0 })'
 descriptor = "go decl names surface in tty.go"
 cost_tokens = 158
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5160,11 +4938,11 @@ end = 131
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 194
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 12 })'
 descriptor = "go decl at tty.go:12"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5178,11 +4956,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 202
+position = 195
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 24 })'
 descriptor = "go decl at tty.go:24"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +4974,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 203
+position = 196
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 33 })'
 descriptor = "go decl at tty.go:33"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5214,11 +4992,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 204
+position = 197
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 41 })'
 descriptor = "go decl at tty.go:41"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5232,11 +5010,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 205
+position = 198
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 56 })'
 descriptor = "go decl at tty.go:56"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5250,11 +5028,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 206
+position = 199
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 84 })'
 descriptor = "go decl at tty.go:84"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5268,11 +5046,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 207
+position = 200
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 97 })'
 descriptor = "go decl at tty.go:97"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5286,11 +5064,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 208
+position = 201
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 109 })'
 descriptor = "go decl at tty.go:109"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5304,11 +5082,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 209
+position = 202
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 130 })'
 descriptor = "go decl at tty.go:130"
 cost_tokens = 0
-cum_tokens = 5273
+cum_tokens = 5045
 
 [batches.content]
 kind = "lines"
@@ -5322,11 +5100,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 210
+position = 203
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 130 })'
 descriptor = "go decl doc at tty.go:130"
 cost_tokens = 19
-cum_tokens = 5292
+cum_tokens = 5064
 
 [batches.content]
 kind = "lines"
@@ -5340,11 +5118,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 211
+position = 204
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 41 })'
 descriptor = "go decl doc at tty.go:41"
 cost_tokens = 16
-cum_tokens = 5308
+cum_tokens = 5080
 
 [batches.content]
 kind = "lines"
@@ -5358,11 +5136,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 212
+position = 205
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 56 })'
 descriptor = "go decl doc at tty.go:56"
 cost_tokens = 16
-cum_tokens = 5324
+cum_tokens = 5096
 
 [batches.content]
 kind = "lines"
@@ -5376,11 +5154,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 213
+position = 206
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 97 })'
 descriptor = "go decl doc at tty.go:97"
 cost_tokens = 20
-cum_tokens = 5344
+cum_tokens = 5116
 
 [batches.content]
 kind = "lines"
@@ -5394,11 +5172,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 214
+position = 207
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_windows.go", chunk_index: 0 })'
 descriptor = "go decl names surface in termios_windows.go"
 cost_tokens = 22
-cum_tokens = 5366
+cum_tokens = 5138
 
 [batches.content]
 kind = "lines"
@@ -5420,11 +5198,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 215
+position = 208
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_windows.go", start_line: 8 })'
 descriptor = "go decl at termios_windows.go:8"
 cost_tokens = 0
-cum_tokens = 5366
+cum_tokens = 5138
 
 [batches.content]
 kind = "lines"
@@ -5438,11 +5216,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 216
+position = 209
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 26 })'
 descriptor = "go decl doc at clipboard.go:26"
 cost_tokens = 28
-cum_tokens = 5394
+cum_tokens = 5166
 
 [batches.content]
 kind = "lines"
@@ -5456,11 +5234,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 217
+position = 210
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 38 })'
 descriptor = "go decl doc at clipboard.go:38"
 cost_tokens = 28
-cum_tokens = 5422
+cum_tokens = 5194
 
 [batches.content]
 kind = "lines"
@@ -5474,11 +5252,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 218
+position = 211
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/key.go" })'
 descriptor = "go package + imports in key.go"
 cost_tokens = 43
-cum_tokens = 5465
+cum_tokens = 5237
 
 [batches.content]
 kind = "lines"
@@ -5508,11 +5286,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 219
+position = 212
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/mouse.go" })'
 descriptor = "go package + imports in mouse.go"
 cost_tokens = 43
-cum_tokens = 5508
+cum_tokens = 5280
 
 [batches.content]
 kind = "lines"
@@ -5542,11 +5320,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 220
+position = 213
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 48 })'
 descriptor = "go decl doc at clipboard.go:48"
 cost_tokens = 29
-cum_tokens = 5537
+cum_tokens = 5309
 
 [batches.content]
 kind = "lines"
@@ -5560,11 +5338,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 221
+position = 214
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 62 })'
 descriptor = "go decl doc at clipboard.go:62"
 cost_tokens = 29
-cum_tokens = 5566
+cum_tokens = 5338
 
 [batches.content]
 kind = "lines"
@@ -5578,11 +5356,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 222
+position = 215
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/xterm.go", start_line: 15 })'
 descriptor = "go decl doc at xterm.go:15"
 cost_tokens = 29
-cum_tokens = 5595
+cum_tokens = 5367
 
 [batches.content]
 kind = "lines"
@@ -5596,11 +5374,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 223
+position = 216
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/screen.go", start_line: 9 })'
 descriptor = "go decl doc at screen.go:9"
 cost_tokens = 71
-cum_tokens = 5666
+cum_tokens = 5438
 
 [batches.content]
 kind = "lines"
@@ -5614,11 +5392,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 224
+position = 217
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_bsd.go", chunk_index: 0 })'
 descriptor = "go decl names surface in termios_bsd.go"
 cost_tokens = 23
-cum_tokens = 5689
+cum_tokens = 5461
 
 [batches.content]
 kind = "lines"
@@ -5640,11 +5418,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 225
+position = 218
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_bsd.go", start_line: 11 })'
 descriptor = "go decl at termios_bsd.go:11"
 cost_tokens = 0
-cum_tokens = 5689
+cum_tokens = 5461
 
 [batches.content]
 kind = "lines"
@@ -5658,11 +5436,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 226
+position = 219
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_unix.go", chunk_index: 0 })'
 descriptor = "go decl names surface in termios_unix.go"
 cost_tokens = 23
-cum_tokens = 5712
+cum_tokens = 5484
 
 [batches.content]
 kind = "lines"
@@ -5684,11 +5462,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 227
+position = 220
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termios_unix.go", start_line: 11 })'
 descriptor = "go decl at termios_unix.go:11"
 cost_tokens = 0
-cum_tokens = 5712
+cum_tokens = 5484
 
 [batches.content]
 kind = "lines"
@@ -5702,11 +5480,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 228
+position = 221
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/color.go" })'
 descriptor = "go package + imports in color.go"
 cost_tokens = 45
-cum_tokens = 5757
+cum_tokens = 5529
 
 [batches.content]
 kind = "lines"
@@ -5736,11 +5514,919 @@ end = 7
 kind = "full"
 
 [[batches]]
+position = 222
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", chunk_index: 2 })'
+descriptor = "go decl names surface #2 in tea.go"
+cost_tokens = 106
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 357
+end = 357
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 395
+end = 395
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 402
+end = 402
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 409
+end = 409
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 426
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 555
+end = 555
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 358
+end = 358
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 375
+end = 375
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 396
+end = 396
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 403
+end = 403
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 410
+end = 410
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 427
+end = 427
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 556
+end = 556
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 223
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 374 })'
+descriptor = "go decl at tea.go:374"
+cost_tokens = 0
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 374
+end = 374
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 224
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 390 })'
+descriptor = "go decl at tea.go:390"
+cost_tokens = 0
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 390
+end = 390
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 225
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 402 })'
+descriptor = "go decl at tea.go:402"
+cost_tokens = 0
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 402
+end = 402
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 409 })'
+descriptor = "go decl at tea.go:409"
+cost_tokens = 0
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 409
+end = 409
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
+descriptor = "go decl at tea.go:555"
+cost_tokens = 0
+cum_tokens = 5635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 555
+end = 555
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426 })'
+descriptor = "go decl at tea.go:426"
+cost_tokens = 5
+cum_tokens = 5640
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 426
+end = 426
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 552
+end = 552
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 229
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 551 })'
+descriptor = "go struct field group at tea.go:426 group 551"
+cost_tokens = 10
+cum_tokens = 5650
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 551
+end = 551
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
+descriptor = "go decl body at tea.go:555"
+cost_tokens = 6
+cum_tokens = 5656
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 556
+end = 556
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 231
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 506 })'
+descriptor = "go struct field group at tea.go:426 group 506"
+cost_tokens = 16
+cum_tokens = 5672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426 })'
+descriptor = "go decl doc at tea.go:426"
+cost_tokens = 12
+cum_tokens = 5684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 425
+end = 425
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 233
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 537 })'
+descriptor = "go struct field group at tea.go:426 group 537"
+cost_tokens = 23
+cum_tokens = 5707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 537
+end = 538
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 543 })'
+descriptor = "go struct field group at tea.go:426 group 543"
+cost_tokens = 24
+cum_tokens = 5731
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 543
+end = 544
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 540 })'
+descriptor = "go struct field group at tea.go:426 group 540"
+cost_tokens = 25
+cum_tokens = 5756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 540
+end = 541
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
+descriptor = "go decl doc at tea.go:555"
+cost_tokens = 19
+cum_tokens = 5775
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 554
+end = 554
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 531 })'
+descriptor = "go struct field group at tea.go:426 group 531"
+cost_tokens = 29
+cum_tokens = 5804
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 531
+end = 532
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 534 })'
+descriptor = "go struct field group at tea.go:426 group 534"
+cost_tokens = 31
+cum_tokens = 5835
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 534
+end = 535
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 374 })'
+descriptor = "go decl doc at tea.go:374"
+cost_tokens = 26
+cum_tokens = 5861
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 372
+end = 373
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 395 })'
+descriptor = "go decl at tea.go:395"
+cost_tokens = 25
+cum_tokens = 5886
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 395
+end = 398
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 488 })'
+descriptor = "go struct field group at tea.go:426 group 488"
+cost_tokens = 40
+cum_tokens = 5926
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 488
+end = 490
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 501 })'
+descriptor = "go struct field group at tea.go:426 group 501"
+cost_tokens = 40
+cum_tokens = 5966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 501
+end = 504
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 479 })'
+descriptor = "go struct field group at tea.go:426 group 479"
+cost_tokens = 42
+cum_tokens = 6008
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 479
+end = 481
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 409 })'
+descriptor = "go decl doc at tea.go:409"
+cost_tokens = 13
+cum_tokens = 6021
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 408
+end = 408
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 427 })'
+descriptor = "go struct field group at tea.go:426 group 427"
+cost_tokens = 44
+cum_tokens = 6065
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 427
+end = 429
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 246
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 431 })'
+descriptor = "go struct field group at tea.go:426 group 431"
+cost_tokens = 49
+cum_tokens = 6114
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 431
+end = 433
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 247
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 508 })'
+descriptor = "go struct field group at tea.go:426 group 508"
+cost_tokens = 49
+cum_tokens = 6163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 508
+end = 510
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 248
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 512 })'
+descriptor = "go struct field group at tea.go:426 group 512"
+cost_tokens = 50
+cum_tokens = 6213
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 512
+end = 515
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 249
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 517 })'
+descriptor = "go struct field group at tea.go:426 group 517"
+cost_tokens = 50
+cum_tokens = 6263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 517
+end = 520
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 250
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 546 })'
+descriptor = "go struct field group at tea.go:426 group 546"
+cost_tokens = 50
+cum_tokens = 6313
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 546
+end = 549
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 251
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 492 })'
+descriptor = "go struct field group at tea.go:426 group 492"
+cost_tokens = 55
+cum_tokens = 6368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 492
+end = 495
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 252
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 497 })'
+descriptor = "go struct field group at tea.go:426 group 497"
+cost_tokens = 58
+cum_tokens = 6426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 497
+end = 499
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 253
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 483 })'
+descriptor = "go struct field group at tea.go:426 group 483"
+cost_tokens = 65
+cum_tokens = 6491
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 483
+end = 486
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 254
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 474 })'
+descriptor = "go struct field group at tea.go:426 group 474"
+cost_tokens = 71
+cum_tokens = 6562
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 474
+end = 477
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 255
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 357 })'
+descriptor = "go decl at tea.go:357"
+cost_tokens = 131
+cum_tokens = 6693
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 357
+end = 360
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 362
+end = 363
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 365
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 368
+end = 370
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 256
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 357 })'
+descriptor = "go decl doc at tea.go:357"
+cost_tokens = 14
+cum_tokens = 6707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 356
+end = 356
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 257
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 435 })'
+descriptor = "go struct field group at tea.go:426 group 435"
+cost_tokens = 83
+cum_tokens = 6790
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 435
+end = 439
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 258
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 402 })'
+descriptor = "go decl doc at tea.go:402"
+cost_tokens = 31
+cum_tokens = 6821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 400
+end = 401
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 259
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 395 })'
+descriptor = "go decl doc at tea.go:395"
+cost_tokens = 43
+cum_tokens = 6864
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 392
+end = 394
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 260
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 390 })'
+descriptor = "go decl doc at tea.go:390"
+cost_tokens = 113
+cum_tokens = 6977
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 383
+end = 389
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 261
+key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 522 })'
+descriptor = "go struct field group at tea.go:426 group 522"
+cost_tokens = 107
+cum_tokens = 7084
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 522
+end = 529
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 262
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 374 })'
+descriptor = "go decl body at tea.go:374"
+cost_tokens = 63
+cum_tokens = 7147
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 375
+end = 380
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 263
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 402 })'
+descriptor = "go decl body at tea.go:402"
+cost_tokens = 27
+cum_tokens = 7174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 403
+end = 405
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 264
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 54 })'
 descriptor = "go decl doc at clipboard.go:54"
 cost_tokens = 63
-cum_tokens = 5820
+cum_tokens = 7237
 
 [batches.content]
 kind = "lines"
@@ -5754,11 +6440,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 230
+position = 265
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 68 })'
 descriptor = "go decl doc at clipboard.go:68"
 cost_tokens = 63
-cum_tokens = 5883
+cum_tokens = 7300
 
 [batches.content]
 kind = "lines"
@@ -5772,11 +6458,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 231
+position = 266
 key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 179 })'
 descriptor = "go struct field group at tea.go:84 group 179"
 cost_tokens = 148
-cum_tokens = 6031
+cum_tokens = 7448
 
 [batches.content]
 kind = "lines"
@@ -5790,11 +6476,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 232
+position = 267
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/renderer.go", start_line: 96 })'
 descriptor = "go decl doc at renderer.go:96"
 cost_tokens = 27
-cum_tokens = 6058
+cum_tokens = 7475
 
 [batches.content]
 kind = "lines"
@@ -5808,11 +6494,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 233
+position = 268
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/nil_renderer.go" })'
 descriptor = "go package + imports in nil_renderer.go"
 cost_tokens = 47
-cum_tokens = 6105
+cum_tokens = 7522
 
 [batches.content]
 kind = "lines"
@@ -5834,11 +6520,487 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 234
+position = 269
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", chunk_index: 1 })'
+descriptor = "go decl names surface #1 in tea.go"
+cost_tokens = 185
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 288
+end = 288
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 297
+end = 297
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 313
+end = 317
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 321
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 289
+end = 289
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 298
+end = 298
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 306
+end = 306
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 310
+end = 310
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 318
+end = 318
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 322
+end = 322
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 350
+end = 350
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 270
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
+descriptor = "go decl at tea.go:279"
+cost_tokens = 0
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 271
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 284 })'
+descriptor = "go decl at tea.go:284"
+cost_tokens = 0
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 272
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 309 })'
+descriptor = "go decl at tea.go:309"
+cost_tokens = 0
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 309
+end = 309
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 273
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 321 })'
+descriptor = "go decl at tea.go:321"
+cost_tokens = 0
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 321
+end = 321
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 274
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
+descriptor = "go decl at tea.go:349"
+cost_tokens = 0
+cum_tokens = 7707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 275
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 312 })'
+descriptor = "go decl at tea.go:312"
+cost_tokens = 9
+cum_tokens = 7716
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 312
+end = 318
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 276
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
+descriptor = "go decl body at tea.go:279"
+cost_tokens = 7
+cum_tokens = 7723
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 280
+end = 280
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 277
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 312 })'
+descriptor = "go decl doc at tea.go:312"
+cost_tokens = 9
+cum_tokens = 7732
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 311
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 278
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 284 })'
+descriptor = "go decl doc at tea.go:284"
+cost_tokens = 15
+cum_tokens = 7747
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 279
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 309 })'
+descriptor = "go decl doc at tea.go:309"
+cost_tokens = 16
+cum_tokens = 7763
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 308
+end = 308
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 280
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 321 })'
+descriptor = "go decl doc at tea.go:321"
+cost_tokens = 19
+cum_tokens = 7782
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 320
+end = 320
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 281
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
+descriptor = "go decl doc at tea.go:349"
+cost_tokens = 51
+cum_tokens = 7833
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 346
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 282
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
+descriptor = "go decl body at tea.go:349"
+cost_tokens = 39
+cum_tokens = 7872
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 350
+end = 353
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 283
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 336 })'
+descriptor = "go decl at tea.go:336"
+cost_tokens = 113
+cum_tokens = 7985
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 336
+end = 344
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 284
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 336 })'
+descriptor = "go decl doc at tea.go:336"
+cost_tokens = 58
+cum_tokens = 8043
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 331
+end = 335
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 285
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 279 })'
+descriptor = "go decl doc at tea.go:279"
+cost_tokens = 109
+cum_tokens = 8152
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 269
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 286
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 321 })'
+descriptor = "go decl body at tea.go:321"
+cost_tokens = 60
+cum_tokens = 8212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 322
+end = 328
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 287
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/termcap.go", start_line: 5 })'
 descriptor = "go decl doc at termcap.go:5"
 cost_tokens = 32
-cum_tokens = 6137
+cum_tokens = 8244
 
 [batches.content]
 kind = "lines"
@@ -5852,11 +7014,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 235
+position = 288
 key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 84, group_start_line: 149 })'
 descriptor = "go struct field group at tea.go:84 group 149"
 cost_tokens = 157
-cum_tokens = 6294
+cum_tokens = 8401
 
 [batches.content]
 kind = "lines"
@@ -5870,11 +7032,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 236
+position = 289
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/signals_windows.go" })'
 descriptor = "go package + imports in signals_windows.go"
 cost_tokens = 7
-cum_tokens = 6301
+cum_tokens = 8408
 
 [batches.content]
 kind = "lines"
@@ -5888,11 +7050,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 237
+position = 290
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/clipboard.go", start_line: 15 })'
 descriptor = "go decl doc at clipboard.go:15"
 cost_tokens = 63
-cum_tokens = 6364
+cum_tokens = 8471
 
 [batches.content]
 kind = "lines"
@@ -5906,11 +7068,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 238
+position = 291
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", chunk_index: 0 })'
 descriptor = "go decl names surface in exec.go"
 cost_tokens = 196
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6092,11 +7254,11 @@ end = 103
 kind = "ellipsis"
 
 [[batches]]
-position = 239
+position = 292
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 22 })'
 descriptor = "go decl at exec.go:22"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6110,11 +7272,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 240
+position = 293
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 50 })'
 descriptor = "go decl at exec.go:50"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6128,11 +7290,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 241
+position = 294
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 56 })'
 descriptor = "go decl at exec.go:56"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6146,11 +7308,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 242
+position = 295
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 69 })'
 descriptor = "go decl at exec.go:69"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6164,11 +7326,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 243
+position = 296
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 75 })'
 descriptor = "go decl at exec.go:75"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6182,11 +7344,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 244
+position = 297
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 78 })'
 descriptor = "go decl at exec.go:78"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6200,11 +7362,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 245
+position = 298
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 86 })'
 descriptor = "go decl at exec.go:86"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6218,11 +7380,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 246
+position = 299
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 94 })'
 descriptor = "go decl at exec.go:94"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6236,11 +7398,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 247
+position = 300
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 102 })'
 descriptor = "go decl at exec.go:102"
 cost_tokens = 0
-cum_tokens = 6560
+cum_tokens = 8667
 
 [batches.content]
 kind = "lines"
@@ -6254,11 +7416,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 248
+position = 301
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 50 })'
 descriptor = "go decl body at exec.go:50"
 cost_tokens = 12
-cum_tokens = 6572
+cum_tokens = 8679
 
 [batches.content]
 kind = "lines"
@@ -6272,11 +7434,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 249
+position = 302
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 60 })'
 descriptor = "go decl at exec.go:60"
 cost_tokens = 41
-cum_tokens = 6613
+cum_tokens = 8720
 
 [batches.content]
 kind = "lines"
@@ -6290,11 +7452,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 250
+position = 303
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 10 })'
 descriptor = "go decl at exec.go:10"
 cost_tokens = 20
-cum_tokens = 6633
+cum_tokens = 8740
 
 [batches.content]
 kind = "lines"
@@ -6308,11 +7470,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 251
+position = 304
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 60 })'
 descriptor = "go decl doc at exec.go:60"
 cost_tokens = 28
-cum_tokens = 6661
+cum_tokens = 8768
 
 [batches.content]
 kind = "lines"
@@ -6326,11 +7488,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 252
+position = 305
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 56 })'
 descriptor = "go decl doc at exec.go:56"
 cost_tokens = 37
-cum_tokens = 6698
+cum_tokens = 8805
 
 [batches.content]
 kind = "lines"
@@ -6344,11 +7506,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 253
+position = 306
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 69 })'
 descriptor = "go decl body at exec.go:69"
 cost_tokens = 12
-cum_tokens = 6710
+cum_tokens = 8817
 
 [batches.content]
 kind = "lines"
@@ -6362,11 +7524,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 254
+position = 307
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 10 })'
 descriptor = "go decl doc at exec.go:10"
 cost_tokens = 19
-cum_tokens = 6729
+cum_tokens = 8836
 
 [batches.content]
 kind = "lines"
@@ -6380,11 +7542,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 255
+position = 308
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 22 })'
 descriptor = "go decl body at exec.go:22"
 cost_tokens = 30
-cum_tokens = 6759
+cum_tokens = 8866
 
 [batches.content]
 kind = "lines"
@@ -6398,11 +7560,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 256
+position = 309
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 78 })'
 descriptor = "go decl doc at exec.go:78"
 cost_tokens = 20
-cum_tokens = 6779
+cum_tokens = 8886
 
 [batches.content]
 kind = "lines"
@@ -6416,11 +7578,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 257
+position = 310
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 86 })'
 descriptor = "go decl doc at exec.go:86"
 cost_tokens = 20
-cum_tokens = 6799
+cum_tokens = 8906
 
 [batches.content]
 kind = "lines"
@@ -6434,11 +7596,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 258
+position = 311
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 94 })'
 descriptor = "go decl doc at exec.go:94"
 cost_tokens = 21
-cum_tokens = 6820
+cum_tokens = 8927
 
 [batches.content]
 kind = "lines"
@@ -6452,11 +7614,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 259
+position = 312
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 102 })'
 descriptor = "go decl doc at exec.go:102"
 cost_tokens = 21
-cum_tokens = 6841
+cum_tokens = 8948
 
 [batches.content]
 kind = "lines"
@@ -6470,11 +7632,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 260
+position = 313
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/exec.go", start_line: 75 })'
 descriptor = "go decl doc at exec.go:75"
 cost_tokens = 28
-cum_tokens = 6869
+cum_tokens = 8976
 
 [batches.content]
 kind = "lines"
@@ -6488,11 +7650,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 261
+position = 314
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 33 })'
 descriptor = "go decl doc at tty.go:33"
 cost_tokens = 28
-cum_tokens = 6897
+cum_tokens = 9004
 
 [batches.content]
 kind = "lines"
@@ -6506,11 +7668,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 262
+position = 315
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/screen.go", start_line: 26 })'
 descriptor = "go decl doc at screen.go:26"
 cost_tokens = 35
-cum_tokens = 6932
+cum_tokens = 9039
 
 [batches.content]
 kind = "lines"
@@ -6524,11 +7686,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 263
+position = 316
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 243
-cum_tokens = 7175
+cum_tokens = 9282
 
 [batches.content]
 kind = "lines"
@@ -6886,11 +8048,11 @@ end = 393
 kind = "ellipsis"
 
 [[batches]]
-position = 264
+position = 317
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 14
-cum_tokens = 7189
+cum_tokens = 9296
 
 [batches.content]
 kind = "lines"
@@ -6904,11 +8066,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 265
+position = 318
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/README.md", section_index: 44 })'
 descriptor = "README.md section #44"
 cost_tokens = 34
-cum_tokens = 7223
+cum_tokens = 9330
 
 [batches.content]
 kind = "lines"
@@ -6938,11 +8100,11 @@ end = 370
 kind = "full"
 
 [[batches]]
-position = 266
+position = 319
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 238
-cum_tokens = 7461
+cum_tokens = 9568
 
 [batches.content]
 kind = "lines"
@@ -6980,11 +8142,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 267
+position = 320
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", chunk_index: 0 })'
 descriptor = "go decl names surface in options.go"
 cost_tokens = 204
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7198,11 +8360,11 @@ end = 164
 kind = "ellipsis"
 
 [[batches]]
-position = 268
+position = 321
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 17 })'
 descriptor = "go decl at options.go:17"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7216,11 +8378,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 269
+position = 322
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 22 })'
 descriptor = "go decl at options.go:22"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7234,11 +8396,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 270
+position = 323
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 30 })'
 descriptor = "go decl at options.go:30"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7252,11 +8414,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 271
+position = 324
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 40 })'
 descriptor = "go decl at options.go:40"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7270,11 +8432,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 272
+position = 325
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 58 })'
 descriptor = "go decl at options.go:58"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7288,11 +8450,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 273
+position = 326
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 66 })'
 descriptor = "go decl at options.go:66"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7306,11 +8468,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 274
+position = 327
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 76 })'
 descriptor = "go decl at options.go:76"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7324,11 +8486,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 275
+position = 328
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 84 })'
 descriptor = "go decl at options.go:84"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7342,11 +8504,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 276
+position = 329
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 98 })'
 descriptor = "go decl at options.go:98"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7360,11 +8522,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 277
+position = 330
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 133 })'
 descriptor = "go decl at options.go:133"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7378,11 +8540,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 278
+position = 331
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 142 })'
 descriptor = "go decl at options.go:142"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7396,11 +8558,11 @@ end = 142
 kind = "full"
 
 [[batches]]
-position = 279
+position = 332
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 153 })'
 descriptor = "go decl at options.go:153"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7414,11 +8576,11 @@ end = 153
 kind = "full"
 
 [[batches]]
-position = 280
+position = 333
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 163 })'
 descriptor = "go decl at options.go:163"
 cost_tokens = 0
-cum_tokens = 7665
+cum_tokens = 9772
 
 [batches.content]
 kind = "lines"
@@ -7432,11 +8594,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 281
+position = 334
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 84 })'
 descriptor = "go decl doc at options.go:84"
 cost_tokens = 24
-cum_tokens = 7689
+cum_tokens = 9796
 
 [batches.content]
 kind = "lines"
@@ -7450,11 +8612,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 282
+position = 335
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 30 })'
 descriptor = "go decl doc at options.go:30"
 cost_tokens = 34
-cum_tokens = 7723
+cum_tokens = 9830
 
 [batches.content]
 kind = "lines"
@@ -7468,11 +8630,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 283
+position = 336
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 30 })'
 descriptor = "go decl body at options.go:30"
 cost_tokens = 25
-cum_tokens = 7748
+cum_tokens = 9855
 
 [batches.content]
 kind = "lines"
@@ -7486,11 +8648,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 284
+position = 337
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 58 })'
 descriptor = "go decl body at options.go:58"
 cost_tokens = 25
-cum_tokens = 7773
+cum_tokens = 9880
 
 [batches.content]
 kind = "lines"
@@ -7504,11 +8666,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 285
+position = 338
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 133 })'
 descriptor = "go decl body at options.go:133"
 cost_tokens = 25
-cum_tokens = 7798
+cum_tokens = 9905
 
 [batches.content]
 kind = "lines"
@@ -7522,11 +8684,11 @@ end = 136
 kind = "full"
 
 [[batches]]
-position = 286
+position = 339
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 66 })'
 descriptor = "go decl doc at options.go:66"
 cost_tokens = 37
-cum_tokens = 7835
+cum_tokens = 9942
 
 [batches.content]
 kind = "lines"
@@ -7540,11 +8702,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 287
+position = 340
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 22 })'
 descriptor = "go decl body at options.go:22"
 cost_tokens = 26
-cum_tokens = 7861
+cum_tokens = 9968
 
 [batches.content]
 kind = "lines"
@@ -7558,11 +8720,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 288
+position = 341
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 98 })'
 descriptor = "go decl body at options.go:98"
 cost_tokens = 26
-cum_tokens = 7887
+cum_tokens = 9994
 
 [batches.content]
 kind = "lines"
@@ -7571,1188 +8733,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
 start = 99
 end = 101
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 289
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 142 })'
-descriptor = "go decl body at options.go:142"
-cost_tokens = 26
-cum_tokens = 7913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 143
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 290
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 153 })'
-descriptor = "go decl body at options.go:153"
-cost_tokens = 26
-cum_tokens = 7939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 154
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 291
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 66 })'
-descriptor = "go decl body at options.go:66"
-cost_tokens = 27
-cum_tokens = 7966
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 67
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 292
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 76 })'
-descriptor = "go decl body at options.go:76"
-cost_tokens = 28
-cum_tokens = 7994
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 77
-end = 79
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 293
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 84 })'
-descriptor = "go decl body at options.go:84"
-cost_tokens = 33
-cum_tokens = 8027
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 85
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 294
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 163 })'
-descriptor = "go decl body at options.go:163"
-cost_tokens = 35
-cum_tokens = 8062
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 164
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 295
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 22 })'
-descriptor = "go decl doc at options.go:22"
-cost_tokens = 59
-cum_tokens = 8121
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 19
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 296
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 40 })'
-descriptor = "go decl body at options.go:40"
-cost_tokens = 38
-cum_tokens = 8159
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 41
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 297
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 40 })'
-descriptor = "go decl doc at options.go:40"
-cost_tokens = 61
-cum_tokens = 8220
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 36
-end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 298
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 142 })'
-descriptor = "go decl doc at options.go:142"
-cost_tokens = 61
-cum_tokens = 8281
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 139
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 299
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 17 })'
-descriptor = "go decl doc at options.go:17"
-cost_tokens = 73
-cum_tokens = 8354
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 11
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 300
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 76 })'
-descriptor = "go decl doc at options.go:76"
-cost_tokens = 68
-cum_tokens = 8422
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 72
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 301
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go", start_line: 163 })'
-descriptor = "go decl doc at options.go:163"
-cost_tokens = 70
-cum_tokens = 8492
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/options.go"
-start = 159
-end = 162
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 302
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", chunk_index: 1 })'
-descriptor = "go decl names surface #1 in tea.go"
-cost_tokens = 210
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 313
-end = 317
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 336
-end = 336
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 349
-end = 349
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 357
-end = 357
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 374
-end = 374
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 390
-end = 390
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 395
-end = 395
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 402
-end = 402
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 409
-end = 409
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 426
-end = 426
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 555
-end = 555
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 318
-end = 318
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 322
-end = 322
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 337
-end = 337
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 350
-end = 350
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 358
-end = 358
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 375
-end = 375
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 391
-end = 391
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 396
-end = 396
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 403
-end = 403
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 410
-end = 410
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 427
-end = 427
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 556
-end = 556
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 303
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 321 })'
-descriptor = "go decl at tea.go:321"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 321
-end = 321
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 304
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
-descriptor = "go decl at tea.go:349"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 349
-end = 349
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 305
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 374 })'
-descriptor = "go decl at tea.go:374"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 374
-end = 374
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 306
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 390 })'
-descriptor = "go decl at tea.go:390"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 390
-end = 390
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 307
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 402 })'
-descriptor = "go decl at tea.go:402"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 402
-end = 402
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 308
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 409 })'
-descriptor = "go decl at tea.go:409"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 409
-end = 409
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 309
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
-descriptor = "go decl at tea.go:555"
-cost_tokens = 0
-cum_tokens = 8702
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 555
-end = 555
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 310
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426 })'
-descriptor = "go decl at tea.go:426"
-cost_tokens = 5
-cum_tokens = 8707
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 426
-end = 426
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 552
-end = 552
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 311
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 312 })'
-descriptor = "go decl at tea.go:312"
-cost_tokens = 9
-cum_tokens = 8716
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 312
-end = 318
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 312
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 551 })'
-descriptor = "go struct field group at tea.go:426 group 551"
-cost_tokens = 10
-cum_tokens = 8726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 551
-end = 551
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 313
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
-descriptor = "go decl body at tea.go:555"
-cost_tokens = 6
-cum_tokens = 8732
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 556
-end = 556
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 314
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 506 })'
-descriptor = "go struct field group at tea.go:426 group 506"
-cost_tokens = 16
-cum_tokens = 8748
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 506
-end = 506
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 315
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426 })'
-descriptor = "go decl doc at tea.go:426"
-cost_tokens = 12
-cum_tokens = 8760
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 425
-end = 425
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 316
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 312 })'
-descriptor = "go decl doc at tea.go:312"
-cost_tokens = 9
-cum_tokens = 8769
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 311
-end = 311
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 317
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 537 })'
-descriptor = "go struct field group at tea.go:426 group 537"
-cost_tokens = 23
-cum_tokens = 8792
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 537
-end = 538
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 318
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 543 })'
-descriptor = "go struct field group at tea.go:426 group 543"
-cost_tokens = 24
-cum_tokens = 8816
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 543
-end = 544
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 319
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 540 })'
-descriptor = "go struct field group at tea.go:426 group 540"
-cost_tokens = 25
-cum_tokens = 8841
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 540
-end = 541
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 320
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 555 })'
-descriptor = "go decl doc at tea.go:555"
-cost_tokens = 19
-cum_tokens = 8860
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 554
-end = 554
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 321
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 531 })'
-descriptor = "go struct field group at tea.go:426 group 531"
-cost_tokens = 29
-cum_tokens = 8889
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 531
-end = 532
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 322
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 321 })'
-descriptor = "go decl doc at tea.go:321"
-cost_tokens = 19
-cum_tokens = 8908
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 320
-end = 320
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 323
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 534 })'
-descriptor = "go struct field group at tea.go:426 group 534"
-cost_tokens = 31
-cum_tokens = 8939
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 534
-end = 535
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 324
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 374 })'
-descriptor = "go decl doc at tea.go:374"
-cost_tokens = 26
-cum_tokens = 8965
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 372
-end = 373
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 325
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 395 })'
-descriptor = "go decl at tea.go:395"
-cost_tokens = 25
-cum_tokens = 8990
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 395
-end = 398
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 326
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 488 })'
-descriptor = "go struct field group at tea.go:426 group 488"
-cost_tokens = 40
-cum_tokens = 9030
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 488
-end = 490
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 327
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 501 })'
-descriptor = "go struct field group at tea.go:426 group 501"
-cost_tokens = 40
-cum_tokens = 9070
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 501
-end = 504
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 328
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 479 })'
-descriptor = "go struct field group at tea.go:426 group 479"
-cost_tokens = 42
-cum_tokens = 9112
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 479
-end = 481
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 329
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 409 })'
-descriptor = "go decl doc at tea.go:409"
-cost_tokens = 13
-cum_tokens = 9125
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 408
-end = 408
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 330
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 427 })'
-descriptor = "go struct field group at tea.go:426 group 427"
-cost_tokens = 44
-cum_tokens = 9169
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 427
-end = 429
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 331
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 431 })'
-descriptor = "go struct field group at tea.go:426 group 431"
-cost_tokens = 49
-cum_tokens = 9218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 431
-end = 433
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 332
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 508 })'
-descriptor = "go struct field group at tea.go:426 group 508"
-cost_tokens = 49
-cum_tokens = 9267
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 508
-end = 510
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 333
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 512 })'
-descriptor = "go struct field group at tea.go:426 group 512"
-cost_tokens = 50
-cum_tokens = 9317
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 512
-end = 515
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 334
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 517 })'
-descriptor = "go struct field group at tea.go:426 group 517"
-cost_tokens = 50
-cum_tokens = 9367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 517
-end = 520
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 335
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 546 })'
-descriptor = "go struct field group at tea.go:426 group 546"
-cost_tokens = 50
-cum_tokens = 9417
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 546
-end = 549
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 336
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 492 })'
-descriptor = "go struct field group at tea.go:426 group 492"
-cost_tokens = 55
-cum_tokens = 9472
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 492
-end = 495
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 337
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 497 })'
-descriptor = "go struct field group at tea.go:426 group 497"
-cost_tokens = 58
-cum_tokens = 9530
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 497
-end = 499
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 338
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
-descriptor = "go decl doc at tea.go:349"
-cost_tokens = 51
-cum_tokens = 9581
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 346
-end = 348
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 339
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 483 })'
-descriptor = "go struct field group at tea.go:426 group 483"
-cost_tokens = 65
-cum_tokens = 9646
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 483
-end = 486
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 340
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 349 })'
-descriptor = "go decl body at tea.go:349"
-cost_tokens = 39
-cum_tokens = 9685
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 350
-end = 353
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 341
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 336 })'
-descriptor = "go decl at tea.go:336"
-cost_tokens = 113
-cum_tokens = 9798
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 336
-end = 344
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 342
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 336 })'
-descriptor = "go decl doc at tea.go:336"
-cost_tokens = 58
-cum_tokens = 9856
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 331
-end = 335
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 343
-key = 'Go(StructFieldGroup { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go", start_line: 426, group_start_line: 474 })'
-descriptor = "go struct field group at tea.go:426 group 474"
-cost_tokens = 71
-cum_tokens = 9927
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
-start = 474
-end = 477
 
 [batches.content.spans.render]
 kind = "full"

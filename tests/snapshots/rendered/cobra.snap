@@ -59,47 +59,6 @@ args.go
     18→	"fmt"
     19→	"strings"
     20→)
-    22→type PositionalArgs func(cmd *Command, args []string) error
-    …
-    28→func legacyArgs(cmd *Command, args []string) error {
-    …
-    41→// NoArgs returns an error if any args are included.
-    42→func NoArgs(cmd *Command, args []string) error {
-    43→	if len(args) > 0 {
-    44→		return fmt.Errorf("unknown command %q for %q", args[0], cmd.CommandPath())
-    45→	}
-    46→	return nil
-    49→// OnlyValidArgs returns an error if there are any positional args that are not in
-    50→// the `ValidArgs` field of `Command`
-    51→func OnlyValidArgs(cmd *Command, args []string) error {
-    …
-    68→// NoDuplicateArgs returns an error if there are any duplicate positional args.
-    69→func NoDuplicateArgs(cmd *Command, args []string) error {
-    …
-    81→// ArbitraryArgs never returns an error.
-    82→func ArbitraryArgs(cmd *Command, args []string) error {
-    83→	return nil
-    86→// MinimumNArgs returns an error if there is not at least N args.
-    87→func MinimumNArgs(n int) PositionalArgs {
-    …
-    96→// MaximumNArgs returns an error if there are more than N args.
-    97→func MaximumNArgs(n int) PositionalArgs {
-    …
-    106→// ExactArgs returns an error if there are not exactly n args.
-    107→func ExactArgs(n int) PositionalArgs {
-    …
-    116→// RangeArgs returns an error if the number of args is not within the expected range.
-    117→func RangeArgs(min int, max int) PositionalArgs {
-    …
-    126→// MatchAll allows combining several PositionalArgs to work in concert.
-    127→func MatchAll(pargs ...PositionalArgs) PositionalArgs {
-    …
-    138→// ExactValidArgs returns an error if there are not exactly N positional args OR
-    139→// there are any positional args that are not in the `ValidArgs` field of `Command`
-    140→//
-    141→// Deprecated: use MatchAll(ExactArgs(n), OnlyValidArgs) instead
-    142→func ExactValidArgs(n int) PositionalArgs {
-    143→	return MatchAll(ExactArgs(n), OnlyValidArgs)
 args_test.go
 assets/
     CobraMain.png
@@ -120,120 +79,168 @@ cobra.go
     28→	"time"
     29→	"unicode"
     30→)
-    32→var templateFuncs = template.FuncMap{
-    …
-    42→var initializers []func()
-    43→var finalizers []func()
-    …
-    45→const (
-    46→	defaultPrefixMatching   = false
-    47→	defaultCommandSorting   = true
-    48→	defaultCaseInsensitive  = false
-    49→	defaultTraverseRunHooks = false
-    50→)
-    52→// EnablePrefixMatching allows setting automatic prefix matching. Automatic prefix matching can be a dangerous thing
-    53→// to automatically enable in CLI tools.
-    54→// Set this to true to enable it.
-    55→var EnablePrefixMatching = defaultPrefixMatching
-    …
-    57→// EnableCommandSorting controls sorting of the slice of commands, which is turned on by default.
-    58→// To disable sorting, set it to false.
-    59→var EnableCommandSorting = defaultCommandSorting
-    …
-    61→// EnableCaseInsensitive allows case-insensitive commands names. (case sensitive by default)
-    62→var EnableCaseInsensitive = defaultCaseInsensitive
-    …
-    64→// EnableTraverseRunHooks executes persistent pre-run and post-run hooks from all parents.
-    65→// By default this is disabled, which means only the first run hook to be found is executed.
-    66→var EnableTraverseRunHooks = defaultTraverseRunHooks
-    …
-    68→// MousetrapHelpText enables an information splash screen on Windows
-    69→// if the CLI is started from explorer.exe.
-    70→// To disable the mousetrap, just set this variable to blank string ("").
-    71→// Works only on Microsoft Windows.
-    72→var MousetrapHelpText = `This is a command line tool.
-    …
-    74→You need to open cmd.exe and run it from there.
-    75→`
-    77→// MousetrapDisplayDuration controls how long the MousetrapHelpText message is displayed on Windows
-    78→// if the CLI is started from explorer.exe. Set to 0 to wait for the return key to be pressed.
-    79→// To disable the mousetrap, just set MousetrapHelpText to blank string ("").
-    80→// Works only on Microsoft Windows.
-    81→var MousetrapDisplayDuration = 5 * time.Second
-    …
-    83→// AddTemplateFunc adds a template function that's available to Usage and Help
-    84→// template generation.
-    85→func AddTemplateFunc(name string, tmplFunc interface{}) {
-    86→	templateFuncs[name] = tmplFunc
-    89→// AddTemplateFuncs adds multiple template functions that are available to Usage and
-    90→// Help template generation.
-    91→func AddTemplateFuncs(tmplFuncs template.FuncMap) {
-    92→	for k, v := range tmplFuncs {
-    93→		templateFuncs[k] = v
-    94→	}
-    97→// OnInitialize sets the passed functions to be run when each command's
-    98→// Execute method is called.
-    99→func OnInitialize(y ...func()) {
-    100→	initializers = append(initializers, y...)
-    103→// OnFinalize sets the passed functions to be run when each command's
-    104→// Execute method is terminated.
-    105→func OnFinalize(y ...func()) {
-    106→	finalizers = append(finalizers, y...)
-    111→// Gt takes two types and checks whether the first type is greater than the second. In case of types Arrays, Chans,
-    112→// Maps and Slices, Gt will compare their lengths. Ints are compared directly while strings are first parsed as
-    113→// ints and then compared.
-    114→func Gt(a interface{}, b interface{}) bool {
-    …
-    143→// Eq takes two types and checks whether they are equal. Supported types are int and string. Unsupported types will panic.
-    144→func Eq(a interface{}, b interface{}) bool {
-    …
-    159→func trimRightSpace(s string) string {
-    160→	return strings.TrimRightFunc(s, unicode.IsSpace)
-    165→// appendIfNotPresent will append stringToAppend to the end of s, but only if it's not yet present in s.
-    166→func appendIfNotPresent(s, stringToAppend string) string {
-    167→	if strings.Contains(s, stringToAppend) {
-    168→		return s
-    169→	}
-    170→	return s + " " + stringToAppend
-    173→// rpad adds padding to the right of a string.
-    174→func rpad(s string, padding int) string {
-    175→	formattedString := fmt.Sprintf("%%-%ds", padding)
-    176→	return fmt.Sprintf(formattedString, s)
-    179→func tmpl(text string) *tmplFunc {
-    …
-    191→// ld compares two strings and returns the levenshtein distance between them.
-    192→func ld(s, t string, ignoreCase bool) int {
-    …
-    225→func stringInSlice(a string, list []string) bool {
-    226→	for _, b := range list {
-    227→		if b == a {
-    228→			return true
-    229→		}
-    230→	}
-    231→	return false
-    234→// CheckErr prints the msg with the prefix 'Error:' and exits with error code 1. If the msg is nil, it does nothing.
-    235→func CheckErr(msg interface{}) {
-    236→	if msg != nil {
-    237→		fmt.Fprintln(os.Stderr, "Error:", msg)
-    238→		os.Exit(1)
-    239→	}
-    242→// WriteStringAndCheck writes a string into a buffer, and checks if the error is not nil.
-    243→func WriteStringAndCheck(b io.StringWriter, s string) {
-    244→	_, err := b.WriteString(s)
-    245→	CheckErr(err)
 cobra_test.go
 command.go
     15→// Package cobra is a commander providing a simple interface to create powerful modern CLI interfaces.
     16→// In addition to providing an interface, Cobra simultaneously provides a controller to organize your application code.
+    17→package cobra
+    19→import (
+    20→	"bytes"
+    21→	"context"
+    22→	"errors"
+    23→	"fmt"
+    24→	"io"
+    25→	"os"
+    26→	"path/filepath"
+    27→	"sort"
+    28→	"strings"
+    30→	flag "github.com/spf13/pflag"
+    31→)
+    33→const (
+    34→	FlagSetByCobraAnnotation     = "cobra_annotation_flag_set_by_cobra"
+    35→	CommandDisplayNameAnnotation = "cobra_annotation_command_display_name"
+    …
+    37→	helpFlagName    = "help"
+    38→	helpCommandName = "help"
+    39→)
+    41→// FParseErrWhitelist configures Flag parse errors to be ignored
+    42→type FParseErrWhitelist flag.ParseErrorsAllowlist
+    …
+    44→// Group Structure to manage groups for commands
+    45→type Group struct {
+    46→	ID    string
+    47→	Title string
+    48→}
+    50→// Command is just that, a command for your application.
+    51→// E.g.  'go run ...' - 'run' is the command. Cobra requires
+    52→// you to define the usage and description as part of your command
+    53→// definition to ensure usability.
+    54→type Command struct {
+    …
+    66→	// Aliases is an array of aliases that can be used instead of the first word in Use.
+    67→	Aliases []string
+    69→	// SuggestFor is an array of command names for which this command will be suggested -
+    70→	// similar to aliases but only suggests.
+    71→	SuggestFor []string
+    73→	// Short is the short description shown in the 'help' output.
+    74→	Short string
+    76→	// The group id under which this subcommand is grouped in the 'help' output of its parent.
+    77→	GroupID string
+    79→	// Long is the long message shown in the 'help <this-command>' output.
+    80→	Long string
+    82→	// Example is examples of how to use the command.
+    83→	Example string
+    85→	// ValidArgs is list of all valid non-flag arguments that are accepted in shell completions
+    86→	ValidArgs []Completion
+    87→	// ValidArgsFunction is an optional function that provides valid non-flag arguments for shell completion.
+    88→	// It is a dynamic version of using ValidArgs.
+    89→	// Only one of ValidArgs and ValidArgsFunction can be used for a command.
+    90→	ValidArgsFunction CompletionFunc
+    92→	// Expected arguments
+    93→	Args PositionalArgs
+    95→	// ArgAliases is List of aliases for ValidArgs.
+    96→	// These are not suggested to the user in the shell completion,
+    97→	// but accepted if entered manually.
+    98→	ArgAliases []string
+    100→	// BashCompletionFunction is custom bash functions used by the legacy bash autocompletion generator.
+    101→	// For portability with other shells, it is recommended to instead use ValidArgsFunction
+    102→	BashCompletionFunction string
+    104→	// Deprecated defines, if this command is deprecated and should print this string when used.
+    105→	Deprecated string
+    107→	// Annotations are key/value pairs that can be used by applications to identify or
+    108→	// group commands or set special options.
+    109→	Annotations map[string]string
+    111→	// Version defines the version for this command. If this value is non-empty and the command does not
+    112→	// define a "version" flag, a "version" boolean flag will be added to the command and, if specified,
+    113→	// will print content of the "Version" variable. A shorthand "v" flag will also be added if the
+    114→	// command does not define one.
+    115→	Version string
+    148→	// groups for subcommands
+    149→	commandgroups []*Group
+    188→	// completionCommandGroupID is the group id for the completion command
+    189→	completionCommandGroupID string
+    191→	// versionTemplate is the version template defined by user.
+    192→	versionTemplate *tmplFunc
+    194→	// errPrefix is the error message prefix defined by user.
+    195→	errPrefix string
+    197→	// inReader is a reader defined by the user that replaces stdin
+    198→	inReader io.Reader
+    199→	// outWriter is a writer defined by the user that replaces stdout
+    200→	outWriter io.Writer
+    201→	// errWriter is a writer defined by the user that replaces stderr
+    202→	errWriter io.Writer
+    204→	// FParseErrWhitelist flag parse errors to be ignored
+    205→	FParseErrWhitelist FParseErrWhitelist
+    207→	// CompletionOptions is a set of options to control the handling of shell completion
+    208→	CompletionOptions CompletionOptions
+    210→	// commandsAreSorted defines, if command slice are sorted or not.
+    211→	commandsAreSorted bool
+    212→	// commandCalledAs is the name or alias value used to call this command.
+    213→	commandCalledAs struct {
+    214→		name   string
+    215→		called bool
+    216→	}
+    218→	ctx context.Context
+    220→	// commands is the list of commands supported by this program.
+    221→	commands []*Command
+    222→	// parent is a parent command for this command.
+    223→	parent *Command
+    224→	// Max lengths of commands' string lengths for use in padding.
+    225→	commandsMaxUseLen         int
+    226→	commandsMaxCommandPathLen int
+    227→	commandsMaxNameLen        int
+    229→	// TraverseChildren parses flags on all parents before executing child command.
+    230→	TraverseChildren bool
+    232→	// Hidden defines, if this command is hidden and should NOT show up in the list of available commands.
+    233→	Hidden bool
+    235→	// SilenceErrors is an option to quiet errors down stream.
+    236→	SilenceErrors bool
+    238→	// SilenceUsage is an option to silence usage when an error occurs.
+    239→	SilenceUsage bool
+    241→	// DisableFlagParsing disables the flag parsing.
+    242→	// If this is true all flags will be passed to the command as arguments.
+    243→	DisableFlagParsing bool
+    245→	// DisableAutoGenTag defines, if gen tag ("Auto generated by spf13/cobra...")
+    246→	// will be printed by generating docs for this command.
+    247→	DisableAutoGenTag bool
+    249→	// DisableFlagsInUseLine will disable the addition of [flags] to the usage
+    250→	// line of a command when printing help or generating docs
+    251→	DisableFlagsInUseLine bool
+    253→	// DisableSuggestions disables the suggestions based on Levenshtein distance
+    254→	// that go along with 'unknown command' messages.
+    255→	DisableSuggestions bool
+    257→	// SuggestionsMinimumDistance defines minimum levenshtein distance to display suggestions.
+    258→	// Must be > 0.
+    259→	SuggestionsMinimumDistance int
+    260→}
+    262→// Context returns underlying command context. If command was executed
+    263→// with ExecuteContext or the context was set with SetContext, the
+    264→// previously set context will be returned. Otherwise, nil is returned.
+    265→//
+    266→// Notice that a call to Execute and ExecuteC will replace a nil context of
+    267→// a command with a context.Background, so a background context will be
+    268→// returned by Context after one of these functions has been called.
+    269→func (c *Command) Context() context.Context {
+    270→	return c.ctx
+    273→// SetContext sets context for the command. This context will be overwritten by
+    274→// Command.ExecuteContext or Command.ExecuteContextC.
+    275→func (c *Command) SetContext(ctx context.Context) {
+    276→	c.ctx = ctx
+    279→// SetArgs sets arguments for the command. It is set to os.Args[1:] by default, if desired, can be overridden
+    280→// particularly useful when testing.
+    281→func (c *Command) SetArgs(a []string) {
+    282→	c.args = a
+    285→// SetOutput sets the destination for usage and error messages.
+    286→// If output is nil, os.Stderr is used.
+    287→//
+    288→// Deprecated: Use SetOut and/or SetErr instead
+    289→func (c *Command) SetOutput(output io.Writer) {
+    290→	c.outWriter = output
+    291→	c.errWriter = output
 command_notwin.go
-    18→package cobra
     20→var preExecHookFn func(*Command)
 command_test.go
 command_win.go
-    28→var preExecHookFn = preExecHook
-    …
-    30→func preExecHook(c *Command) {
-    …
 completions.go
 completions_test.go
 doc/
@@ -251,13 +258,6 @@ doc/
 fish_completions.go
 fish_completions_test.go
 flag_groups.go
-    15→package cobra
-    17→import (
-    18→	"fmt"
-    19→	"sort"
-    20→	"strings"
-    22→	flag "github.com/spf13/pflag"
-    23→)
 flag_groups_test.go
 go.mod
     1→module github.com/spf13/cobra
@@ -276,28 +276,7 @@ site/
     content/
         active_help.md
         completions/
-            _index.md
-            bash.md
-                1→# Generating Bash Completions For Your cobra.Command
-                …
-                5→## Bash legacy dynamic completions
-                …
-            fish.md
-            powershell.md
-            zsh.md
         docgen/
-            _index.md
-                1→# Documentation generation
-                …
-                8→## Options
-                9→### `DisableAutoGenTag`
-                …
-                15→### `InitDefaultCompletionCmd`
-                …
-            man.md
-            md.md
-            rest.md
-            yaml.md
         projects_using_cobra.md
         user_guide.md
 zsh_completions.go

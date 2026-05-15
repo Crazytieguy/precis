@@ -1,7 +1,7 @@
 fixture = "gin"
 budget = 10000
-cumulative_tokens = 9879
-batch_count = 403
+cumulative_tokens = 9991
+batch_count = 415
 
 [[batches]]
 position = 1
@@ -11041,58 +11041,390 @@ kind = "full"
 
 [[batches]]
 position = 401
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/gin/testdata/certificate" })'
-descriptor = "listing of 'testdata/certificate'"
-cost_tokens = 8
-cum_tokens = 9813
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/gin/testdata/certificate"
-entries = ["cert.pem", "key.pem"]
-
-[[batches]]
-position = 402
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/gin/binding/default_validator.go", start_line: 44 })'
-descriptor = "go decl doc at binding/default_validator.go:44"
-cost_tokens = 23
-cum_tokens = 9836
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", chunk_index: 1 })'
+descriptor = "go decl names surface #1 in context.go"
+cost_tokens = 134
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/gin/binding/default_validator.go"
-start = 43
-end = 43
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 402
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 122 })'
+descriptor = "go decl at context.go:122"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 122
+end = 122
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 403
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/gin/binding/header.go" })'
-descriptor = "go package + imports in binding/header.go"
-cost_tokens = 43
-cum_tokens = 9879
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 149 })'
+descriptor = "go decl at context.go:149"
+cost_tokens = 0
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/gin/binding/header.go"
-start = 5
-end = 5
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 149
+end = 149
 
 [batches.content.spans.render]
 kind = "full"
 
+[[batches]]
+position = 404
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 155 })'
+descriptor = "go decl at context.go:155"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/gin/binding/header.go"
-start = 7
-end = 11
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 405
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 167 })'
+descriptor = "go decl at context.go:167"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 406
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 177 })'
+descriptor = "go decl at context.go:177"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 407
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 188 })'
+descriptor = "go decl at context.go:188"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 408
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 199 })'
+descriptor = "go decl at context.go:199"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 199
+end = 199
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 409
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 207 })'
+descriptor = "go decl at context.go:207"
+cost_tokens = 0
+cum_tokens = 9939
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 410
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 167 })'
+descriptor = "go decl body at context.go:167"
+cost_tokens = 7
+cum_tokens = 9946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 411
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 177 })'
+descriptor = "go decl body at context.go:177"
+cost_tokens = 7
+cum_tokens = 9953
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 178
+end = 178
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 412
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 207 })'
+descriptor = "go decl body at context.go:207"
+cost_tokens = 8
+cum_tokens = 9961
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 413
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 199 })'
+descriptor = "go decl body at context.go:199"
+cost_tokens = 9
+cum_tokens = 9970
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 200
+end = 200
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 414
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 167 })'
+descriptor = "go decl doc at context.go:167"
+cost_tokens = 11
+cum_tokens = 9981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 415
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/gin/context.go", start_line: 149 })'
+descriptor = "go decl body at context.go:149"
+cost_tokens = 10
+cum_tokens = 9991
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/gin/context.go"
+start = 150
+end = 150
 
 [batches.content.spans.render]
 kind = "full"

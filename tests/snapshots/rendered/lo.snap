@@ -60,43 +60,59 @@ find.go
     6→	"github.com/samber/lo/internal/constraints"
     7→	"github.com/samber/lo/internal/xrand"
     8→)
-    986→// SamplesBy returns N random unique items from collection, using randomIntGenerator as the random index generator.
-    987→// Play: https://go.dev/play/p/Dy9bGDhD_Gw
-    988→func SamplesBy[T any, Slice ~[]T](collection Slice, count int, randomIntGenerator randomIntGenerator) Slice {
+    10→// IndexOf returns the index at which the first occurrence of a value is found in a slice or -1
+    11→// if the value cannot be found.
+    12→// Play: https://go.dev/play/p/Eo7W0lvKTky
+    13→func IndexOf[T comparable](collection []T, element T) int {
+    14→	for i := range collection {
+    15→		if collection[i] == element {
+    16→			return i
+    17→		}
+    18→	}
+    20→	return -1
+    23→// LastIndexOf returns the index at which the last occurrence of a value is found in a slice or -1
+    24→// if the value cannot be found.
+    25→// Play: https://go.dev/play/p/Eo7W0lvKTky
+    26→func LastIndexOf[T comparable](collection []T, element T) int {
+    …
+    38→// HasPrefix returns true if the collection has the prefix.
+    39→// Play: https://go.dev/play/p/SrljzVDpMQM
+    40→func HasPrefix[T comparable](collection, prefix []T) bool {
+    …
+    54→// HasSuffix returns true if the collection has the suffix.
+    55→// Play: https://go.dev/play/p/bJeLetQNAON
+    56→func HasSuffix[T comparable](collection, suffix []T) bool {
+    …
+    70→// Find searches for an element in a slice based on a predicate. Returns element and true if element was found.
+    71→// Play: https://go.dev/play/p/Eo7W0lvKTky
+    72→func Find[T any](collection []T, predicate func(item T) bool) (T, bool) {
+    73→	for i := range collection {
+    74→		if predicate(collection[i]) {
+    75→			return collection[i], true
+    76→		}
+    77→	}
+    79→	var result T
+    80→	return result, false
+    83→// FindErr searches for an element in a slice based on a predicate that can return an error.
+    84→// Returns the element and nil error if the element is found.
+    85→// Returns zero value and nil error if the element is not found.
+    86→// If the predicate returns an error, iteration stops immediately and returns zero value and the error.
+    87→// Play: https://go.dev/play/p/XK-qtpQWXJ9
+    88→func FindErr[T any](collection []T, predicate func(item T) (bool, error)) (T, error) {
+    …
+    104→// FindIndexOf searches for an element in a slice based on a predicate and returns the index and true.
+    105→// Returns -1 and false if the element is not found.
+    106→// Play: https://go.dev/play/p/XWSEM4Ic_t0
+    107→func FindIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
+    …
+    118→// FindLastIndexOf searches for the last element in a slice based on a predicate and returns the index and true.
+    119→// Returns -1 and false if the element is not found.
+    120→// Play: https://go.dev/play/p/2VhPMiQvX-D
+    121→func FindLastIndexOf[T any](collection []T, predicate func(item T) bool) (T, int, bool) {
     …
 find_test.go
 func.go
     1→package lo
-    3→// Partial returns new function that, when called, has its first argument set to the provided value.
-    4→// Play: https://go.dev/play/p/Sy1gAQiQZ3v
-    5→func Partial[T1, T2, R any](f func(a T1, b T2) R, arg1 T1) func(T2) R {
-    6→	return func(t2 T2) R {
-    7→		return f(arg1, t2)
-    8→	}
-    11→// Partial1 returns new function that, when called, has its first argument set to the provided value.
-    12→// Play: https://go.dev/play/p/D-ASTXCLBzw
-    13→func Partial1[T1, T2, R any](f func(T1, T2) R, arg1 T1) func(T2) R {
-    14→	return Partial(f, arg1)
-    17→// Partial2 returns new function that, when called, has its first argument set to the provided value.
-    18→// Play: https://go.dev/play/p/-xiPjy4JChJ
-    19→func Partial2[T1, T2, T3, R any](f func(T1, T2, T3) R, arg1 T1) func(T2, T3) R {
-    20→	return func(t2 T2, t3 T3) R {
-    21→		return f(arg1, t2, t3)
-    22→	}
-    25→// Partial3 returns new function that, when called, has its first argument set to the provided value.
-    26→// Play: https://go.dev/play/p/zWtSutpI26m
-    27→func Partial3[T1, T2, T3, T4, R any](f func(T1, T2, T3, T4) R, arg1 T1) func(T2, T3, T4) R {
-    28→	return func(t2 T2, t3 T3, t4 T4) R {
-    29→		return f(arg1, t2, t3, t4)
-    30→	}
-    33→// Partial4 returns new function that, when called, has its first argument set to the provided value.
-    34→// Play: https://go.dev/play/p/kBrnnMTcJm0
-    35→func Partial4[T1, T2, T3, T4, T5, R any](f func(T1, T2, T3, T4, T5) R, arg1 T1) func(T2, T3, T4, T5) R {
-    …
-    41→// Partial5 returns new function that, when called, has its first argument set to the provided value.
-    42→// Play: https://go.dev/play/p/7Is7K2y_VC3
-    43→func Partial5[T1, T2, T3, T4, T5, T6, R any](f func(T1, T2, T3, T4, T5, T6) R, arg1 T1) func(T2, T3, T4, T5, T6) R {
-    …
 func_test.go
 go.mod
     1→module github.com/samber/lo
