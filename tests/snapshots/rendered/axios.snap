@@ -3,6 +3,20 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .github/
+    CODEOWNERS
+    FUNDING.yml
+    ISSUE_TEMPLATE.md
+    PULL_REQUEST_TEMPLATE.md
+    copilot-instructions.md
+    dependabot.yml
+    workflows/
+        lockfile-lint.yml
+        moderator.yml
+        publish.yml
+        release-branch.yml
+        run-ci.yml
+        verify-build-reproducibility.yml
+        zizmor.yml
 .gitignore
 .husky/
 .npmignore
@@ -112,6 +126,7 @@ README.md
     379→- [Resources](#resources)
     380→- [Credits](#credits)
     381→- [License](#license)
+    386→- **Node.js Requests:** Make [http](https://nodejs.org/api/http.html) requests from Node.js environments.
     388→- **Interceptors:** Intercept requests and responses to add custom logic or transform data.
     389→- **Data Transformation:** Transform request and response data automatically.
     390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
@@ -120,95 +135,32 @@ THREATMODEL.md
 docs/
     .vitepress/
     data/
-        sponsors.json
     es/
-        index.md
-        pages/
-            advanced/
-            getting-started/
-                examples/
-                features.md
-                first-steps.md
-                upgrade-guide.md
-            misc/
     favicon.ico
     fr/
-        index.md
-        pages/
-            advanced/
-            getting-started/
-                examples/
-                features.md
-                first-steps.md
-                upgrade-guide.md
-            misc/
     index.md
     package-lock.json
     package.json
-        2→  "name": "axios",
-        3→  "version": "1.0.0",
-        4→  "description": "Documentation for the Axios HTTP client",
-        5→  "license": "MIT",
-        6→  "type": "module",
-        7→  "private": true,
     pages/
-        advanced/
-        getting-started/
-            examples/
-            features.md
-            first-steps.md
-                1→# First steps
-                …
-                5→## Installing
-                …
-                55→## Importing axios
-                …
-                92→## Making your first request
-                …
-                120→## Next steps
-                …
-            upgrade-guide.md
-        misc/
-            security.md
-            semver.md
-                1→# Semantic versioning
-                …
-                5→## axios versioning
-                …
-                13→## Version format
-                …
-                27→## Pre-release versions
-                …
-                33→## Version ranges
-                …
-            sponsors.md
     patches/
     public/
-        android-chrome-192x192.png
-        android-chrome-512x512.png
-        apple-touch-icon.png
-        favicon-16x16.png
-        favicon-32x32.png
-        favicon.ico
-        logo-light.svg
-        logo.svg
-        site.webmanifest
-        words-light.svg
-        words.svg
     scripts/
     site.webmanifest
     zh/
-        index.md
-        pages/
-            advanced/
-            getting-started/
-                examples/
-                features.md
-                first-steps.md
-                upgrade-guide.md
-            misc/
 eslint.config.js
 examples/
+    README.md
+    abort-controller/
+    all/
+    amd/
+    get/
+    improved-network-errors.md
+    network_enhanced.js
+    post/
+    postMultipartFormData/
+    server.js
+    transform-response/
+    upload/
 gulpfile.js
     79→export { env, clear, version, packageJSON };
 index.d.cts
@@ -265,6 +217,8 @@ lib/
         fetch.js
         http.js
         xhr.js
+            15→export default isXHRAdapterSupported &&
+            …
     axios.js
         89→export default axios;
     cancel/
@@ -273,6 +227,8 @@ lib/
         CanceledError.js
             22→export default CanceledError;
         isCancel.js
+            3→export default function isCancel(value) {
+            4→  return !!(value && value.__CANCEL__);
     core/
         Axios.js
             281→export default Axios;
@@ -291,11 +247,25 @@ lib/
             8→- Handling config
         buildFullPath.js
         dispatchRequest.js
+            34→export default function dispatchRequest(config) {
+            …
         mergeConfig.js
         settle.js
+            14→export default function settle(resolve, reject, response) {
+            …
         transformData.js
+            15→export default function transformData(fns, response) {
+            …
     defaults/
         index.js
+            1→'use strict';
+            3→import utils from '../utils.js';
+            4→import AxiosError from '../core/AxiosError.js';
+            5→import transitionalDefaults from './transitional.js';
+            6→import toFormData from '../helpers/toFormData.js';
+            7→import toURLEncodedForm from '../helpers/toURLEncodedForm.js';
+            8→import platform from '../platform/index.js';
+            9→import formDataToJSON from '../helpers/formDataToJSON.js';
             11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
             23→function stringifySafely(rawValue, parser, encoder) {
             24→  if (utils.isString(rawValue)) {
@@ -311,17 +281,23 @@ lib/
             35→  return (encoder || JSON.stringify)(rawValue);
             177→export default defaults;
         transitional.js
+            3→export default {
+            …
     env/
         README.md
             1→# axios // env
             3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
         classes/
+            FormData.js
         data.js
+            1→export const VERSION = "1.16.1";
     helpers/
     platform/
         browser/
         common/
             utils.js
+                46→export {
+                …
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';
@@ -356,6 +332,10 @@ tests/
         cjs/
         deno/
         esm/
+            package-lock.json
+            package.json
+            tests/
+            vitest.config.js
     unit/
 tsconfig.json
     1→{

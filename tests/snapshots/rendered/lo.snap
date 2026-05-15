@@ -43,122 +43,6 @@ constraints.go
     5→	Clone() T
     6→}
 docs/
-    .gitignore
-    CLAUDE.md
-    README.md
-        1→# Website
-        3→This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
-        5→## Installation
-        …
-        7→```bash
-        8→yarn
-        9→```
-        11→## Local Development
-        …
-        19→## Build
-        …
-        27→## Deployment
-        …
-    data/
-    docs/
-        _category_.json
-        about.md
-        contributing.md
-        core/
-        experimental/
-        getting-started.md
-        glossary.md
-        iter/
-        mutable/
-        parallel/
-    docusaurus.config.ts
-        439→export default config;
-    package-lock.json
-    package.json
-        2→  "name": "lo",
-        3→  "version": "0.0.0",
-        4→  "private": true,
-        62→  "engines": {
-        63→    "node": ">=20.0"
-        64→  }
-    plugins/
-        helpers-pages/
-    scripts/
-    sidebars.ts
-        70→export default sidebars;
-    src/
-        clientModules/
-        css/
-            custom.css
-        pages/
-            community.module.css
-            community.tsx
-                91→export default Community;
-            index.module.css
-            index.tsx
-                1→import type {ReactNode} from 'react';
-                2→import clsx from 'clsx';
-                3→import Link from '@docusaurus/Link';
-                4→import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-                5→import Layout from '@theme/Layout';
-                6→import Heading from '@theme/Heading';
-                7→import styles from './index.module.css';
-                9→type FeatureItem = {
-                10→  title: string;
-                11→  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
-                12→  description: ReactNode;
-                13→};
-                45→function Feature({title, Svg, description}: FeatureItem) {
-                46→  return (
-                47→    <div className={clsx('col col--4')}>
-                48→      <div className="text--center">
-                49→        <Svg className={styles.featureSvg} role="img" />
-                50→      </div>
-                51→      <div className="text--center padding-horiz--md">
-                52→        <Heading as="h3">{title}</Heading>
-                53→        <p>{description}</p>
-                54→      </div>
-                55→    </div>
-                56→  );
-                59→function HomepageFeatures(): ReactNode {
-                60→  return (
-                61→    <section className={styles.features}>
-                62→      <div className="container">
-                63→        <div className="row">
-                64→          {FeatureList.map((props, idx) => (
-                65→            <Feature key={idx} {...props} />
-                66→          ))}
-                67→        </div>
-                68→      </div>
-                69→    </section>
-                70→  );
-                73→function HomepageHeader() {
-                74→  const {siteConfig} = useDocusaurusContext();
-                101→export default function Home(): JSX.Element {
-                102→  const {siteConfig} = useDocusaurusContext();
-                103→  return (
-                104→    <Layout
-                105→      title={`🏎️ ${siteConfig.title}: ${siteConfig.tagline}`}
-                106→      description="Reusable utility library for Go">
-                107→      <HomepageHeader />
-                108→      <main>
-                109→        <HomepageFeatures />
-                110→      </main>
-                111→    </Layout>
-                112→  );
-        prism-include-languages.js
-        theme/
-            CodeBlock/
-            ColorModeToggle/
-            DocSidebar/
-            NotFound/
-            prism-include-languages.js
-    static/
-        .nojekyll
-        img/
-        llms.txt
-        robots.txt
-    tsconfig.json
 errors.go
     1→package lo
     3→import (
@@ -183,6 +67,38 @@ find.go
 find_test.go
 func.go
     1→package lo
+    3→// Partial returns new function that, when called, has its first argument set to the provided value.
+    4→// Play: https://go.dev/play/p/Sy1gAQiQZ3v
+    5→func Partial[T1, T2, R any](f func(a T1, b T2) R, arg1 T1) func(T2) R {
+    6→	return func(t2 T2) R {
+    7→		return f(arg1, t2)
+    8→	}
+    11→// Partial1 returns new function that, when called, has its first argument set to the provided value.
+    12→// Play: https://go.dev/play/p/D-ASTXCLBzw
+    13→func Partial1[T1, T2, R any](f func(T1, T2) R, arg1 T1) func(T2) R {
+    14→	return Partial(f, arg1)
+    17→// Partial2 returns new function that, when called, has its first argument set to the provided value.
+    18→// Play: https://go.dev/play/p/-xiPjy4JChJ
+    19→func Partial2[T1, T2, T3, R any](f func(T1, T2, T3) R, arg1 T1) func(T2, T3) R {
+    20→	return func(t2 T2, t3 T3) R {
+    21→		return f(arg1, t2, t3)
+    22→	}
+    25→// Partial3 returns new function that, when called, has its first argument set to the provided value.
+    26→// Play: https://go.dev/play/p/zWtSutpI26m
+    27→func Partial3[T1, T2, T3, T4, R any](f func(T1, T2, T3, T4) R, arg1 T1) func(T2, T3, T4) R {
+    28→	return func(t2 T2, t3 T3, t4 T4) R {
+    29→		return f(arg1, t2, t3, t4)
+    30→	}
+    33→// Partial4 returns new function that, when called, has its first argument set to the provided value.
+    34→// Play: https://go.dev/play/p/kBrnnMTcJm0
+    35→func Partial4[T1, T2, T3, T4, T5, R any](f func(T1, T2, T3, T4, T5) R, arg1 T1) func(T2, T3, T4, T5) R {
+    36→	return func(t2 T2, t3 T3, t4 T4, t5 T5) R {
+    37→		return f(arg1, t2, t3, t4, t5)
+    38→	}
+    41→// Partial5 returns new function that, when called, has its first argument set to the provided value.
+    42→// Play: https://go.dev/play/p/7Is7K2y_VC3
+    43→func Partial5[T1, T2, T3, T4, T5, T6, R any](f func(T1, T2, T3, T4, T5, T6) R, arg1 T1) func(T2, T3, T4, T5, T6) R {
+    …
 func_test.go
 go.mod
     1→module github.com/samber/lo
@@ -338,6 +254,16 @@ parallel/
     slice.go
         1→package parallel
         3→import "sync"
+        8→func Map[T, R any](collection []T, transform func(item T, index int) R) []R {
+        …
+        32→func ForEach[T any](collection []T, callback func(item T, index int)) {
+        …
+        50→func Times[T any](count int, iteratee func(index int) T) []T {
+        …
+        75→func GroupBy[T any, U comparable, Slice ~[]T](collection Slice, iteratee func(item T) U) map[U]Slice {
+        …
+        95→func PartitionBy[T any, K comparable, Slice ~[]T](collection Slice, iteratee func(item T) K) []Slice {
+        …
     slice_test.go
 retry.go
     1→package lo

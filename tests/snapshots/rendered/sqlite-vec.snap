@@ -63,6 +63,13 @@ README.md
     …
     152→## See Also
     …
+    154→- [**`sqlite-ecosystem`**](https://github.com/asg017/sqlite-ecosystem), Maybe
+    155→  more 3rd party SQLite extensions I've developed
+    156→- [**`sqlite-rembed`**](https://github.com/asg017/sqlite-rembed), Generate text
+    157→  embeddings from remote APIs like OpenAI/Nomic/Ollama, meant for testing and
+    158→  SQL scripts
+    159→- [**`sqlite-lembed`**](https://github.com/asg017/sqlite-lembed), Generate text
+    160→  embeddings locally from embedding models in the `.gguf` format
 SECURITY.md
 TODO
     1→- [ ] add `xyz_info` shadow table with version etc.
@@ -93,13 +100,23 @@ benchmarks/
         benches/
         build.rs
         src/
+            lib.rs
+                8→pub fn init_vec() {
+                …
     profiling/
     self-params/
+        build.py
+        knn.py
+        test.py
 bindings/
     go/
         ncruces/
+            go-sqlite3.patch
     python/
         extra_init.py
+            1→from typing import List
+            2→from struct import pack
+            3→from sqlite3 import Connection
             6→def serialize_float32(vector: List[float]) -> bytes:
             7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
             8→    return pack("%sf" % len(vector), *vector)
@@ -117,6 +134,22 @@ bindings/
                 7→mod tests {
                 …
 examples/
+    nbc-headlines/
+    python-recipes/
+    simple-bun/
+    simple-c/
+    simple-deno/
+    simple-go-cgo/
+    simple-go-ncruces/
+    simple-node/
+    simple-node2/
+    simple-python/
+    simple-ruby/
+    simple-rust/
+    simple-sqlite/
+    simple-wasm/
+    sqlite3-cli/
+    wasm/
 reference.yaml
 scripts/
 site/
@@ -125,126 +158,23 @@ site/
     api-reference.md
     build-ref.mjs
     compiling.md
-        5→# Compiling `sqlite-vec`
-        …
-        7→`sqlite-vec` is is easy to compile yourself! It's a single C file with no dependencies, so the process should be straightforward.
-        9→## From Source
-        …
-        25→## From the amalgamation build
-        …
-        54→## Compile-time options
-        …
     features/
-        knn.md
-            1→# KNN queries
-            …
-            14→## `vec0` virtual tables
-            …
-            87→## Manually with SQL scalar functions
-            …
-        vec0.md
-            1→# `vec0` Virtual Table
-            …
-            3→## Metadata in `vec0` Virtual Tables {#vec0_metadata}
-            …
-            33→### Metadata Columns {#metadata}
-            …
-            110→### Partition Key Columns {#partition-keys}
-            …
-            187→### Auxiliary Columns {#aux}
-            …
     getting-started/
-        installation.md
-            1→# Installing
-            …
-            3→You have several options to include `sqlite-vec` into your projects, including
-            4→PyPi packages for Python, NPM packages for Node.js, Gems for Ruby, and more.
-            6→## With popular package managers
-            …
-            51→## Pre-compiled extensions
-            …
-            74→## Compiling
-            …
-        introduction.md
-            1→# Introduction to `sqlite-vec`
-            …
-            3→## Intro to Vector Databases
-            …
-            5→## Vector Search in SQLite with `sqlite-vec`
-            …
-            7→## Getting help
     guides/
         arithmetic.md
-            1→# Vector Arithmetic
-            3→- `vec_add()`
-            4→- `vec_sub()`
-            5→- `vec_mean()`
         binary-quant.md
-            1→# Binary Quantization
-            …
-            36→## Binary Quantization `sqlite-vec`
-            …
-            54→## Demo
-            …
-            80→### Re-scoring
-            …
-            112→# Benchmarks
-            …
-            114→## Model support
-            …
         classifiers.md
         hybrid-search.md
         matryoshka.md
-            1→# Matryoshka (Adaptive-Length) Embeddings
-            …
-            21→## Matryoshka Embeddings with `sqlite-vec`
-            …
-            37→## Benchmarks
-            …
-            39→## Suppported Models
-            …
         performance.md
         rag.md
-            1→# Retrival Augmented Generation (RAG)
-            3→- "memories"?
-            4→- chunking
         scalar-quant.md
-            1→# Scalar Quantization (SQ)
-            …
-            27→## Benchmarks
         semantic-search.md
     index.md
     package-lock.json
     package.json
-        2→  "scripts": {
-        3→    "ref": "node build-ref.mjs",
-        4→    "dev": "vitepress dev",
-        5→    "build": "vitepress build",
-        6→    "preview": "vitepress preview"
-        7→  },
     project.data.ts
-        12→export default {
-        13→  load() {
-        14→    return {
-        15→      PROJECT,
-        16→      VERSION,
-        17→    };
-        18→  },
-        19→};
     public/
-        flyio.svg
-        fonts/
-            ZillaSlab-SemiBold.otf
-            ZillaSlab-SemiBold.ttf
-            ZillaSlab-SemiBold.woff
-            ZillaSlab-SemiBold.woff2
-        logo.dark.svg
-        logo.light.svg
-        mozilla.svg
-        shinkai.dark.svg
-        shinkai.svg
-        sqlitecloud.svg
-        turso.svg
     sqlite.tmlanguage.json
     using/
         android-ios.md
@@ -252,34 +182,12 @@ site/
         datasette.md
         go.md
         js.md
-            1→# Using `sqlite-vec` in Node.js, Deno, and Bun
-            …
-            49→## Working with vectors in JavaScript
-            …
-            63→## Node.js
-            …
-            112→## Deno
-            …
-            147→## Bun
-            …
         python.md
         rqlite.md
         ruby.md
-            1→# Using `sqlite-vec` in Ruby
-            …
-            32→## Working with vectors in Ruby
-            …
         rust.md
-            1→# Using `sqlite-vec` in Rust
-            …
-            57→## Working with vectors in Rust
-            …
         sqlite-utils.md
         wasm.md
-            1→# `sqlite-vec` in the Browser with WebAssembly
-            …
-            25→## The `sqlite-vec-wasm-demo` NPM package
-            …
     versioning.md
 sqlite-dist.toml
     1→[package]
@@ -291,6 +199,74 @@ sqlite-dist.toml
     7→authors = ["Alex Garcia"]
     8→git_tag_format = "v$VERSION"
 sqlite-vec.c
+    1→#include "sqlite-vec.h"
+    3→#include <assert.h>
+    4→#include <errno.h>
+    5→#include <float.h>
+    6→#include <inttypes.h>
+    7→#include <limits.h>
+    8→#include <math.h>
+    9→#include <stdbool.h>
+    10→#include <stdint.h>
+    11→#include <stdlib.h>
+    12→#include <string.h>
+    76→typedef int8_t i8;
+    77→typedef uint8_t u8;
+    78→typedef int16_t i16;
+    79→typedef int32_t i32;
+    80→typedef sqlite3_int64 i64;
+    81→typedef uint32_t u32;
+    82→typedef uint64_t u64;
+    83→typedef float f32;
+    84→typedef size_t usize;
+    …
+    112→#define countof(x) (sizeof(x) / sizeof((x)[0]))
+    113→#define min(a, b) (((a) <= (b)) ? (a) : (b))
+    …
+    115→enum VectorElementType {
+    116→  // clang-format off
+    117→  SQLITE_VEC_ELEMENT_TYPE_FLOAT32 = 223 + 0,
+    118→  SQLITE_VEC_ELEMENT_TYPE_BIT     = 223 + 1,
+    119→  SQLITE_VEC_ELEMENT_TYPE_INT8    = 223 + 2,
+    120→  // clang-format on
+    121→};
+    583→#define vecJsonIsspace(x) (vecJsonIsSpaceX[(unsigned char)x])
+    …
+    585→typedef void (*vector_cleanup)(void *p);
+    …
+    587→void vector_cleanup_noop(void *_) { UNUSED_PARAMETER(_); }
+    …
+    589→#define JSON_SUBTYPE 74
+    …
+    591→void vtab_set_error(sqlite3_vtab *pVTab, const char *zFormat, ...) {
+    …
+    598→struct Array {
+    599→  size_t element_size;
+    600→  size_t length;
+    601→  size_t capacity;
+    602→  void *z;
+    603→};
+    605→/**
+    606→ * @brief Initial an array with the given element size and capacity.
+    607→ *
+    608→ * @param array
+    609→ * @param element_size
+    610→ * @param init_capacity
+    611→ * @return SQLITE_OK on success, error code on failure. Only error is
+    612→ * SQLITE_NOMEM
+    613→ */
+    614→int array_init(struct Array *array, size_t element_size, size_t init_capacity) {
+    …
+    629→int array_append(struct Array *array, const void *element) {
+    …
+    646→void array_cleanup(struct Array *array) {
+    …
+    656→char *vector_subtype_name(int subtype) {
+    …
+    667→char *type_name(int type) {
+    …
+    683→typedef void (*fvec_cleanup)(f32 *vector);
+    …
     9807→    {"vec0",          &vec0Module,          NULL, NULL},
     9808→    {"vec_each",      &vec_eachModule,      NULL, NULL},
 sqlite-vec.h.tmpl

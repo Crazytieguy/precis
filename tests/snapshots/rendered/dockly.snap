@@ -8,6 +8,7 @@ expression: rendered
 .npmrc
 .nvmrc
 .vscode/
+    launch.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Dockerfile
@@ -51,6 +52,11 @@ README.md
     …
     129→# In the news
     …
+    131→- Admin Magazine article: [Visualizing containers with clarity
+    132→](https://www.admin-magazine.com/Articles/Visualizing-containers-with-clarity)
+    133→- [A learnk8s tweet](https://twitter.com/learnk8s/status/1075677503782563840)
+    134→- [Dockly – Manage Docker Containers From Terminal](https://ostechnix.com/dockly-manage-docker-containers-from-terminal/)
+    135→- [Clever cloud CEO, Quentin Adam, tweeting about dockly](https://twitter.com/waxzce/status/1123886351924043777)
     137→# Author
     …
 SECURITY.md
@@ -61,95 +67,24 @@ docs/
     .prettierrc
     LICENSE
     README.md
-        1→# gatsby-starter-stellar
-        3→**This starter has been updated for Gatsby.js V2.**
-        5→**The older V1 version of this starter can be found in the V1 branch**
-        7→Gatsby.js V2 starter based on the Stellar site template, designed by HTML5 UP. Check out https://codebushi.com/gatsby-starters/ for more Gatsby starters and templates.
-        9→## Preview
-        …
-        11→https://gatsby-stellar.surge.sh/
-        13→## Installation
-        …
-        15→Install this starter (assuming Gatsby is installed) by running from your CLI:
-        16→<br>
-        17→`gatsby new gatsby-starter-stellar https://github.com/codebushi/gatsby-starter-stellar`
-        19→Run `gatsby develop` in the terminal to start the dev site.
     gatsby-browser.js
     gatsby-config.js
     gatsby-node.js
     gatsby-ssr.js
     package.json
-        2→  "name": "gatsby-starter-stellar",
-        3→  "description": "Gatsby Starter - Stellar by HTML5 UP",
-        4→  "version": "1.0.0",
-        5→  "author": "Hunter Chang",
-        21→  "keywords": [
-        22→    "gatsby"
-        23→  ],
-        24→  "license": "MIT",
-        25→  "scripts": {
-        26→    "build": "gatsby build",
-        27→    "develop": "gatsby develop",
-        28→    "deploy": "gatsby build --prefix-paths && gh-pages -d public -r https://$GITHUB_TOKEN@github.com/lirantal/dockly.git",
-        29→    "format": "prettier --write '**/*.js'",
-        30→    "test": "echo \"Error: no test specified\" && exit 1"
-        31→  },
-        36→  "repository": {
-        37→    "type": "git",
-        38→    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-        39→  }
     src/
         assets/
-            css/
-            fonts/
-                FontAwesome.otf
-                fontawesome-webfont.eot
-                fontawesome-webfont.svg
-                fontawesome-webfont.ttf
-                fontawesome-webfont.woff
-                fontawesome-webfont.woff2
-            images/
-            scss/
-                base/
-                components/
-                ie8.scss
-                ie9.scss
-                layout/
-                    _footer.scss
-                    _header.scss
-                    _main.scss
-                    _nav.scss
-                    _wrapper.scss
-                libs/
-                    _functions.scss
-                    _mixins.scss
-                    _skel.scss
-                    _vars.scss
-                main.scss
         components/
             Footer.js
             Header.js
-                37→export default Header
             HeaderGeneric.js
-                10→export default HeaderGeneric
             Nav.js
-                32→export default Nav
             Scroll.js
-                63→export default Scroll;
             layout.js
-                40→export default Template
         pages/
             404.js
-                11→export default NotFoundPage
             generic.js
-                30→export default Generic
             index.js
-                1→import React from 'react'
-                2→import Helmet from 'react-helmet'
-                3→import Waypoint from 'react-waypoint'
-                5→import Layout from '../components/layout'
-                6→import Header from '../components/Header'
-                7→import featured_image from '../assets/images/dockly-featured-image.png'
 hooks/
     containers.hook.js
     images.hook.js
@@ -202,6 +137,7 @@ index.js
     99→  process.exit(-1)
 lib/
     modes.js
+        1→'use strict'
         3→module.exports = {
         4→  container: 'containers',
         5→  service: 'services',
@@ -216,7 +152,51 @@ package.json
     2→  "name": "dockly",
     3→  "version": "0.0.0-development",
     4→  "description": "Immersive terminal interface for managing docker containers and services",
+    27→  "repository": {
+    28→    "type": "git",
+    29→    "url": "git+https://github.com/lirantal/dockly.git"
+    30→  },
+    31→  "keywords": [
+    32→    "docker",
+    33→    "container",
+    34→    "swarm",
+    35→    "cli",
+    36→    "shell",
+    37→    "blessed",
+    38→    "command",
+    39→    "command line",
+    40→    "console",
+    41→    "terminal"
+    42→  ],
+    43→  "author": {
+    44→    "name": "Liran Tal",
+    45→    "email": "liran.tal@gmail.com"
+    46→  },
+    47→  "contributors": [
+    48→    {
+    49→      "name": "Matan Avneri",
+    50→      "email": "Matan.av@gmail.com",
+    51→      "url": "https://github.com/MatanAvneri"
+    52→    },
+    53→    {
+    54→      "name": "Trevor Farlow",
+    55→      "url": "https://github.com/trevdor"
+    56→    },
+    57→    {
+    58→      "name": "Israel Roldan",
+    59→      "url": "https://github.com/israelroldan",
+    60→      "email": "oss@isro.me"
+    61→    }
+    62→  ],
     63→  "license": "MIT",
+    64→  "bugs": {
+    65→    "url": "https://github.com/lirantal/dockly/issues"
+    66→  },
+    67→  "homepage": "https://github.com/lirantal/dockly#readme",
+    89→  "publishConfig": {
+    90→    "provenance": true,
+    91→    "access": "public"
+    92→  }
 src/
     assetsLoader.js
         10→class assetsLoader {
@@ -323,6 +303,12 @@ src/
             …
     widgetsTemplates/
         base.hook.template.js
+            6→class myWidget extends baseWidget(EventEmitter) {
+            7→  copyItemIdToClipboard () {
+            …
+            29→  getSelectedItem () {
+            …
+            34→module.exports = myWidget
         help.widget.template.js
             5→class myWidget extends baseWidget() {
             …

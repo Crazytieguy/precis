@@ -135,6 +135,16 @@ fn non_essential_factor_inner(
             // own `source/` (chalk) keeps full weight on its vendored
             // modules.
             return 0.2;
+        } else if is_docs_site_subtree(first, root) {
+            // Separate documentation-site sub-app at the repo root
+            // (axios's `docs/package.json`, dockly's `docs/package.json`).
+            // The site is build-and-publish plumbing — its sources are
+            // peripheral to understanding the parent library. NS authors
+            // rank the parent README ahead of the site's own pages,
+            // scaffolding, and per-package config. Real user docs
+            // (`click/docs/`, `mdbook/docs/` — no nested package.json)
+            // keep full weight.
+            return 0.2;
         }
     }
     for component in target.components().skip(1) {
@@ -234,6 +244,24 @@ fn non_essential_factor_inner(
         }
     }
     1.0
+}
+
+/// Detect a depth-1 documentation-site sub-app: a directory whose
+/// name is a docs-site convention AND that ships its own
+/// `package.json` (Docusaurus, VitePress, Astro, Next.js docs sites
+/// all create one). Distinguishes a separate docs publishing app
+/// (axios's `docs/`, dockly's `docs/`) from real user-facing
+/// documentation that lives inline (click's `docs/`, mdbook's
+/// `docs/` — both lack a nested package.json). NS authors rank the
+/// parent library's content ahead of either kind, but only the
+/// sub-app shape is reliably demoted-able without losing canonical
+/// documentation.
+fn is_docs_site_subtree(first_component: &str, root: &std::path::Path) -> bool {
+    let lower = first_component.to_ascii_lowercase();
+    if !matches!(lower.as_str(), "docs" | "doc" | "site" | "website") {
+        return false;
+    }
+    root.join(first_component).join("package.json").is_file()
 }
 
 /// Root-level dirs holding vendored / third-party content, release
