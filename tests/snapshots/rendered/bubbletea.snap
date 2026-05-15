@@ -79,28 +79,6 @@ input.go
     …
 key.go
 keyboard.go
-    9→type KeyboardEnhancementsMsg struct {
-    …
-    31→// SupportsKeyDisambiguation returns whether the terminal supports key
-    32→// disambiguation (e.g., distinguishing between different modifier keys).
-    33→func (k KeyboardEnhancementsMsg) SupportsKeyDisambiguation() bool {
-    34→	return k.Flags > 0
-    37→// SupportsEventTypes returns whether the terminal supports reporting
-    38→// different types of key events (press, release, and repeat).
-    39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
-    40→	return k.Flags&ansi.KittyReportEventTypes != 0
-    43→// SupportsAlternateKeys returns whether the terminal supports reporting
-    44→// alternate key codes.
-    45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
-    46→	return k.Flags&ansi.KittyReportAlternateKeys != 0
-    49→// SupportsAllKeysAsEscapeCodes returns whether the terminal supports reporting
-    50→// all keys as escape codes.
-    51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
-    52→	return k.Flags&ansi.KittyReportAllKeysAsEscapeCodes != 0
-    55→// SupportsAssociatedText returns whether the terminal supports reporting
-    56→// associated text with key events.
-    57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
-    58→	return k.Flags&ansi.KittyReportAssociatedKeys != 0
 logging.go
     23→func LogToFile(path string, prefix string) (*os.File, error) {
     24→	return LogToFileWith(path, prefix, log.Default())
@@ -239,8 +217,32 @@ tea.go
     77→	var view View
     78→	view.SetContent(s)
     79→	return view
+    82→// View represents a terminal view that can be composed of multiple layers.
+    83→// It can also contain a cursor that will be rendered on top of the layers.
     84→type View struct {
     …
+    128→	// Cursor represents the cursor position, style, and visibility on the
+    129→	// screen. When not nil, the cursor will be shown at the specified
+    130→	// position.
+    131→	Cursor *Cursor
+    133→	// BackgroundColor when not nil, sets the terminal background color. Use
+    134→	// nil to reset to the terminal's default background color.
+    135→	BackgroundColor color.Color
+    137→	// ForegroundColor when not nil, sets the terminal foreground color. Use
+    138→	// nil to reset to the terminal's default foreground color.
+    139→	ForegroundColor color.Color
+    141→	// WindowTitle sets the terminal window title. Support depends on the
+    142→	// terminal.
+    143→	WindowTitle string
+    145→	// ProgressBar when not nil, shows a progress bar in the terminal's
+    146→	// progress bar section. Support depends on the terminal.
+    147→	ProgressBar *ProgressBar
+    172→	// DisableBracketedPasteMode disables bracketed paste mode for this view.
+    173→	DisableBracketedPasteMode bool
+    175→	// MouseMode sets the mouse mode for this view. It can be one of
+    176→	// [MouseModeNone], [MouseModeCellMotion], or [MouseModeAllMotion].
+    177→	MouseMode MouseMode
+    190→}
     241→type KeyboardEnhancements struct {
     …
     279→func (v *View) SetContent(s string) {

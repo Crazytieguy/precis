@@ -283,10 +283,31 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         start_line: info.start_line,
                     }
                     .into(),
-                    predecessor: Some(decl_predecessor),
+                    predecessor: Some(decl_predecessor.clone()),
                     content,
                     value: decl_body_value(file, info, ctx),
                 });
+            }
+            // Big-struct field-group split. Each blank-line-separated
+            // group inside `type X struct { … }` fires independently
+            // gated on the parent `Decl`; the parent Decl's own span
+            // was trimmed in `grouped_type_info` to the type-header /
+            // closer rows so the FieldGroup spans don't overlap.
+            for group in &info.struct_field_groups {
+                let lines = FileLines::new(group.rows.clone());
+                if let Some(content) = single_file_lines_content(file, &source, lines) {
+                    out.push(Batch {
+                        key: GoKey::StructFieldGroup {
+                            file: file.clone(),
+                            start_line: info.start_line,
+                            group_start_line: group.group_start_line,
+                        }
+                        .into(),
+                        predecessor: Some(decl_predecessor.clone()),
+                        content,
+                        value: struct_field_group_value(file, info, ctx),
+                    });
+                }
             }
         }
     }
@@ -358,6 +379,21 @@ struct DeclInfo {
     name_lines: Vec<usize>,
     body_rows: Option<(usize, usize)>,
     exported: bool,
+    /// Blank-line-separated field groups inside a big `type X struct
+    /// { … }` body. When present, `decl_lines` covers only the type
+    /// header and the closing brace — body rows belong to the
+    /// emitted [`GoKey::StructFieldGroup`] batches instead. Empty
+    /// when the decl is not a big struct.
+    struct_field_groups: Vec<StructFieldGroup>,
+}
+
+#[derive(Debug, Clone)]
+struct StructFieldGroup {
+    /// 1-based start line of the first row in the group (including any
+    /// leading `//` doc comment).
+    group_start_line: usize,
+    /// All 1-based row numbers covered by this group.
+    rows: Vec<usize>,
 }
 
 impl DeclInfo {
@@ -413,6 +449,7 @@ fn function_info(node: Node, source: &str) -> Option<DeclInfo> {
         name_lines: vec![start_line],
         body_rows: body_interior_rows(node),
         exported: is_exported(name),
+        struct_field_groups: Vec::new(),
     })
 }
 
@@ -434,6 +471,7 @@ fn method_info(node: Node, source: &str) -> Option<DeclInfo> {
         // type stays package-private from the agent's "what's the
         // public API" view.
         exported: is_exported(name) && receiver_type_exported(node, source),
+        struct_field_groups: Vec::new(),
     })
 }
 
@@ -441,10 +479,14 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
     let mut cursor = node.walk();
     let mut name_lines = Vec::new();
     let mut exported = false;
+    let mut single_type_spec: Option<Node> = None;
+    let mut type_spec_count = 0;
     for spec in node.children(&mut cursor) {
         if !matches!(spec.kind(), "type_spec" | "type_alias") {
             continue;
         }
+        type_spec_count += 1;
+        single_type_spec = Some(spec);
         name_lines.push(spec.start_position().row + 1);
         if let Some(name_node) = spec.child_by_field_name("name")
             && is_exported(&source[name_node.start_byte()..name_node.end_byte()])
@@ -452,20 +494,112 @@ fn grouped_type_info(node: Node, source: &str) -> DeclInfo {
             exported = true;
         }
     }
+    let start_row = node.start_position().row;
+    let end_row = node.end_position().row;
     let mut decl_lines = Vec::new();
-    push_rows(
-        &mut decl_lines,
-        node.start_position().row,
-        node.end_position().row,
-    );
+    push_rows(&mut decl_lines, start_row, end_row);
+
+    let mut struct_field_groups = Vec::new();
+    // Only chunk single-spec struct decls: `type X struct { … }`.
+    // Multi-spec groups (`type ( … )`) keep the existing behaviour.
+    if type_spec_count == 1
+        && let Some(spec) = single_type_spec
+        && let Some(struct_body) = find_struct_body(spec)
+    {
+        let body_start = struct_body.start_position().row;
+        let body_end = struct_body.end_position().row;
+        if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
+            let groups = collect_struct_field_groups(struct_body, source);
+            if groups.len() >= STRUCT_FIELD_GROUP_MIN_GROUPS {
+                // Trim decl_lines to the type header row + the
+                // struct's closing-brace row. Body rows in between
+                // now belong to per-`StructFieldGroup` batches, and
+                // any rows after the struct (uncommon) stay with the
+                // header so the Decl renders the full structural
+                // framing in one batch.
+                decl_lines.clear();
+                decl_lines.push(start_row + 1);
+                decl_lines.push(body_end + 1);
+                if end_row > body_end {
+                    push_rows(&mut decl_lines, body_end + 1, end_row);
+                }
+                decl_lines.sort_unstable();
+                decl_lines.dedup();
+                struct_field_groups = groups;
+            }
+        }
+    }
+
     DeclInfo {
         kind: DeclKind::Type,
-        start_line: node.start_position().row + 1,
+        start_line: start_row + 1,
         decl_lines,
         name_lines,
         body_rows: None,
         exported,
+        struct_field_groups,
     }
+}
+
+/// Minimum source-line span (closing brace minus opening brace) for a
+/// struct body to be eligible for field-group chunking. Below this,
+/// the unchunked struct fits cheaply at any reasonable budget and
+/// splitting adds scheduling churn without payoff.
+const STRUCT_FIELD_GROUP_MIN_LINES: usize = 60;
+
+/// Minimum number of blank-line-separated field groups required for
+/// chunking. A two-group struct's groups would be roughly half the
+/// struct each — the parent Decl is already cheap to schedule when
+/// the struct is moderately small, and per-group fragmentation is
+/// only useful for Command-style structs with many distinct anchors.
+const STRUCT_FIELD_GROUP_MIN_GROUPS: usize = 3;
+
+/// Locate the inner `struct_type` node of a `type_spec` whose type is
+/// a struct. Walks named children; returns the struct_type node or
+/// None for non-struct types.
+fn find_struct_body(spec: Node) -> Option<Node> {
+    let ty = spec.child_by_field_name("type")?;
+    if ty.kind() == "struct_type" {
+        Some(ty)
+    } else {
+        None
+    }
+}
+
+/// Split a struct body into blank-line-separated field groups. Each
+/// group's `rows` covers the leading `//` doc comments + the field
+/// row(s) of every contiguous non-blank source line in the group.
+/// Source line numbers are 1-based.
+fn collect_struct_field_groups(struct_body: Node, source: &str) -> Vec<StructFieldGroup> {
+    let body_start = struct_body.start_position().row;
+    let body_end = struct_body.end_position().row;
+    if body_end <= body_start + 1 {
+        return Vec::new();
+    }
+    let src_lines: Vec<&str> = source.lines().collect();
+    let mut groups: Vec<StructFieldGroup> = Vec::new();
+    let mut current: Vec<usize> = Vec::new();
+    // Walk rows strictly between the `{` and the `}` lines.
+    for row in (body_start + 1)..body_end {
+        let line = src_lines.get(row).copied().unwrap_or("");
+        if line.trim().is_empty() {
+            if !current.is_empty() {
+                groups.push(StructFieldGroup {
+                    group_start_line: *current.first().unwrap(),
+                    rows: std::mem::take(&mut current),
+                });
+            }
+        } else {
+            current.push(row + 1);
+        }
+    }
+    if !current.is_empty() {
+        groups.push(StructFieldGroup {
+            group_start_line: *current.first().unwrap(),
+            rows: current,
+        });
+    }
+    groups
 }
 
 fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {
@@ -506,6 +640,7 @@ fn grouped_value_info(node: Node, source: &str, kind: DeclKind) -> DeclInfo {
         name_lines,
         body_rows: None,
         exported,
+        struct_field_groups: Vec::new(),
     }
 }
 
@@ -637,6 +772,17 @@ fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let cat = (0.30 * kv).min(1.0);
     let fu = (0.80 * kv).min(1.0);
     mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
+}
+
+fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
+    // Same shape as `decl_value` for a Type, scaled down: each group
+    // is one slice of the struct's identity, not the whole declaration.
+    let kv = info.kind.kind_weight() * info.visibility_factor();
+    let cat = (0.55 * kv).min(1.0);
+    let fu = (0.70 * kv).min(1.0);
+    mix_signals(cat, fu, 0.55, go_depth_factor(file, ctx))
         * go_aux_factor(file)
         * go_entry_factor(file, ctx)
 }

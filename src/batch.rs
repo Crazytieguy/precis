@@ -450,6 +450,22 @@ pub enum GoKey {
     /// no blank-line gap. Predecessor: matching [`GoKey::Decl`].
     /// Priority 3.x.
     DeclDoc { file: PathBuf, start_line: usize },
+    /// Blank-line-separated field-group within a big `type X struct { … }`
+    /// declaration. NS authors anchor on Cobra-style per-field-group
+    /// rows ("Command help-text fields", "Command boolean knobs") — at
+    /// the default whole-struct granularity the struct's `Decl` batch
+    /// is too large to fit at small budgets and no field content is
+    /// delivered. Emitted only for type-decls whose struct body has
+    /// ≥3 blank-line-separated groups and ≥60 body lines. Predecessor:
+    /// matching [`GoKey::Decl`] at the same `start_line` — line overlap
+    /// with the Decl is allowed as ancestor overlap, and the Decl's
+    /// own rendered span is reduced to the struct header + closer so
+    /// the two batches don't conflict on body rows.
+    StructFieldGroup {
+        file: PathBuf,
+        start_line: usize,
+        group_start_line: usize,
+    },
     /// Surface listing of every `Test*` / `Benchmark*` / `Example*`
     /// function's first line in a `_test.go` file. Skipped for
     /// non-test files. Priority 3.x–5.x.
@@ -1037,7 +1053,7 @@ impl GoKey {
     /// matches the C walker's calibrated value.
     pub fn concavity_exponent(&self) -> f64 {
         match self {
-            GoKey::Decl { .. } | GoKey::DeclBody { .. } => 0.45,
+            GoKey::Decl { .. } | GoKey::DeclBody { .. } | GoKey::StructFieldGroup { .. } => 0.45,
             _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
         }
     }
@@ -1080,6 +1096,16 @@ impl GoKey {
                     start_line
                 )
             }
+            GoKey::StructFieldGroup {
+                file,
+                start_line,
+                group_start_line,
+            } => format!(
+                "go struct field group at {}:{} group {}",
+                display_path(file, fixture_root),
+                start_line,
+                group_start_line,
+            ),
             GoKey::TestNames { file } => {
                 format!(
                     "go test names surface in {}",
