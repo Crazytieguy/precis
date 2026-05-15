@@ -24,80 +24,80 @@ Score(3000)=0.746 I=0.949 C=0.585 ns_rows≤3K=19/39 (reached=15 partial=0 missi
 | walker |  | 268 | 0 | go decl at group.go:20 |  |  | 0.847 |
 | walker |  | 268 | 0 | go decl at group.go:36 |  |  | 0.847 |
 | walker |  | 299 | 31 | go decl at group.go:10 |  |  | 0.854 |
-| ns | 337 |  | 85 | Package + import declarations across all .go files | 2.1 |  | 0.762 |
-| walker |  | 352 | 53 | go decl names surface in sort.go |  |  | 0.767 |
-| walker |  | 352 | 0 | go decl at sort.go:7 |  |  | 0.767 |
-| walker |  | 352 | 0 | go decl at sort.go:16 |  |  | 0.767 |
-| walker |  | 352 | 0 | go decl at sort.go:21 |  |  | 0.767 |
-| walker |  | 365 | 13 | go decl doc at sort.go:7 |  |  | 0.767 |
-| walker |  | 379 | 14 | go decl doc at sort.go:16 |  |  | 0.768 |
-| walker |  | 393 | 14 | go decl doc at sort.go:21 |  |  | 0.770 |
-| ns | 400 |  | 63 | All public function/method first-lines (multierror.go) | 2.2 |  | 0.673 |
-| walker |  | 542 | 149 | README headline in README.md |  |  | 0.706 |
-| ns | 564 |  | 164 | Public function names across single-fn files | 2.3 |  | 0.679 |
-| ns | 592 |  | 28 | README H2 headings | 2.4 |  | 0.662 |
-| walker |  | 593 | 51 | headings outline in README.md |  |  | 0.691 |
-| walker |  | 609 | 16 | go package + imports in group.go |  |  | 0.704 |
-| walker |  | 625 | 16 | go decl body at sort.go:21 |  |  | 0.705 |
-| walker |  | 654 | 29 | go decl doc at group.go:10 |  |  | 0.718 |
-| walker |  | 687 | 33 | go decl doc at format.go:13 |  |  | 0.793 |
-| walker |  | 706 | 19 | go decl body at sort.go:16 |  |  | 0.793 |
-| ns | 725 |  | 133 | Append doc comment + signature | 3.1 | 2.3 | 0.740 |
-| walker |  | 736 | 30 | go decl doc at flatten.go:8 |  |  | 0.741 |
-| walker |  | 766 | 30 | go decl doc at group.go:36 |  |  | 0.742 |
-| walker |  | 792 | 26 | go package + imports in prefix.go |  |  | 0.756 |
-| walker |  | 828 | 36 | go decl doc at format.go:17 |  |  | 0.759 |
-| walker |  | 861 | 33 | go package + imports in format.go |  |  | 0.774 |
-| walker |  | 894 | 33 | go package + imports in multierror.go |  |  | 0.791 |
-| ns | 909 |  | 184 | Error.Unwrap doc + signature | 3.2 | 2.2 | 0.729 |
-| walker |  | 925 | 31 | go decl body at sort.go:7 |  |  | 0.730 |
-| walker |  | 977 | 52 | go decl doc at group.go:20 |  |  | 0.735 |
-| walker |  | 1011 | 34 | go decl body at group.go:36 |  |  | 0.748 |
-| ns | 1011 |  | 102 | Group struct + Go/Wait signatures with doc comments | 3.3 | 2.3 | 0.748 |
-| ns | 1140 |  | 129 | Flatten + Prefix doc + signatures | 3.4 | 2.3 | 0.716 |
-| walker |  | 1183 | 172 | go decl names surface in multierror.go |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:18 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:31 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:42 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:53 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:71 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:99 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:102 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:108 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:117 |  |  | 0.788 |
-| walker |  | 1183 | 0 | go decl at multierror.go:122 |  |  | 0.788 |
-| ns | 1186 |  | 46 | ErrorFormatFunc + ListFormatFunc docs | 3.5 | 2.3 | 0.795 |
-| walker |  | 1206 | 23 | go decl at multierror.go:13 |  |  | 0.804 |
-| walker |  | 1219 | 13 | go decl body at multierror.go:42 |  |  | 0.804 |
-| walker |  | 1230 | 11 | go decl doc at multierror.go:102 |  |  | 0.804 |
-| walker |  | 1239 | 9 | go decl body at multierror.go:102 |  |  | 0.804 |
-| walker |  | 1277 | 38 | go decl doc at multierror.go:13 |  |  | 0.840 |
-| walker |  | 1288 | 11 | go decl body at multierror.go:117 |  |  | 0.840 |
-| walker |  | 1299 | 11 | go decl body at multierror.go:122 |  |  | 0.840 |
-| walker |  | 1315 | 16 | go decl doc at multierror.go:122 |  |  | 0.840 |
-| ns | 1331 |  | 145 | Error.Error + WrappedErrors + GoString docs | 3.6 | 2.2 | 0.804 |
-| walker |  | 1333 | 18 | go decl doc at multierror.go:117 |  |  | 0.804 |
-| walker |  | 1362 | 29 | go decl body at multierror.go:53 |  |  | 0.804 |
-| ns | 1419 |  | 88 | sort.Interface methods on Error | 3.7 | 2.3 | 0.810 |
-| walker |  | 1434 | 72 | go decl doc at multierror.go:31 |  |  | 0.810 |
-| walker |  | 1477 | 43 | go decl body at multierror.go:18 |  |  | 0.811 |
-| walker |  | 1511 | 34 | go decl doc at multierror.go:108 |  |  | 0.811 |
-| ns | 1596 |  | 177 | chain type explainer comment + decl | 3.8 | 3.2 | 0.772 |
-| walker |  | 1599 | 88 | go decl doc at prefix.go:16 |  |  | 0.811 |
-| walker |  | 1654 | 55 | go decl body at multierror.go:31 |  |  | 0.813 |
-| ns | 1718 |  | 122 | README usage section overview lines | 4.1 |  | 0.782 |
-| walker |  | 1778 | 124 | go decl doc at append.go:14 |  |  | 0.823 |
-| walker |  | 1896 | 118 | go decl doc at multierror.go:53 |  |  | 0.863 |
-| ns | 1908 |  | 190 | README Append usage example | 4.2 | 4.1 | 0.807 |
-| walker |  | 1929 | 33 | go decl body at multierror.go:108 |  |  | 0.808 |
-| walker |  | 2021 | 92 | go decl body at flatten.go:8 |  |  | 0.809 |
-| walker |  | 2196 | 175 | go decl doc at multierror.go:71 |  |  | 0.858 |
-| walker |  | 2285 | 89 | go decl body at group.go:20 |  |  | 0.860 |
-| walker |  | 2415 | 130 | go decl body at format.go:17 |  |  | 0.861 |
-| ns | 2416 |  | 508 | README errors.Is / errors.As / Unwrap stdlib-compat snippets | 4.3 | 4.1 | 0.757 |
-| walker |  | 2592 | 177 | go decl doc at multierror.go:99 |  |  | 0.795 |
-| ns | 2690 |  | 274 | README ErrorFormat + ErrorOrNil examples | 4.4 | 4.1 | 0.738 |
-| walker |  | 2734 | 142 | go decl body at multierror.go:71 |  |  | 0.741 |
+| walker |  | 332 | 33 | go package + imports in multierror.go |  |  | 0.857 |
+| ns | 337 |  | 85 | Package + import declarations across all .go files | 2.1 |  | 0.783 |
+| walker |  | 385 | 53 | go decl names surface in sort.go |  |  | 0.787 |
+| walker |  | 385 | 0 | go decl at sort.go:7 |  |  | 0.787 |
+| walker |  | 385 | 0 | go decl at sort.go:16 |  |  | 0.787 |
+| walker |  | 385 | 0 | go decl at sort.go:21 |  |  | 0.787 |
+| walker |  | 398 | 13 | go decl doc at sort.go:7 |  |  | 0.788 |
+| ns | 400 |  | 63 | All public function/method first-lines (multierror.go) | 2.2 |  | 0.690 |
+| walker |  | 412 | 14 | go decl doc at sort.go:16 |  |  | 0.690 |
+| walker |  | 426 | 14 | go decl doc at sort.go:21 |  |  | 0.692 |
+| ns | 564 |  | 164 | Public function names across single-fn files | 2.3 |  | 0.668 |
+| walker |  | 575 | 149 | README headline in README.md |  |  | 0.692 |
+| ns | 592 |  | 28 | README H2 headings | 2.4 |  | 0.675 |
+| walker |  | 626 | 51 | headings outline in README.md |  |  | 0.704 |
+| walker |  | 642 | 16 | go package + imports in group.go |  |  | 0.719 |
+| walker |  | 658 | 16 | go decl body at sort.go:21 |  |  | 0.720 |
+| ns | 725 |  | 133 | Append doc comment + signature | 3.1 | 2.3 | 0.672 |
+| walker |  | 830 | 172 | go decl names surface in multierror.go |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:18 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:31 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:42 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:53 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:71 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:99 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:102 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:108 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:117 |  |  | 0.766 |
+| walker |  | 830 | 0 | go decl at multierror.go:122 |  |  | 0.766 |
+| walker |  | 853 | 23 | go decl at multierror.go:13 |  |  | 0.778 |
+| walker |  | 866 | 13 | go decl body at multierror.go:42 |  |  | 0.778 |
+| walker |  | 877 | 11 | go decl doc at multierror.go:102 |  |  | 0.778 |
+| walker |  | 886 | 9 | go decl body at multierror.go:102 |  |  | 0.779 |
+| ns | 909 |  | 184 | Error.Unwrap doc + signature | 3.2 | 2.2 | 0.718 |
+| walker |  | 924 | 38 | go decl doc at multierror.go:13 |  |  | 0.761 |
+| walker |  | 935 | 11 | go decl body at multierror.go:117 |  |  | 0.761 |
+| walker |  | 946 | 11 | go decl body at multierror.go:122 |  |  | 0.761 |
+| walker |  | 962 | 16 | go decl doc at multierror.go:122 |  |  | 0.762 |
+| walker |  | 980 | 18 | go decl doc at multierror.go:117 |  |  | 0.762 |
+| walker |  | 1009 | 29 | go decl body at multierror.go:53 |  |  | 0.762 |
+| ns | 1011 |  | 102 | Group struct + Go/Wait signatures with doc comments | 3.3 | 2.3 | 0.728 |
+| walker |  | 1038 | 29 | go decl doc at group.go:10 |  |  | 0.738 |
+| walker |  | 1071 | 33 | go decl doc at format.go:13 |  |  | 0.795 |
+| walker |  | 1090 | 19 | go decl body at sort.go:16 |  |  | 0.795 |
+| walker |  | 1120 | 30 | go decl doc at flatten.go:8 |  |  | 0.796 |
+| ns | 1140 |  | 129 | Flatten + Prefix doc + signatures | 3.4 | 2.3 | 0.761 |
+| ns | 1186 |  | 46 | ErrorFormatFunc + ListFormatFunc docs | 3.5 | 2.3 | 0.750 |
+| walker |  | 1192 | 72 | go decl doc at multierror.go:31 |  |  | 0.750 |
+| walker |  | 1235 | 43 | go decl body at multierror.go:18 |  |  | 0.750 |
+| walker |  | 1265 | 30 | go decl doc at group.go:36 |  |  | 0.760 |
+| walker |  | 1299 | 34 | go decl doc at multierror.go:108 |  |  | 0.761 |
+| walker |  | 1325 | 26 | go package + imports in prefix.go |  |  | 0.772 |
+| ns | 1331 |  | 145 | Error.Error + WrappedErrors + GoString docs | 3.6 | 2.2 | 0.739 |
+| walker |  | 1361 | 36 | go decl doc at format.go:17 |  |  | 0.761 |
+| walker |  | 1416 | 55 | go decl body at multierror.go:31 |  |  | 0.762 |
+| ns | 1419 |  | 88 | sort.Interface methods on Error | 3.7 | 2.3 | 0.770 |
+| walker |  | 1449 | 33 | go package + imports in format.go |  |  | 0.782 |
+| walker |  | 1567 | 118 | go decl doc at multierror.go:53 |  |  | 0.828 |
+| ns | 1596 |  | 177 | chain type explainer comment + decl | 3.8 | 3.2 | 0.787 |
+| walker |  | 1598 | 31 | go decl body at sort.go:7 |  |  | 0.788 |
+| walker |  | 1650 | 52 | go decl doc at group.go:20 |  |  | 0.816 |
+| walker |  | 1683 | 33 | go decl body at multierror.go:108 |  |  | 0.816 |
+| walker |  | 1717 | 34 | go decl body at group.go:36 |  |  | 0.817 |
+| ns | 1718 |  | 122 | README usage section overview lines | 4.1 |  | 0.786 |
+| walker |  | 1892 | 175 | go decl doc at multierror.go:71 |  |  | 0.840 |
+| ns | 1908 |  | 190 | README Append usage example | 4.2 | 4.1 | 0.786 |
+| walker |  | 1980 | 88 | go decl doc at prefix.go:16 |  |  | 0.819 |
+| walker |  | 2104 | 124 | go decl doc at append.go:14 |  |  | 0.857 |
+| walker |  | 2281 | 177 | go decl doc at multierror.go:99 |  |  | 0.901 |
+| ns | 2416 |  | 508 | README errors.Is / errors.As / Unwrap stdlib-compat snippets | 4.3 | 4.1 | 0.791 |
+| walker |  | 2423 | 142 | go decl body at multierror.go:71 |  |  | 0.794 |
+| walker |  | 2515 | 92 | go decl body at flatten.go:8 |  |  | 0.795 |
+| walker |  | 2604 | 89 | go decl body at group.go:20 |  |  | 0.797 |
+| ns | 2690 |  | 274 | README ErrorFormat + ErrorOrNil examples | 4.4 | 4.1 | 0.740 |
+| walker |  | 2734 | 130 | go decl body at format.go:17 |  |  | 0.741 |
 | walker |  | 2813 | 79 | go decl body at flatten.go:20 |  |  | 0.743 |
 | walker |  | 2994 | 181 | go decl body at prefix.go:16 |  |  | 0.746 |
 | ns | 3075 |  | 385 | README intro paragraph (unwrap + Go-version notes) | 4.5 |  | 0.710 |

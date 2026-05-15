@@ -455,10 +455,36 @@ kind = "full"
 
 [[batches]]
 position = 20
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go" })'
+descriptor = "go package + imports in multierror.go"
+cost_tokens = 33
+cum_tokens = 332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go" })'
 descriptor = "go decl names surface in sort.go"
 cost_tokens = 53
-cum_tokens = 352
+cum_tokens = 385
 
 [batches.content]
 kind = "lines"
@@ -512,11 +538,11 @@ end = 22
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 22
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 7 })'
 descriptor = "go decl at sort.go:7"
 cost_tokens = 0
-cum_tokens = 352
+cum_tokens = 385
 
 [batches.content]
 kind = "lines"
@@ -530,11 +556,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 22
+position = 23
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 16 })'
 descriptor = "go decl at sort.go:16"
 cost_tokens = 0
-cum_tokens = 352
+cum_tokens = 385
 
 [batches.content]
 kind = "lines"
@@ -548,11 +574,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 23
+position = 24
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 21 })'
 descriptor = "go decl at sort.go:21"
 cost_tokens = 0
-cum_tokens = 352
+cum_tokens = 385
 
 [batches.content]
 kind = "lines"
@@ -566,11 +592,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 24
+position = 25
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 7 })'
 descriptor = "go decl doc at sort.go:7"
 cost_tokens = 13
-cum_tokens = 365
+cum_tokens = 398
 
 [batches.content]
 kind = "lines"
@@ -584,11 +610,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 16 })'
 descriptor = "go decl doc at sort.go:16"
 cost_tokens = 14
-cum_tokens = 379
+cum_tokens = 412
 
 [batches.content]
 kind = "lines"
@@ -602,11 +628,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 21 })'
 descriptor = "go decl doc at sort.go:21"
 cost_tokens = 14
-cum_tokens = 393
+cum_tokens = 426
 
 [batches.content]
 kind = "lines"
@@ -620,11 +646,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 149
-cum_tokens = 542
+cum_tokens = 575
 
 [batches.content]
 kind = "lines"
@@ -654,11 +680,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 51
-cum_tokens = 593
+cum_tokens = 626
 
 [batches.content]
 kind = "lines"
@@ -728,11 +754,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go" })'
 descriptor = "go package + imports in group.go"
 cost_tokens = 16
-cum_tokens = 609
+cum_tokens = 642
 
 [batches.content]
 kind = "lines"
@@ -754,11 +780,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 21 })'
 descriptor = "go decl body at sort.go:21"
 cost_tokens = 16
-cum_tokens = 625
+cum_tokens = 658
 
 [batches.content]
 kind = "lines"
@@ -772,259 +798,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 31
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 10 })'
-descriptor = "go decl doc at group.go:10"
-cost_tokens = 29
-cum_tokens = 654
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
 position = 32
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go", start_line: 13 })'
-descriptor = "go decl doc at format.go:13"
-cost_tokens = 33
-cum_tokens = 687
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 16 })'
-descriptor = "go decl body at sort.go:16"
-cost_tokens = 19
-cum_tokens = 706
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/flatten.go", start_line: 8 })'
-descriptor = "go decl doc at flatten.go:8"
-cost_tokens = 30
-cum_tokens = 736
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/flatten.go"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 36 })'
-descriptor = "go decl doc at group.go:36"
-cost_tokens = 30
-cum_tokens = 766
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
-start = 34
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go" })'
-descriptor = "go package + imports in prefix.go"
-cost_tokens = 26
-cum_tokens = 792
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go", start_line: 17 })'
-descriptor = "go decl doc at format.go:17"
-cost_tokens = 36
-cum_tokens = 828
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
-start = 15
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go" })'
-descriptor = "go package + imports in format.go"
-cost_tokens = 33
-cum_tokens = 861
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go" })'
-descriptor = "go package + imports in multierror.go"
-cost_tokens = 33
-cum_tokens = 894
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 6
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 7 })'
-descriptor = "go decl body at sort.go:7"
-cost_tokens = 31
-cum_tokens = 925
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
-start = 8
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 20 })'
-descriptor = "go decl doc at group.go:20"
-cost_tokens = 52
-cum_tokens = 977
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
-start = 16
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 36 })'
-descriptor = "go decl body at group.go:36"
-cost_tokens = 34
-cum_tokens = 1011
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
-start = 37
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go" })'
 descriptor = "go decl names surface in multierror.go"
 cost_tokens = 172
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1206,11 +984,11 @@ end = 123
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 33
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 18 })'
 descriptor = "go decl at multierror.go:18"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1224,11 +1002,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 45
+position = 34
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 31 })'
 descriptor = "go decl at multierror.go:31"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1242,11 +1020,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 46
+position = 35
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 42 })'
 descriptor = "go decl at multierror.go:42"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1260,11 +1038,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 47
+position = 36
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 53 })'
 descriptor = "go decl at multierror.go:53"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1278,11 +1056,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 48
+position = 37
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 71 })'
 descriptor = "go decl at multierror.go:71"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1296,11 +1074,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 49
+position = 38
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 99 })'
 descriptor = "go decl at multierror.go:99"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1314,11 +1092,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 50
+position = 39
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 102 })'
 descriptor = "go decl at multierror.go:102"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1332,11 +1110,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 51
+position = 40
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 108 })'
 descriptor = "go decl at multierror.go:108"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1350,11 +1128,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 52
+position = 41
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 117 })'
 descriptor = "go decl at multierror.go:117"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1368,11 +1146,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 53
+position = 42
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 122 })'
 descriptor = "go decl at multierror.go:122"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 830
 
 [batches.content]
 kind = "lines"
@@ -1386,11 +1164,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 54
+position = 43
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 13 })'
 descriptor = "go decl at multierror.go:13"
 cost_tokens = 23
-cum_tokens = 1206
+cum_tokens = 853
 
 [batches.content]
 kind = "lines"
@@ -1404,11 +1182,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 55
+position = 44
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 42 })'
 descriptor = "go decl body at multierror.go:42"
 cost_tokens = 13
-cum_tokens = 1219
+cum_tokens = 866
 
 [batches.content]
 kind = "lines"
@@ -1422,11 +1200,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 56
+position = 45
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 102 })'
 descriptor = "go decl doc at multierror.go:102"
 cost_tokens = 11
-cum_tokens = 1230
+cum_tokens = 877
 
 [batches.content]
 kind = "lines"
@@ -1440,11 +1218,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 57
+position = 46
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 102 })'
 descriptor = "go decl body at multierror.go:102"
 cost_tokens = 9
-cum_tokens = 1239
+cum_tokens = 886
 
 [batches.content]
 kind = "lines"
@@ -1458,11 +1236,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 58
+position = 47
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 13 })'
 descriptor = "go decl doc at multierror.go:13"
 cost_tokens = 38
-cum_tokens = 1277
+cum_tokens = 924
 
 [batches.content]
 kind = "lines"
@@ -1476,11 +1254,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 59
+position = 48
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 117 })'
 descriptor = "go decl body at multierror.go:117"
 cost_tokens = 11
-cum_tokens = 1288
+cum_tokens = 935
 
 [batches.content]
 kind = "lines"
@@ -1494,11 +1272,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 60
+position = 49
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 122 })'
 descriptor = "go decl body at multierror.go:122"
 cost_tokens = 11
-cum_tokens = 1299
+cum_tokens = 946
 
 [batches.content]
 kind = "lines"
@@ -1512,11 +1290,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 61
+position = 50
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 122 })'
 descriptor = "go decl doc at multierror.go:122"
 cost_tokens = 16
-cum_tokens = 1315
+cum_tokens = 962
 
 [batches.content]
 kind = "lines"
@@ -1530,11 +1308,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 62
+position = 51
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 117 })'
 descriptor = "go decl doc at multierror.go:117"
 cost_tokens = 18
-cum_tokens = 1333
+cum_tokens = 980
 
 [batches.content]
 kind = "lines"
@@ -1548,11 +1326,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 63
+position = 52
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 53 })'
 descriptor = "go decl body at multierror.go:53"
 cost_tokens = 29
-cum_tokens = 1362
+cum_tokens = 1009
 
 [batches.content]
 kind = "lines"
@@ -1566,11 +1344,83 @@ end = 57
 kind = "full"
 
 [[batches]]
-position = 64
+position = 53
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 10 })'
+descriptor = "go decl doc at group.go:10"
+cost_tokens = 29
+cum_tokens = 1038
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go", start_line: 13 })'
+descriptor = "go decl doc at format.go:13"
+cost_tokens = 33
+cum_tokens = 1071
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 16 })'
+descriptor = "go decl body at sort.go:16"
+cost_tokens = 19
+cum_tokens = 1090
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/flatten.go", start_line: 8 })'
+descriptor = "go decl doc at flatten.go:8"
+cost_tokens = 30
+cum_tokens = 1120
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/flatten.go"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 31 })'
 descriptor = "go decl doc at multierror.go:31"
 cost_tokens = 72
-cum_tokens = 1434
+cum_tokens = 1192
 
 [batches.content]
 kind = "lines"
@@ -1584,11 +1434,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 65
+position = 58
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 18 })'
 descriptor = "go decl body at multierror.go:18"
 cost_tokens = 43
-cum_tokens = 1477
+cum_tokens = 1235
 
 [batches.content]
 kind = "lines"
@@ -1610,11 +1460,29 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 66
+position = 59
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 36 })'
+descriptor = "go decl doc at group.go:36"
+cost_tokens = 30
+cum_tokens = 1265
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 108 })'
 descriptor = "go decl doc at multierror.go:108"
 cost_tokens = 34
-cum_tokens = 1511
+cum_tokens = 1299
 
 [batches.content]
 kind = "lines"
@@ -1628,29 +1496,55 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 67
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go", start_line: 16 })'
-descriptor = "go decl doc at prefix.go:16"
-cost_tokens = 88
-cum_tokens = 1599
+position = 61
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go" })'
+descriptor = "go package + imports in prefix.go"
+cost_tokens = 26
+cum_tokens = 1325
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go"
-start = 10
-end = 15
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go"
+start = 6
+end = 8
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 68
+position = 62
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go", start_line: 17 })'
+descriptor = "go decl doc at format.go:17"
+cost_tokens = 36
+cum_tokens = 1361
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 31 })'
 descriptor = "go decl body at multierror.go:31"
 cost_tokens = 55
-cum_tokens = 1654
+cum_tokens = 1416
 
 [batches.content]
 kind = "lines"
@@ -1672,29 +1566,37 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 69
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/append.go", start_line: 14 })'
-descriptor = "go decl doc at append.go:14"
-cost_tokens = 124
-cum_tokens = 1778
+position = 64
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go" })'
+descriptor = "go package + imports in format.go"
+cost_tokens = 33
+cum_tokens = 1449
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/append.go"
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
 start = 6
-end = 13
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 70
+position = 65
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 53 })'
 descriptor = "go decl doc at multierror.go:53"
 cost_tokens = 118
-cum_tokens = 1896
+cum_tokens = 1567
 
 [batches.content]
 kind = "lines"
@@ -1708,11 +1610,55 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 71
+position = 66
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go", start_line: 7 })'
+descriptor = "go decl body at sort.go:7"
+cost_tokens = 31
+cum_tokens = 1598
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/sort.go"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 20 })'
+descriptor = "go decl doc at group.go:20"
+cost_tokens = 52
+cum_tokens = 1650
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
+start = 16
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 108 })'
 descriptor = "go decl body at multierror.go:108"
 cost_tokens = 33
-cum_tokens = 1929
+cum_tokens = 1683
 
 [batches.content]
 kind = "lines"
@@ -1734,11 +1680,135 @@ end = 113
 kind = "full"
 
 [[batches]]
+position = 69
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 36 })'
+descriptor = "go decl body at group.go:36"
+cost_tokens = 34
+cum_tokens = 1717
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go"
+start = 37
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 71 })'
+descriptor = "go decl doc at multierror.go:71"
+cost_tokens = 175
+cum_tokens = 1892
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 60
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go", start_line: 16 })'
+descriptor = "go decl doc at prefix.go:16"
+cost_tokens = 88
+cum_tokens = 1980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/prefix.go"
+start = 10
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 72
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/append.go", start_line: 14 })'
+descriptor = "go decl doc at append.go:14"
+cost_tokens = 124
+cum_tokens = 2104
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/append.go"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 99 })'
+descriptor = "go decl doc at multierror.go:99"
+cost_tokens = 177
+cum_tokens = 2281
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 88
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 71 })'
+descriptor = "go decl body at multierror.go:71"
+cost_tokens = 142
+cum_tokens = 2423
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 72
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 77
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
+start = 82
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/flatten.go", start_line: 8 })'
 descriptor = "go decl body at flatten.go:8"
 cost_tokens = 92
-cum_tokens = 2021
+cum_tokens = 2515
 
 [batches.content]
 kind = "lines"
@@ -1760,29 +1830,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 73
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 71 })'
-descriptor = "go decl doc at multierror.go:71"
-cost_tokens = 175
-cum_tokens = 2196
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 60
-end = 70
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 74
+position = 76
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/group.go", start_line: 20 })'
 descriptor = "go decl body at group.go:20"
 cost_tokens = 89
-cum_tokens = 2285
+cum_tokens = 2604
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +1864,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 75
+position = 77
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go", start_line: 17 })'
 descriptor = "go decl body at format.go:17"
 cost_tokens = 130
-cum_tokens = 2415
+cum_tokens = 2734
 
 [batches.content]
 kind = "lines"
@@ -1841,58 +1893,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/format.go"
 start = 27
 end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 99 })'
-descriptor = "go decl doc at multierror.go:99"
-cost_tokens = 177
-cum_tokens = 2592
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 88
-end = 98
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go", start_line: 71 })'
-descriptor = "go decl body at multierror.go:71"
-cost_tokens = 142
-cum_tokens = 2734
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 72
-end = 75
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 77
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/go-multierror/multierror.go"
-start = 82
-end = 85
 
 [batches.content.spans.render]
 kind = "full"

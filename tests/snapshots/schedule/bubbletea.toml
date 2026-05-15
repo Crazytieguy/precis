@@ -1,7 +1,7 @@
 fixture = "bubbletea"
 budget = 10000
-cumulative_tokens = 9968
-batch_count = 379
+cumulative_tokens = 9996
+batch_count = 376
 
 [[batches]]
 position = 1
@@ -9279,10 +9279,44 @@ entries = ["altscreen.golden", "altscreen_autoexit.golden", "bg_set_color.golden
 
 [[batches]]
 position = 364
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go" })'
+descriptor = "go package + imports in tea.go"
+cost_tokens = 224
+cum_tokens = 9559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 12
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tea.go"
+start = 31
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 365
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 33 })'
 descriptor = "go decl body at tty.go:33"
 cost_tokens = 27
-cum_tokens = 9362
+cum_tokens = 9586
 
 [batches.content]
 kind = "lines"
@@ -9304,11 +9338,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 365
+position = 366
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tty.go", start_line: 130 })'
 descriptor = "go decl body at tty.go:130"
 cost_tokens = 65
-cum_tokens = 9427
+cum_tokens = 9651
 
 [batches.content]
 kind = "lines"
@@ -9322,11 +9356,11 @@ end = 135
 kind = "full"
 
 [[batches]]
-position = 366
+position = 367
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics" })'
 descriptor = "listing of 'tutorials/basics'"
 cost_tokens = 8
-cum_tokens = 9435
+cum_tokens = 9659
 
 [batches.content]
 kind = "fs"
@@ -9336,11 +9370,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics"
 entries = ["README.md", "main.go"]
 
 [[batches]]
-position = 367
+position = 368
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/README.md" })'
 descriptor = "README headline in tutorials/basics/README.md"
 cost_tokens = 58
-cum_tokens = 9493
+cum_tokens = 9717
 
 [batches.content]
 kind = "lines"
@@ -9362,11 +9396,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 368
+position = 369
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/README.md" })'
 descriptor = "headings outline in tutorials/basics/README.md"
 cost_tokens = 97
-cum_tokens = 9590
+cum_tokens = 9814
 
 [batches.content]
 kind = "lines"
@@ -9516,11 +9550,11 @@ end = 229
 kind = "ellipsis"
 
 [[batches]]
-position = 369
+position = 370
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/README.md", section_index: 0 })'
 descriptor = "tutorials/basics/README.md section #0"
 cost_tokens = 94
-cum_tokens = 9684
+cum_tokens = 9908
 
 [batches.content]
 kind = "lines"
@@ -9550,11 +9584,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 370
+position = 371
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go" })'
 descriptor = "go decl names surface in tutorials/basics/main.go"
 cost_tokens = 88
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9656,11 +9690,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 371
+position = 372
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 16 })'
 descriptor = "go decl at tutorials/basics/main.go:16"
 cost_tokens = 0
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9674,11 +9708,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 372
+position = 373
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 28 })'
 descriptor = "go decl at tutorials/basics/main.go:28"
 cost_tokens = 0
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9692,11 +9726,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 373
+position = 374
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 32 })'
 descriptor = "go decl at tutorials/basics/main.go:32"
 cost_tokens = 0
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9710,11 +9744,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 374
+position = 375
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 59 })'
 descriptor = "go decl at tutorials/basics/main.go:59"
 cost_tokens = 0
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9728,11 +9762,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 375
+position = 376
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 84 })'
 descriptor = "go decl at tutorials/basics/main.go:84"
 cost_tokens = 0
-cum_tokens = 9772
+cum_tokens = 9996
 
 [batches.content]
 kind = "lines"
@@ -9744,247 +9778,3 @@ end = 84
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 376
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go", start_line: 28 })'
-descriptor = "go decl body at tutorials/basics/main.go:28"
-cost_tokens = 5
-cum_tokens = 9777
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/basics/main.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 377
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands" })'
-descriptor = "listing of 'tutorials/commands'"
-cost_tokens = 8
-cum_tokens = 9785
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands"
-entries = ["README.md", "main.go"]
-
-[[batches]]
-position = 378
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md" })'
-descriptor = "README headline in tutorials/commands/README.md"
-cost_tokens = 65
-cum_tokens = 9850
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 379
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md" })'
-descriptor = "headings outline in tutorials/commands/README.md"
-cost_tokens = 118
-cum_tokens = 9968
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 35
-end = 35
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 47
-end = 47
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 99
-end = 99
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 181
-end = 181
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 214
-end = 214
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 227
-end = 227
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 232
-end = 232
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 36
-end = 36
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 100
-end = 100
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 182
-end = 182
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 215
-end = 215
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 228
-end = 228
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/bubbletea/tutorials/commands/README.md"
-start = 233
-end = 233
-
-[batches.content.spans.render]
-kind = "ellipsis"

@@ -399,26 +399,23 @@ Score(3000)=0.378 I=0.571 C=0.251 ns_rows≤3K=14/41 (reached=2 partial=0 missin
 | walker |  | 9263 | 112 | go decl doc at renderer.go:86 |  |  | 0.357 |
 | ns | 9300 |  | 68 | tutorials/basics/main.go skeleton | 4.8 |  | 0.356 |
 | walker |  | 9335 | 72 | listing of 'testdata/TestViewModel' |  |  | 0.356 |
-| walker |  | 9362 | 27 | go decl body at tty.go:33 |  |  | 0.356 |
-| walker |  | 9427 | 65 | go decl body at tty.go:130 |  |  | 0.356 |
-| walker |  | 9435 | 8 | listing of 'tutorials/basics' |  |  | 0.356 |
 | ns | 9443 |  | 143 | ErrProgramPanic / ErrProgramKilled / ErrInterrupted | 4.9 |  | 0.354 |
-| walker |  | 9493 | 58 | README headline in tutorials/basics/README.md |  |  | 0.354 |
 | ns | 9515 |  | 72 | ProgressBarState enum | 4.10 |  | 0.352 |
-| walker |  | 9590 | 97 | headings outline in tutorials/basics/README.md |  |  | 0.352 |
-| ns | 9625 |  | 110 | OpenTTY helper (tty.go) | 4.11 |  | 0.356 |
-| walker |  | 9684 | 94 | tutorials/basics/README.md section #0 |  |  | 0.356 |
+| walker |  | 9559 | 224 | go package + imports in tea.go |  |  | 0.352 |
+| walker |  | 9586 | 27 | go decl body at tty.go:33 |  |  | 0.352 |
+| ns | 9625 |  | 110 | OpenTTY helper (tty.go) | 4.11 |  | 0.351 |
+| walker |  | 9651 | 65 | go decl body at tty.go:130 |  |  | 0.356 |
+| walker |  | 9659 | 8 | listing of 'tutorials/basics' |  |  | 0.356 |
 | ns | 9705 |  | 80 | LogToFile signatures (logging.go) | 4.12 |  | 0.360 |
-| walker |  | 9772 | 88 | go decl names surface in tutorials/basics/main.go |  |  | 0.364 |
-| walker |  | 9772 | 0 | go decl at tutorials/basics/main.go:16 |  |  | 0.364 |
-| walker |  | 9772 | 0 | go decl at tutorials/basics/main.go:28 |  |  | 0.364 |
-| walker |  | 9772 | 0 | go decl at tutorials/basics/main.go:32 |  |  | 0.364 |
-| walker |  | 9772 | 0 | go decl at tutorials/basics/main.go:59 |  |  | 0.364 |
-| walker |  | 9772 | 0 | go decl at tutorials/basics/main.go:84 |  |  | 0.364 |
-| walker |  | 9777 | 5 | go decl body at tutorials/basics/main.go:28 |  |  | 0.364 |
-| walker |  | 9785 | 8 | listing of 'tutorials/commands' |  |  | 0.364 |
-| ns | 9797 |  | 92 | README — Logging Stuff snippet | 4.13 |  | 0.362 |
-| walker |  | 9850 | 65 | README headline in tutorials/commands/README.md |  |  | 0.362 |
-| ns | 9924 |  | 127 | Bubbles + Lip Gloss companion libs (README) | 4.14 |  | 0.361 |
-| walker |  | 9968 | 118 | headings outline in tutorials/commands/README.md |  |  | 0.361 |
-| ns | 9987 |  | 63 | Cursor struct godoc + NewCursor (tea.go) | 4.15 |  | 0.360 |
+| walker |  | 9717 | 58 | README headline in tutorials/basics/README.md |  |  | 0.360 |
+| ns | 9797 |  | 92 | README — Logging Stuff snippet | 4.13 |  | 0.358 |
+| walker |  | 9814 | 97 | headings outline in tutorials/basics/README.md |  |  | 0.358 |
+| walker |  | 9908 | 94 | tutorials/basics/README.md section #0 |  |  | 0.358 |
+| ns | 9924 |  | 127 | Bubbles + Lip Gloss companion libs (README) | 4.14 |  | 0.356 |
+| ns | 9987 |  | 63 | Cursor struct godoc + NewCursor (tea.go) | 4.15 |  | 0.355 |
+| walker |  | 9996 | 88 | go decl names surface in tutorials/basics/main.go |  |  | 0.360 |
+| walker |  | 9996 | 0 | go decl at tutorials/basics/main.go:16 |  |  | 0.360 |
+| walker |  | 9996 | 0 | go decl at tutorials/basics/main.go:28 |  |  | 0.360 |
+| walker |  | 9996 | 0 | go decl at tutorials/basics/main.go:32 |  |  | 0.360 |
+| walker |  | 9996 | 0 | go decl at tutorials/basics/main.go:59 |  |  | 0.360 |
+| walker |  | 9996 | 0 | go decl at tutorials/basics/main.go:84 |  |  | 0.360 |

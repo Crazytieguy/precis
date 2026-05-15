@@ -1,7 +1,7 @@
 fixture = "cobra"
 budget = 10000
-cumulative_tokens = 9856
-batch_count = 258
+cumulative_tokens = 9902
+batch_count = 257
 
 [[batches]]
 position = 1
@@ -499,2422 +499,10 @@ entries = ["cmd_test.go", "man_docs.go", "man_docs_test.go", "man_examples_test.
 
 [[batches]]
 position = 14
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen" })'
-descriptor = "listing of 'site/content/docgen'"
-cost_tokens = 21
-cum_tokens = 724
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen"
-entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
-
-[[batches]]
-position = 15
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions" })'
-descriptor = "listing of 'site/content/completions'"
-cost_tokens = 23
-cum_tokens = 747
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions"
-entries = ["_index.md", "bash.md", "fish.md", "powershell.md", "zsh.md"]
-
-[[batches]]
-position = 16
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md" })'
-descriptor = "headings outline in site/content/completions/bash.md"
-cost_tokens = 31
-cum_tokens = 778
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 17
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_notwin.go" })'
-descriptor = "go package + imports in command_notwin.go"
-cost_tokens = 7
-cum_tokens = 785
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_notwin.go"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go" })'
-descriptor = "go package + imports in flag_groups.go"
-cost_tokens = 54
-cum_tokens = 839
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 17
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 22
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 19
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md" })'
-descriptor = "headings outline in site/content/docgen/_index.md"
-cost_tokens = 43
-cum_tokens = 882
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 20
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go" })'
-descriptor = "go decl names surface in command_win.go"
-cost_tokens = 31
-cum_tokens = 913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go", start_line: 30 })'
-descriptor = "go decl at command_win.go:30"
-cost_tokens = 0
-cum_tokens = 913
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 22
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go" })'
-descriptor = "go decl names surface in args.go"
-cost_tokens = 225
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 22
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 43
-end = 43
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 98
-end = 98
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 108
-end = 108
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 118
-end = 118
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 23
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 28 })'
-descriptor = "go decl at args.go:28"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 24
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
-descriptor = "go decl at args.go:42"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 51 })'
-descriptor = "go decl at args.go:51"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 26
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 69 })'
-descriptor = "go decl at args.go:69"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 27
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
-descriptor = "go decl at args.go:82"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
-descriptor = "go decl at args.go:87"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 29
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
-descriptor = "go decl at args.go:97"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 97
-end = 97
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
-descriptor = "go decl at args.go:107"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 107
-end = 107
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 31
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 117 })'
-descriptor = "go decl at args.go:117"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 117
-end = 117
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 32
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 127 })'
-descriptor = "go decl at args.go:127"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 33
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
-descriptor = "go decl at args.go:142"
-cost_tokens = 0
-cum_tokens = 1138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 34
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
-descriptor = "go decl body at args.go:82"
-cost_tokens = 5
-cum_tokens = 1143
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 83
-end = 83
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
-descriptor = "go decl doc at args.go:82"
-cost_tokens = 13
-cum_tokens = 1156
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 36
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
-descriptor = "go decl doc at args.go:42"
-cost_tokens = 16
-cum_tokens = 1172
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 37
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
-descriptor = "go decl body at args.go:142"
-cost_tokens = 14
-cum_tokens = 1186
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
-descriptor = "go decl doc at args.go:107"
-cost_tokens = 18
-cum_tokens = 1204
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 106
-end = 106
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 39
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 127 })'
-descriptor = "go decl doc at args.go:127"
-cost_tokens = 18
-cum_tokens = 1222
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 40
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 69 })'
-descriptor = "go decl doc at args.go:69"
-cost_tokens = 19
-cum_tokens = 1241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 68
-end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 41
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
-descriptor = "go decl doc at args.go:97"
-cost_tokens = 19
-cum_tokens = 1260
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 42
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
-descriptor = "go decl doc at args.go:87"
-cost_tokens = 20
-cum_tokens = 1280
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 86
-end = 86
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 43
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 117 })'
-descriptor = "go decl doc at args.go:117"
-cost_tokens = 22
-cum_tokens = 1302
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 116
-end = 116
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 44
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 51 })'
-descriptor = "go decl doc at args.go:51"
-cost_tokens = 37
-cum_tokens = 1339
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 49
-end = 50
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 45
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
-descriptor = "go decl doc at args.go:142"
-cost_tokens = 71
-cum_tokens = 1410
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 138
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 46
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
-descriptor = "go decl body at args.go:42"
-cost_tokens = 48
-cum_tokens = 1458
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 43
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 47
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go" })'
-descriptor = "go decl names surface in doc/util.go"
-cost_tokens = 128
-cum_tokens = 1586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 50
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 48
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 26 })'
-descriptor = "go decl at doc/util.go:26"
-cost_tokens = 0
-cum_tokens = 1586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 49
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 41 })'
-descriptor = "go decl at doc/util.go:41"
-cost_tokens = 0
-cum_tokens = 1586
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 41
-end = 41
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 50
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md" })'
-descriptor = "headings outline in site/content/completions/zsh.md"
-cost_tokens = 53
-cum_tokens = 1639
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 51
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go" })'
-descriptor = "go decl names surface in doc/md_docs.go"
-cost_tokens = 137
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 125
-end = 125
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 133
-end = 133
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 126
-end = 126
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 52
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 32 })'
-descriptor = "go decl at doc/md_docs.go:32"
-cost_tokens = 0
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 53
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
-descriptor = "go decl at doc/md_docs.go:52"
-cost_tokens = 0
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 54
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 57 })'
-descriptor = "go decl at doc/md_docs.go:57"
-cost_tokens = 0
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 55
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 125 })'
-descriptor = "go decl at doc/md_docs.go:125"
-cost_tokens = 0
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 125
-end = 125
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 56
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 133 })'
-descriptor = "go decl at doc/md_docs.go:133"
-cost_tokens = 0
-cum_tokens = 1776
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 133
-end = 133
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 57
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
-descriptor = "go decl doc at doc/md_docs.go:52"
-cost_tokens = 11
-cum_tokens = 1787
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 58
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 57 })'
-descriptor = "go decl doc at doc/md_docs.go:57"
-cost_tokens = 13
-cum_tokens = 1800
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 59
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
-descriptor = "go decl body at doc/md_docs.go:52"
-cost_tokens = 19
-cum_tokens = 1819
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 60
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 133 })'
-descriptor = "go decl doc at doc/md_docs.go:133"
-cost_tokens = 33
-cum_tokens = 1852
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
-start = 131
-end = 132
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 61
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go" })'
-descriptor = "go decl names surface in doc/yaml_docs.go"
-cost_tokens = 143
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 37
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 54
-end = 54
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 94
-end = 94
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 62
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 53 })'
-descriptor = "go decl at doc/yaml_docs.go:53"
-cost_tokens = 0
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 63
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 60 })'
-descriptor = "go decl at doc/yaml_docs.go:60"
-cost_tokens = 0
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 60
-end = 60
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 64
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
-descriptor = "go decl at doc/yaml_docs.go:88"
-cost_tokens = 0
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 88
-end = 88
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 65
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 93 })'
-descriptor = "go decl at doc/yaml_docs.go:93"
-cost_tokens = 0
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 93
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 66
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 149 })'
-descriptor = "go decl at doc/yaml_docs.go:149"
-cost_tokens = 0
-cum_tokens = 1995
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 67
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
-descriptor = "go decl doc at doc/yaml_docs.go:88"
-cost_tokens = 11
-cum_tokens = 2006
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 87
-end = 87
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 68
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 93 })'
-descriptor = "go decl doc at doc/yaml_docs.go:93"
-cost_tokens = 13
-cum_tokens = 2019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 92
-end = 92
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 69
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 60 })'
-descriptor = "go decl doc at doc/yaml_docs.go:60"
-cost_tokens = 15
-cum_tokens = 2034
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 70
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
-descriptor = "go decl body at doc/yaml_docs.go:88"
-cost_tokens = 19
-cum_tokens = 2053
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 89
-end = 89
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 71
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md" })'
-descriptor = "headings outline in site/content/docgen/md.md"
-cost_tokens = 59
-cum_tokens = 2112
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 72
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go" })'
-descriptor = "go package + imports in doc/util.go"
-cost_tokens = 38
-cum_tokens = 2150
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 17
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 20
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md" })'
-descriptor = "headings outline in site/content/active_help.md"
-cost_tokens = 97
-cum_tokens = 2247
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 26
-end = 26
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 95
-end = 95
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 149
-end = 149
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 96
-end = 96
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 143
-end = 143
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
-start = 150
-end = 150
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 74
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go" })'
-descriptor = "go decl names surface in flag_groups.go"
-cost_tokens = 309
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 26
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 209
-end = 209
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 50
-end = 50
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 66
-end = 66
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 82
-end = 82
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 122
-end = 122
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 145
-end = 145
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 168
-end = 168
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 189
-end = 189
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 210
-end = 210
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 226
-end = 226
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 75
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 33 })'
-descriptor = "go decl at flag_groups.go:33"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 76
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 49 })'
-descriptor = "go decl at flag_groups.go:49"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 49
-end = 49
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 65 })'
-descriptor = "go decl at flag_groups.go:65"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 65
-end = 65
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 78
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 81 })'
-descriptor = "go decl at flag_groups.go:81"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 81
-end = 81
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 79
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 111 })'
-descriptor = "go decl at flag_groups.go:111"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 80
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 121 })'
-descriptor = "go decl at flag_groups.go:121"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 81
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 144 })'
-descriptor = "go decl at flag_groups.go:144"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 144
-end = 144
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 82
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 167 })'
-descriptor = "go decl at flag_groups.go:167"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 167
-end = 167
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 188 })'
-descriptor = "go decl at flag_groups.go:188"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 188
-end = 188
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 84
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 209 })'
-descriptor = "go decl at flag_groups.go:209"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 209
-end = 209
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 85
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 225 })'
-descriptor = "go decl at flag_groups.go:225"
-cost_tokens = 0
-cum_tokens = 2556
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 86
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 25 })'
-descriptor = "go decl at flag_groups.go:25"
-cost_tokens = 9
-cum_tokens = 2565
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 25
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 87
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 81 })'
-descriptor = "go decl doc at flag_groups.go:81"
-cost_tokens = 33
-cum_tokens = 2598
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 79
-end = 80
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 88
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 49 })'
-descriptor = "go decl doc at flag_groups.go:49"
-cost_tokens = 42
-cum_tokens = 2640
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 47
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 89
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 33 })'
-descriptor = "go decl doc at flag_groups.go:33"
-cost_tokens = 43
-cum_tokens = 2683
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 31
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 90
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 65 })'
-descriptor = "go decl doc at flag_groups.go:65"
-cost_tokens = 43
-cum_tokens = 2726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 63
-end = 64
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 91
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md" })'
-descriptor = "headings outline in site/content/docgen/yaml.md"
-cost_tokens = 60
-cum_tokens = 2786
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 69
-end = 69
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
-start = 70
-end = 70
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 92
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go" })'
 descriptor = "go package + imports in cobra.go"
 cost_tokens = 84
-cum_tokens = 2870
+cum_tokens = 787
 
 [batches.content]
 kind = "lines"
@@ -2936,653 +524,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 93
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md" })'
-descriptor = "headings outline in site/content/docgen/rest.md"
-cost_tokens = 63
-cum_tokens = 2933
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 29
-end = 29
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 72
-end = 72
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 59
-end = 59
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
-start = 73
-end = 73
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 94
-key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go" })'
-descriptor = "go decl names surface in doc/rest_docs.go"
-cost_tokens = 171
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 145
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 31
-end = 31
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 63
-end = 63
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 174
-end = 174
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 95
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 30 })'
-descriptor = "go decl at doc/rest_docs.go:30"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 96
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
-descriptor = "go decl at doc/rest_docs.go:52"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 97
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
-descriptor = "go decl at doc/rest_docs.go:57"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 57
-end = 57
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 98
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 62 })'
-descriptor = "go decl at doc/rest_docs.go:62"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 62
-end = 62
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 138 })'
-descriptor = "go decl at doc/rest_docs.go:138"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 100
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 145 })'
-descriptor = "go decl at doc/rest_docs.go:145"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 145
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 101
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 173 })'
-descriptor = "go decl at doc/rest_docs.go:173"
-cost_tokens = 0
-cum_tokens = 3104
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 173
-end = 173
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 102
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
-descriptor = "go decl doc at doc/rest_docs.go:57"
-cost_tokens = 14
-cum_tokens = 3118
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 56
-end = 56
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 103
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 62 })'
-descriptor = "go decl doc at doc/rest_docs.go:62"
-cost_tokens = 16
-cum_tokens = 3134
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 61
-end = 61
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 104
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
-descriptor = "go decl body at doc/rest_docs.go:57"
-cost_tokens = 15
-cum_tokens = 3149
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 58
-end = 58
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 105
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 145 })'
-descriptor = "go decl doc at doc/rest_docs.go:145"
-cost_tokens = 35
-cum_tokens = 3184
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 143
-end = 144
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 106
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
-descriptor = "go decl doc at doc/rest_docs.go:52"
-cost_tokens = 15
-cum_tokens = 3199
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 107
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 173 })'
-descriptor = "go decl doc at doc/rest_docs.go:173"
-cost_tokens = 23
-cum_tokens = 3222
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 172
-end = 172
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 108
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 138 })'
-descriptor = "go decl body at doc/rest_docs.go:138"
-cost_tokens = 36
-cum_tokens = 3258
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 139
-end = 140
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 109
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go" })'
-descriptor = "go package + imports in command.go"
-cost_tokens = 98
-cum_tokens = 3356
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
-start = 19
-end = 28
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
-start = 30
-end = 31
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 110
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
-descriptor = "go decl body at args.go:107"
-cost_tokens = 72
-cum_tokens = 3428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 108
-end = 113
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 111
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md", section_index: 0 })'
-descriptor = "site/content/completions/bash.md section #0"
-cost_tokens = 20
-cum_tokens = 3448
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 112
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md", section_index: 0 })'
-descriptor = "site/content/completions/zsh.md section #0"
-cost_tokens = 20
-cum_tokens = 3468
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 113
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
-descriptor = "go decl body at args.go:87"
-cost_tokens = 74
-cum_tokens = 3542
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 88
-end = 93
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 114
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
-descriptor = "go decl body at args.go:97"
-cost_tokens = 74
-cum_tokens = 3616
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 98
-end = 103
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 115
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 41 })'
-descriptor = "go decl doc at doc/util.go:41"
-cost_tokens = 29
-cum_tokens = 3645
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
-start = 39
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 116
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
-descriptor = "go decl body at doc/rest_docs.go:52"
-cost_tokens = 19
-cum_tokens = 3664
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 117
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 28 })'
-descriptor = "go decl doc at args.go:28"
-cost_tokens = 62
-cum_tokens = 3726
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
-start = 24
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 118
+position = 15
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go" })'
 descriptor = "go decl names surface in cobra.go"
 cost_tokens = 419
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +902,11 @@ end = 244
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 16
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 55 })'
 descriptor = "go decl at cobra.go:55"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -3974,11 +920,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 120
+position = 17
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 59 })'
 descriptor = "go decl at cobra.go:59"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -3992,11 +938,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 121
+position = 18
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 62 })'
 descriptor = "go decl at cobra.go:62"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4010,11 +956,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 122
+position = 19
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 66 })'
 descriptor = "go decl at cobra.go:66"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4028,11 +974,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 123
+position = 20
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 81 })'
 descriptor = "go decl at cobra.go:81"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4046,11 +992,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 124
+position = 21
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 85 })'
 descriptor = "go decl at cobra.go:85"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4064,11 +1010,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 125
+position = 22
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 91 })'
 descriptor = "go decl at cobra.go:91"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4082,11 +1028,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 126
+position = 23
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 99 })'
 descriptor = "go decl at cobra.go:99"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4100,11 +1046,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 127
+position = 24
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 105 })'
 descriptor = "go decl at cobra.go:105"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +1064,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 128
+position = 25
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 114 })'
 descriptor = "go decl at cobra.go:114"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4136,11 +1082,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 129
+position = 26
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 144 })'
 descriptor = "go decl at cobra.go:144"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4154,11 +1100,11 @@ end = 144
 kind = "full"
 
 [[batches]]
-position = 130
+position = 27
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 159 })'
 descriptor = "go decl at cobra.go:159"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4172,11 +1118,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 131
+position = 28
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 166 })'
 descriptor = "go decl at cobra.go:166"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4190,11 +1136,11 @@ end = 166
 kind = "full"
 
 [[batches]]
-position = 132
+position = 29
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 174 })'
 descriptor = "go decl at cobra.go:174"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4208,11 +1154,11 @@ end = 174
 kind = "full"
 
 [[batches]]
-position = 133
+position = 30
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 179 })'
 descriptor = "go decl at cobra.go:179"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4226,11 +1172,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 134
+position = 31
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 192 })'
 descriptor = "go decl at cobra.go:192"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4244,11 +1190,11 @@ end = 192
 kind = "full"
 
 [[batches]]
-position = 135
+position = 32
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 225 })'
 descriptor = "go decl at cobra.go:225"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4262,11 +1208,11 @@ end = 225
 kind = "full"
 
 [[batches]]
-position = 136
+position = 33
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 235 })'
 descriptor = "go decl at cobra.go:235"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4280,11 +1226,11 @@ end = 235
 kind = "full"
 
 [[batches]]
-position = 137
+position = 34
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 243 })'
 descriptor = "go decl at cobra.go:243"
 cost_tokens = 0
-cum_tokens = 4145
+cum_tokens = 1206
 
 [batches.content]
 kind = "lines"
@@ -4298,11 +1244,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 138
+position = 35
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 85 })'
 descriptor = "go decl body at cobra.go:85"
 cost_tokens = 10
-cum_tokens = 4155
+cum_tokens = 1216
 
 [batches.content]
 kind = "lines"
@@ -4316,11 +1262,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 139
+position = 36
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 99 })'
 descriptor = "go decl body at cobra.go:99"
 cost_tokens = 11
-cum_tokens = 4166
+cum_tokens = 1227
 
 [batches.content]
 kind = "lines"
@@ -4334,11 +1280,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 140
+position = 37
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 105 })'
 descriptor = "go decl body at cobra.go:105"
 cost_tokens = 11
-cum_tokens = 4177
+cum_tokens = 1238
 
 [batches.content]
 kind = "lines"
@@ -4352,11 +1298,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 141
+position = 38
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 45 })'
 descriptor = "go decl at cobra.go:45"
 cost_tokens = 9
-cum_tokens = 4186
+cum_tokens = 1247
 
 [batches.content]
 kind = "lines"
@@ -4370,11 +1316,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 142
+position = 39
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 72 })'
 descriptor = "go decl at cobra.go:72"
 cost_tokens = 21
-cum_tokens = 4207
+cum_tokens = 1268
 
 [batches.content]
 kind = "lines"
@@ -4396,11 +1342,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 143
+position = 40
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 243 })'
 descriptor = "go decl body at cobra.go:243"
 cost_tokens = 19
-cum_tokens = 4226
+cum_tokens = 1287
 
 [batches.content]
 kind = "lines"
@@ -4414,11 +1360,11 @@ end = 245
 kind = "full"
 
 [[batches]]
-position = 144
+position = 41
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 243 })'
 descriptor = "go decl doc at cobra.go:243"
 cost_tokens = 25
-cum_tokens = 4251
+cum_tokens = 1312
 
 [batches.content]
 kind = "lines"
@@ -4432,11 +1378,11 @@ end = 242
 kind = "full"
 
 [[batches]]
-position = 145
+position = 42
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 85 })'
 descriptor = "go decl doc at cobra.go:85"
 cost_tokens = 27
-cum_tokens = 4278
+cum_tokens = 1339
 
 [batches.content]
 kind = "lines"
@@ -4450,11 +1396,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 146
+position = 43
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 91 })'
 descriptor = "go decl doc at cobra.go:91"
 cost_tokens = 28
-cum_tokens = 4306
+cum_tokens = 1367
 
 [batches.content]
 kind = "lines"
@@ -4468,11 +1414,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 147
+position = 44
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 144 })'
 descriptor = "go decl doc at cobra.go:144"
 cost_tokens = 28
-cum_tokens = 4334
+cum_tokens = 1395
 
 [batches.content]
 kind = "lines"
@@ -4486,11 +1432,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 148
+position = 45
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 62 })'
 descriptor = "go decl doc at cobra.go:62"
 cost_tokens = 21
-cum_tokens = 4355
+cum_tokens = 1416
 
 [batches.content]
 kind = "lines"
@@ -4504,11 +1450,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 149
+position = 46
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 99 })'
 descriptor = "go decl doc at cobra.go:99"
 cost_tokens = 29
-cum_tokens = 4384
+cum_tokens = 1445
 
 [batches.content]
 kind = "lines"
@@ -4522,11 +1468,11 @@ end = 98
 kind = "full"
 
 [[batches]]
-position = 150
+position = 47
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 105 })'
 descriptor = "go decl doc at cobra.go:105"
 cost_tokens = 29
-cum_tokens = 4413
+cum_tokens = 1474
 
 [batches.content]
 kind = "lines"
@@ -4540,11 +1486,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 151
+position = 48
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 235 })'
 descriptor = "go decl doc at cobra.go:235"
 cost_tokens = 34
-cum_tokens = 4447
+cum_tokens = 1508
 
 [batches.content]
 kind = "lines"
@@ -4558,11 +1504,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 152
+position = 49
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 174 })'
 descriptor = "go decl doc at cobra.go:174"
 cost_tokens = 16
-cum_tokens = 4463
+cum_tokens = 1524
 
 [batches.content]
 kind = "lines"
@@ -4576,11 +1522,11 @@ end = 173
 kind = "full"
 
 [[batches]]
-position = 153
+position = 50
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 159 })'
 descriptor = "go decl body at cobra.go:159"
 cost_tokens = 13
-cum_tokens = 4476
+cum_tokens = 1537
 
 [batches.content]
 kind = "lines"
@@ -4594,11 +1540,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 154
+position = 51
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 91 })'
 descriptor = "go decl body at cobra.go:91"
 cost_tokens = 29
-cum_tokens = 4505
+cum_tokens = 1566
 
 [batches.content]
 kind = "lines"
@@ -4612,11 +1558,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 155
+position = 52
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 192 })'
 descriptor = "go decl doc at cobra.go:192"
 cost_tokens = 19
-cum_tokens = 4524
+cum_tokens = 1585
 
 [batches.content]
 kind = "lines"
@@ -4630,11 +1576,11 @@ end = 191
 kind = "full"
 
 [[batches]]
-position = 156
+position = 53
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 59 })'
 descriptor = "go decl doc at cobra.go:59"
 cost_tokens = 37
-cum_tokens = 4561
+cum_tokens = 1622
 
 [batches.content]
 kind = "lines"
@@ -4648,11 +1594,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 157
+position = 54
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 66 })'
 descriptor = "go decl doc at cobra.go:66"
 cost_tokens = 45
-cum_tokens = 4606
+cum_tokens = 1667
 
 [batches.content]
 kind = "lines"
@@ -4666,11 +1612,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 158
+position = 55
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 55 })'
 descriptor = "go decl doc at cobra.go:55"
 cost_tokens = 48
-cum_tokens = 4654
+cum_tokens = 1715
 
 [batches.content]
 kind = "lines"
@@ -4684,11 +1630,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 159
+position = 56
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 235 })'
 descriptor = "go decl body at cobra.go:235"
 cost_tokens = 40
-cum_tokens = 4694
+cum_tokens = 1755
 
 [batches.content]
 kind = "lines"
@@ -4702,11 +1648,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 160
+position = 57
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 114 })'
 descriptor = "go decl doc at cobra.go:114"
 cost_tokens = 70
-cum_tokens = 4764
+cum_tokens = 1825
 
 [batches.content]
 kind = "lines"
@@ -4720,11 +1666,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 161
+position = 58
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 166 })'
 descriptor = "go decl doc at cobra.go:166"
 cost_tokens = 30
-cum_tokens = 4794
+cum_tokens = 1855
 
 [batches.content]
 kind = "lines"
@@ -4738,11 +1684,11 @@ end = 165
 kind = "full"
 
 [[batches]]
-position = 162
+position = 59
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 72 })'
 descriptor = "go decl doc at cobra.go:72"
 cost_tokens = 64
-cum_tokens = 4858
+cum_tokens = 1919
 
 [batches.content]
 kind = "lines"
@@ -4756,11 +1702,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 163
+position = 60
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 174 })'
 descriptor = "go decl body at cobra.go:174"
 cost_tokens = 28
-cum_tokens = 4886
+cum_tokens = 1947
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +1720,11 @@ end = 176
 kind = "full"
 
 [[batches]]
-position = 164
+position = 61
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 81 })'
 descriptor = "go decl doc at cobra.go:81"
 cost_tokens = 88
-cum_tokens = 4974
+cum_tokens = 2035
 
 [batches.content]
 kind = "lines"
@@ -4792,11 +1738,3145 @@ end = 80
 kind = "full"
 
 [[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen" })'
+descriptor = "listing of 'site/content/docgen'"
+cost_tokens = 21
+cum_tokens = 2056
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen"
+entries = ["_index.md", "man.md", "md.md", "rest.md", "yaml.md"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions" })'
+descriptor = "listing of 'site/content/completions'"
+cost_tokens = 23
+cum_tokens = 2079
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions"
+entries = ["_index.md", "bash.md", "fish.md", "powershell.md", "zsh.md"]
+
+[[batches]]
+position = 64
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md" })'
+descriptor = "headings outline in site/content/completions/bash.md"
+cost_tokens = 31
+cum_tokens = 2110
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 65
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 166 })'
+descriptor = "go decl body at cobra.go:166"
+cost_tokens = 40
+cum_tokens = 2150
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 167
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_notwin.go" })'
+descriptor = "go package + imports in command_notwin.go"
+cost_tokens = 7
+cum_tokens = 2157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_notwin.go"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go" })'
+descriptor = "go package + imports in flag_groups.go"
+cost_tokens = 54
+cum_tokens = 2211
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 17
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 22
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md" })'
+descriptor = "headings outline in site/content/docgen/_index.md"
+cost_tokens = 43
+cum_tokens = 2254
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 69
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go" })'
+descriptor = "go decl names surface in command_win.go"
+cost_tokens = 31
+cum_tokens = 2285
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go", start_line: 30 })'
+descriptor = "go decl at command_win.go:30"
+cost_tokens = 0
+cum_tokens = 2285
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command_win.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go" })'
+descriptor = "go decl names surface in args.go"
+cost_tokens = 225
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 98
+end = 98
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 72
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 28 })'
+descriptor = "go decl at args.go:28"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
+descriptor = "go decl at args.go:42"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 51 })'
+descriptor = "go decl at args.go:51"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 69 })'
+descriptor = "go decl at args.go:69"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
+descriptor = "go decl at args.go:82"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
+descriptor = "go decl at args.go:87"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
+descriptor = "go decl at args.go:97"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
+descriptor = "go decl at args.go:107"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 117 })'
+descriptor = "go decl at args.go:117"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 127 })'
+descriptor = "go decl at args.go:127"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
+descriptor = "go decl at args.go:142"
+cost_tokens = 0
+cum_tokens = 2510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 83
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
+descriptor = "go decl body at args.go:82"
+cost_tokens = 5
+cum_tokens = 2515
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 82 })'
+descriptor = "go decl doc at args.go:82"
+cost_tokens = 13
+cum_tokens = 2528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
+descriptor = "go decl doc at args.go:42"
+cost_tokens = 16
+cum_tokens = 2544
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
+descriptor = "go decl body at args.go:142"
+cost_tokens = 14
+cum_tokens = 2558
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
+descriptor = "go decl doc at args.go:107"
+cost_tokens = 18
+cum_tokens = 2576
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 106
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 127 })'
+descriptor = "go decl doc at args.go:127"
+cost_tokens = 18
+cum_tokens = 2594
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 69 })'
+descriptor = "go decl doc at args.go:69"
+cost_tokens = 19
+cum_tokens = 2613
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
+descriptor = "go decl doc at args.go:97"
+cost_tokens = 19
+cum_tokens = 2632
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
+descriptor = "go decl doc at args.go:87"
+cost_tokens = 20
+cum_tokens = 2652
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 117 })'
+descriptor = "go decl doc at args.go:117"
+cost_tokens = 22
+cum_tokens = 2674
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 51 })'
+descriptor = "go decl doc at args.go:51"
+cost_tokens = 37
+cum_tokens = 2711
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 49
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 142 })'
+descriptor = "go decl doc at args.go:142"
+cost_tokens = 71
+cum_tokens = 2782
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 138
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 42 })'
+descriptor = "go decl body at args.go:42"
+cost_tokens = 48
+cum_tokens = 2830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 43
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 225 })'
+descriptor = "go decl body at cobra.go:225"
+cost_tokens = 47
+cum_tokens = 2877
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 226
+end = 231
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go" })'
+descriptor = "go decl names surface in doc/util.go"
+cost_tokens = 128
+cum_tokens = 3005
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 50
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 98
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 26 })'
+descriptor = "go decl at doc/util.go:26"
+cost_tokens = 0
+cum_tokens = 3005
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 41 })'
+descriptor = "go decl at doc/util.go:41"
+cost_tokens = 0
+cum_tokens = 3005
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md" })'
+descriptor = "headings outline in site/content/completions/zsh.md"
+cost_tokens = 53
+cum_tokens = 3058
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 101
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go" })'
+descriptor = "go decl names surface in doc/md_docs.go"
+cost_tokens = 137
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 134
+end = 134
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 102
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 32 })'
+descriptor = "go decl at doc/md_docs.go:32"
+cost_tokens = 0
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
+descriptor = "go decl at doc/md_docs.go:52"
+cost_tokens = 0
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 57 })'
+descriptor = "go decl at doc/md_docs.go:57"
+cost_tokens = 0
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 125 })'
+descriptor = "go decl at doc/md_docs.go:125"
+cost_tokens = 0
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 133 })'
+descriptor = "go decl at doc/md_docs.go:133"
+cost_tokens = 0
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 133
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
+descriptor = "go decl doc at doc/md_docs.go:52"
+cost_tokens = 11
+cum_tokens = 3206
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 57 })'
+descriptor = "go decl doc at doc/md_docs.go:57"
+cost_tokens = 13
+cum_tokens = 3219
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 52 })'
+descriptor = "go decl body at doc/md_docs.go:52"
+cost_tokens = 19
+cum_tokens = 3238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 133 })'
+descriptor = "go decl doc at doc/md_docs.go:133"
+cost_tokens = 33
+cum_tokens = 3271
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go"
+start = 131
+end = 132
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go" })'
+descriptor = "go decl names surface in doc/yaml_docs.go"
+cost_tokens = 143
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 53 })'
+descriptor = "go decl at doc/yaml_docs.go:53"
+cost_tokens = 0
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 60 })'
+descriptor = "go decl at doc/yaml_docs.go:60"
+cost_tokens = 0
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
+descriptor = "go decl at doc/yaml_docs.go:88"
+cost_tokens = 0
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 93 })'
+descriptor = "go decl at doc/yaml_docs.go:93"
+cost_tokens = 0
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 149 })'
+descriptor = "go decl at doc/yaml_docs.go:149"
+cost_tokens = 0
+cum_tokens = 3414
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
+descriptor = "go decl doc at doc/yaml_docs.go:88"
+cost_tokens = 11
+cum_tokens = 3425
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 93 })'
+descriptor = "go decl doc at doc/yaml_docs.go:93"
+cost_tokens = 13
+cum_tokens = 3438
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 60 })'
+descriptor = "go decl doc at doc/yaml_docs.go:60"
+cost_tokens = 15
+cum_tokens = 3453
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 88 })'
+descriptor = "go decl body at doc/yaml_docs.go:88"
+cost_tokens = 19
+cum_tokens = 3472
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md" })'
+descriptor = "headings outline in site/content/docgen/md.md"
+cost_tokens = 59
+cum_tokens = 3531
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/md.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 122
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go" })'
+descriptor = "go package + imports in doc/util.go"
+cost_tokens = 38
+cum_tokens = 3569
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md" })'
+descriptor = "headings outline in site/content/active_help.md"
+cost_tokens = 97
+cum_tokens = 3666
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 96
+end = 96
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/active_help.md"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go" })'
+descriptor = "go decl names surface in flag_groups.go"
+cost_tokens = 309
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 26
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 122
+end = 122
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 226
+end = 226
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 33 })'
+descriptor = "go decl at flag_groups.go:33"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 49 })'
+descriptor = "go decl at flag_groups.go:49"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 65 })'
+descriptor = "go decl at flag_groups.go:65"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 81 })'
+descriptor = "go decl at flag_groups.go:81"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 111 })'
+descriptor = "go decl at flag_groups.go:111"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 111
+end = 111
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 121 })'
+descriptor = "go decl at flag_groups.go:121"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 144 })'
+descriptor = "go decl at flag_groups.go:144"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 167 })'
+descriptor = "go decl at flag_groups.go:167"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 188 })'
+descriptor = "go decl at flag_groups.go:188"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 209 })'
+descriptor = "go decl at flag_groups.go:209"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 225 })'
+descriptor = "go decl at flag_groups.go:225"
+cost_tokens = 0
+cum_tokens = 3975
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 136
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 25 })'
+descriptor = "go decl at flag_groups.go:25"
+cost_tokens = 9
+cum_tokens = 3984
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 25
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 81 })'
+descriptor = "go decl doc at flag_groups.go:81"
+cost_tokens = 33
+cum_tokens = 4017
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 79
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 49 })'
+descriptor = "go decl doc at flag_groups.go:49"
+cost_tokens = 42
+cum_tokens = 4059
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 33 })'
+descriptor = "go decl doc at flag_groups.go:33"
+cost_tokens = 43
+cum_tokens = 4102
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 65 })'
+descriptor = "go decl doc at flag_groups.go:65"
+cost_tokens = 43
+cum_tokens = 4145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
+start = 63
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md" })'
+descriptor = "headings outline in site/content/docgen/yaml.md"
+cost_tokens = 60
+cum_tokens = 4205
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/yaml.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md" })'
+descriptor = "headings outline in site/content/docgen/rest.md"
+cost_tokens = 63
+cum_tokens = 4268
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/rest.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 144 })'
+descriptor = "go decl body at cobra.go:144"
+cost_tokens = 134
+cum_tokens = 4402
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 145
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 148
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 32 })'
+descriptor = "go decl at cobra.go:32"
+cost_tokens = 100
+cum_tokens = 4502
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 32
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go" })'
+descriptor = "go decl names surface in doc/rest_docs.go"
+cost_tokens = 171
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 146
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 30 })'
+descriptor = "go decl at doc/rest_docs.go:30"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
+descriptor = "go decl at doc/rest_docs.go:52"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
+descriptor = "go decl at doc/rest_docs.go:57"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 62 })'
+descriptor = "go decl at doc/rest_docs.go:62"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 138 })'
+descriptor = "go decl at doc/rest_docs.go:138"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 145 })'
+descriptor = "go decl at doc/rest_docs.go:145"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 173 })'
+descriptor = "go decl at doc/rest_docs.go:173"
+cost_tokens = 0
+cum_tokens = 4673
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
+descriptor = "go decl doc at doc/rest_docs.go:57"
+cost_tokens = 14
+cum_tokens = 4687
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 62 })'
+descriptor = "go decl doc at doc/rest_docs.go:62"
+cost_tokens = 16
+cum_tokens = 4703
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 57 })'
+descriptor = "go decl body at doc/rest_docs.go:57"
+cost_tokens = 15
+cum_tokens = 4718
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 145 })'
+descriptor = "go decl doc at doc/rest_docs.go:145"
+cost_tokens = 35
+cum_tokens = 4753
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 143
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
+descriptor = "go decl doc at doc/rest_docs.go:52"
+cost_tokens = 15
+cum_tokens = 4768
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 173 })'
+descriptor = "go decl doc at doc/rest_docs.go:173"
+cost_tokens = 23
+cum_tokens = 4791
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 159
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 138 })'
+descriptor = "go decl body at doc/rest_docs.go:138"
+cost_tokens = 36
+cum_tokens = 4827
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 139
+end = 140
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go" })'
+descriptor = "go package + imports in command.go"
+cost_tokens = 98
+cum_tokens = 4925
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
+start = 19
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/command.go"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 107 })'
+descriptor = "go decl body at args.go:107"
+cost_tokens = 72
+cum_tokens = 4997
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 108
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md", section_index: 0 })'
+descriptor = "site/content/completions/bash.md section #0"
+cost_tokens = 20
+cum_tokens = 5017
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/bash.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md", section_index: 0 })'
+descriptor = "site/content/completions/zsh.md section #0"
+cost_tokens = 20
+cum_tokens = 5037
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/zsh.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 87 })'
+descriptor = "go decl body at args.go:87"
+cost_tokens = 74
+cum_tokens = 5111
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 88
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
 position = 165
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 97 })'
+descriptor = "go decl body at args.go:97"
+cost_tokens = 74
+cum_tokens = 5185
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 98
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 41 })'
+descriptor = "go decl doc at doc/util.go:41"
+cost_tokens = 29
+cum_tokens = 5214
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go"
+start = 39
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 52 })'
+descriptor = "go decl body at doc/rest_docs.go:52"
+cost_tokens = 19
+cum_tokens = 5233
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 28 })'
+descriptor = "go decl doc at args.go:28"
+cost_tokens = 62
+cum_tokens = 5295
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go"
+start = 24
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 30 })'
 descriptor = "go decl at doc/yaml_docs.go:30"
 cost_tokens = 52
-cum_tokens = 5026
+cum_tokens = 5347
 
 [batches.content]
 kind = "lines"
@@ -4810,11 +4890,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 166
+position = 170
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 127 })'
 descriptor = "go decl body at args.go:127"
 cost_tokens = 82
-cum_tokens = 5108
+cum_tokens = 5429
 
 [batches.content]
 kind = "lines"
@@ -4828,11 +4908,11 @@ end = 135
 kind = "full"
 
 [[batches]]
-position = 167
+position = 171
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 117 })'
 descriptor = "go decl body at args.go:117"
 cost_tokens = 84
-cum_tokens = 5192
+cum_tokens = 5513
 
 [batches.content]
 kind = "lines"
@@ -4846,11 +4926,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 168
+position = 172
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go" })'
 descriptor = "go decl names surface in doc/man_docs.go"
 cost_tokens = 225
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5016,11 +5096,11 @@ end = 203
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 173
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 38 })'
 descriptor = "go decl at doc/man_docs.go:38"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5034,11 +5114,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 170
+position = 174
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 48 })'
 descriptor = "go decl at doc/man_docs.go:48"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5052,11 +5132,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 171
+position = 175
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 105 })'
 descriptor = "go decl at doc/man_docs.go:105"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5070,11 +5150,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 172
+position = 176
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 118 })'
 descriptor = "go decl at doc/man_docs.go:118"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5088,11 +5168,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 173
+position = 177
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 143 })'
 descriptor = "go decl at doc/man_docs.go:143"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5106,11 +5186,11 @@ end = 143
 kind = "full"
 
 [[batches]]
-position = 174
+position = 178
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 159 })'
 descriptor = "go decl at doc/man_docs.go:159"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5124,11 +5204,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 175
+position = 179
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 187 })'
 descriptor = "go decl at doc/man_docs.go:187"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5142,11 +5222,11 @@ end = 187
 kind = "full"
 
 [[batches]]
-position = 176
+position = 180
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 202 })'
 descriptor = "go decl at doc/man_docs.go:202"
 cost_tokens = 0
-cum_tokens = 5417
+cum_tokens = 5738
 
 [batches.content]
 kind = "lines"
@@ -5160,11 +5240,11 @@ end = 202
 kind = "full"
 
 [[batches]]
-position = 177
+position = 181
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 84 })'
 descriptor = "go decl at doc/man_docs.go:84"
 cost_tokens = 31
-cum_tokens = 5448
+cum_tokens = 5769
 
 [batches.content]
 kind = "lines"
@@ -5178,11 +5258,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 178
+position = 182
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 94 })'
 descriptor = "go decl at doc/man_docs.go:94"
 cost_tokens = 56
-cum_tokens = 5504
+cum_tokens = 5825
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +5276,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 179
+position = 183
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 84 })'
 descriptor = "go decl doc at doc/man_docs.go:84"
 cost_tokens = 32
-cum_tokens = 5536
+cum_tokens = 5857
 
 [batches.content]
 kind = "lines"
@@ -5214,11 +5294,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 180
+position = 184
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 48 })'
 descriptor = "go decl doc at doc/man_docs.go:48"
 cost_tokens = 36
-cum_tokens = 5572
+cum_tokens = 5893
 
 [batches.content]
 kind = "lines"
@@ -5232,11 +5312,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 181
+position = 185
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 105 })'
 descriptor = "go decl doc at doc/man_docs.go:105"
 cost_tokens = 41
-cum_tokens = 5613
+cum_tokens = 5934
 
 [batches.content]
 kind = "lines"
@@ -5250,11 +5330,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 182
+position = 186
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 94 })'
 descriptor = "go decl doc at doc/man_docs.go:94"
 cost_tokens = 83
-cum_tokens = 5696
+cum_tokens = 6017
 
 [batches.content]
 kind = "lines"
@@ -5268,11 +5348,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 183
+position = 187
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 97
-cum_tokens = 5793
+cum_tokens = 6114
 
 [batches.content]
 kind = "lines"
@@ -5310,11 +5390,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 184
+position = 188
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 125 })'
 descriptor = "go decl body at doc/md_docs.go:125"
 cost_tokens = 49
-cum_tokens = 5842
+cum_tokens = 6163
 
 [batches.content]
 kind = "lines"
@@ -5328,11 +5408,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 185
+position = 189
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 53 })'
 descriptor = "go decl body at doc/yaml_docs.go:53"
 cost_tokens = 49
-cum_tokens = 5891
+cum_tokens = 6212
 
 [batches.content]
 kind = "lines"
@@ -5346,29 +5426,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 186
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 166 })'
-descriptor = "go decl body at cobra.go:166"
-cost_tokens = 40
-cum_tokens = 5931
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
-start = 167
-end = 170
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
+position = 190
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go" })'
 descriptor = "go decl names surface in fish_completions.go"
 cost_tokens = 73
-cum_tokens = 6004
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5422,11 +5484,11 @@ end = 285
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 191
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go", start_line: 25 })'
 descriptor = "go decl at fish_completions.go:25"
 cost_tokens = 0
-cum_tokens = 6004
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5440,11 +5502,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 189
+position = 192
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go", start_line: 276 })'
 descriptor = "go decl at fish_completions.go:276"
 cost_tokens = 0
-cum_tokens = 6004
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5458,11 +5520,11 @@ end = 276
 kind = "full"
 
 [[batches]]
-position = 190
+position = 193
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go", start_line: 284 })'
 descriptor = "go decl at fish_completions.go:284"
 cost_tokens = 0
-cum_tokens = 6004
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5476,11 +5538,11 @@ end = 284
 kind = "full"
 
 [[batches]]
-position = 191
+position = 194
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go", start_line: 284 })'
 descriptor = "go decl doc at fish_completions.go:284"
 cost_tokens = 14
-cum_tokens = 6018
+cum_tokens = 6299
 
 [batches.content]
 kind = "lines"
@@ -5494,11 +5556,11 @@ end = 283
 kind = "full"
 
 [[batches]]
-position = 192
+position = 195
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/fish_completions.go", start_line: 276 })'
 descriptor = "go decl doc at fish_completions.go:276"
 cost_tokens = 19
-cum_tokens = 6037
+cum_tokens = 6318
 
 [batches.content]
 kind = "lines"
@@ -5512,11 +5574,11 @@ end = 275
 kind = "full"
 
 [[batches]]
-position = 193
+position = 196
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 38 })'
 descriptor = "go decl body at doc/man_docs.go:38"
 cost_tokens = 52
-cum_tokens = 6089
+cum_tokens = 6370
 
 [batches.content]
 kind = "lines"
@@ -5530,11 +5592,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 194
+position = 197
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/args.go", start_line: 69 })'
 descriptor = "go decl body at args.go:69"
 cost_tokens = 95
-cum_tokens = 6184
+cum_tokens = 6465
 
 [batches.content]
 kind = "lines"
@@ -5556,29 +5618,29 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 195
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 225 })'
-descriptor = "go decl body at cobra.go:225"
-cost_tokens = 47
-cum_tokens = 6231
+position = 198
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 179 })'
+descriptor = "go decl body at cobra.go:179"
+cost_tokens = 93
+cum_tokens = 6558
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
-start = 226
-end = 231
+start = 180
+end = 188
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 196
+position = 199
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 53 })'
 descriptor = "go decl doc at doc/yaml_docs.go:53"
 cost_tokens = 114
-cum_tokens = 6345
+cum_tokens = 6672
 
 [batches.content]
 kind = "lines"
@@ -5592,11 +5654,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 197
+position = 200
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 38 })'
 descriptor = "go decl doc at doc/man_docs.go:38"
 cost_tokens = 120
-cum_tokens = 6465
+cum_tokens = 6792
 
 [batches.content]
 kind = "lines"
@@ -5610,11 +5672,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 198
+position = 201
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go", start_line: 138 })'
 descriptor = "go decl doc at doc/rest_docs.go:138"
 cost_tokens = 120
-cum_tokens = 6585
+cum_tokens = 6912
 
 [batches.content]
 kind = "lines"
@@ -5628,11 +5690,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 199
+position = 202
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/fish.md", section_index: 0 })'
 descriptor = "site/content/completions/fish.md section #0"
 cost_tokens = 36
-cum_tokens = 6621
+cum_tokens = 6948
 
 [batches.content]
 kind = "lines"
@@ -5654,11 +5716,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 200
+position = 203
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go" })'
 descriptor = "go package + imports in doc/md_docs.go"
 cost_tokens = 90
-cum_tokens = 6711
+cum_tokens = 7038
 
 [batches.content]
 kind = "lines"
@@ -5688,11 +5750,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 201
+position = 204
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/rest_docs.go" })'
 descriptor = "go package + imports in doc/rest_docs.go"
 cost_tokens = 90
-cum_tokens = 6801
+cum_tokens = 7128
 
 [batches.content]
 kind = "lines"
@@ -5722,11 +5784,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 202
+position = 205
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/md_docs.go", start_line: 125 })'
 descriptor = "go decl doc at doc/md_docs.go:125"
 cost_tokens = 124
-cum_tokens = 6925
+cum_tokens = 7252
 
 [batches.content]
 kind = "lines"
@@ -5740,11 +5802,11 @@ end = 124
 kind = "full"
 
 [[batches]]
-position = 203
+position = 206
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go" })'
 descriptor = "go decl names surface in bash_completionsV2.go"
 cost_tokens = 106
-cum_tokens = 7031
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -5814,11 +5876,11 @@ end = 483
 kind = "ellipsis"
 
 [[batches]]
-position = 204
+position = 207
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 24 })'
 descriptor = "go decl at bash_completionsV2.go:24"
 cost_tokens = 0
-cum_tokens = 7031
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -5832,11 +5894,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 205
+position = 208
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 31 })'
 descriptor = "go decl at bash_completionsV2.go:31"
 cost_tokens = 0
-cum_tokens = 7031
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -5850,11 +5912,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 206
+position = 209
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 470 })'
 descriptor = "go decl at bash_completionsV2.go:470"
 cost_tokens = 0
-cum_tokens = 7031
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -5868,11 +5930,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 207
+position = 210
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl at bash_completionsV2.go:482"
 cost_tokens = 0
-cum_tokens = 7031
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -5886,11 +5948,11 @@ end = 482
 kind = "full"
 
 [[batches]]
-position = 208
+position = 211
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl body at bash_completionsV2.go:482"
 cost_tokens = 13
-cum_tokens = 7044
+cum_tokens = 7371
 
 [batches.content]
 kind = "lines"
@@ -5904,11 +5966,11 @@ end = 483
 kind = "full"
 
 [[batches]]
-position = 209
+position = 212
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 470 })'
 descriptor = "go decl doc at bash_completionsV2.go:470"
 cost_tokens = 19
-cum_tokens = 7063
+cum_tokens = 7390
 
 [batches.content]
 kind = "lines"
@@ -5922,11 +5984,11 @@ end = 469
 kind = "full"
 
 [[batches]]
-position = 210
+position = 213
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go", start_line: 482 })'
 descriptor = "go decl doc at bash_completionsV2.go:482"
 cost_tokens = 32
-cum_tokens = 7095
+cum_tokens = 7422
 
 [batches.content]
 kind = "lines"
@@ -5940,11 +6002,61 @@ end = 481
 kind = "full"
 
 [[batches]]
-position = 211
+position = 214
+key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 114 })'
+descriptor = "go decl body at cobra.go:114"
+cost_tokens = 262
+cum_tokens = 7684
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 115
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 118
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 129
+end = 136
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 215
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 26 })'
 descriptor = "go decl doc at doc/util.go:26"
 cost_tokens = 57
-cum_tokens = 7152
+cum_tokens = 7741
 
 [batches.content]
 kind = "lines"
@@ -5958,11 +6070,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 212
+position = 216
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 225 })'
 descriptor = "go decl doc at flag_groups.go:225"
 cost_tokens = 115
-cum_tokens = 7267
+cum_tokens = 7856
 
 [batches.content]
 kind = "lines"
@@ -5976,11 +6088,11 @@ end = 224
 kind = "full"
 
 [[batches]]
-position = 213
+position = 217
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go" })'
 descriptor = "go package + imports in doc/yaml_docs.go"
 cost_tokens = 102
-cum_tokens = 7369
+cum_tokens = 7958
 
 [batches.content]
 kind = "lines"
@@ -6010,11 +6122,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 214
+position = 218
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 111 })'
 descriptor = "go decl body at flag_groups.go:111"
 cost_tokens = 60
-cum_tokens = 7429
+cum_tokens = 8018
 
 [batches.content]
 kind = "lines"
@@ -6028,11 +6140,11 @@ end = 118
 kind = "full"
 
 [[batches]]
-position = 215
+position = 219
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/shell_completions.go" })'
 descriptor = "go package + imports in shell_completions.go"
 cost_tokens = 31
-cum_tokens = 7460
+cum_tokens = 8049
 
 [batches.content]
 kind = "lines"
@@ -6054,55 +6166,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 216
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 144 })'
-descriptor = "go decl body at cobra.go:144"
-cost_tokens = 134
-cum_tokens = 7594
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
-start = 145
-end = 146
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
-start = 148
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 217
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go", start_line: 32 })'
-descriptor = "go decl at cobra.go:32"
-cost_tokens = 100
-cum_tokens = 7694
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/cobra.go"
-start = 32
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 218
+position = 220
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/completions/powershell.md", section_index: 0 })'
 descriptor = "site/content/completions/powershell.md section #0"
 cost_tokens = 44
-cum_tokens = 7738
+cum_tokens = 8093
 
 [batches.content]
 kind = "lines"
@@ -6124,11 +6192,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 219
+position = 221
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go" })'
 descriptor = "go package + imports in active_help.go"
 cost_tokens = 32
-cum_tokens = 7770
+cum_tokens = 8125
 
 [batches.content]
 kind = "lines"
@@ -6150,11 +6218,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 220
+position = 222
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/CONDUCT.md", section_index: 5 })'
 descriptor = "CONDUCT.md section #5"
 cost_tokens = 26
-cum_tokens = 7796
+cum_tokens = 8151
 
 [batches.content]
 kind = "lines"
@@ -6168,11 +6236,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 221
+position = 223
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go" })'
 descriptor = "go decl names surface in active_help.go"
 cost_tokens = 125
-cum_tokens = 7921
+cum_tokens = 8276
 
 [batches.content]
 kind = "lines"
@@ -6258,11 +6326,11 @@ end = 59
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 224
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go", start_line: 38 })'
 descriptor = "go decl at active_help.go:38"
 cost_tokens = 0
-cum_tokens = 7921
+cum_tokens = 8276
 
 [batches.content]
 kind = "lines"
@@ -6276,11 +6344,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 223
+position = 225
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go", start_line: 47 })'
 descriptor = "go decl at active_help.go:47"
 cost_tokens = 0
-cum_tokens = 7921
+cum_tokens = 8276
 
 [batches.content]
 kind = "lines"
@@ -6294,11 +6362,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 224
+position = 226
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go", start_line: 58 })'
 descriptor = "go decl at active_help.go:58"
 cost_tokens = 0
-cum_tokens = 7921
+cum_tokens = 8276
 
 [batches.content]
 kind = "lines"
@@ -6312,11 +6380,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 225
+position = 227
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go", start_line: 38 })'
 descriptor = "go decl body at active_help.go:38"
 cost_tokens = 21
-cum_tokens = 7942
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -6330,11 +6398,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 226
+position = 228
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/active_help.go", start_line: 58 })'
 descriptor = "go decl body at active_help.go:58"
 cost_tokens = 14
-cum_tokens = 7956
+cum_tokens = 8311
 
 [batches.content]
 kind = "lines"
@@ -6348,11 +6416,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 227
+position = 229
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/docgen/_index.md", section_index: 0 })'
 descriptor = "site/content/docgen/_index.md section #0"
 cost_tokens = 49
-cum_tokens = 8005
+cum_tokens = 8360
 
 [batches.content]
 kind = "lines"
@@ -6374,11 +6442,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 228
+position = 230
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 209 })'
 descriptor = "go decl body at flag_groups.go:209"
 cost_tokens = 70
-cum_tokens = 8075
+cum_tokens = 8430
 
 [batches.content]
 kind = "lines"
@@ -6392,11 +6460,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 229
+position = 231
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 162
-cum_tokens = 8237
+cum_tokens = 8592
 
 [batches.content]
 kind = "lines"
@@ -6442,11 +6510,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 230
+position = 232
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/site/content/projects_using_cobra.md", section_index: 0 })'
 descriptor = "site/content/projects_using_cobra.md section #0"
 cost_tokens = 20
-cum_tokens = 8257
+cum_tokens = 8612
 
 [batches.content]
 kind = "lines"
@@ -6460,11 +6528,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 231
+position = 233
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go" })'
 descriptor = "go package + imports in doc/man_docs.go"
 cost_tokens = 132
-cum_tokens = 8389
+cum_tokens = 8744
 
 [batches.content]
 kind = "lines"
@@ -6494,11 +6562,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 232
+position = 234
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/util.go", start_line: 41 })'
 descriptor = "go decl body at doc/util.go:41"
 cost_tokens = 42
-cum_tokens = 8431
+cum_tokens = 8786
 
 [batches.content]
 kind = "lines"
@@ -6512,11 +6580,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 233
+position = 235
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 49 })'
 descriptor = "go decl body at flag_groups.go:49"
 cost_tokens = 154
-cum_tokens = 8585
+cum_tokens = 8940
 
 [batches.content]
 kind = "lines"
@@ -6530,11 +6598,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 234
+position = 236
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 33 })'
 descriptor = "go decl body at flag_groups.go:33"
 cost_tokens = 155
-cum_tokens = 8740
+cum_tokens = 9095
 
 [batches.content]
 kind = "lines"
@@ -6548,11 +6616,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 235
+position = 237
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go" })'
 descriptor = "go decl names surface in powershell_completions.go"
 cost_tokens = 168
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6670,11 +6738,11 @@ end = 349
 kind = "ellipsis"
 
 [[batches]]
-position = 236
+position = 238
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 28 })'
 descriptor = "go decl at powershell_completions.go:28"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6688,11 +6756,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 237
+position = 239
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 313 })'
 descriptor = "go decl at powershell_completions.go:313"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6706,11 +6774,11 @@ end = 313
 kind = "full"
 
 [[batches]]
-position = 238
+position = 240
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 320 })'
 descriptor = "go decl at powershell_completions.go:320"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6724,11 +6792,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 239
+position = 241
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 331 })'
 descriptor = "go decl at powershell_completions.go:331"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6742,11 +6810,11 @@ end = 331
 kind = "full"
 
 [[batches]]
-position = 240
+position = 242
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 337 })'
 descriptor = "go decl at powershell_completions.go:337"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6760,11 +6828,11 @@ end = 337
 kind = "full"
 
 [[batches]]
-position = 241
+position = 243
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 342 })'
 descriptor = "go decl at powershell_completions.go:342"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6778,11 +6846,11 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 242
+position = 244
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 348 })'
 descriptor = "go decl at powershell_completions.go:348"
 cost_tokens = 0
-cum_tokens = 8908
+cum_tokens = 9263
 
 [batches.content]
 kind = "lines"
@@ -6796,11 +6864,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 243
+position = 245
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 337 })'
 descriptor = "go decl body at powershell_completions.go:337"
 cost_tokens = 12
-cum_tokens = 8920
+cum_tokens = 9275
 
 [batches.content]
 kind = "lines"
@@ -6814,11 +6882,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 244
+position = 246
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 348 })'
 descriptor = "go decl body at powershell_completions.go:348"
 cost_tokens = 12
-cum_tokens = 8932
+cum_tokens = 9287
 
 [batches.content]
 kind = "lines"
@@ -6832,11 +6900,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 245
+position = 247
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 331 })'
 descriptor = "go decl body at powershell_completions.go:331"
 cost_tokens = 13
-cum_tokens = 8945
+cum_tokens = 9300
 
 [batches.content]
 kind = "lines"
@@ -6850,11 +6918,11 @@ end = 332
 kind = "full"
 
 [[batches]]
-position = 246
+position = 248
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 342 })'
 descriptor = "go decl body at powershell_completions.go:342"
 cost_tokens = 13
-cum_tokens = 8958
+cum_tokens = 9313
 
 [batches.content]
 kind = "lines"
@@ -6868,11 +6936,11 @@ end = 343
 kind = "full"
 
 [[batches]]
-position = 247
+position = 249
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 331 })'
 descriptor = "go decl doc at powershell_completions.go:331"
 cost_tokens = 18
-cum_tokens = 8976
+cum_tokens = 9331
 
 [batches.content]
 kind = "lines"
@@ -6886,11 +6954,11 @@ end = 330
 kind = "full"
 
 [[batches]]
-position = 248
+position = 250
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 342 })'
 descriptor = "go decl doc at powershell_completions.go:342"
 cost_tokens = 20
-cum_tokens = 8996
+cum_tokens = 9351
 
 [batches.content]
 kind = "lines"
@@ -6904,11 +6972,11 @@ end = 341
 kind = "full"
 
 [[batches]]
-position = 249
+position = 251
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 337 })'
 descriptor = "go decl doc at powershell_completions.go:337"
 cost_tokens = 30
-cum_tokens = 9026
+cum_tokens = 9381
 
 [batches.content]
 kind = "lines"
@@ -6922,11 +6990,11 @@ end = 336
 kind = "full"
 
 [[batches]]
-position = 250
+position = 252
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/powershell_completions.go", start_line: 348 })'
 descriptor = "go decl doc at powershell_completions.go:348"
 cost_tokens = 32
-cum_tokens = 9058
+cum_tokens = 9413
 
 [batches.content]
 kind = "lines"
@@ -6940,11 +7008,11 @@ end = 347
 kind = "full"
 
 [[batches]]
-position = 251
+position = 253
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/man_docs.go", start_line: 105 })'
 descriptor = "go decl body at doc/man_docs.go:105"
 cost_tokens = 99
-cum_tokens = 9157
+cum_tokens = 9512
 
 [batches.content]
 kind = "lines"
@@ -6966,11 +7034,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 252
+position = 254
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/bash_completionsV2.go" })'
 descriptor = "go package + imports in bash_completionsV2.go"
 cost_tokens = 46
-cum_tokens = 9203
+cum_tokens = 9558
 
 [batches.content]
 kind = "lines"
@@ -6992,11 +7060,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 253
+position = 255
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/zsh_completions.go" })'
 descriptor = "go package + imports in zsh_completions.go"
 cost_tokens = 46
-cum_tokens = 9249
+cum_tokens = 9604
 
 [batches.content]
 kind = "lines"
@@ -7018,11 +7086,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 254
+position = 256
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/CONDUCT.md", section_index: 6 })'
 descriptor = "CONDUCT.md section #6"
 cost_tokens = 34
-cum_tokens = 9283
+cum_tokens = 9638
 
 [batches.content]
 kind = "lines"
@@ -7036,11 +7104,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 255
+position = 257
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 264
-cum_tokens = 9547
+cum_tokens = 9902
 
 [batches.content]
 kind = "lines"
@@ -7065,60 +7133,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/cobra/README.md"
 start = 40
 end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 256
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go", start_line: 65 })'
-descriptor = "go decl body at flag_groups.go:65"
-cost_tokens = 171
-cum_tokens = 9718
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/flag_groups.go"
-start = 66
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 257
-key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go", start_line: 37 })'
-descriptor = "go decl at doc/yaml_docs.go:37"
-cost_tokens = 119
-cum_tokens = 9837
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/doc/yaml_docs.go"
-start = 37
-end = 46
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 258
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cobra/CONDUCT.md", section_index: 10 })'
-descriptor = "CONDUCT.md section #10"
-cost_tokens = 19
-cum_tokens = 9856
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cobra/CONDUCT.md"
-start = 32
-end = 33
 
 [batches.content.spans.render]
 kind = "full"

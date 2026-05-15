@@ -1,4 +1,4 @@
-Score(3000)=0.426 I=0.661 C=0.274 ns_rows≤3K=20/41 (reached=5 partial=0 missing=15)
+Score(3000)=0.459 I=0.681 C=0.310 ns_rows≤3K=20/41 (reached=5 partial=1 missing=14)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -6,207 +6,207 @@ Score(3000)=0.426 I=0.661 C=0.274 ns_rows≤3K=20/41 (reached=5 partial=0 missin
 | ns | 75 |  | 30 | Module name + Go version | 1.2 |  | 0.000 |
 | ns | 116 |  | 41 | pkg/ subpackage listing | 1.3 |  | 0.000 |
 | walker |  | 125 | 125 | listing of '.' |  |  | 0.000 |
-| walker |  | 135 | 10 | plaintext config VERSION |  |  | 0.000 |
+| walker |  | 145 | 20 | go decl names surface in main.go |  |  | 0.000 |
+| walker |  | 145 | 0 | go decl at main.go:11 |  |  | 0.000 |
+| walker |  | 145 | 0 | go decl at main.go:13 |  |  | 0.000 |
+| walker |  | 155 | 10 | plaintext config VERSION |  |  | 0.000 |
 | ns | 162 |  | 46 | cmd/ file listing | 1.4 |  | 0.000 |
-| walker |  | 187 | 52 | README headline in README.md |  |  | 0.202 |
-| walker |  | 207 | 20 | go decl names surface in main.go |  |  | 0.203 |
-| walker |  | 207 | 0 | go decl at main.go:11 |  |  | 0.203 |
-| walker |  | 207 | 0 | go decl at main.go:13 |  |  | 0.203 |
-| walker |  | 262 | 55 | headings outline in README.md |  |  | 0.203 |
-| ns | 287 |  | 125 | Repo root file listing | 1.5 |  | 0.523 |
-| walker |  | 327 | 65 | headings outline in IMAGES.md |  |  | 0.523 |
-| walker |  | 352 | 25 | README.md section #2 |  |  | 0.523 |
-| walker |  | 362 | 10 | go decl doc at main.go:11 |  |  | 0.524 |
-| walker |  | 387 | 25 | README.md section #3 |  |  | 0.524 |
-| walker |  | 428 | 41 | listing of 'pkg' |  |  | 0.748 |
-| ns | 443 |  | 156 | main.go entry point (full) | 1.6 |  | 0.639 |
-| walker |  | 447 | 19 | listing of 'pkg/schema' |  |  | 0.639 |
-| walker |  | 493 | 46 | listing of 'cmd' |  |  | 0.759 |
-| walker |  | 509 | 16 | go decl names surface in cmd/graph.go |  |  | 0.759 |
-| walker |  | 509 | 0 | go decl at cmd/graph.go:10 |  |  | 0.759 |
-| walker |  | 525 | 16 | go decl names surface in cmd/list.go |  |  | 0.759 |
-| walker |  | 525 | 0 | go decl at cmd/list.go:11 |  |  | 0.759 |
-| walker |  | 544 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.759 |
-| walker |  | 544 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.759 |
-| walker |  | 576 | 32 | go decl names surface in cmd/dir.go |  |  | 0.759 |
-| walker |  | 576 | 0 | go decl at cmd/dir.go:15 |  |  | 0.759 |
-| walker |  | 585 | 9 | go decl at cmd/dir.go:10 |  |  | 0.759 |
-| walker |  | 604 | 19 | listing of 'cmd/testdata' |  |  | 0.759 |
-| walker |  | 626 | 22 | listing of 'pkg/exprparser' |  |  | 0.759 |
-| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.712 |
-| walker |  | 672 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.712 |
-| walker |  | 672 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.712 |
-| walker |  | 672 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.712 |
-| walker |  | 677 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.712 |
-| walker |  | 701 | 24 | listing of 'pkg/artifacts' |  |  | 0.712 |
-| walker |  | 726 | 25 | listing of 'pkg/artifactcache' |  |  | 0.712 |
-| walker |  | 734 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.712 |
-| walker |  | 742 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.712 |
-| ns | 758 |  | 123 | CLAUDE.md: Executor pattern + combinators | 1.8 |  | 0.676 |
-| walker |  | 775 | 33 | listing of 'pkg/lookpath' |  |  | 0.676 |
-| walker |  | 801 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.676 |
-| walker |  | 801 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.676 |
-| walker |  | 819 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.676 |
-| walker |  | 826 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.676 |
-| walker |  | 834 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.676 |
-| walker |  | 872 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.676 |
-| walker |  | 872 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.676 |
-| walker |  | 918 | 46 | IMAGES.md section #0 |  |  | 0.676 |
-| ns | 930 |  | 172 | CLAUDE.md: Key Packages | 1.9 |  | 0.644 |
-| walker |  | 934 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.644 |
-| walker |  | 977 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.644 |
-| walker |  | 1002 | 25 | go package + imports in cmd/platforms.go |  |  | 0.644 |
-| ns | 1112 |  | 182 | CLAUDE.md: build/test commands | 1.10 |  | 0.607 |
-| walker |  | 1290 | 288 | README.md section #0 |  |  | 0.608 |
-| ns | 1314 |  | 202 | README rationale bullets (Fast Feedback / Local Task Runner) | 1.11 |  | 0.612 |
-| walker |  | 1347 | 57 | go package + imports in main.go |  |  | 0.641 |
-| walker |  | 1404 | 57 | go decl names surface in pkg/lookpath/env.go |  |  | 0.641 |
-| walker |  | 1404 | 0 | go decl at pkg/lookpath/env.go:12 |  |  | 0.641 |
-| walker |  | 1404 | 0 | go decl at pkg/lookpath/env.go:16 |  |  | 0.641 |
-| walker |  | 1407 | 3 | go decl at pkg/lookpath/env.go:9 |  |  | 0.641 |
-| walker |  | 1421 | 14 | go decl at pkg/lookpath/env.go:5 |  |  | 0.641 |
-| walker |  | 1433 | 12 | go decl body at pkg/lookpath/env.go:16 |  |  | 0.641 |
-| walker |  | 1440 | 7 | go decl body at pkg/lookpath/env.go:12 |  |  | 0.641 |
-| walker |  | 1443 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.641 |
-| walker |  | 1459 | 16 | go package + imports in pkg/lookpath/env.go |  |  | 0.641 |
-| walker |  | 1475 | 16 | go package + imports in pkg/workflowpattern/trace_writer.go |  |  | 0.641 |
-| walker |  | 1531 | 56 | listing of 'pkg/model' |  |  | 0.641 |
-| walker |  | 1542 | 11 | go decl names surface in pkg/model/job_context.go |  |  | 0.641 |
-| walker |  | 1549 | 7 | go package + imports in pkg/model/job_context.go |  |  | 0.641 |
-| ns | 1563 |  | 249 | CLAUDE.md: linting + testing rules | 1.12 |  | 0.594 |
-| walker |  | 1570 | 21 | listing of 'pkg/model/testdata' |  |  | 0.594 |
-| walker |  | 1615 | 45 | go decl names surface in pkg/model/anchors.go |  |  | 0.594 |
-| walker |  | 1615 | 0 | go decl at pkg/model/anchors.go:9 |  |  | 0.594 |
-| walker |  | 1615 | 0 | go decl at pkg/model/anchors.go:36 |  |  | 0.594 |
-| ns | 1622 |  | 59 | common.Executor type + Conditional | 2.1 |  | 0.582 |
-| walker |  | 1630 | 15 | go package + imports in pkg/model/step_result.go |  |  | 0.582 |
-| ns | 1758 |  | 136 | Plan / Stage / Run types | 2.2 |  | 0.547 |
-| walker |  | 1769 | 139 | go decl names surface in cmd/notices.go |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:22 |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:57 |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:65 |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:121 |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:130 |  |  | 0.547 |
-| walker |  | 1769 | 0 | go decl at cmd/notices.go:138 |  |  | 0.547 |
-| walker |  | 1796 | 27 | go decl at cmd/notices.go:17 |  |  | 0.547 |
-| ns | 1871 |  | 113 | Workflow struct + YAML tags | 2.3 |  | 0.529 |
-| walker |  | 1873 | 77 | go decl names surface in pkg/workflowpattern/trace_writer.go |  |  | 0.529 |
-| walker |  | 1873 | 0 | go decl at pkg/workflowpattern/trace_writer.go:16 |  |  | 0.529 |
-| walker |  | 1887 | 14 | go decl at pkg/workflowpattern/trace_writer.go:5 |  |  | 0.529 |
-| walker |  | 1897 | 10 | go decl body at pkg/workflowpattern/trace_writer.go:16 |  |  | 0.529 |
-| walker |  | 1921 | 24 | listing of 'pkg/model/testdata/invalid-job-name' |  |  | 0.529 |
-| ns | 1953 |  | 82 | WorkflowPlanner interface | 2.4 |  | 0.516 |
-| walker |  | 2069 | 148 | go decl names surface in cmd/input.go |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:70 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:85 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:90 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:94 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:99 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:104 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:109 |  |  | 0.516 |
-| walker |  | 2069 | 0 | go decl at cmd/input.go:114 |  |  | 0.516 |
-| walker |  | 2076 | 7 | go decl body at cmd/input.go:99 |  |  | 0.516 |
-| walker |  | 2085 | 9 | go decl body at cmd/input.go:85 |  |  | 0.516 |
-| walker |  | 2094 | 9 | go decl body at cmd/input.go:90 |  |  | 0.516 |
-| walker |  | 2103 | 9 | go decl body at cmd/input.go:94 |  |  | 0.516 |
-| walker |  | 2112 | 9 | go decl body at cmd/input.go:109 |  |  | 0.516 |
-| walker |  | 2121 | 9 | go decl body at cmd/input.go:114 |  |  | 0.516 |
-| walker |  | 2131 | 10 | go decl body at cmd/input.go:104 |  |  | 0.516 |
-| walker |  | 2143 | 12 | go decl doc at cmd/input.go:90 |  |  | 0.516 |
-| walker |  | 2156 | 13 | go decl doc at cmd/input.go:85 |  |  | 0.516 |
-| walker |  | 2169 | 13 | go decl doc at cmd/input.go:99 |  |  | 0.516 |
-| walker |  | 2183 | 14 | go decl doc at cmd/input.go:109 |  |  | 0.516 |
-| ns | 2185 |  | 232 | Step struct (YAML fields) | 2.5 |  | 0.489 |
-| walker |  | 2198 | 15 | go decl doc at cmd/input.go:104 |  |  | 0.489 |
-| walker |  | 2213 | 15 | go decl doc at cmd/input.go:114 |  |  | 0.489 |
-| walker |  | 2255 | 42 | go package + imports in cmd/input.go |  |  | 0.489 |
-| walker |  | 2334 | 79 | listing of 'pkg/common' |  |  | 0.489 |
-| walker |  | 2348 | 14 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.489 |
-| walker |  | 2348 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.489 |
-| walker |  | 2355 | 7 | go package + imports in pkg/common/cartesian.go |  |  | 0.489 |
-| walker |  | 2395 | 40 | go decl names surface in pkg/common/file.go |  |  | 0.489 |
-| walker |  | 2395 | 0 | go decl at pkg/common/file.go:10 |  |  | 0.489 |
-| walker |  | 2395 | 0 | go decl at pkg/common/file.go:37 |  |  | 0.489 |
-| walker |  | 2405 | 10 | go decl doc at pkg/common/file.go:10 |  |  | 0.489 |
-| walker |  | 2417 | 12 | go decl doc at pkg/common/file.go:37 |  |  | 0.489 |
-| ns | 2455 |  | 270 | Job struct (YAML fields) | 2.6 |  | 0.462 |
-| walker |  | 2458 | 41 | go decl names surface in pkg/common/cartesian.go |  |  | 0.462 |
-| walker |  | 2458 | 0 | go decl at pkg/common/cartesian.go:4 |  |  | 0.462 |
-| walker |  | 2458 | 0 | go decl at pkg/common/cartesian.go:25 |  |  | 0.462 |
-| walker |  | 2504 | 46 | go decl names surface in pkg/common/context.go |  |  | 0.462 |
-| walker |  | 2504 | 0 | go decl at pkg/common/context.go:10 |  |  | 0.462 |
-| walker |  | 2504 | 0 | go decl at pkg/common/context.go:42 |  |  | 0.462 |
-| walker |  | 2522 | 18 | go decl doc at pkg/common/cartesian.go:4 |  |  | 0.462 |
-| walker |  | 2592 | 70 | go decl names surface in pkg/common/dryrun.go |  |  | 0.462 |
-| walker |  | 2592 | 0 | go decl at pkg/common/dryrun.go:12 |  |  | 0.462 |
-| walker |  | 2592 | 0 | go decl at pkg/common/dryrun.go:23 |  |  | 0.462 |
-| walker |  | 2609 | 17 | go decl doc at pkg/common/dryrun.go:12 |  |  | 0.462 |
-| walker |  | 2627 | 18 | go decl doc at pkg/common/dryrun.go:23 |  |  | 0.462 |
-| walker |  | 2644 | 17 | go decl body at pkg/common/dryrun.go:23 |  |  | 0.462 |
-| ns | 2646 |  | 191 | Strategy + Defaults + RunDefaults | 2.7 |  | 0.440 |
-| walker |  | 2716 | 72 | go decl names surface in pkg/common/logger.go |  |  | 0.440 |
-| walker |  | 2716 | 0 | go decl at pkg/common/logger.go:14 |  |  | 0.440 |
-| walker |  | 2716 | 0 | go decl at pkg/common/logger.go:25 |  |  | 0.440 |
-| walker |  | 2730 | 14 | go decl doc at pkg/common/logger.go:14 |  |  | 0.440 |
-| walker |  | 2747 | 17 | go decl doc at pkg/common/logger.go:25 |  |  | 0.440 |
-| walker |  | 2762 | 15 | go decl body at pkg/common/logger.go:25 |  |  | 0.440 |
-| ns | 2803 |  | 157 | ContainerSpec (services / container YAML) | 2.8 |  | 0.426 |
-| walker |  | 2852 | 90 | go decl names surface in pkg/common/line_writer.go |  |  | 0.426 |
-| walker |  | 2852 | 0 | go decl at pkg/common/line_writer.go:9 |  |  | 0.426 |
-| walker |  | 2852 | 0 | go decl at pkg/common/line_writer.go:17 |  |  | 0.426 |
-| walker |  | 2852 | 0 | go decl at pkg/common/line_writer.go:23 |  |  | 0.426 |
-| walker |  | 2852 | 0 | go decl at pkg/common/line_writer.go:43 |  |  | 0.426 |
-| walker |  | 2868 | 16 | go decl doc at pkg/common/line_writer.go:9 |  |  | 0.426 |
-| walker |  | 2885 | 17 | go decl doc at pkg/common/line_writer.go:17 |  |  | 0.426 |
-| walker |  | 2907 | 22 | go decl at pkg/common/line_writer.go:11 |  |  | 0.426 |
-| walker |  | 2931 | 24 | go decl body at pkg/common/context.go:42 |  |  | 0.426 |
-| walker |  | 2955 | 24 | go decl body at pkg/common/line_writer.go:17 |  |  | 0.426 |
-| walker |  | 2980 | 25 | go package + imports in pkg/common/dryrun.go |  |  | 0.426 |
-| walker |  | 3005 | 25 | go package + imports in pkg/common/job_error.go |  |  | 0.426 |
-| ns | 3007 |  | 204 | JobType enum constants | 2.9 |  | 0.410 |
-| walker |  | 3014 | 9 | listing of 'pkg/gh' |  |  | 0.410 |
-| walker |  | 3037 | 23 | go decl names surface in pkg/gh/gh.go |  |  | 0.410 |
-| walker |  | 3037 | 0 | go decl at pkg/gh/gh.go:10 |  |  | 0.410 |
-| walker |  | 3086 | 49 | go package + imports in cmd/dir.go |  |  | 0.410 |
-| walker |  | 3104 | 18 | listing of 'pkg/artifacts/testdata' |  |  | 0.410 |
-| ns | 3348 |  | 341 | StepType enum constants | 2.10 |  | 0.388 |
-| ns | 3671 |  | 323 | Step.Type() dispatch body | 2.11 |  | 0.371 |
-| walker |  | 3939 | 835 | go module file go.mod |  |  | 0.400 |
-| ns | 4026 |  | 355 | ActionRunsUsing constants (node12/16/20/24, docker, composite) | 2.12 |  | 0.378 |
-| walker |  | 4051 | 112 | go decl names surface in pkg/common/auth.go |  |  | 0.378 |
-| walker |  | 4051 | 0 | go decl at pkg/common/auth.go:38 |  |  | 0.378 |
-| walker |  | 4051 | 0 | go decl at pkg/common/auth.go:72 |  |  | 0.378 |
-| walker |  | 4060 | 9 | go decl at pkg/common/auth.go:33 |  |  | 0.378 |
-| walker |  | 4082 | 22 | go decl at pkg/common/auth.go:26 |  |  | 0.378 |
-| walker |  | 4136 | 54 | go package + imports in cmd/list.go |  |  | 0.378 |
-| walker |  | 4191 | 55 | go package + imports in cmd/graph.go |  |  | 0.378 |
-| walker |  | 4311 | 120 | go decl names surface in pkg/workflowpattern/workflow_pattern.go |  |  | 0.378 |
-| walker |  | 4311 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:15 |  |  | 0.378 |
-| walker |  | 4311 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.378 |
-| walker |  | 4311 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:138 |  |  | 0.378 |
-| walker |  | 4311 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.378 |
-| walker |  | 4311 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.378 |
-| walker |  | 4323 | 12 | go decl doc at pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.378 |
-| walker |  | 4355 | 32 | go decl at pkg/workflowpattern/workflow_pattern.go:9 |  |  | 0.378 |
-| walker |  | 4372 | 17 | go decl doc at pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.378 |
-| walker |  | 4391 | 19 | go decl doc at pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.378 |
-| walker |  | 4423 | 32 | go package + imports in pkg/common/line_writer.go |  |  | 0.378 |
-| ns | 4452 |  | 426 | Action + ActionRuns structs | 2.13 |  | 0.359 |
-| walker |  | 4552 | 129 | go decl names surface in pkg/model/step_result.go |  |  | 0.359 |
-| walker |  | 4552 | 0 | go decl at pkg/model/step_result.go:19 |  |  | 0.359 |
-| walker |  | 4552 | 0 | go decl at pkg/model/step_result.go:23 |  |  | 0.359 |
-| walker |  | 4552 | 0 | go decl at pkg/model/step_result.go:34 |  |  | 0.359 |
-| walker |  | 4561 | 9 | go decl at pkg/model/step_result.go:7 |  |  | 0.359 |
-| walker |  | 4610 | 49 | go decl at pkg/model/step_result.go:41 |  |  | 0.359 |
-| walker |  | 4620 | 10 | go decl body at pkg/model/step_result.go:19 |  |  | 0.359 |
-| walker |  | 4643 | 23 | listing of 'pkg/exprparser/testdata' |  |  | 0.359 |
-| walker |  | 4647 | 4 | listing of 'pkg/artifacts/testdata/GHSL-2023-004' |  |  | 0.359 |
-| walker |  | 4651 | 4 | listing of 'pkg/artifacts/testdata/upload-and-download' |  |  | 0.359 |
-| walker |  | 4655 | 4 | listing of 'pkg/artifacts/testdata/v4' |  |  | 0.359 |
-| walker |  | 4659 | 4 | listing of 'pkg/model/testdata/container-volumes' |  |  | 0.359 |
-| walker |  | 4663 | 4 | listing of 'pkg/model/testdata/empty-workflow' |  |  | 0.359 |
-| walker |  | 4667 | 4 | listing of 'pkg/model/testdata/strategy' |  |  | 0.359 |
-| walker |  | 4708 | 41 | go decl body at main.go:13 |  |  | 0.386 |
+| walker |  | 207 | 52 | README headline in README.md |  |  | 0.203 |
+| walker |  | 217 | 10 | go decl doc at main.go:11 |  |  | 0.203 |
+| walker |  | 272 | 55 | headings outline in README.md |  |  | 0.203 |
+| ns | 287 |  | 125 | Repo root file listing | 1.5 |  | 0.524 |
+| walker |  | 337 | 65 | headings outline in IMAGES.md |  |  | 0.524 |
+| walker |  | 362 | 25 | README.md section #2 |  |  | 0.524 |
+| walker |  | 419 | 57 | go package + imports in main.go |  |  | 0.531 |
+| ns | 443 |  | 156 | main.go entry point (full) | 1.6 |  | 0.485 |
+| walker |  | 444 | 25 | README.md section #3 |  |  | 0.485 |
+| walker |  | 485 | 41 | listing of 'pkg' |  |  | 0.677 |
+| walker |  | 504 | 19 | listing of 'pkg/schema' |  |  | 0.677 |
+| walker |  | 550 | 46 | listing of 'cmd' |  |  | 0.796 |
+| walker |  | 566 | 16 | go decl names surface in cmd/graph.go |  |  | 0.796 |
+| walker |  | 566 | 0 | go decl at cmd/graph.go:10 |  |  | 0.796 |
+| walker |  | 582 | 16 | go decl names surface in cmd/list.go |  |  | 0.796 |
+| walker |  | 582 | 0 | go decl at cmd/list.go:11 |  |  | 0.796 |
+| walker |  | 601 | 19 | go decl names surface in cmd/platforms.go |  |  | 0.796 |
+| walker |  | 601 | 0 | go decl at cmd/platforms.go:7 |  |  | 0.796 |
+| walker |  | 633 | 32 | go decl names surface in cmd/dir.go |  |  | 0.796 |
+| walker |  | 633 | 0 | go decl at cmd/dir.go:15 |  |  | 0.796 |
+| ns | 635 |  | 192 | CLAUDE.md architecture: execution flow | 1.7 |  | 0.746 |
+| walker |  | 642 | 9 | go decl at cmd/dir.go:10 |  |  | 0.746 |
+| walker |  | 661 | 19 | listing of 'cmd/testdata' |  |  | 0.746 |
+| walker |  | 683 | 22 | listing of 'pkg/exprparser' |  |  | 0.746 |
+| walker |  | 729 | 46 | go decl names surface in cmd/secrets.go |  |  | 0.746 |
+| walker |  | 729 | 0 | go decl at cmd/secrets.go:14 |  |  | 0.746 |
+| walker |  | 729 | 0 | go decl at cmd/secrets.go:40 |  |  | 0.746 |
+| walker |  | 734 | 5 | go decl body at cmd/secrets.go:40 |  |  | 0.746 |
+| walker |  | 758 | 24 | listing of 'pkg/artifacts' |  |  | 0.709 |
+| ns | 758 |  | 123 | CLAUDE.md: Executor pattern + combinators | 1.8 |  | 0.709 |
+| walker |  | 783 | 25 | listing of 'pkg/artifactcache' |  |  | 0.709 |
+| walker |  | 791 | 8 | go package + imports in pkg/artifactcache/doc.go |  |  | 0.709 |
+| walker |  | 799 | 8 | go package + imports in pkg/artifactcache/model.go |  |  | 0.709 |
+| walker |  | 832 | 33 | listing of 'pkg/lookpath' |  |  | 0.709 |
+| walker |  | 858 | 26 | go decl names surface in pkg/lookpath/error.go |  |  | 0.709 |
+| walker |  | 858 | 0 | go decl at pkg/lookpath/error.go:8 |  |  | 0.709 |
+| walker |  | 876 | 18 | go decl at pkg/lookpath/error.go:3 |  |  | 0.709 |
+| walker |  | 883 | 7 | go decl body at pkg/lookpath/error.go:8 |  |  | 0.709 |
+| walker |  | 891 | 8 | go package + imports in pkg/lookpath/error.go |  |  | 0.709 |
+| walker |  | 929 | 38 | go decl names surface in pkg/artifactcache/model.go |  |  | 0.709 |
+| walker |  | 929 | 0 | go decl at pkg/artifactcache/model.go:9 |  |  | 0.709 |
+| ns | 930 |  | 172 | CLAUDE.md: Key Packages | 1.9 |  | 0.676 |
+| walker |  | 975 | 46 | IMAGES.md section #0 |  |  | 0.676 |
+| walker |  | 991 | 16 | listing of 'pkg/workflowpattern' |  |  | 0.676 |
+| walker |  | 1034 | 43 | go decl at pkg/artifactcache/model.go:3 |  |  | 0.676 |
+| walker |  | 1075 | 41 | go decl body at main.go:13 |  |  | 0.730 |
+| walker |  | 1100 | 25 | go package + imports in cmd/platforms.go |  |  | 0.730 |
+| ns | 1112 |  | 182 | CLAUDE.md: build/test commands | 1.10 |  | 0.688 |
+| ns | 1314 |  | 202 | README rationale bullets (Fast Feedback / Local Task Runner) | 1.11 |  | 0.681 |
+| walker |  | 1388 | 288 | README.md section #0 |  |  | 0.692 |
+| walker |  | 1445 | 57 | go decl names surface in pkg/lookpath/env.go |  |  | 0.692 |
+| walker |  | 1445 | 0 | go decl at pkg/lookpath/env.go:12 |  |  | 0.692 |
+| walker |  | 1445 | 0 | go decl at pkg/lookpath/env.go:16 |  |  | 0.692 |
+| walker |  | 1448 | 3 | go decl at pkg/lookpath/env.go:9 |  |  | 0.692 |
+| walker |  | 1462 | 14 | go decl at pkg/lookpath/env.go:5 |  |  | 0.692 |
+| walker |  | 1474 | 12 | go decl body at pkg/lookpath/env.go:16 |  |  | 0.692 |
+| walker |  | 1481 | 7 | go decl body at pkg/lookpath/env.go:12 |  |  | 0.692 |
+| walker |  | 1484 | 3 | listing of 'pkg/artifactcache/testdata' |  |  | 0.692 |
+| walker |  | 1500 | 16 | go package + imports in pkg/lookpath/env.go |  |  | 0.692 |
+| walker |  | 1516 | 16 | go package + imports in pkg/workflowpattern/trace_writer.go |  |  | 0.692 |
+| ns | 1563 |  | 249 | CLAUDE.md: linting + testing rules | 1.12 |  | 0.641 |
+| walker |  | 1572 | 56 | listing of 'pkg/model' |  |  | 0.641 |
+| walker |  | 1583 | 11 | go decl names surface in pkg/model/job_context.go |  |  | 0.641 |
+| walker |  | 1590 | 7 | go package + imports in pkg/model/job_context.go |  |  | 0.641 |
+| walker |  | 1611 | 21 | listing of 'pkg/model/testdata' |  |  | 0.641 |
+| ns | 1622 |  | 59 | common.Executor type + Conditional | 2.1 |  | 0.627 |
+| walker |  | 1656 | 45 | go decl names surface in pkg/model/anchors.go |  |  | 0.627 |
+| walker |  | 1656 | 0 | go decl at pkg/model/anchors.go:9 |  |  | 0.627 |
+| walker |  | 1656 | 0 | go decl at pkg/model/anchors.go:36 |  |  | 0.627 |
+| walker |  | 1671 | 15 | go package + imports in pkg/model/step_result.go |  |  | 0.627 |
+| ns | 1758 |  | 136 | Plan / Stage / Run types | 2.2 |  | 0.590 |
+| walker |  | 1810 | 139 | go decl names surface in cmd/notices.go |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:22 |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:57 |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:65 |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:121 |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:130 |  |  | 0.590 |
+| walker |  | 1810 | 0 | go decl at cmd/notices.go:138 |  |  | 0.590 |
+| walker |  | 1837 | 27 | go decl at cmd/notices.go:17 |  |  | 0.590 |
+| ns | 1871 |  | 113 | Workflow struct + YAML tags | 2.3 |  | 0.571 |
+| walker |  | 1914 | 77 | go decl names surface in pkg/workflowpattern/trace_writer.go |  |  | 0.571 |
+| walker |  | 1914 | 0 | go decl at pkg/workflowpattern/trace_writer.go:16 |  |  | 0.571 |
+| walker |  | 1928 | 14 | go decl at pkg/workflowpattern/trace_writer.go:5 |  |  | 0.571 |
+| walker |  | 1938 | 10 | go decl body at pkg/workflowpattern/trace_writer.go:16 |  |  | 0.571 |
+| ns | 1953 |  | 82 | WorkflowPlanner interface | 2.4 |  | 0.557 |
+| walker |  | 1962 | 24 | listing of 'pkg/model/testdata/invalid-job-name' |  |  | 0.557 |
+| walker |  | 2110 | 148 | go decl names surface in cmd/input.go |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:70 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:85 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:90 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:94 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:99 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:104 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:109 |  |  | 0.557 |
+| walker |  | 2110 | 0 | go decl at cmd/input.go:114 |  |  | 0.557 |
+| walker |  | 2117 | 7 | go decl body at cmd/input.go:99 |  |  | 0.557 |
+| walker |  | 2126 | 9 | go decl body at cmd/input.go:85 |  |  | 0.557 |
+| walker |  | 2135 | 9 | go decl body at cmd/input.go:90 |  |  | 0.557 |
+| walker |  | 2144 | 9 | go decl body at cmd/input.go:94 |  |  | 0.557 |
+| walker |  | 2153 | 9 | go decl body at cmd/input.go:109 |  |  | 0.557 |
+| walker |  | 2162 | 9 | go decl body at cmd/input.go:114 |  |  | 0.557 |
+| walker |  | 2172 | 10 | go decl body at cmd/input.go:104 |  |  | 0.557 |
+| walker |  | 2184 | 12 | go decl doc at cmd/input.go:90 |  |  | 0.557 |
+| ns | 2185 |  | 232 | Step struct (YAML fields) | 2.5 |  | 0.528 |
+| walker |  | 2197 | 13 | go decl doc at cmd/input.go:85 |  |  | 0.528 |
+| walker |  | 2210 | 13 | go decl doc at cmd/input.go:99 |  |  | 0.528 |
+| walker |  | 2224 | 14 | go decl doc at cmd/input.go:109 |  |  | 0.528 |
+| walker |  | 2239 | 15 | go decl doc at cmd/input.go:104 |  |  | 0.528 |
+| walker |  | 2254 | 15 | go decl doc at cmd/input.go:114 |  |  | 0.528 |
+| walker |  | 2296 | 42 | go package + imports in cmd/input.go |  |  | 0.528 |
+| walker |  | 2375 | 79 | listing of 'pkg/common' |  |  | 0.528 |
+| walker |  | 2389 | 14 | go decl names surface in pkg/common/outbound_ip.go |  |  | 0.528 |
+| walker |  | 2389 | 0 | go decl at pkg/common/outbound_ip.go:13 |  |  | 0.528 |
+| walker |  | 2396 | 7 | go package + imports in pkg/common/cartesian.go |  |  | 0.528 |
+| walker |  | 2436 | 40 | go decl names surface in pkg/common/file.go |  |  | 0.528 |
+| walker |  | 2436 | 0 | go decl at pkg/common/file.go:10 |  |  | 0.528 |
+| walker |  | 2436 | 0 | go decl at pkg/common/file.go:37 |  |  | 0.528 |
+| walker |  | 2446 | 10 | go decl doc at pkg/common/file.go:10 |  |  | 0.528 |
+| ns | 2455 |  | 270 | Job struct (YAML fields) | 2.6 |  | 0.499 |
+| walker |  | 2458 | 12 | go decl doc at pkg/common/file.go:37 |  |  | 0.499 |
+| walker |  | 2499 | 41 | go decl names surface in pkg/common/cartesian.go |  |  | 0.499 |
+| walker |  | 2499 | 0 | go decl at pkg/common/cartesian.go:4 |  |  | 0.499 |
+| walker |  | 2499 | 0 | go decl at pkg/common/cartesian.go:25 |  |  | 0.499 |
+| walker |  | 2545 | 46 | go decl names surface in pkg/common/context.go |  |  | 0.499 |
+| walker |  | 2545 | 0 | go decl at pkg/common/context.go:10 |  |  | 0.499 |
+| walker |  | 2545 | 0 | go decl at pkg/common/context.go:42 |  |  | 0.499 |
+| walker |  | 2563 | 18 | go decl doc at pkg/common/cartesian.go:4 |  |  | 0.499 |
+| walker |  | 2633 | 70 | go decl names surface in pkg/common/dryrun.go |  |  | 0.499 |
+| walker |  | 2633 | 0 | go decl at pkg/common/dryrun.go:12 |  |  | 0.499 |
+| walker |  | 2633 | 0 | go decl at pkg/common/dryrun.go:23 |  |  | 0.499 |
+| ns | 2646 |  | 191 | Strategy + Defaults + RunDefaults | 2.7 |  | 0.475 |
+| walker |  | 2650 | 17 | go decl doc at pkg/common/dryrun.go:12 |  |  | 0.475 |
+| walker |  | 2668 | 18 | go decl doc at pkg/common/dryrun.go:23 |  |  | 0.475 |
+| walker |  | 2685 | 17 | go decl body at pkg/common/dryrun.go:23 |  |  | 0.475 |
+| walker |  | 2757 | 72 | go decl names surface in pkg/common/logger.go |  |  | 0.475 |
+| walker |  | 2757 | 0 | go decl at pkg/common/logger.go:14 |  |  | 0.475 |
+| walker |  | 2757 | 0 | go decl at pkg/common/logger.go:25 |  |  | 0.475 |
+| walker |  | 2771 | 14 | go decl doc at pkg/common/logger.go:14 |  |  | 0.475 |
+| walker |  | 2788 | 17 | go decl doc at pkg/common/logger.go:25 |  |  | 0.475 |
+| walker |  | 2803 | 15 | go decl body at pkg/common/logger.go:25 |  |  | 0.459 |
+| ns | 2803 |  | 157 | ContainerSpec (services / container YAML) | 2.8 |  | 0.459 |
+| walker |  | 2893 | 90 | go decl names surface in pkg/common/line_writer.go |  |  | 0.459 |
+| walker |  | 2893 | 0 | go decl at pkg/common/line_writer.go:9 |  |  | 0.459 |
+| walker |  | 2893 | 0 | go decl at pkg/common/line_writer.go:17 |  |  | 0.459 |
+| walker |  | 2893 | 0 | go decl at pkg/common/line_writer.go:23 |  |  | 0.459 |
+| walker |  | 2893 | 0 | go decl at pkg/common/line_writer.go:43 |  |  | 0.459 |
+| walker |  | 2909 | 16 | go decl doc at pkg/common/line_writer.go:9 |  |  | 0.459 |
+| walker |  | 2926 | 17 | go decl doc at pkg/common/line_writer.go:17 |  |  | 0.459 |
+| walker |  | 2948 | 22 | go decl at pkg/common/line_writer.go:11 |  |  | 0.459 |
+| walker |  | 2972 | 24 | go decl body at pkg/common/context.go:42 |  |  | 0.459 |
+| walker |  | 2996 | 24 | go decl body at pkg/common/line_writer.go:17 |  |  | 0.459 |
+| ns | 3007 |  | 204 | JobType enum constants | 2.9 |  | 0.442 |
+| walker |  | 3021 | 25 | go package + imports in pkg/common/dryrun.go |  |  | 0.442 |
+| walker |  | 3046 | 25 | go package + imports in pkg/common/job_error.go |  |  | 0.442 |
+| walker |  | 3055 | 9 | listing of 'pkg/gh' |  |  | 0.442 |
+| walker |  | 3078 | 23 | go decl names surface in pkg/gh/gh.go |  |  | 0.442 |
+| walker |  | 3078 | 0 | go decl at pkg/gh/gh.go:10 |  |  | 0.442 |
+| walker |  | 3127 | 49 | go package + imports in cmd/dir.go |  |  | 0.442 |
+| walker |  | 3145 | 18 | listing of 'pkg/artifacts/testdata' |  |  | 0.442 |
+| ns | 3348 |  | 341 | StepType enum constants | 2.10 |  | 0.418 |
+| ns | 3671 |  | 323 | Step.Type() dispatch body | 2.11 |  | 0.400 |
+| walker |  | 3980 | 835 | go module file go.mod |  |  | 0.430 |
+| ns | 4026 |  | 355 | ActionRunsUsing constants (node12/16/20/24, docker, composite) | 2.12 |  | 0.406 |
+| walker |  | 4092 | 112 | go decl names surface in pkg/common/auth.go |  |  | 0.406 |
+| walker |  | 4092 | 0 | go decl at pkg/common/auth.go:38 |  |  | 0.406 |
+| walker |  | 4092 | 0 | go decl at pkg/common/auth.go:72 |  |  | 0.406 |
+| walker |  | 4101 | 9 | go decl at pkg/common/auth.go:33 |  |  | 0.406 |
+| walker |  | 4123 | 22 | go decl at pkg/common/auth.go:26 |  |  | 0.406 |
+| walker |  | 4177 | 54 | go package + imports in cmd/list.go |  |  | 0.406 |
+| walker |  | 4232 | 55 | go package + imports in cmd/graph.go |  |  | 0.406 |
+| walker |  | 4352 | 120 | go decl names surface in pkg/workflowpattern/workflow_pattern.go |  |  | 0.406 |
+| walker |  | 4352 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:15 |  |  | 0.406 |
+| walker |  | 4352 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.406 |
+| walker |  | 4352 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:138 |  |  | 0.406 |
+| walker |  | 4352 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.406 |
+| walker |  | 4352 | 0 | go decl at pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.406 |
+| walker |  | 4364 | 12 | go decl doc at pkg/workflowpattern/workflow_pattern.go:38 |  |  | 0.406 |
+| walker |  | 4396 | 32 | go decl at pkg/workflowpattern/workflow_pattern.go:9 |  |  | 0.406 |
+| walker |  | 4413 | 17 | go decl doc at pkg/workflowpattern/workflow_pattern.go:151 |  |  | 0.406 |
+| walker |  | 4432 | 19 | go decl doc at pkg/workflowpattern/workflow_pattern.go:177 |  |  | 0.406 |
+| ns | 4452 |  | 426 | Action + ActionRuns structs | 2.13 |  | 0.386 |
+| walker |  | 4464 | 32 | go package + imports in pkg/common/line_writer.go |  |  | 0.386 |
+| walker |  | 4593 | 129 | go decl names surface in pkg/model/step_result.go |  |  | 0.386 |
+| walker |  | 4593 | 0 | go decl at pkg/model/step_result.go:19 |  |  | 0.386 |
+| walker |  | 4593 | 0 | go decl at pkg/model/step_result.go:23 |  |  | 0.386 |
+| walker |  | 4593 | 0 | go decl at pkg/model/step_result.go:34 |  |  | 0.386 |
+| walker |  | 4602 | 9 | go decl at pkg/model/step_result.go:7 |  |  | 0.386 |
+| walker |  | 4651 | 49 | go decl at pkg/model/step_result.go:41 |  |  | 0.386 |
+| walker |  | 4661 | 10 | go decl body at pkg/model/step_result.go:19 |  |  | 0.386 |
+| walker |  | 4684 | 23 | listing of 'pkg/exprparser/testdata' |  |  | 0.386 |
+| walker |  | 4688 | 4 | listing of 'pkg/artifacts/testdata/GHSL-2023-004' |  |  | 0.386 |
+| walker |  | 4692 | 4 | listing of 'pkg/artifacts/testdata/upload-and-download' |  |  | 0.386 |
+| walker |  | 4696 | 4 | listing of 'pkg/artifacts/testdata/v4' |  |  | 0.386 |
+| walker |  | 4700 | 4 | listing of 'pkg/model/testdata/container-volumes' |  |  | 0.386 |
+| walker |  | 4704 | 4 | listing of 'pkg/model/testdata/empty-workflow' |  |  | 0.386 |
+| walker |  | 4708 | 4 | listing of 'pkg/model/testdata/strategy' |  |  | 0.386 |
 | walker |  | 4802 | 94 | go decl at pkg/model/job_context.go:3 |  |  | 0.386 |
 | ns | 4852 |  | 400 | Action Input + Output + ReadAction | 2.14 |  | 0.368 |
 | walker |  | 4869 | 67 | go package + imports in cmd/secrets.go |  |  | 0.368 |

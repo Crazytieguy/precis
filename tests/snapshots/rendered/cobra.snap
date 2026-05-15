@@ -120,6 +120,107 @@ cobra.go
     28→	"time"
     29→	"unicode"
     30→)
+    32→var templateFuncs = template.FuncMap{
+    …
+    42→var initializers []func()
+    43→var finalizers []func()
+    …
+    45→const (
+    46→	defaultPrefixMatching   = false
+    47→	defaultCommandSorting   = true
+    48→	defaultCaseInsensitive  = false
+    49→	defaultTraverseRunHooks = false
+    50→)
+    52→// EnablePrefixMatching allows setting automatic prefix matching. Automatic prefix matching can be a dangerous thing
+    53→// to automatically enable in CLI tools.
+    54→// Set this to true to enable it.
+    55→var EnablePrefixMatching = defaultPrefixMatching
+    …
+    57→// EnableCommandSorting controls sorting of the slice of commands, which is turned on by default.
+    58→// To disable sorting, set it to false.
+    59→var EnableCommandSorting = defaultCommandSorting
+    …
+    61→// EnableCaseInsensitive allows case-insensitive commands names. (case sensitive by default)
+    62→var EnableCaseInsensitive = defaultCaseInsensitive
+    …
+    64→// EnableTraverseRunHooks executes persistent pre-run and post-run hooks from all parents.
+    65→// By default this is disabled, which means only the first run hook to be found is executed.
+    66→var EnableTraverseRunHooks = defaultTraverseRunHooks
+    …
+    68→// MousetrapHelpText enables an information splash screen on Windows
+    69→// if the CLI is started from explorer.exe.
+    70→// To disable the mousetrap, just set this variable to blank string ("").
+    71→// Works only on Microsoft Windows.
+    72→var MousetrapHelpText = `This is a command line tool.
+    …
+    74→You need to open cmd.exe and run it from there.
+    75→`
+    77→// MousetrapDisplayDuration controls how long the MousetrapHelpText message is displayed on Windows
+    78→// if the CLI is started from explorer.exe. Set to 0 to wait for the return key to be pressed.
+    79→// To disable the mousetrap, just set MousetrapHelpText to blank string ("").
+    80→// Works only on Microsoft Windows.
+    81→var MousetrapDisplayDuration = 5 * time.Second
+    …
+    83→// AddTemplateFunc adds a template function that's available to Usage and Help
+    84→// template generation.
+    85→func AddTemplateFunc(name string, tmplFunc interface{}) {
+    86→	templateFuncs[name] = tmplFunc
+    89→// AddTemplateFuncs adds multiple template functions that are available to Usage and
+    90→// Help template generation.
+    91→func AddTemplateFuncs(tmplFuncs template.FuncMap) {
+    92→	for k, v := range tmplFuncs {
+    93→		templateFuncs[k] = v
+    94→	}
+    97→// OnInitialize sets the passed functions to be run when each command's
+    98→// Execute method is called.
+    99→func OnInitialize(y ...func()) {
+    100→	initializers = append(initializers, y...)
+    103→// OnFinalize sets the passed functions to be run when each command's
+    104→// Execute method is terminated.
+    105→func OnFinalize(y ...func()) {
+    106→	finalizers = append(finalizers, y...)
+    111→// Gt takes two types and checks whether the first type is greater than the second. In case of types Arrays, Chans,
+    112→// Maps and Slices, Gt will compare their lengths. Ints are compared directly while strings are first parsed as
+    113→// ints and then compared.
+    114→func Gt(a interface{}, b interface{}) bool {
+    …
+    143→// Eq takes two types and checks whether they are equal. Supported types are int and string. Unsupported types will panic.
+    144→func Eq(a interface{}, b interface{}) bool {
+    …
+    159→func trimRightSpace(s string) string {
+    160→	return strings.TrimRightFunc(s, unicode.IsSpace)
+    165→// appendIfNotPresent will append stringToAppend to the end of s, but only if it's not yet present in s.
+    166→func appendIfNotPresent(s, stringToAppend string) string {
+    167→	if strings.Contains(s, stringToAppend) {
+    168→		return s
+    169→	}
+    170→	return s + " " + stringToAppend
+    173→// rpad adds padding to the right of a string.
+    174→func rpad(s string, padding int) string {
+    175→	formattedString := fmt.Sprintf("%%-%ds", padding)
+    176→	return fmt.Sprintf(formattedString, s)
+    179→func tmpl(text string) *tmplFunc {
+    …
+    191→// ld compares two strings and returns the levenshtein distance between them.
+    192→func ld(s, t string, ignoreCase bool) int {
+    …
+    225→func stringInSlice(a string, list []string) bool {
+    226→	for _, b := range list {
+    227→		if b == a {
+    228→			return true
+    229→		}
+    230→	}
+    231→	return false
+    234→// CheckErr prints the msg with the prefix 'Error:' and exits with error code 1. If the msg is nil, it does nothing.
+    235→func CheckErr(msg interface{}) {
+    236→	if msg != nil {
+    237→		fmt.Fprintln(os.Stderr, "Error:", msg)
+    238→		os.Exit(1)
+    239→	}
+    242→// WriteStringAndCheck writes a string into a buffer, and checks if the error is not nil.
+    243→func WriteStringAndCheck(b io.StringWriter, s string) {
+    244→	_, err := b.WriteString(s)
+    245→	CheckErr(err)
 cobra_test.go
 command.go
 command_notwin.go
@@ -139,58 +240,11 @@ doc/
     man_docs_test.go
     man_examples_test.go
     md_docs.go
-        30→const markdownExtension = ".md"
-        …
-        32→func printOptions(buf *bytes.Buffer, cmd *cobra.Command, name string) error {
-        …
-        51→// GenMarkdown creates markdown output.
-        52→func GenMarkdown(cmd *cobra.Command, w io.Writer) error {
-        53→	return GenMarkdownCustom(cmd, w, func(s string) string { return s })
-        56→// GenMarkdownCustom creates custom markdown output.
-        57→func GenMarkdownCustom(cmd *cobra.Command, w io.Writer, linkHandler func(string) string) error {
-        …
-        125→func GenMarkdownTree(cmd *cobra.Command, dir string) error {
-        …
-        131→// GenMarkdownTreeCustom is the same as GenMarkdownTree, but
-        132→// with custom filePrepender and linkHandler.
-        133→func GenMarkdownTreeCustom(cmd *cobra.Command, dir string, filePrepender, linkHandler func(string) string) error {
-        …
     md_docs_test.go
     rest_docs.go
     rest_docs_test.go
     util.go
-        15→package doc
-        17→import (
-        18→	"strings"
-        20→	"github.com/spf13/cobra"
-        21→)
-        26→func hasSeeAlso(cmd *cobra.Command) bool {
-        …
-        41→func forceMultiLine(s string) string {
-        …
-        48→type byName []*cobra.Command
-        …
-        50→func (s byName) Len() int           { return len(s) }
-        51→func (s byName) Swap(i, j int)      { s[i], s[j] = s[j], s[i] }
-        52→func (s byName) Less(i, j int) bool { return s[i].Name() < s[j].Name() }
     yaml_docs.go
-        30→type cmdOption struct {
-        …
-        37→type cmdDoc struct {
-        …
-        53→func GenYamlTree(cmd *cobra.Command, dir string) error {
-        …
-        59→// GenYamlTreeCustom creates yaml structured ref files.
-        60→func GenYamlTreeCustom(cmd *cobra.Command, dir string, filePrepender, linkHandler func(string) string) error {
-        …
-        87→// GenYaml creates yaml output.
-        88→func GenYaml(cmd *cobra.Command, w io.Writer) error {
-        89→	return GenYamlCustom(cmd, w, func(s string) string { return s })
-        92→// GenYamlCustom creates custom yaml output.
-        93→func GenYamlCustom(cmd *cobra.Command, w io.Writer, linkHandler func(string) string) error {
-        …
-        149→func genFlagResult(flags *pflag.FlagSet) []cmdOption {
-        …
     yaml_docs_test.go
 fish_completions.go
 fish_completions_test.go
@@ -202,41 +256,6 @@ flag_groups.go
     20→	"strings"
     22→	flag "github.com/spf13/pflag"
     23→)
-    25→const (
-    26→	requiredAsGroupAnnotation   = "cobra_annotation_required_if_others_set"
-    27→	oneRequiredAnnotation       = "cobra_annotation_one_required"
-    28→	mutuallyExclusiveAnnotation = "cobra_annotation_mutually_exclusive"
-    29→)
-    31→// MarkFlagsRequiredTogether marks the given flags with annotations so that Cobra errors
-    32→// if the command is invoked with a subset (but not all) of the given flags.
-    33→func (c *Command) MarkFlagsRequiredTogether(flagNames ...string) {
-    …
-    47→// MarkFlagsOneRequired marks the given flags with annotations so that Cobra errors
-    48→// if the command is invoked without at least one flag from the given set of flags.
-    49→func (c *Command) MarkFlagsOneRequired(flagNames ...string) {
-    …
-    63→// MarkFlagsMutuallyExclusive marks the given flags with annotations so that Cobra errors
-    64→// if the command is invoked with more than one flag from the given set of flags.
-    65→func (c *Command) MarkFlagsMutuallyExclusive(flagNames ...string) {
-    …
-    79→// ValidateFlagGroups validates the mutuallyExclusive/oneRequired/requiredAsGroup logic and returns the
-    80→// first error encountered.
-    81→func (c *Command) ValidateFlagGroups() error {
-    …
-    111→func hasAllFlags(fs *flag.FlagSet, flagnames ...string) bool {
-    …
-    121→func processFlagForGroupAnnotation(flags *flag.FlagSet, pflag *flag.Flag, annotation string, groupStatus map[string]map[string]bool) {
-    …
-    144→func validateRequiredFlagGroups(data map[string]map[string]bool) error {
-    …
-    167→func validateOneRequiredFlagGroups(data map[string]map[string]bool) error {
-    …
-    188→func validateExclusiveFlagGroups(data map[string]map[string]bool) error {
-    …
-    209→func sortedKeys(m map[string]map[string]bool) []string {
-    …
-    225→func (c *Command) enforceFlagGroupsForCompletion() {
-    …
 flag_groups_test.go
 go.mod
     1→module github.com/spf13/cobra
@@ -254,22 +273,6 @@ shell_completions.go
 site/
     content/
         active_help.md
-            1→# Active Help
-            …
-            20→## Supported shells
-            …
-            26→## Adding Active Help messages
-            …
-            32→### Active Help for nouns
-            …
-            73→### Active Help for flags
-            …
-            95→## User control of Active Help
-            …
-            142→## Active Help with Cobra's default completion command
-            …
-            149→## Debugging Active Help
-            …
         completions/
             _index.md
             bash.md
@@ -280,14 +283,6 @@ site/
             fish.md
             powershell.md
             zsh.md
-                1→## Generating Zsh Completion For Your cobra.Command
-                …
-                5→## Zsh completions standardization
-                …
-                9→### Deprecation summary
-                …
-                19→### Behavioral changes
-                …
         docgen/
             _index.md
                 1→# Documentation generation
@@ -299,32 +294,8 @@ site/
                 …
             man.md
             md.md
-                1→# Generating Markdown Docs For Your Own cobra.Command
-                …
-                29→## Generate markdown docs for the entire command tree
-                …
-                58→## Generate markdown docs for a single command
-                …
-                72→## Customize the output
-                …
             rest.md
-                1→# Generating ReStructured Text Docs For Your Own cobra.Command
-                …
-                29→## Generate ReST docs for the entire command tree
-                …
-                58→## Generate ReST docs for a single command
-                …
-                72→## Customize the output
-                …
             yaml.md
-                1→# Generating Yaml Docs For Your Own cobra.Command
-                …
-                29→## Generate yaml docs for the entire command tree
-                …
-                58→## Generate yaml docs for a single command
-                …
-                69→## Customize the output
-                …
         projects_using_cobra.md
         user_guide.md
 zsh_completions.go

@@ -144,12 +144,6 @@ database/
         v5/
     postgres/
         README.md
-            1→# postgres
-            3→`postgres://user:password@host:port/dbname?query` (`postgresql://` works, too)
-            26→## Upgrading from v1
-            …
-            34→## Multi-statement mode
-            …
         TUTORIAL.md
         examples/
         postgres.go
@@ -247,6 +241,17 @@ log.go
     11→	Verbose() bool
     12→}
 migrate.go
+    5→package migrate
+    7→import (
+    8→	"errors"
+    9→	"fmt"
+    10→	"os"
+    11→	"sync"
+    12→	"time"
+    14→	"github.com/golang-migrate/migrate/v4/database"
+    15→	iurl "github.com/golang-migrate/migrate/v4/internal/url"
+    16→	"github.com/golang-migrate/migrate/v4/source"
+    17→)
 migrate_test.go
 migration.go
     11→// DefaultBufferSize sets the in memory buffer size (in Bytes) for every

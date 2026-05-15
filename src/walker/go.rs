@@ -526,35 +526,92 @@ fn go_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn package_imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx)) * go_aux_factor(file)
+    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
 }
 
 /// Sits below per-decl `Type`-kind value so the scheduler favours
 /// structural anchors in load-bearing files over a blanket name
 /// surface in every `.go` file.
 fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx)) * go_aux_factor(file)
+    mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
 }
 
 fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx)) * go_aux_factor(file)
+    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
 }
 
 fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.20 * kv).min(1.0);
     let fu = (0.6 * kv).min(1.0);
-    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx)) * go_aux_factor(file)
+    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
 }
 
 fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.30 * kv).min(1.0);
     let fu = (0.80 * kv).min(1.0);
-    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx)) * go_aux_factor(file)
+    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
+}
+
+/// Boost Go files whose stem matches the file's own `package` clause —
+/// the long-standing Go convention for "the file the agent looks at
+/// first" (`tea.go` in `package tea`, `cobra.go` in `package cobra`,
+/// `gin.go` in `package gin`). Analogous to Rust's `lib.rs`/`main.rs`
+/// `entrypoint_boost`. NS authors universally rank this file's content
+/// (package doc, top-level types, package-level helpers) ahead of
+/// sibling utility files.
+///
+/// Restricted to root-level files (depth ≤ 1): in monorepos with
+/// many internal/sub-packages (`internal/foo/foo.go`, `internal/bar/bar.go`,
+/// `pkg/baz/baz.go`), every subpackage would match this rule and the
+/// boost would crowd the early budget with private-implementation
+/// content. The convention's load-bearing case is the package-root
+/// orientation file, not a stem match in any internal subdir.
+fn go_entry_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+    const BOOST: f64 = 1.4;
+    if ctx.depth_from_root(file) > 1 {
+        return 1.0;
+    }
+    let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
+        return 1.0;
+    };
+    let Some((source, tree)) = parse_go(ctx, file) else {
+        return 1.0;
+    };
+    let Some(pkg) = package_name(&tree, &source) else {
+        return 1.0;
+    };
+    if stem == pkg { BOOST } else { 1.0 }
+}
+
+fn package_name(tree: &Tree, source: &str) -> Option<String> {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "package_clause" {
+            let mut inner = child.walk();
+            for n in child.children(&mut inner) {
+                if matches!(n.kind(), "package_identifier" | "identifier") {
+                    return Some(source[n.start_byte()..n.end_byte()].to_string());
+                }
+            }
+        }
+    }
+    None
 }
 
 /// Damp Go files whose stem carries a build-tag suffix or matches

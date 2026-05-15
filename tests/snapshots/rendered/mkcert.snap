@@ -37,15 +37,6 @@ README.md
     67→```
     68→brew install mkcert
     69→```
-    71→or build from source (requires Go 1.13+)
-    73→```
-    74→git clone https://github.com/FiloSottile/mkcert && cd mkcert
-    75→go build -ldflags "-X main.Version=$(git describe --tags)"
-    76→```
-    86→For Arch Linux users, [`mkcert`](https://archlinux.org/packages/extra/x86_64/mkcert/) is available on the official Arch Linux repository.
-    88→```
-    89→sudo pacman -Syu mkcert
-    90→```
     92→### Windows
     …
     94→On Windows, use [Chocolatey](https://chocolatey.org)
@@ -74,17 +65,13 @@ README.md
     …
     166→### Mobile devices
     …
-    168→For the certificates to be trusted on mobile devices, you will have to install the root CA. It's the `rootCA.pem` file in the folder printed by `mkcert -CAROOT`.
-    172→For Android, you will have to install the CA and then enable user roots in the development build of your app. See [this StackOverflow answer](https://stackoverflow.com/a/22040887/749014).
     174→### Using the root with Node.js
     …
     182→### Changing the location of the CA files
     …
-    184→The CA certificate and its key are stored in an application data folder in the user home. You usually don't have to worry about it, as installation is automated, but the location is printed by `mkcert -CAROOT`.
     186→If you want to manage separate CAs, you can use the environment variable `$CAROOT` to set the folder where mkcert will place and look for the local CA files.
     188→### Installing the CA on other systems
     …
-    197→Remember that mkcert is meant for development purposes, not production, so it should not be used on end users' machines, and that you should *not* export or share `rootCA-key.pem`.
 cert.go
     35→var userAndHostname string
     …
@@ -144,6 +131,17 @@ main.go
     28→)
     30→const shortUsage = `Usage of mkcert:
     …
+    32→	$ mkcert -install
+    33→	Install the local CA in the system trust store.
+    35→	$ mkcert example.org
+    36→	Generate "example.org.pem" and "example.org-key.pem".
+    38→	$ mkcert example.com myapp.dev localhost 127.0.0.1 ::1
+    39→	Generate "example.com+4.pem" and "example.com+4-key.pem".
+    41→	$ mkcert "*.example.it"
+    42→	Generate "_wildcard.example.it.pem" and "_wildcard.example.it-key.pem".
+    44→	$ mkcert -uninstall
+    45→	Uninstall the local CA (but do not delete it).
+    47→`
     49→const advancedUsage = `Advanced options:
     …
     82→// Version can be set at link time to override debug.BuildInfo.Main.Version,
@@ -157,7 +155,18 @@ main.go
     153→const rootKeyName = "rootCA-key.pem"
     …
     155→type mkcert struct {
-    …
+    156→	installMode, uninstallMode bool
+    157→	pkcs12, ecdsa, client      bool
+    158→	keyFile, certFile, p12File string
+    159→	csrPath                    string
+    161→	CAROOT string
+    162→	caCert *x509.Certificate
+    163→	caKey  crypto.PrivateKey
+    165→	// The system cert pool is only loaded once. After installing the root, checks
+    166→	// will keep failing until the next execution. TODO: maybe execve?
+    167→	// https://github.com/golang/go/issues/24540 (thanks, myself)
+    168→	ignoreCheckFailure bool
+    169→}
     171→func (m *mkcert) Run(args []string) {
     …
     240→func getCAROOT() string {
@@ -173,7 +182,16 @@ main.go
     341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
     342→	return err == nil
     345→func storeEnabled(name string) bool {
-    …
+    346→	stores := os.Getenv("TRUST_STORES")
+    347→	if stores == "" {
+    348→		return true
+    349→	}
+    350→	for _, store := range strings.Split(stores, ",") {
+    351→		if store == name {
+    352→			return true
+    353→		}
+    354→	}
+    355→	return false
     358→func fatalIfErr(err error, msg string) {
     359→	if err != nil {
     360→		log.Fatalf("ERROR: %s: %s", msg, err)

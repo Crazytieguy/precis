@@ -6,18 +6,18 @@ Score(3000)=0.506 I=0.790 C=0.324 ns_rows≤3K=20/45 (reached=6 partial=5 missin
 | ns | 55 |  | 55 | Repo root listing | 1.1 |  | 1.000 |
 | walker |  | 87 | 32 | README headline in readme.md |  |  | 1.000 |
 | ns | 92 |  | 37 | README one-line description | 1.2 |  | 0.965 |
-| walker |  | 113 | 26 | listing of 'supplemental' |  |  | 0.966 |
-| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.880 |
-| walker |  | 181 | 68 | headings outline in readme.md |  |  | 0.881 |
-| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.759 |
-| walker |  | 253 | 72 | go decl names surface in beszel.go |  |  | 0.761 |
-| walker |  | 253 | 0 | go decl at beszel.go:15 |  |  | 0.761 |
-| walker |  | 253 | 0 | go decl at beszel.go:18 |  |  | 0.761 |
-| walker |  | 290 | 37 | go decl at beszel.go:7 |  |  | 0.765 |
-| walker |  | 309 | 19 | go decl doc at beszel.go:15 |  |  | 0.767 |
-| walker |  | 328 | 19 | go decl doc at beszel.go:18 |  |  | 0.771 |
-| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.673 |
-| walker |  | 350 | 22 | go package + imports in beszel.go |  |  | 0.676 |
+| ns | 124 |  | 32 | go.mod identity + Go toolchain | 1.3 |  | 0.879 |
+| walker |  | 159 | 72 | go decl names surface in beszel.go |  |  | 0.882 |
+| walker |  | 159 | 0 | go decl at beszel.go:15 |  |  | 0.882 |
+| walker |  | 159 | 0 | go decl at beszel.go:18 |  |  | 0.882 |
+| walker |  | 196 | 37 | go decl at beszel.go:7 |  |  | 0.886 |
+| walker |  | 215 | 19 | go decl doc at beszel.go:15 |  |  | 0.889 |
+| ns | 224 |  | 100 | README Features bullets (first half) | 1.4 |  | 0.764 |
+| walker |  | 234 | 19 | go decl doc at beszel.go:18 |  |  | 0.768 |
+| walker |  | 256 | 22 | go package + imports in beszel.go |  |  | 0.772 |
+| walker |  | 282 | 26 | listing of 'supplemental' |  |  | 0.772 |
+| ns | 329 |  | 105 | README Architecture section: hub + agent | 1.5 |  | 0.672 |
+| walker |  | 350 | 68 | headings outline in readme.md |  |  | 0.676 |
 | walker |  | 375 | 25 | readme.md section #23 |  |  | 0.676 |
 | walker |  | 385 | 10 | listing of 'supplemental/docker' |  |  | 0.676 |
 | ns | 399 |  | 70 | README Features bullets (second half) | 1.6 |  | 0.643 |

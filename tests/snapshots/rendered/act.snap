@@ -156,7 +156,10 @@ main.go
     11→var version string
     …
     13→func main() {
-    …
+    14→	ctx, cancel := common.CreateGracefulJobCancellationContext()
+    15→	defer cancel()
+    17→	// run the command
+    18→	cmd.Execute(ctx, version)
 main_test.go
 pkg/
     artifactcache/
@@ -204,10 +207,6 @@ pkg/
         context_test.go
         draw.go
         dryrun.go
-            1→package common
-            3→import (
-            4→	"context"
-            5→)
             7→type dryrunContextKey string
             …
             9→const dryrunContextKeyVal = dryrunContextKey("dryrun")
