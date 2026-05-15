@@ -1,4 +1,4 @@
-Score(3000)=0.333 I=0.682 C=0.162 ns_rows≤3K=19/47 (reached=4 partial=0 missing=15)
+Score(3000)=0.333 I=0.683 C=0.162 ns_rows≤3K=19/47 (reached=4 partial=0 missing=15)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -29,65 +29,65 @@ Score(3000)=0.333 I=0.682 C=0.162 ns_rows≤3K=19/47 (reached=4 partial=0 missin
 | walker |  | 637 | 21 | headings outline in site/guides/scalar-quant.md |  |  | 0.614 |
 | walker |  | 637 | 0 | site/guides/scalar-quant.md section #1 |  |  | 0.614 |
 | ns | 668 |  | 212 | README canonical KNN select + results | 1.9 |  | 0.525 |
-| walker |  | 695 | 58 | headings outline in site/guides/matryoshka.md |  |  | 0.525 |
-| walker |  | 695 | 0 | site/guides/matryoshka.md section #2 |  |  | 0.525 |
-| walker |  | 764 | 69 | package scripts in site/package.json |  |  | 0.525 |
-| walker |  | 810 | 46 | listing of 'site/public' |  |  | 0.525 |
-| walker |  | 876 | 66 | headings outline in site/guides/binary-quant.md |  |  | 0.525 |
-| walker |  | 881 | 5 | listing of 'bindings/go' |  |  | 0.525 |
-| walker |  | 886 | 5 | listing of 'bindings/python' |  |  | 0.525 |
+| walker |  | 706 | 69 | package scripts in site/package.json |  |  | 0.525 |
+| walker |  | 752 | 46 | listing of 'site/public' |  |  | 0.525 |
+| walker |  | 757 | 5 | listing of 'bindings/go' |  |  | 0.525 |
+| walker |  | 762 | 5 | listing of 'bindings/python' |  |  | 0.525 |
+| walker |  | 811 | 49 | listing of 'site/using' |  |  | 0.525 |
+| walker |  | 840 | 29 | headings outline in site/using/ruby.md |  |  | 0.525 |
+| walker |  | 869 | 29 | headings outline in site/using/rust.md |  |  | 0.525 |
 | ns | 891 |  | 223 | README canonical INSERT values | 1.10 |  | 0.495 |
-| walker |  | 935 | 49 | listing of 'site/using' |  |  | 0.495 |
-| walker |  | 964 | 29 | headings outline in site/using/ruby.md |  |  | 0.495 |
-| walker |  | 993 | 29 | headings outline in site/using/rust.md |  |  | 0.495 |
-| walker |  | 1032 | 39 | headings outline in site/using/wasm.md |  |  | 0.495 |
-| walker |  | 1064 | 32 | site/compiling.md section #0 |  |  | 0.495 |
-| walker |  | 1108 | 44 | export at site/project.data.ts:12 |  |  | 0.495 |
+| walker |  | 901 | 32 | site/compiling.md section #0 |  |  | 0.495 |
+| walker |  | 945 | 44 | export at site/project.data.ts:12 |  |  | 0.495 |
+| walker |  | 984 | 39 | headings outline in site/using/wasm.md |  |  | 0.495 |
+| walker |  | 1042 | 58 | headings outline in site/guides/matryoshka.md |  |  | 0.495 |
+| walker |  | 1042 | 0 | site/guides/matryoshka.md section #2 |  |  | 0.495 |
 | ns | 1117 |  | 226 | TODO deferred backlog | 1.11 |  | 0.445 |
-| walker |  | 1174 | 66 | headings outline in site/using/js.md |  |  | 0.445 |
-| walker |  | 1304 | 130 | python decl names surface in tmp-static.py |  |  | 0.445 |
-| walker |  | 1304 | 0 | python decl at tmp-static.py:25 |  |  | 0.445 |
-| walker |  | 1382 | 78 | headings outline in site/using/go.md |  |  | 0.445 |
+| walker |  | 1172 | 130 | python decl names surface in tmp-static.py |  |  | 0.445 |
+| walker |  | 1172 | 0 | python decl at tmp-static.py:25 |  |  | 0.445 |
+| walker |  | 1238 | 66 | headings outline in site/guides/binary-quant.md |  |  | 0.445 |
+| walker |  | 1246 | 8 | listing of 'site/getting-started' |  |  | 0.445 |
+| walker |  | 1289 | 43 | headings outline in site/getting-started/installation.md |  |  | 0.445 |
+| walker |  | 1341 | 52 | headings outline in site/getting-started/introduction.md |  |  | 0.445 |
+| walker |  | 1341 | 0 | site/getting-started/introduction.md section #0 |  |  | 0.445 |
+| walker |  | 1341 | 0 | site/getting-started/introduction.md section #1 |  |  | 0.445 |
+| walker |  | 1341 | 0 | site/getting-started/introduction.md section #2 |  |  | 0.445 |
+| walker |  | 1341 | 0 | site/getting-started/introduction.md section #3 |  |  | 0.445 |
+| walker |  | 1385 | 44 | listing of 'site/public/fonts' |  |  | 0.380 |
 | ns | 1385 |  | 268 | sqlite-vec.h.tmpl ABI guard + visibility macros | 1.12 |  | 0.380 |
-| walker |  | 1390 | 8 | listing of 'site/getting-started' |  |  | 0.380 |
-| walker |  | 1433 | 43 | headings outline in site/getting-started/installation.md |  |  | 0.380 |
-| walker |  | 1485 | 52 | headings outline in site/getting-started/introduction.md |  |  | 0.380 |
-| walker |  | 1485 | 0 | site/getting-started/introduction.md section #0 |  |  | 0.380 |
-| walker |  | 1485 | 0 | site/getting-started/introduction.md section #1 |  |  | 0.380 |
-| walker |  | 1485 | 0 | site/getting-started/introduction.md section #2 |  |  | 0.380 |
-| walker |  | 1485 | 0 | site/getting-started/introduction.md section #3 |  |  | 0.380 |
-| walker |  | 1529 | 44 | listing of 'site/public/fonts' |  |  | 0.380 |
+| walker |  | 1498 | 113 | ARCHITECTURE.md section #0 |  |  | 0.380 |
+| walker |  | 1530 | 32 | site/guides/rag.md section #0 |  |  | 0.380 |
+| walker |  | 1596 | 66 | headings outline in site/using/js.md |  |  | 0.380 |
 | ns | 1620 |  | 235 | sqlite-dist.toml — release channels | 1.13 |  | 0.368 |
-| walker |  | 1642 | 113 | ARCHITECTURE.md section #0 |  |  | 0.368 |
-| walker |  | 1674 | 32 | site/guides/rag.md section #0 |  |  | 0.368 |
-| ns | 1704 |  | 84 | sqlite-vec.c — #pragma region map | 2.1 |  | 0.359 |
-| walker |  | 1711 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.359 |
-| walker |  | 1711 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.359 |
-| walker |  | 1711 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.359 |
-| walker |  | 1728 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.359 |
-| walker |  | 1745 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.360 |
-| walker |  | 1767 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.360 |
-| walker |  | 1789 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.360 |
+| walker |  | 1633 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.368 |
+| walker |  | 1633 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.368 |
+| walker |  | 1633 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.368 |
+| walker |  | 1650 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.368 |
+| walker |  | 1667 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.368 |
+| walker |  | 1689 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.369 |
+| ns | 1704 |  | 84 | sqlite-vec.c — #pragma region map | 2.1 |  | 0.360 |
+| walker |  | 1711 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.360 |
 | ns | 1893 |  | 189 | Scalar function definition locations | 2.2 |  | 0.337 |
 | ns | 2032 |  | 139 | Init entry-point locations | 2.3 |  | 0.329 |
 | ns | 2133 |  | 101 | ARCHITECTURE.md — vec0 + shadow-table headings | 2.4 |  | 0.325 |
-| ns | 2312 |  | 179 | ARCHITECTURE.md — shadow-table column bodies | 2.5 |  | 0.305 |
-| walker |  | 2360 | 571 | README.md section #0 |  |  | 0.357 |
-| walker |  | 2370 | 10 | listing of 'site/features' |  |  | 0.357 |
-| walker |  | 2409 | 39 | headings outline in site/features/knn.md |  |  | 0.357 |
-| walker |  | 2486 | 77 | headings outline in site/features/vec0.md |  |  | 0.358 |
-| walker |  | 2486 | 0 | site/features/vec0.md section #0 |  |  | 0.358 |
-| walker |  | 2611 | 125 | headings outline in site/using/python.md |  |  | 0.358 |
-| walker |  | 2649 | 38 | site/guides/arithmetic.md section #0 |  |  | 0.358 |
-| walker |  | 2673 | 24 | listing of 'benchmarks/micro' |  |  | 0.358 |
+| walker |  | 2282 | 571 | README.md section #0 |  |  | 0.381 |
+| walker |  | 2292 | 10 | listing of 'site/features' |  |  | 0.381 |
+| ns | 2312 |  | 179 | ARCHITECTURE.md — shadow-table column bodies | 2.5 |  | 0.357 |
+| walker |  | 2331 | 39 | headings outline in site/features/knn.md |  |  | 0.357 |
+| walker |  | 2408 | 77 | headings outline in site/features/vec0.md |  |  | 0.358 |
+| walker |  | 2408 | 0 | site/features/vec0.md section #0 |  |  | 0.358 |
+| walker |  | 2446 | 38 | site/guides/arithmetic.md section #0 |  |  | 0.358 |
+| walker |  | 2524 | 78 | headings outline in site/using/go.md |  |  | 0.358 |
+| walker |  | 2548 | 24 | listing of 'benchmarks/micro' |  |  | 0.358 |
+| walker |  | 2700 | 152 | python decl at tmp-static.py:13 |  |  | 0.358 |
 | ns | 2744 |  | 432 | site/api-reference.md TOC | 2.6 |  | 0.333 |
-| walker |  | 2825 | 152 | python decl at tmp-static.py:13 |  |  | 0.333 |
-| walker |  | 2971 | 146 | package dependencies in site/package.json |  |  | 0.333 |
-| walker |  | 3016 | 45 | site/getting-started/installation.md section #0 |  |  | 0.333 |
-| walker |  | 3024 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.333 |
-| walker |  | 3052 | 28 | python imports in bindings/python/extra_init.py |  |  | 0.333 |
-| walker |  | 3065 | 13 | listing of 'benchmarks/self-params' |  |  | 0.333 |
-| walker |  | 3145 | 80 | listing of 'examples' |  |  | 0.334 |
+| walker |  | 2846 | 146 | package dependencies in site/package.json |  |  | 0.333 |
+| walker |  | 2891 | 45 | site/getting-started/installation.md section #0 |  |  | 0.333 |
+| walker |  | 2899 | 8 | listing of 'bindings/go/ncruces' |  |  | 0.333 |
+| walker |  | 2927 | 28 | python imports in bindings/python/extra_init.py |  |  | 0.333 |
+| walker |  | 2940 | 13 | listing of 'benchmarks/self-params' |  |  | 0.333 |
+| walker |  | 3020 | 80 | listing of 'examples' |  |  | 0.334 |
+| walker |  | 3145 | 125 | headings outline in site/using/python.md |  |  | 0.334 |
 | walker |  | 3149 | 4 | listing of 'benchmarks/micro/src' |  |  | 0.334 |
 | walker |  | 3161 | 12 | pub item at benchmarks/micro/src/lib.rs:8 |  |  | 0.334 |
 | ns | 3242 |  | 498 | aFunc[] — scalar function registration data | 2.7 |  | 0.321 |

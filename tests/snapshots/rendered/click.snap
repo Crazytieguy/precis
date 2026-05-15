@@ -33,6 +33,25 @@ README.md
     18→-   Supports lazy loading of subcommands at runtime
     21→## A Simple Example
     …
+    23→```python
+    24→import click
+    26→@click.command()
+    27→@click.option("--count", default=1, help="Number of greetings.")
+    28→@click.option("--name", prompt="Your name", help="The person to greet.")
+    29→def hello(count, name):
+    30→    """Simple program that greets NAME for a total of COUNT times."""
+    31→    for _ in range(count):
+    32→        click.echo(f"Hello, {name}!")
+    34→if __name__ == '__main__':
+    35→    hello()
+    36→```
+    38→```
+    39→$ python hello.py --count=3
+    40→Your name: Click
+    41→Hello, Click!
+    42→Hello, Click!
+    43→Hello, Click!
+    44→```
     47→## Donate
     …
     49→The Pallets organization develops and supports Click and other popular
@@ -125,16 +144,6 @@ docs/
         71→## Installation
         …
     exceptions.md
-        3→# Exception Handling and Exit Codes
-        …
-        18→## Where are Errors Handled?
-        …
-        36→## What if I Don't Want That?
-        …
-        64→## Which Exceptions Exist?
-        …
-        88→## Help Pages and Exit Codes
-        …
     extending-click.md
         1→# Extending Click
         …
@@ -214,33 +223,7 @@ docs/
         5→# Setuptools Integration
         7→Moved to {doc}`entry-points`.
     shell-completion.md
-        3→# Shell Completion
-        …
-        21→## Enabling Completion
-        …
-        113→## Custom Type Completion
-        …
-        138→## Overriding Value Completion
-        …
-        163→## Adding Support for a Shell
-        …
     standalone-apps.md
-        1→# Standalone Application with Briefcase
-        …
-        18→## Installation
-        …
-        20→Install Briefcase in the virtual environment:
-        22→```console
-        23→pip install briefcase
-        24→```
-        26→## Configuration
-        …
-        93→## Entry Point
-        …
-        109→## Running
-        …
-        122→## Building and Packaging
-        …
     support-multiple-versions.md
         1→# Supporting Multiple Versions
         …
@@ -266,16 +249,6 @@ docs/
         13→## How to Use Virtualenv
         …
     why.md
-        1→# Why Click?
-        …
-        35→## Why not Argparse?
-        …
-        47→## Why not Docopt etc.?
-        …
-        84→## Why Hardcoded Behaviors?
-        …
-        98→## Why No Auto Correction?
-        …
     wincmd.md
         1→# Windows Console Notes
         …

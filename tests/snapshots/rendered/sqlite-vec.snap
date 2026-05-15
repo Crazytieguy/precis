@@ -78,11 +78,18 @@ benchmarks/
         src/
     profiling/
     self-params/
+        build.py
+        knn.py
+        test.py
 bindings/
     go/
         ncruces/
+            go-sqlite3.patch
     python/
         extra_init.py
+            1→from typing import List
+            2→from struct import pack
+            3→from sqlite3 import Connection
             6→def serialize_float32(vector: List[float]) -> bytes:
             7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
             8→    return pack("%sf" % len(vector), *vector)
@@ -140,6 +147,8 @@ site/
         installation.md
             1→# Installing
             …
+            3→You have several options to include `sqlite-vec` into your projects, including
+            4→PyPi packages for Python, NPM packages for Node.js, Gems for Ruby, and more.
             6→## With popular package managers
             …
             51→## Pre-compiled extensions
@@ -263,24 +272,6 @@ site/
             147→## Bun
             …
         python.md
-            5→# Using `sqlite-vec` in Python
-            …
-            37→## Working with Vectors
-            …
-            39→### Lists
-            …
-            54→### NumPy Arrays
-            …
-            71→## Using an up-to-date version of SQLite {#updated-sqlite}
-            …
-            89→### Compile your own SQLite version
-            …
-            101→### Use `pysqlite3`
-            …
-            109→### Upgrading your Python version
-            …
-            117→## MacOS blocks SQLite extensions by default
-            …
         rqlite.md
         ruby.md
             1→# Using `sqlite-vec` in Ruby

@@ -233,8 +233,8 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
         // values among H2-derived ranges; the synthetic H1-unwrap intro
         // (parent_idx 0 when present) doesn't count. Used by README
         // section index decay so projects with kitchen-sink READMEs
-        // (axios 31 H2s, debug 18 H2s, p-queue 20 H2s) get a steeper
-        // tail demotion without changing the shape for normal READMEs.
+        // (axios 31 H2s, debug 18 H2s) get a steeper tail demotion
+        // without changing the shape for normal READMEs.
         let total_h2_count = section_h2_count(&ranges);
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
@@ -311,7 +311,7 @@ fn dense_md_sibling_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
     };
-    const DENSE_THRESHOLD: usize = 10;
+    const DENSE_THRESHOLD: usize = 7;
     let Ok(read_dir) = std::fs::read_dir(parent) else {
         return 1.0;
     };
@@ -354,17 +354,16 @@ fn readme_section_value(
         * readme_index_decay(range, total_h2_count)
 }
 
-/// Index decay for README sections. Counts real H2 sections only
-/// (skipping the synthetic H1-unwrap intro). Returns 1.0 for the
-/// first real H2 in every case. For short / medium READMEs (≤12
-/// sections) keeps the mild 0.15-exponent / 0.7-floor shape, which
-/// is metric-safe across the fixtures whose README *is* the canonical
-/// content (chalk, mitt, beszel, neco, json-server, semver — all
-/// regressed under a blanket steeper decay). For long READMEs the
-/// shape switches to a faster falloff so kitchen-sink documentation
-/// READMEs (axios 31 H2s, debug 18, p-queue 20) don't displace
-/// source content at small budgets — source-anchored NSes universally
-/// treat the tail sections as appendix.
+/// Index decay for README sections. Returns 1.0 for the first real
+/// H2 in every case. For short / medium READMEs keeps the mild
+/// 0.15-exponent / 0.7-floor shape, which is metric-safe across the
+/// fixtures whose README *is* the canonical content (chalk, mitt,
+/// beszel, neco, json-server, semver — all regressed under a
+/// blanket steeper decay). For long READMEs the shape switches to a
+/// faster falloff so kitchen-sink documentation READMEs (axios 31
+/// H2s, debug 18) don't displace source content at small budgets —
+/// source-anchored NSes universally treat the tail sections as
+/// appendix.
 fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     let h2_idx = if range.synthetic_intro_present {
         range.parent_index.saturating_sub(1)

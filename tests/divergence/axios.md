@@ -1,4 +1,4 @@
-Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missing=11)
+Score(3000)=0.398 I=0.458 C=0.346 ns_rows≤3K=15/40 (reached=4 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -18,29 +18,29 @@ Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | walker |  | 327 | 19 | export at lib/platform/index.js:4 |  |  | 0.604 |
 | walker |  | 335 | 8 | export names surface in lib/axios.js |  |  | 0.604 |
 | walker |  | 353 | 18 | module item at lib/defaults/index.js:23 |  |  | 0.604 |
-| walker |  | 395 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.604 |
+| walker |  | 366 | 13 | imports in index.js |  |  | 0.604 |
 | ns | 400 |  | 85 | lib/core, lib/adapters, lib/cancel — children | 1.5 |  | 0.479 |
-| walker |  | 408 | 13 | imports in index.js |  |  | 0.479 |
-| walker |  | 425 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.479 |
-| walker |  | 572 | 147 | export at index.js:26 |  |  | 0.483 |
+| walker |  | 513 | 147 | export at index.js:26 |  |  | 0.483 |
+| walker |  | 555 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.483 |
+| walker |  | 572 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.483 |
 | ns | 590 |  | 190 | lib/helpers — full child listing | 1.6 |  | 0.365 |
-| walker |  | 642 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.365 |
-| ns | 671 |  | 81 | lib/defaults, lib/env, lib/platform — tree | 1.7 |  | 0.335 |
-| walker |  | 675 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.335 |
-| walker |  | 754 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.335 |
-| walker |  | 774 | 20 | listing of 'lib/adapters' |  |  | 0.345 |
-| walker |  | 816 | 42 | README headline in lib/adapters/README.md |  |  | 0.345 |
-| walker |  | 842 | 26 | imports in lib/platform/index.js |  |  | 0.345 |
-| walker |  | 875 | 33 | ECOSYSTEM.md section #0 |  |  | 0.345 |
+| walker |  | 605 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.365 |
+| walker |  | 625 | 20 | listing of 'lib/adapters' |  |  | 0.376 |
+| walker |  | 667 | 42 | README headline in lib/adapters/README.md |  |  | 0.376 |
+| ns | 671 |  | 81 | lib/defaults, lib/env, lib/platform — tree | 1.7 |  | 0.345 |
+| walker |  | 693 | 26 | imports in lib/platform/index.js |  |  | 0.345 |
+| walker |  | 744 | 51 | listing of 'docs' |  |  | 0.345 |
+| walker |  | 818 | 74 | package identity in docs/package.json |  |  | 0.345 |
+| walker |  | 833 | 15 | export names surface in gulpfile.js |  |  | 0.345 |
+| walker |  | 849 | 16 | CONTRIBUTORS.md section #2 |  |  | 0.345 |
 | ns | 918 |  | 247 | AGENTS.md — Architecture Boundaries | 1.8 |  | 0.332 |
-| walker |  | 926 | 51 | listing of 'docs' |  |  | 0.332 |
-| walker |  | 1000 | 74 | package identity in docs/package.json |  |  | 0.332 |
-| walker |  | 1015 | 15 | export names surface in gulpfile.js |  |  | 0.332 |
-| walker |  | 1031 | 16 | CONTRIBUTORS.md section #2 |  |  | 0.332 |
-| walker |  | 1042 | 11 | listing of 'docs/pages' |  |  | 0.332 |
-| walker |  | 1053 | 11 | listing of 'lib/env' |  |  | 0.346 |
-| walker |  | 1089 | 36 | README headline in lib/env/README.md |  |  | 0.346 |
-| walker |  | 1098 | 9 | export names surface in lib/utils.js |  |  | 0.346 |
+| walker |  | 919 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.332 |
+| walker |  | 952 | 33 | ECOSYSTEM.md section #0 |  |  | 0.332 |
+| walker |  | 963 | 11 | listing of 'docs/pages' |  |  | 0.332 |
+| walker |  | 974 | 11 | listing of 'lib/env' |  |  | 0.346 |
+| walker |  | 1010 | 36 | README headline in lib/env/README.md |  |  | 0.346 |
+| walker |  | 1019 | 9 | export names surface in lib/utils.js |  |  | 0.346 |
+| walker |  | 1098 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.346 |
 | walker |  | 1116 | 18 | listing of 'docs/pages/getting-started' |  |  | 0.346 |
 | walker |  | 1120 | 4 | listing of 'docs/data' |  |  | 0.346 |
 | walker |  | 1139 | 19 | listing of 'tests' |  |  | 0.346 |
@@ -57,97 +57,97 @@ Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | walker |  | 1521 | 9 | export names surface in lib/cancel/CancelToken.js |  |  | 0.426 |
 | walker |  | 1530 | 9 | export names surface in lib/core/AxiosError.js |  |  | 0.426 |
 | walker |  | 1539 | 9 | export names surface in lib/core/AxiosHeaders.js |  |  | 0.426 |
+| walker |  | 1591 | 52 | headings outline in docs/pages/getting-started/first-steps.md |  |  | 0.426 |
+| walker |  | 1605 | 14 | listing of 'tests/smoke' |  |  | 0.426 |
+| walker |  | 1615 | 10 | export names surface in lib/cancel/CanceledError.js |  |  | 0.426 |
+| walker |  | 1625 | 10 | export names surface in lib/core/InterceptorManager.js |  |  | 0.426 |
+| walker |  | 1638 | 13 | listing of 'docs/pages/misc' |  |  | 0.426 |
 | ns | 1642 |  | 264 | AGENTS.md — Naming Conventions + Common Pitfalls | 1.11 |  | 0.405 |
+| walker |  | 1691 | 53 | headings outline in docs/pages/misc/semver.md |  |  | 0.405 |
 | ns | 1707 |  | 65 | Top-level fs — build/tooling/extras | 2.1 |  | 0.437 |
-| walker |  | 1789 | 250 | headings outline in THREATMODEL.md |  |  | 0.437 |
-| walker |  | 1794 | 5 | THREATMODEL.md section #10 |  |  | 0.437 |
-| walker |  | 1799 | 5 | THREATMODEL.md section #24 |  |  | 0.437 |
-| walker |  | 1804 | 5 | THREATMODEL.md section #33 |  |  | 0.437 |
-| walker |  | 1809 | 5 | THREATMODEL.md section #44 |  |  | 0.437 |
-| walker |  | 1814 | 5 | THREATMODEL.md section #53 |  |  | 0.437 |
-| walker |  | 1866 | 52 | headings outline in docs/pages/getting-started/first-steps.md |  |  | 0.437 |
-| walker |  | 1880 | 14 | listing of 'tests/smoke' |  |  | 0.437 |
-| walker |  | 1890 | 10 | export names surface in lib/cancel/CanceledError.js |  |  | 0.437 |
-| walker |  | 1900 | 10 | export names surface in lib/core/InterceptorManager.js |  |  | 0.437 |
-| walker |  | 1913 | 13 | listing of 'docs/pages/misc' |  |  | 0.437 |
-| walker |  | 1966 | 53 | headings outline in docs/pages/misc/semver.md |  |  | 0.437 |
 | ns | 2083 |  | 376 | index.js — full file (named ESM re-exports) | 2.2 |  | 0.402 |
 | ns | 2336 |  | 253 | lib/axios.js — createInstance() factory header | 2.3 |  | 0.377 |
-| walker |  | 2754 | 788 | README headline in README.md |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #1 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #2 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #3 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #4 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #5 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #6 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #7 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #8 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #9 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #10 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #11 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #12 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #13 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #14 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #15 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #16 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #17 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #18 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #19 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #20 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #21 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #22 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #23 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #24 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #25 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #26 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #27 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #28 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #29 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #30 |  |  | 0.377 |
-| walker |  | 2754 | 0 | README.md section #31 |  |  | 0.377 |
-| walker |  | 2770 | 16 | README.md section #36 |  |  | 0.377 |
+| walker |  | 2479 | 788 | README headline in README.md |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #1 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #2 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #3 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #4 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #5 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #6 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #7 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #8 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #9 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #10 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #11 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #12 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #13 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #14 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #15 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #16 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #17 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #18 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #19 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #20 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #21 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #22 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #23 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #24 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #25 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #26 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #27 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #28 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #29 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #30 |  |  | 0.377 |
+| walker |  | 2479 | 0 | README.md section #31 |  |  | 0.377 |
+| walker |  | 2495 | 16 | README.md section #36 |  |  | 0.377 |
+| walker |  | 2511 | 16 | README.md section #37 |  |  | 0.377 |
+| walker |  | 2595 | 84 | json config tsconfig.json |  |  | 0.377 |
+| walker |  | 2602 | 7 | listing of 'docs/es' |  |  | 0.377 |
+| walker |  | 2613 | 11 | listing of 'docs/es/pages' |  |  | 0.377 |
+| walker |  | 2631 | 18 | listing of 'docs/es/pages/getting-started' |  |  | 0.377 |
+| walker |  | 2638 | 7 | listing of 'docs/fr' |  |  | 0.377 |
+| walker |  | 2649 | 11 | listing of 'docs/fr/pages' |  |  | 0.377 |
+| walker |  | 2667 | 18 | listing of 'docs/fr/pages/getting-started' |  |  | 0.377 |
+| walker |  | 2674 | 7 | listing of 'docs/zh' |  |  | 0.377 |
+| walker |  | 2685 | 11 | listing of 'docs/zh/pages' |  |  | 0.377 |
+| walker |  | 2703 | 18 | listing of 'docs/zh/pages/getting-started' |  |  | 0.377 |
+| walker |  | 2772 | 69 | listing of 'docs/public' |  |  | 0.377 |
 | ns | 2773 |  | 437 | lib/axios.js — static-property attachment block | 2.4 |  | 0.340 |
-| walker |  | 2786 | 16 | README.md section #37 |  |  | 0.340 |
-| walker |  | 2870 | 84 | json config tsconfig.json |  |  | 0.340 |
-| walker |  | 2877 | 7 | listing of 'docs/es' |  |  | 0.340 |
-| walker |  | 2888 | 11 | listing of 'docs/es/pages' |  |  | 0.340 |
-| walker |  | 2906 | 18 | listing of 'docs/es/pages/getting-started' |  |  | 0.340 |
-| walker |  | 2913 | 7 | listing of 'docs/fr' |  |  | 0.340 |
-| walker |  | 2924 | 11 | listing of 'docs/fr/pages' |  |  | 0.340 |
-| walker |  | 2942 | 18 | listing of 'docs/fr/pages/getting-started' |  |  | 0.340 |
-| walker |  | 2949 | 7 | listing of 'docs/zh' |  |  | 0.340 |
-| walker |  | 2960 | 11 | listing of 'docs/zh/pages' |  |  | 0.340 |
-| walker |  | 2978 | 18 | listing of 'docs/zh/pages/getting-started' |  |  | 0.340 |
-| ns | 3041 |  | 268 | lib/axios.js — module imports | 2.5 | 2.3 | 0.327 |
-| walker |  | 3047 | 69 | listing of 'docs/public' |  |  | 0.327 |
-| walker |  | 3051 | 4 | listing of 'lib/platform/common' |  |  | 0.329 |
-| walker |  | 3149 | 98 | THREATMODEL.md section #0 |  |  | 0.329 |
-| walker |  | 3186 | 37 | COLLABORATOR_GUIDE.md section #1 |  |  | 0.329 |
-| walker |  | 3208 | 22 | README.md section #35 |  |  | 0.329 |
-| ns | 3341 |  | 300 | lib/core/Axios.js — class header + constructor | 2.6 |  | 0.311 |
-| walker |  | 3357 | 149 | module item at index.js:6 |  |  | 0.361 |
-| ns | 3379 |  | 38 | lib/core/Axios.js — request()/_request()/getUri() signatures | 2.7 | 2.6 | 0.359 |
-| walker |  | 3477 | 120 | package scripts in docs/package.json |  |  | 0.359 |
-| walker |  | 3514 | 37 | listing of '.github' |  |  | 0.359 |
-| walker |  | 3554 | 40 | listing of '.github/workflows' |  |  | 0.359 |
-| walker |  | 3572 | 18 | listing of 'tests/smoke/esm' |  |  | 0.359 |
-| walker |  | 3585 | 13 | export names surface in lib/adapters/xhr.js |  |  | 0.359 |
-| walker |  | 3655 | 70 | headings outline in docs/pages/getting-started/features.md |  |  | 0.359 |
-| walker |  | 3663 | 8 | export names surface in lib/platform/common/utils.js |  |  | 0.359 |
-| walker |  | 3668 | 5 | listing of 'lib/env/classes' |  |  | 0.362 |
-| walker |  | 3682 | 14 | export names surface in lib/cancel/isCancel.js |  |  | 0.362 |
-| walker |  | 3682 | 0 | export at lib/cancel/isCancel.js:3 |  |  | 0.362 |
-| walker |  | 3695 | 13 | export body at lib/cancel/isCancel.js:3 body 4 |  |  | 0.362 |
-| walker |  | 3709 | 14 | export names surface in lib/core/dispatchRequest.js |  |  | 0.362 |
-| walker |  | 3709 | 0 | export at lib/core/dispatchRequest.js:34 |  |  | 0.362 |
+| walker |  | 2776 | 4 | listing of 'lib/platform/common' |  |  | 0.343 |
+| walker |  | 2813 | 37 | COLLABORATOR_GUIDE.md section #1 |  |  | 0.343 |
+| walker |  | 2835 | 22 | README.md section #35 |  |  | 0.343 |
+| walker |  | 2984 | 149 | module item at index.js:6 |  |  | 0.398 |
+| ns | 3041 |  | 268 | lib/axios.js — module imports | 2.5 | 2.3 | 0.382 |
+| walker |  | 3104 | 120 | package scripts in docs/package.json |  |  | 0.382 |
+| walker |  | 3141 | 37 | listing of '.github' |  |  | 0.382 |
+| walker |  | 3181 | 40 | listing of '.github/workflows' |  |  | 0.382 |
+| walker |  | 3199 | 18 | listing of 'tests/smoke/esm' |  |  | 0.382 |
+| walker |  | 3212 | 13 | export names surface in lib/adapters/xhr.js |  |  | 0.382 |
+| walker |  | 3282 | 70 | headings outline in docs/pages/getting-started/features.md |  |  | 0.382 |
+| walker |  | 3290 | 8 | export names surface in lib/platform/common/utils.js |  |  | 0.382 |
+| walker |  | 3295 | 5 | listing of 'lib/env/classes' |  |  | 0.385 |
+| walker |  | 3309 | 14 | export names surface in lib/cancel/isCancel.js |  |  | 0.385 |
+| walker |  | 3309 | 0 | export at lib/cancel/isCancel.js:3 |  |  | 0.385 |
+| walker |  | 3322 | 13 | export body at lib/cancel/isCancel.js:3 body 4 |  |  | 0.385 |
+| walker |  | 3336 | 14 | export names surface in lib/core/dispatchRequest.js |  |  | 0.385 |
+| walker |  | 3336 | 0 | export at lib/core/dispatchRequest.js:34 |  |  | 0.385 |
+| ns | 3341 |  | 300 | lib/core/Axios.js — class header + constructor | 2.6 |  | 0.364 |
+| ns | 3379 |  | 38 | lib/core/Axios.js — request()/_request()/getUri() signatures | 2.7 | 2.6 | 0.362 |
+| walker |  | 3450 | 114 | imports in lib/defaults/index.js |  |  | 0.362 |
+| walker |  | 3459 | 9 | export names surface in lib/defaults/transitional.js |  |  | 0.362 |
+| walker |  | 3474 | 15 | export names surface in lib/env/data.js |  |  | 0.362 |
+| walker |  | 3529 | 55 | headings outline in docs/fr/pages/getting-started/first-steps.md |  |  | 0.362 |
+| walker |  | 3584 | 55 | headings outline in docs/zh/pages/getting-started/first-steps.md |  |  | 0.362 |
+| walker |  | 3640 | 56 | headings outline in docs/es/pages/getting-started/first-steps.md |  |  | 0.362 |
 | ns | 3803 |  | 424 | lib/core/Axios.js — method-alias loops (get/post/…/postForm/query) | 2.8 | 2.6 | 0.338 |
-| walker |  | 3823 | 114 | imports in lib/defaults/index.js |  |  | 0.338 |
-| walker |  | 3832 | 9 | export names surface in lib/defaults/transitional.js |  |  | 0.338 |
-| walker |  | 3847 | 15 | export names surface in lib/env/data.js |  |  | 0.338 |
-| walker |  | 3902 | 55 | headings outline in docs/fr/pages/getting-started/first-steps.md |  |  | 0.338 |
+| walker |  | 3890 | 250 | headings outline in THREATMODEL.md |  |  | 0.338 |
+| walker |  | 3895 | 5 | THREATMODEL.md section #10 |  |  | 0.338 |
+| walker |  | 3900 | 5 | THREATMODEL.md section #24 |  |  | 0.338 |
+| walker |  | 3905 | 5 | THREATMODEL.md section #33 |  |  | 0.334 |
 | ns | 3905 |  | 102 | lib/core/AxiosError.js — class header, constructor sig, static from sig | 2.9 |  | 0.334 |
-| walker |  | 3957 | 55 | headings outline in docs/zh/pages/getting-started/first-steps.md |  |  | 0.334 |
-| walker |  | 4013 | 56 | headings outline in docs/es/pages/getting-started/first-steps.md |  |  | 0.334 |
+| walker |  | 3910 | 5 | THREATMODEL.md section #44 |  |  | 0.334 |
+| walker |  | 3915 | 5 | THREATMODEL.md section #53 |  |  | 0.334 |
+| walker |  | 4013 | 98 | THREATMODEL.md section #0 |  |  | 0.334 |
 | walker |  | 4026 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.334 |
 | walker |  | 4039 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.334 |
 | walker |  | 4052 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.334 |

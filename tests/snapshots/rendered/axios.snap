@@ -19,6 +19,7 @@ COLLABORATOR_GUIDE.md
     3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
     5→## Code of Conduct
     …
+    7→You are expected to have read the [Code of Conduct](./CODE_OF_CONDUCT.md) and to help enforce it. This community should be friendly and welcoming.
     9→## Triage Issues
     …
     16→## Answer Questions
@@ -111,49 +112,11 @@ README.md
     379→- [Resources](#resources)
     380→- [Credits](#credits)
     381→- [License](#license)
+    388→- **Interceptors:** Intercept requests and responses to add custom logic or transform data.
     389→- **Data Transformation:** Transform request and response data automatically.
     390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
 SECURITY.md
 THREATMODEL.md
-    1→# Axios Threat Model
-    …
-    9→## 1. Scope & Methodology
-    …
-    24→## 2. Runtime Threat Model
-    …
-    26→### 2.1 System Overview
-    …
-    55→### 2.2 Assets
-    …
-    65→### 2.3 Trust Boundaries
-    …
-    72→### 2.4 Threat Actors
-    …
-    81→### 2.5 Threats
-    …
-    85→---
-    233→### 2.6 Explicit Non-Goals (Runtime)
-    …
-    243→---
-    245→## 3. Project / Supply-Chain Threat Model
-    …
-    249→### 3.1 System Overview
-    …
-    285→### 3.2 Assets
-    …
-    297→### 3.3 Trust Boundaries
-    …
-    304→### 3.4 Threat Actors
-    …
-    314→### 3.5 Threats
-    …
-    316→---
-    448→### 3.6 Summary: Project Risk Posture
-    …
-    463→---
-    465→### 3.7 Incident Response Runbook
-    …
-    509→---
 docs/
     .vitepress/
     data/
@@ -221,6 +184,17 @@ docs/
             sponsors.md
     patches/
     public/
+        android-chrome-192x192.png
+        android-chrome-512x512.png
+        apple-touch-icon.png
+        favicon-16x16.png
+        favicon-32x32.png
+        favicon.ico
+        logo-light.svg
+        logo.svg
+        site.webmanifest
+        words-light.svg
+        words.svg
     scripts/
     site.webmanifest
     zh/
@@ -241,6 +215,25 @@ index.d.cts
 index.d.ts
 index.js
     1→import axios from './lib/axios.js';
+    6→const {
+    7→  Axios,
+    8→  AxiosError,
+    9→  CanceledError,
+    10→  isCancel,
+    11→  CancelToken,
+    12→  VERSION,
+    13→  all,
+    14→  Cancel,
+    15→  isAxiosError,
+    16→  spread,
+    17→  toFormData,
+    18→  AxiosHeaders,
+    19→  HttpStatusCode,
+    20→  formToJSON,
+    21→  getAdapter,
+    22→  mergeConfig,
+    23→  create,
+    24→} = axios;
     26→export {
     27→  axios as default,
     28→  create,
@@ -328,6 +321,7 @@ lib/
     platform/
         browser/
         common/
+            utils.js
         index.js
             1→import platform from './node/index.js';
             2→import * as utils from './common/utils.js';

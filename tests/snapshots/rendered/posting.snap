@@ -50,18 +50,6 @@ docs/
     faq.md
     guide/
         collections.md
-            1→## Overview
-            …
-            10→## The collection browser
-            …
-            35→## The default collection
-            …
-            50→## Creating a collection
-            …
-            56→## Loading a collection
-            …
-            64→### Example
-            …
         command_palette.md
             1→## Overview
             …
@@ -69,29 +57,7 @@ docs/
             …
         configuration.md
         environments.md
-            1→## Overview
-            …
-            10→## Loading variables
-            …
-            37→## Autoloading `.env` files
-            …
-            41→## Using environment variables
-            …
-            47→## Practical example
-            …
-            81→### Environment specific config
-            …
         external_tools.md
-            1→## Overview
-            …
-            9→## External Editors
-            …
-            34→## External Pagers
-            …
-            53→### JSON Pager
-            …
-            71→## Exporting to curl
-            …
         help_system.md
             1→## Overview
             …
@@ -188,7 +154,14 @@ src/
             28→    except OSError:
             29→        pass
             32→def create_default_collection() -> Path:
-            …
+            33→    f = default_collection_directory()
+            34→    if f.exists():
+            35→        return f
+            37→    try:
+            38→        f.mkdir(parents=True)
+            39→    except OSError:
+            40→        pass
+            42→    return f
             45→@click.group(cls=DefaultGroup, default="default", default_if_no_args=True)
             46→def cli() -> None:
             47→    """A TUI for testing HTTP APIs."""
@@ -268,6 +241,10 @@ src/
             4→@dataclass
             5→class HelpData:
             6→    """Data relating to the widget to be displayed in the HelpScreen"""
+            8→    title: str = field(default="")
+            9→    """Title of the widget"""
+            10→    description: str = field(default="")
+            11→    """Markdown description to be displayed in the HelpScreen"""
         help_screen.py
         highlight_url.py
         highlighters.py
@@ -281,6 +258,13 @@ src/
             16→class JumpOverlay(ModalScreen[str | Widget | None]):
             …
         jumper.py
+            9→@runtime_checkable
+            10→class Jumpable(Protocol):
+            13→    jump_key: str
+            16→class JumpInfo(NamedTuple):
+            17→    """Information returned by the jumper for each jump target."""
+            26→class Jumper:
+            27→    """An Amp-like jumping mechanism for quick spatial navigation"""
         locations.py
         messages.py
             6→@dataclass
@@ -337,6 +321,8 @@ src/
                 form_editor.py
                 header_editor.py
                 method_selection.py
+                    14→class MethodSelector(PostingSelect[str]):
+                    …
                 path_editor.py
                 query_editor.py
                 request_auth.py
