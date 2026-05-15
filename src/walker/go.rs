@@ -49,8 +49,8 @@ use crate::content::BatchContent;
 use crate::value::{mix_signals, names_surface_chunk_factor};
 
 use super::{
-    FileLines, WalkCtx, build_per_file_content, collect_doc_comments_above, dedup_sorted,
-    extend_span, file_depth_factor, file_lines_covered_by,
+    FileLines, WalkCtx, collect_doc_comments_above, dedup_sorted, extend_span, file_depth_factor,
+    file_lines_covered_by,
     fs::{files_with_extension, list_dir},
     push_rows, signature_end_row, single_file_lines_content,
 };
@@ -165,42 +165,52 @@ fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKe
 fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in source_files {
+        let Some((source, tree)) = parse_go(ctx, file) else {
+            continue;
+        };
+        let src_lines: Vec<&str> = source.lines().collect();
+        let line_count = src_lines.len();
+        let decls = find_decls(&tree, &source);
+        let pkg = package_name(&tree, &source);
+        // Compute the entry-file boost once per file and thread it
+        // through the value functions. Computing inside each value
+        // function (called 4 + 3 × decls times per file) re-walked the
+        // tree on every call — command.go's 139 decls × 7-8 channels
+        // = ~1000 tree-walks per file in the hot path.
+        let entry_factor = go_entry_factor_for(file, ctx, pkg.as_deref(), &decls);
+
         // Only emit `PackageDocLede` for files that qualify as an
         // entry-shaped file (package-name match, big-struct anchor,
         // or the `doc.go` Go-convention package-docs file). Internal
-        // subpackage doc ledes (`internal/xtime/time.go`,
-        // `internal/constraints/constraints.go`) carry low orientation
-        // value relative to their cost and crowd the early budget if
-        // every subpackage gets one.
+        // subpackage doc ledes (`internal/xtime/time.go`) carry low
+        // orientation value relative to their cost and crowd the
+        // early budget if every subpackage gets one.
         let is_doc_go = file
             .file_stem()
             .and_then(|s| s.to_str())
             .is_some_and(|s| s == "doc");
-        if (go_entry_factor(file, ctx) > 1.0 || is_doc_go)
+        if (entry_factor > 1.0 || is_doc_go)
             && let Some(content) =
-                build_per_file_content(file, ctx, parse_go, collect_package_doc_lede)
+                single_file_lines_content(file, &source, collect_package_doc_lede(&tree, &source))
         {
             out.push(Batch {
                 key: GoKey::PackageDocLede { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: package_doc_lede_value(file, ctx),
+                value: package_doc_lede_value(file, ctx, entry_factor),
             });
         }
-        if let Some(content) = build_per_file_content(file, ctx, parse_go, collect_package_imports)
+        if let Some(content) =
+            single_file_lines_content(file, &source, collect_package_imports(&tree, &source))
         {
             out.push(Batch {
                 key: GoKey::PackageImports { file: file.clone() }.into(),
                 predecessor: None,
                 content,
-                value: package_imports_value(file, ctx),
+                value: package_imports_value(file, ctx, entry_factor),
             });
         }
 
-        let Some((source, tree)) = parse_go(ctx, file) else {
-            continue;
-        };
-        let decls = find_decls(&tree, &source);
         if decls.is_empty() {
             continue;
         }
@@ -209,12 +219,10 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
         // decls × 1439 lines, command.go's 139 decls × 2072 lines)
         // emit a too-big unchunked surface that loses the value/cost
         // race to small-sibling-file batches. Chunk only when BOTH
-        // decl count and line count are large: chunking moderately-sized
-        // files (gin.go's 57 decls × 832 lines, migrate.go's 35 decls ×
-        // 979 lines) regressed past iterations because their full
-        // surface DID fit at ~2.5K and chunking displaced delivered
-        // content.
-        let line_count = source.lines().count();
+        // decl count and line count are large: chunking moderately-
+        // sized files (gin.go 57 × 832, migrate.go 35 × 979) regressed
+        // because their full surfaces DID fit at ~2.5K and chunking
+        // displaced delivered content.
         let chunk_count = if decls.len() > GO_DECL_NAMES_CHUNK_THRESHOLD
             && line_count > GO_DECL_NAMES_CHUNK_LINE_THRESHOLD
         {
@@ -228,6 +236,9 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                 chunk_index,
             })
             .collect();
+        // chunk_count == 1 means "don't chunk" — produce a single batch
+        // that covers all decls regardless of how many `chunks(N)` would
+        // yield. Otherwise `chunks(N)` lines up with the chunk count.
         let names_lines_by_chunk: Vec<FileLines> = if chunk_count == 1 {
             vec![collect_decl_names_from(&decls)]
         } else {
@@ -242,11 +253,10 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     key: names_keys[chunk_index].clone().into(),
                     predecessor: None,
                     content,
-                    value: decl_names_value(file, ctx, chunk_index, chunk_count),
+                    value: decl_names_value(file, ctx, chunk_index, chunk_count, entry_factor),
                 });
             }
         }
-        let src_lines: Vec<&str> = source.lines().collect();
         for (decl_index, (node, info)) in decls.iter().enumerate() {
             let chunk_index = decl_index / GO_DECL_NAMES_CHUNK_SIZE;
             let chunk_index = chunk_index.min(chunk_count - 1);
@@ -271,7 +281,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     key: decl_key.clone().into(),
                     predecessor: Some(names_predecessor.clone()),
                     content,
-                    value: decl_value(file, info, ctx),
+                    value: decl_value(file, info, ctx, entry_factor),
                 });
             }
             let decl_predecessor = BatchKey::Go(decl_key);
@@ -284,7 +294,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_doc_value(file, info, ctx),
+                    value: decl_doc_value(file, info, ctx, entry_factor),
                 });
             }
             if info.kind.has_body()
@@ -298,7 +308,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                     .into(),
                     predecessor: Some(decl_predecessor.clone()),
                     content,
-                    value: decl_body_value(file, info, ctx),
+                    value: decl_body_value(file, info, ctx, entry_factor),
                 });
             }
             // Big-struct field-group split. Each blank-line-separated
@@ -318,7 +328,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
                         .into(),
                         predecessor: Some(decl_predecessor.clone()),
                         content,
-                        value: struct_field_group_value(file, info, ctx),
+                        value: struct_field_group_value(file, info, ctx, entry_factor),
                     });
                 }
             }
@@ -738,68 +748,62 @@ fn go_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     file_depth_factor(file, ctx, false)
 }
 
-fn package_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+fn package_doc_lede_value(file: &Path, ctx: &WalkCtx, entry_factor: f64) -> f64 {
     // Higher cat than `PackageImports`: the doc lede answers "what
     // does this package provide" — identity-level orientation. The
     // entry-file boost compounds on the package-name-matched file
     // (tea.go in package tea, xxhash.go in package xxhash).
-    mix_signals(0.60, 0.55, 0.55, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+    mix_signals(0.60, 0.55, 0.55, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
-fn package_imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+fn package_imports_value(file: &Path, ctx: &WalkCtx, entry_factor: f64) -> f64 {
+    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
 /// Sits below per-decl `Type`-kind value so the scheduler favours
 /// structural anchors in load-bearing files over a blanket name
 /// surface in every `.go` file.
-fn decl_names_value(file: &Path, ctx: &WalkCtx, chunk_index: usize, chunk_count: usize) -> f64 {
+fn decl_names_value(
+    file: &Path,
+    ctx: &WalkCtx,
+    chunk_index: usize,
+    chunk_count: usize,
+    entry_factor: f64,
+) -> f64 {
     mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx))
         * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+        * entry_factor
         * names_surface_chunk_factor(chunk_index, chunk_count)
 }
 
-fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
+fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
-fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
+fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.20 * kv).min(1.0);
     let fu = (0.6 * kv).min(1.0);
-    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
-fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
+fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.30 * kv).min(1.0);
     let fu = (0.80 * kv).min(1.0);
-    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
-fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
+fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx, entry_factor: f64) -> f64 {
     // Same shape as `decl_value` for a Type, scaled down: each group
     // is one slice of the struct's identity, not the whole declaration.
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.55 * kv).min(1.0);
     let fu = (0.70 * kv).min(1.0);
-    mix_signals(cat, fu, 0.55, go_depth_factor(file, ctx))
-        * go_aux_factor(file)
-        * go_entry_factor(file, ctx)
+    mix_signals(cat, fu, 0.55, go_depth_factor(file, ctx)) * go_aux_factor(file) * entry_factor
 }
 
 /// Boost Go files that anchor the package's API surface. Two
@@ -810,17 +814,32 @@ fn struct_field_group_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 
 ///   cobra`). The long-standing "the file the agent looks at first"
 ///   convention. Analogous to Rust's `lib.rs`/`main.rs`
 ///   `entrypoint_boost`.
-/// - **Has a big-struct anchor**: the file contains a single-spec
-///   `type X struct { … }` whose body spans ≥ `STRUCT_FIELD_GROUP_MIN_LINES`
-///   lines. Cobra's `command.go` is the canonical case — the
-///   package's `Command` struct is the API anchor even though the
-///   file stem doesn't match `package cobra`.
+/// - **Has a big-struct anchor**: the file contains an *exported*
+///   single-spec `type X struct { … }` whose body spans ≥
+///   `STRUCT_FIELD_GROUP_MIN_LINES` lines and splits into at least
+///   `STRUCT_FIELD_GROUP_MIN_GROUPS` blank-line-separated field groups.
+///   Cobra's `command.go` is the canonical case — the package's
+///   exported `Command` struct is the API anchor even though the file
+///   stem doesn't match `package cobra`. The split-eligibility +
+///   exported gate keeps the boost off files whose big struct is a
+///   private contiguous configuration blob without per-field-group
+///   anchors.
 ///
 /// Restricted to root-level files (depth ≤ 1): in monorepos with many
 /// internal/sub-packages, every subpackage would match the package-
 /// name rule and the boost would crowd the early budget with
 /// private-implementation content.
-fn go_entry_factor(file: &Path, ctx: &WalkCtx) -> f64 {
+///
+/// Called once per file in `expand_source_files` and the resulting
+/// `f64` is threaded through every per-file value function — the
+/// previous design recomputed this 4 + 3 × decls times per file
+/// (re-walking the tree on each call).
+fn go_entry_factor_for(
+    file: &Path,
+    ctx: &WalkCtx,
+    pkg: Option<&str>,
+    decls: &[(Node, DeclInfo)],
+) -> f64 {
     const BOOST: f64 = 1.4;
     if ctx.depth_from_root(file) > 1 {
         return 1.0;
@@ -828,54 +847,16 @@ fn go_entry_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     let Some(stem) = file.file_stem().and_then(|s| s.to_str()) else {
         return 1.0;
     };
-    let Some((source, tree)) = parse_go(ctx, file) else {
-        return 1.0;
-    };
-    let pkg = package_name(&tree, &source);
-    if pkg.as_deref() == Some(stem) {
+    if pkg == Some(stem) {
         return BOOST;
     }
-    if file_has_big_struct_anchor(&tree) {
+    if decls
+        .iter()
+        .any(|(_, info)| info.exported && !info.struct_field_groups.is_empty())
+    {
         return BOOST;
     }
     1.0
-}
-
-/// True if any top-level `type_declaration` in the file is a single-
-/// spec struct whose body spans at least `STRUCT_FIELD_GROUP_MIN_LINES`
-/// rows. Marks the file as the package's API-anchor file (cobra's
-/// `command.go`, gin's `gin.go` — the latter is also package-name
-/// matched, so this rule is a generalization, not a duplicate).
-fn file_has_big_struct_anchor(tree: &Tree) -> bool {
-    let root = tree.root_node();
-    let mut cursor = root.walk();
-    for child in root.children(&mut cursor) {
-        if child.kind() != "type_declaration" {
-            continue;
-        }
-        let mut spec_cursor = child.walk();
-        let mut spec_count = 0;
-        let mut single_spec: Option<Node> = None;
-        for spec in child.children(&mut spec_cursor) {
-            if matches!(spec.kind(), "type_spec" | "type_alias") {
-                spec_count += 1;
-                single_spec = Some(spec);
-            }
-        }
-        if spec_count != 1 {
-            continue;
-        }
-        let Some(spec) = single_spec else { continue };
-        let Some(body) = find_struct_body(spec) else {
-            continue;
-        };
-        let body_start = body.start_position().row;
-        let body_end = body.end_position().row;
-        if body_end.saturating_sub(body_start) + 1 >= STRUCT_FIELD_GROUP_MIN_LINES {
-            return true;
-        }
-    }
-    false
 }
 
 fn package_name(tree: &Tree, source: &str) -> Option<String> {
