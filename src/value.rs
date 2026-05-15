@@ -172,6 +172,8 @@ fn non_essential_factor_inner(
                     | "showcase"
                     | "storybook"
                     | "fuzz"
+                    | "fuzzer"
+                    | "profiler"
                     | "scripts"
                     | "tools"
                     | "tooling"

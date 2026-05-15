@@ -85,12 +85,21 @@ README.md
     127→To build code that uses the standard library if available,
     128→but still works seamlessly with Python 3.6+,
     129→do the following.
+    131→Instead of a hard Tomli dependency, use the following
+    132→[dependency specifier](https://packaging.python.org/en/latest/specifications/dependency-specifiers/)
+    133→to only require Tomli when the standard library module is not available:
+    135→```
+    136→tomli >= 1.1.0 ; python_version < "3.11"
+    137→```
     152→## FAQ<a name="faq"></a>
     …
     154→### Why this parser?<a name="why-this-parser"></a>
     …
     156→- it's lil'
     157→- pure Python with zero dependencies
+    158→- the fastest pure Python parser [\*](#pure-python):
+    159→  14x as fast as [tomlkit](https://pypi.org/project/tomlkit/),
+    160→  2.1x as fast as [toml](https://pypi.org/project/toml/)
     161→- outputs [basic data types](#how-do-toml-types-map-into-python-types) only
     162→- 100% spec compliant: passes all tests in
     163→  [toml-lang/toml-test](https://github.com/toml-lang/toml-test)
@@ -120,34 +129,9 @@ README.md
 benchmark/
 fuzzer/
     fuzz.py
-        1→import atheris
-        20→def test_one_input(input_bytes: bytes) -> None:
-        21→    # We need a Unicode string, not bytes
-        53→def print_err(data):
-        54→    codepoints = [hex(ord(x)) for x in data]
-        55→    sys.stderr.write(f"Input was {type(data)}:\n{data}\nCodepoints:\n{codepoints}\n")
-        56→    sys.stderr.flush()
-        59→def normalize_toml_obj(toml_obj: dict) -> None:
-        60→    """Make NaNs equal when compared (without using recursion)."""
-        61→    to_process = [toml_obj]
-        71→def main():
-        72→    # For possible options, see https://llvm.org/docs/LibFuzzer.html#options
-        73→    fuzzer_options = sys.argv
-        74→    atheris.Setup(fuzzer_options, test_one_input)
-        75→    atheris.Fuzz()
     requirements.txt
 profiler/
     profiler_script.py
-        1→"""A script for profiling.
-        3→To generate and read results:
-        4→  - `tox -e profile`
-        5→  - `firefox .tox/prof/output.svg`
-        6→"""
-        8→from pathlib import Path
-        10→import tomli
-        12→benchmark_toml = (
-        13→    (Path(__file__).parent.parent / "benchmark" / "data.toml").read_bytes().decode()
-        14→)
     requirements.txt
 pyproject.toml
 scripts/
@@ -174,8 +158,18 @@ src/
             64→    """
             98→@lru_cache(maxsize=None)
             99→def cached_tz(hour_str: str, minute_str: str, sign_str: str) -> timezone:
+            100→    sign = 1 if sign_str == "+" else -1
+            101→    return timezone(
+            102→        timedelta(
+            103→            hours=sign * int(hour_str),
+            104→            minutes=sign * int(minute_str),
+            105→        )
+            106→    )
             109→def match_to_localtime(match: re.Match[str]) -> time:
-            …
+            110→    hour_str, minute_str, sec_str, micros_str = match.groups()
+            111→    sec = int(sec_str) if sec_str else 0
+            112→    micros = int(micros_str.ljust(6, "0")) if micros_str else 0
+            113→    return time(int(hour_str), int(minute_str), sec, micros)
             116→def match_to_number(match: re.Match[str], parse_float: ParseFloat) -> Any:
             117→    if match.group("floatpart"):
             118→        return parse_float(match.group())
