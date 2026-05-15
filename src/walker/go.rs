@@ -165,6 +165,15 @@ fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKe
 fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in source_files {
+        if let Some(content) = build_per_file_content(file, ctx, parse_go, collect_package_doc_lede)
+        {
+            out.push(Batch {
+                key: GoKey::PackageDocLede { file: file.clone() }.into(),
+                predecessor: None,
+                content,
+                value: package_doc_lede_value(file, ctx),
+            });
+        }
         if let Some(content) = build_per_file_content(file, ctx, parse_go, collect_package_imports)
         {
             out.push(Batch {
@@ -579,6 +588,16 @@ fn go_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
     file_depth_factor(file, ctx, false)
 }
 
+fn package_doc_lede_value(file: &Path, ctx: &WalkCtx) -> f64 {
+    // Higher cat than `PackageImports`: the doc lede answers "what
+    // does this package provide" — identity-level orientation. The
+    // entry-file boost compounds on the package-name-matched file
+    // (tea.go in package tea, xxhash.go in package xxhash).
+    mix_signals(0.60, 0.55, 0.55, go_depth_factor(file, ctx))
+        * go_aux_factor(file)
+        * go_entry_factor(file, ctx)
+}
+
 fn package_imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
     mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx))
         * go_aux_factor(file)
@@ -764,6 +783,23 @@ fn collect_package_imports(tree: &Tree, source: &str) -> FileLines {
         }
     }
     FileLines::new(dedup_sorted(lines))
+}
+
+/// The contiguous `//`-comment block immediately above the file's
+/// `package` clause — Go's "package comment" convention. NS authors
+/// anchor on this as the file's identity lede (`// Package tea
+/// provides ...`). Emitted as a separate batch (vs folding into
+/// `PackageImports`) so the lede can fire standalone at low cost when
+/// the `PackageImports` batch's `import (...)` block is heavy.
+fn collect_package_doc_lede(tree: &Tree, source: &str) -> FileLines {
+    let root = tree.root_node();
+    let mut cursor = root.walk();
+    for child in root.children(&mut cursor) {
+        if child.kind() == "package_clause" {
+            return collect_doc_comments_above(child, source);
+        }
+    }
+    FileLines::new(Vec::new())
 }
 
 /// One full + ellipsis pair per name line so a grouped block surfaces

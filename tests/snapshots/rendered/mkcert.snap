@@ -57,10 +57,6 @@ README.md
     129→### Advanced options
     …
     150→> **Note:** You _must_ place these options before the domain names list.
-    152→#### Example
-    154→```
-    155→mkcert -key-file key.pem -cert-file cert.pem example.com *.example.com
-    156→```
     158→### S/MIME
     …
     166→### Mobile devices
@@ -108,6 +104,7 @@ go.mod
     14→)
 go.sum
 main.go
+    5→// Command mkcert is a simple zero-config tool to make development certificates.
     6→package main
     8→import (
     9→	"crypto"

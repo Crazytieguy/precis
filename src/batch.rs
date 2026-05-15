@@ -421,6 +421,12 @@ pub enum CKey {
 /// reachable in one schedule slot.
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum GoKey {
+    /// `// Package foo provides ...` doc-comment block immediately
+    /// above the `package` clause. Standalone identity lede; emitted
+    /// separately from `PackageImports` so a long package comment can
+    /// fire without dragging the file's whole import block with it.
+    /// Priority 1.x for the root entry file.
+    PackageDocLede { file: PathBuf },
     /// Package clause + import block at the top of a `.go` file.
     /// Plumbing batch. Priority 2.x.
     PackageImports { file: PathBuf },
@@ -1038,6 +1044,12 @@ impl GoKey {
 
     pub fn describe(&self, fixture_root: &Path) -> String {
         match self {
+            GoKey::PackageDocLede { file } => {
+                format!(
+                    "go package doc lede in {}",
+                    display_path(file, fixture_root)
+                )
+            }
             GoKey::PackageImports { file } => {
                 format!(
                     "go package + imports in {}",

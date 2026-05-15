@@ -58,6 +58,8 @@ go.mod
 go.sum
 testall.sh
 xxhash.go
+    1→// Package xxhash implements the 64-bit variant of xxHash (XXH64) as described
+    2→// at https://xxhash.com/.
     3→package xxhash
     5→import (
     6→	"encoding/binary"

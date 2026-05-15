@@ -12,6 +12,8 @@ Makefile
 SECURITY.md
 agent/
 beszel.go
+    1→// Package beszel provides core application constants and version information
+    2→// which are used throughout the application.
     3→package beszel
     5→import "github.com/blang/semver"
     7→const (
@@ -94,6 +96,9 @@ internal/
             102→func extractFile(zipFile *zip.File, basePath string) error {
             …
         ghupdate.go
+            1→// Package ghupdate implements a new command to self update the current
+            2→// executable with the latest GitHub release. This is based on PocketBase's
+            3→// ghupdate package with modifications.
         ghupdate_test.go
         release.go
             8→type releaseAsset struct {
@@ -110,36 +115,10 @@ internal/
             …
         selinux_test.go
     hub/
-        agent_connect.go
-        agent_connect_test.go
-        api.go
-        api_test.go
-        collections.go
-        collections_test.go
-        config/
-        expirymap/
-        heartbeat/
-        hub.go
-        hub_test.go
-        hub_test_helpers.go
-        server.go
-        server_development.go
-        server_production.go
-            18→func (h *Hub) startServer(se *core.ServeEvent) error {
-            …
-        systems/
-        transport/
-        update.go
-            13→// Update updates beszel to the latest version
-            14→func Update(cmd *cobra.Command, _ []string) {
-            …
-            58→func restartService() {
-            …
-        utils/
-        ws/
     migrations/
     records/
         records.go
+            1→// Package records handles creating longer records and deleting old records.
         records_averaging_test.go
         records_deletion.go
         records_deletion_test.go
@@ -161,6 +140,7 @@ internal/
         bun.lock
         components.json
         embed.go
+            1→// Package site handles the Beszel frontend embedding.
             10→var distDir embed.FS
             …
             12→// DistDirFS contains the embedded dist directory files (without the "dist" prefix)
@@ -210,6 +190,7 @@ internal/
     tests/
     users/
         users.go
+            1→// Package users handles user-related custom functionality.
 readme.md
     1→# Beszel
     3→Beszel is a lightweight server monitoring platform that includes Docker statistics, historical data, and alert functions.

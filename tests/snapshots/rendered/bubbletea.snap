@@ -75,15 +75,10 @@ focus.go
 go.mod
 go.sum
 input.go
-    7→// translateInputEvent translates an input event into a Bubble Tea Msg.
     8→func (p *Program) translateInputEvent(e uv.Event) Msg {
     …
 key.go
 keyboard.go
-    1→package tea
-    3→import (
-    4→	"github.com/charmbracelet/x/ansi"
-    5→)
     9→type KeyboardEnhancementsMsg struct {
     …
     31→// SupportsKeyDisambiguation returns whether the terminal supports key
@@ -196,6 +191,15 @@ screen_test.go
 signals_unix.go
 signals_windows.go
 tea.go
+    1→// Package tea provides a framework for building rich terminal user interfaces
+    2→// based on the paradigms of The Elm Architecture. It's well-suited for simple
+    3→// and complex terminal applications, either inline, full-window, or a mix of
+    4→// both. It's been battle-tested in several large projects and is
+    5→// production-ready.
+    6→//
+    7→// A tutorial is available at https://github.com/charmbracelet/bubbletea/tree/master/tutorials
+    8→//
+    9→// Example programs can be found at https://github.com/charmbracelet/bubbletea/tree/master/examples
     38→// ErrProgramPanic is returned by [Program.Run] when the program recovers from a panic.
     39→var ErrProgramPanic = errors.New("program experienced a panic")
     …
@@ -301,8 +305,5 @@ xterm.go
     10→	return t.Name
     15→type terminalVersion struct{}
     …
-    17→// RequestTerminalVersion is a command that queries the terminal for its
-    18→// version using XTVERSION. Note that some terminals may not support this
-    19→// command.
     20→func RequestTerminalVersion() Msg {
     21→	return terminalVersion{}

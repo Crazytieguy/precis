@@ -1,7 +1,7 @@
 fixture = "act"
 budget = 10000
-cumulative_tokens = 9935
-batch_count = 380
+cumulative_tokens = 9987
+batch_count = 379
 
 [[batches]]
 position = 1
@@ -4326,10 +4326,28 @@ kind = "full"
 
 [[batches]]
 position = 167
+key = 'Go(PackageDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifactcache/doc.go" })'
+descriptor = "go package doc lede in pkg/artifactcache/doc.go"
+cost_tokens = 132
+cum_tokens = 4596
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifactcache/doc.go"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/model/step_result.go"
 cost_tokens = 129
-cum_tokens = 4593
+cum_tokens = 4725
 
 [batches.content]
 kind = "lines"
@@ -4447,11 +4465,11 @@ end = 42
 kind = "ellipsis"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 19 })'
 descriptor = "go decl at pkg/model/step_result.go:19"
 cost_tokens = 0
-cum_tokens = 4593
+cum_tokens = 4725
 
 [batches.content]
 kind = "lines"
@@ -4465,11 +4483,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 23 })'
 descriptor = "go decl at pkg/model/step_result.go:23"
 cost_tokens = 0
-cum_tokens = 4593
+cum_tokens = 4725
 
 [batches.content]
 kind = "lines"
@@ -4483,11 +4501,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 34 })'
 descriptor = "go decl at pkg/model/step_result.go:34"
 cost_tokens = 0
-cum_tokens = 4593
+cum_tokens = 4725
 
 [batches.content]
 kind = "lines"
@@ -4501,11 +4519,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 7 })'
 descriptor = "go decl at pkg/model/step_result.go:7"
 cost_tokens = 9
-cum_tokens = 4602
+cum_tokens = 4734
 
 [batches.content]
 kind = "lines"
@@ -4519,11 +4537,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 41 })'
 descriptor = "go decl at pkg/model/step_result.go:41"
 cost_tokens = 49
-cum_tokens = 4651
+cum_tokens = 4783
 
 [batches.content]
 kind = "lines"
@@ -4537,11 +4555,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 19 })'
 descriptor = "go decl body at pkg/model/step_result.go:19"
 cost_tokens = 10
-cum_tokens = 4661
+cum_tokens = 4793
 
 [batches.content]
 kind = "lines"
@@ -4555,11 +4573,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 174
+position = 175
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/exprparser/testdata" })'
 descriptor = "listing of 'pkg/exprparser/testdata'"
 cost_tokens = 23
-cum_tokens = 4684
+cum_tokens = 4816
 
 [batches.content]
 kind = "fs"
@@ -4569,11 +4587,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/exprparser/testdata
 entries = ["for-hashing-1.txt", "for-hashing-2.txt", "for-hashing-3"]
 
 [[batches]]
-position = 175
+position = 176
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/GHSL-2023-004" })'
 descriptor = "listing of 'pkg/artifacts/testdata/GHSL-2023-004'"
 cost_tokens = 4
-cum_tokens = 4688
+cum_tokens = 4820
 
 [batches.content]
 kind = "fs"
@@ -4583,11 +4601,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/
 entries = ["artifacts.yml"]
 
 [[batches]]
-position = 176
+position = 177
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/upload-and-download" })'
 descriptor = "listing of 'pkg/artifacts/testdata/upload-and-download'"
 cost_tokens = 4
-cum_tokens = 4692
+cum_tokens = 4824
 
 [batches.content]
 kind = "fs"
@@ -4597,11 +4615,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/
 entries = ["artifacts.yml"]
 
 [[batches]]
-position = 177
+position = 178
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/v4" })'
 descriptor = "listing of 'pkg/artifacts/testdata/v4'"
 cost_tokens = 4
-cum_tokens = 4696
+cum_tokens = 4828
 
 [batches.content]
 kind = "fs"
@@ -4611,11 +4629,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/artifacts/testdata/
 entries = ["artifacts.yml"]
 
 [[batches]]
-position = 178
+position = 179
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/container-volumes" })'
 descriptor = "listing of 'pkg/model/testdata/container-volumes'"
 cost_tokens = 4
-cum_tokens = 4700
+cum_tokens = 4832
 
 [batches.content]
 kind = "fs"
@@ -4625,11 +4643,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/cont
 entries = ["push.yml"]
 
 [[batches]]
-position = 179
+position = 180
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/empty-workflow" })'
 descriptor = "listing of 'pkg/model/testdata/empty-workflow'"
 cost_tokens = 4
-cum_tokens = 4704
+cum_tokens = 4836
 
 [batches.content]
 kind = "fs"
@@ -4639,11 +4657,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/empt
 entries = ["push.yml"]
 
 [[batches]]
-position = 180
+position = 181
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/strategy" })'
 descriptor = "listing of 'pkg/model/testdata/strategy'"
 cost_tokens = 4
-cum_tokens = 4708
+cum_tokens = 4840
 
 [batches.content]
 kind = "fs"
@@ -4653,11 +4671,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/testdata/stra
 entries = ["push.yml"]
 
 [[batches]]
-position = 181
+position = 182
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/job_context.go", start_line: 3 })'
 descriptor = "go decl at pkg/model/job_context.go:3"
 cost_tokens = 94
-cum_tokens = 4802
+cum_tokens = 4934
 
 [batches.content]
 kind = "lines"
@@ -4671,11 +4689,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 182
+position = 183
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/secrets.go" })'
 descriptor = "go package + imports in cmd/secrets.go"
 cost_tokens = 67
-cum_tokens = 4869
+cum_tokens = 5001
 
 [batches.content]
 kind = "lines"
@@ -4705,11 +4723,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 183
+position = 184
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/filecollector" })'
 descriptor = "listing of 'pkg/filecollector'"
 cost_tokens = 13
-cum_tokens = 4882
+cum_tokens = 5014
 
 [batches.content]
 kind = "fs"
@@ -4719,11 +4737,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/filecollector"
 entries = ["file_collector.go", "file_collector_test.go"]
 
 [[batches]]
-position = 184
+position = 185
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/act/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 102
-cum_tokens = 4984
+cum_tokens = 5116
 
 [batches.content]
 kind = "lines"
@@ -4761,11 +4779,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 185
+position = 186
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/file.go" })'
 descriptor = "go package + imports in pkg/common/file.go"
 cost_tokens = 39
-cum_tokens = 5023
+cum_tokens = 5155
 
 [batches.content]
 kind = "lines"
@@ -4781,40 +4799,6 @@ kind = "full"
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/file.go"
 start = 3
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go" })'
-descriptor = "go package + imports in pkg/common/logger.go"
-cost_tokens = 39
-cum_tokens = 5062
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
-start = 6
 end = 7
 
 [batches.content.spans.render]
@@ -4822,10 +4806,44 @@ kind = "full"
 
 [[batches]]
 position = 187
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go" })'
+descriptor = "go package + imports in pkg/common/logger.go"
+cost_tokens = 39
+cum_tokens = 5194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/logger.go"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/outbound_ip.go" })'
 descriptor = "go package + imports in pkg/common/outbound_ip.go"
 cost_tokens = 40
-cum_tokens = 5102
+cum_tokens = 5234
 
 [batches.content]
 kind = "lines"
@@ -4847,11 +4865,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 188
+position = 189
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/anchors.go" })'
 descriptor = "go package + imports in pkg/model/anchors.go"
 cost_tokens = 40
-cum_tokens = 5142
+cum_tokens = 5274
 
 [batches.content]
 kind = "lines"
@@ -4881,11 +4899,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 189
+position = 190
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/workflowpattern/workflow_pattern.go" })'
 descriptor = "go package + imports in pkg/workflowpattern/workflow_pattern.go"
 cost_tokens = 41
-cum_tokens = 5183
+cum_tokens = 5315
 
 [batches.content]
 kind = "lines"
@@ -4907,11 +4925,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 190
+position = 191
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/anchors.go", start_line: 36 })'
 descriptor = "go decl body at pkg/model/anchors.go:36"
 cost_tokens = 17
-cum_tokens = 5200
+cum_tokens = 5332
 
 [batches.content]
 kind = "lines"
@@ -4925,11 +4943,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 191
+position = 192
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/notices.go", start_line: 57 })'
 descriptor = "go decl body at cmd/notices.go:57"
 cost_tokens = 27
-cum_tokens = 5227
+cum_tokens = 5359
 
 [batches.content]
 kind = "lines"
@@ -4943,11 +4961,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 192
+position = 193
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/model/step_result.go", start_line: 13 })'
 descriptor = "go decl at pkg/model/step_result.go:13"
 cost_tokens = 28
-cum_tokens = 5255
+cum_tokens = 5387
 
 [batches.content]
 kind = "lines"
@@ -4961,11 +4979,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 193
+position = 194
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/draw.go" })'
 descriptor = "go package + imports in pkg/common/draw.go"
 cost_tokens = 46
-cum_tokens = 5301
+cum_tokens = 5433
 
 [batches.content]
 kind = "lines"
@@ -4987,11 +5005,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 194
+position = 195
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/common/job_error.go"
 cost_tokens = 179
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5157,11 +5175,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 196
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 16 })'
 descriptor = "go decl at pkg/common/job_error.go:16"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5175,11 +5193,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 196
+position = 197
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 26 })'
 descriptor = "go decl at pkg/common/job_error.go:26"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5193,11 +5211,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 197
+position = 198
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 31 })'
 descriptor = "go decl at pkg/common/job_error.go:31"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5211,11 +5229,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 198
+position = 199
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 36 })'
 descriptor = "go decl at pkg/common/job_error.go:36"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5229,11 +5247,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 199
+position = 200
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 40 })'
 descriptor = "go decl at pkg/common/job_error.go:40"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5247,11 +5265,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 200
+position = 201
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 51 })'
 descriptor = "go decl at pkg/common/job_error.go:51"
 cost_tokens = 0
-cum_tokens = 5480
+cum_tokens = 5612
 
 [batches.content]
 kind = "lines"
@@ -5265,11 +5283,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 201
+position = 202
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 16 })'
 descriptor = "go decl doc at pkg/common/job_error.go:16"
 cost_tokens = 17
-cum_tokens = 5497
+cum_tokens = 5629
 
 [batches.content]
 kind = "lines"
@@ -5283,11 +5301,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 202
+position = 203
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 36 })'
 descriptor = "go decl body at pkg/common/job_error.go:36"
 cost_tokens = 16
-cum_tokens = 5513
+cum_tokens = 5645
 
 [batches.content]
 kind = "lines"
@@ -5301,11 +5319,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 203
+position = 204
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 31 })'
 descriptor = "go decl doc at pkg/common/job_error.go:31"
 cost_tokens = 22
-cum_tokens = 5535
+cum_tokens = 5667
 
 [batches.content]
 kind = "lines"
@@ -5319,11 +5337,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 204
+position = 205
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 51 })'
 descriptor = "go decl doc at pkg/common/job_error.go:51"
 cost_tokens = 28
-cum_tokens = 5563
+cum_tokens = 5695
 
 [batches.content]
 kind = "lines"
@@ -5337,11 +5355,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 205
+position = 206
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 26 })'
 descriptor = "go decl body at pkg/common/job_error.go:26"
 cost_tokens = 21
-cum_tokens = 5584
+cum_tokens = 5716
 
 [batches.content]
 kind = "lines"
@@ -5355,11 +5373,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 206
+position = 207
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/job_error.go", start_line: 31 })'
 descriptor = "go decl body at pkg/common/job_error.go:31"
 cost_tokens = 27
-cum_tokens = 5611
+cum_tokens = 5743
 
 [batches.content]
 kind = "lines"
@@ -5373,11 +5391,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 207
+position = 208
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/git" })'
 descriptor = "listing of 'pkg/common/git'"
 cost_tokens = 9
-cum_tokens = 5620
+cum_tokens = 5752
 
 [batches.content]
 kind = "fs"
@@ -5387,11 +5405,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/git"
 entries = ["git.go", "git_test.go"]
 
 [[batches]]
-position = 208
+position = 209
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container" })'
 descriptor = "listing of 'pkg/container'"
 cost_tokens = 160
-cum_tokens = 5780
+cum_tokens = 5912
 
 [batches.content]
 kind = "fs"
@@ -5401,11 +5419,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container"
 entries = ["DOCKER_LICENSE", "container_types.go", "docker_auth.go", "docker_build.go", "docker_cli.go", "docker_cli_test.go", "docker_images.go", "docker_images_test.go", "docker_logger.go", "docker_network.go", "docker_pull.go", "docker_pull_test.go", "docker_run.go", "docker_run_test.go", "docker_socket.go", "docker_socket_test.go", "docker_stub.go", "docker_volume.go", "executions_environment.go", "host_environment.go", "host_environment_test.go", "linux_container_environment_extensions.go", "linux_container_environment_extensions_test.go", "parse_env_file.go", "testdata", "util.go", "util_openbsd_mips64.go", "util_plan9.go", "util_windows.go"]
 
 [[batches]]
-position = 209
+position = 210
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/executions_environment.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/executions_environment.go"
 cost_tokens = 12
-cum_tokens = 5792
+cum_tokens = 5924
 
 [batches.content]
 kind = "lines"
@@ -5427,11 +5445,29 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 210
+position = 211
+key = 'Go(PackageDocLede { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_cli.go" })'
+descriptor = "go package doc lede in pkg/container/docker_cli.go"
+cost_tokens = 14
+cum_tokens = 5938
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_cli.go"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 212
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/parse_env_file.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/parse_env_file.go"
 cost_tokens = 26
-cum_tokens = 5818
+cum_tokens = 5964
 
 [batches.content]
 kind = "lines"
@@ -5453,11 +5489,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 211
+position = 213
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/parse_env_file.go", start_line: 14 })'
 descriptor = "go decl at pkg/container/parse_env_file.go:14"
 cost_tokens = 0
-cum_tokens = 5818
+cum_tokens = 5964
 
 [batches.content]
 kind = "lines"
@@ -5471,11 +5507,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 212
+position = 214
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_network.go"
 cost_tokens = 36
-cum_tokens = 5854
+cum_tokens = 6000
 
 [batches.content]
 kind = "lines"
@@ -5513,11 +5549,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 215
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go", start_line: 12 })'
 descriptor = "go decl at pkg/container/docker_network.go:12"
 cost_tokens = 0
-cum_tokens = 5854
+cum_tokens = 6000
 
 [batches.content]
 kind = "lines"
@@ -5531,11 +5567,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 214
+position = 216
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go", start_line: 45 })'
 descriptor = "go decl at pkg/container/docker_network.go:45"
 cost_tokens = 0
-cum_tokens = 5854
+cum_tokens = 6000
 
 [batches.content]
 kind = "lines"
@@ -5549,11 +5585,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 215
+position = 217
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_volume.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_volume.go"
 cost_tokens = 40
-cum_tokens = 5894
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -5591,11 +5627,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 216
+position = 218
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_volume.go", start_line: 12 })'
 descriptor = "go decl at pkg/container/docker_volume.go:12"
 cost_tokens = 0
-cum_tokens = 5894
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -5609,11 +5645,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 217
+position = 219
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_volume.go", start_line: 36 })'
 descriptor = "go decl at pkg/container/docker_volume.go:36"
 cost_tokens = 0
-cum_tokens = 5894
+cum_tokens = 6040
 
 [batches.content]
 kind = "lines"
@@ -5627,11 +5663,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 218
+position = 220
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/util.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/util.go"
 cost_tokens = 46
-cum_tokens = 5940
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5669,11 +5705,11 @@ end = 25
 kind = "ellipsis"
 
 [[batches]]
-position = 219
+position = 221
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/util.go", start_line: 12 })'
 descriptor = "go decl at pkg/container/util.go:12"
 cost_tokens = 0
-cum_tokens = 5940
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5687,11 +5723,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 220
+position = 222
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/util.go", start_line: 24 })'
 descriptor = "go decl at pkg/container/util.go:24"
 cost_tokens = 0
-cum_tokens = 5940
+cum_tokens = 6086
 
 [batches.content]
 kind = "lines"
@@ -5705,11 +5741,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 221
+position = 223
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_auth.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_auth.go"
 cost_tokens = 48
-cum_tokens = 5988
+cum_tokens = 6134
 
 [batches.content]
 kind = "lines"
@@ -5747,11 +5783,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 222
+position = 224
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_auth.go", start_line: 15 })'
 descriptor = "go decl at pkg/container/docker_auth.go:15"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 6134
 
 [batches.content]
 kind = "lines"
@@ -5765,11 +5801,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 223
+position = 225
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_auth.go", start_line: 42 })'
 descriptor = "go decl at pkg/container/docker_auth.go:42"
 cost_tokens = 0
-cum_tokens = 5988
+cum_tokens = 6134
 
 [batches.content]
 kind = "lines"
@@ -5783,11 +5819,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 224
+position = 226
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_build.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_build.go"
 cost_tokens = 52
-cum_tokens = 6040
+cum_tokens = 6186
 
 [batches.content]
 kind = "lines"
@@ -5825,11 +5861,11 @@ end = 79
 kind = "ellipsis"
 
 [[batches]]
-position = 225
+position = 227
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_build.go", start_line: 23 })'
 descriptor = "go decl at pkg/container/docker_build.go:23"
 cost_tokens = 0
-cum_tokens = 6040
+cum_tokens = 6186
 
 [batches.content]
 kind = "lines"
@@ -5843,11 +5879,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 226
+position = 228
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_build.go", start_line: 78 })'
 descriptor = "go decl at pkg/container/docker_build.go:78"
 cost_tokens = 0
-cum_tokens = 6040
+cum_tokens = 6186
 
 [batches.content]
 kind = "lines"
@@ -5861,11 +5897,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 227
+position = 229
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_build.go", start_line: 23 })'
 descriptor = "go decl doc at pkg/container/docker_build.go:23"
 cost_tokens = 19
-cum_tokens = 6059
+cum_tokens = 6205
 
 [batches.content]
 kind = "lines"
@@ -5879,11 +5915,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 228
+position = 230
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/util.go", start_line: 24 })'
 descriptor = "go decl body at pkg/container/util.go:24"
 cost_tokens = 7
-cum_tokens = 6066
+cum_tokens = 6212
 
 [batches.content]
 kind = "lines"
@@ -5897,11 +5933,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 229
+position = 231
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/executions_environment.go" })'
 descriptor = "go package + imports in pkg/container/executions_environment.go"
 cost_tokens = 15
-cum_tokens = 6081
+cum_tokens = 6227
 
 [batches.content]
 kind = "lines"
@@ -5923,11 +5959,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 230
+position = 232
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_images.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_images.go"
 cost_tokens = 58
-cum_tokens = 6139
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5965,11 +6001,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 231
+position = 233
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_images.go", start_line: 16 })'
 descriptor = "go decl at pkg/container/docker_images.go:16"
 cost_tokens = 0
-cum_tokens = 6139
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -5983,11 +6019,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 232
+position = 234
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_images.go", start_line: 44 })'
 descriptor = "go decl at pkg/container/docker_images.go:44"
 cost_tokens = 0
-cum_tokens = 6139
+cum_tokens = 6285
 
 [batches.content]
 kind = "lines"
@@ -6001,11 +6037,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 233
+position = 235
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_pull.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_pull.go"
 cost_tokens = 70
-cum_tokens = 6209
+cum_tokens = 6355
 
 [batches.content]
 kind = "lines"
@@ -6059,11 +6095,11 @@ end = 124
 kind = "ellipsis"
 
 [[batches]]
-position = 234
+position = 236
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_pull.go", start_line: 21 })'
 descriptor = "go decl at pkg/container/docker_pull.go:21"
 cost_tokens = 0
-cum_tokens = 6209
+cum_tokens = 6355
 
 [batches.content]
 kind = "lines"
@@ -6077,11 +6113,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 235
+position = 237
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_pull.go", start_line: 78 })'
 descriptor = "go decl at pkg/container/docker_pull.go:78"
 cost_tokens = 0
-cum_tokens = 6209
+cum_tokens = 6355
 
 [batches.content]
 kind = "lines"
@@ -6095,11 +6131,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 236
+position = 238
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_pull.go", start_line: 123 })'
 descriptor = "go decl at pkg/container/docker_pull.go:123"
 cost_tokens = 0
-cum_tokens = 6209
+cum_tokens = 6355
 
 [batches.content]
 kind = "lines"
@@ -6113,11 +6149,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 237
+position = 239
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_pull.go", start_line: 21 })'
 descriptor = "go decl doc at pkg/container/docker_pull.go:21"
 cost_tokens = 19
-cum_tokens = 6228
+cum_tokens = 6374
 
 [batches.content]
 kind = "lines"
@@ -6131,11 +6167,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 238
+position = 240
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata" })'
 descriptor = "listing of 'pkg/container/testdata'"
 cost_tokens = 37
-cum_tokens = 6265
+cum_tokens = 6411
 
 [batches.content]
 kind = "fs"
@@ -6145,11 +6181,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata"
 entries = ["Dockerfile", "docker-pull-options", "scratch", "utf16.env", "utf16be.env", "utf8.env", "valid.env", "valid.label"]
 
 [[batches]]
-position = 239
+position = 241
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_socket.go"
 cost_tokens = 83
-cum_tokens = 6348
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -6235,11 +6271,11 @@ end = 63
 kind = "ellipsis"
 
 [[batches]]
-position = 240
+position = 242
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", start_line: 23 })'
 descriptor = "go decl at pkg/container/docker_socket.go:23"
 cost_tokens = 0
-cum_tokens = 6348
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -6253,11 +6289,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 241
+position = 243
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", start_line: 45 })'
 descriptor = "go decl at pkg/container/docker_socket.go:45"
 cost_tokens = 0
-cum_tokens = 6348
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -6271,11 +6307,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 242
+position = 244
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", start_line: 62 })'
 descriptor = "go decl at pkg/container/docker_socket.go:62"
 cost_tokens = 0
-cum_tokens = 6348
+cum_tokens = 6494
 
 [batches.content]
 kind = "lines"
@@ -6289,11 +6325,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 243
+position = 245
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", start_line: 57 })'
 descriptor = "go decl at pkg/container/docker_socket.go:57"
 cost_tokens = 20
-cum_tokens = 6368
+cum_tokens = 6514
 
 [batches.content]
 kind = "lines"
@@ -6307,11 +6343,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 244
+position = 246
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_images.go", start_line: 44 })'
 descriptor = "go decl doc at pkg/container/docker_images.go:44"
 cost_tokens = 30
-cum_tokens = 6398
+cum_tokens = 6544
 
 [batches.content]
 kind = "lines"
@@ -6325,11 +6361,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 245
+position = 247
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_logger.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_logger.go"
 cost_tokens = 86
-cum_tokens = 6484
+cum_tokens = 6630
 
 [batches.content]
 kind = "lines"
@@ -6399,11 +6435,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 246
+position = 248
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_logger.go", start_line: 27 })'
 descriptor = "go decl at pkg/container/docker_logger.go:27"
 cost_tokens = 0
-cum_tokens = 6484
+cum_tokens = 6630
 
 [batches.content]
 kind = "lines"
@@ -6417,11 +6453,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 247
+position = 249
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_logger.go", start_line: 77 })'
 descriptor = "go decl at pkg/container/docker_logger.go:77"
 cost_tokens = 0
-cum_tokens = 6484
+cum_tokens = 6630
 
 [batches.content]
 kind = "lines"
@@ -6435,11 +6471,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 248
+position = 250
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_socket.go", start_line: 23 })'
 descriptor = "go decl doc at pkg/container/docker_socket.go:23"
 cost_tokens = 15
-cum_tokens = 6499
+cum_tokens = 6645
 
 [batches.content]
 kind = "lines"
@@ -6453,11 +6489,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 249
+position = 251
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/container_types.go"
 cost_tokens = 102
-cum_tokens = 6601
+cum_tokens = 6747
 
 [batches.content]
 kind = "lines"
@@ -6575,11 +6611,11 @@ end = 84
 kind = "ellipsis"
 
 [[batches]]
-position = 250
+position = 252
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 80 })'
 descriptor = "go decl at pkg/container/container_types.go:80"
 cost_tokens = 9
-cum_tokens = 6610
+cum_tokens = 6756
 
 [batches.content]
 kind = "lines"
@@ -6593,11 +6629,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 251
+position = 253
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 36 })'
 descriptor = "go decl at pkg/container/container_types.go:36"
 cost_tokens = 27
-cum_tokens = 6637
+cum_tokens = 6783
 
 [batches.content]
 kind = "lines"
@@ -6611,11 +6647,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 252
+position = 254
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 36 })'
 descriptor = "go decl doc at pkg/container/container_types.go:36"
 cost_tokens = 16
-cum_tokens = 6653
+cum_tokens = 6799
 
 [batches.content]
 kind = "lines"
@@ -6629,11 +6665,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 253
+position = 255
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 70 })'
 descriptor = "go decl at pkg/container/container_types.go:70"
 cost_tokens = 47
-cum_tokens = 6700
+cum_tokens = 6846
 
 [batches.content]
 kind = "lines"
@@ -6647,11 +6683,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 254
+position = 256
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 70 })'
 descriptor = "go decl doc at pkg/container/container_types.go:70"
 cost_tokens = 20
-cum_tokens = 6720
+cum_tokens = 6866
 
 [batches.content]
 kind = "lines"
@@ -6665,11 +6701,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 255
+position = 257
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 61 })'
 descriptor = "go decl at pkg/container/container_types.go:61"
 cost_tokens = 50
-cum_tokens = 6770
+cum_tokens = 6916
 
 [batches.content]
 kind = "lines"
@@ -6683,11 +6719,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 256
+position = 258
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/container_types.go", start_line: 61 })'
 descriptor = "go decl doc at pkg/container/container_types.go:61"
 cost_tokens = 20
-cum_tokens = 6790
+cum_tokens = 6936
 
 [batches.content]
 kind = "lines"
@@ -6701,11 +6737,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 257
+position = 259
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_images.go", start_line: 16 })'
 descriptor = "go decl doc at pkg/container/docker_images.go:16"
 cost_tokens = 38
-cum_tokens = 6828
+cum_tokens = 6974
 
 [batches.content]
 kind = "lines"
@@ -6719,11 +6755,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 258
+position = 260
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata/docker-pull-options" })'
 descriptor = "listing of 'pkg/container/testdata/docker-pull-options'"
 cost_tokens = 4
-cum_tokens = 6832
+cum_tokens = 6978
 
 [batches.content]
 kind = "fs"
@@ -6733,11 +6769,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata/
 entries = ["config.json"]
 
 [[batches]]
-position = 259
+position = 261
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata/scratch" })'
 descriptor = "listing of 'pkg/container/testdata/scratch'"
 cost_tokens = 4
-cum_tokens = 6836
+cum_tokens = 6982
 
 [batches.content]
 kind = "fs"
@@ -6747,11 +6783,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/testdata/
 entries = ["test.txt"]
 
 [[batches]]
-position = 260
+position = 262
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/linux_container_environment_extensions.go"
 cost_tokens = 159
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6885,11 +6921,11 @@ end = 76
 kind = "ellipsis"
 
 [[batches]]
-position = 261
+position = 263
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 19 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:19"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6903,11 +6939,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 262
+position = 264
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 50 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:50"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6921,11 +6957,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 263
+position = 265
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 54 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:54"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6939,11 +6975,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 264
+position = 266
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 58 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:58"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6957,11 +6993,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 265
+position = 267
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 62 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:62"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6975,11 +7011,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 266
+position = 268
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 66 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:66"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -6993,11 +7029,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 267
+position = 269
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 75 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:75"
 cost_tokens = 0
-cum_tokens = 6995
+cum_tokens = 7141
 
 [batches.content]
 kind = "lines"
@@ -7011,11 +7047,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 268
+position = 270
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 13 })'
 descriptor = "go decl at pkg/container/linux_container_environment_extensions.go:13"
 cost_tokens = 3
-cum_tokens = 6998
+cum_tokens = 7144
 
 [batches.content]
 kind = "lines"
@@ -7029,11 +7065,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 269
+position = 271
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 75 })'
 descriptor = "go decl body at pkg/container/linux_container_environment_extensions.go:75"
 cost_tokens = 5
-cum_tokens = 7003
+cum_tokens = 7149
 
 [batches.content]
 kind = "lines"
@@ -7047,11 +7083,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 270
+position = 272
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 54 })'
 descriptor = "go decl body at pkg/container/linux_container_environment_extensions.go:54"
 cost_tokens = 6
-cum_tokens = 7009
+cum_tokens = 7155
 
 [batches.content]
 kind = "lines"
@@ -7065,11 +7101,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 271
+position = 273
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 50 })'
 descriptor = "go decl body at pkg/container/linux_container_environment_extensions.go:50"
 cost_tokens = 9
-cum_tokens = 7018
+cum_tokens = 7164
 
 [batches.content]
 kind = "lines"
@@ -7083,11 +7119,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 272
+position = 274
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 62 })'
 descriptor = "go decl body at pkg/container/linux_container_environment_extensions.go:62"
 cost_tokens = 9
-cum_tokens = 7027
+cum_tokens = 7173
 
 [batches.content]
 kind = "lines"
@@ -7101,11 +7137,11 @@ end = 63
 kind = "full"
 
 [[batches]]
-position = 273
+position = 275
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 58 })'
 descriptor = "go decl body at pkg/container/linux_container_environment_extensions.go:58"
 cost_tokens = 25
-cum_tokens = 7052
+cum_tokens = 7198
 
 [batches.content]
 kind = "lines"
@@ -7119,11 +7155,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 274
+position = 276
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/executions_environment.go", start_line: 5 })'
 descriptor = "go decl at pkg/container/executions_environment.go:5"
 cost_tokens = 108
-cum_tokens = 7160
+cum_tokens = 7306
 
 [batches.content]
 kind = "lines"
@@ -7137,11 +7173,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 275
+position = 277
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/util.go" })'
 descriptor = "go package + imports in pkg/container/util.go"
 cost_tokens = 47
-cum_tokens = 7207
+cum_tokens = 7353
 
 [batches.content]
 kind = "lines"
@@ -7171,11 +7207,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 276
+position = 278
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/linux_container_environment_extensions.go", start_line: 19 })'
 descriptor = "go decl doc at pkg/container/linux_container_environment_extensions.go:19"
 cost_tokens = 60
-cum_tokens = 7267
+cum_tokens = 7413
 
 [batches.content]
 kind = "lines"
@@ -7189,11 +7225,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 277
+position = 279
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/context.go" })'
 descriptor = "go package + imports in pkg/common/context.go"
 cost_tokens = 50
-cum_tokens = 7317
+cum_tokens = 7463
 
 [batches.content]
 kind = "lines"
@@ -7210,76 +7246,76 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/context.go"
 start = 3
 end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 278
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go" })'
-descriptor = "go package + imports in pkg/gh/gh.go"
-cost_tokens = 50
-cum_tokens = 7367
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go"
-start = 3
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 279
-key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go" })'
-descriptor = "go package + imports in pkg/container/docker_network.go"
-cost_tokens = 53
-cum_tokens = 7420
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
-start = 8
-end = 10
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 280
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go" })'
+descriptor = "go package + imports in pkg/gh/gh.go"
+cost_tokens = 50
+cum_tokens = 7513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/gh/gh.go"
+start = 3
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 281
+key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go" })'
+descriptor = "go package + imports in pkg/container/docker_network.go"
+cost_tokens = 53
+cum_tokens = 7566
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_network.go"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 282
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_volume.go" })'
 descriptor = "go package + imports in pkg/container/docker_volume.go"
 cost_tokens = 53
-cum_tokens = 7473
+cum_tokens = 7619
 
 [batches.content]
 kind = "lines"
@@ -7309,11 +7345,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 281
+position = 283
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", chunk_index: 0 })'
 descriptor = "go decl names surface in cmd/root.go"
 cost_tokens = 372
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7639,11 +7675,11 @@ end = 760
 kind = "ellipsis"
 
 [[batches]]
-position = 282
+position = 284
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 47 })'
 descriptor = "go decl at cmd/root.go:47"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7657,11 +7693,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 283
+position = 285
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 56 })'
 descriptor = "go decl at cmd/root.go:56"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7675,11 +7711,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 284
+position = 286
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 138 })'
 descriptor = "go decl at cmd/root.go:138"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7693,11 +7729,11 @@ end = 138
 kind = "full"
 
 [[batches]]
-position = 285
+position = 287
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 155 })'
 descriptor = "go decl at cmd/root.go:155"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7711,11 +7747,11 @@ end = 155
 kind = "full"
 
 [[batches]]
-position = 286
+position = 288
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 167 })'
 descriptor = "go decl at cmd/root.go:167"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7729,11 +7765,11 @@ end = 167
 kind = "full"
 
 [[batches]]
-position = 287
+position = 289
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 256 })'
 descriptor = "go decl at cmd/root.go:256"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7747,11 +7783,11 @@ end = 256
 kind = "full"
 
 [[batches]]
-position = 288
+position = 290
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 268 })'
 descriptor = "go decl at cmd/root.go:268"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7765,11 +7801,11 @@ end = 268
 kind = "full"
 
 [[batches]]
-position = 289
+position = 291
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 278 })'
 descriptor = "go decl at cmd/root.go:278"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7783,11 +7819,11 @@ end = 278
 kind = "full"
 
 [[batches]]
-position = 290
+position = 292
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 304 })'
 descriptor = "go decl at cmd/root.go:304"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7801,11 +7837,11 @@ end = 304
 kind = "full"
 
 [[batches]]
-position = 291
+position = 293
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 314 })'
 descriptor = "go decl at cmd/root.go:314"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7819,11 +7855,11 @@ end = 314
 kind = "full"
 
 [[batches]]
-position = 292
+position = 294
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 320 })'
 descriptor = "go decl at cmd/root.go:320"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7837,11 +7873,11 @@ end = 320
 kind = "full"
 
 [[batches]]
-position = 293
+position = 295
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 333 })'
 descriptor = "go decl at cmd/root.go:333"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7855,11 +7891,11 @@ end = 333
 kind = "full"
 
 [[batches]]
-position = 294
+position = 296
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 345 })'
 descriptor = "go decl at cmd/root.go:345"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7873,11 +7909,11 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 295
+position = 297
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 349 })'
 descriptor = "go decl at cmd/root.go:349"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7891,11 +7927,11 @@ end = 349
 kind = "full"
 
 [[batches]]
-position = 296
+position = 298
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 373 })'
 descriptor = "go decl at cmd/root.go:373"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7909,11 +7945,11 @@ end = 373
 kind = "full"
 
 [[batches]]
-position = 297
+position = 299
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 391 })'
 descriptor = "go decl at cmd/root.go:391"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7927,11 +7963,11 @@ end = 391
 kind = "full"
 
 [[batches]]
-position = 298
+position = 300
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 716 })'
 descriptor = "go decl at cmd/root.go:716"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7945,11 +7981,11 @@ end = 716
 kind = "full"
 
 [[batches]]
-position = 299
+position = 301
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 759 })'
 descriptor = "go decl at cmd/root.go:759"
 cost_tokens = 0
-cum_tokens = 7845
+cum_tokens = 7991
 
 [batches.content]
 kind = "lines"
@@ -7963,11 +7999,11 @@ end = 759
 kind = "full"
 
 [[batches]]
-position = 300
+position = 302
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 47 })'
 descriptor = "go decl doc at cmd/root.go:47"
 cost_tokens = 15
-cum_tokens = 7860
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -7981,11 +8017,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 301
+position = 303
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 37 })'
 descriptor = "go decl at cmd/root.go:37"
 cost_tokens = 50
-cum_tokens = 7910
+cum_tokens = 8056
 
 [batches.content]
 kind = "lines"
@@ -7999,11 +8035,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 302
+position = 304
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 391 })'
 descriptor = "go decl doc at cmd/root.go:391"
 cost_tokens = 12
-cum_tokens = 7922
+cum_tokens = 8068
 
 [batches.content]
 kind = "lines"
@@ -8017,11 +8053,11 @@ end = 390
 kind = "full"
 
 [[batches]]
-position = 303
+position = 305
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 345 })'
 descriptor = "go decl body at cmd/root.go:345"
 cost_tokens = 14
-cum_tokens = 7936
+cum_tokens = 8082
 
 [batches.content]
 kind = "lines"
@@ -8035,11 +8071,11 @@ end = 346
 kind = "full"
 
 [[batches]]
-position = 304
+position = 306
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 138 })'
 descriptor = "go decl doc at cmd/root.go:138"
 cost_tokens = 35
-cum_tokens = 7971
+cum_tokens = 8117
 
 [batches.content]
 kind = "lines"
@@ -8053,11 +8089,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 305
+position = 307
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 47 })'
 descriptor = "go decl body at cmd/root.go:47"
 cost_tokens = 54
-cum_tokens = 8025
+cum_tokens = 8171
 
 [batches.content]
 kind = "lines"
@@ -8079,11 +8115,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 306
+position = 308
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/cmd/root.go", start_line: 314 })'
 descriptor = "go decl body at cmd/root.go:314"
 cost_tokens = 30
-cum_tokens = 8055
+cum_tokens = 8201
 
 [batches.content]
 kind = "lines"
@@ -8097,11 +8133,11 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 307
+position = 309
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/executor.go" })'
 descriptor = "go package + imports in pkg/common/executor.go"
 cost_tokens = 54
-cum_tokens = 8109
+cum_tokens = 8255
 
 [batches.content]
 kind = "lines"
@@ -8131,11 +8167,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 308
+position = 310
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/common/outbound_ip.go", start_line: 13 })'
 descriptor = "go decl doc at pkg/common/outbound_ip.go:13"
 cost_tokens = 76
-cum_tokens = 8185
+cum_tokens = 8331
 
 [batches.content]
 kind = "lines"
@@ -8149,11 +8185,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 309
+position = 311
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner" })'
 descriptor = "listing of 'pkg/runner'"
 cost_tokens = 186
-cum_tokens = 8371
+cum_tokens = 8517
 
 [batches.content]
 kind = "fs"
@@ -8163,11 +8199,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner"
 entries = ["action.go", "action_cache.go", "action_cache_offline_mode.go", "action_cache_test.go", "action_composite.go", "action_test.go", "command.go", "command_test.go", "container_mock_test.go", "expression.go", "expression_test.go", "hashfiles", "job_executor.go", "job_executor_test.go", "local_repository_cache.go", "logger.go", "res", "reusable_workflow.go", "run_context.go", "run_context_test.go", "runner.go", "runner_test.go", "step.go", "step_action_local.go", "step_action_local_test.go", "step_action_remote.go", "step_action_remote_test.go", "step_docker.go", "step_docker_test.go", "step_factory.go", "step_factory_test.go", "step_run.go", "step_run_test.go", "step_test.go", "testdata"]
 
 [[batches]]
-position = 310
+position = 312
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/step_factory.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/step_factory.go"
 cost_tokens = 56
-cum_tokens = 8427
+cum_tokens = 8573
 
 [batches.content]
 kind = "lines"
@@ -8221,11 +8257,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 311
+position = 313
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/step_factory.go", start_line: 15 })'
 descriptor = "go decl at pkg/runner/step_factory.go:15"
 cost_tokens = 0
-cum_tokens = 8427
+cum_tokens = 8573
 
 [batches.content]
 kind = "lines"
@@ -8239,11 +8275,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 312
+position = 314
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/step_factory.go", start_line: 9 })'
 descriptor = "go decl at pkg/runner/step_factory.go:9"
 cost_tokens = 24
-cum_tokens = 8451
+cum_tokens = 8597
 
 [batches.content]
 kind = "lines"
@@ -8257,11 +8293,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 313
+position = 315
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/hashfiles" })'
 descriptor = "listing of 'pkg/runner/hashfiles'"
 cost_tokens = 4
-cum_tokens = 8455
+cum_tokens = 8601
 
 [batches.content]
 kind = "fs"
@@ -8271,11 +8307,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/hashfiles"
 entries = ["index.js"]
 
 [[batches]]
-position = 314
+position = 316
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/res" })'
 descriptor = "listing of 'pkg/runner/res'"
 cost_tokens = 4
-cum_tokens = 8459
+cum_tokens = 8605
 
 [batches.content]
 kind = "fs"
@@ -8285,11 +8321,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/res"
 entries = ["trampoline.js"]
 
 [[batches]]
-position = 315
+position = 317
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/local_repository_cache.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/local_repository_cache.go"
 cost_tokens = 85
-cum_tokens = 8544
+cum_tokens = 8690
 
 [batches.content]
 kind = "lines"
@@ -8343,11 +8379,11 @@ end = 45
 kind = "ellipsis"
 
 [[batches]]
-position = 316
+position = 318
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/local_repository_cache.go", start_line: 25 })'
 descriptor = "go decl at pkg/runner/local_repository_cache.go:25"
 cost_tokens = 0
-cum_tokens = 8544
+cum_tokens = 8690
 
 [batches.content]
 kind = "lines"
@@ -8361,11 +8397,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 317
+position = 319
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/local_repository_cache.go", start_line: 44 })'
 descriptor = "go decl at pkg/runner/local_repository_cache.go:44"
 cost_tokens = 0
-cum_tokens = 8544
+cum_tokens = 8690
 
 [batches.content]
 kind = "lines"
@@ -8379,11 +8415,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 318
+position = 320
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/local_repository_cache.go", start_line: 19 })'
 descriptor = "go decl at pkg/runner/local_repository_cache.go:19"
 cost_tokens = 36
-cum_tokens = 8580
+cum_tokens = 8726
 
 [batches.content]
 kind = "lines"
@@ -8397,11 +8433,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 319
+position = 321
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_cache_offline_mode.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/action_cache_offline_mode.go"
 cost_tokens = 92
-cum_tokens = 8672
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -8455,11 +8491,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 320
+position = 322
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_cache_offline_mode.go", start_line: 17 })'
 descriptor = "go decl at pkg/runner/action_cache_offline_mode.go:17"
 cost_tokens = 0
-cum_tokens = 8672
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -8473,11 +8509,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 321
+position = 323
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_cache_offline_mode.go", start_line: 45 })'
 descriptor = "go decl at pkg/runner/action_cache_offline_mode.go:45"
 cost_tokens = 0
-cum_tokens = 8672
+cum_tokens = 8818
 
 [batches.content]
 kind = "lines"
@@ -8491,11 +8527,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 322
+position = 324
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_cache_offline_mode.go", start_line: 13 })'
 descriptor = "go decl at pkg/runner/action_cache_offline_mode.go:13"
 cost_tokens = 14
-cum_tokens = 8686
+cum_tokens = 8832
 
 [batches.content]
 kind = "lines"
@@ -8509,11 +8545,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 323
+position = 325
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_cache_offline_mode.go", start_line: 45 })'
 descriptor = "go decl body at pkg/runner/action_cache_offline_mode.go:45"
 cost_tokens = 18
-cum_tokens = 8704
+cum_tokens = 8850
 
 [batches.content]
 kind = "lines"
@@ -8527,11 +8563,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 324
+position = 326
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/job_executor.go"
 cost_tokens = 116
-cum_tokens = 8820
+cum_tokens = 8966
 
 [batches.content]
 kind = "lines"
@@ -8617,11 +8653,11 @@ end = 201
 kind = "ellipsis"
 
 [[batches]]
-position = 325
+position = 327
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", start_line: 23 })'
 descriptor = "go decl at pkg/runner/job_executor.go:23"
 cost_tokens = 0
-cum_tokens = 8820
+cum_tokens = 8966
 
 [batches.content]
 kind = "lines"
@@ -8635,11 +8671,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 326
+position = 328
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", start_line: 157 })'
 descriptor = "go decl at pkg/runner/job_executor.go:157"
 cost_tokens = 0
-cum_tokens = 8820
+cum_tokens = 8966
 
 [batches.content]
 kind = "lines"
@@ -8653,11 +8689,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 327
+position = 329
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", start_line: 185 })'
 descriptor = "go decl at pkg/runner/job_executor.go:185"
 cost_tokens = 0
-cum_tokens = 8820
+cum_tokens = 8966
 
 [batches.content]
 kind = "lines"
@@ -8671,11 +8707,11 @@ end = 185
 kind = "full"
 
 [[batches]]
-position = 328
+position = 330
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", start_line: 200 })'
 descriptor = "go decl at pkg/runner/job_executor.go:200"
 cost_tokens = 0
-cum_tokens = 8820
+cum_tokens = 8966
 
 [batches.content]
 kind = "lines"
@@ -8689,11 +8725,11 @@ end = 200
 kind = "full"
 
 [[batches]]
-position = 329
+position = 331
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/job_executor.go", start_line: 23 })'
 descriptor = "go decl doc at pkg/runner/job_executor.go:23"
 cost_tokens = 11
-cum_tokens = 8831
+cum_tokens = 8977
 
 [batches.content]
 kind = "lines"
@@ -8707,11 +8743,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 330
+position = 332
 key = 'Go(PackageImports { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/step_factory.go" })'
 descriptor = "go package + imports in pkg/runner/step_factory.go"
 cost_tokens = 40
-cum_tokens = 8871
+cum_tokens = 9017
 
 [batches.content]
 kind = "lines"
@@ -8741,11 +8777,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 331
+position = 333
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/action_composite.go"
 cost_tokens = 163
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8863,11 +8899,11 @@ end = 223
 kind = "ellipsis"
 
 [[batches]]
-position = 332
+position = 334
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 13 })'
 descriptor = "go decl at pkg/runner/action_composite.go:13"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8881,11 +8917,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 333
+position = 335
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 47 })'
 descriptor = "go decl at pkg/runner/action_composite.go:47"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8899,11 +8935,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 334
+position = 336
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 84 })'
 descriptor = "go decl at pkg/runner/action_composite.go:84"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8917,11 +8953,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 335
+position = 337
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 133 })'
 descriptor = "go decl at pkg/runner/action_composite.go:133"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8935,11 +8971,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 336
+position = 338
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 197 })'
 descriptor = "go decl at pkg/runner/action_composite.go:197"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8953,11 +8989,11 @@ end = 197
 kind = "full"
 
 [[batches]]
-position = 337
+position = 339
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 222 })'
 descriptor = "go decl at pkg/runner/action_composite.go:222"
 cost_tokens = 0
-cum_tokens = 9034
+cum_tokens = 9180
 
 [batches.content]
 kind = "lines"
@@ -8971,11 +9007,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 338
+position = 340
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 126 })'
 descriptor = "go decl at pkg/runner/action_composite.go:126"
 cost_tokens = 28
-cum_tokens = 9062
+cum_tokens = 9208
 
 [batches.content]
 kind = "lines"
@@ -8989,11 +9025,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 339
+position = 341
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/action_composite.go", start_line: 133 })'
 descriptor = "go decl doc at pkg/runner/action_composite.go:133"
 cost_tokens = 18
-cum_tokens = 9080
+cum_tokens = 9226
 
 [batches.content]
 kind = "lines"
@@ -9007,11 +9043,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 340
+position = 342
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/runner/runner.go"
 cost_tokens = 210
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9193,11 +9229,11 @@ end = 254
 kind = "ellipsis"
 
 [[batches]]
-position = 341
+position = 343
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 67 })'
 descriptor = "go decl at pkg/runner/runner.go:67"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9211,11 +9247,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 342
+position = 344
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 91 })'
 descriptor = "go decl at pkg/runner/runner.go:91"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9229,11 +9265,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 343
+position = 345
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 99 })'
 descriptor = "go decl at pkg/runner/runner.go:99"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9247,11 +9283,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 344
+position = 346
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 122 })'
 descriptor = "go decl at pkg/runner/runner.go:122"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9265,11 +9301,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 345
+position = 347
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 221 })'
 descriptor = "go decl at pkg/runner/runner.go:221"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9283,11 +9319,11 @@ end = 221
 kind = "full"
 
 [[batches]]
-position = 346
+position = 348
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 234 })'
 descriptor = "go decl at pkg/runner/runner.go:234"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9301,11 +9337,11 @@ end = 234
 kind = "full"
 
 [[batches]]
-position = 347
+position = 349
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 253 })'
 descriptor = "go decl at pkg/runner/runner.go:253"
 cost_tokens = 0
-cum_tokens = 9290
+cum_tokens = 9436
 
 [batches.content]
 kind = "lines"
@@ -9319,11 +9355,11 @@ end = 253
 kind = "full"
 
 [[batches]]
-position = 348
+position = 350
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 17 })'
 descriptor = "go decl at pkg/runner/runner.go:17"
 cost_tokens = 18
-cum_tokens = 9308
+cum_tokens = 9454
 
 [batches.content]
 kind = "lines"
@@ -9337,11 +9373,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 349
+position = 351
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 91 })'
 descriptor = "go decl doc at pkg/runner/runner.go:91"
 cost_tokens = 11
-cum_tokens = 9319
+cum_tokens = 9465
 
 [batches.content]
 kind = "lines"
@@ -9355,11 +9391,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 350
+position = 352
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 17 })'
 descriptor = "go decl doc at pkg/runner/runner.go:17"
 cost_tokens = 14
-cum_tokens = 9333
+cum_tokens = 9479
 
 [batches.content]
 kind = "lines"
@@ -9373,11 +9409,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 351
+position = 353
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 80 })'
 descriptor = "go decl at pkg/runner/runner.go:80"
 cost_tokens = 13
-cum_tokens = 9346
+cum_tokens = 9492
 
 [batches.content]
 kind = "lines"
@@ -9391,11 +9427,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 352
+position = 354
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 122 })'
 descriptor = "go decl doc at pkg/runner/runner.go:122"
 cost_tokens = 9
-cum_tokens = 9355
+cum_tokens = 9501
 
 [batches.content]
 kind = "lines"
@@ -9409,11 +9445,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 353
+position = 355
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 91 })'
 descriptor = "go decl body at pkg/runner/runner.go:91"
 cost_tokens = 33
-cum_tokens = 9388
+cum_tokens = 9534
 
 [batches.content]
 kind = "lines"
@@ -9435,11 +9471,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 354
+position = 356
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/runner/runner.go", start_line: 84 })'
 descriptor = "go decl at pkg/runner/runner.go:84"
 cost_tokens = 42
-cum_tokens = 9430
+cum_tokens = 9576
 
 [batches.content]
 kind = "lines"
@@ -9453,11 +9489,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 355
+position = 357
 key = 'Go(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", chunk_index: 0 })'
 descriptor = "go decl names surface in pkg/container/docker_stub.go"
 cost_tokens = 214
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9623,11 +9659,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 356
+position = 358
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 16 })'
 descriptor = "go decl at pkg/container/docker_stub.go:16"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9641,11 +9677,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 357
+position = 359
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 22 })'
 descriptor = "go decl at pkg/container/docker_stub.go:22"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9659,11 +9695,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 358
+position = 360
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 27 })'
 descriptor = "go decl at pkg/container/docker_stub.go:27"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9677,11 +9713,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 359
+position = 361
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 34 })'
 descriptor = "go decl at pkg/container/docker_stub.go:34"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9695,11 +9731,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 360
+position = 362
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 41 })'
 descriptor = "go decl at pkg/container/docker_stub.go:41"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9713,11 +9749,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 361
+position = 363
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 45 })'
 descriptor = "go decl at pkg/container/docker_stub.go:45"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9731,11 +9767,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 362
+position = 364
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 49 })'
 descriptor = "go decl at pkg/container/docker_stub.go:49"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9749,11 +9785,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 363
+position = 365
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 53 })'
 descriptor = "go decl at pkg/container/docker_stub.go:53"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9767,11 +9803,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 364
+position = 366
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 59 })'
 descriptor = "go decl at pkg/container/docker_stub.go:59"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9785,11 +9821,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 365
+position = 367
 key = 'Go(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 65 })'
 descriptor = "go decl at pkg/container/docker_stub.go:65"
 cost_tokens = 0
-cum_tokens = 9644
+cum_tokens = 9790
 
 [batches.content]
 kind = "lines"
@@ -9803,11 +9839,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 366
+position = 368
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 41 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:41"
 cost_tokens = 5
-cum_tokens = 9649
+cum_tokens = 9795
 
 [batches.content]
 kind = "lines"
@@ -9821,11 +9857,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 367
+position = 369
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 45 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:45"
 cost_tokens = 8
-cum_tokens = 9657
+cum_tokens = 9803
 
 [batches.content]
 kind = "lines"
@@ -9839,11 +9875,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 368
+position = 370
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 49 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:49"
 cost_tokens = 8
-cum_tokens = 9665
+cum_tokens = 9811
 
 [batches.content]
 kind = "lines"
@@ -9857,11 +9893,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 369
+position = 371
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 16 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:16"
 cost_tokens = 11
-cum_tokens = 9676
+cum_tokens = 9822
 
 [batches.content]
 kind = "lines"
@@ -9875,11 +9911,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 370
+position = 372
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 22 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:22"
 cost_tokens = 11
-cum_tokens = 9687
+cum_tokens = 9833
 
 [batches.content]
 kind = "lines"
@@ -9893,11 +9929,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 371
+position = 373
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 41 })'
 descriptor = "go decl doc at pkg/container/docker_stub.go:41"
 cost_tokens = 14
-cum_tokens = 9701
+cum_tokens = 9847
 
 [batches.content]
 kind = "lines"
@@ -9911,11 +9947,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 372
+position = 374
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 27 })'
 descriptor = "go decl doc at pkg/container/docker_stub.go:27"
 cost_tokens = 19
-cum_tokens = 9720
+cum_tokens = 9866
 
 [batches.content]
 kind = "lines"
@@ -9929,11 +9965,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 373
+position = 375
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 34 })'
 descriptor = "go decl doc at pkg/container/docker_stub.go:34"
 cost_tokens = 19
-cum_tokens = 9739
+cum_tokens = 9885
 
 [batches.content]
 kind = "lines"
@@ -9947,11 +9983,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 374
+position = 376
 key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 22 })'
 descriptor = "go decl doc at pkg/container/docker_stub.go:22"
 cost_tokens = 30
-cum_tokens = 9769
+cum_tokens = 9915
 
 [batches.content]
 kind = "lines"
@@ -9965,11 +10001,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 375
+position = 377
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 53 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:53"
 cost_tokens = 24
-cum_tokens = 9793
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -9983,11 +10019,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 376
+position = 378
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 59 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:59"
 cost_tokens = 24
-cum_tokens = 9817
+cum_tokens = 9963
 
 [batches.content]
 kind = "lines"
@@ -10001,11 +10037,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 377
+position = 379
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 65 })'
 descriptor = "go decl body at pkg/container/docker_stub.go:65"
 cost_tokens = 24
-cum_tokens = 9841
+cum_tokens = 9987
 
 [batches.content]
 kind = "lines"
@@ -10014,60 +10050,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go"
 start = 66
 end = 68
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 378
-key = 'Go(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 16 })'
-descriptor = "go decl doc at pkg/container/docker_stub.go:16"
-cost_tokens = 38
-cum_tokens = 9879
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go"
-start = 14
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 379
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 27 })'
-descriptor = "go decl body at pkg/container/docker_stub.go:27"
-cost_tokens = 28
-cum_tokens = 9907
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go"
-start = 28
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 380
-key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go", start_line: 34 })'
-descriptor = "go decl body at pkg/container/docker_stub.go:34"
-cost_tokens = 28
-cum_tokens = 9935
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/act/pkg/container/docker_stub.go"
-start = 35
-end = 37
 
 [batches.content.spans.render]
 kind = "full"

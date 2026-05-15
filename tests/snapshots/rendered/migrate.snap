@@ -137,17 +137,7 @@ database/
     neo4j/
     parse_test.go
     pgx/
-        README.md
-        examples/
-        pgx.go
-        pgx_test.go
-        v5/
     postgres/
-        README.md
-        TUTORIAL.md
-        examples/
-        postgres.go
-        postgres_test.go
     ql/
         README.md
         examples/
@@ -161,12 +151,6 @@ database/
         redshift.go
         redshift_test.go
     rqlite/
-        README.md
-            1→# rqlite
-            3→`rqlite://admin:secret@server1.example.com:4001/?level=strong&timeout=5`
-        examples/
-        rqlite.go
-        rqlite_test.go
     shell/
     snowflake/
     spanner/
@@ -198,9 +182,6 @@ database/
         sqlite3_test.go
     sqlserver/
         README.md
-            1→# Microsoft SQL Server
-            3→`sqlserver://username:password@host/instance?param1=value&param2=value`
-            4→`sqlserver://username:password@host:port?param1=value&param2=value`
         examples/
         sqlserver.go
         sqlserver_test.go
@@ -241,6 +222,10 @@ log.go
     11→	Verbose() bool
     12→}
 migrate.go
+    1→// Package migrate reads migrations from sources and runs them against databases.
+    2→// Sources are defined by the `source.Driver` and databases by the `database.Driver`
+    3→// interface. The driver interfaces are kept "dumb", all migration logic is kept
+    4→// in this package.
     5→package migrate
     7→import (
     8→	"errors"
@@ -283,6 +268,10 @@ source/
         bitbucket.go
         bitbucket_test.go
     driver.go
+        1→// Package source provides the Source interface.
+        2→// All source drivers must implement this interface, register themselves,
+        3→// optionally provide a `WithInstance` function and pass the tests
+        4→// in package source/testing.
     driver_test.go
     errors.go
         1→package source
