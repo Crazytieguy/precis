@@ -39,7 +39,7 @@ done
 
 # 2. Regenerate baselines against the current working tree.
 echo "Regenerating baselines (UPDATE_BASELINES=1 cargo t)…" >&2
-UPDATE_BASELINES=1 cargo t --quiet 2>&1 | tail -3 >&2
+UPDATE_BASELINES=1 cargo t 2>&1 | tail -5 >&2
 
 # 3. Post-state: read regenerated scores.
 for f in tests/divergence/*.md; do
