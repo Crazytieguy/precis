@@ -290,7 +290,49 @@ fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
         0.55,
         0.4,
         super::file_depth_factor(file, ctx, is_orientation_doc(file)),
-    )
+    ) * dense_md_sibling_factor(file)
+}
+
+/// Damp the per-file outline value for markdown files that sit in a
+/// directory with many `.md` siblings (`click/docs/` has 35, axios's
+/// translated `docs/<lang>/pages/advanced/` has 25 each). The
+/// directory *listing* already names every file; emitting a heading
+/// outline for each as a separate ranked batch crowds source content
+/// when NS authors typically anchor on at most a few of them. The
+/// `sqrt(threshold/N)` shape leaves dirs with ≤10 .md siblings at
+/// full weight and gently saturates above that. Root-level READMEs
+/// and `is_orientation_doc` files (ARCHITECTURE / OVERVIEW / DESIGN /
+/// STRUCTURE) are always exempt — their parent dir's count never
+/// applies to *them*; they're the anchor, not the noise.
+fn dense_md_sibling_factor(file: &Path) -> f64 {
+    if is_readme(file) || is_orientation_doc(file) {
+        return 1.0;
+    }
+    let Some(parent) = file.parent() else {
+        return 1.0;
+    };
+    const DENSE_THRESHOLD: usize = 10;
+    let Ok(read_dir) = std::fs::read_dir(parent) else {
+        return 1.0;
+    };
+    let mut count = 0usize;
+    for entry in read_dir.flatten() {
+        let path = entry.path();
+        if path
+            .extension()
+            .and_then(|e| e.to_str())
+            .is_some_and(|ext| ext.eq_ignore_ascii_case("md"))
+        {
+            count += 1;
+            if count > DENSE_THRESHOLD * 4 {
+                break;
+            }
+        }
+    }
+    if count <= DENSE_THRESHOLD {
+        return 1.0;
+    }
+    ((DENSE_THRESHOLD as f64) / (count as f64)).sqrt()
 }
 
 fn readme_section_value(

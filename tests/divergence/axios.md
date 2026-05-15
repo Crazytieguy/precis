@@ -9,25 +9,25 @@ Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | ns | 166 |  | 29 | lib/ direct children | 1.3 |  | 0.514 |
 | walker |  | 229 | 68 | package identity in package.json |  |  | 0.521 |
 | walker |  | 241 | 12 | listing of 'sandbox' |  |  | 0.521 |
-| walker |  | 283 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.521 |
-| walker |  | 312 | 29 | listing of 'lib' |  |  | 0.715 |
-| ns | 315 |  | 149 | package.json — name/version/main/module/type | 1.4 |  | 0.601 |
-| walker |  | 320 | 8 | listing of 'lib/defaults' |  |  | 0.602 |
-| walker |  | 328 | 8 | export names surface in lib/defaults/index.js |  |  | 0.602 |
-| walker |  | 341 | 13 | listing of 'lib/platform' |  |  | 0.604 |
-| walker |  | 350 | 9 | export names surface in lib/platform/index.js |  |  | 0.604 |
-| walker |  | 369 | 19 | export at lib/platform/index.js:4 |  |  | 0.604 |
-| walker |  | 377 | 8 | export names surface in lib/axios.js |  |  | 0.604 |
-| walker |  | 395 | 18 | module item at lib/defaults/index.js:23 |  |  | 0.604 |
+| walker |  | 270 | 29 | listing of 'lib' |  |  | 0.715 |
+| walker |  | 278 | 8 | listing of 'lib/defaults' |  |  | 0.715 |
+| walker |  | 286 | 8 | export names surface in lib/defaults/index.js |  |  | 0.715 |
+| walker |  | 299 | 13 | listing of 'lib/platform' |  |  | 0.717 |
+| walker |  | 308 | 9 | export names surface in lib/platform/index.js |  |  | 0.717 |
+| ns | 315 |  | 149 | package.json — name/version/main/module/type | 1.4 |  | 0.604 |
+| walker |  | 327 | 19 | export at lib/platform/index.js:4 |  |  | 0.604 |
+| walker |  | 335 | 8 | export names surface in lib/axios.js |  |  | 0.604 |
+| walker |  | 353 | 18 | module item at lib/defaults/index.js:23 |  |  | 0.604 |
+| walker |  | 395 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.604 |
 | ns | 400 |  | 85 | lib/core, lib/adapters, lib/cancel — children | 1.5 |  | 0.479 |
 | walker |  | 408 | 13 | imports in index.js |  |  | 0.479 |
 | walker |  | 425 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.479 |
-| walker |  | 495 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.479 |
-| walker |  | 574 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.479 |
-| ns | 590 |  | 190 | lib/helpers — full child listing | 1.6 |  | 0.361 |
-| ns | 671 |  | 81 | lib/defaults, lib/env, lib/platform — tree | 1.7 |  | 0.332 |
-| walker |  | 721 | 147 | export at index.js:26 |  |  | 0.335 |
-| walker |  | 754 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.335 |
+| walker |  | 572 | 147 | export at index.js:26 |  |  | 0.483 |
+| ns | 590 |  | 190 | lib/helpers — full child listing | 1.6 |  | 0.365 |
+| walker |  | 642 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.365 |
+| ns | 671 |  | 81 | lib/defaults, lib/env, lib/platform — tree | 1.7 |  | 0.335 |
+| walker |  | 675 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.335 |
+| walker |  | 754 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.335 |
 | walker |  | 774 | 20 | listing of 'lib/adapters' |  |  | 0.345 |
 | walker |  | 816 | 42 | README headline in lib/adapters/README.md |  |  | 0.345 |
 | walker |  | 842 | 26 | imports in lib/platform/index.js |  |  | 0.345 |
@@ -46,25 +46,25 @@ Score(3000)=0.340 I=0.438 C=0.265 ns_rows≤3K=15/40 (reached=4 partial=0 missin
 | walker |  | 1139 | 19 | listing of 'tests' |  |  | 0.346 |
 | walker |  | 1155 | 16 | listing of 'lib/cancel' |  |  | 0.361 |
 | ns | 1187 |  | 269 | AGENTS.md — Commands | 1.9 |  | 0.347 |
-| ns | 1378 |  | 191 | AGENTS.md — Package Shape | 1.10 |  | 0.336 |
-| walker |  | 1405 | 250 | headings outline in THREATMODEL.md |  |  | 0.336 |
-| walker |  | 1410 | 5 | THREATMODEL.md section #10 |  |  | 0.336 |
-| walker |  | 1415 | 5 | THREATMODEL.md section #24 |  |  | 0.336 |
-| walker |  | 1420 | 5 | THREATMODEL.md section #33 |  |  | 0.336 |
-| walker |  | 1425 | 5 | THREATMODEL.md section #44 |  |  | 0.336 |
-| walker |  | 1430 | 5 | THREATMODEL.md section #53 |  |  | 0.336 |
-| walker |  | 1496 | 66 | COLLABORATOR_GUIDE.md section #0 |  |  | 0.336 |
-| walker |  | 1545 | 49 | listing of 'lib/core' |  |  | 0.426 |
-| walker |  | 1610 | 65 | README headline in lib/core/README.md |  |  | 0.426 |
+| walker |  | 1221 | 66 | COLLABORATOR_GUIDE.md section #0 |  |  | 0.347 |
+| walker |  | 1270 | 49 | listing of 'lib/core' |  |  | 0.440 |
+| walker |  | 1335 | 65 | README headline in lib/core/README.md |  |  | 0.440 |
+| ns | 1378 |  | 191 | AGENTS.md — Package Shape | 1.10 |  | 0.426 |
+| walker |  | 1384 | 49 | lib/core/README.md section #0 |  |  | 0.426 |
+| walker |  | 1495 | 111 | module item body at lib/defaults/index.js:23 body 24 |  |  | 0.426 |
+| walker |  | 1503 | 8 | export names surface in lib/core/Axios.js |  |  | 0.426 |
+| walker |  | 1512 | 9 | export names surface in lib/adapters/adapters.js |  |  | 0.426 |
+| walker |  | 1521 | 9 | export names surface in lib/cancel/CancelToken.js |  |  | 0.426 |
+| walker |  | 1530 | 9 | export names surface in lib/core/AxiosError.js |  |  | 0.426 |
+| walker |  | 1539 | 9 | export names surface in lib/core/AxiosHeaders.js |  |  | 0.426 |
 | ns | 1642 |  | 264 | AGENTS.md — Naming Conventions + Common Pitfalls | 1.11 |  | 0.405 |
-| walker |  | 1659 | 49 | lib/core/README.md section #0 |  |  | 0.405 |
 | ns | 1707 |  | 65 | Top-level fs — build/tooling/extras | 2.1 |  | 0.437 |
-| walker |  | 1770 | 111 | module item body at lib/defaults/index.js:23 body 24 |  |  | 0.437 |
-| walker |  | 1778 | 8 | export names surface in lib/core/Axios.js |  |  | 0.437 |
-| walker |  | 1787 | 9 | export names surface in lib/adapters/adapters.js |  |  | 0.437 |
-| walker |  | 1796 | 9 | export names surface in lib/cancel/CancelToken.js |  |  | 0.437 |
-| walker |  | 1805 | 9 | export names surface in lib/core/AxiosError.js |  |  | 0.437 |
-| walker |  | 1814 | 9 | export names surface in lib/core/AxiosHeaders.js |  |  | 0.437 |
+| walker |  | 1789 | 250 | headings outline in THREATMODEL.md |  |  | 0.437 |
+| walker |  | 1794 | 5 | THREATMODEL.md section #10 |  |  | 0.437 |
+| walker |  | 1799 | 5 | THREATMODEL.md section #24 |  |  | 0.437 |
+| walker |  | 1804 | 5 | THREATMODEL.md section #33 |  |  | 0.437 |
+| walker |  | 1809 | 5 | THREATMODEL.md section #44 |  |  | 0.437 |
+| walker |  | 1814 | 5 | THREATMODEL.md section #53 |  |  | 0.437 |
 | walker |  | 1866 | 52 | headings outline in docs/pages/getting-started/first-steps.md |  |  | 0.437 |
 | walker |  | 1880 | 14 | listing of 'tests/smoke' |  |  | 0.437 |
 | walker |  | 1890 | 10 | export names surface in lib/cancel/CanceledError.js |  |  | 0.437 |

@@ -118,20 +118,6 @@ docs/
             65→### Binding IDs
             …
         navigation.md
-            3→## Jump mode
-            …
-            15→## Tab navigation
-            …
-            25→## Mouse navigation
-            …
-            34→## Searching and jumping to requests
-            …
-            42→## Contextual help
-            …
-            49→## Automatic focus switching
-            …
-            59→## Exiting
-            …
         requests.md
         scripting.md
         themes.md
@@ -264,7 +250,9 @@ src/
             11→CommandType = tuple[str, IgnoreReturnCallbackType, str, bool]
             14→class PostingProvider(Provider):
             15→    @property
-            …
+            16→    def commands(
+            17→        self,
+            18→    ) -> tuple[tuple[str, IgnoreReturnCallbackType, str, bool], ...]:
             204→    async def discover(self) -> Hits:
             …
             218→    async def search(self, query: str) -> Hits:
@@ -315,6 +303,7 @@ src/
         themes.py
         tuple_to_multidict.py
         types.py
+            1→from typing import Literal, Optional, Tuple, Union
             3→PostingLayout = Literal["horizontal", "vertical"]
             6→CertTypes = Union[
         urls.py

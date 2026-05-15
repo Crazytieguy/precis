@@ -52,47 +52,7 @@ docs/
         click-logo.svg
         click-name.svg
     advanced.md
-        1→# Advanced Patterns
-        …
-        13→## Callbacks and Eager Options
-        …
-        70→## Callbacks for Validation
-        …
-        116→## Parameter Modifications
-        …
-        172→## Token Normalization
-        …
-        203→## Invoking Other Commands
-        …
-        244→## Forwarding Unknown Options
-        …
-        339→## Managing Resources
-        …
     api.md
-        1→# API
-        …
-        14→## Decorators
-        …
-        65→## Utilities
-        …
-        143→## Commands
-        …
-        170→## Parameters
-        …
-        185→## Context
-        …
-        204→## Types
-        …
-        264→## Exceptions
-        …
-        298→## Formatting
-        …
-        309→## Parsing
-        …
-        317→## Shell Completion
-        …
-        343→## Testing
-        …
     arguments.md
         3→# Arguments
         …
@@ -108,37 +68,36 @@ docs/
     click-concepts.md
         1→# Click Concepts
         …
+        3→This section covers concepts about Click's design.
+        5→```{contents}
+        6→---
+        7→depth: 1
+        8→local: true
+        9→---
+        10→```
+        12→(callback-evaluation-order)=
         14→## Callback Evaluation Order
         …
     command-line-reference.md
         1→# General Command Line Topics
         …
+        3→```{currentmodule} click
+        4→```
+        6→```{contents}
+        7→---
+        8→depth: 1
+        9→local: true
+        10→---
+        11→```
+        13→(exit-codes)=
         14→## Exit Codes
         …
     commands-and-groups.md
     commands.md
-        1→# Advanced Groups and Context
-        …
-        16→## Callback Invocation
-        …
-        48→## Nested Handling and Contexts
-        …
-        99→## Decorating Commands
-        …
-        137→## Command Chaining
-        …
-        177→## Command Pipelines
-        …
-        294→## Overriding Defaults
-        …
-        354→### Multi-value parameters
-        …
-        383→## Context Defaults
-        …
-        423→## Command Return Values
-        …
     complex.md
     conf.py
+        1→from pallets_sphinx_themes import get_version
+        2→from pallets_sphinx_themes import ProjectLink
     contrib.md
         3→# click-contrib
         …
@@ -148,33 +107,16 @@ docs/
     design-opinions.md
         1→# CLI Design Opinions
         …
+        3→```{currentmodule} click
+        4→```
+        5→A penny for your thoughts...
+        7→```{contents}
+        8→:depth: 1
+        9→:local: true
+        10→```
         12→## Options over arguments
         …
     documentation.md
-        1→# Help Pages
-        …
-        8→## Help Texts
-        …
-        32→## Command Short Help
-        …
-        53→## Command Epilog Help
-        …
-        74→## Documenting Arguments
-        …
-        112→## Showing Defaults
-        …
-        148→## Showing Environment Variables
-        …
-        164→## Click's Wrapping Behavior
-        …
-        190→## Escaping Click's Wrapping
-        …
-        224→## Truncating Help Texts
-        …
-        249→## Placeholder / Meta Variable
-        …
-        273→## Help Parameter Customization
-        …
     entry-points.md
         1→# Packaging Entry Points
         …
@@ -214,6 +156,11 @@ docs/
     handling-files.md
         3→# Handling Files
         …
+        5→```{currentmodule} click
+        6→```
+        8→Click has built in features to support file and file path handling. The examples use arguments but the same principle
+        9→applies to options as well.
+        11→(file-args)=
         13→## File Arguments
         …
         47→## File Path Arguments
@@ -222,30 +169,33 @@ docs/
         …
     index.rst
     license.md
+        1→# BSD-3-Clause License
+        3→```{literalinclude} ../LICENSE.txt
+        4→---
+        5→language: text
+        6→---
+        7→```
     option-decorators.md
         1→# Options Shortcut Decorators
         …
+        3→```{currentmodule} click
+        4→```
+        6→For convenience commonly used combinations of options arguments are available as their own decorators.
+        8→```{contents}
+        9→---
+        10→depth: 2
+        11→local: true
+        12→---
+        13→```
         15→## Password Option
         …
         47→## Confirmation Option
         …
         84→## Version Option
         …
+        86→{func}`version_option` adds a `--version` option which immediately prints the version number and exits the program.
     options.md
     parameter-types.md
-        3→# Parameter Types
-        …
-        18→## Built-in Types Examples
-        …
-        20→(choice-opts)=
-        22→### Choice
-        …
-        81→### Int and Float Ranges
-        …
-        109→## Built-in Types Listing
-        …
-        156→## How to Implement Custom Types
-        …
     parameters.md
         3→# Parameters
         …
@@ -259,39 +209,7 @@ docs/
         32→## Parameter Names
         …
     prompts.md
-        1→# User Input Prompts
-        …
-        21→## Option Prompts
-        …
-        71→## Input Prompts
-        …
-        87→## Optional Prompts
-        …
-        110→## Confirmation Prompts
-        …
-        127→## Dynamic Defaults for Prompts
-        …
     quickstart.md
-        1→# Quickstart
-        …
-        3→```{currentmodule} click
-        4→```
-        6→## Install
-        …
-        16→## Examples
-        …
-        40→## Basic Concepts - Creating a Command
-        …
-        74→## Echoing
-        …
-        88→## Nesting Commands
-        …
-        138→## Registering Commands Later
-        …
-        158→## Adding Parameters
-        …
-        177→## Switching to Entry Points
-        …
     setuptools.md
         5→# Setuptools Integration
         7→Moved to {doc}`entry-points`.
@@ -311,6 +229,10 @@ docs/
         …
         18→## Installation
         …
+        20→Install Briefcase in the virtual environment:
+        22→```console
+        23→pip install briefcase
+        24→```
         26→## Configuration
         …
         93→## Entry Point
@@ -329,20 +251,6 @@ docs/
         24→### `ParamType` methods require `ctx`
         …
     testing.md
-        1→# Testing Click Applications
-        …
-        20→## Basic Example
-        …
-        52→## Subcommands
-        …
-        86→## Context Settings
-        …
-        120→## File System Isolation
-        …
-        174→## Input Streams
-        …
-        207→## File Descriptors and Low-Level I/O
-        …
     unicode-support.md
         1→# Unicode Support
         …
@@ -350,34 +258,6 @@ docs/
         …
     upgrade-guides.md
     utils.md
-        1→# Utilities
-        …
-        9→## Printing to Stdout
-        …
-        50→## ANSI Colors
-        …
-        84→## Pager Support
-        …
-        126→## Screen Clearing
-        …
-        139→## Getting Characters from Terminal
-        …
-        174→## Waiting for Key Press
-        …
-        193→## Launching Editors
-        …
-        224→## Launching Applications
-        …
-        240→## Printing Filenames
-        …
-        254→## Standard Streams
-        …
-        281→## Intelligent File Opening
-        …
-        306→## Finding Application Folders
-        …
-        335→## Showing Progress Bars
-        …
     virtualenv.md
         3→# Virtualenv
         …
@@ -399,6 +279,11 @@ docs/
     wincmd.md
         1→# Windows Console Notes
         …
+        3→```{versionadded} 6.0
+        4→```
+        6→Click emulates output streams on Windows to support unicode to the Windows console through separate APIs and we perform
+        7→different decoding of parameters.
+        9→Here is a brief overview of how this works and what it means to you.
         11→## Unicode Arguments
         …
         24→## Unicode Output and Input
@@ -409,6 +294,15 @@ examples/
     colors/
     completion/
     complex/
+        README
+        complex/
+            __init__.py
+            cli.py
+            commands/
+                __init__.py
+                cmd_init.py
+                cmd_status.py
+        pyproject.toml
     imagepipe/
     inout/
     naval/
@@ -437,6 +331,27 @@ src/
             15→from .core import Option as Option
             16→from .core import Parameter as Parameter
             17→from .core import ParameterSource as ParameterSource
+            18→from .decorators import argument as argument
+            19→from .decorators import command as command
+            20→from .decorators import confirmation_option as confirmation_option
+            21→from .decorators import group as group
+            22→from .decorators import help_option as help_option
+            23→from .decorators import make_pass_decorator as make_pass_decorator
+            24→from .decorators import option as option
+            25→from .decorators import pass_context as pass_context
+            26→from .decorators import pass_obj as pass_obj
+            27→from .decorators import password_option as password_option
+            28→from .decorators import version_option as version_option
+            29→from .exceptions import Abort as Abort
+            30→from .exceptions import BadArgumentUsage as BadArgumentUsage
+            31→from .exceptions import BadOptionUsage as BadOptionUsage
+            32→from .exceptions import BadParameter as BadParameter
+            33→from .exceptions import ClickException as ClickException
+            34→from .exceptions import FileError as FileError
+            35→from .exceptions import MissingParameter as MissingParameter
+            36→from .exceptions import NoSuchCommand as NoSuchCommand
+            37→from .exceptions import NoSuchOption as NoSuchOption
+            38→from .exceptions import UsageError as UsageError
             39→from .formatting import HelpFormatter as HelpFormatter
             40→from .formatting import wrap_text as wrap_text
             41→from .globals import get_current_context as get_current_context
@@ -453,10 +368,23 @@ src/
             40→    def indent_only(self, text: str) -> str:
             …
         _utils.py
+            1→from __future__ import annotations
+            3→import enum
+            4→import typing as t
         _winconsole.py
         core.py
         decorators.py
         exceptions.py
+            330→class Abort(RuntimeError):
+            331→    """An internal signalling exception that signals Click to abort."""
+            334→class Exit(RuntimeError):
+            335→    """An exception that indicates that the application should exit with some
+            336→    status code.
+            338→    :param code: the status code to exit with.
+            339→    """
+            341→    __slots__ = ("exit_code",)
+            343→    def __init__(self, code: int = 0) -> None:
+            344→        self.exit_code: int = code
         formatting.py
         globals.py
         parser.py

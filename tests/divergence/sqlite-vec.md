@@ -41,13 +41,13 @@ Score(3000)=0.333 I=0.682 C=0.162 ns_rows≤3K=19/47 (reached=4 partial=0 missin
 | walker |  | 964 | 29 | headings outline in site/using/ruby.md |  |  | 0.495 |
 | walker |  | 993 | 29 | headings outline in site/using/rust.md |  |  | 0.495 |
 | walker |  | 1032 | 39 | headings outline in site/using/wasm.md |  |  | 0.495 |
-| walker |  | 1098 | 66 | headings outline in site/using/js.md |  |  | 0.495 |
+| walker |  | 1064 | 32 | site/compiling.md section #0 |  |  | 0.495 |
+| walker |  | 1108 | 44 | export at site/project.data.ts:12 |  |  | 0.495 |
 | ns | 1117 |  | 226 | TODO deferred backlog | 1.11 |  | 0.445 |
-| walker |  | 1130 | 32 | site/compiling.md section #0 |  |  | 0.445 |
-| walker |  | 1174 | 44 | export at site/project.data.ts:12 |  |  | 0.445 |
-| walker |  | 1252 | 78 | headings outline in site/using/go.md |  |  | 0.445 |
-| walker |  | 1382 | 130 | python decl names surface in tmp-static.py |  |  | 0.445 |
-| walker |  | 1382 | 0 | python decl at tmp-static.py:25 |  |  | 0.445 |
+| walker |  | 1174 | 66 | headings outline in site/using/js.md |  |  | 0.445 |
+| walker |  | 1304 | 130 | python decl names surface in tmp-static.py |  |  | 0.445 |
+| walker |  | 1304 | 0 | python decl at tmp-static.py:25 |  |  | 0.445 |
+| walker |  | 1382 | 78 | headings outline in site/using/go.md |  |  | 0.445 |
 | ns | 1385 |  | 268 | sqlite-vec.h.tmpl ABI guard + visibility macros | 1.12 |  | 0.380 |
 | walker |  | 1390 | 8 | listing of 'site/getting-started' |  |  | 0.380 |
 | walker |  | 1433 | 43 | headings outline in site/getting-started/installation.md |  |  | 0.380 |
@@ -61,23 +61,23 @@ Score(3000)=0.333 I=0.682 C=0.162 ns_rows≤3K=19/47 (reached=4 partial=0 missin
 | walker |  | 1642 | 113 | ARCHITECTURE.md section #0 |  |  | 0.368 |
 | walker |  | 1674 | 32 | site/guides/rag.md section #0 |  |  | 0.368 |
 | ns | 1704 |  | 84 | sqlite-vec.c — #pragma region map | 2.1 |  | 0.359 |
-| walker |  | 1799 | 125 | headings outline in site/using/python.md |  |  | 0.359 |
-| walker |  | 1836 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.359 |
-| walker |  | 1836 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.359 |
-| walker |  | 1836 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.359 |
-| walker |  | 1853 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.359 |
-| walker |  | 1870 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.360 |
-| walker |  | 1892 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.360 |
+| walker |  | 1711 | 37 | python decl names surface in bindings/python/extra_init.py |  |  | 0.359 |
+| walker |  | 1711 | 0 | python decl at bindings/python/extra_init.py:6 |  |  | 0.359 |
+| walker |  | 1711 | 0 | python decl at bindings/python/extra_init.py:11 |  |  | 0.359 |
+| walker |  | 1728 | 17 | python decl body at bindings/python/extra_init.py:6 body 8 |  |  | 0.359 |
+| walker |  | 1745 | 17 | python decl body at bindings/python/extra_init.py:11 body 13 |  |  | 0.360 |
+| walker |  | 1767 | 22 | python decl doc at bindings/python/extra_init.py:6 |  |  | 0.360 |
+| walker |  | 1789 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.360 |
 | ns | 1893 |  | 189 | Scalar function definition locations | 2.2 |  | 0.337 |
-| walker |  | 1914 | 22 | python decl doc at bindings/python/extra_init.py:11 |  |  | 0.337 |
 | ns | 2032 |  | 139 | Init entry-point locations | 2.3 |  | 0.329 |
 | ns | 2133 |  | 101 | ARCHITECTURE.md — vec0 + shadow-table headings | 2.4 |  | 0.325 |
 | ns | 2312 |  | 179 | ARCHITECTURE.md — shadow-table column bodies | 2.5 |  | 0.305 |
-| walker |  | 2485 | 571 | README.md section #0 |  |  | 0.357 |
-| walker |  | 2495 | 10 | listing of 'site/features' |  |  | 0.357 |
-| walker |  | 2534 | 39 | headings outline in site/features/knn.md |  |  | 0.357 |
-| walker |  | 2611 | 77 | headings outline in site/features/vec0.md |  |  | 0.358 |
-| walker |  | 2611 | 0 | site/features/vec0.md section #0 |  |  | 0.358 |
+| walker |  | 2360 | 571 | README.md section #0 |  |  | 0.357 |
+| walker |  | 2370 | 10 | listing of 'site/features' |  |  | 0.357 |
+| walker |  | 2409 | 39 | headings outline in site/features/knn.md |  |  | 0.357 |
+| walker |  | 2486 | 77 | headings outline in site/features/vec0.md |  |  | 0.358 |
+| walker |  | 2486 | 0 | site/features/vec0.md section #0 |  |  | 0.358 |
+| walker |  | 2611 | 125 | headings outline in site/using/python.md |  |  | 0.358 |
 | walker |  | 2649 | 38 | site/guides/arithmetic.md section #0 |  |  | 0.358 |
 | walker |  | 2673 | 24 | listing of 'benchmarks/micro' |  |  | 0.358 |
 | ns | 2744 |  | 432 | site/api-reference.md TOC | 2.6 |  | 0.333 |
