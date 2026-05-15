@@ -263,6 +263,64 @@ If revisited, options to consider before another sweep:
 Don't re-attempt the simple multiplier in isolation; the sweep already
 demonstrated it's structurally insufficient.
 
+## v0.2-rewrite post-fixture-add batch (May 2026)
+
+After 28 fixtures landed, several patterns surfaced that were
+addressable by *generalizing existing logic* rather than adding
+language-specific knobs. Worth noting because the wins were broader
+than a single fixture but the gradient is shallow:
+
+- **Dense-`.md`-siblings damp** in `walker::markdown` (`sqrt(threshold/N)`
+  factor on `HeadingsOutline` when a dir has > 6 `.md` files). Helps
+  click / axios / sqlite-vec by getting per-file outline batches out
+  of the way of source content. Threshold is calibrated so
+  superstruct's `docs/guides` (6 siblings) keeps full weight on its
+  per-file outlines.
+- **Adaptive README index decay** (`readme_index_decay` switches to
+  steeper falloff when total H2 count >= 18). Helps long-tail READMEs
+  (debug 18 H2s, axios 31) without regressing short-README fixtures
+  (chalk 12, mitt 7 — these all regressed under a blanket steeper
+  decay).
+- **Root-level vendor-dir classifier** (`is_root_level_vendor_dir_name`)
+  applies a 0.2× factor to `deps` / `vendor` / `vendored` / `third_party`
+  / `external` / `sig` / `signatures` / `tap-snapshots` / `3rd*` at
+  depth 1. Depth-1-only is load-bearing: chalk's `source/vendor/` is
+  the project's own implementation; a path-anywhere rule regressed it.
+- **Generic dot-dir demotion** at any depth (with `.github/workflows`
+  exception) — picks up `site/.vitepress`, `docs/.vitepress`,
+  `packages/foo/.changeset`, root `.husky` / `.devcontainer` / etc.
+  Replaces a per-name enumeration that was drifting.
+- **Python `_test.py` / `test_*.py` and `tests_*` dir patterns** —
+  Python test conventions were missing from the test-file classifier
+  even though Go and TS/JS were covered.
+- **Plaintext `VERSION` / `TODO`** — common extensionless orientation
+  files; was missing from the plaintext walker's narrow whitelist.
+- **Localized README whitelist** rebuilt as `<lang>-<region>` form
+  rather than enumerated region pairs.
+
+What did **not** generalize cleanly and is unlikely to without more
+structural work:
+
+- **Go `DeclNames` chunking** — split tea.go / context.go / command.go
+  into chunks. The chunked-first-chunk factor 0.9 ended up regressing
+  xxhash (29 decls, just over a 24-decl threshold) because the
+  unchunked surface was tuned to win the ratio race. Reverted; the
+  large-file case (tea.go's decl names never fit at 10K) remains
+  unaddressed.
+- **JS / TS `module.exports` CommonJS** — audiobookshelf's
+  `server/Server.js` is CommonJS and the TS walker doesn't recognize
+  `class Server` from a `class_declaration` outside an `export`
+  context. NS expects this content but the walker can't deliver it.
+- **`identity_meta_value` lowered** — regressed enclosed / commander /
+  ts-pattern / ky beyond the wins on p-queue / svgo. Reverted.
+- **`scripts_value` bumped** — regressed axios (somehow). Reverted.
+- **README range-count trigger** for audiobookshelf's H1-only-with-
+  H3-splits structure (60+ ranges, 7 H2-equivalents). The proposed
+  `effective_range_count >= 35` regressed mcphost / chalk; the
+  threshold can't distinguish "lots of medium-depth H3 splits" from
+  "kitchen-sink documentation". Audiobookshelf's 0.45-ish ceiling
+  remains a structural limit.
+
 ## Min-tokens lower bound
 
 `RenderedTree::marginal_cost` is the only path to a real per-batch cost
