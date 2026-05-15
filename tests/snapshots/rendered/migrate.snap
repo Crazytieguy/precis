@@ -95,6 +95,12 @@ database/
         cassandra_test.go
         examples/
     clickhouse/
+        README.md
+            1→# ClickHouse
+            3→`clickhouse://host:port?username=user&password=password&database=clicks&x-multi-statement=true`
+        clickhouse.go
+        clickhouse_test.go
+        examples/
     cockroachdb/
     crate/
     driver.go
@@ -253,10 +259,6 @@ source/
         bitbucket.go
         bitbucket_test.go
     driver.go
-        1→// Package source provides the Source interface.
-        2→// All source drivers must implement this interface, register themselves,
-        3→// optionally provide a `WithInstance` function and pass the tests
-        4→// in package source/testing.
     driver_test.go
     errors.go
         1→package source

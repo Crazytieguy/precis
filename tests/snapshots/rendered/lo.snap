@@ -135,8 +135,6 @@ internal/
             2→# Constraints
             4→This package is for Go 1.18 retrocompatiblity purpose.
         constraints.go
-            5→// Package constraints defines a set of useful constraints to be used
-            6→// with type parameters.
             7→package constraints
             12→type Signed interface {
             13→	~int | ~int8 | ~int16 | ~int32 | ~int64
@@ -167,7 +165,6 @@ internal/
             4→Lightweight mock for time package.
             6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
         fake.go
-            1→//nolint:revive
         noCopy.go
             1→package xtime
             10→type noCopy struct{}
@@ -175,9 +172,7 @@ internal/
             13→func (*noCopy) Lock()   {}
             14→func (*noCopy) Unlock() {}
         real.go
-            1→//nolint:revive
         time.go
-            1→//nolint:revive
             2→package xtime
             4→import "time"
 intersect.go

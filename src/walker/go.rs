@@ -165,7 +165,20 @@ fn expand_test_files(test_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKe
 fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
     let mut out = Vec::new();
     for file in source_files {
-        if let Some(content) = build_per_file_content(file, ctx, parse_go, collect_package_doc_lede)
+        // Only emit `PackageDocLede` for files that qualify as an
+        // entry-shaped file (package-name match, big-struct anchor,
+        // or the `doc.go` Go-convention package-docs file). Internal
+        // subpackage doc ledes (`internal/xtime/time.go`,
+        // `internal/constraints/constraints.go`) carry low orientation
+        // value relative to their cost and crowd the early budget if
+        // every subpackage gets one.
+        let is_doc_go = file
+            .file_stem()
+            .and_then(|s| s.to_str())
+            .is_some_and(|s| s == "doc");
+        if (go_entry_factor(file, ctx) > 1.0 || is_doc_go)
+            && let Some(content) =
+                build_per_file_content(file, ctx, parse_go, collect_package_doc_lede)
         {
             out.push(Batch {
                 key: GoKey::PackageDocLede { file: file.clone() }.into(),
