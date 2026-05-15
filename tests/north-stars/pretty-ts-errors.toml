@@ -1,0 +1,672 @@
+fixture = "pretty-ts-errors"
+revision_pin = "980c274b"
+summary = """
+`pretty-ts-errors` is a VSCode extension that reformats noisy TypeScript
+diagnostics into human-readable hovers and sidebar panels. The
+repository is a Turborepo npm monorepo with one app (`apps/vscode-extension`)
+that wires VS Code activation/commands/providers, and three packages:
+`packages/formatter` (pure regex-rule pipeline that rewrites error
+messages, plus a Prettier-based type pretty-printer), `packages/vscode-formatter`
+(adds hover/sidebar HTML rendering, embeds command links, syntax-highlights
+via shiki), and `packages/utils` (tiny shared helpers — `has`, `d`/dedent,
+`objectKeys`, `invert`). `examples/` holds buggy `.ts`/`.js`/`.vue`/
+`.type` files used for manual hover testing.
+
+The ranking serves the full dev-task distribution: explaining how the
+extension reshapes diagnostics, adding/tweaking a regex rule in the
+formatter, extending the VS Code surface (a new command, sidebar
+behavior, hover provider), debugging the bundle/build pipeline
+(esbuild + tsdown + vitest + turbo), or onboarding via the docs. Breadth
+over depth: locate every source file, command, and public export before
+diving into bodies. The two load-bearing flows — `errorMessagePrettifier`'s
+regex-rule loop and `webviewViewProvider`'s mode+pin state machine — get
+the most body coverage.
+"""
+
+# ----------------------------------------------------------------------
+# TIER 1 — Orientation: what kind of project this is, top-level layout
+# ----------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README title + tagline"
+justification = "Smallest possible 'what is this?' anchor. Title + one-line tagline gives the agent the project name and purpose in two lines."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 9, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level repo layout"
+justification = "Catastrophic-omission hedge for the root: listing every immediate child tells the agent the monorepo has exactly these top-level dirs/files. Lets later batches narrow into them without the agent guessing whether more exist."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "ARCHITECTURE.md headings — package map"
+justification = "Tiny authoritative four-line summary: which directories are the four packages. H2 headings carry the directory names; bodies are one-liner descriptions. Catastrophic-omission hedge for the package set."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/ARCHITECTURE.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 8, end = 9, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 12, end = 13, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 16, end = 17, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 20, end = 21, render = { kind = "full" } },
+  { path = "docs/ARCHITECTURE.md", start = 24, end = 25, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "README — Supports (file types handled)"
+justification = "One H2 section: the agent learns exactly which file extensions are claimed (.ts/.js/.jsx/.tsx/.mdx/.astro/.svelte/.vue/.hbs/.gjs/.gts) and which TS reporters (Node/Deno/JSDoc/Glint). Critical breadth signal for 'does it support X?' queries."
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 42, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Root package.json — workspaces + name + engines"
+justification = "Names the workspaces glob (`packages/*`, `apps/*`), package name, packageManager, node engine. Tells the agent which subtrees are the workspaces themselves."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 1, end = 2, render = { kind = "full" } },
+  { path = "package.json", start = 11, end = 13, render = { kind = "full" } },
+  { path = "package.json", start = 24, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "README — Features (prettified hover capabilities)"
+justification = "One H2 section: enumerates the four agent-visible features (syntax-highlighted types, declaration-jump button, typescript.tv link, ts-error-translator link). Pairs with 1.4 for full 'what does it do?'."
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 35, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "turbo.json pipeline tasks"
+justification = "Names the four turbo task graph nodes — build (outputs dist/**), lint, dev (cache:false, persistent), test (cache:false). Tells the agent what `turbo run X` actually does."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "turbo.json", start = 1, end = 17, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Root package.json — script entry points"
+justification = "All five root npm scripts in one batch (build/dev/lint/test/format). Together with 1.7 makes 'how do I run X?' a zero-follow-up answer."
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 3, end = 10, render = { kind = "full" } },
+]
+
+# ----------------------------------------------------------------------
+# TIER 2 — Package source maps + public exports + extension entry
+# ----------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "packages/utils — public export signatures"
+justification = "Names every export: `objectKeys`, `invert`, `d` (dedent), `has`. These are imported across packages — having signatures visible answers most uses without a hop. Catastrophic-omission hedge: all four utils in one place."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/utils/src/index.ts", start = 3, end = 6, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "packages/utils/src/index.ts", start = 36, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "packages/formatter — src tree"
+justification = "Names every source file (addMissingParentheses, errorMessagePrettifier, formatTypeBlock, formatTypeWithPrettier, index). Catastrophic-omission hedge for the formatter package — agent knows exactly which files implement it."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/formatter/src", entries = "all" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "packages/formatter/src/index.ts — exports"
+justification = "Names the single public export: `createErrorMessagePrettifier` and the `CodeBlockFn` type. Tells the agent the formatter is one-function-shaped."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/index.ts", start = 1, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "packages/vscode-formatter — src tree"
+justification = "Subtree listing of components/ and format/ — names every component (actions, errorTitle, hoverCodeBlock, htmlCodeBlock, miniLine, plainCodeBlock, spanBreak) and every format module (embedSymbolLinks, identSentences, prettifyDiagnosticForHover, prettifyDiagnosticForSidebar) plus the index. Catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/vscode-formatter/src", entries = "all" },
+  { parent = "packages/vscode-formatter/src/components", entries = "all" },
+  { parent = "packages/vscode-formatter/src/format", entries = "all" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "packages/vscode-formatter/src/index.ts — exports"
+justification = "Three public exports: `prettifyDiagnosticForHover`, `prettifyDiagnosticForSidebar`, `initHighlighter`. Tells the agent there are exactly two diagnostic-rendering entrypoints (hover vs sidebar) plus a highlighter init."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/index.ts", start = 1, end = 3, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "apps/vscode-extension/src — top-level tree"
+justification = "Names every immediate child: diagnostics.ts, extension.ts, formattedDiagnosticsStore.ts, globals.d.ts, logger.ts, supportedLanguageIds.ts, plus commands/, provider/, test/ subdirs. Catastrophic-omission hedge for the extension app."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "apps/vscode-extension/src", entries = "all" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "apps/vscode-extension/src/commands + provider — trees"
+justification = "Eight command files (copyError, enabledCommands, execute, pinError, revealSelection, showErrorInSidebar, unpinError, validate) and four provider files (hoverProvider, markdownWebviewProvider, selectedTextHoverProvider, webviewViewProvider). Catastrophic-omission hedge for command/provider surface."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "apps/vscode-extension/src/commands", entries = "all" },
+  { parent = "apps/vscode-extension/src/provider", entries = "all" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "extension.ts — activate() register calls"
+justification = "The body of the entry point: every register* call (logger, selectedTextHoverProvider, onDidChangeDiagnostics, webviewViewProvider, copyError, showErrorInSidebar, pinError, unpinError, revealSelection) plus setContext for supportedLanguageIds. Zero-follow-up wiring map for 'what runs at activation?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/extension.ts", start = 13, end = 38, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "supportedLanguageIds.ts — full"
+justification = "Tiny constant array (12 entries). Names every VS Code language id the extension claims (typescript, javascript, typescriptreact, javascriptreact, astro, svelte, vue, mdx, glimmer-js, glimmer-ts). Pairs with the activationEvents in the manifest."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/supportedLanguageIds.ts", start = 1, end = 12, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "enabledCommands.ts — five whitelisted commands"
+justification = "Lists the five commands callable from hover/webview links: showErrorInSidebar, revealSelection, copyError, pinError, unpinError. Catastrophic-omission hedge for what the prettified message can link to."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/commands/enabledCommands.ts", start = 1, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "manifest — contributed commands (the four)"
+justification = "Names the four VS Code-contributed commands and their categories: revealSelection, showErrorInSidebar, pinError, unpinError. Catastrophic-omission hedge: nothing else is registered."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 75, end = 101, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "manifest — view container + sidePanel webview view"
+justification = "The `viewsContainers.activitybar` + `views.prettyTsErrors` stanza that creates the activity-bar entry and the `prettyTsErrors.sidePanel` webview view. Anchors 'how is the sidebar registered with VS Code?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 55, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.13"
+descriptor = "manifest — activationEvents + grammar/menus contribution"
+justification = "Lists the onLanguage activation events (mirroring 2.9) plus the editor/title menu binding and the contributed `type` language + tmGrammar. Together with 2.11+2.12 covers all `contributes`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/package.json", start = 34, end = 46, render = { kind = "full" } },
+  { path = "apps/vscode-extension/package.json", start = 102, end = 125, render = { kind = "full" } },
+]
+
+# ----------------------------------------------------------------------
+# TIER 3 — Public signatures + key data shapes across the source tree
+# ----------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "Command register* signatures (all 7)"
+justification = "First line of every register* fn in commands/: registerCopyError, registerPinError, registerRevealSelection, registerShowErrorInSidebar, registerUnpinError, plus execute() helper and tryEnsureUri/tryEnsureRange in validate.ts. Catastrophic-omission hedge: agent sees exactly which commands have implementations. Pairs with 2.8's wiring."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/commands/copyError.ts", start = 6, end = 6, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/pinError.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/revealSelection.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/showErrorInSidebar.ts", start = 8, end = 8, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/unpinError.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/execute.ts", start = 7, end = 10, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 3, end = 5, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/commands/validate.ts", start = 33, end = 37, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "diagnostics.ts — top-level decls + signatures"
+justification = "Names registerOnDidChangeDiagnostics, getFormattedDiagnostic, ensureHoverProviderIsRegistered, supportedDiagnosticSources list (the 5 LSP sources: ts/ts-plugin/deno-ts/js/glint), CACHE_SIZE_MAX. The diagnostic-event pipeline at a glance."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 26, end = 32, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 34, end = 34, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 84, end = 84, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 97, end = 97, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 99, end = 102, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 138, end = 138, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "formattedDiagnosticsStore.ts — full"
+justification = "Tiny shared cache module: the `FormattedDiagnostic` interface (range/contents/lspDiagnostic) and the global `Map<fsPath, FormattedDiagnostic[]>`. Almost every provider reads/writes this — vital data-shape anchor."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/formattedDiagnosticsStore.ts", start = 1, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "webviewViewProvider.ts — top-level decls (sidebar state machine surface)"
+justification = "Constants (NO_DIAGNOSTICS_MESSAGE, SIDEBAR_CACHE_SIZE_MAX, sidebarHtmlCache), the `ViewMode = cursor|locked` type alias, `DiagnosticItem`/`PinnedError` interfaces, `getViewProvider`/`registerWebviewViewProvider` exports, `diagnosticToItem` helper, and the `MarkdownWebviewViewProvider` class declaration. Tells the agent the sidebar has two modes and what state it tracks."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 23, end = 23, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 26, end = 40, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 81, end = 83, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 103, end = 115, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "webviewViewProvider class — method signatures (location batch)"
+justification = "First line of every method on MarkdownWebviewViewProvider: ensureInitialized, lockToDiagnostic, pinDiagnostic, unpinDiagnostic, resolveWebviewView, ensureDisposables, getActiveContentHtml, getActiveDiagnosticItems, getCursorDiagnosticItems, refresh. Catastrophic-omission hedge for the sidebar API surface."
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 117, end = 117, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 190, end = 190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 214, end = 214, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 242, end = 242, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 249, end = 249, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 320, end = 320, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 329, end = 329, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 335, end = 335, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 345, end = 345, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 358, end = 358, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Provider entry signatures"
+justification = "First line of the four provider entry points: hoverProvider const, registerSelectedTextHoverProvider, MarkdownWebviewProvider class (constructor signature). Pairs with 2.7's listing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/hoverProvider.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/selectedTextHoverProvider.ts", start = 18, end = 18, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 11, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "MarkdownWebviewProvider methods — signatures"
+justification = "First line of every method: loadWebviewHtmlTemplate, getWebviewOptions, createOnDidReceiveMessage, getWebviewContent, patchCspSafeAttrs. Tells the agent what the lower-level webview wrapper exposes (HTML template loading + CSP rewriting + webview options)."
+predecessor = "3.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 19, end = 19, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 39, end = 39, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "apps/vscode-extension/src/provider/markdownWebviewProvider.ts", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "formatter — fn signatures across all 4 src files"
+justification = "Every exported/internal function: createErrorMessagePrettifier, getRules + Rule type, addMissingParentheses, formatTypeBlock, formatType, formatTypeWithPrettier (with print options). Plus the CodeBlockFn type. Catastrophic-omission hedge for the formatter package."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 3, end = 7, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 9, end = 11, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 33, end = 36, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 38, end = 38, render = { kind = "full" } },
+  { path = "packages/formatter/src/addMissingParentheses.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 4, end = 8, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeBlock.ts", start = 34, end = 37, render = { kind = "full" } },
+  { path = "packages/formatter/src/formatTypeWithPrettier.ts", start = 5, end = 14, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "vscode-formatter components — fn signatures (location batch)"
+justification = "First line of every exported helper in components/: divider, errorCodeExplanationLink, showErrorInSidebarLink, pinErrorLink, copyErrorLink, errorMessageTranslationLink (actions.ts); errorTitle; hoverCodeBlock (+ internal codeBlock/inline/multi); htmlCodeBlock + initHighlighter + Highlighter interface; miniLine; plainCodeBlock; spanBreak. Catastrophic-omission hedge across the seven component files."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 5, end = 5, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 14, end = 14, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 25, end = 25, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 36, end = 36, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/actions.ts", start = 45, end = 45, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/errorTitle.ts", start = 4, end = 8, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/hoverCodeBlock.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 3, end = 5, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 9, end = 9, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/htmlCodeBlock.ts", start = 13, end = 13, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/miniLine.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/plainCodeBlock.ts", start = 7, end = 7, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/components/spanBreak.ts", start = 8, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "vscode-formatter format/ — fn signatures + flow"
+justification = "Top of each format/ module: embedSymbolLinks (Diagnostic -> Diagnostic), identSentences, prettifyDiagnosticForHover, prettifyDiagnosticForSidebar — plus the createErrorMessagePrettifier instantiation lines that bind codeBlock per render target. Reveals the two-target rendering split (markdown for hover, HTML for sidebar)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/format/embedSymbolLinks.ts", start = 4, end = 4, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/identSentences.ts", start = 3, end = 3, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 17, end = 18, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 24, end = 26, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 16, end = 17, render = { kind = "full" } },
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 23, end = 25, render = { kind = "full" } },
+]
+
+# ----------------------------------------------------------------------
+# TIER 4 — Load-bearing bodies (formatter pipeline + sidebar state)
+# ----------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "errorMessagePrettifier — the rule loop"
+justification = "Body of createErrorMessagePrettifier: walk rules, run each pattern via matchAll, splice in async replacer results. The core algorithm of the formatter package — zero-follow-up for 'how does prettification work?'."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 12, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "diagnostics.ts — onDidChangeDiagnostics body"
+justification = "registerOnDidChangeDiagnostics: filter to supportedDiagnosticSources, parallel-format each, store under fsPath (or delete on empty), call ensureHoverProviderIsRegistered. The full event-driven ingestion path wrapped in logger.measure."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 35, end = 77, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "diagnostics.ts — getFormattedDiagnostic cache logic"
+justification = "Message-keyed MarkdownString cache (FIFO eviction at CACHE_SIZE_MAX=100): read, miss → prettifyDiagnosticForHover → set isTrusted/supportHtml. Cache key is diagnostic.message (in-source TODO calls out it should be LRU). Returns FormattedDiagnostic shape."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/diagnostics.ts", start = 99, end = 128, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "webviewViewProvider — refresh body"
+justification = "The render path: assemble pinned-section + diagnostic-items, dedupe against `lastContent`, postMessage update-content. Shows the dedup that suppresses no-op updates."
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 358, end = 405, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "prettifyDiagnosticForHover — full body"
+justification = "The hover entrypoint: embedSymbolLinks → identSentences → prettifyErrorMessageForHover → wrap with errorTitle + actions (showErrorInSidebar/pin/copy/explanation). The d`html` template ties everything together."
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForHover.ts", start = 17, end = 45, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "webviewViewProvider — lockToDiagnostic + pinDiagnostic"
+justification = "Two methods that mutate sidebar state from commands. lockToDiagnostic switches mode='locked' and pins a specific diagnostic by range+message match. pinDiagnostic toggles a separate pinned-section header (toggle-on-same-html). Explains the dual mode/pin state."
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 190, end = 240, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "webviewViewProvider — selection/editor event subscriptions"
+justification = "The disposable bag inside resolveWebviewView: onDidChangeActiveTextEditor → drop lock + refresh (with skipNextEditorChange flag), onDidChangeTextEditorSelection → cursor-mode refresh (with skip flags + supported-languageId guard), onDidChangeVisibility → refresh. Zero-follow-up for 'when does the sidebar update?'."
+predecessor = "3.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/src/provider/webviewViewProvider.ts", start = 274, end = 309, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "getRules — every rule's regex pattern"
+justification = "Catastrophic-omission hedge for the rule set. The actual regex literal of each of the 16 rules in `getRules`, with the multi-line ones showing `pattern:` + the regex on the next line. Lets the agent grep for which rule handles 'missing properties' vs 'declare module' vs 'Overload N of M' without reading all replacer bodies."
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 54, end = 54, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 58, end = 58, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 63, end = 64, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 76, end = 76, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 86, end = 86, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 103, end = 103, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 108, end = 108, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 112, end = 112, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 116, end = 117, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 122, end = 123, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 127, end = 128, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 133, end = 134, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 138, end = 139, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 143, end = 143, render = { kind = "full" } },
+  { path = "packages/formatter/src/errorMessagePrettifier.ts", start = 148, end = 148, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "embedSymbolLinks — full body"
+justification = "If relatedInformation[0] matches `'symbol' is declared here.`, rewrite every occurrence of the symbol with an <a> linked to command:prettyTsErrors.revealSelection?<uri,range>. The implementation of the 'go to declaration' icon."
+predecessor = "3.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/format/embedSymbolLinks.ts", start = 4, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "prettifyDiagnosticForSidebar — full body"
+justification = "Sidebar entrypoint: same shape as Hover but drops showErrorInSidebar (already in sidebar), uses htmlCodeBlock (shiki-rendered) instead of hoverCodeBlock, adds errorMessageTranslation link. Side-by-side with 4.5 makes the two-target split explicit."
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/vscode-formatter/src/format/prettifyDiagnosticForSidebar.ts", start = 16, end = 43, render = { kind = "full" } },
+]
+
+# ----------------------------------------------------------------------
+# TIER 5 — Tests, examples, build/dev configs, docs
+# ----------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "packages/formatter/test — tree"
+justification = "Names the formatter test files (errorMessageMocks.ts, formatter.vitest.ts) plus __snapshots__ dir. Catastrophic-omission hedge: lets the agent locate the single test entry."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "packages/formatter/test", entries = "all" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "errorMessageMocks — exported mock names (location batch)"
+justification = "First line of each exported mock: errorWithSpecialCharsInObjectKeys, errorWithDashInObjectKeys, errorWithMethodsWordInIt, errorWithParamsDestructuring, errorWithLongType, errorWithTruncatedType2, variableNotUsedEror, errorWithSimpleIndentations, errorWithComma, missingPropertyError, missingReactPropsError, leftSideAritmeticError, theosError, ts1378Error, ts2304Error, ts2305Error, ts2307Error, ts1360Error, errorWithStringChars, ts2322ErrorWithPrivateProperty, ts4113Error, ts4117Error. Catastrophic-omission hedge for the corpus of test error shapes."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 9, end = 9, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 13, end = 13, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 20, end = 20, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 25, end = 25, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 30, end = 30, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 42, end = 42, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 49, end = 49, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 55, end = 55, render = { kind = "full" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 60, end = 60, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 66, end = 66, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 70, end = 70, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 74, end = 74, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 78, end = 78, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 82, end = 82, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 86, end = 86, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 90, end = 90, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 94, end = 94, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 98, end = 98, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 103, end = 103, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+  { path = "packages/formatter/test/errorMessageMocks.ts", start = 107, end = 107, render = { kind = "truncated", pattern = "^export const [a-zA-Z0-9]+" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "examples/ + apps/vscode-extension/scripts + webview — trees"
+justification = "Names the four example files (errors.js/.ts/.vue/examples.type — manual-debug fodder), the two extension build scripts (build.js, process-shim.js), and the webview asset files (index.html, index.js, style.css, vendor/). Catastrophic-omission hedge for these adjacent surfaces."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+  { parent = "apps/vscode-extension/scripts", entries = "all" },
+  { parent = "apps/vscode-extension/webview", entries = "all" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "build.js — esbuild config + workspace alias plugin"
+justification = "esbuild context with `entryPoints.extension = ./src/extension.ts`, external `vscode`, format `cjs`, process shim inject, and the workspacePackagesPlugin that resolves `@pretty-ts-errors/{utils,formatter,vscode-formatter}` to source paths so changes propagate in watch mode. Anchors 'how is the extension bundled?' and 'why do workspace package changes get picked up immediately?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "apps/vscode-extension/scripts/build.js", start = 11, end = 34, render = { kind = "full" } },
+  { path = "apps/vscode-extension/scripts/build.js", start = 62, end = 86, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "CONTRIBUTING — H2/H3 headings"
+justification = "Tells the agent CONTRIBUTING.md covers Set up Local Dev Environment (monorepo & turbo), Contributing to the Source Code (architecture, styleguide, debugging & testing), and how to find tests + manual debugging via selectedTextHoverProvider. Pointer to follow when answering 'how do I contribute / debug / test?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "CONTRIBUTING.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 58, end = 58, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 76, end = 76, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 82, end = 82, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 86, end = 86, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 90, end = 92, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 108, end = 108, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 115, end = 115, render = { kind = "full" } },
+  { path = "CONTRIBUTING.md", start = 123, end = 123, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "docs/ + .github/workflows — trees"
+justification = "Lists docs/ children (ARCHITECTURE.md, hide-original-errors.md, vscode-logs.md, pretty-ts-errors-hack.css, plus image dirs) and the single PR-CI workflow file. Catastrophic-omission hedge for docs and CI."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docs", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "PR CI workflow — the actual test commands"
+justification = "GitHub Actions YAML steps: format:check, build all workspaces, then per-package test commands (formatter / vscode-formatter / vscode-extension via xvfb-run). Names exact test invocations a contributor can replicate locally."
+predecessor = "5.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".github/workflows/pr-ci.yml", start = 30, end = 49, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "vitest config — formatter test runner"
+justification = "Vitest test glob (`test/**/*.vitest.{ts,tsx}` + `*.spec.{ts,tsx}`, env=node, globals=true) used by both formatter packages. Tells the agent how to invoke / where unit tests are picked up."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "packages/formatter/vitest.config.ts", start = 4, end = 9, render = { kind = "full" } },
+]

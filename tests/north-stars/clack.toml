@@ -1,0 +1,982 @@
+fixture = "clack"
+revision_pin = "adb6af9f"
+summary = """
+Clack is a TypeScript monorepo (pnpm workspaces) that ships two npm
+packages: `@clack/core` — headless `Prompt<T>` base class + per-prompt
+subclasses (text, password, confirm, select, multi-select, autocomplete,
+date, multi-line, select-key, group-multiselect) plus shared utilities
+(settings/aliases, cursor helpers, ansi string diff), and `@clack/prompts`
+— pre-styled wrapper functions around the core primitives, with extra
+output-only helpers (intro/outro, cancel, log, stream, note, box,
+spinner, progress, tasks, taskLog, group). Code lives under
+`packages/{core,prompts}/src/`; examples under `examples/{basic,changesets}/`.
+
+The ranking serves the full distribution of CLI / prompts-library tasks an
+agent might face: "what does prompt X do / what options does it take",
+"how do I render a custom prompt by subclassing the core primitive",
+"where is the keypress / state-machine logic", "where is the ANSI /
+guide-bar styling defined", "how does the autocomplete filter / sliding
+window work", debugging styling bugs, and adding new prompts. Breadth of
+fs/signature locations is prioritised over deep bodies in early batches.
+"""
+
+# ---- Tier 1: top-of-repo orientation -----------------------------------
+# What kind of repo is this, what packages does it ship, where to look.
+
+[[batches]]
+id = "1.1"
+descriptor = "Clack lede — two packages + their roles"
+justification = """
+Two-line lede from the root README naming `@clack/prompts` (opinionated,
+ready-to-use) and `@clack/core` (headless primitives). Zero-follow-up
+for "what is clack".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo top-level entries"
+justification = """
+Lists every top-level file/dir so the agent never has to ls the root.
+Tells the agent at a glance: monorepo (packages/, examples/, pnpm-*),
+typescript (tsconfig.json, biome.json), changesets-managed (.changeset),
+GitHub-hosted (.github). One-hop pointer for any of these.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "Workspace layout — packages/ and examples/ children"
+justification = """
+Names the two published packages (`core`, `prompts`) and the two example
+projects (`basic`, `changesets`). Catastrophic-omission hedge: without
+this an agent might assume there's only one package or miss the examples
+entirely.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages"
+entries = "all"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "pnpm workspace globs"
+justification = """
+Confirms the monorepo wiring (`examples/*`, `packages/*`,
+workspace-protocol). Cheap, answers "how are packages linked".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pnpm-workspace.yaml"
+start = 1
+end = 3
+render = { kind = "full" }
+
+# ---- Tier 2: source listings + barrel exports --------------------------
+# Names every file that ships and the public-API re-exports.
+
+[[batches]]
+id = "2.1"
+descriptor = "@clack/prompts src/ — every file ships at the surface"
+justification = """
+Names every styled prompt + helper module that lives in
+`packages/prompts/src/`: confirm, text, password, select, multiselect,
+autocomplete, date, path, multi-line, select-key, group-multi-select,
+spinner, progress-bar, log, stream, note, box, task, task-log, group,
+messages, common, limit-options. Filename = function name in most
+cases, so the listing is a 1-hop index for "where is X".
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages/prompts/src"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "@clack/core src/ — primitive classes + utils"
+justification = """
+Names every primitive Prompt subclass under `core/src/prompts/` plus the
+util modules (cursor.ts, settings.ts, string.ts, index.ts). Mirrors 2.1
+for the headless layer.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "packages/core/src"
+entries = "all"
+[[batches.content.groups]]
+parent = "packages/core/src/prompts"
+entries = "all"
+[[batches.content.groups]]
+parent = "packages/core/src/utils"
+entries = "all"
+
+[[batches]]
+id = "2.3"
+descriptor = "@clack/core lede — what the package exposes"
+justification = """
+The 1-line description of @clack/core ("low-level primitives") + the
+named-export list (`TextPrompt`, `SelectPrompt`, `ConfirmPrompt`, base
+`Prompt` class with a `render` function). Cheap and answers "what does
+core do" without opening any source file.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/README.md"
+start = 3
+end = 8
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "@clack/prompts barrel — core re-exports + first half"
+justification = """
+Confirms the prompts package re-exports `isCancel`/`settings`/
+`updateSettings` from core, then names the early `export *`s
+(autocomplete, box, common, confirm, date, group, group-multi-select,
+limit-options, log, messages). First of two splits to fit the envelope.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/index.ts"
+start = 1
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "@clack/prompts barrel — second half (export *)"
+justification = """
+Names the remaining `export *` modules: multi-line, multi-select, note,
+password, path, progress-bar, select, select-key, spinner, stream, task,
+task-log, text. Together with 2.4 this is a no-omission listing of
+prompts' public re-export surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/index.ts"
+start = 14
+end = 26
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "Root scripts — build/test/lint commands"
+justification = """
+Inner script labels + commands from the root package.json. Tells the
+agent the supported workflow (`pnpm build`, `pnpm test`, `pnpm format`/
+`lint`, `pnpm types`, `pnpm deps`). devDeps and workspace metadata are
+skipped (inferable from biome.json/knip.json + pnpm-lock).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 5
+end = 16
+render = { kind = "full" }
+
+# ---- Tier 3: public surface — common options + Prompt base + intro/outro
+
+[[batches]]
+id = "3.1"
+descriptor = "CommonOptions interface — input/output/signal/withGuide"
+justification = """
+The four-field options interface that every styled prompt extends.
+Tiny, ubiquitous, and answers "how do I pipe stdin/stdout/abort into a
+prompt" without an agent having to chase imports.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/common.ts"
+start = 70
+end = 75
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "intro / outro / cancel — session bookend helpers"
+justification = """
+The three short top-level helpers from messages.ts. Most CLI prompt
+sessions begin with `intro(title)` and end with `outro(message)` or
+`cancel(message)` — agents need their signatures + behaviour up-front.
+Full file fits easily because each helper is 5 lines.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/messages.ts"
+start = 6
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Core Prompt<T> base — PromptOptions + class declaration"
+justification = """
+The base class every core primitive extends. Includes the
+`PromptOptions` interface (custom `render`, `validate`, `initialValue`,
+input/output/signal) and the public `Prompt<T>` class header with its
+public fields (`state`, `error`, `value`, `userInput`) and `prompt()`
+method's promise return type. Answers "how do I write a custom prompt
+on top of @clack/core" — the question @clack/core's own README points
+at.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/prompts/prompt.ts"
+start = 17
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "ClackState enum — five canonical prompt states"
+justification = """
+The state machine: `'initial' | 'active' | 'cancel' | 'submit' |
+'error'`. Referenced everywhere render functions branch on `this.state`.
+Pairs with the `symbol(state)` helper that maps states to coloured glyphs.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/types.ts"
+start = 4
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "text() — TextOptions + function signature"
+justification = """
+The TextOptions interface (message/placeholder/defaultValue/initialValue/
+validate) plus the `text(opts)` factory signature. Single most common
+prompt; agent answering "how do I prompt for a name" wants this.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/text.ts"
+start = 5
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/text.ts"
+start = 56
+end = 56
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "confirm() — ConfirmOptions + function signature"
+justification = """
+ConfirmOptions (message/active/inactive/initialValue/vertical) plus the
+`confirm(opts)` signature. Y/N prompt — the second most-used variant
+and surprisingly fiddly because of the `active`/`inactive` labels.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/confirm.ts"
+start = 12
+end = 44
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/confirm.ts"
+start = 61
+end = 61
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "password() — PasswordOptions + function signature"
+justification = """
+PasswordOptions (message/mask/validate/clearOnError) plus the factory.
+Calls out `clearOnError` and the default mask character.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/password.ts"
+start = 5
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/password.ts"
+start = 47
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "Option<Value> type + SelectOptions + select() signature"
+justification = """
+The shared `Option<Value>` type used by select/multiselect/autocomplete/
+selectKey (with optional `label`, `hint`, `disabled`) plus SelectOptions
+(message/options/initialValue/maxItems) and the `select()` signature.
+Foundational for any choice-prompt usage.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/select.ts"
+start = 14
+end = 73
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/select.ts"
+start = 85
+end = 85
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "multiselect() — MultiSelectOptions + signature"
+justification = """
+MultiSelectOptions (message/options/initialValues/maxItems/required/
+cursorAt) and the `multiselect()` signature. Returns an array; `required`
+defaults to true (per the body).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/multi-select.ts"
+start = 16
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/multi-select.ts"
+start = 31
+end = 31
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "autocomplete() — AutocompleteOptions + signature"
+justification = """
+AutocompleteOptions: shared shape (message/options/maxItems/placeholder/
+validate/filter) plus initialValue/initialUserInput. `options` can be a
+function (dynamic options getter — used by `path`). The signature is
+`autocomplete<Value>(opts) => Promise<Value | symbol>`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/autocomplete.ts"
+start = 44
+end = 94
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/autocomplete.ts"
+start = 121
+end = 121
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "autocompleteMultiselect() — Options + signature"
+justification = """
+The multi-select variant: extends the shared autocomplete options shape
+with `initialValues` and `required`. Returns `Promise<Value[] | symbol>`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/autocomplete.ts"
+start = 264
+end = 278
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/autocomplete.ts"
+start = 304
+end = 304
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "date() — DateOptions + DateFormat + signature"
+justification = """
+DateOptions (message/format/locale/defaultValue/initialValue/minDate/
+maxDate/validate) + the `DateFormat` literal-union (`'YMD' | 'MDY' |
+'DMY'`) re-exported from core. The most-customised prompt in clack;
+agents will want this when wiring date input.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/date.ts"
+start = 6
+end = 19
+render = { kind = "full" }
+
+[[batches]]
+id = "3.13"
+descriptor = "path() — PathOptions + signature"
+justification = """
+PathOptions (message/root/directory/initialValue/validate). path()
+extends autocomplete with a dynamic `options()` reader over the
+filesystem. Common gotcha called out in the JSDoc: in directory mode,
+hitting Enter on an existing directory submits rather than descending.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/path.ts"
+start = 6
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/path.ts"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "3.14"
+descriptor = "multiline() — MultiLineOptions + signature"
+justification = """
+MultiLineOptions extends TextOptions with `showSubmit`. Documents the
+two submit modes: double-Enter (default) vs explicit `[ submit ]` button
+when `showSubmit: true`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/multi-line.ts"
+start = 6
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/multi-line.ts"
+start = 36
+end = 36
+render = { kind = "full" }
+
+[[batches]]
+id = "3.15"
+descriptor = "selectKey() — SelectKeyOptions + signature"
+justification = """
+SelectKeyOptions (message/options/initialValue/caseSensitive). Lets the
+user press a single-character key (first char of each option's `value`)
+to submit immediately — distinct from arrow-navigation `select`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/select-key.ts"
+start = 6
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/select-key.ts"
+start = 13
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.16"
+descriptor = "groupMultiselect() — GroupMultiSelectOptions + signature"
+justification = """
+GroupMultiSelectOptions (message/options-record/initialValues/maxItems/
+required/cursorAt/selectableGroups/groupSpacing). Renders multi-select
+grouped by key; selecting a group toggles all its items.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/group-multi-select.ts"
+start = 15
+end = 61
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/group-multi-select.ts"
+start = 90
+end = 90
+render = { kind = "full" }
+
+[[batches]]
+id = "3.17"
+descriptor = "spinner() — SpinnerOptions + SpinnerResult + signature"
+justification = """
+SpinnerOptions (indicator dots|timer / onCancel / cancelMessage /
+errorMessage / frames / delay / styleFrame) and SpinnerResult
+(start/stop/cancel/error/message/clear/isCancelled). Surfaces the
+process-signal hooks that make spinner robust under SIGINT/SIGTERM.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/spinner.ts"
+start = 15
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/spinner.ts"
+start = 37
+end = 37
+render = { kind = "full" }
+
+[[batches]]
+id = "3.18"
+descriptor = "progress() — ProgressOptions + ProgressResult"
+justification = """
+ProgressOptions extends SpinnerOptions with `style` (light/heavy/block),
+`max`, `size`. ProgressResult adds `advance(step, msg)` to SpinnerResult.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/progress-bar.ts"
+start = 12
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "3.19"
+descriptor = "note() / box() — output-only helpers"
+justification = """
+`note(message, title, { format })` and the more configurable
+`box(message, title, { contentAlign, titleAlign, width, titlePadding,
+contentPadding, rounded, formatBorder })`. BoxAlignment union is
+declared in box.ts. Both are pure side-effect output helpers — no
+keypress / state machine involved.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/note.ts"
+start = 18
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/note.ts"
+start = 37
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 22
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 37
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 48
+end = 48
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 54
+end = 54
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 60
+end = 60
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 66
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 72
+end = 72
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 77
+end = 78
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/box.ts"
+start = 123
+end = 123
+render = { kind = "full" }
+
+[[batches]]
+id = "3.20"
+descriptor = "log / stream — level helpers + LogMessageOptions"
+justification = """
+LogMessageOptions (symbol/spacing/secondarySymbol) and the
+`log.{message,info,success,step,warn,warning,error}` method set, plus
+the parallel `stream.{message,info,success,step,warn,warning,error}` set
+that consumes (async)iterables. Same level vocabulary across both.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/log.ts"
+start = 13
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/stream.ts"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "3.21"
+descriptor = "tasks() — Task type + signature"
+justification = """
+Task is `{ title, task: (message: msg => void) => string | void, enabled? }`.
+`tasks(taskList, opts)` runs each non-disabled task inside its own
+spinner. Useful when scripting install / build sequences.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/task.ts"
+start = 4
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task.ts"
+start = 23
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "3.22"
+descriptor = "taskLog() — Options + result interface (group / message / success / error)"
+justification = """
+TaskLogOptions (title/limit/spacing/retainLog) + return interface
+(message, group(name) → { message, error, success }, error, success).
+Used for sub-process logs that clear on success and remain on failure.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 14
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 185
+end = 186
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 189
+end = 189
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 196
+end = 197
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 200
+end = 200
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 206
+end = 206
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 214
+end = 214
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/task-log.ts"
+start = 225
+end = 225
+render = { kind = "full" }
+
+[[batches]]
+id = "3.23"
+descriptor = "group() — PromptGroup + signature"
+justification = """
+The chained-prompts helper. Each prompt receives `{ results }` of all
+previous prompts. `onCancel` callback runs if a member is cancelled.
+Skipping is via returning `undefined` from a member (see the
+patch/minor branches in `examples/changesets`).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/group.ts"
+start = 11
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/group.ts"
+start = 60
+end = 63
+render = { kind = "full" }
+
+# ---- Tier 4: internals — lifecycle, state, settings, ANSI --------------
+
+[[batches]]
+id = "4.1"
+descriptor = "Default actions + aliases (vim keys, escape→cancel)"
+justification = """
+The seven canonical Actions (`up/down/left/right/space/enter/cancel`),
+the `Action` type, and the default key→action alias map (`k j h l`
+vim arrows, `\\x03` and `escape` for cancel). Required for understanding
+"why does escape cancel" or "where do I add a new alias".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/utils/settings.ts"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/core/src/utils/settings.ts"
+start = 40
+end = 56
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "ClackEvents — every event a Prompt emits"
+justification = """
+The 12 events a prompt may emit/listen to: initial/active/cancel/submit/
+error/cursor/key/value/userInput/confirm/finalize/beforePrompt. Anyone
+extending Prompt subscribes via `.on(event, cb)` — this list is the
+event vocabulary.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/types.ts"
+start = 12
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "isActionKey — alias→Action lookup helper"
+justification = """
+Decides whether a raw key/sequence matches a canonical Action via the
+alias map. Called by every prompt that responds to navigation /
+cancellation. Short, sharp helper.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/utils/settings.ts"
+start = 179
+end = 191
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "Prompt.prompt() lifecycle — readline, signal abort, submit/cancel"
+justification = """
+The core lifecycle: builds the readline interface, hooks keypress, sets
+raw mode, wires AbortSignal, and resolves the promise on submit (value)
+or cancel (CANCEL_SYMBOL). Critical for debugging "prompt never
+resolves" or "abortSignal isn't cancelling".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/prompts/prompt.ts"
+start = 123
+end = 175
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "Prompt.onKeypress — state machine, validate, submit/cancel"
+justification = """
+The single keypress dispatcher. Reads readline cursor/userInput, runs
+opts.validate on Enter, transitions `state` to 'submit' or 'cancel' or
+'error', emits the 'finalize' event, calls render(). Every prompt
+behaviour bug traces back through this method.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/prompts/prompt.ts"
+start = 204
+end = 256
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "ANSI symbol glyphs + unicodeOr + symbol(state) colorer"
+justification = """
+Headline glyphs an agent will encounter when reading render bodies:
+S_BAR / S_BAR_START / S_BAR_END for the guide bar, S_STEP_* for prompt
+states, S_RADIO_* and S_CHECKBOX_* for selection, S_PASSWORD_MASK,
+unicodeOr ASCII fallback, and the `symbol(state)` colorer that maps
+state → coloured glyph.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/common.ts"
+start = 6
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/common.ts"
+start = 18
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/common.ts"
+start = 23
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/src/common.ts"
+start = 42
+end = 54
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "limitOptions sliding-window core — the algorithm"
+justification = """
+The page-around-the-cursor algorithm and the `outputMaxItems` minimum
+of 5. Top/bottom `…` markers signal cropped tails. Where to look for
+"why is my long list showing only N entries / why is the cursor off".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/src/limit-options.ts"
+start = 41
+end = 75
+render = { kind = "full" }
+
+[[batches]]
+id = "4.8"
+descriptor = "AutocompletePrompt — search-filter handler"
+justification = """
+The `#onUserInputChanged(value)` method that runs on every typed char:
+re-runs `#filterFn` across `options`, re-clamps the cursor via
+`findCursor`, updates `focusedValue`, and (single-select only)
+auto-selects the focused value or clears the selection if no match.
+The heart of autocomplete's behaviour.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/prompts/autocomplete.ts"
+start = 225
+end = 252
+render = { kind = "full" }
+
+[[batches]]
+id = "4.9"
+descriptor = "examples/basic — every demo file (one per prompt feature)"
+justification = """
+Names every `.ts` demo under examples/basic: one per prompt feature
+(text-validation, password, confirm via index.ts, autocomplete,
+autocomplete-multiselect, date, spinner family, progress, stream,
+task-log, path, default-value, multi-line via index.ts). One-hop
+pointer for "show me a working example of X".
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "examples/basic"
+entries = "all"
+
+[[batches]]
+id = "4.10"
+descriptor = "findCursor / findTextCursor — list + 2D cursor helpers"
+justification = """
+The two cursor helpers shared by every choice prompt: `findCursor`
+wraps + skips disabled options on up/down navigation; `findTextCursor`
+moves a 1D text cursor by (dx,dy) over a multi-line value (used by
+MultiLinePrompt arrow keys). Tiny and high-density.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/core/src/utils/cursor.ts"
+start = 1
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/core/src/utils/cursor.ts"
+start = 20
+end = 25
+render = { kind = "full" }
+
+[[batches]]
+id = "4.11"
+descriptor = "tsconfig path aliases — @clack/core/@clack/prompts → src/index"
+justification = """
+The compiler `paths` config (and `include`) is the reason `import '@clack/
+core'` resolves to `packages/core/src/index.ts` during dev (vs `dist/`
+after build). Useful when an agent's edits aren't reflected.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 17
+end = 23
+render = { kind = "full" }
+
+[[batches]]
+id = "4.12"
+descriptor = "Test scaffolding — MockReadable + MockWritable signatures"
+justification = """
+Names the two stream mocks used in every prompt test under
+packages/{core,prompts}/test/: `MockReadable` (buffers values, emits
+via _read), `MockWritable` (collects chunks in `.buffer`, has `isTTY`/
+`columns`/`rows` defaults). Common ask: "how do I unit-test a custom
+prompt" — points the agent at the same scaffolding the package uses.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "packages/prompts/test/test-utils.ts"
+start = 3
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "packages/prompts/test/test-utils.ts"
+start = 19
+end = 22
+render = { kind = "full" }

@@ -1,0 +1,609 @@
+fixture = "nats-server"
+revision_pin = "8f41bed8"
+summary = """
+nats-server is the reference NATS messaging server: a Go implementation of
+the NATS protocol with JetStream persistence, clustering (routes), gateways
+between clusters, leafnodes (account-scoped tunnels), MQTT 3.1.1 and
+WebSocket adapters, JWT-based account auth, and HTTP monitoring. A single
+~370k-LoC `server/` package holds nearly all server logic; sibling
+packages (`conf`, `logger`, `internal/*`) handle config parsing and shared
+utilities. `main.go` is a thin shim — `server.ConfigureOptions` parses
+flags+config, `server.NewServer`, `s.ConfigureLogger`, `server.Run(s)`,
+`s.WaitForShutdown()`. The CLI flag inventory (full text of `usageStr`)
+lives in main.go; the equivalent conf-file keys are in `Options` struct
+field JSON tags inside server/opts.go.
+
+The agent query distribution skews heavily toward navigating this very
+large monolithic package: "where is X feature implemented", "what config
+keys exist", "what does Y option mean", "how does subsystem Z hook in",
+"what's the data model for streams/consumers/accounts". Catastrophic
+omission risk is high — the `server/` directory has 156 files; partial
+listing misleads. Priority is therefore breadth of file pointers and
+signature locations first, then short concept ledes. The 10k-token cap
+punishes large struct dumps disproportionately on a codebase this size;
+what's included in full is the lock-ordering invariants and the on-wire
+INFO frame.
+"""
+
+# ============================================================
+# Tier 1 — Tiny orientation pointers (small first to grow envelope)
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "main.go package + import + go:generate"
+justification = """
+Smallest possible orientation: main.go is package main, imports the
+server package, and uses //go:generate to regenerate JS errors.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "main.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "main.go", start = 23, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README first sentence (truncated)"
+justification = """
+First-line identification: NATS is a CNCF messaging system; sets domain
+context. README line 5 is a long paragraph; truncate at the first
+sentence-end.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 5, end = 5, render = { kind = "truncated", pattern = "^[^.]+\\." } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Top-level repo listing"
+justification = """
+The repo's top-level shape: Go entry (`main.go`), implementation under
+`server/`, plus conf, doc, docker, internal, logger, logos, scripts,
+test, util, markdown docs, go.mod.
+"""
+content = { kind = "fs", groups = [ { parent = ".", entries = "all" } ] }
+
+[[batches]]
+id = "1.4"
+descriptor = "Top-level doc headers"
+justification = """
+Header-line pointers to every top-level doc (CONTRIBUTING, MAINTAINERS,
+GOVERNANCE, AMBASSADORS, CODE-OF-CONDUCT, DEPENDENCIES, RELEASES, TODO).
+Catastrophic-omission hedge.
+"""
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "MAINTAINERS.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "GOVERNANCE.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "AMBASSADORS.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "CODE-OF-CONDUCT.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "DEPENDENCIES.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "RELEASES.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "TODO.md", start = 2, end = 2, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "docker/ + util/ + scripts/ + doc/"
+justification = """
+Ops-adjacent trees: docker (Dockerfile + default conf), util (systemd
+units), scripts (CI shards), doc (ADR redirect).
+"""
+content = { kind = "fs", groups = [
+  { parent = "docker", entries = "all" },
+  { parent = "util", entries = "all" },
+  { parent = "scripts", entries = "all" },
+  { parent = "doc", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Sibling packages (conf, logger, internal)"
+justification = """
+Sibling packages outside server/: conf (HOCON-ish parser), logger
+(file/syslog sinks), internal/* (ldap DN, fastrand, antithesis no-ops,
+ocsp, testhelper). Catastrophic-omission hedge.
+"""
+content = { kind = "fs", groups = [
+  { parent = "conf", entries = "all" },
+  { parent = "logger", entries = "all" },
+  { parent = "internal", entries = "all" },
+  { parent = "internal/antithesis", entries = "all" },
+  { parent = "internal/fastrand", entries = "all" },
+  { parent = "internal/ldap", entries = "all" },
+  { parent = "internal/ocsp", entries = "all" },
+  { parent = "internal/testhelper", entries = "all" },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "test/ directory listing"
+justification = """
+`test/` is the black-box test suite (parallel to in-package `*_test.go`
+in server/). Listing establishes black-box groups (accounts cycles,
+auth, client cluster, gateway, leafnode, monitor, new routes, ocsp peer,
+operator, ports, proto, route discovery, services, tls, user
+authorization).
+"""
+content = { kind = "fs", groups = [ { parent = "test", entries = "all" } ] }
+
+[[batches]]
+id = "1.8"
+descriptor = "server/ subpackages — part 1 of 2 (ats/avl/cert*/gsl/pse)"
+justification = """
+First 5 specialized server subpackages: ats (account time source), avl
+(seq sets), certidp + certstore (TLS helpers), gsl (generic sublist),
+pse (process stats per-OS). Split into two halves to fit early-batch
+envelope.
+"""
+content = { kind = "fs", groups = [
+  { parent = "server/ats", entries = "all" },
+  { parent = "server/avl", entries = "all" },
+  { parent = "server/certidp", entries = "all" },
+  { parent = "server/certstore", entries = "all" },
+  { parent = "server/gsl", entries = "all" },
+  { parent = "server/pse", entries = "all" },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "server/ subpackages — part 2 of 2 (stree/sysmem/thw/tpm)"
+justification = """
+Remaining server subpackages: stree (adaptive radix tree), sysmem
+(per-OS memory), thw (timed hash wheel), tpm (JetStream key sealing).
+"""
+content = { kind = "fs", groups = [
+  { parent = "server/stree", entries = "all" },
+  { parent = "server/sysmem", entries = "all" },
+  { parent = "server/thw", entries = "all" },
+  { parent = "server/tpm", entries = "all" },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "go.mod — module path + deps"
+justification = """
+Module path `github.com/nats-io/nats-server/v2`. Direct deps:
+klauspost/compress, nats-io/jwt (JWT auth), nkeys (crypto identity),
+highwayhash, antithesis-sdk-go (property testing), go-tpm (JS
+encryption), golang.org/x/{crypto,sys,time}.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "Server lifecycle entry-point signatures"
+justification = """
+Locations of every Server method main.go reaches through plus shutdown
+and accept-loop. Each landed via the bare signature line. The Run()
+wrapper in service.go is the systemd / Windows-service stub.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/server.go", start = 677, end = 677, render = { kind = "full" } },
+  { path = "server/server.go", start = 682, end = 682, render = { kind = "full" } },
+  { path = "server/server.go", start = 695, end = 695, render = { kind = "full" } },
+  { path = "server/server.go", start = 1674, end = 1674, render = { kind = "full" } },
+  { path = "server/server.go", start = 2237, end = 2237, render = { kind = "full" } },
+  { path = "server/server.go", start = 2558, end = 2558, render = { kind = "full" } },
+  { path = "server/server.go", start = 2748, end = 2748, render = { kind = "full" } },
+  { path = "server/server.go", start = 2753, end = 2753, render = { kind = "full" } },
+  { path = "server/server.go", start = 2987, end = 2987, render = { kind = "full" } },
+  { path = "server/service.go", start = 20, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "main.go main() function"
+justification = """
+The main() function. Names the 5 public server APIs the agent needs:
+ConfigureOptions, NewServer, ConfigureLogger, Run, WaitForShutdown
+(plus RedactArgs/PrintAndDie). The CheckConfig exit branch is visible.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 97, end = 134, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Constants + lock invariants + config fixtures
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "nats-server --signal subcommands"
+justification = """
+The Command type constants (stop/quit/reopen/reload + private ldm/term).
+Tiny, zero-hop for signal subcommand questions.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/const.go", start = 22, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Config fixture directories"
+justification = """
+server/configs/ + server/configs/reload/ + test/configs/ + conf/includes/
+hold dozens of fixtures (TLS variants, token/multi-user auth,
+max_connections, malformed_*, JS limits, certs). Listing prevents the
+agent from missing existing failure-mode coverage.
+"""
+content = { kind = "fs", groups = [
+  { parent = "server/configs", entries = "all" },
+  { parent = "server/configs/reload", entries = "all" },
+  { parent = "test/configs", entries = "all" },
+  { parent = "conf/includes", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Key default ports / payloads / timeouts"
+justification = """
+Discrete one-line picks of the most-grepped constants: VERSION,
+DEFAULT_PORT=4222, DEFAULT_HTTP_PORT=8222, DEFAULT_LEAFNODE_PORT=7422,
+MAX_CONTROL_LINE_SIZE=4096, MAX_PAYLOAD_SIZE=1MB, MAX_PENDING_SIZE,
+DEFAULT_MAX_CONNECTIONS, TLS_TIMEOUT, AUTH_TIMEOUT, DEFAULT_PING_INTERVAL,
+DEFAULT_LAME_DUCK_DURATION, DEFAULT_LEAF_NODE_RECONNECT, reserved
+accounts ($SYS, $G), DEFAULT_ACCOUNT_FETCH_TIMEOUT. Each pick includes
+the preceding comment line for inline context.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/const.go", start = 67, end = 69, render = { kind = "full" } },
+  { path = "server/const.go", start = 77, end = 78, render = { kind = "full" } },
+  { path = "server/const.go", start = 88, end = 90, render = { kind = "full" } },
+  { path = "server/const.go", start = 92, end = 94, render = { kind = "full" } },
+  { path = "server/const.go", start = 101, end = 102, render = { kind = "full" } },
+  { path = "server/const.go", start = 104, end = 105, render = { kind = "full" } },
+  { path = "server/const.go", start = 107, end = 108, render = { kind = "full" } },
+  { path = "server/const.go", start = 116, end = 117, render = { kind = "full" } },
+  { path = "server/const.go", start = 119, end = 120, render = { kind = "full" } },
+  { path = "server/const.go", start = 122, end = 123, render = { kind = "full" } },
+  { path = "server/const.go", start = 134, end = 135, render = { kind = "full" } },
+  { path = "server/const.go", start = 158, end = 159, render = { kind = "full" } },
+  { path = "server/const.go", start = 161, end = 162, render = { kind = "full" } },
+  { path = "server/const.go", start = 194, end = 196, render = { kind = "full" } },
+  { path = "server/const.go", start = 198, end = 200, render = { kind = "full" } },
+  { path = "server/const.go", start = 205, end = 206, render = { kind = "full" } },
+  { path = "server/const.go", start = 243, end = 244, render = { kind = "full" } },
+  { path = "server/const.go", start = 246, end = 247, render = { kind = "full" } },
+  { path = "server/const.go", start = 249, end = 250, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "locksordering.txt — full"
+justification = """
+Critical for any concurrency / refactor query. Documents the partial
+order of lock acquisitions: jetStream → jsAccount → Server → client →
+Account, reloadMu (must go first), jscmMu (JS-cluster-migrate
+serialiser), clMu/ddMu/batchMu on stream. Without it, lock-order changes
+will deadlock.
+"""
+content = { kind = "lines", spans = [
+  { path = "locksordering.txt", start = 1, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "server/ directory listing"
+justification = """
+The 156-file server/ directory is THE place. Listing every immediate
+child is the single most catastrophic-omission-prone gap. Without this,
+agents assume files like msgtrace.go, sdm.go, scheduler.go,
+norace_*_test.go, signal_wasm.go, websocket_go125/126.go,
+jetstream_super_cluster_test.go don't exist. Big batch — deferred to
+where envelope can absorb it.
+"""
+content = { kind = "fs", groups = [ { parent = "server", entries = "all" } ] }
+
+# ============================================================
+# Tier 3 — Options config surface
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Per-subsystem option type names"
+justification = """
+Type-declaration lines for every Options sub-block: PinnedCertSet,
+ClusterOpts, CompressionOpts, GatewayOpts, RemoteGatewayOpts, LeafNodeOpts,
+RemoteLeafOpts, JSLimitOpts, JSTpmOpts, AuthCallout, Options,
+WebsocketOpts, MQTTOpts, authorization, TLSConfigOpts, TLSCertPairOpt,
+OCSPConfig, ProxiesConfig, ProxyConfig. Index of every subsystem with
+its own options block.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/opts.go", start = 60, end = 60, render = { kind = "full" } },
+  { path = "server/opts.go", start = 65, end = 65, render = { kind = "full" } },
+  { path = "server/opts.go", start = 98, end = 98, render = { kind = "full" } },
+  { path = "server/opts.go", start = 143, end = 143, render = { kind = "full" } },
+  { path = "server/opts.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "server/opts.go", start = 183, end = 183, render = { kind = "full" } },
+  { path = "server/opts.go", start = 247, end = 247, render = { kind = "full" } },
+  { path = "server/opts.go", start = 360, end = 360, render = { kind = "full" } },
+  { path = "server/opts.go", start = 371, end = 371, render = { kind = "full" } },
+  { path = "server/opts.go", start = 379, end = 379, render = { kind = "full" } },
+  { path = "server/opts.go", start = 397, end = 397, render = { kind = "full" } },
+  { path = "server/opts.go", start = 593, end = 593, render = { kind = "full" } },
+  { path = "server/opts.go", start = 688, end = 688, render = { kind = "full" } },
+  { path = "server/opts.go", start = 845, end = 845, render = { kind = "full" } },
+  { path = "server/opts.go", start = 865, end = 865, render = { kind = "full" } },
+  { path = "server/opts.go", start = 892, end = 892, render = { kind = "full" } },
+  { path = "server/opts.go", start = 898, end = 898, render = { kind = "full" } },
+  { path = "server/opts.go", start = 907, end = 907, render = { kind = "full" } },
+  { path = "server/opts.go", start = 912, end = 912, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Options public + per-block parser functions"
+justification = """
+Functions external embedders call (ProcessConfigFile, ConfigureOptions,
+MergeOptions, Clone, RedactArgs, GenTLSConfig, ProcessConfigString,
+ConfigDigest). Plus internal per-block parsers (parseCluster, parseGateway,
+parseJetStream, parseLeafNodes, parseAccounts, parseAuthorization,
+parseAuthCallout, parseTLS, parseWebsocket, parseMQTT). Index of "where
+is conf key X parsed".
+"""
+content = { kind = "lines", spans = [
+  { path = "server/opts.go", start = 790, end = 790, render = { kind = "full" } },
+  { path = "server/opts.go", start = 945, end = 945, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1049, end = 1049, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1065, end = 1065, render = { kind = "full" } },
+  { path = "server/opts.go", start = 1075, end = 1075, render = { kind = "full" } },
+  { path = "server/opts.go", start = 2002, end = 2002, render = { kind = "full" } },
+  { path = "server/opts.go", start = 2245, end = 2245, render = { kind = "full" } },
+  { path = "server/opts.go", start = 2637, end = 2637, render = { kind = "full" } },
+  { path = "server/opts.go", start = 2787, end = 2787, render = { kind = "full" } },
+  { path = "server/opts.go", start = 3610, end = 3610, render = { kind = "full" } },
+  { path = "server/opts.go", start = 4499, end = 4499, render = { kind = "full" } },
+  { path = "server/opts.go", start = 4700, end = 4700, render = { kind = "full" } },
+  { path = "server/opts.go", start = 5053, end = 5053, render = { kind = "full" } },
+  { path = "server/opts.go", start = 5439, end = 5439, render = { kind = "full" } },
+  { path = "server/opts.go", start = 5558, end = 5558, render = { kind = "full" } },
+  { path = "server/opts.go", start = 5829, end = 5829, render = { kind = "full" } },
+  { path = "server/opts.go", start = 6141, end = 6141, render = { kind = "full" } },
+  { path = "server/opts.go", start = 6557, end = 6557, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Wire & data model
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "INFO struct (wire frame, all connection kinds)"
+justification = """
+`Info` is the JSON payload exchanged on CONNECT/INFO for every connection
+kind (client, route, gateway, leafnode). Its fields are the protocol
+surface — answers "what metadata flows on connect" / "how do I add a
+capability advertisement" questions zero-hop.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/server.go", start = 107, end = 165, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "client.go connection-kind taxonomy"
+justification = """
+The CLIENT/ROUTER/GATEWAY/SYSTEM/LEAF/JETSTREAM/ACCOUNT taxonomy is
+referenced everywhere. Plus NATS/MQTT/WS clientType extension.
+Disambiguates "client" (any inbound connection's runtime, including
+internal/system ones).
+"""
+content = { kind = "lines", spans = [
+  { path = "server/client.go", start = 44, end = 88, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Account struct + globalAccountName"
+justification = """
+Account is the third runtime leg (alongside Server and client). Field
+opening shows stats, sublist, leafnodes (lleafs, leafClusters), imports
+/exports, JS hooks. Plus globalAccountName=$G binding.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/accounts.go", start = 42, end = 50, render = { kind = "full" } },
+  { path = "server/accounts.go", start = 51, end = 95, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 5 — JetStream surface
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "JetStream lifecycle method signatures"
+justification = """
+JS lifecycle index on Server: EnableJetStream, enableJetStream,
+restartJetStream, setupJetStreamExports, handleOutOfSpace,
+DisableJetStream, enableJetStreamAccounts, configJetStream,
+configAllJetStreamAccounts, JetStreamEnabled, shutdownJetStream.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/jetstream.go", start = 193, end = 193, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 419, end = 419, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 565, end = 565, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 599, end = 599, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 622, end = 622, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 652, end = 652, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 699, end = 699, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 780, end = 780, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 913, end = 913, render = { kind = "full" } },
+  { path = "server/jetstream.go", start = 986, end = 986, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "JetStreamConfig (per-server JS settings)"
+justification = """
+The per-server JS config struct — MaxMemory, MaxStore, StoreDir,
+SyncInterval, SyncAlways, Domain, CompressOK, UniqueTag, Strict.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/jetstream.go", start = 41, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "$JS.API.* subject scheme"
+justification = """
+The `$JS.API.*` subject scheme is the public protocol for managing
+streams/consumers over NATS. Constants in jetstream_api.go are the
+canonical name + format strings for each endpoint (CREATE, UPDATE, INFO,
+LIST). Indispensable for management tooling.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/jetstream_api.go", start = 36, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "JetStream errors are code-generated"
+justification = """
+errors.json + errors_gen.go (`//go:build ignore` codegen) generates the
+JS ApiErrors table. Saves the agent from editing the generated
+jetstream_errors_generated.go (wrong file).
+"""
+content = { kind = "lines", spans = [
+  { path = "server/errors_gen.go", start = 1, end = 5, render = { kind = "full" } },
+  { path = "server/errors.json", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Storage + JS cluster file pointers"
+justification = """
+One-line file locators — filestore.go's FileStoreConfig (disk storage),
+memstore.go opener (in-memory), store.go (StreamStore/ConsumerStore
+interface), jetstream_cluster.go (jetStreamCluster meta-raft assignment
+table).
+"""
+content = { kind = "lines", spans = [
+  { path = "server/filestore.go", start = 57, end = 60, render = { kind = "full" } },
+  { path = "server/memstore.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "server/store.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "server/jetstream_cluster.go", start = 42, end = 48, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 6 — Cluster / Gateway / Leafnode + monitoring
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "Route protocol prefixes"
+justification = """
+Routes connect servers in a cluster. RouteType (Implicit/Explicit) and
+on-wire single-letter prefixes (A+/A-/RS+/RS-/LS+/LS-) are protocol
+contracts.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/route.go", start = 35, end = 54, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "Gateway reply scheme + leafnode loop prefix"
+justification = """
+Cross-cluster reply routing uses `_GR_.<cluster>.<server>.` (legacy
+`$GR.`); leafnode loop avoidance uses `$LDS.`. Plus reconnect delay
+constants. Anchors cross-cluster + leaf debugging.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/gateway.go", start = 35, end = 59, render = { kind = "full" } },
+  { path = "server/leafnode.go", start = 44, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "Monitoring HTTP handler index"
+justification = """
+The /varz, /connz, /routez, /subsz, /stacksz, /gatewayz, /leafz handlers
+in monitor.go. Plus HandleRoot (index page). One signature line per
+handler.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/monitor.go", start = 730, end = 730, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 917, end = 917, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 1108, end = 1108, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 1155, end = 1155, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 1498, end = 1498, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 1973, end = 1973, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 2334, end = 2334, render = { kind = "full" } },
+  { path = "server/monitor.go", start = 2473, end = 2473, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 7 — Auxiliary concept pointers
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "README-MQTT.md heading anchor"
+justification = """
+README-MQTT.md is the canonical implementation guide for NATS's MQTT
+3.1.1 support (built on JetStream). Single-line pointer signals the
+doc exists; full TOC + body is large enough that we defer to the agent
+reading the file directly. Saves the agent from missing this canonical
+reference.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/README-MQTT.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "server/README-MQTT.md", start = 14, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "Auth-callout subject + Authentication interface name"
+justification = """
+AuthCalloutSubject = `$SYS.REQ.USER.AUTH` (delegated auth via NATS request).
+Plus the `Authentication` interface declaration line. Tiny pointers for
+any custom-auth integration query.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/auth_callout.go", start = 29, end = 30, render = { kind = "full" } },
+  { path = "server/auth.go", start = 39, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "Reload option interface anchor"
+justification = """
+Single-line anchors for the hot-reload mechanism: the `option` interface
+declaration + the `FlagSnapshot` global. Names what to grep for when
+asking "what does SIGHUP reload" — the full interface body is left to
+the file read.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/reload.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "server/reload.go", start = 43, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "conf parser package doc"
+justification = """
+`conf` is the standalone HOCON-ish parser used by ProcessConfigFile.
+Package doc explains the format flexibility (#, // comments; :, =, or
+whitespace assignments). The unusual package boundary makes this easy
+to miss.
+"""
+content = { kind = "lines", spans = [
+  { path = "conf/parse.go", start = 14, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = "RaftNode interface declaration"
+justification = """
+Single-line anchor for the RaftNode consensus interface (NATS RaftGroup
+/ NRG, used by JetStream cluster). Bodies of the interface are 60+ lines
+but knowing the type exists at this location is the cheapest hedge.
+"""
+content = { kind = "lines", spans = [
+  { path = "server/raft.go", start = 40, end = 40, render = { kind = "full" } },
+] }

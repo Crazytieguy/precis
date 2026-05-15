@@ -1,0 +1,815 @@
+fixture = "mkdocs"
+revision_pin = "28625367"
+summary = """
+MkDocs is a Python static site generator for project documentation: it
+takes a tree of Markdown files plus a single `mkdocs.yml` configuration
+file and produces a static HTML site. CLI subcommands are `build`,
+`serve` (with livereload), `gh-deploy`, `new`, `get-deps`. The codebase
+is a single Python package `mkdocs/` with `commands/`, `config/`,
+`structure/`, `plugins.py`, `theme.py`, `livereload/`, `utils/`,
+`contrib/search/` (the built-in plugin), and two built-in themes
+(`mkdocs/themes/{mkdocs,readthedocs}`) carrying Jinja templates,
+CSS/JS, and gettext locale catalogs for ~17 languages. Documentation
+lives in `docs/` (and is itself built with mkdocs, dogfooding). Tests
+are unittest-based under `mkdocs/tests/`, mirroring the package layout.
+
+The ranking serves the full distribution of dev queries: "where is the
+CLI defined / how do I add a subcommand", "what config options exist
+and how are they validated", "what plugin events can I hook", "how is
+a page rendered from Markdown to HTML", "how does the livereload
+server work", "where are the themes / how do I add a translation",
+"how does the built-in search plugin work", "what changed between
+versions". Early batches cover orientation + top-level structure;
+middle batches expose the config / plugin / structure API surfaces
+(class names, on_* event names, field names) so an agent can locate
+features; later batches surface docs site structure, locale/asset
+breadth, and the test tree.
+"""
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 1 — top-level orientation
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "README pitch sentence"
+justification = "One-line statement of what MkDocs is (static site generator for Markdown project docs, configured by YAML). Tiny first batch so even the smallest budget gets a useful answer to 'what is this project'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 9, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Package version"
+justification = "Single source of truth for the current version (1.6.1). One-line `__version__` referenced by hatch_build and pyproject's `dynamic = [\"version\"]`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__init__.py", start = 5, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Repo root listing"
+justification = "Every immediate child of the repo root: mkdocs/, docs/, mkdocs.yml, pyproject.toml, CONTRIBUTING.md, README.md, requirements/, .github/, setup.py, hatch_build.py, LICENSE plus dotfile linters. Catastrophic-omission hedge for orientation."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "README features bullets"
+justification = "Bullet list of what MkDocs supports (build static HTML from Markdown, plugins/extensions, built-in & third-party themes, host anywhere). Tiny prose that helps frame any 'can it do X' query."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 18, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "pyproject project identity"
+justification = "Package name, description, license, Python version constraint. The bare-minimum project identity block."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 5, end = 9, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 33, end = 34, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "pyproject entry points + scripts"
+justification = "How `mkdocs` the shell command is wired (`mkdocs = \"mkdocs.__main__:cli\"`) and how built-in themes (`mkdocs`, `readthedocs`) and plugins (`search`) register via entry points. Tells the agent the dispatch story without reading any Python."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 79, end = 87, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "pyproject runtime deps — core"
+justification = "First half of dependencies: click (CLI), Jinja2+markupsafe (templating), Markdown, PyYAML, watchdog (file watching), ghp-import (GitHub Pages deploy), pyyaml_env_tag. The 'what stack' answer."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 35, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "pyproject runtime deps — rest + i18n extra"
+justification = "Second half of deps (importlib-metadata, packaging, mergedeep, pathspec, mkdocs-get-deps, colorama-on-Windows) plus the `i18n` extra (babel ≥2.9). Closes the catastrophic-omission of partial dep listing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 44, end = 54, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 2 — CLI surface, exceptions, top-level mkdocs/ listing
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "mkdocs/ package listing"
+justification = "Immediate children of the `mkdocs/` package: __init__.py, __main__.py, commands/, config/, contrib/, exceptions.py, livereload/, localization.py, plugins.py, structure/, templates/, tests/, theme.py, themes/, utils/, py.typed. The single most valuable directory listing in the repo."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs", entries = "all" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "CLI subcommand decorators + docstrings"
+justification = "Every `@cli.command(name=…)` line with its one-line docstring: serve / build / gh-deploy / get-deps / new. Closes the catastrophic-omission risk for 'what subcommands exist'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__main__.py", start = 249, end = 250, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 253, end = 253, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 268, end = 268, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 275, end = 275, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 281, end = 281, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 293, end = 293, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 308, end = 308, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 328, end = 328, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 339, end = 339, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 359, end = 360, render = { kind = "full" } },
+  { path = "mkdocs/__main__.py", start = 363, end = 363, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "exceptions module — class signatures"
+justification = "All public exception types and their one-line docstrings: MkDocsException, Abort, ConfigurationError, BuildError, PluginError. Self-contained semantic batch — answers 'what errors does MkDocs raise' fully."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/exceptions.py", start = 1, end = 7, render = { kind = "full" } },
+  { path = "mkdocs/exceptions.py", start = 13, end = 16, render = { kind = "full" } },
+  { path = "mkdocs/exceptions.py", start = 22, end = 27, render = { kind = "full" } },
+  { path = "mkdocs/exceptions.py", start = 30, end = 34, render = { kind = "full" } },
+  { path = "mkdocs/exceptions.py", start = 37, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "build subcommand body"
+justification = "Full body of `build_command`: shows the standard control flow (`load_config`, `on_startup(command='build')`, `build.build(cfg, dirty=...)`, `on_shutdown()`). Anchors the build pipeline. Refines 2.2's signature lines."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__main__.py", start = 275, end = 290, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "serve subcommand options + body"
+justification = "All `serve` CLI flags (`--dev-addr`, `--open`, `--no-livereload`, `--dirty/--clean`, `--watch-theme`, `--watch`) and the body delegating to `mkdocs.commands.serve.serve`. Densest answer to 'what flags does mkdocs serve take'. Refines 2.2."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__main__.py", start = 253, end = 272, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "gh-deploy subcommand options"
+justification = "All gh-deploy flags (--message, --remote-branch/-name, --force, --no-history, --ignore-version, --shell). Refines 2.2's bare command-line + docstring."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__main__.py", start = 293, end = 308, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "gh-deploy subcommand body"
+justification = "Body wiring `build.build` + `gh_deploy.gh_deploy` (the actual deploy call chain). Separate from 2.6 so a small budget can have the flags without the body, and the threshold cut between them is coherent."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/__main__.py", start = 309, end = 325, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 3 — subpackage layouts (commands/, config/, structure/, utils/,
+#           contrib/, themes/, tests/) + docs/ tree
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "mkdocs/commands/ listing"
+justification = "Children of `commands/`: build.py, serve.py, gh_deploy.py, new.py, __init__.py. The four CLI command implementations are one file each — knowing this layout lets the agent map subcommand → file in zero hops."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/commands", entries = "all" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "mkdocs/config/ listing"
+justification = "Children of `config/`: __init__.py, base.py (Config, BaseConfigOption, load_config), config_options.py (option types, ~1200 lines), defaults.py (MkDocsConfig schema). Three-file map of the config subsystem."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/config", entries = "all" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "mkdocs/structure/ listing"
+justification = "Children of `structure/`: __init__.py (StructureItem ABC), files.py (File, Files, InclusionLevel, get_files), nav.py (Navigation, Section, Link), pages.py (Page + markdown processors), toc.py (AnchorLink, TableOfContents). The site-model layer."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/structure", entries = "all" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "mkdocs/utils/ listing"
+justification = "Children of `utils/`: __init__.py (paths, theme lookup), yaml.py (loader + !ENV/!relative tags), meta.py (YAML / MultiMarkdown frontmatter), templates.py (TemplateContext, filters), rendering.py (heading-text extraction), cache.py, babel_stub.py, filters.py (legacy)."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/utils", entries = "all" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "mkdocs/contrib/ + contrib/search/ listings"
+justification = "`contrib/` contains only `search/`. `search/` contains __init__.py (SearchPlugin), search_index.py (SearchIndex), prebuild-index.js, and lunr-language/ (per-language stemmers). Plus search/templates/ assets. Maps the built-in search plugin."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/contrib", entries = "all" },
+  { parent = "mkdocs/contrib/search", entries = "all" },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "mkdocs/themes/ listing"
+justification = "Children of `themes/`: __init__.py, babel.cfg (babel extract config), mkdocs/ (default theme), readthedocs/ (alternative). Two built-in themes, each a full directory with templates/CSS/JS/locales."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/themes", entries = "all" },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "mkdocs/tests/ listing"
+justification = "Top-level test files mirror the source: build_tests.py, cli_tests.py, gh_deploy_tests.py, livereload_tests.py, localization_tests.py, new_tests.py, plugin_tests.py, search_tests.py, theme_tests.py + base.py + integration.py + subdirs config/, structure/, utils/, integration/. Lets the agent locate tests by feature."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/tests", entries = "all" },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "docs/ tree (top + user-guide + dev-guide + about)"
+justification = "All four directories of the documentation site: docs/ (index, getting-started, hooks.py), docs/user-guide/ (8 pages), docs/dev-guide/ (4 pages + README), docs/about/ (release-notes, contributing, license). Lets the agent answer 'where is X documented'."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/user-guide", entries = "all" },
+  { parent = "docs/dev-guide", entries = "all" },
+  { parent = "docs/about", entries = "all" },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 4 — config surface (MkDocsConfig fields, config_options classes,
+#           theme manifests)
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "MkDocsConfig class declaration"
+justification = "`class MkDocsConfig(base.Config):` docstring identifies it as the root object of mkdocs.yml. The anchor batch for all subsequent field refinements."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/config/defaults.py", start = 38, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "MkDocsConfig core fields (site/nav/theme/docs_dir/site_dir)"
+justification = "The first wave of MkDocs config keys with their option types: site_name, nav, exclude_docs, draft_docs, not_in_nav, site_url, site_description, site_author, theme, docs_dir, site_dir, copyright. Single lookup answers 'what config keys exist for X'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/config/defaults.py", start = 44, end = 44, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 47, end = 49, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 51, end = 51, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 57, end = 57, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 64, end = 64, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 67, end = 67, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 73, end = 73, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 79, end = 79, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 82, end = 82, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "MkDocsConfig remaining fields (repo/extras/markdown/plugins/hooks)"
+justification = "The rest of the top-level keys: dev_addr, use_directory_urls, repo_url, repo_name, edit_uri_template, edit_uri, extra_css, extra_javascript, extra_templates, markdown_extensions, strict, remote_branch, remote_name, extra, plugins, hooks, watch. Together with 4.2 this lists every supported mkdocs.yml key — catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/config/defaults.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 106, end = 106, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 110, end = 110, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 116, end = 117, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 123, end = 124, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 128, end = 128, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 132, end = 134, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 140, end = 140, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 144, end = 144, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 147, end = 147, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 150, end = 150, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 157, end = 157, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 162, end = 162, render = { kind = "full" } },
+  { path = "mkdocs/config/defaults.py", start = 166, end = 166, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "config_options class roster (option types)"
+justification = "Every top-level `class X(...)` in config_options.py: SubConfig, PropagatingSubConfig, OptionallyRequired, ListOfItems, DictOfItems, ConfigItems, Type, Choice, Deprecated, IpAddress, URL, Optional, RepoURL, EditURI, EditURITemplate, RepoName, FilesystemObject, Dir, DocsDir, File, ListOfPaths, SiteDir, Theme, Nav, Private, ExtraScriptValue, ExtraScript, MarkdownExtensions, Plugins, Hooks, PathSpec. Catastrophic-omission hedge — without this, an agent can't know which option type to subclass."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/config/config_options.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 125, end = 125, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 148, end = 148, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 189, end = 189, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 244, end = 244, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 301, end = 301, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 323, end = 323, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 357, end = 357, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 384, end = 384, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 463, end = 463, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 492, end = 492, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 529, end = 529, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 569, end = 569, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 607, end = 607, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 630, end = 630, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 666, end = 666, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 689, end = 689, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 714, end = 714, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 725, end = 725, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 739, end = 739, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 750, end = 750, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 774, end = 774, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 805, end = 805, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 861, end = 861, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 910, end = 910, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 918, end = 918, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 941, end = 941, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 955, end = 955, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 1041, end = 1041, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 1168, end = 1168, render = { kind = "full" } },
+  { path = "mkdocs/config/config_options.py", start = 1217, end = 1217, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "config base — BaseConfigOption + Config + load_config"
+justification = "The pillars of the config system: BaseConfigOption (the descriptor) class line + validate/run_validation method signatures, ValidationError, Config + LegacyConfig classes, and the top-level `load_config(...)` entry point. Lets the agent author a new option type without reading the whole 393-line file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/config/base.py", start = 37, end = 37, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 54, end = 55, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 67, end = 73, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 109, end = 110, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 123, end = 132, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 281, end = 282, render = { kind = "full" } },
+  { path = "mkdocs/config/base.py", start = 340, end = 351, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Theme class declaration + __init__ signature"
+justification = "`class Theme(MutableMapping[str, Any])` with its docstring + constructor signature (name, custom_dir, static_templates, locale, **user_config). The agent's anchor for theme-loading work; the body covers parent-theme inheritance via `extends` in mkdocs_theme.yml."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/theme.py", start = 23, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "Built-in theme manifests (mkdocs_theme.yml × 2)"
+justification = "Full content of both built-in themes' `mkdocs_theme.yml`: static_templates, locale, include_search_page/search_index_only, highlightjs/hljs_*, navigation_depth, color_mode, nav_style, analytics gtag, shortcuts (mkdocs theme) / sticky_navigation, collapse_navigation, prev_next_buttons_location, titles_only (readthedocs). Answers 'what theme options are available'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/themes/mkdocs/mkdocs_theme.yml", start = 1, end = 28, render = { kind = "full" } },
+  { path = "mkdocs/themes/readthedocs/mkdocs_theme.yml", start = 1, end = 25, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 5 — plugin API surface
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "5.1"
+descriptor = "plugins.py module — top declarations"
+justification = "Module docstring (`Implements the plugin API for MkDocs.`), `get_plugins()` entry-point discovery fn, `class BasePlugin(Generic[SomeConfig]):` declaration + class docstring. The anchor batch for the plugin system."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 40, end = 41, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 58, end = 71, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "BasePlugin event hook names (locations)"
+justification = "Every `def on_*` method signature line on BasePlugin: on_startup, on_shutdown, on_serve, on_config, on_pre_build, on_files, on_nav, on_env, on_post_build, on_build_error, on_pre_template, on_template_context, on_post_template, on_pre_page, on_page_read_source, on_page_markdown, on_page_content, on_page_context, on_post_page. Catastrophic-omission hedge — without all of them, an agent might think a hook doesn't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 100, end = 100, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 117, end = 117, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 134, end = 136, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 156, end = 156, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 170, end = 170, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 179, end = 179, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 196, end = 198, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 213, end = 215, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 231, end = 231, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 240, end = 240, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 254, end = 256, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 271, end = 273, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 289, end = 291, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 310, end = 310, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 325, end = 325, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 345, end = 347, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 364, end = 366, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 383, end = 385, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 401, end = 401, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "plugin priorities, CombinedEvent, PluginCollection"
+justification = "`event_priority` decorator signature + recommended levels docstring, `CombinedEvent` class declaration + docstring, `PluginCollection` class declaration + docstring. Lets the agent author multi-handler plugins and understand event dispatch ordering."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 426, end = 432, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 460, end = 464, render = { kind = "full" } },
+  { path = "mkdocs/plugins.py", start = 493, end = 500, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "BasePlugin config_class / config_scheme / load_config"
+justification = "How a plugin declares its config schema: `config_class: type[SomeConfig]`, `config_scheme: PlainConfigSchema`, `supports_multiple_instances`, `__class_getitem__` for `BasePlugin[FooConfig]` syntax, `load_config(...)` method. Direct answer to 'how do I add a config option to a plugin'."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 58, end = 96, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "PluginCollection.run_event (event dispatch core)"
+justification = "The `run_event(name, item, **kwargs)` method — the heart of how MkDocs fans an event out to plugin handlers, with the 'keep item if method returned None' contract. One small body answers 'how is an event actually called'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 551, end = 573, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "SearchPlugin — the built-in plugin class"
+justification = "The one real plugin shipped with MkDocs. `_PluginConfig` (lang/separator/min_search_length/prebuild_index/indexing options) + `class SearchPlugin(BasePlugin[_PluginConfig])` showing on_config/on_pre_build/on_page_context/on_post_build wiring. A complete worked example of a plugin."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/contrib/search/__init__.py", start = 54, end = 65, render = { kind = "full" } },
+  { path = "mkdocs/contrib/search/__init__.py", start = 87, end = 100, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "get_plugin_logger + PrefixedLogger"
+justification = "`get_plugin_logger(name) -> PrefixedLogger` — the recommended idiom for plugin logging (with usage example in the docstring). Self-contained zero-follow-up answer to 'how should a plugin log'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/plugins.py", start = 677, end = 697, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 6 — structure model (Files/File/Page/Navigation/InclusionLevel)
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "6.1"
+descriptor = "InclusionLevel enum"
+justification = "`class InclusionLevel(enum.Enum)` with its EXCLUDED/DRAFT/NOT_IN_NAV/UNDEFINED/INCLUDED values — the gating mechanism for which files end up on the site / live preview. Dense semantic answer to 'how does draft_docs work'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/files.py", start = 31, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Files + File class declarations"
+justification = "`class Files:` (collection of File objects) and `class File:` (one MkDocs file: src_uri, src_dir, dest_dir, abs_dest_path, content_bytes/string, abs_src_path, page) — the two central site-model classes' class-line + short docstring."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/files.py", start = 62, end = 63, render = { kind = "full" } },
+  { path = "mkdocs/structure/files.py", start = 181, end = 185, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "File.generated classmethod + get_files / set_exclusions / file_sort_key"
+justification = "How plugins create virtual files (`File.generated(config, src_uri, content=...)`) plus the top-level helpers that orchestrate file discovery: `get_files(config)`, `set_exclusions(files, config)`, `file_sort_key`. The module's public API."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/files.py", start = 301, end = 315, render = { kind = "full" } },
+  { path = "mkdocs/structure/files.py", start = 527, end = 527, render = { kind = "full" } },
+  { path = "mkdocs/structure/files.py", start = 546, end = 546, render = { kind = "full" } },
+  { path = "mkdocs/structure/files.py", start = 591, end = 591, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "Page class signature + key attrs"
+justification = "`class Page(StructureItem)` constructor signature (`title, file, config`) plus the typed attributes `markdown`, `content`, `toc`, `meta` that plugins read/write during build. Direct answer to 'what's on a Page'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/pages.py", start = 35, end = 36, render = { kind = "full" } },
+  { path = "mkdocs/structure/pages.py", start = 75, end = 88, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "Navigation / Section / Link / get_navigation signatures"
+justification = "`class Navigation(items, pages, homepage)`, `class Section(title, children, active)`, `class Link(title, url)` (children always None), `get_navigation(files, config) -> Navigation` builder. Self-contained answer to nav-tree authoring."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/nav.py", start = 21, end = 24, render = { kind = "full" } },
+  { path = "mkdocs/structure/nav.py", start = 48, end = 51, render = { kind = "full" } },
+  { path = "mkdocs/structure/nav.py", start = 97, end = 100, render = { kind = "full" } },
+  { path = "mkdocs/structure/nav.py", start = 130, end = 131, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.6"
+descriptor = "StructureItem ABC + TOC types"
+justification = "`class StructureItem` (ABC for Section/Page/Link with parent/is_section/is_page/is_link), and TOC types `AnchorLink(title, id, level, children)` + `TableOfContents` (iterable of AnchorLink) with `get_toc()` factory."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/structure/__init__.py", start = 10, end = 12, render = { kind = "full" } },
+  { path = "mkdocs/structure/toc.py", start = 20, end = 21, render = { kind = "full" } },
+  { path = "mkdocs/structure/toc.py", start = 28, end = 33, render = { kind = "full" } },
+  { path = "mkdocs/structure/toc.py", start = 60, end = 61, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 7 — build pipeline + livereload + utils API surfaces
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "7.1"
+descriptor = "build.build() signature + intro"
+justification = "`def build(config: MkDocsConfig, *, serve_url: str | None = None, dirty: bool = False) -> None: 'Perform a full site build.'` — the entry point for `mkdocs build` and `mkdocs serve`. Anchor for build-pipeline questions."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/commands/build.py", start = 249, end = 251, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "build pipeline — plugin event call sites"
+justification = "Just the lines inside `build()` that invoke plugin events, in order: on_config, on_pre_build, on_files, on_nav, on_env, on_post_build, on_build_error. Lets the agent see the event firing order without the 80-line body."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/commands/build.py", start = 265, end = 265, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 268, end = 268, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 292, end = 292, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 299, end = 299, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 319, end = 319, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 347, end = 347, render = { kind = "full" } },
+  { path = "mkdocs/commands/build.py", start = 357, end = 357, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "commands/new — initial project text"
+justification = "The literal `index_text` template MkDocs writes into `docs/index.md` for `mkdocs new` — the canonical example of an initial mkdocs project (site_name + four `mkdocs` commands + project layout). Zero-follow-up answer for 'what does mkdocs new produce'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/commands/new.py", start = 6, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "serve.serve() signature"
+justification = "`def serve(config_file, livereload=True, build_type=None, watch_theme=False, watch=[], *, open_in_browser=False, **kwargs)` + docstring. Pointer to the dev-server entry point — body details are one read away."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/commands/serve.py", start = 20, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "LiveReloadServer class header"
+justification = "`class LiveReloadServer(socketserver.ThreadingMixIn, wsgiref.simple_server.WSGIServer)` plus `_serve_url(host, port, path)` helper. Tells the agent the dev server is a stdlib WSGI server, not Werkzeug/Flask."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/livereload/__init__.py", start = 90, end = 94, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.6"
+descriptor = "gh_deploy.gh_deploy() signature"
+justification = "`def gh_deploy(config, message=None, force=False, no_history=False, ignore_version=False, shell=False)` — pointer to the deploy entry point. Body uses `ghp_import.ghp_import` (the click-disclosed dep)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/commands/gh_deploy.py", start = 100, end = 107, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.7"
+descriptor = "utils — public function roster"
+justification = "Every top-level fn/class in `utils/__init__.py`: get_build_timestamp/datetime/date, reduce_list, copy_file, write_file, clean_directory, is_markdown_file, is_error_template, get_relative_url, normalize_url, create_media_urls, path_to_url, get_theme_dir, get_themes, get_theme_names, dirname_to_title, get_markdown_title, nest_paths, DuplicateFilter, CountHandler, weak_property. Catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mkdocs/utils/__init__.py", start = 47, end = 47, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 62, end = 62, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 76, end = 76, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 96, end = 96, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 113, end = 113, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 126, end = 126, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 134, end = 134, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 152, end = 152, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 164, end = 164, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 177, end = 177, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 205, end = 205, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 242, end = 242, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 249, end = 249, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 256, end = 256, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 263, end = 263, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 290, end = 290, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 295, end = 295, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 306, end = 306, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 338, end = 338, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 358, end = 358, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 370, end = 370, render = { kind = "full" } },
+  { path = "mkdocs/utils/__init__.py", start = 388, end = 388, render = { kind = "full" } },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 8 — docs site structure + theme/locale breadth (signal of scope)
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "8.1"
+descriptor = "user-guide/configuration.md — H2 section headings"
+justification = "The H2 anchors of the canonical config reference doc: Introduction, Project information, Documentation layout, Build directories, Preview controls, Live Reloading, Formatting options, Special YAML tags, Configuration Inheritance. Lets the agent jump to a config-doc section without scanning 1289 lines."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/user-guide/configuration.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 15, end = 15, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 235, end = 235, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 484, end = 484, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 652, end = 652, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 654, end = 654, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 735, end = 735, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 1068, end = 1068, render = { kind = "full" } },
+  { path = "docs/user-guide/configuration.md", start = 1142, end = 1142, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "dev-guide/plugins.md — top headings"
+justification = "H1+H2 anchors of the plugin-developer doc: Installing/Using/Developing Plugins, BasePlugin, Events, Event Priorities, Handling Errors, Logging in plugins, Entry Point, Publishing a Plugin. The map to plugin authoring documentation."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/dev-guide/plugins.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/dev-guide/plugins.md", start = 7, end = 7, render = { kind = "full" } },
+  { path = "docs/dev-guide/plugins.md", start = 24, end = 24, render = { kind = "full" } },
+  { path = "docs/dev-guide/plugins.md", start = 57, end = 57, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "dev-guide/themes.md — H2 headings"
+justification = "H2 anchors of the theme-developer doc (1115 lines): Creating a custom theme, Basic theme, Theme Files, Template Variables, Template Filters, Search and themes, Packaging Themes, Supporting theme Localization/Translation. The map to theme authoring."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/dev-guide/themes.md", start = 22, end = 22, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 81, end = 81, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 178, end = 178, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 219, end = 219, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 657, end = 657, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 691, end = 691, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 805, end = 805, render = { kind = "full" } },
+  { path = "docs/dev-guide/themes.md", start = 1017, end = 1017, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.4"
+descriptor = "release-notes.md — version markers"
+justification = "Every `## Version X.Y.Z` heading marker in release-notes.md (the 2206-line changelog) — answers 'what versions exist' and 'when did feature X land' as a one-glance map."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/about/release-notes.md", start = 30, end = 30, render = { kind = "full" } },
+  { path = "docs/about/release-notes.md", start = 48, end = 48, render = { kind = "full" } },
+  { path = "docs/about/release-notes.md", start = 283, end = 283, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.5"
+descriptor = "Themes — both theme dirs listed"
+justification = "Children of `themes/mkdocs/` and `themes/readthedocs/` showing the shared layout (base.html, main.html, 404.html, content.html, nav.html, toc.html, mkdocs_theme.yml, plus css/, js/, img/, locales/, webfonts/). Catastrophic-omission hedge — agent needs to know all template files exist before authoring overrides."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/themes/mkdocs", entries = "all" },
+  { parent = "mkdocs/themes/readthedocs", entries = "all" },
+]
+
+[[batches]]
+id = "8.6"
+descriptor = "Theme locales — language directory listing"
+justification = "Children of `themes/mkdocs/locales/` (de, es, fa, fr, id, it, ja, nb, nl, nn, pl, pt_BR, ru, tr, uk, zh_CN, zh_TW) — the ~17 supported UI locales. Lets the agent answer 'is locale X supported' without globbing."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/themes/mkdocs/locales", entries = "all" },
+]
+
+# ────────────────────────────────────────────────────────────────────
+# Tier 9 — final breadth (lunr languages, integration projects,
+#           getting-started + contrib search assets)
+# ────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "9.1"
+descriptor = "search/lunr-language/ — language scripts listing"
+justification = "All ~30 stemmers shipped in contrib/search/lunr-language/ (lunr.ar.js, lunr.de.js, lunr.es.js, lunr.fr.js, lunr.hi.js, lunr.ja.js, lunr.ru.js, lunr.zh.js, ...). Closes the catastrophic-omission of 'is search supported in language X'."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/contrib/search/lunr-language", entries = "all" },
+]
+
+[[batches]]
+id = "9.2"
+descriptor = "Integration test projects + .github workflows"
+justification = "`mkdocs/tests/integration/{minimal,subpages,unicode,complicated_config}/mkdocs.yml` plus `projects.yaml` — the canonical example configs used in CI. Plus the four GitHub Actions workflow files (autofix, ci, docs, deploy-release)."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "mkdocs/tests/integration", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]

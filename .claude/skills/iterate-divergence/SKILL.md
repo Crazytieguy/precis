@@ -14,6 +14,20 @@ on every row.
 For column semantics and scoring formula, read the module-level
 `//!` doc at the top of `src/divergence.rs`.
 
+## Validation fixtures are held out — do not open them
+
+`tests/validation/<fixture>.md` holds a separate, held-out corpus
+sampled from the GitHub language distribution. Each file is a single
+`Score(3000)=…` headline line — there is no per-row table, by
+design. **Do not survey, open, or iterate against these files.** The
+calibration loop targets only `tests/divergence/`. Validation scores
+exist as a regression check we look at *after* a change is otherwise
+ready; treating them as a tuning surface defeats their purpose.
+
+If a change moves a validation score, that's information — but the
+debugging step is to read the *training* reports and reason about
+generality, not to read the validation fixture's source.
+
 ## Priority
 
 `Score(3000)` is the highest-priority budget — the auto-injection
@@ -31,11 +45,12 @@ Start breadth-first; narrow as the candidate sharpens. The stopping
 condition is identifying one high-quality candidate — not exhaustive
 analysis.
 
-Survey with `head -1 tests/divergence/*.md`. Open many of the lowest
-`Score(3000)` fixtures — the broadest, highest-value rules show up
-as patterns that recur across several weak fixtures, and the wider
-the initial scan, the more such patterns are visible. Narrow the
-fixture set as the candidate sharpens.
+Survey with `head -1 tests/divergence/*.md` (training only — leave
+`tests/validation/` alone, see the held-out note above). Open many
+of the lowest `Score(3000)` fixtures — the broadest, highest-value
+rules show up as patterns that recur across several weak fixtures,
+and the wider the initial scan, the more such patterns are visible.
+Narrow the fixture set as the candidate sharpens.
 
 On each fixture, read enough rows to identify a candidate; rows
 past where the pattern is clear usually aren't informative.
@@ -165,6 +180,9 @@ perspectives.
 - Don't change North Star files to match the walker. That's moving
   the goalpost. Frozen NSs are the calibration target; the walker
   has to come to them.
+- **Don't read or iterate against `tests/validation/`.** It's the
+  held-out regression set; opening a validation fixture's source or
+  schedule to debug a low score is overfitting to the holdout.
 - Don't ship neutral or marginally-positive changes that *add* code.
   Complexity has to pay for itself.
 - Don't commit a "set of improvements" — each coherent change gets

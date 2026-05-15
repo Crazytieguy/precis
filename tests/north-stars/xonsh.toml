@@ -1,0 +1,957 @@
+fixture = "xonsh"
+revision_pin = "70212600"
+summary = """
+xonsh is an interactive Python-extending shell: a single language and
+runtime where Python expressions and subprocess commands compose
+freely. The repo is a large pure-Python package (xonsh/, ~150 files,
+20k+ LoC, plus xontrib/, xompletions/, tests/, docs/). Its codebase
+is organised cleanly into subsystems — parser, execer/session, procs,
+completers, prompt, history, shells, environ, events, xontribs — and
+the project ships an unusually detailed CLAUDE.md (485 lines) that
+documents architecture, conventions, and load-bearing pitfalls.
+
+Sessions in this fixture will span: orienting on the architecture
+("how does input become an executed command?"), changing or extending
+a subsystem (a new completer, a prompt field, a history backend, a
+xontrib, an xoreutil), debugging concrete failures (signal handling
+on Flatpak, fd leaks in pipelines, parser version-specific syntax,
+prompt_toolkit integration), testing & CI questions, and policy
+questions about how xonsh is *described* in docs.
+
+Ranking strategy: lead with CLAUDE.md's architecture section
+(unusually high information density) + the README's "this is what
+xonsh looks like" feel, then top-level orientation (project layout,
+entry-point dispatch, session shape). Then subsystem-by-subsystem
+roll-out, leading each with a directory listing + top-level signatures
+(catastrophic-omission mitigation) before any per-fn body. Larger
+files (parsers/base.py at ~4100 lines, tools.py at ~3200, environ.py
+at ~3500, built_ins.py at ~1300) are deep — show their top-level
+signatures + carefully chosen bodies, never re-paste the full files.
+Prefer breadth: every module deserves at least a `name + first-line`
+pointer.
+"""
+
+# =============================================================================
+# Tier 1 — Orientation. What is xonsh? How is the repo laid out? Where do you
+# enter? Tiny, high-signal anchors that benefit every imaginable query.
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "CLAUDE.md title"
+justification = """
+Single-line anchor: the agent learns that the fixture has a CLAUDE.md
+worth treating as authoritative. Sets up the threshold for every
+subsequent CLAUDE.md batch.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 1, end = 1, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "xonsh version string"
+justification = """
+``xonsh/__init__.py`` is one line: ``__version__ = "0.23.6"``. Tiny
+but canonical (pyproject.toml's version is dynamic from this).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/__init__.py", start = 1, end = 1, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "CLAUDE.md lede paragraph — what xonsh is"
+justification = """
+The lede is the best one-shot summary of what xonsh *is*: a
+Python-extending language and runtime, not shell+Python glued
+together. Lands the framing every later doc/explain query depends on.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 3, end = 3, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Xonsh-description policy header + item 2 (don't reference other shells)"
+justification = """
+Heading + item 2 of §"How to describe xonsh": docs/posts don't name
+or link other shells. Item 1 follows in 1.7.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 5, end = 7, render = { kind = "full" } },
+    { path = "CLAUDE.md", start = 11, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Top-level fixture listing"
+justification = """
+Catastrophic-omission floor for the repo root. 38 entries via `all`.
+The agent learns of CLAUDE.md, README.rst, pyproject.toml, setup.py,
+CHANGELOG.md, CONTRIBUTING.md, run-tests.xsh, xonsh-in-docker.py,
+conftest.py, .pre-commit-config.yaml, plus the docs/, tests/,
+appimage/, ci/, scripts/, nix/, xompletions/, xontrib/, xonsh/ dirs.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Core execution flow (the four key files)"
+justification = """
+CLAUDE.md §"Core Execution Flow" lists main.py / built_ins.py /
+execer.py / shell.py and their roles. Any "how does xonsh execute X?"
+query should start here.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 44, end = 50, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Xonsh-description policy — item 1 (don't say 'mixes shell and Python')"
+justification = """
+The single longest line in CLAUDE.md is item 1 of the description
+policy: docs/README/blog must avoid the "mixes shell and Python"
+framing. Pinning this prevents a routine class of revert-the-AI's-
+edit sessions.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 9, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "xonsh/ package layout"
+justification = """
+~50 files and 14 subpackages. Agent must not falsely conclude a
+subpackage is absent.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh", entries = "all" },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "CLAUDE.md project layout (canonical subpackage map)"
+justification = """
+§"Project Layout" gives one-line-per-subpackage purpose. Together
+with 1.8's fs listing the agent has the structural map of the whole
+repo in <80 source lines.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 461, end = 485, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Key modules — purpose-to-file table"
+justification = """
+The §"Key Modules" table maps file→responsibility for 11 most-touched
+modules (aliases.py, commands_cache.py, completers/, prompt/,
+history/, shells/, pyghooks.py, tools.py, platform.py, xontribs.py,
+lib/lazyasd.py). Lands "where does X live?" in one hop.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 84, end = 99, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "Quick reference: install / test / lint commands"
+justification = """
+"How do I run the tests?" / "how do I lint?" is one of the most
+common one-shot dev queries; this section answers them precisely
+(pytest, ruff, mypy, pre-commit, ``python -m xonsh --no-rc``).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 14, end = 38, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.12"
+descriptor = "README hero — what xonsh looks like in use (part 1)"
+justification = """
+The README's "Xonsh is the Shell / Xonsh is Python" table is the
+clearest demonstration of xonsh's syntax (cd/curl/PATH.append,
+p-strings, @() interpolation, callable aliases). For any query that
+involves *writing* xonsh the agent needs concrete syntax examples.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.rst", start = 1, end = 3, render = { kind = "full" } },
+    { path = "README.rst", start = 8, end = 8, render = { kind = "full" } },
+    { path = "README.rst", start = 14, end = 64, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.13"
+descriptor = "README hero — syntax examples (part 2: meta-shell, events)"
+justification = """
+Second half of the README example table: callable aliases, xontrib
+loading, ``@.imp.<module>``, ``@events.on_ptk_create``, custom
+keybindings.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.rst", start = 65, end = 127, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.14"
+descriptor = "pyproject.toml — metadata, packages, entry points"
+justification = """
+Python versions (>=3.11), packages list (explicit — no auto-discover),
+entry-points (pytest11 plugin, two pygments lexers, virtualenv
+activator), console scripts (xonsh, xonsh-cat, xonsh-uname,
+xonsh-uptime).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pyproject.toml", start = 6, end = 17, render = { kind = "full" } },
+    { path = "pyproject.toml", start = 23, end = 43, render = { kind = "full" } },
+    { path = "pyproject.toml", start = 70, end = 79, render = { kind = "full" } },
+    { path = "pyproject.toml", start = 149, end = 154, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 2 — Core execution: entry point (main.py), session (built_ins.py),
+# parser/exec (execer.py), shell dispatch (shell.py), events (events.py).
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "main.py — top-level def/class locations"
+justification = """
+``xonsh.main`` is the CLI entry. The names form an outline of xonsh
+startup: parser/premain/main/main_xonsh/postmain plus the TTY
+handshake (_acquire/_release/_setup_controlling_terminal,
+_handle_sig_ttin_ttou), rc-file handling, service bootstrap, failback,
+and embedding entry points (main_context, setup).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/main.py", start = 122, end = 122, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 131, end = 131, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 145, end = 145, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 185, end = 185, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 269, end = 269, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 506, end = 506, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 562, end = 562, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 694, end = 694, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 842, end = 842, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 865, end = 869, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 872, end = 872, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/main.py", start = 903, end = 903, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/main.py", start = 914, end = 914, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 927, end = 927, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/main.py", start = 968, end = 968, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1052, end = 1052, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/main.py", start = 1104, end = 1104, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1137, end = 1137, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1270, end = 1270, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1277, end = 1277, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1287, end = 1287, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "built_ins.py — top-level def/class locations"
+justification = """
+``xonsh.built_ins`` defines XSH session + the AST-invoked helpers
+the execer's transformed code calls (subproc_captured_stdout,
+subproc_captured_inject, subproc_captured_object, subproc_uncaptured,
+path_literal, pathsearch, globsearch, regexsearch). Without this
+catalogue the agent has to grep for "what does $() compile to?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/built_ins.py", start = 46, end = 46, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 59, end = 59, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 95, end = 95, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 102, end = 102, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 109, end = 109, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 164, end = 164, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 180, end = 180, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 205, end = 205, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 294, end = 294, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 299, end = 299, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 305, end = 305, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 339, end = 339, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 353, end = 353, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 418, end = 418, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 437, end = 437, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 457, end = 457, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 469, end = 469, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 480, end = 480, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 493, end = 493, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 572, end = 572, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 626, end = 626, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 639, end = 639, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 648, end = 648, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 676, end = 676, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/built_ins.py", start = 739, end = 739, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 767, end = 767, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 838, end = 838, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 880, end = 880, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 889, end = 889, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 898, end = 898, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 985, end = 985, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 1224, end = 1224, render = { kind = "full" } },
+    { path = "xonsh/built_ins.py", start = 1239, end = 1239, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "execer.py + shell.py + events.py — top-level layout"
+justification = """
+Three small files, one batch: ``Execer`` is the only top-level
+symbol in execer.py; ``shell.py`` has Shell + transform_command +
+deindent; ``events.py`` defines AbstractEvent/Event/LoadEvent/
+EventManager + the module-level singleton.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/execer.py", start = 24, end = 25, render = { kind = "full" } },
+    { path = "xonsh/shell.py", start = 170, end = 170, render = { kind = "full" } },
+    { path = "xonsh/shell.py", start = 187, end = 187, render = { kind = "full" } },
+    { path = "xonsh/shell.py", start = 225, end = 225, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 1, end = 9, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 19, end = 19, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 36, end = 36, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 42, end = 42, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 50, end = 50, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 138, end = 138, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 227, end = 227, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 296, end = 296, render = { kind = "full" } },
+    { path = "xonsh/events.py", start = 429, end = 430, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Canonical event names (from CLAUDE.md)"
+justification = """
+CLAUDE.md lists the canonical events: on_transform_command,
+on_precommand, on_postcommand, on_command_not_found,
+on_pre_prompt_format/on_pre_prompt/on_post_prompt, on_chdir,
+on_exit. Most "make this happen when X" queries route through one of
+these.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 106, end = 115, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "XonshSession — public interface (env / history / imp / lastcmd / debug)"
+justification = """
+``XonshSessionInterface`` is the documented public-API view of the
+session, accessible from xonsh as ``@.env``, ``@.history``,
+``@.imp.<module>``, ``@.lastcmd.rtn``, ``@.debug.breakpoint()``.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/built_ins.py", start = 952, end = 983, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Execer.parse() — two-phase parsing summary"
+justification = """
+Three-phase parse: Phase 1 context-free with $()-wrap retry, Phase
+2 context-aware AST transform (CtxAwareTransformer.ctxvisit), Phase
+3 wrap_subproc_raise_checks. The doc block here is the load-bearing
+mental model for any "why does this xonsh syntax error?" /
+"how does ls -l get recognized as subprocess?" query.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/execer.py", start = 59, end = 65, render = { kind = "full" } },
+    { path = "xonsh/execer.py", start = 91, end = 95, render = { kind = "full" } },
+    { path = "xonsh/execer.py", start = 106, end = 106, render = { kind = "full" } },
+    { path = "xonsh/execer.py", start = 114, end = 120, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Shell.shell_type_aliases + choose_shell_type entry"
+justification = """
+The 9-key alias map (b/best, d/dumb, ptk/prompt-toolkit/
+prompt_toolkit, rand/random, rl/readline) is canonical: any "how do I
+run xonsh with shell-type X?" question lands here.
+``construct_shell_cls`` (refined in 2.10) shows which class lives in
+which file.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/shell.py", start = 232, end = 244, render = { kind = "full" } },
+    { path = "xonsh/shell.py", start = 247, end = 247, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "main() body — subcommand dispatch + TTY handshake"
+justification = """
+``main()`` is the actual entry point. ``xonsh format ...`` bypasses
+premain entirely. Otherwise: TTY handshake → premain → main_xonsh →
+exit, with foreign-shell failback on exception. Refines the location
+in 2.1.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/main.py", start = 1105, end = 1107, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1113, end = 1116, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1128, end = 1134, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "main_xonsh — four-mode dispatch (interactive / -c / file / stdin)"
+justification = """
+``main_xonsh`` is the mode switch matching ``XonshMode``: interactive
+runs ``shell.shell.cmdloop()``; single_command calls
+``run_code_with_cache``; script_from_file resolves the path then
+``run_script_with_cache``; script_from_stdin reads stdin + reopens
+/dev/tty. Refines 2.1.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/main.py", start = 1138, end = 1138, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1162, end = 1162, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1182, end = 1184, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1193, end = 1194, render = { kind = "full" } },
+    { path = "xonsh/main.py", start = 1218, end = 1220, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "2.10"
+descriptor = "Bare-XSH safety in plugin code paths"
+justification = """
+CLAUDE.md design-patterns rule: modules reachable from entry-point
+plugins (pyghooks loaded by nbconvert/jupyter/Sphinx outside an
+active xonsh session) must not assume XSH is bootstrapped.
+``XSH.env`` / ``XSH.aliases`` / etc. can be ``None`` until
+``setup()`` runs. Required for any pyghooks / xontrib edit.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 116, end = 125, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 3 — Parser & lexer system (xonsh/parsers/). Largest subsystem by far
+# (~10k LoC). Inheritance chain BaseParser → v36 → v38 → v39 → v310 → v313.
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "parsers/ directory listing"
+justification = """
+The xonsh parser system has 12 modules + a vendored ply/ subpackage.
+Listing them prevents inferences like "fstring handling must be in
+base.py" — actually it's split across fstring_adaptor.py and
+fstring_rules_llm.py.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/parsers", entries = "all" },
+    { parent = "xonsh/parsers/ply", entries = "all" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Parser version dispatch (parser.py) + CLAUDE.md parser-system overview"
+justification = """
+xonsh/parser.py is 23 lines — the whole thing is a ``@lazyobject`` that
+selects v313 / v310 / v39 / v38 / v36 by ``PYTHON_VERSION_INFO``, with
+an ``XONSH_RD_PARSER`` env-var escape hatch. The CLAUDE.md parser
+section adds context: BaseParser is ~3800 lines, ``YaccLoader`` is a
+background thread, parser tables are generated and not committed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/parser.py", start = 1, end = 23, render = { kind = "full" } },
+    { path = "CLAUDE.md", start = 51, end = 70, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "parsers/base.py — top-level def/class names"
+justification = """
+``parsers/base.py`` is the ~4100-line grammar core; just the
+top-level names are useful pointers (Location, Index, BaseParser,
+YaccLoader, _is_subproc_helper_call, wrap_subproc_raise_checks,
+ensure_has_elts, raise_parse_error, etc.). Method-level navigation
+is via grep once the file is in scope.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/parsers/base.py", start = 55, end = 55, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 68, end = 68, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 77, end = 77, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 88, end = 88, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 120, end = 120, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 131, end = 131, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 231, end = 231, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 240, end = 240, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 256, end = 256, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 264, end = 264, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 275, end = 275, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 280, end = 280, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 287, end = 287, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 302, end = 302, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 326, end = 326, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 331, end = 331, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 336, end = 336, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 348, end = 348, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 360, end = 360, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 372, end = 372, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/base.py", start = 376, end = 376, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 385, end = 385, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 399, end = 399, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 432, end = 432, render = { kind = "full" } },
+    { path = "xonsh/parsers/base.py", start = 453, end = 453, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "parsers/lexer.py — top-level def/class names"
+justification = """
+The hybrid tokenize/PLY lexer handles xonsh-specific tokens
+(@$, ??, @(), $(), !(), $[], ![], IO redirects, f-strings). Each
+``handle_*`` is invoked from the state machine; ``get_tokens`` is the
+entry. Lexer class at the bottom.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/parsers/lexer.py", start = 47, end = 47, render = { kind = "full" } },
+    { path = "xonsh/parsers/lexer.py", start = 132, end = 132, render = { kind = "full" } },
+    { path = "xonsh/parsers/lexer.py", start = 137, end = 137, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 160, end = 160, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 173, end = 173, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 185, end = 185, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 195, end = 195, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 207, end = 207, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 218, end = 218, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 231, end = 231, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 245, end = 245, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 250, end = 250, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 254, end = 254, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 258, end = 258, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 292, end = 292, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 312, end = 312, render = { kind = "full" } },
+    { path = "xonsh/parsers/lexer.py", start = 355, end = 355, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 393, end = 393, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/parsers/lexer.py", start = 441, end = 441, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "parsers/ast.py + completion_context.py + fstring/tokenize files"
+justification = """
+``ast.py`` defines ``CtxAwareTransformer`` (the Phase 2 visitor
+called from Execer.parse). ``completion_context.py`` exposes
+``CompletionContextParser`` for tab completion. ``fstring_adaptor.py``
++ ``fstring_rules_llm.py`` handle xonsh f-strings. ``tokenize.py`` is
+vendored from CPython but xonsh-extended.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/parsers/ast.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/parsers/completion_context.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/parsers/fstring_adaptor.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/parsers/rd_parser.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/parsers/tokenize.py", start = 1, end = 4, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 4 — Subprocess/procs subsystem (xonsh/procs/). The actual execution
+# layer that takes a parsed subproc invocation and runs it.
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "procs/ listing + top-level entries for specs/pipelines/jobs"
+justification = """
+Nine modules in procs/. Most-asked classes are SubprocSpec (spec
+construction, shebang parsing, binary detection), CommandPipeline +
+HiddenCommandPipeline (thread-safe execution, signal handling), and
+jobs.py (fg/bg/disown). Single batch covers the directory + the
+most-referenced top-level names from CLAUDE.md §"Subprocess System".
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/procs", entries = "all" },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Subprocess System (CLAUDE.md) + key class locations"
+justification = """
+CLAUDE.md's §"Subprocess System" maps procs files to roles. Pinning
+SubprocSpec, CommandPipeline, HiddenCommandPipeline, and a few core
+functions (run_subproc) gives the agent named handles for any
+pipeline / fd / signal query.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 72, end = 78, render = { kind = "full" } },
+    { path = "xonsh/procs/specs.py", start = 365, end = 365, render = { kind = "full" } },
+    { path = "xonsh/procs/specs.py", start = 391, end = 391, render = { kind = "full" } },
+    { path = "xonsh/procs/specs.py", start = 405, end = 405, render = { kind = "full" } },
+    { path = "xonsh/procs/pipelines.py", start = 111, end = 111, render = { kind = "full" } },
+    { path = "xonsh/procs/pipelines.py", start = 1104, end = 1104, render = { kind = "full" } },
+    { path = "xonsh/procs/pipelines.py", start = 1124, end = 1124, render = { kind = "full" } },
+    { path = "xonsh/procs/jobs.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/procs/executables.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/procs/proxies.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/procs/readers.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/procs/posix.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/procs/pipes.py", start = 1, end = 1, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 5 — Environment (environ.py is ~3500 lines; Xettings hierarchy +
+# Env class are the load-bearing pieces).
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "environ.py — class catalogue (Var / Xettings hierarchy / Env)"
+justification = """
+The Xettings subclass hierarchy is the canonical env-var classification:
+SystemSetting / GeneralSetting / SubprocessSetting / ErrorHandlingSetting
+/ JobsSetting / LangSetting / CacheSetting / ChangeDirSetting /
+InterpreterSetting / XontribSetting / PromptSetting / PromptHistorySetting
+/ PTKSetting / AsyncPromptSetting / AutoCompletionSetting /
+PTKCompletionSetting / WindowsSetting / DeprecatedSetting. ``Env``
+itself is a ChainMap-like with overlay support.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/environ.py", start = 295, end = 295, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 639, end = 639, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 864, end = 864, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 955, end = 956, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1028, end = 1028, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1140, end = 1140, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1290, end = 1290, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1447, end = 1447, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1471, end = 1471, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1614, end = 1614, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 1627, end = 1627, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 2107, end = 2107, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 2402, end = 2402, render = { kind = "full" } },
+    { path = "xonsh/environ.py", start = 3285, end = 3285, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/environ.py", start = 3315, end = 3315, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/environ.py", start = 3326, end = 3326, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 6 — Aliases, commands_cache, xontribs.
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "aliases.py + commands_cache.py + xontribs.py + xonfig.py — class catalogue"
+justification = """
+Together these form the alias/command/extension layer. Aliases
+(MutableMapping with click integration), FuncAlias, ExecAlias,
+SourceForeignAlias, PartialEvalAlias, ArgParserAlias-derived classes
+(XontribAlias, XonfigAlias, HistoryAlias). The ``make_default_aliases``
+fn at the bottom of aliases.py is the canonical list of built-ins
+(cd, pushd/popd, dirs, jobs, fg/bg/disown, source/source-bash/source-zsh,
+history, trace, timeit, xonfig, showcmd, which, xontrib, xpip, xreset,
+plus @error_raise/@thread/@unthread/@lines/@path/@paths/@json/@jsonl
+command decorators).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/aliases.py", start = 87, end = 87, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 144, end = 144, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 280, end = 280, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 707, end = 707, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 870, end = 870, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 1142, end = 1142, render = { kind = "full" } },
+    { path = "xonsh/aliases.py", start = 1641, end = 1641, render = { kind = "full" } },
+    { path = "xonsh/commands_cache.py", start = 31, end = 31, render = { kind = "full" } },
+    { path = "xonsh/commands_cache.py", start = 80, end = 80, render = { kind = "full" } },
+    { path = "xonsh/commands_cache.py", start = 127, end = 127, render = { kind = "full" } },
+    { path = "xonsh/commands_cache.py", start = 635, end = 635, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 22, end = 22, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 293, end = 293, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 337, end = 337, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 375, end = 375, render = { kind = "full" } },
+    { path = "xonsh/xontribs.py", start = 552, end = 552, render = { kind = "full" } },
+    { path = "xonsh/xonfig.py", start = 716, end = 716, render = { kind = "full" } },
+    { path = "xonsh/xonfig.py", start = 825, end = 825, render = { kind = "full" } },
+    { path = "CLAUDE.md", start = 100, end = 105, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 7 — Completers, prompt, history.
+# =============================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "completers/ directory + key classes"
+justification = """
+17 completer modules. The init.py wires up ``default_completers``;
+each module is one provider (base, bash, click, commands, dirs, emoji,
+environment, imports, man, path, python). ``RichCompletion``, the
+``contextual_completer`` / ``contextual_command_completer`` /
+``non_exclusive_completer`` decorators, and ``CommandContext`` are
+the API any new completer uses.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/completers", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "completers — file roles + completion-naming policy"
+justification = """
+CLAUDE.md design-discipline note: the module is called a "completer"
+(parallel with "parser"), never a "completion". Plus the key entry
+points: ``complete_base`` (the catch-all), ``default_completers``
+(init), ``add_one_completer`` / ``remove_completer`` / ``list_completers``.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "CLAUDE.md", start = 256, end = 256, render = { kind = "full" } },
+    { path = "xonsh/completers/init.py", start = 23, end = 23, render = { kind = "full" } },
+    { path = "xonsh/completers/base.py", start = 13, end = 13, render = { kind = "full" } },
+    { path = "xonsh/completers/completer.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "xonsh/completers/completer.py", start = 47, end = 47, render = { kind = "full" } },
+    { path = "xonsh/completers/completer.py", start = 68, end = 68, render = { kind = "full" } },
+    { path = "xonsh/completers/completer.py", start = 75, end = 75, render = { kind = "full" } },
+    { path = "xonsh/completers/tools.py", start = 63, end = 63, render = { kind = "full" } },
+    { path = "xonsh/completers/tools.py", start = 161, end = 161, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/completers/tools.py", start = 177, end = 177, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/completers/tools.py", start = 209, end = 209, render = { kind = "truncated", pattern = "^def [^(]+" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "prompt/ + history/ + shells/ — directory + key classes"
+justification = """
+prompt/ has base + cwd, env, gitstatus, job, times, vc (vcs).
+history/ has the four backends (json, sqlite, dummy) + base + main +
+diff_history. shells/ has base/dumb/readline plus ptk_shell/. Class
+names listed here lets the agent know which file owns
+``PromptFormatter``, ``PromptFields``, ``History``, ``SqliteHistory``,
+``construct_history``, etc.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/prompt", entries = "all" },
+    { parent = "xonsh/history", entries = "all" },
+    { parent = "xonsh/shells", entries = "all" },
+    { parent = "xonsh/shells/ptk_shell", entries = "all" },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "prompt/base + history/base + history/main + shells anchors"
+justification = """
+Key anchors: PromptFormatter / PromptFields / BasePromptField /
+PromptField / MultiPromptField (prompt/base.py). History abstract
+base + HistoryEntry. construct_history (history/main.py) is the
+factory. HistoryAlias is the CLI surface. Shell entry classes.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/prompt/base.py", start = 87, end = 87, render = { kind = "full" } },
+    { path = "xonsh/prompt/base.py", start = 280, end = 280, render = { kind = "full" } },
+    { path = "xonsh/prompt/base.py", start = 424, end = 424, render = { kind = "full" } },
+    { path = "xonsh/prompt/base.py", start = 489, end = 489, render = { kind = "full" } },
+    { path = "xonsh/prompt/base.py", start = 502, end = 502, render = { kind = "full" } },
+    { path = "xonsh/history/base.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "xonsh/history/base.py", start = 31, end = 31, render = { kind = "full" } },
+    { path = "xonsh/history/main.py", start = 34, end = 34, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "xonsh/history/main.py", start = 231, end = 231, render = { kind = "full" } },
+    { path = "xonsh/history/json.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/history/sqlite.py", start = 337, end = 337, render = { kind = "full" } },
+    { path = "xonsh/history/dummy.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/shells/base_shell.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/shells/readline_shell.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/shells/dumb_shell.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/shells/ptk_shell/__init__.py", start = 1, end = 1, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 8 — Utilities (tools.py, lib/, api/), pyghooks, platform, formatter,
+# webconfig, virtualenv, pytest, debug, codecache, foreign_shells, imphooks,
+# wizard, timings, lazyimps, xoreutils, xompletions, xontrib.
+# =============================================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "tools.py exception classes + key utilities"
+justification = """
+``XonshError`` + ``XonshCalledProcessError`` are the user-facing
+exception types. ``print_above_prompt`` is the canonical "display
+from a UI subsystem" helper (interactive completers / prompt
+formatters must use it instead of ``print``). ``subproc_toks``,
+``find_next_break``, ``get_logical_line``, ``balanced_parens`` are
+the parsing helpers called from Execer.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/tools.py", start = 131, end = 131, render = { kind = "full" } },
+    { path = "xonsh/tools.py", start = 135, end = 135, render = { kind = "full" } },
+    { path = "xonsh/tools.py", start = 357, end = 357, render = { kind = "full" } },
+    { path = "xonsh/tools.py", start = 1102, end = 1102, render = { kind = "full" } },
+    { path = "xonsh/tools.py", start = 1113, end = 1113, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "CLAUDE.md", start = 254, end = 254, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "lib/ + api/ + xoreutils/ directory listings"
+justification = """
+xonsh.lib is xonsh's "standard library" (lazyasd, lazyimps, lazyjson,
+inspectors, pretty, openpy, collections, itertools, jsonutils,
+modules, completion_quoting, plus xsh-only os.py / string.py /
+subprocess.py). xonsh.api is the documented public-API surface
+(`os.rmtree`, `subprocess.run`/`check_call`/`check_output`).
+xoreutils provides cat/echo/pwd/tee/tty/yes/uname/uptime/umask/ulimit
+/which/xcontext as Python implementations.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/lib", entries = "all" },
+    { parent = "xonsh/api", entries = "all" },
+    { parent = "xonsh/xoreutils", entries = "all" },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "lazyasd + lazyimps + api signatures"
+justification = """
+``@lazyobject`` / ``@lazydict`` / ``@lazybool`` are pervasive
+in xonsh (used to defer expensive imports / regex compilation /
+platform probes). ``xonsh.api.subprocess.run/check_call/check_output``
++ ``xonsh.api.os.rmtree`` form the documented public API.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/lib/lazyasd.py", start = 11, end = 11, render = { kind = "full" } },
+    { path = "xonsh/lib/lazyasd.py", start = 203, end = 203, render = { kind = "full" } },
+    { path = "xonsh/lib/lazyasd.py", start = 239, end = 239, render = { kind = "full" } },
+    { path = "xonsh/api/subprocess.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "xonsh/api/subprocess.py", start = 20, end = 20, render = { kind = "full" } },
+    { path = "xonsh/api/subprocess.py", start = 26, end = 26, render = { kind = "full" } },
+    { path = "xonsh/api/os.py", start = 13, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.4"
+descriptor = "platform.py + platforms/ + pyghooks + pygments_cache"
+justification = """
+``xonsh.platform`` exposes the OS / WSL / pygments / ptk probes
+(ON_WINDOWS, ON_POSIX, ON_WSL, ON_BSD, HAS_PYGMENTS, has_prompt_toolkit,
+best_shell_type, PATH_DEFAULT, etc.). xonsh.platforms.{macutils,
+winutils} hold platform-specific code. pyghooks.py is the Pygments
+syntax-highlighting integration (entry-pointed from pyproject).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "xonsh/platform.py", start = 122, end = 122, render = { kind = "full" } },
+    { path = "xonsh/platform.py", start = 178, end = 178, render = { kind = "full" } },
+    { path = "xonsh/platform.py", start = 206, end = 206, render = { kind = "full" } },
+    { path = "xonsh/platform.py", start = 260, end = 260, render = { kind = "full" } },
+    { path = "xonsh/platform.py", start = 533, end = 533, render = { kind = "full" } },
+    { path = "xonsh/platform.py", start = 609, end = 609, render = { kind = "full" } },
+    { path = "xonsh/platforms/macutils.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/platforms/winutils.py", start = 1, end = 1, render = { kind = "full" } },
+    { path = "xonsh/pyghooks.py", start = 1, end = 4, render = { kind = "full" } },
+    { path = "xonsh/pygments_cache.py", start = 1, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.5"
+descriptor = "formatter/ + pytest/ + xompletions/ — outlying subsystems"
+justification = """
+Outlying subsystems whose roles are non-obvious:
+- formatter/ — the ``xonsh format`` subcommand (formatter/cli.py /
+  core.py); main.py dispatches here on argv[0] == 'format'.
+- webconfig/ — Sphinx-style config UI served from xonsh.
+- virtualenv/ — entry-pointed ``XonshActivator`` for the
+  virtualenv.activate plugin protocol.
+- pytest/ — the pytest plugin (xession fixture etc., entry-pointed
+  from pyproject as pytest11).
+- xompletions/ — built-in completions for cd, pip, gh, git, python,
+  sudo, rmdir, _xonsh.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "xonsh/formatter", entries = "all" },
+    { parent = "xonsh/pytest", entries = "all" },
+    { parent = "xompletions", entries = "all" },
+]
+

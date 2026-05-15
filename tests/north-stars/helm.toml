@@ -1,0 +1,721 @@
+fixture = "helm"
+revision_pin = "b2786f15"
+summary = """
+Helm v4 — the Kubernetes package manager, a Go monorepo housing both
+the `helm` CLI and the `helm.sh/helm/v4` Go SDK. The codebase is
+large (≈14k lines in `pkg/action/` alone, ≈17k lines under
+`pkg/cmd/`) so this NS optimizes for orientation + precise pointers
+over verbatim content: the agent needs to know *which* package owns
+*which* concern (CLI plumbing vs. action SDK vs. data model vs. k8s
+infra), the directory split conventions (`pkg/` public, `internal/`
+private; `chart/v2` stable vs. `internal/chart/v3` next-gen;
+`release/v1` vs. `release/v2`), and the per-package signature shape so
+follow-up reads land in one hop. Query distribution we serve:
+"where is the install flow implemented", "how do I add a new flag to
+`helm install`", "what fields does `Chart.Metadata` carry",
+"how does the storage driver interface look", "what hook events exist",
+"how does the post-renderer integrate", "Cobra command wiring", etc.
+"""
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo identity — README lede"
+justification = """
+The first thing the agent needs is *what is this repo*. README L1
+(`# Helm`) + L10 (the one-line description tying Helm to charts +
+Kubernetes) is enough for the agent to recognize the project and
+frame chart / release / templating vocabulary. Two lines, ~30
+tokens — cheapest possible orientation.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+    { path = "README.md", start = 10, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level filesystem listing"
+justification = """
+Every immediate child of the fixture root. Tells the agent the shape:
+Go monorepo (`go.mod`, `Makefile`, `cmd/`, `pkg/`, `internal/`,
+`scripts/`, `testdata/`), plus governance (`OWNERS`, `KEYS`,
+`LICENSE`, `CONTRIBUTING.md`, `code-of-conduct.md`, `SECURITY.md`,
+`ADOPTERS.md`, `AGENTS.md`). Catastrophic-omission mitigation:
+listing *all* immediate children prevents inferring an unlisted file
+is absent.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
+id = "1.3"
+descriptor = "AGENTS.md one-line overview"
+justification = """
+AGENTS.md L5 — single sentence: \"Helm is a package manager for
+Kubernetes written in Go\". With L8 noting CLI+SDK shape, this is
+the absolute minimal navigation framing. Tiny — keeps growth
+envelope happy and lets later tiers add detail.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "AGENTS.md", start = 5, end = 5, render = { kind = "full" } },
+    { path = "AGENTS.md", start = 8, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "v3/v4 branch split note (AGENTS.md L10)"
+justification = """
+\"The project currently supports Helm v3 and Helm v4 versions, based
+on the dev-v3 and main branches respectively.\" Critical for any
+agent confused later by the v2/v3 chart and v1/v2 release nesting —
+this is the framing.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "AGENTS.md", start = 10, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Helm-in-a-handbasket lede (charts concept)"
+justification = """
+README L20-23 — the section header + the apt/yum/homebrew analogy.
+Zero-follow-up for \"what does helm do at a high level\".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 20, end = 23, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "AGENTS.md package map: cmd/, action, cmd, chart"
+justification = """
+AGENTS.md L25-32 — \"Major packages\" header, the `cmd/helm/`
+description, and the first four `pkg/` entries: `action/` (core ops),
+`cmd/` (Cobra wiring), `chart/v2/` (stable chart format), and
+`engine/` (template rendering). The most central four packages of
+the whole repo. Split from 1.7 so a tight budget still gets these.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "AGENTS.md", start = 25, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "AGENTS.md package map: kube/, registry, release, repo, storage"
+justification = """
+AGENTS.md L33-37 — the remaining `pkg/` packages: `kube/`,
+`registry/`, `release/`, `repo/`, `storage/`. Completes the public
+API surface map.
+"""
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "AGENTS.md", start = 33, end = 37, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "AGENTS.md internal/ map (private impls)"
+justification = """
+AGENTS.md L38-41 — `internal/chart/v3` (next-gen chart format) and
+`internal/release/v2`. Completes the version-split picture.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "AGENTS.md", start = 38, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Charts contain — README L27-32"
+justification = """
+Five lines: \"Charts are Helm packages that contain at least two
+things\" with `Chart.yaml` + templates bullets, and the chart-storage
+(disk or remote repo) line. Conceptually load-bearing for nearly
+every downstream chart-related question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 27, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "cmd/helm/helm.go imports + ManagedFieldsManager"
+justification = """
+Lines 17-36 of the main package: package decl, imports (proving the
+only Helm-glue is `pkg/cmd` + `pkg/kube`), and the
+`kube.ManagedFieldsManager = \"helm\"` setup. Predecessor of 1.11
+(the rest of main); split this way so a small budget still sees the
+file's existence and shape.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "cmd/helm/helm.go", start = 17, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "cmd/helm/helm.go — root cmd + Execute"
+justification = """
+Lines 38-51: the `NewRootCmd(...)` call, the
+`if err := cmd.Execute(); err != nil` block, `CommandError`-aware
+exit-code handling. Predecessor 1.10 so the file frame is set up.
+Together they're the entire `main()`; a CLI-startup query needs
+nothing more.
+"""
+predecessor = "1.10"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "cmd/helm/helm.go", start = 38, end = 51, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.1"
+descriptor = "pkg/ directory listing"
+justification = """
+Full listing of `pkg/` immediate children — the public SDK surface.
+Mitigates catastrophic-omission for the package list that AGENTS.md
+already partially named: this reveals also `cli/`, `downloader/`,
+`getter/`, `helmpath/`, `ignore/`, `kubeenv/`, `postrenderer/`,
+`provenance/`, `pusher/`, `strvals/`, `uploader/` that AGENTS.md
+glosses over. Critical for honest \"where can X live\" decisions.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg", entries = "all" }]
+
+[[batches]]
+id = "2.2"
+descriptor = "internal/ directory listing"
+justification = """
+Full listing of `internal/` immediate children. Reveals beyond
+AGENTS.md's two highlights: `cli/`, `copystructure/`, `fileutil/`,
+`gates/`, `logging/`, `monocular/`, `plugin/`, `resolver/`,
+`statusreaders/`, `sympath/`, `test/`, `third_party/`, `tlsutil/`,
+`urlutil/`, `version/`. Many of these are referenced from `pkg/`
+code; knowing they live here saves wide searches.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "internal", entries = "all" }]
+
+[[batches]]
+id = "2.3"
+descriptor = "pkg/action/ listing (the SDK core)"
+justification = """
+`pkg/action/` files only (no test files filtered — they're listed
+too). One per Helm operation: `install.go`, `upgrade.go`,
+`uninstall.go`, `rollback.go`, `list.go`, `lint.go`, `show.go`,
+`status.go`, `get*.go`, `pull.go`, `push.go`, `verify.go`,
+`package.go`, `release_testing.go`, `registry_login/logout`,
+`history.go`, `dependency.go`, plus framework files
+(`action.go`, `validate.go`, `hooks.go`, `lazyclient.go`,
+`resource_policy.go`, `doc.go`). One of the highest-value FS
+batches: any \"how is `helm <op>` implemented\" question maps
+straight to a filename here.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/action", entries = "all" }]
+
+[[batches]]
+id = "2.4"
+descriptor = "pkg/chart/ + pkg/chart/v2/ listings"
+justification = """
+Top-level `pkg/chart/` (interfaces shared across versions:
+`interfaces.go`, `common.go`, `dependency.go`, plus `common/`, `loader/`,
+`v2/`) and the v2 chart format leaf (`chart.go`, `metadata.go`,
+`dependency.go`, `errors.go`, `lint/`, `loader/`, `util/`). Reveals
+the v2 stable shape; v3 mirrors it. Together these answer \"where is
+the chart type\" and \"what's the chart loader\" without follow-up.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "pkg/chart", entries = "all" },
+    { parent = "pkg/chart/v2", entries = "all" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "pkg/release/ + pkg/release/v1/ + release/common"
+justification = """
+Three groups: `pkg/release/` (the version-agnostic accessors:
+`interfaces.go`, `common.go`, `responses.go`, plus `common/` and
+`v1/`), `pkg/release/v1/` (`release.go`, `hook.go`, `info.go`,
+`mock.go`, `util/`), and `pkg/release/common/` (`status.go`). The
+Release data model is everywhere in this codebase — pointer batch
+for it.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "pkg/release", entries = "all" },
+    { parent = "pkg/release/v1", entries = "all" },
+    { parent = "pkg/release/common", entries = "all" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "pkg/storage/ + pkg/storage/driver/ listings"
+justification = """
+`pkg/storage/` (the `Storage` wrapper: `storage.go`) and its drivers
+under `driver/` (`cfgmaps.go`, `memory.go`, `secrets.go`, `sql.go`,
+`labels.go`, `records.go`, `util.go`, `driver.go`, `mock_test.go`).
+The four backend types — Secrets / ConfigMaps / Memory / SQL — are
+named in `Configuration.Init`'s switch (see batch 5.x). Catastrophic-
+omission mitigation for the driver list.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "pkg/storage", entries = "all" },
+    { parent = "pkg/storage/driver", entries = "all" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "pkg/kube/ listing"
+justification = """
+`pkg/kube/` files: `client.go`, `interface.go`, `factory.go`,
+`converter.go`, `options.go`, `ready.go`, `resource.go`,
+`resource_policy.go`, `result.go`, `roundtripper.go`,
+`statuswait.go`, `wait.go`, plus `fake/` subdir. The k8s client
+abstraction. One of the canonical landing places for
+\"how does helm talk to Kubernetes\".
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/kube", entries = "all" }]
+
+[[batches]]
+id = "2.8"
+descriptor = "pkg/engine/ listing (template renderer)"
+justification = """
+`pkg/engine/` files: `engine.go`, `funcs.go`, `files.go`,
+`lookup_func.go`, `doc.go`, plus the test files. Small package
+(7 files) — listing them is the cheapest way to point at the
+template-rendering layer.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/engine", entries = "all" }]
+
+[[batches]]
+id = "2.9"
+descriptor = "pkg/registry/ + pkg/repo/v1/ listings"
+justification = """
+Registry (OCI) and repo (legacy chart repositories): `pkg/registry/`
+(`client.go`, `chart.go`, `plugin.go`, `reference.go`, `tag.go`,
+`transport.go`, `constants.go`, `generic.go`) and `pkg/repo/v1/`
+(`repo.go`, `chartrepo.go`, `index.go`, `error.go`, `doc.go`, plus
+`repotest/`). Together they cover \"chart distribution\".
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "pkg/registry", entries = "all" },
+    { parent = "pkg/repo/v1", entries = "all" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "pkg/cli/, downloader/, getter/, postrenderer/, helmpath/ listings"
+justification = """
+Smaller but distinct packages, each with a focused role: `pkg/cli/`
+(EnvSettings + value-merge + output formats) including its `values/`
+and `output/` subdirs, `pkg/downloader/` (chart manager + cache),
+`pkg/getter/` (the protocol-getter interface), `pkg/postrenderer/`,
+`pkg/helmpath/` (XDG paths). Cheap multi-group FS batch covering
+several adjacent areas.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "pkg/cli", entries = "all" },
+    { parent = "pkg/cli/values", entries = "all" },
+    { parent = "pkg/cli/output", entries = "all" },
+    { parent = "pkg/downloader", entries = "all" },
+    { parent = "pkg/getter", entries = "all" },
+    { parent = "pkg/postrenderer", entries = "all" },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "internal/chart/v3/ + internal/release/v2/ listings"
+justification = """
+The next-gen chart format and its release package. `internal/chart/v3/`
+mirrors `pkg/chart/v2/` (`chart.go`, `metadata.go`, `dependency.go`,
+`errors.go`, `lint/`, `loader/`, `util/`); `internal/release/v2/`
+mirrors `pkg/release/v1/`. Knowing the mirror shape lets the agent
+infer file names by analogy.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "internal/chart/v3", entries = "all" },
+    { parent = "internal/release/v2", entries = "all" },
+]
+
+[[batches]]
+id = "2.12"
+descriptor = "internal/plugin/ listing (extism + subprocess plugins)"
+justification = """
+The plugin runtime — Helm's main extensibility surface (per
+AGENTS.md, \"preferred over incorporating into Helm's codebase\").
+Files name the two runtimes (`runtime_extismv1.go`,
+`runtime_subprocess.go`), the loader, the metadata schemas, the
+type registry, the installer, and a signing/verification path
+(`sign.go`, `verify.go`, `signing_info.go`).
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "internal/plugin", entries = "all" }]
+
+[[batches]]
+id = "2.13"
+descriptor = "pkg/cmd/ listing (Cobra command files)"
+justification = """
+`pkg/cmd/` is large (106 entries — every CLI subcommand has its
+own file). Listing all of them reveals the complete command surface
+(`install.go`, `upgrade.go`, `template.go`, `lint.go`, `repo*.go`,
+`plugin*.go`, `search*.go`, `get*.go`, `dependency*.go`, etc.) and
+that pairing with `pkg/action/` is one-to-one for ops, with
+additional UX commands (`completion`, `env`, `docs`, `version`,
+`registry`, `push`). Pricey but absolutely load-bearing.
+"""
+[batches.content]
+kind = "fs"
+groups = [{ parent = "pkg/cmd", entries = "all" }]
+
+[[batches]]
+id = "3.1"
+descriptor = "Chart struct (v2) — the central data type"
+justification = """
+The `Chart` struct definition (pkg/chart/v2/chart.go L36-64) — the
+single most-referenced type in the codebase. Fields: Raw, Metadata,
+Lock, Templates, Values, Schema, SchemaModTime, Files, ModTime,
+plus private parent/dependencies. Plus the doc comment lede
+explaining what a chart is. Zero-follow-up for any \"what does a
+chart hold\" question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/chart/v2/chart.go", start = 36, end = 64, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "chart.Accessor (version-agnostic chart interface)"
+justification = """
+pkg/chart/interfaces.go — full file (44 lines): `Charter` and
+`Dependency` (both `any`-typed for type-erasure), `Accessor` with
+methods Name, IsRoot, MetadataAsMap, Files, Templates,
+ChartFullPath, IsLibraryChart, Dependencies, MetaDependencies,
+Values, Schema, Deprecated, and `DependencyAccessor`. This is the
+*public* shape after the v2/v3 type-switch in `chart/common.go`.
+Pair with 3.1 (concrete struct) — they overlap zero source lines.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/chart/interfaces.go", start = 16, end = 44, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Chart.Metadata struct (Chart.yaml model)"
+justification = """
+`Metadata` struct (pkg/chart/v2/metadata.go L47-84) — models
+`Chart.yaml`: Name, Home, Sources, Version, Description, Keywords,
+Maintainers, Icon, APIVersion, Condition, Tags, AppVersion,
+Deprecated, Annotations, KubeVersion, Dependencies, Type. Massive
+zero-follow-up value for chart-authoring / chart-loading questions.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/chart/v2/metadata.go", start = 47, end = 84, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Release struct (v1)"
+justification = """
+`Release` struct (pkg/release/v1/release.go L23-54) — Name, Info,
+Chart, Config, Manifest, Hooks, Version, Namespace, Labels,
+ApplyMethod. Plus `ApplyMethodClientSideApply`/`ServerSideApply`
+constants. Zero-follow-up for any \"what's in a release record\"
+question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/v1/release.go", start = 23, end = 54, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "release.Accessor (version-agnostic release interface)"
+justification = """
+pkg/release/interfaces.go — full file (46 lines): mirrors
+chart.Accessor at the release level: `Releaser`/`Hook` `any` types,
+`Accessor` (Name, Namespace, Version, Hooks, Manifest, Notes,
+Labels, Chart, Status, ApplyMethod, DeployedAt), and `HookAccessor`
+(Path, Manifest). Together with 3.2 this explains how v1 and v2
+releases coexist behind one API.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/interfaces.go", start = 17, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Release Status constants"
+justification = """
+The 9 release statuses (StatusUnknown, Deployed, Uninstalled,
+Superseded, Failed, Uninstalling, PendingInstall, PendingUpgrade,
+PendingRollback) from pkg/release/common/status.go L18-49, plus the
+`IsPending` helper. Tiny + load-bearing. Used in install/upgrade/
+rollback flow to drive transitions.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/common/status.go", start = 18, end = 49, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Hook event constants (lifecycle slots)"
+justification = """
+pkg/release/v1/hook.go L24-38 — `HookEvent` type and the 9 events:
+pre/post-install, pre/post-delete, pre/post-upgrade, pre/post-rollback,
+test. Defines the chart-author-visible lifecycle slots. Zero-follow-up
+for \"what hook events exist\".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/v1/hook.go", start = 24, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Hook delete + output policies + annotation keys"
+justification = """
+pkg/release/v1/hook.go L42-75 — `HookDeletePolicy`
+(hook-succeeded / hook-failed / before-hook-creation),
+`HookOutputLogPolicy`, and the four annotation keys (`helm.sh/hook`,
+`hook-weight`, `hook-delete-policy`, `hook-output-log-policy`).
+These names are what chart YAML files use.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/v1/hook.go", start = 42, end = 75, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Hook struct (manifest + lifecycle metadata)"
+justification = """
+pkg/release/v1/hook.go L77-96 — the `Hook` struct: Name, Kind,
+Path, Manifest, Events, LastRun, Weight, DeletePolicies,
+OutputLogPolicies. What gets stored alongside the release for each
+hook found during render.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/release/v1/hook.go", start = 77, end = 96, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Configuration struct (action SDK entry point)"
+justification = """
+`Configuration` struct (pkg/action/action.go L118-146) — what every
+action takes: RESTClientGetter, Releases (*Storage), KubeClient,
+RegistryClient, Capabilities, CustomTemplateFuncs, HookOutputFunc,
+plus a mutex and LogHolder embed. This is *the* SDK entry — anyone
+using helm-as-library lands here.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/action/action.go", start = 118, end = 146, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "DryRunStrategy enum"
+justification = """
+pkg/action/action.go L76-89 — the three dry-run modes: None,
+Client, Server. Tiny + zero-follow-up for \"what dry-run modes are
+available\".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/action/action.go", start = 76, end = 89, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "PostRenderStrategy enum + why-each-mode-exists comments"
+justification = """
+pkg/action/action.go L91-116 — `PostRenderStrategy` plus the three
+modes (Combined default, Separate, NoHooks). The comments encode
+non-obvious historical context: Kustomize duplicate-resource
+behavior, Helm 4 default vs Helm 3 behavior. Worth Full rendering.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/action/action.go", start = 91, end = 116, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "kube.Interface (the k8s client contract)"
+justification = """
+pkg/kube/interface.go L28-78 — the `Interface` interface that
+abstracts \"talk to Kubernetes\": Get, Create, Delete, Update, Build,
+IsReachable, GetWaiter, GetPodList, OutputContainerLogsForPodList,
+BuildTable. The whole contract that `pkg/kube/fake` mocks and the
+action package consumes.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/kube/interface.go", start = 28, end = 78, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "kube.Waiter + InterfaceWaitOptions"
+justification = """
+pkg/kube/interface.go L80-112 — the `Waiter` interface (Wait,
+WaitWithJobs, WaitForDelete, WatchUntilReady) used during
+install/upgrade/rollback to wait for resources to become ready.
+Plus `InterfaceWaitOptions` extension used by install/upgrade
+options paths.
+"""
+predecessor = "3.13"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/kube/interface.go", start = 80, end = 112, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "storage.Driver — sentinel errors"
+justification = """
+pkg/storage/driver/driver.go L27-55 — the four sentinel errors
+(`ErrReleaseNotFound`, `ErrReleaseExists`, `ErrInvalidKey`,
+`ErrNoDeployedReleases`), the `StorageDriverError` wrapper type and
+its constructor. Often the failure mode an agent debugs first.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/storage/driver/driver.go", start = 27, end = 55, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "storage.Driver interface composition"
+justification = """
+pkg/storage/driver/driver.go L57-105 — the five small interfaces
+composed into `Driver`: Creator, Updator, Deletor, Queryor
+(Get/List/Query), each separately documented with the contract for
+their method (e.g. \"returns ErrReleaseNotFound\"). What each of
+Secrets/ConfigMaps/Memory/SQL implements.
+"""
+predecessor = "3.15"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/storage/driver/driver.go", start = 57, end = 105, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.1"
+descriptor = "Action entry-point function signatures (Install, Upgrade, Uninstall, Rollback)"
+justification = """
+The single-line signatures for the four primary action `Run` /
+`RunWithContext` methods, truncated at the opening paren. Tiny
+location pointer — tells the agent exactly where each operation
+begins executing in `pkg/action/`. Catastrophic-omission mitigation:
+listing all four together prevents inferring an op exists without a
+`Run` entrypoint.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/action/install.go", start = 275, end = 275, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/action/install.go", start = 284, end = 284, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/action/upgrade.go", start = 164, end = 164, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/action/upgrade.go", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/action/uninstall.go", start = 62, end = 62, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/action/rollback.go", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Configuration.Init driver switch — backend dispatch"
+justification = """
+pkg/action/action.go L663-719 — `Configuration.Init` builds the
+storage driver from the `helmDriver` string (\"secret\"/\"secrets\"/
+default, \"configmap\"/\"configmaps\", \"memory\", \"sql\"). Plus the
+lazy KubeClient setup. Single most load-bearing function for
+\"how do I switch storage backend\" / \"why is the SQL driver
+picked\".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/action/action.go", start = 663, end = 664, render = { kind = "full" } },
+    { path = "pkg/action/action.go", start = 673, end = 711, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Engine struct + Render method signature"
+justification = """
+pkg/engine/engine.go L37-50 — the `Engine` struct (Strict, LintMode,
+clientProvider, EnableDNS, CustomTemplateFuncs) — plus L60 (the
+one-line doc comment) and L79 (the `Render` method signature,
+truncated to the prefix). Together these cover the template-render
+entry-point shape; pair with the `engine.go` directory pointer
+from 2.8.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "pkg/engine/engine.go", start = 37, end = 50, render = { kind = "full" } },
+    { path = "pkg/engine/engine.go", start = 60, end = 60, render = { kind = "full" } },
+    { path = "pkg/engine/engine.go", start = 79, end = 79, render = { kind = "truncated", pattern = "^func \\(e Engine\\) Render" } },
+]

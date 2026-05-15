@@ -1,0 +1,727 @@
+fixture = "sameboy"
+revision_pin = "208ba4af"
+summary = """
+SameBoy is a Game Boy (DMG) and Game Boy Color (CGB) emulator. The
+emulation core is a portable C11 library under `Core/`, exposing a
+`GB_*` API around an opaque `GB_gameboy_t`. That core is consumed by
+several frontends — a Cocoa app for macOS (with embedded HexFiend +
+JoyKit), an SDL app for everything else, an iOS app, a libretro core,
+QuickLook previewers/thumbnailers, and an automatic tester. Boot ROMs
+live under `BootROMs/` and are written in rgbds SM83 assembly; visual
+scaling/filter shaders under `Shaders/` are polyglot GLSL/Metal. The
+build system is a single ~940-line GNU Makefile with target-specific
+toggles (`DISABLE_DEBUGGER`, `DISABLE_REWIND`, `DISABLE_CHEATS`, …)
+that filter out the corresponding `Core/*.c` files and disable code
+guarded by `#ifdef GB_DISABLE_*`.
+
+Likely agent queries: "how do I integrate the core into a new
+frontend?" (start at `Core/gb.h` public API near `GB_init` /
+`GB_run`), "where is X register handled?" (`Core/memory.c` /
+`Core/apu.c` / `Core/display.c` switch on `GB_IO_*` constants from
+`Core/gb.h`), "how does the SDL build target work?" (`SDL/main.c`
++ Makefile `sdl:` target), "how do save states work?" (`Core/save_state.c`
++ `BESS.md`), "what does the debugger support?" (`Core/debugger.c`
+command table + `Core/debugger.h`). Ranking favors breadth over depth:
+list public API names everywhere first, drill into bodies only after
+all subsystems are at least named.
+"""
+
+# ============================================================
+# Tier 1 — identity + top-level orientation
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README title + opening sentence (truncated)"
+justification = """
+Smallest useful opening: project name plus the first sentence of
+the lede ("SameBoy is an open source Game Boy (DMG) and Game Boy
+Color (CGB) emulator, written in portable C."). Fits the very-
+small-budget threshold without spending tokens on the website link
+or the rest of the paragraph.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 3, end = 3, render = { kind = "truncated", pattern = "^[^.]+\\." } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level directory listing"
+justification = """
+The agent needs to know what major chunks the repo is split into
+before anything else. Each top-level dir is a coherent sub-project
+(Core, SDL, Cocoa, iOS, libretro, BootROMs, Shaders, HexFiend,
+JoyKit, QuickLook, Tester, Windows, AppleCommon, FreeDesktop,
+XdgThumbnailer, Misc). Catastrophic-omission mitigation: enumerate
+all so the agent doesn't assume a frontend doesn't exist.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README lede — full sentence (Cocoa+SDL+libretro+debugger mention)"
+justification = """
+Promote 1.1 to the full sentence: "It has a native Cocoa frontend
+for macOS, an SDL frontend for other operating systems, and a
+libretro core. It also includes a text-based debugger with an
+expression evaluator."
+"""
+predecessor = "1.1"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 3, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "CONTRIBUTING — per-folder language map (truncated)"
+justification = """
+Maps top-level dirs to language: Core/SDL/libretro/Tester are C11;
+Cocoa/HexFiend/JoyKit/QuickLook are ARC Obj-C. Truncated to the
+first two sentences to satisfy the small-budget envelope.
+"""
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 21, end = 21, render = { kind = "truncated", pattern = "^[^.]+\\.[^.]+\\." } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "CONTRIBUTING — per-folder language map (full)"
+justification = """
+Promote 1.4 to full content with the BootROMs / Shaders / GNU Make
+tail and the "avoid adding new languages" rule.
+"""
+predecessor = "1.4"
+content = { kind = "lines", spans = [
+  { path = "CONTRIBUTING.md", start = 21, end = 21, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — Core/ public API surface
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Core/ directory listing"
+justification = """
+Names every Core/*.c and Core/*.h plus `graphics/`. Each pair is a
+subsystem (apu = audio, display = ppu, mbc = cart mappers,
+sm83_cpu = CPU, sgb = super game boy, debugger, save_state, cheats,
+…). Every cut here would mislead about what subsystems exist.
+"""
+content = { kind = "fs", groups = [
+  { parent = "Core", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Core/defs.h — GB_gameboy_t forward decl"
+justification = """
+The opaque-type forward declaration every frontend depends on. Tiny
+but explains why `GB_gameboy_t` is opaque everywhere.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/defs.h", start = 66, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Core/gb.h — GB_init / GB_alloc / GB_run signatures"
+justification = """
+The most-used core entry points: `GB_init`, `GB_alloc`, `GB_dealloc`,
+`GB_free`, `GB_run`, `GB_run_frame`. Minimal frontend integration in
+seven lines.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 893, end = 896, render = { kind = "full" } },
+  { path = "Core/gb.h", start = 912, end = 914, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "Core/gb.h — full lifecycle + model predicates"
+justification = """
+The full lifecycle block: `GB_init`/`free`/`alloc`/`dealloc`/
+`allocation_size`, `GB_is_inited`/`is_cgb`/`is_cgb_in_cgb_mode`/
+`is_sgb`/`is_hle_sgb`, `GB_get_model`, `GB_reset`/`quick_reset`/
+`switch_model_and_reset`, `GB_run`/`run_frame`. Refines 2.3.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 893, end = 914, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Core/gb.h — ROM/boot/GBS/ISX/battery loading"
+justification = """
+The file-loading API: `GB_load_boot_rom*`, `GB_load_rom*`,
+`GB_load_isx`, `GB_load_gbs*`, `GB_save_battery*`, `GB_load_battery*`.
+Each signature answers "how do I load X?".
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 939, end = 953, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Core/gb.h — callback setter signatures"
+justification = """
+Every frontend integrates with the core by registering callbacks:
+log, input/async_input, infrared, rumble, boot-rom-load, execution,
+lcd line/status. Names + types tell the agent what extension points
+exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 967, end = 977, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Core/gb.c — top-level GB_* function locations"
+justification = """
+Truncated-name pointers to every top-level `GB_*` function defined
+in gb.c (init, ROM loading, run, callback wiring, audio/log
+delegation). One-hop precision for "where is GB_init implemented?".
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.c", start = 16, end = 16, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 42, end = 42, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 157, end = 157, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 164, end = 164, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 197, end = 197, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 202, end = 202, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 255, end = 255, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 331, end = 331, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 427, end = 427, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 505, end = 505, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 526, end = 526, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 758, end = 758, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 845, end = 845, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 895, end = 895, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 968, end = 968, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 1078, end = 1078, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 1190, end = 1190, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/gb.c", start = 1228, end = 1228, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+# ============================================================
+# Tier 3 — Subsystem entry points (locations + key headers)
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Core/memory.c — public function locations"
+justification = """
+Where `GB_read_memory`, `GB_safe_read_memory`, `GB_write_memory`,
+`GB_dma_run`, `GB_hdma_run`, the read/write callback setters, OAM-
+bug triggers, `GB_is_dma_active` live.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/memory.c", start = 93, end = 93, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 196, end = 196, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 768, end = 768, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 776, end = 776, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 823, end = 823, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 1801, end = 1801, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 1809, end = 1809, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 1862, end = 1862, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 1867, end = 1867, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/memory.c", start = 1907, end = 1907, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Core/apu.c — public function locations"
+justification = """
+Locations of every public APU function: `GB_apu_init`, `GB_apu_run`,
+register R/W (`GB_apu_read`, `GB_apu_write`, `GB_apu_is_DAC_enabled`),
+sampling (`GB_set_sample_rate*`, `GB_apu_set_sample_callback`),
+highpass/interference, per-channel mute/volume/period/amplitude.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/apu.c", start = 148, end = 148, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 815, end = 815, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 1081, end = 1081, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 1097, end = 1097, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 1682, end = 1682, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2164, end = 2164, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2183, end = 2183, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2205, end = 2205, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2210, end = 2210, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2215, end = 2215, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2399, end = 2399, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2405, end = 2405, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2411, end = 2411, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2429, end = 2429, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2434, end = 2434, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/apu.c", start = 2453, end = 2453, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "Core/display.c — public function locations"
+justification = """
+Where each PPU function lives: palette setup, `GB_display_run`,
+`GB_display_vblank`, `GB_STAT_update`, `GB_lcd_off`, draw helpers,
+color-correction config, callback setters, object/background
+disable flags.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/display.c", start = 13, end = 13, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 51, end = 51, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 173, end = 173, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 486, end = 486, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 497, end = 497, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 523, end = 523, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 562, end = 562, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 1533, end = 1533, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 2253, end = 2253, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 2303, end = 2303, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/display.c", start = 2373, end = 2373, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Core/debugger.c — top-level function locations"
+justification = """
+Where each `GB_debugger_*` implementation lives — execute_command,
+complete_substring, load/clear symbols, evaluate, break, is_stopped,
+set_disabled, hooks, watchpoint tests, async commands. One hop from
+"I want to add a debugger command" to the editing spot.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/debugger.c", start = 2361, end = 2361, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2384, end = 2384, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2448, end = 2448, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2455, end = 2455, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2462, end = 2462, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2528, end = 2528, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2688, end = 2688, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2704, end = 2704, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2733, end = 2733, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2827, end = 2827, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2862, end = 2862, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/debugger.c", start = 2868, end = 2868, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Core/save_state.c + Core/timing.c — function locations"
+justification = """
+Locations of `GB_save_state_to_buffer*`, `GB_is_save_state`, plus
+timing/RTC API (`GB_timing_sync*`, `GB_serial_master_edge`,
+`GB_set_rtc_mode`, `GB_set_rtc_multiplier`, `GB_rtc_set_time`,
+`GB_advance_cycles`, `GB_emulate_timer_glitch`).
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/save_state.c", start = 867, end = 867, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/save_state.c", start = 882, end = 882, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/save_state.c", start = 1488, end = 1488, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 43, end = 43, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 58, end = 58, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 184, end = 184, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 288, end = 288, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 308, end = 308, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 435, end = 435, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "Core/timing.c", start = 526, end = 526, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Core/mbc.h — cart-type enum"
+justification = """
+Full list of supported cartridge mappers (NO_MBC, MBC1, MBC2, MBC3,
+MBC5, MBC7, MMM01, HUC1, HUC3, TPP1, CAMERA) and internal
+`GB_configure_cart`/`GB_reset_mbc`/`GB_update_mbc_mappings` entry
+points. Drives any "does SameBoy support cart X?" / "where is
+banking handled?" query.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/mbc.h", start = 1, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "Core/joypad.h — GB_key_t enum + key setter signatures"
+justification = """
+The key enum (RIGHT/LEFT/UP/DOWN/A/B/SELECT/START) and public setter
+signatures (`GB_set_key_state*`, `GB_set_key_mask*`). Faux-analog
+and the rest are one hop away.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/joypad.h", start = 5, end = 15, render = { kind = "full" } },
+  { path = "Core/joypad.h", start = 30, end = 34, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "Core/save_state.h — GB_save_state / GB_load_state signatures"
+justification = """
+`GB_save_state`, `GB_get_save_state_size`, `GB_save_state_to_buffer`,
+`GB_load_state[_from_buffer]`, `GB_is_save_state`,
+`GB_get_state_model[_from_buffer]`. The save-state public API.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/save_state.h", start = 35, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "Core/debugger.h — debugger public API signatures"
+justification = """
+`GB_debugger_break`, `_execute_command`, `_complete_substring`,
+`_load_symbol_file`, `_name_for_address`, `_describe_address`,
+`_evaluate`, `_is_stopped`, `_set_disabled`, `_clear_symbols`,
+`_set_reload_callback`. Skips header preamble.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/debugger.h", start = 8, end = 30, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — Frontends + build entry
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Makefile target list"
+justification = """
+The named `make` targets (cocoa, sdl, lib, ios/ios-ipa/ios-deb,
+bootroms, tester, libretro, xdg-thumbnailer, all). Answers "how do
+I build only X?" zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 408, end = 427, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "Makefile — DISABLE_* feature flags"
+justification = """
+The `DISABLE_TIMEKEEPING / DISABLE_REWIND / DISABLE_DEBUGGER /
+DISABLE_CHEATS / DISABLE_CHEAT_SEARCH` flags, what `-D` they set
+and which `Core/*.c` they remove from compilation. Critical for
+"how do I strip the debugger to embed the core?" — the answer is
+`make lib DISABLE_DEBUGGER=1`.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 62, end = 101, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "SDL/ directory listing"
+justification = """
+SDL frontend layout: main, gui, console, configuration, shader,
+audio drivers under audio/, open_dialog backends, save_png backends,
+Windows associations.
+"""
+content = { kind = "fs", groups = [
+  { parent = "SDL", entries = "all" },
+  { parent = "SDL/audio", entries = "all" },
+  { parent = "SDL/open_dialog", entries = "all" },
+  { parent = "SDL/save_png", entries = "all" },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "libretro/ + BootROMs/ + Shaders/ + Tester/ listings"
+justification = """
+Bundled view of smaller sub-projects: libretro core (libretro.c/h,
+options.inc, link.T, jni/Android.mk), boot-ROM sources (cgb/cgb0/
+cgb_fast/dmg/mgb/sgb/sgb2/agb .asm, hardware.inc, sameboot.inc,
+pb12.c, SameBoyLogo.png), the shader set (NearestNeighbor,
+Bilinear, Smooth, Scale2x/4x, AAScale2x/4x, HQ2x, OmniScale[Legacy],
+AAOmniScaleLegacy, LCD, MonoLCD, CRT, FlatCRT, MasterShader.fsh/
+.metal), the single-file Tester.
+"""
+content = { kind = "fs", groups = [
+  { parent = "libretro", entries = "all" },
+  { parent = "libretro/jni", entries = "all" },
+  { parent = "BootROMs", entries = "all" },
+  { parent = "Shaders", entries = "all" },
+  { parent = "Tester", entries = "all" },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "SDL/main.c + Cocoa/main.m entry signatures"
+justification = """
+The SDL entry-point line + the entire 6-line Cocoa main.m (just
+`NSApplicationMain(argc, argv)`). Tells the agent where each
+platform's boot starts.
+"""
+content = { kind = "lines", spans = [
+  { path = "SDL/main.c", start = 1443, end = 1443, render = { kind = "full" } },
+  { path = "Cocoa/main.m", start = 1, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Tester/main.c — CLI usage string"
+justification = """
+The Tester (validate against test ROMs) prints its own usage on
+no-arg invocation. Shows `--dmg --sgb --cgb --start --length --sav
+--boot --tga --jobs` zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "Tester/main.c", start = 289, end = 300, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "libretro/libretro.c — retro_* entry point locations"
+justification = """
+Where each libretro callback lives: init/deinit, api_version,
+set_controller_port_device, get_system_info, get_system_av_info,
+set_environment, set_video_refresh, reset, run, load_game[_special],
+unload_game, get_region, serialize[_size], unserialize,
+get_memory_size, cheat_reset, cheat_set.
+"""
+content = { kind = "lines", spans = [
+  { path = "libretro/libretro.c", start = 1218, end = 1218, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1243, end = 1243, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1255, end = 1255, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1260, end = 1260, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1265, end = 1265, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1278, end = 1278, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1308, end = 1308, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1344, end = 1344, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1365, end = 1365, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1475, end = 1475, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1539, end = 1539, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1616, end = 1616, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1640, end = 1640, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1663, end = 1663, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1756, end = 1756, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1823, end = 1823, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "libretro/libretro.c", start = 1826, end = 1826, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "QuickLook/ + XdgThumbnailer/ + Misc/Palettes/ + FreeDesktop/ + AppleCommon/ listings"
+justification = """
+Smaller frontends/asset directories: macOS QuickLook plugin
+(GBPreviewProvider, GBThumbnailProvider, get_image_for_rom), Linux
+Xdg thumbnailer, built-in DMG palette .sbp files, FreeDesktop
+assets, AppleCommon (GBAudioClient + GBViewBase/Metal shared
+between Cocoa and iOS).
+"""
+content = { kind = "fs", groups = [
+  { parent = "QuickLook", entries = "all" },
+  { parent = "XdgThumbnailer", entries = "all" },
+  { parent = "Misc", entries = "all" },
+  { parent = "Misc/Palettes", entries = "all" },
+  { parent = "FreeDesktop", entries = "all" },
+  { parent = "AppleCommon", entries = "all" },
+] }
+
+
+# ============================================================
+# Tier 5 — IO register map + LCDC bits + model enum
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Core/gb.h — GB_IO_* register map (joypad / serial / timer / interrupt)"
+justification = """
+First chunk of the I/O register map: GB_IO_JOYP, SB, SC, DIV, TIMA,
+TMA, TAC, IF. The master keys for `Core/memory.c` + `Core/timing.c`
+dispatch.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 132, end = 148, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "Core/gb.h — LCDC bits + 16-bit register enum"
+justification = """
+LCDC bit constants (BG_EN/OBJ_EN/OBJ_SIZE/BG_MAP/TILE_SEL/WIN_ENABLE/
+WIN_MAP/ENABLE), the 16-bit register enum (AF/BC/DE/HL/SP/PC), the
+border-mode enum. Cheap, supports graphics-side queries.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 97, end = 131, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "Core/gb.h — GB_IO_* sound register map (NR10–NR52 + WAV)"
+justification = """
+Sound-channel I/O registers (NR10/11/12/13/14 — square1; NR21..24 —
+square2; NR30..34 — wave; NR41..44 — noise; NR50/51/52 — mixer; the
+WAV_START..END region). The master key for `Core/apu.c`'s register
+dispatching.
+"""
+predecessor = "5.1"
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 150, end = 178, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "Core/model.h — family masks + family-leader model values"
+justification = """
+The `GB_MODEL_*_FAMILY` / `GB_MODEL_*_BIT` masks plus the head value
+of each model family (DMG_B, SGB, MGB, SGB2, CGB_0, CGB_E, AGB_A,
+GBP_A). Skips the many alias lines (NTSC/PAL/NO_SFC variants) and
+commented-out entries to keep the cost reasonable — agent can read
+the file (39 lines) for the full alias set if needed.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/model.h", start = 1, end = 11, render = { kind = "full" } },
+  { path = "Core/model.h", start = 14, end = 14, render = { kind = "full" } },
+  { path = "Core/model.h", start = 16, end = 16, render = { kind = "full" } },
+  { path = "Core/model.h", start = 22, end = 23, render = { kind = "full" } },
+  { path = "Core/model.h", start = 25, end = 25, render = { kind = "full" } },
+  { path = "Core/model.h", start = 30, end = 30, render = { kind = "full" } },
+  { path = "Core/model.h", start = 32, end = 33, render = { kind = "full" } },
+  { path = "Core/model.h", start = 39, end = 39, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 6 — Build, CI, conventions
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "Makefile — source aggregation lines"
+justification = """
+`CORE_SOURCES` / `SDL_SOURCES` / `IOS_SOURCES` / `COCOA_SOURCES` /
+`QUICKLOOK_SOURCES` / `XDG_THUMBNAILER_SOURCES` / `TESTER_SOURCES`
+declarations + Windows-only `CORE_SOURCES += Windows/*.c`. The
+master target-to-source mapping.
+"""
+predecessor = "4.1"
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 431, end = 442, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = ".github/ + Windows/ directory listings"
+justification = """
+`.github/{workflows,actions}` (workflows: sanity.yml, libretro.yml;
+actions: install_deps.sh, sanity_tests.sh, update_libretro.sh +
+four test ROMs), and `Windows/` POSIX shims (dirent, pthread,
+stdint, inttypes, stdio, math, unistd, string, manifest.xml,
+msvcrt.def).
+"""
+content = { kind = "fs", groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/actions", entries = "all" },
+  { parent = "Windows", entries = "all" },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "Core/gb.h — STRUCT_VERSION + outer-opaque shim"
+justification = """
+The struct-versioning trick: with `GB_INTERNAL` the struct fields
+are exposed, otherwise the outer struct is
+`uint8_t[sizeof(internal)]` aligned. Plus `STRUCT_VERSION 15`
+(bumped when layout breaks save compat). The secret of how the
+public header keeps the struct opaque while `Core/*.c` see the
+fields.
+"""
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 45, end = 50, render = { kind = "full" } },
+  { path = "Core/gb.h", start = 862, end = 868, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 7 — Specifics (CGB DMA/palettes, BESS, audio plugin, boot)
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "Core/gb.h — GB_IO_* graphics register map (LCDC..KEY0)"
+justification = """
+Graphics block: LCDC/STAT/SCY/SCX/LY/LYC/DMA/BGP/OBP0/OBP1/WY/WX/
+KEY0. Each is referenced by name throughout Core/display.c and
+Core/memory.c. Demoted to tier 7 (after the joypad/serial/timer/
+interrupt + sound register batches in tier 5) so cuts in tier 5
+still get a coherent IO map slice.
+"""
+predecessor = "5.1"
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 180, end = 194, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "Core/gb.h — CGB DMA (HDMA1–5) + speed switch / VRAM / boot disable"
+justification = """
+The CGB-specific IO band: KEY1 speed switch, VBK VRAM bank, BANK
+boot-rom disable, HDMA1–5 (general/HBlank DMA). Critical for any
+CGB-mode work; also relatively cheap.
+"""
+predecessor = "7.1"
+content = { kind = "lines", spans = [
+  { path = "Core/gb.h", start = 196, end = 209, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "BootROMs/dmg_boot.asm — init sequence"
+justification = """
+SameBoy's open-source DMG boot ROM opening: rgbds SECTION at
+ROM0[$0000], stack init, VRAM clear loop, audio init writes, BG
+palette config. Anchors any "where do the boot-ROM splash tweaks
+live?" query.
+"""
+predecessor = "4.4"
+content = { kind = "lines", spans = [
+  { path = "BootROMs/dmg_boot.asm", start = 1, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "BESS save-state spec — footer + block format"
+justification = """
+The portable BESS save-state format: footer (offset+magic at end
+of file), block format (4-char identifier + 32-bit length, until
+END, unknowns ignored). Required context for `Core/save_state.c`'s
+BESS_* types.
+"""
+content = { kind = "lines", spans = [
+  { path = "BESS.md", start = 7, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = "Core/save_state.c — BESS block / buffer / footer typedefs"
+justification = """
+The packed structs SameBoy uses to read/write BESS blocks:
+`BESS_block_t` (magic+size), `BESS_buffer_t` (size+offset),
+`BESS_footer_t` (start_offset+magic). Concrete impl payoff for 7.4.
+"""
+predecessor = "7.4"
+content = { kind = "lines", spans = [
+  { path = "Core/save_state.c", start = 23, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.6"
+descriptor = "SDL/audio/audio.h — public driver API signatures"
+justification = """
+The public side of the pluggable audio backend: `GB_audio_is_playing`,
+`_set_paused`, `_clear_queue`, `_get_frequency`, `_get_queue_length`,
+`_queue_sample`, `_init`, `_deinit`, `_driver_name`,
+`_driver_name_at_index`. Tells the agent that SDL's audio is
+abstracted behind a driver layer (XAudio2, SDL, OpenAL impls live
+under `SDL/audio/`). The `GB_audio_driver_t` vtable struct itself is
+one file-read away (lines 18-40 of the same file).
+"""
+content = { kind = "lines", spans = [
+  { path = "SDL/audio/audio.h", start = 1, end = 16, render = { kind = "full" } },
+] }

@@ -5,20 +5,7 @@ use super::*;
 
 pub(super) fn format_report(scores: &Scores, ctx: &BuildCtx) -> String {
     let mut out = String::new();
-    let primary = &scores.vector[PRIMARY_BUDGET_INDEX];
-    writeln!(
-        out,
-        "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={})",
-        primary.score,
-        primary.importance,
-        primary.coverage,
-        scores.rows_in_primary,
-        scores.total_ns,
-        scores.reached,
-        scores.partial,
-        scores.missing,
-    )
-    .unwrap();
+    writeln!(out, "{}", scores.headline()).unwrap();
     format_schedule_table(&mut out, ctx);
     out
 }

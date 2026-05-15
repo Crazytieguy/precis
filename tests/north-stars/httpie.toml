@@ -1,0 +1,911 @@
+fixture = "httpie"
+revision_pin = "5b604c37"
+summary = """
+HTTPie 3.2.4 — a Python command-line HTTP client. Two user-facing
+binaries (`http`/`https`) plus a third (`httpie`) for managing
+plugins and sessions. Single source package `httpie/` with ~9.8k
+LoC across a handful of clearly named sub-packages: `cli/`
+(argparse-based declarative parser + key=value request-item syntax
++ nested-JSON DSL), `output/` (write/stream/format/colorize
+pipeline + Rich-based help UI), `plugins/` (Auth/Transport/
+Converter/Formatter plugin types, with builtin Basic/Digest/Bearer
+auth), `manager/` (the `httpie` admin CLI), `internal/` (background
+update-check daemon), `legacy/` (session-format migrations).
+Top-level glue: `core.py` (main/raw_main/program loop),
+`client.py` (collect_messages — drives `requests`), `models.py`
+(HTTPRequest/HTTPResponse wrappers), `context.py` (Environment),
+`config.py`, `sessions.py`, `downloads.py`, `uploads.py`,
+`status.py` (ExitStatus enum). Ranking serves a broad mix of dev
+queries: tracing the request lifecycle, finding the option/flag
+that drives a behavior, modifying parsing or output formatting,
+extending via a plugin, fixing a bug in session/download/upload
+paths. The CLI parser is unusually large (`cli/definition.py` is
+~960 lines of declarative ParserSpec) so its surface is split
+heavily into the ranking.
+"""
+
+# =============================================================================
+# Tier 1 — identity, entry points, the smallest "what is this repo" surface.
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Root fs listing"
+justification = """
+The single broadest orientation signal: shows the package
+layout (httpie/, tests/, docs/, extras/) and the top-level config
+files (setup.cfg, setup.py, Makefile, pytest.ini, README, etc).
+Mitigates catastrophic omission for "what files exist at the
+root" — everything later is rooted in this list.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.2"
+descriptor = "httpie package __init__: version + tagline"
+justification = """
+Locates the source-of-truth version string (used by setup.cfg
+`version = attr:` and by `--version`) and confirms the package
+docstring. Tiny and lands the agent on canonical metadata.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/__init__.py", start = 1, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "README lede"
+justification = """
+The repo's own elevator pitch — HTTPie is a human-friendly CLI
+HTTP client; `http`/`https` commands; supports formatted output;
+designed for testing/debugging APIs. Five lines, frames almost
+any high-level user-query.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 30, end = 34, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Console-script entry points"
+justification = """
+The three CLI binaries: `http`, `https` (→ `httpie.__main__:main`)
+and `httpie` (→ `httpie.manager.__main__:main`). Resolves the
+very common question "where does the `http` command start?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "setup.cfg", start = 75, end = 79, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "httpie/ package fs listing"
+justification = """
+The package's own top-level layout: top-level modules
+(core/client/models/context/config/sessions/downloads/uploads/
+status/utils/compat/encoding/ssl_/cookies/adapters) plus
+sub-packages (cli/, output/, plugins/, manager/, internal/,
+legacy/). Structural skeleton later tiers refine.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "httpie"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = "README features list"
+justification = """
+Bullet-list of HTTPie's user-facing features (JSON, forms,
+uploads, HTTPS, proxies, auth, sessions, downloads). Cheap
+semantic context for "does HTTPie support X?" without follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 60, end = 69, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "http/https __main__: program entry"
+justification = """
+The 19-line entry point that wraps `httpie.core.main` for the
+http/https binaries; turns KeyboardInterrupt into
+ExitStatus.ERROR_CTRL_C. Resolves "where does the CLI start"
+in one hop.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/__main__.py", start = 1, end = 19, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 2 — request lifecycle: core orchestration, client, key sub-packages.
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "ExitStatus enum"
+justification = """
+status.py's IntEnum lists every exit code precis is concerned
+with: SUCCESS, ERROR, ERROR_TIMEOUT, ERROR_HTTP_3XX/4XX/5XX,
+ERROR_TOO_MANY_REDIRECTS, PLUGIN_ERROR, ERROR_CTRL_C. Self-
+contained — resolves "what does exit code N mean" with no
+follow-up. Cheap (~20 lines) and broadly applicable.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/status.py", start = 1, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "httpie/cli/ fs listing"
+justification = """
+Names all files under cli/: argparser.py (the parser subclass),
+argtypes.py (key=value parsing), constants.py (separators/output
+flags), definition.py (the ParserSpec declaration), dicts.py,
+exceptions.py, nested_json/ (subpackage), options.py
+(ParserSpec/Group/Argument types), requestitems.py, utils.py.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "httpie/cli"
+entries = "all"
+
+[[batches]]
+id = "2.3"
+descriptor = "httpie/output/ fs listing"
+justification = """
+Names all files/subdirs under output/: models.py
+(ProcessingOptions), processing.py (Conversion/Formatting),
+streams.py (Raw/Encoded/Pretty/BufferedPretty), writer.py
+(write_message), utils.py, plus subpackages formatters/, lexers/,
+ui/.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "httpie/output"
+entries = "all"
+
+[[batches]]
+id = "2.4"
+descriptor = "httpie/plugins/ fs listing"
+justification = """
+plugins/ contents: base.py (AuthPlugin/TransportPlugin/
+ConverterPlugin/FormatterPlugin), builtin.py (Basic/Digest/Bearer),
+manager.py (PluginManager + entry-point loading), registry.py
+(the singleton + built-in registration). Plus __init__.py
+re-exports.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "httpie/plugins"
+entries = "all"
+
+[[batches]]
+id = "2.5"
+descriptor = "core.py top-level function locations"
+justification = """
+All top-level functions in core.py — raw_main, main, program,
+print_debug_info, decode_raw_args. One def line each (multi-line
+signatures, so just the `def NAME(` opener). The names alone make
+the orchestration shape legible: raw_main is parser-agnostic,
+main constructs the http/https parser and delegates, program is
+the per-request loop.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/core.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "httpie/core.py", start = 146, end = 146, render = { kind = "full" } },
+    { path = "httpie/core.py", start = 170, end = 170, render = { kind = "full" } },
+    { path = "httpie/core.py", start = 270, end = 270, render = { kind = "full" } },
+    { path = "httpie/core.py", start = 285, end = 285, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "core.main(): construct parser + delegate"
+justification = """
+The thinnest possible "what happens when you run `http`": main
+imports `httpie.cli.definition.parser`, calls raw_main with
+`program` as main_program. Makes the cli/definition.py → core
+→ client wiring legible. Predecessor: 2.5 (which marked line 146
+as the `def main(` opener).
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/core.py", start = 146, end = 167, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "core.py imports: cross-module wiring"
+justification = """
+The from-imports show exactly which modules core depends on:
+cli.constants/cli.nested_json/client/context/downloads/models/
+output.models/output.writer/plugins.registry/status/utils/
+internal.update_warnings/internal.daemon_runner. One read =
+catastrophic-omission-safe map of the orchestration boundary.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/core.py", start = 12, end = 28, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "client.py: public function locations"
+justification = """
+All public functions in client.py — collect_messages,
+max_headers, build_requests_session, dump_request,
+finalize_headers, transform_headers, apply_missing_repeated_headers,
+make_default_headers, make_send_kwargs[*_mergeable_from_env],
+json_dict_to_request_body, make_request_kwargs, ensure_path_as_is.
+Each line is a `def NAME(` or short single-line signature.
+Mitigates catastrophic omission for "what does client.py expose".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/client.py", start = 43, end = 43, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 145, end = 145, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 156, end = 156, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 187, end = 187, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 192, end = 192, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 212, end = 212, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 233, end = 233, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 263, end = 263, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 281, end = 281, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 288, end = 288, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 314, end = 314, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 325, end = 325, render = { kind = "full" } },
+    { path = "httpie/client.py", start = 377, end = 377, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 3 — CLI parser surface: separators, positional args, parse pipeline.
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "cli/constants.py: separator constants"
+justification = """
+HTTPie's full set of named separator constants — SEPARATOR_HEADER
+`:`, SEPARATOR_HEADER_EMPTY `;`, SEPARATOR_HEADER_EMBED `:@`,
+SEPARATOR_DATA_STRING `=`, SEPARATOR_DATA_RAW_JSON `:=`,
+SEPARATOR_FILE_UPLOAD `@`, SEPARATOR_FILE_UPLOAD_TYPE `;type=`,
+SEPARATOR_DATA_EMBED_FILE_CONTENTS `=@`,
+SEPARATOR_DATA_EMBED_RAW_JSON_FILE `:=@`, SEPARATOR_QUERY_PARAM
+`==`, SEPARATOR_QUERY_EMBED_FILE `==@`. The single highest-value
+syntax reference in the repo.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/constants.py", start = 1, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "cli/constants.py: separator group sets"
+justification = """
+SEPARATOR_GROUP_DATA_ITEMS, SEPARATORS_GROUP_MULTIPART,
+SEPARATOR_GROUP_DATA_EMBED_ITEMS, SEPARATOR_GROUP_NESTED_JSON_ITEMS,
+SEPARATOR_GROUP_ALL_ITEMS — the frozenset classifications that
+dispatch each separator to the right processor in
+requestitems.py. Resolves "which separators count as data
+fields?" / "which can embed file contents?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/constants.py", start = 29, end = 72, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "cli/constants.py: output-option flags + pretty map + RequestType"
+justification = """
+OUT_REQ_HEAD/BODY/RESP_HEAD/BODY/META single-char codes,
+BASE_OUTPUT_OPTIONS, OUTPUT_OPTIONS, PRETTY_MAP (all/colors/
+format/none), DEFAULT_FORMAT_OPTIONS list,
+OUTPUT_OPTIONS_DEFAULT[_STDOUT_REDIRECTED|_OFFLINE], RequestType
+enum. Anchors --print strings and the formatter options.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/constants.py", start = 74, end = 116, render = { kind = "full" } },
+    { path = "httpie/cli/constants.py", start = 125, end = 134, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "definition.py: ParserSpec opener"
+justification = """
+`options = ParserSpec('http', …)` + epilog ("for every --OPTION
+there is also a --no-OPTION that reverts to default"). Anchors
+every later add_group call.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/definition.py", start = 32, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "definition.py: METHOD + URL positionals"
+justification = """
+The METHOD positional (optional, auto-inferred as GET or POST)
+and the URL positional (with the `http :3000` localhost shorthand
+documented inline).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/definition.py", start = 49, end = 66, render = { kind = "full" } },
+    { path = "httpie/cli/definition.py", start = 74, end = 80, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "definition.py: REQUEST_ITEM nested_options table"
+justification = """
+User-facing reference for REQUEST_ITEM — maps each separator
+(Name:Value / name==value / field=value / field:=json / field@/
+dir/file) to its semantic group. Single highest-density spot in
+the CLI for "how do I send X kind of data?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/definition.py", start = 89, end = 105, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "definition.py: REQUEST_ITEM help body"
+justification = """
+Full help block for REQUEST_ITEM — copy-pasteable examples for
+every separator (Referer:https://… X-API-Token:123 search==httpie
+name=HTTPie awesome:=true cv@~/Documents/CV.pdf
+essay=@Documents/essay.txt package:=@./package.json) plus the
+backslash-escape rule.
+"""
+predecessor = "3.6"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/definition.py", start = 106, end = 145, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "definition.py: content-type flags (--json/--form/--multipart/--boundary/--raw)"
+justification = """
+add_argument + short_help blocks for the request-body-mode flags.
+Resolves "is the default JSON or form?" (--json is `(default)`)
+and "what does --raw do?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/definition.py", start = 153, end = 159, render = { kind = "full" } },
+    { path = "httpie/cli/definition.py", start = 167, end = 173, render = { kind = "full" } },
+    { path = "httpie/cli/definition.py", start = 183, end = 199, render = { kind = "full" } },
+    { path = "httpie/cli/definition.py", start = 200, end = 202, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "argparser.py: HTTPieArgumentParser.parse_args"
+justification = """
+The 40-line method that runs every argument-normalization step
+in sequence: _apply_no_options → _process_request_type →
+_process_download_options → _setup_standard_streams →
+_process_output_options → _process_pretty_options →
+_process_format_options → _guess_method → _parse_items →
+_process_url → _process_auth → _process_ssl_cert → body source.
+Clearest table-of-contents for argparser.py.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/argparser.py", start = 151, end = 194, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "argparser.py: parser-class declarations"
+justification = """
+The argparse.ArgumentParser subclasses: HTTPieHelpFormatter (32),
+BaseHTTPieArgumentParser (81), HTTPieManagerArgumentParser (128),
+HTTPieArgumentParser (138). Names + line locations only.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/argparser.py", start = 32, end = 32, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 81, end = 81, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 128, end = 128, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 138, end = 138, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "argparser.py: _process_* method locations"
+justification = """
+Every helper in HTTPieArgumentParser, one def line each:
+_process_request_type, _process_url, _setup_standard_streams,
+_process_ssl_cert, _process_auth, _apply_no_options,
+_body_from_file/_input, _ensure_one_data_source, _guess_method,
+_parse_items, _process_output_options, _process_pretty_options,
+_process_download_options, _process_format_options,
+print_manual, print_usage, error. Resolves "where is X
+normalized?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/argparser.py", start = 196, end = 196, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 205, end = 205, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 227, end = 227, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 269, end = 269, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 282, end = 282, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 357, end = 357, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 382, end = 382, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 391, end = 391, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 399, end = 399, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 409, end = 409, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 448, end = 448, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 492, end = 492, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 531, end = 531, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 542, end = 542, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 554, end = 554, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 561, end = 561, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 575, end = 575, render = { kind = "full" } },
+    { path = "httpie/cli/argparser.py", start = 598, end = 598, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "argtypes.KeyValueArg + KeyValueArgType signatures"
+justification = """
+The data class for parsed request-items (key/value/sep/orig
+attributes) + KeyValueArgType class docstring on
+"longest-separator-wins / backslash-escape" parsing. Resolves
+"where is `==` split from `=`?"; body of `__call__` is in
+argtypes.py:64-130 if more detail is needed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/argtypes.py", start = 12, end = 26, render = { kind = "full" } },
+    { path = "httpie/cli/argtypes.py", start = 48, end = 56, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 4 — Request-item parsing, HTTP models, output pipeline, plugin types.
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "RequestItems.__init__: containers (headers/data/files/params/multipart)"
+justification = """
+RequestItems class header + the five attribute slots it
+collects: headers, data, files, params, multipart_data — keyed
+by request_type (json/form). Single-page map of where each
+CLI item ends up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/requestitems.py", start = 24, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "RequestItems.from_args: separator → processor dispatch table"
+justification = """
+The 50-line `rules` dict — every SEPARATOR_* key paired with
+its (processor_fn, target_container) tuple. Definitive answer
+to "what code runs when I write `X==`?" — and a structural
+mirror of the separator constants in 3.1/3.2.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/requestitems.py", start = 36, end = 95, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "requestitems.py: processor function locations"
+justification = """
+Every process_*_arg function name in requestitems.py:
+process_header_arg, process_embed_header_arg,
+process_empty_header_arg, process_query_param_arg,
+process_embed_query_param_arg, process_file_upload_arg,
+process_data_item_arg, process_data_embed_file_contents_arg,
+process_data_embed_raw_json_file_arg,
+process_data_raw_json_embed_arg, process_data_nested_json_embed_args
++ load_text_file, load_json helpers. Mitigates catastrophic
+omission for "what processors exist?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/requestitems.py", start = 126, end = 126, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 130, end = 130, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 134, end = 134, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 142, end = 142, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 146, end = 146, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 150, end = 150, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 189, end = 189, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 193, end = 193, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 197, end = 197, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 203, end = 203, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 208, end = 208, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 212, end = 212, render = { kind = "full" } },
+    { path = "httpie/cli/requestitems.py", start = 226, end = 226, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "cli/dicts.py: container types"
+justification = """
+HTTPHeadersDict (case-insensitive multi-value),
+RequestJSONDataDict, MultiValueOrderedDict,
+RequestQueryParamsDict, RequestDataDict,
+MultipartRequestDataDict, RequestFilesDict. Names + class lines
+for what RequestItems collects into.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/cli/dicts.py", start = 6, end = 12, render = { kind = "full" } },
+    { path = "httpie/cli/dicts.py", start = 49, end = 49, render = { kind = "full" } },
+    { path = "httpie/cli/dicts.py", start = 53, end = 53, render = { kind = "full" } },
+    { path = "httpie/cli/dicts.py", start = 81, end = 93, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "models.py: HTTPMessage / HTTPResponse / HTTPRequest"
+justification = """
+Class headers + class-level docstrings for the three message
+wrappers around requests.Request/Response, plus iter_body/
+iter_lines/headers/content_type abstract method shape.
+Anchor for "how does the output pipeline see a request?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/models.py", start = 23, end = 23, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 26, end = 32, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 37, end = 41, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 52, end = 58, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 61, end = 62, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 130, end = 131, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "models.OutputOptions + RequestsMessageKind + OPTION_TO_PARAM"
+justification = """
+The NamedTuple that the writer keys on: OutputOptions(kind,
+headers, body, meta) plus the RequestsMessageKind enum and the
+OPTION_TO_PARAM dict mapping output flags (H/B/h/b/m) to message
+parts.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/models.py", start = 175, end = 199, render = { kind = "full" } },
+    { path = "httpie/models.py", start = 202, end = 207, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "output/writer.write_message + write_stream signatures"
+justification = """
+The two entry points into the output pipeline that core.program
+calls per message — write_message (chooses Pretty/Encoded/Raw
+stream) and write_stream (iterates chunks to outfile.buffer).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/output/writer.py", start = 23, end = 34, render = { kind = "full" } },
+    { path = "httpie/output/writer.py", start = 61, end = 66, render = { kind = "full" } },
+    { path = "httpie/output/writer.py", start = 122, end = 128, render = { kind = "full" } },
+    { path = "httpie/output/writer.py", start = 153, end = 158, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "output/streams.py: stream-class hierarchy"
+justification = """
+BaseStream (abstract, 30) → RawStream (88) → EncodedStream (105)
+→ PrettyStream (170) → BufferedPrettyStream (228), plus
+DataSuppressedError / BinarySuppressedError (20, 24). One-line-
+each class declarations make the prettify/stream-vs-buffer
+strategy legible.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/output/streams.py", start = 20, end = 20, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 24, end = 24, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 30, end = 31, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 88, end = 89, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 105, end = 112, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 170, end = 177, render = { kind = "full" } },
+    { path = "httpie/output/streams.py", start = 228, end = 234, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "output/processing: Conversion + Formatting class headers"
+justification = """
+The two delegate classes in processing.py: Conversion picks the
+right ConverterPlugin by MIME; Formatting iterates enabled
+FormatterPlugin instances across headers/body/metadata. Body of
+each is a one-liner loop — see processing.py if needed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/output/processing.py", start = 16, end = 16, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 19, end = 23, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 26, end = 27, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 29, end = 29, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 44, end = 44, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 49, end = 49, render = { kind = "full" } },
+    { path = "httpie/output/processing.py", start = 55, end = 55, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "output/models.ProcessingOptions"
+justification = """
+The NamedTuple that bundles --stream/--style/--pretty/
+--response-mime/--response-charset/--json/--format-options for
+the stream class. ProcessingOptions.from_raw_args picks these
+out of the argparse namespace.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/output/models.py", start = 10, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "plugins/base.py: plugin class hierarchy"
+justification = """
+The four plugin types: BasePlugin (4) → AuthPlugin (16) /
+TransportPlugin (72) / ConverterPlugin (96) / FormatterPlugin
+(124). Class lines + one-line responsibilities. Everything an
+out-of-tree HTTPie plugin can be.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/plugins/base.py", start = 4, end = 13, render = { kind = "full" } },
+    { path = "httpie/plugins/base.py", start = 16, end = 16, render = { kind = "full" } },
+    { path = "httpie/plugins/base.py", start = 72, end = 72, render = { kind = "full" } },
+    { path = "httpie/plugins/base.py", start = 96, end = 96, render = { kind = "full" } },
+    { path = "httpie/plugins/base.py", start = 124, end = 124, render = { kind = "full" } },
+    { path = "httpie/plugins/base.py", start = 129, end = 129, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "plugins/registry.py: builtin-plugin registration"
+justification = """
+The plugin_manager singleton and the seven built-in plugins it
+registers at import time: BasicAuthPlugin, DigestAuthPlugin,
+BearerAuthPlugin, HeadersFormatter, JSONFormatter, XMLFormatter,
+ColorFormatter. Tiny — 21 lines.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/plugins/registry.py", start = 1, end = 21, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 5 — runtime state: env / config / sessions / downloads / uploads / auth.
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "context.Environment: class header + class-level attributes"
+justification = """
+The Environment class — represents stdin/stdout/stderr/colors/
+config_dir/program_name and is_windows. Class-level defaults
+serve as the dataclass-like field list. Every test injects a
+MockEnvironment subclass and every CLI step reads from one.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/context.py", start = 46, end = 56, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "config.Config + default dir resolution"
+justification = """
+The XDG/legacy/.httpie directory resolution (env override →
+windows %APPDATA% → ~/.httpie if it exists → $XDG_CONFIG_HOME)
+and the Config class with its DEFAULTS={'default_options': []}
++ plugins_dir/version_info_file properties.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/config.py", start = 11, end = 18, render = { kind = "full" } },
+    { path = "httpie/config.py", start = 137, end = 141, render = { kind = "full" } },
+    { path = "httpie/config.py", start = 158, end = 159, render = { kind = "full" } },
+    { path = "httpie/config.py", start = 162, end = 163, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "sessions.Session + get_httpie_session"
+justification = """
+Persistent JSON session files: SESSIONS_DIR_NAME, the public
+factory get_httpie_session (with bound_hostname/url-as-host
+fallback), and the Session class header + its initial schema
+(headers/cookies/auth dicts).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/sessions.py", start = 29, end = 31, render = { kind = "full" } },
+    { path = "httpie/sessions.py", start = 92, end = 100, render = { kind = "full" } },
+    { path = "httpie/sessions.py", start = 124, end = 126, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "downloads.Downloader + helpers"
+justification = """
+The Downloader class and its helpers — filename_from_content_disposition,
+filename_from_url, get_unique_filename, parse_content_range,
+trim_filename_if_needed, DownloadStatus. Just the def lines and
+class headers — the pieces behind `--download` / `--continue`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/downloads.py", start = 23, end = 23, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 27, end = 27, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 85, end = 85, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 106, end = 106, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 144, end = 144, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 151, end = 151, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 162, end = 162, render = { kind = "full" } },
+    { path = "httpie/downloads.py", start = 307, end = 307, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "uploads: prepare_request_body + chunked-stream shapes"
+justification = """
+The body-prep entry point (prepare_request_body) and the
+ChunkedStream / ChunkedUploadStream / ChunkedMultipartUploadStream
+classes — what handles `--chunked` and multipart. Plus
+get_multipart_data_and_content_type and compress_request.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/uploads.py", start = 20, end = 20, render = { kind = "full" } },
+    { path = "httpie/uploads.py", start = 25, end = 25, render = { kind = "full" } },
+    { path = "httpie/uploads.py", start = 44, end = 44, render = { kind = "full" } },
+    { path = "httpie/uploads.py", start = 191, end = 191, render = { kind = "full" } },
+    { path = "httpie/uploads.py", start = 230, end = 230, render = { kind = "full" } },
+    { path = "httpie/uploads.py", start = 252, end = 252, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "plugins/builtin.py: Basic / Digest / Bearer auth plugins"
+justification = """
+The three built-in AuthPlugin classes and their HTTPBasicAuth /
+HTTPBearerAuth helpers. Resolves "where is digest auth?" or
+"how is the Authorization header built for Bearer?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/plugins/builtin.py", start = 9, end = 9, render = { kind = "full" } },
+    { path = "httpie/plugins/builtin.py", start = 47, end = 49, render = { kind = "full" } },
+    { path = "httpie/plugins/builtin.py", start = 57, end = 59, render = { kind = "full" } },
+    { path = "httpie/plugins/builtin.py", start = 71, end = 73, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 6 — landscape mop-up: tests, docs, manager, formatters, internal.
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "tests/ fs listing"
+justification = """
+The test-suite landscape — test_auth/auth_plugins, test_cli/
+cli_ui/cli_utils, test_compress, test_config, test_cookie[_on_redirects],
+test_defaults, test_downloads, test_encoding, test_errors,
+test_exit_status, test_httpie[_cli], test_json, test_meta,
+test_offline, test_output, test_parser_schema, test_plugins_cli,
+test_redirects, test_regressions, test_sessions, test_ssl,
+test_stream, test_tokens, test_transport_plugin,
+test_update_warnings, test_uploads, test_windows, test_xml. The
+"is there a test for X?" mitigation.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "tests"
+entries = "all"
+
+[[batches]]
+id = "6.2"
+descriptor = "output/formatters: built-in FormatterPlugin class headers"
+justification = """
+The four formatters registered in plugins/registry.py:
+HeadersFormatter (headers.py), JSONFormatter (json.py),
+XMLFormatter (xml.py), ColorFormatter (formatters/colors.py).
+One class line each — names + file locations so the agent can
+jump straight to the right one.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/output/formatters/headers.py", start = 4, end = 4, render = { kind = "full" } },
+    { path = "httpie/output/formatters/json.py", start = 6, end = 6, render = { kind = "full" } },
+    { path = "httpie/output/formatters/xml.py", start = 53, end = 53, render = { kind = "full" } },
+    { path = "httpie/output/formatters/colors.py", start = 40, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "manager/cli.py: COMMANDS dict shape"
+justification = """
+The declarative COMMANDS tree behind `httpie cli sessions
+upgrade[-all]`, `httpie cli export-args`, `httpie cli check-
+updates`, and `httpie [cli] plugins install/upgrade/uninstall/
+list`. Resolves "what does the `httpie` admin CLI do?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "httpie/manager/cli.py", start = 15, end = 19, render = { kind = "full" } },
+    { path = "httpie/manager/cli.py", start = 59, end = 60, render = { kind = "full" } },
+]

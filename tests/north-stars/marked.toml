@@ -1,0 +1,873 @@
+fixture = "marked"
+revision_pin = "a7affc3b"
+summary = """
+`marked` is a TypeScript markdown→HTML compiler distributed as a Node.js
+library (ESM/UMD) and a CLI (`bin/marked`). The pipeline is a 4-stage
+rope: Lexer → Tokenizer → Parser → Renderer; everything in `src/` is
+one of those stages, a token-type definition, a hook surface, an
+options shape, or shared helpers. The library is bundled to `lib/`
+(gitignored) by `esbuild.config.js`; spec compliance is checked
+against vendored CommonMark/GFM/original/redos JSON+md/html fixtures
+in `test/specs/`.
+
+Ranking goals — four query distributions:
+
+1. **API consumer.** "How do I parse markdown?" "What options exist?"
+   "How do I override a renderer method?" Served by surfacing the
+   `marked()` entry, `Marked` class, the option keys, and the
+   override-via-`use()` protocol (return `false` to fall through).
+2. **Grammar / spec compliance.** "Where is the rule for tables?" "How
+   does paragraph interruption work?" Served by the `Tokenizer` method
+   locations (one per element), the `rules.ts` regex pools (normal /
+   gfm / pedantic / breaks), and the `test/specs/` corpus layout.
+3. **Custom extension authoring.** "What does my tokenizer return?"
+   "What does my renderer get?" Served by the `Token` union, the
+   `Tokens.*` field shapes, and the `USING_PRO.md` extension manual.
+4. **CLI / integration.** "How do I run it?" "What flags exist?"
+   Served by `bin/main.js`, `man/marked.1.md`, and `package.json`.
+
+Catastrophic-omission hedges that recur: the `Tokens.*` interfaces, the
+`Tokenizer` / `Renderer` / `TextRenderer` / `Hooks` method sets, the
+`MarkedOptions` keys, and the rule-set variants are each shown as
+complete name lists (location batches) before any single member's
+body — listing only some implies the others don't exist. Big bodies
+(Lexer dispatch loops, rules grammar) get structural ellipsis-padded
+sketches so the *try order* survives without 200 lines of code.
+"""
+
+# =============================================================================
+# Tier 1 — identity: what is this repo, what's at the top
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README — H1 + lede bullets"
+justification = """
+Single-screen anchor: the H1 names the library, lines 13–16 are the
+four positioning bullets (built for speed, low-level, light-weight,
+runs in browser/server/CLI).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 5,  end = 5,  render = { kind = "full" } },
+  { path = "README.md", start = 13, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Fixture top-level tree"
+justification = """
+Root directory listing — cheapest catastrophic-omission hedge: without
+this the agent assumes there are no `docs/`, `man/`, `api/`, or
+`bin/` dirs and wastes tool calls guessing.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "package.json — name + version + bin"
+justification = """
+Names the npm package (`marked`), the version, and the `bin` mapping
+(`marked → bin/marked.js`). Smallest answer to "what package am I in?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 2,  end = 6,  render = { kind = "full" } },
+  { path = "package.json", start = 11, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "src/ + bin/ + man/ + api/ listings"
+justification = """
+The four code-bearing directories listed together. `src/` reveals the
+pipeline at a file level (Lexer, Tokenizer, Parser, Renderer,
+TextRenderer, Hooks, Instance, MarkedOptions, Tokens, rules, helpers,
+defaults, marked). `bin/` is the CLI, `man/` the one-file man page,
+`api/` a Vercel serverless endpoint.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src", entries = "all" },
+  { parent = "bin", entries = "all" },
+  { parent = "man", entries = "all" },
+  { parent = "api", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json — entry paths + engines"
+justification = """
+ESM main, UMD browser, types path, and the Node 20+ engine floor.
+Refines 1.3 with the lib/marked.* layout that's gitignored from this
+repo but published.
+"""
+content.kind = "lines"
+predecessor = "1.3"
+content.spans = [
+  { path = "package.json", start = 7,   end = 10,  render = { kind = "full" } },
+  { path = "package.json", start = 100, end = 102, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 2 — pipeline mental model: marked() → Marked class → parseMarkdown
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "marked.ts — singleton + first overload"
+justification = """
+Line 17 reveals that `marked` is a singleton `Marked` instance (root
+cause of "options leak across modules" gotchas). The first overload
+(async true → Promise<string>) sets the pattern for the others.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/marked.ts", start = 17, end = 17, render = { kind = "full" } },
+  { path = "src/marked.ts", start = 26, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "marked.ts — all overloads + impl signature"
+justification = """
+The four `marked()` overloads (async true → Promise, async false →
+string, untyped options → string|Promise, and the impl). Tells the
+agent the async/sync dispatch is option-driven.
+"""
+content.kind = "lines"
+predecessor = "2.1"
+content.spans = [
+  { path = "src/marked.ts", start = 26, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "marked.* monkey-patched API surface"
+justification = """
+Every `marked.X` the singleton exposes besides the call itself — the
+configuration setters (`options`/`setOptions`, `getDefaults`,
+`defaults`), the extension hook (`use`, `walkTokens`), and the
+re-exposed classes/functions (`Parser`, `parser`, `Renderer`,
+`TextRenderer`, `Lexer`, `lexer`, `Tokenizer`, `Hooks`, `parseInline`,
+`parse` alias). Catastrophic-omission hedge for any `marked.X` lookup.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/marked.ts", start = 47,  end = 47,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 58,  end = 58,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 60,  end = 60,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 66,  end = 66,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 77,  end = 77,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 88,  end = 88,  render = { kind = "full" } },
+  { path = "src/marked.ts", start = 93,  end = 101, render = { kind = "full" } },
+  { path = "src/marked.ts", start = 103, end = 110, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Marked class — field layout"
+justification = """
+The class whose instance is the `marked` singleton. Each instance
+holds its own `defaults`, plus per-component class references
+(`Parser`/`Renderer`/`TextRenderer`/`Lexer`/`Tokenizer`/`Hooks`).
+These are what `use()` can override.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Instance.ts", start = 17, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Marked.parseMarkdown — sync pipeline body"
+justification = """
+The 5-step sync flow (preprocess → lex → processAllTokens → walkTokens
+→ parser → postprocess), the most important answer to "what does
+parse actually do?". Async variant is a mirror with `await` at each
+stage; not shown to stay cheap.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Instance.ts", start = 322, end = 343, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 3 — extension surface: options, hooks, the named method sets
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "MarkedExtension keys — what marked.use() accepts"
+justification = """
+The nine keys of `MarkedExtension` shown as their declarations only
+(JSDoc skipped): async, breaks, extensions, gfm, hooks, pedantic,
+renderer, silent, tokenizer, walkTokens. This *is* the configuration
+API; "what can I set?" is a zero-follow-up answer.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/MarkedOptions.ts", start = 52, end = 56,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 61, end = 61,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 68, end = 68,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 73, end = 73,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 84, end = 84,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 89, end = 89,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 96, end = 96,   render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 101, end = 101, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 106, end = 106, render = { kind = "full" } },
+  { path = "src/MarkedOptions.ts", start = 114, end = 115, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Hooks class — method names + passthrough sets"
+justification = """
+The two passThrough sets at the top of the class (which hooks chain
+their predecessor's return value, with the async-aware subset), then
+the six hook signatures (preprocess, postprocess, processAllTokens,
+emStrongMask, provideLexer, provideParser).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Hooks.ts", start = 15, end = 26, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 31, end = 31, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 38, end = 38, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 45, end = 45, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 52, end = 52, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/Hooks.ts", start = 66, end = 66, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Tokenizer method locations — every block + inline tokenizer"
+justification = """
+The 24 tokenizer methods, name-only, truncated at the opening paren.
+Master list of every markdown construct the lexer recognises: block
+(space, code, fences, heading, hr, blockquote, list, html, def,
+table, lheading, paragraph, text) and inline (escape, tag, link,
+reflink, emStrong, codespan, br, del, autolink, url, inlineText).
+Critical catastrophic-omission hedge: "where does marked handle X?"
+→ one hop.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Tokenizer.ts", start = 72,  end = 72,  render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 82,  end = 82,  render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 98,  end = 98,  render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 113, end = 113, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 484, end = 484, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 499, end = 499, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 515, end = 515, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 578, end = 578, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 592, end = 592, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 607, end = 607, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 619, end = 619, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 630, end = 630, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 655, end = 655, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 716, end = 716, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 734, end = 734, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 805, end = 805, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 822, end = 822, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 832, end = 832, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 885, end = 885, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 913, end = 913, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/Tokenizer.ts", start = 950, end = 950, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Renderer method names — block + inline emission set"
+justification = """
+The 21 default Renderer methods. Full signature lines incl. the
+destructured token shape — these are what `marked.use({ renderer: })`
+can override. Mirrors the Tokenizer set in 3.3 (almost 1:1).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Renderer.ts", start = 21,  end = 21,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 25,  end = 25,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 43,  end = 43,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 48,  end = 48,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 52,  end = 52,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 56,  end = 56,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 60,  end = 60,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 64,  end = 64,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 79,  end = 79,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 83,  end = 83,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 89,  end = 89,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 93,  end = 93,  render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 128, end = 128, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 140, end = 140, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 144, end = 144, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 148, end = 148, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 152, end = 152, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 156, end = 156, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 175, end = 175, render = { kind = "full" } },
+  { path = "src/Renderer.ts", start = 193, end = 193, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "TextRenderer method names"
+justification = """
+The 10 TextRenderer methods (strong, em, codespan, del, html, text,
+link, image, br, checkbox). Used inside image alt-text. Block-level
+methods are deliberately absent.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/TextRenderer.ts", start = 9,  end = 9,  render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 13, end = 13, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 17, end = 17, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 21, end = 21, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 25, end = 25, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 29, end = 29, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 33, end = 33, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 37, end = 37, render = { kind = "full" } },
+  { path = "src/TextRenderer.ts", start = 41, end = 45, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 4 — token schema + extension type aliases
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "Token union — MarkedToken + Token + TokensList"
+justification = """
+The two type aliases that enumerate every token kind. `MarkedToken` is
+the union of 24 built-in shapes; `Token` adds `Tokens.Generic` for
+custom extensions; `TokensList` is `Token[]` with a `links` map
+(populated by `def` tokens for reflink resolution).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Tokens.ts", start = 3,   end = 30,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 217, end = 221, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Tokens.* interface locations"
+justification = """
+Locations of every `Tokens.*` interface declaration. Discovery batch
+for chasing a token type's field shape.
+"""
+content.kind = "lines"
+predecessor = "4.1"
+content.spans = [
+  { path = "src/Tokens.ts", start = 32,  end = 32,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 40,  end = 40,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 45,  end = 45,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 51,  end = 51,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 60,  end = 60,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 66,  end = 66,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 74,  end = 74,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 81,  end = 81,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 88,  end = 88,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 94,  end = 94,  render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 102, end = 102, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 110, end = 110, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 115, end = 115, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 123, end = 123, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 132, end = 132, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 141, end = 141, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 150, end = 150, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 168, end = 168, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 173, end = 173, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 180, end = 180, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 188, end = 188, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 195, end = 195, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 199, end = 199, render = { kind = "full" } },
+  { path = "src/Tokens.ts", start = 208, end = 208, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Extension type aliases — Tokenizer/Renderer custom-extension shapes"
+justification = """
+The smaller types a custom-extension author needs: `TokenizerThis`,
+`RendererThis`, the function signatures
+(`TokenizerExtensionFunction`, `TokenizerStartFunction`,
+`RendererExtensionFunction`), the named interfaces with their
+`TokenizerAndRendererExtension` union.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/MarkedOptions.ts", start = 8, end = 35, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 5 — extension semantics: use() merge + walkTokens
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Marked.use — five-branch merge skeleton"
+justification = """
+Skeleton of the 184-line `use()` method: declaration, the five
+merging branches (extensions array, renderer override, tokenizer
+override, hooks override, walkTokens chain), and the trailing
+`this.defaults` assign. Ellipses mark where the deep logic lives.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Instance.ts", start = 76,  end = 79,  render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 80,  end = 80,  render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 87,  end = 87,  render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 88,  end = 88,  render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 137, end = 138, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 141, end = 141, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 142, end = 142, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 165, end = 165, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 166, end = 166, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 192, end = 192, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 193, end = 193, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 243, end = 243, render = { kind = "full" } },
+  { path = "src/Instance.ts", start = 244, end = 244, render = { kind = "ellipsis" } },
+  { path = "src/Instance.ts", start = 256, end = 259, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "Marked.walkTokens — table/list/childTokens recursion"
+justification = """
+How walkTokens visits every node. Notable: `table` recurses through
+header + each row's cells; `list` recurses through items; the
+`extensions.childTokens` lookup lets custom extensions name their own
+child arrays via the `flat(Infinity)` rebind.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Instance.ts", start = 38, end = 74, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 6 — rules surface (the grammar's flavor matrix)
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "rules.ts — exported rule-set surface (normal/gfm/pedantic/breaks)"
+justification = """
+The bottom of `rules.ts`: shows the three block flavors (normal, gfm,
+pedantic) and four inline flavors (normal, gfm, breaks, pedantic).
+The grammar is *not* a single regex set; the flavor is selected by
+the Lexer constructor (6.2).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/rules.ts", start = 478, end = 499, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Lexer constructor — option→rule-flavor decision"
+justification = """
+The pedantic / gfm / breaks if-chain that selects which `block.*` and
+`inline.*` set the tokenizer uses. With 6.1 the agent can answer
+"what regex applies when option X is set?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Lexer.ts", start = 39, end = 57, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "rules.ts — `other` helper-regex name catalog"
+justification = """
+Truncated locations of every key in the `other` regex pool. Tokenizer
+methods reference these by name (e.g. `this.rules.other.blankLine`,
+`...listItemRegex(bull)`).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/rules.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "src/rules.ts", start = 31, end = 66, render = { kind = "truncated", pattern = "^  [^:]+" } },
+  { path = "src/rules.ts", start = 80, end = 86, render = { kind = "truncated", pattern = "^  [^:]+" } },
+  { path = "src/rules.ts", start = 87, end = 87, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 7 — docs surface (cheap location batches + the high-value Options table)
+# =============================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "docs/ + docs/demo/ listings"
+justification = """
+Site-source layout. INDEX.md (landing), USING_ADVANCED.md (options),
+USING_PRO.md (extension manual) are the three user-facing docs;
+CONTRIBUTING/PUBLISHING/AUTHORS/broken/CODE_OF_CONDUCT are meta;
+demo/ holds the marked.js.org demo page.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "docs/demo", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "USING_ADVANCED — H2 section locations"
+justification = """
+Section discovery for the advanced/options doc: Marked instance,
+parse function, Options, Old Options, Known Extensions, User Examples,
+Inline Markdown, Highlighting, Workers, CLI Extensions.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/USING_ADVANCED.md", start = 1,   end = 1,   render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 18,  end = 18,  render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 47,  end = 47,  render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 60,  end = 60,  render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 76,  end = 76,  render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 117, end = 117, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 155, end = 155, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 167, end = 167, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 171, end = 171, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 177, end = 177, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 210, end = 210, render = { kind = "full" } },
+  { path = "docs/USING_ADVANCED.md", start = 245, end = 245, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "USING_PRO — H2 section locations"
+justification = """
+Section discovery for the extension manual: Terminology Note, use(),
+The Marked Pipeline, The Renderer + block + inline method lists, The
+Tokenizer + block + inline lists, Walk Tokens, Hooks, Custom
+Extensions, Async Marked, The Lexer, The Parser, Access to Lexer
+and Parser.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/USING_PRO.md", start = 1,   end = 1,   render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 5,   end = 5,   render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 30,  end = 30,  render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 69,  end = 69,  render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 84,  end = 84,  render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 141, end = 141, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 157, end = 157, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 172, end = 172, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 215, end = 215, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 231, end = 231, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 249, end = 249, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 282, end = 282, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 420, end = 420, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 573, end = 573, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 645, end = 645, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 650, end = 650, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 654, end = 654, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "USING_ADVANCED — Options table (current)"
+justification = """
+The canonical option-name + type + default + since-version + notes
+table. Direct answer to "what options can I pass?".
+"""
+content.kind = "lines"
+predecessor = "7.2"
+content.spans = [
+  { path = "docs/USING_ADVANCED.md", start = 49, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "USING_PRO — use() merging rules"
+justification = """
+The narrative version of the `marked.use` merge logic in 5.1: which
+options merge (renderer/tokenizer/hooks/walkTokens/extensions) and
+which overwrite (everything else). Plus the "don't add extensions in
+a loop" warning that causes "your extension is recursing" bugs.
+"""
+content.kind = "lines"
+predecessor = "7.3"
+content.spans = [
+  { path = "docs/USING_PRO.md", start = 56, end = 66, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.6"
+descriptor = "USING_PRO — Custom Extensions property dt-list"
+justification = """
+The `<dt>` declaration lines from the Custom Extensions section: each
+property a custom extension defines (name, level, start, tokenizer,
+returned-token shape, lexer helper methods, renderer, parser helper
+methods, childTokens). Skips the prose `<dd>` bodies but preserves
+the property names.
+"""
+content.kind = "lines"
+predecessor = "7.3"
+content.spans = [
+  { path = "docs/USING_PRO.md", start = 420, end = 422, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 425, end = 425, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 430, end = 430, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 437, end = 437, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 442, end = 442, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 448, end = 448, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 451, end = 451, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 454, end = 454, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 463, end = 463, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 466, end = 466, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 469, end = 469, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 474, end = 474, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 480, end = 480, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 483, end = 483, render = { kind = "full" } },
+  { path = "docs/USING_PRO.md", start = 488, end = 488, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 8 — CLI + scripts (broad surface)
+# =============================================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "bin/marked.js — CLI entry stub"
+justification = """
+The 16-line shebang entry. Sets `process.title = 'marked'` and calls
+`main(process)`. Real CLI work is in `bin/main.js`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "bin/marked.js", start = 1, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "bin/main.js — CLI argv switch (every flag)"
+justification = """
+The `case` block of every recognised CLI flag (`-o`, `-i`, `-s`, `-t`,
+`-c`, `-n`, `-h`, `-v`, plus `--anyOption value` and `--no-X`
+inverter). Single batch answers "what flags does the CLI accept".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "bin/main.js", start = 100, end = 153, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "bin/main.js — default config file search"
+justification = """
+The lookup order: `~/.marked.json` → `~/.marked.js` →
+`~/.marked/index.js`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "bin/main.js", start = 209, end = 222, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.4"
+descriptor = "package.json — npm scripts"
+justification = """
+Every script entry: `build`, `build:esbuild`, `build:types`,
+`build:man`, `build:reset`, `build:docs`, `lint`, `rules`, `test`,
+`test:cjs`, `test:lint`, `test:only`, `test:redos`, `test:specs(:only)`,
+`test:types`, `test:umd`, `test:unit(:only)`, `test:update`, `bench`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "package.json", start = 77, end = 99, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 9 — Lexer + Parser dispatch loops (where order matters)
+# =============================================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "Lexer — state + lex two-phase"
+justification = """
+The Lexer's public fields (`tokens`, `options`, `state` with inLink/
+inRawBlock/top flags, inlineQueue) plus the `lex()` body where the
+two-phase design is visible: blockTokens first, then drain the
+inline queue. Answer to "why does lex run in two passes?".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Lexer.ts", start = 10, end = 21, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 88, end = 100, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.2"
+descriptor = "Lexer.blockTokens — tokenizer try-order"
+justification = """
+The block tokenizer dispatch order: extension → space → code →
+fences → heading → hr → blockquote → list → html → def → table →
+lheading → paragraph → text. Single-line excerpts of each `if (token
+= this.tokenizer.X(src))` so the order survives without the bodies.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Lexer.ts", start = 124, end = 124, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 136, end = 136, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 150, end = 150, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 165, end = 165, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 172, end = 172, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 179, end = 179, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 186, end = 186, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 193, end = 193, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 200, end = 200, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 207, end = 207, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 225, end = 225, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 232, end = 232, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 255, end = 255, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 271, end = 271, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.3"
+descriptor = "Lexer.inlineTokens — masking + tokenizer try-order"
+justification = """
+The inline dispatch in order (extension → escape → tag → link →
+reflink → emStrong → codespan → br → del → autolink → url →
+inlineText) plus the three masking passes that protect em/strong
+delimiter scanning (reflink labels, escaped punctuation, blockSkip
+for link/code/html bodies).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Lexer.ts", start = 305, end = 309, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 330, end = 330, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 336, end = 336, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 357, end = 357, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 369, end = 369, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 376, end = 376, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 383, end = 383, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 390, end = 390, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 403, end = 403, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 410, end = 410, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 417, end = 417, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 424, end = 424, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 431, end = 431, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 438, end = 438, render = { kind = "full" } },
+  { path = "src/Lexer.ts", start = 461, end = 461, render = { kind = "full" } },
+]
+
+# =============================================================================
+# Tier 10 — small files: defaults, helpers, tests, INDEX, man, configs
+# =============================================================================
+
+[[batches]]
+id = "10.1"
+descriptor = "defaults.ts — default options + changeDefaults"
+justification = """
+The default `MarkedOptions` object (gfm true, all others off/null)
+and the `changeDefaults` setter that keeps singleton defaults in
+sync.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/defaults.ts", start = 1, end = 25, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.2"
+descriptor = "helpers.ts — exported helper signatures + escape map"
+justification = """
+The shared utilities (`escapeHtmlEntities`, `cleanUrl`, `splitCells`,
+`rtrim`, `trimTrailingBlankLines`, `findClosingBracket`, `expandTabs`)
+shown as signature lines only. Plus the local escape-table on lines
+6–13 — the actual map of which HTML chars get encoded.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/helpers.ts", start = 6,   end = 13,  render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 15,  end = 15,  render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 29,  end = 29,  render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 38,  end = 38,  render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 88,  end = 88,  render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 112, end = 112, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 126, end = 126, render = { kind = "full" } },
+  { path = "src/helpers.ts", start = 151, end = 151, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.3"
+descriptor = "test/ + test/unit/ + test/specs/ listings"
+justification = """
+Unit-test files (Hooks, Lexer, Parser, instance, marked, bin) plus
+the type-sanity-check file and the five spec-corpora subdirs.
+Catastrophic-omission hedge: tells the agent which module has tests
+and at what path, and what the five test/specs/ subdirs are
+(commonmark, gfm, new, original, redos).
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "test", entries = "all" },
+  { parent = "test/unit", entries = "all" },
+  { parent = "test/types", entries = "all" },
+  { parent = "test/specs", entries = "all" },
+]
+
+[[batches]]
+id = "10.4"
+descriptor = "INDEX.md — lede + H2 section locations"
+justification = """
+The published landing page. Lede paragraphs (1–6) describe what
+marked is, with caveats; H2 locations follow (demo, installation,
+usage, specifications, tools, security).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/INDEX.md", start = 1,   end = 6,   render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 13,  end = 13,  render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 20,  end = 20,  render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 28,  end = 28,  render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 142, end = 142, render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 150, end = 150, render = { kind = "full" } },
+  { path = "docs/INDEX.md", start = 163, end = 163, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.5"
+descriptor = ".github + .devcontainer listings"
+justification = """
+CI / release / dev-container layout: workflows/, issue + PR
+templates, dependabot.yml, devcontainer image+post-create.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+  { parent = ".github/ISSUE_TEMPLATE", entries = "all" },
+  { parent = ".github/PULL_REQUEST_TEMPLATE", entries = "all" },
+  { parent = ".devcontainer", entries = "all" },
+]
+# =============================================================================
+# Tier 11 — Parser extension-fallback (deferred — protocol echoes 5.1 / 7.5)
+# =============================================================================
+
+[[batches]]
+id = "11.1"
+descriptor = "Parser — extension-fallback dispatch"
+justification = """
+The parser's extension-renderer try-first block at lines 49–57
+documents the return-false fallback protocol — same protocol used by
+`use()` overrides. Deferred late because the protocol is
+already documented in 5.1's `use()` merge and 7.5's prose; this batch
+is the literal code form.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/Parser.ts", start = 49, end = 60, render = { kind = "full" } },
+]

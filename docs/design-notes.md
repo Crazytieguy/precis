@@ -52,6 +52,34 @@ itself is the source of truth for architecture and invariants.
 - `revision_pin` is the only thing binding an NS to its fixture revision.
   `load_ns_checked` enforces it; the `ns_pins_match_fixture_pins` test
   enforces it under `cargo t`.
+- **Training vs validation tier.** Fixtures are split into a training set
+  (full divergence report at `tests/divergence/<name>.md`, drives
+  calibration) and a held-out validation set (one-line score at
+  `tests/validation/<name>.md`, no per-row diff). The validation set is
+  sampled to match the GitHub language distribution within supported
+  languages; the calibration loop is forbidden from opening it. The
+  point is overfit detection — if a value/walker change wins on the
+  training set but tanks on validation, the rule isn't general.
+  Enforcement is by process (the `iterate-divergence` skill), not by
+  the type system; treat the holdout as load-bearing convention.
+- **Training-set archetype gaps to fill (when the design-notes open
+  items are exhausted).** Training is library-heavy in TS/Rust and
+  small-lib-heavy in C. Five fixtures that would broaden the archetype
+  mix without overlapping existing training or the holdout:
+  - 2 TS apps from underrepresented archetypes: a modern web/build
+    framework (e.g. nestjs/nest or vitejs/vite) and a code-editor /
+    serious-application class fixture (not a small npm library).
+  - 2 mid-size structured C codebases: an embedded protocol stack
+    (e.g. hathach/tinyusb or wasm3/wasm3) and a C parser/compiler
+    (e.g. rui314/chibicc or TinyCC) — distinct from the
+    Redis-school small libs.
+  - 1 Rust serious CLI tool (e.g. sharkdp/hyperfine or
+    BurntSushi/ripgrep) — current Rust set has 3 error/log utilities
+    + mdbook/toasty/sps/otree and no canonical "what Rust is famous
+    for" CLI.
+  Pick by reasoning from general archetype gaps, not by reading
+  `tests/validation/`. Each new fixture is permanent CI time + a
+  corpus-wide divergence regen on every future walker change.
 - **Growth envelope**: each batch's marginal cost must satisfy
   `cost_i ≤ 100 + 0.3 · cumulative_before`. Per-batch is too local;
   cumulative matches the author's intuition ("doubling aggregate on

@@ -3,7 +3,7 @@
 //! (see `docs/design-notes.md`) means sub-budget behavior is a prefix of
 //! the T_max schedule, so per-budget snapshots are redundant.
 //!
-//! Three artifact classes, all regeneratable via `UPDATE_BASELINES=1`:
+//! Four artifact classes, all regeneratable via `UPDATE_BASELINES=1`:
 //!
 //! - **Schedule TOML** — `tests/snapshots/schedule/<fixture>.toml`,
 //!   produced by `render_schedule` at `SCHEDULE_BUDGET` (the cap). Byte-
@@ -15,13 +15,21 @@
 //!   atom metrics alone don't cover.
 //!
 //! - **Divergence report** — `tests/divergence/<fixture>.md`, one per
-//!   fixture with a frozen NS (`tests/north-stars/<fixture>.toml`).
-//!   Divergence reports are generated from the in-memory schedules the
-//!   per-fixture tests already produce. Survey across fixtures with
-//!   `head -1 tests/divergence/*.md` (each report's first line is the
-//!   `Score(3000)=… I=… C=… ns_rows≤3K=…` headline).
+//!   training fixture with a frozen NS (`tests/north-stars/<fixture>.toml`).
+//!   Survey across fixtures with `head -1 tests/divergence/*.md` (each
+//!   report's first line is the `Score(3000)=… I=… C=… ns_rows≤3K=…`
+//!   headline).
 //!
-//! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all three artifact
+//! - **Validation score** — `tests/validation/<fixture>.md`, one per
+//!   validation fixture. Contains *only* the `Score(3000)=…` headline
+//!   line; no schedule TOML, no rendered snapshot, no per-row diff.
+//!   Validation fixtures are sampled from the GitHub language
+//!   distribution and held out: they exist to catch regressions on
+//!   real-world codebases the calibration loop has never seen. Walker /
+//!   value iteration must not target them — read the `iterate-divergence`
+//!   skill for the discipline.
+//!
+//! Unified regen: `UPDATE_BASELINES=1 cargo t` accepts all four artifact
 //! types (sets `INSTA_UPDATE=always` internally for the rendered snapshot).
 
 use std::fs;
@@ -29,8 +37,8 @@ use std::path::{Path, PathBuf};
 use std::sync::OnceLock;
 
 use precis::{
-    Schedule, divergence::generate_divergence_report, ns_loader::load_ns_checked, render_schedule,
-    render_with_schedule,
+    Schedule, divergence::generate_divergence_report, divergence::score as compute_score,
+    ns_loader::load_ns_checked, render_schedule, render_with_schedule,
 };
 
 /// Walker budget for the canonical schedule snapshot. Matches the NS cap.
@@ -40,6 +48,7 @@ const RENDERED_BUDGET: usize = 3_000;
 
 const SCHEDULE_DIR: &str = "tests/snapshots/schedule";
 const DIVERGENCE_DIR: &str = "tests/divergence";
+const VALIDATION_DIR: &str = "tests/validation";
 
 // ---- test-fn generation ------------------------------------------------
 
@@ -52,6 +61,25 @@ macro_rules! per_fixture_tests {
             #[test]
             fn [<fixture_baselines_ $fixture>]() {
                 check_fixture_baselines($name);
+            }
+        }
+    };
+}
+
+/// Validation-tier counterpart to [`per_fixture_tests!`]. Generates a
+/// test that runs the walker, scores against the NS, and commits *only*
+/// the one-line headline to `tests/validation/<fixture>.md`. No schedule
+/// TOML, no rendered snapshot, no per-row divergence table — validation
+/// fixtures are held out from calibration on purpose.
+macro_rules! per_validation_fixture_tests {
+    ($fixture:ident) => {
+        per_validation_fixture_tests!($fixture, stringify!($fixture));
+    };
+    ($fixture:ident, $name:expr) => {
+        paste::paste! {
+            #[test]
+            fn [<fixture_baselines_validation_ $fixture>]() {
+                check_validation_fixture_baselines($name);
             }
         }
     };
@@ -124,6 +152,43 @@ per_fixture_tests!(svgo);
 per_fixture_tests!(dockly);
 per_fixture_tests!(audiobookshelf);
 
+// ---- validation fixtures -----------------------------------------------
+//
+// Held-out corpus sampled from the GitHub language distribution within
+// supported languages. The calibration loop (`Skill(iterate-divergence)`)
+// must not target these — the score in `tests/validation/<name>.md` is
+// the regression check, and the per-row diff is intentionally absent so
+// there's nothing to overfit to.
+
+// Python
+per_validation_fixture_tests!(aiogram);
+per_validation_fixture_tests!(mkdocs);
+per_validation_fixture_tests!(healthchecks);
+per_validation_fixture_tests!(statsmodels);
+per_validation_fixture_tests!(xonsh);
+per_validation_fixture_tests!(httpie);
+per_validation_fixture_tests!(crawlee_python, "crawlee-python");
+// TypeScript
+per_validation_fixture_tests!(pretty_ts_errors, "pretty-ts-errors");
+per_validation_fixture_tests!(drizzle_orm, "drizzle-orm");
+per_validation_fixture_tests!(preact_signals, "preact-signals");
+per_validation_fixture_tests!(clack);
+per_validation_fixture_tests!(excalidraw);
+// JavaScript
+per_validation_fixture_tests!(marked);
+per_validation_fixture_tests!(handlebars);
+per_validation_fixture_tests!(octotree);
+per_validation_fixture_tests!(rough_viz, "rough-viz");
+// Go
+per_validation_fixture_tests!(helm);
+per_validation_fixture_tests!(nats_server, "nats-server");
+per_validation_fixture_tests!(rqlite);
+// C
+per_validation_fixture_tests!(mongoose);
+per_validation_fixture_tests!(sameboy);
+// Rust
+per_validation_fixture_tests!(xh);
+
 // ---- paths -------------------------------------------------------------
 
 fn manifest_dir() -> &'static Path {
@@ -149,6 +214,12 @@ fn divergence_path(fixture: &str) -> PathBuf {
 
 fn ns_path(fixture: &str) -> PathBuf {
     manifest_dir().join(format!("tests/north-stars/{fixture}.toml"))
+}
+
+fn validation_path(fixture: &str) -> PathBuf {
+    manifest_dir()
+        .join(VALIDATION_DIR)
+        .join(format!("{fixture}.md"))
 }
 
 fn update_baselines() -> bool {
@@ -205,6 +276,32 @@ fn check_divergence(fixture: &str, fixture_dir: &Path, schedule: &Schedule) {
         "divergence report",
         &divergence_path(fixture),
         report.as_bytes(),
+    );
+}
+
+fn check_validation_fixture_baselines(fixture: &str) {
+    let fixture_dir = require_fixture(fixture);
+    let schedule = render_schedule(&[&fixture_dir], SCHEDULE_BUDGET)
+        .unwrap_or_else(|e| panic!("render_schedule({fixture}): {e}"));
+
+    let ns_toml = ns_path(fixture);
+    assert!(
+        ns_toml.exists(),
+        "validation fixture `{fixture}` has no NS at {}; author one before registering",
+        ns_toml.display(),
+    );
+    let ns = load_ns_checked(&ns_toml, &fixture_dir)
+        .unwrap_or_else(|e| panic!("load_ns_checked({fixture}): {e}"));
+    let scores = compute_score(&ns, &schedule, &fixture_dir)
+        .unwrap_or_else(|e| panic!("score({fixture}): {e}"));
+
+    let headline = format!("{}\n", scores.headline());
+    println!("{fixture} (validation): {}", scores.headline());
+
+    compare_or_update(
+        "validation score",
+        &validation_path(fixture),
+        headline.as_bytes(),
     );
 }
 

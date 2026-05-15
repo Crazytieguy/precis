@@ -6,6 +6,16 @@
 // snapshot targets when added to `tests/snapshots.rs::FIXTURES` — typically
 // after a North Star at `tests/north-stars/<name>.md` is in place. See
 // `Skill(add-fixture)` for the full integration flow.
+//
+// The list is split into two tiers:
+//
+//   - **Training fixtures** drive walker / value calibration via the
+//     divergence reports in `tests/divergence/`. Registered in
+//     `tests/fixture_baselines.rs` with `per_fixture_tests!`.
+//   - **Validation fixtures** are held out: they get a North Star and a
+//     single Score(3000) line in `tests/validation/<name>.md`, but no
+//     per-row divergence report — the calibration loop must not target
+//     them. Registered with `per_validation_fixture_tests!`.
 
 with_fixtures! {
     // Rust
@@ -82,4 +92,37 @@ with_fixtures! {
     ("jq",                  "https://github.com/jqlang/jq.git",                   "f58787c4"),
     // Lua
     ("middleclass",         "https://github.com/kikito/middleclass.git",          "359f0e27"),
+
+    // ====================================================================
+    // Validation fixtures (held out — see per_validation_fixture_tests!)
+    // ====================================================================
+
+    // Python (validation)
+    ("aiogram",             "https://github.com/aiogram/aiogram.git",             "f6b2cd53"),
+    ("mkdocs",              "https://github.com/mkdocs/mkdocs.git",               "28625367"),
+    ("healthchecks",        "https://github.com/healthchecks/healthchecks.git",   "ac7b523a"),
+    ("statsmodels",         "https://github.com/statsmodels/statsmodels.git",     "3c102982"),
+    ("xonsh",               "https://github.com/xonsh/xonsh.git",                 "70212600"),
+    ("httpie",              "https://github.com/httpie/cli.git",                  "5b604c37"),
+    ("crawlee-python",      "https://github.com/apify/crawlee-python.git",        "b3b8c59b"),
+    // TypeScript (validation)
+    ("pretty-ts-errors",    "https://github.com/yoavbls/pretty-ts-errors.git",    "980c274b"),
+    ("drizzle-orm",         "https://github.com/drizzle-team/drizzle-orm.git",    "48e54060"),
+    ("preact-signals",      "https://github.com/preactjs/signals.git",            "cca91a3c"),
+    ("clack",               "https://github.com/bombshell-dev/clack.git",         "adb6af9f"),
+    ("excalidraw",          "https://github.com/excalidraw/excalidraw.git",       "f6d85bc8"),
+    // JavaScript (validation)
+    ("marked",              "https://github.com/markedjs/marked.git",             "a7affc3b"),
+    ("handlebars",          "https://github.com/handlebars-lang/handlebars.js.git", "3105ca73"),
+    ("octotree",            "https://github.com/ovity/octotree.git",              "470747c7"),
+    ("rough-viz",           "https://github.com/jwilber/roughViz.git",            "17c7ea86"),
+    // Go (validation)
+    ("helm",                "https://github.com/helm/helm.git",                   "b2786f15"),
+    ("nats-server",         "https://github.com/nats-io/nats-server.git",         "8f41bed8"),
+    ("rqlite",              "https://github.com/rqlite/rqlite.git",               "c74c936d"),
+    // C (validation)
+    ("mongoose",            "https://github.com/cesanta/mongoose.git",            "1d373ce5"),
+    ("sameboy",             "https://github.com/LIJI32/SameBoy.git",              "208ba4af"),
+    // Rust (validation)
+    ("xh",                  "https://github.com/ducaale/xh.git",                  "b928cf08"),
 }

@@ -1,0 +1,1536 @@
+fixture = "drizzle-orm"
+revision_pin = "48e54060"
+summary = """
+drizzle-orm is a headless TypeScript ORM monorepo. The package layout
+is the dominant fact: a core `drizzle-orm/src/` with cross-cutting
+abstractions (`Table`, `Column`, `SQL` template tag, `entityKind`
+runtime tagging, `relations`), three parallel SQL-dialect cores
+(`pg-core/`, `mysql-core/`, `sqlite-core/`) that each ship their own
+table factory + dialect + db + view + columns/ + query-builders/, a
+fourth `singlestore-core/`, and ~30 sibling driver dirs
+(`node-postgres/`, `postgres-js/`, `better-sqlite3/`, `mysql2/`, `d1/`,
+`libsql/`, `neon-http/`, `neon-serverless/`, `planetscale-serverless/`,
+`vercel-postgres/`, `bun-sqlite/`, `bun-sql/`, `xata-http/`, `gel/`,
+`pglite/`, `aws-data-api/`, `expo-sqlite/`, `op-sqlite/`,
+`durable-sqlite/`, `prisma/`, `supabase/`, `tidb-serverless/`,
+`netlify-db/`, `sql-js/`, `knex/`, `kysely/`, plus `*-proxy/` HTTP
+adapters) each exposing a `drizzle(client, config)` factory. Sibling
+packages in the monorepo are `drizzle-kit` (migration CLI),
+`drizzle-zod`/`drizzle-valibot`/`drizzle-typebox`/`drizzle-arktype`
+(schema-to-validator converters), `drizzle-seed`, `eslint*`,
+`integration-tests`, `docs/`, `changelogs/`.
+
+The agent's job typically involves (1) finding where a given column
+type / operator / dialect concept lives (very high cardinality,
+location-heavy), (2) understanding the table/column/SQL abstraction
+hierarchy (semantic), or (3) wiring a driver. Snapshot leans toward
+breadth: directory listings + signature spans for the dialect cores,
+columns dirs, query-builders, drivers, and SQL helpers — the agent
+should be one read or grep away from any specific operator,
+column type, dialect method, or driver factory.
+"""
+
+# ============================================================
+# Tier 1 — Orientation: what kind of project this is.
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Project tagline"
+justification = """
+Smallest possible first impression: the README's H3 tagline names the
+abstraction in one line. Keeps batch-1 cost well under the floor so
+the rest of the ranking has room to grow.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 18
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "README — \"modern TS ORM, lightweight, zero deps\""
+justification = """
+Two short sentences naming the design constraints (~7.4kb, tree
+shakeable, 0 deps). Keeps batch-2 cost small enough to satisfy the
+envelope while still conveying the project's value prop.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 20
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "README — supported dialects (truncated)"
+justification = """
+Line 22 is the dense one: enumerates every serverless backend
+(Turso/Neon/Xata/PlanetScale/D1/LiteFS/Vercel/Supabase/AWS Data API).
+Truncated to the bolded claim — the agent can grep the full URL list
+on demand. The semantic content ("PostgreSQL, MySQL, SQLite + every
+serverless") lands without paying for ~12 inline links.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "\\*\\*Drizzle supports every PostgreSQL, MySQL and SQLite database\\*\\*[^.]+\\." }
+
+[[batches]]
+id = "1.4"
+descriptor = "README — runtimes + TS-first design (truncated)"
+justification = """
+Names the runtimes targeted (Node/Bun/Deno/Workers/Edge) and the
+TS-first design (declare SQL schemas, relational + SQL-like queries).
+Truncated to drop the marketing prose / repeated URLs.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 24
+end = 24
+render = { kind = "truncated", pattern = "\\*\\*Drizzle is serverless-ready by design\\*\\*\\. [^.]+\\." }
+[[batches.content.spans]]
+path = "README.md"
+start = 27
+end = 27
+render = { kind = "truncated", pattern = "While you can use Drizzle as a JavaScript library, [^.]+\\." }
+
+[[batches]]
+id = "1.5"
+descriptor = "README — Drizzle Kit + Studio ecosystem"
+justification = """
+Names the two sibling tools (`drizzle-kit` migrations CLI, Drizzle
+Studio), which map onto the `drizzle-kit/` and changelogs/ entries
+the next batch surfaces.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 29
+end = 34
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "Top-level fixture listing"
+justification = """
+Names every workspace package (drizzle-arktype, drizzle-kit,
+drizzle-orm, drizzle-seed, drizzle-typebox, drizzle-valibot,
+drizzle-zod, integration-tests, eslint, eslint-plugin-drizzle), the
+top-level docs/, changelogs/, misc/, patches/, and config
+(package.json, pnpm-workspace.yaml, turbo.json, dprint.json,
+tsconfig.json). Catastrophic-omission mitigation: tells the agent
+this is a pnpm/turbo monorepo with N specific peer packages, no more.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+# ============================================================
+# Tier 2 — Package layout for the headline `drizzle-orm` package
+# and its root-level public surface.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "drizzle-orm package root listing"
+justification = """
+Inside the headline package: scripts/, src/, tests/, type-tests/,
+tsup/tsconfig configs, package.json. Tells the agent source is in
+src/ and that there's a separate type-tests dir (relevant to
+TS-heavy edits).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm"
+entries = "all"
+
+[[batches]]
+id = "2.2"
+descriptor = "Root barrel — what `drizzle-orm` re-exports"
+justification = """
+The exact set of root-level modules re-exported by the package
+entrypoint. Distinguishes "framework-level" surface (alias,
+column-builder, column, entity, errors, logger, operations,
+query-promise, relations, sql, subquery, table, utils, view-common)
+from dialect-specific surface that lives behind subpath imports.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/index.ts"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "drizzle-orm src/ full listing"
+justification = """
+The most load-bearing single directory in the repo. Reveals every
+dialect core (pg-core, mysql-core, sqlite-core, singlestore-core,
+gel-core), every driver dir (node-postgres, postgres-js, mysql2,
+better-sqlite3, d1, libsql, neon-http, neon-serverless,
+planetscale-serverless, vercel-postgres, bun-sqlite, bun-sql,
+xata-http, pglite, gel, aws-data-api, expo-sqlite, op-sqlite,
+durable-sqlite, prisma, supabase, tidb-serverless, netlify-db,
+sql-js, knex, kysely, *-proxy), and the cross-cutting root files
+(table.ts, column.ts, column-builder.ts, entity.ts, relations.ts,
+sql/, errors.ts, logger.ts, migrator.ts, utils.ts, index.ts,
+casing.ts, alias.ts, batch.ts, cache/, ...).
+Catastrophic-omission mitigation: by showing every entry the agent
+can rule out that a given driver/dialect doesn't exist.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src"
+entries = "all"
+
+# ============================================================
+# Tier 3 — Core cross-cutting abstractions. Tells the agent the
+# class hierarchy that every dialect/driver hangs off.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Table class — declaration + factory"
+justification = """
+Names the central `Table<T>` class, the `TableConfig` shape, and the
+two top-level helpers (`isTable`, `getTableName`,
+`getTableUniqueName`). Every dialect's `PgTable`/`MySqlTable`/
+`SQLiteTable` extends this.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/table.ts"
+start = 8
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/table.ts"
+start = 42
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/table.ts"
+start = 120
+end = 122
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/table.ts"
+start = 143
+end = 149
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Table model-inference types (InferSelect/Insert)"
+justification = """
+The four exported type helpers (`InferModel`, `InferSelectModel`,
+`InferInsertModel`, `InferEnum`) that almost every consumer uses to
+derive row types. Heavy semantic value: query "how do I get the row
+type from a table?" answered without a follow-up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/table.ts"
+start = 189
+end = 208
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Column abstract class — signature anchors"
+justification = """
+Names the `Column<T>` abstract class, its `ColumnBaseConfig` config
+shape, the runtime fields a column carries (name/notNull/default/
+hasDefault/isUnique/dataType/columnType/enumValues/generated), and
+the abstract `getSQLType()` method every concrete column overrides.
+This is the type every dialect's column subclasses extend.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/column.ts"
+start = 13
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column.ts"
+start = 63
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column.ts"
+start = 72
+end = 88
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column.ts"
+start = 113
+end = 122
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "entityKind — runtime instanceof"
+justification = """
+The `entityKind` Symbol and the `is(value, Type)` helper are how the
+codebase replaces `instanceof` (which breaks across bundler
+boundaries). Every `Pg*`/`MySql*`/`SQLite*` class has a
+`static readonly [entityKind] = '...'` marker; understanding this
+unlocks a huge chunk of the codebase.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/entity.ts"
+start = 1
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/entity.ts"
+start = 12
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "errors.ts — the three exported error types"
+justification = """
+Tiny file, full content. Tells the agent the only Drizzle-specific
+error classes (`DrizzleError`, `DrizzleQueryError`,
+`TransactionRollbackError`) and what fields they carry.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/errors.ts"
+start = 1
+end = 33
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "logger.ts — Logger interface + DefaultLogger"
+justification = """
+Whole file. The `Logger` interface (`logQuery(query, params)`),
+`LogWriter`/`ConsoleLogWriter`, `DefaultLogger` (default writer +
+param stringification), and `NoopLogger`. Tells the agent exactly
+what a `drizzle({ logger: ... })` value must implement.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/logger.ts"
+start = 1
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "DrizzleConfig — what drizzle()'s config arg accepts"
+justification = """
+`DrizzleConfig<TSchema>` is the shape every `drizzle()` factory in
+every driver accepts: `logger`, `schema`, `casing`, `cache`. Plus
+`Casing` is the union literal `'snake_case' | 'camelCase'`. Tells
+the agent the entire shared-config surface without reading any
+driver.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/utils.ts"
+start = 234
+end = 241
+render = { kind = "full" }
+
+# ============================================================
+# Tier 4 — Dialect cores: parallel pg-core / mysql-core /
+# sqlite-core directories + their table/dialect anchors. The
+# agent will almost always need this when asked "where is the
+# X column / Y query builder in dialect Z?".
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "pg-core/ directory listing"
+justification = """
+Names every file/subdir in the Postgres core (alias, checks, columns,
+db, dialect, expressions, foreign-keys, index, indexes, policies,
+primary-keys, query-builders, roles, schema, sequence, session,
+subquery, table, unique-constraint, utils, view-base, view-common,
+view). Catastrophic-omission mitigation: tells the agent that, say,
+`roles.ts` exists only here and not in mysql-core.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/pg-core"
+entries = "all"
+
+[[batches]]
+id = "4.2"
+descriptor = "mysql-core/ + sqlite-core/ directory listings"
+justification = """
+Parallel structure to pg-core: lets the agent see which features
+each dialect shares vs. which are pg-only. Bundled so the agent
+sees the three dialects' shapes side-by-side. mysql-core is also
+the template for singlestore-core (which subclasses it heavily).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/mysql-core"
+entries = "all"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/sqlite-core"
+entries = "all"
+
+[[batches]]
+id = "4.3"
+descriptor = "singlestore-core/ + gel-core/ — extra dialects"
+justification = """
+The two less-mainstream dialects in the codebase. singlestore is a
+MySQL fork (TiDB-like); gel is the new EdgeDB. Listing them at the
+same tier mirrors the pattern.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/singlestore-core"
+entries = "all"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/gel-core"
+entries = "all"
+
+[[batches]]
+id = "4.4"
+descriptor = "pg-core barrel — full export surface"
+justification = """
+`pg-core/index.ts` re-exports every Pg-prefixed module. Tells the
+agent what `import from 'drizzle-orm/pg-core'` exposes: alias,
+checks, columns, db, dialect, foreign-keys, indexes, policies,
+primary-keys, query-builders, roles, schema, sequence, session,
+subquery, table, unique-constraint, utils, utils/index, view-common,
+view.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/index.ts"
+start = 1
+end = 21
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "Dialect table factories — pgTable/mysqlTable/sqliteTable"
+justification = """
+The three public table factory functions plus their `*Creator`
+variants (for prefixed table names). These are the entry points
+every user-facing schema declaration uses.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/table.ts"
+start = 244
+end = 244
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/table.ts"
+start = 248
+end = 248
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/mysql-core/table.ts"
+start = 221
+end = 221
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/mysql-core/table.ts"
+start = 225
+end = 225
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sqlite-core/table.ts"
+start = 219
+end = 219
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sqlite-core/table.ts"
+start = 223
+end = 223
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "PgTable class — subclass of root Table"
+justification = """
+Anchors the dialect→core class hierarchy: `PgTable<T> extends
+Table<T>` plus the two pg-specific symbols (`InlineForeignKeys`,
+`EnableRLS`) and the `PgTableExtraConfigValue` union (CheckBuilder
+| ForeignKeyBuilder | PrimaryKeyBuilder | UniqueConstraintBuilder |
+PgPolicy | AnyIndexBuilder). The Pg/MySql/SQLite tables follow the
+same shape — this is the canonical example.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/table.ts"
+start = 13
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/table.ts"
+start = 33
+end = 56
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "PgDialect — the per-dialect SQL builder hub"
+justification = """
+Class declaration of `PgDialect` and its public method anchors
+(escapeName/escapeParam/escapeString, buildDeleteQuery/buildUpdateSet/
+buildUpdateQuery/buildSelectQuery/buildSetOperationQuery/
+buildInsertQuery/buildRefreshMaterializedViewQuery/prepareTyping/
+sqlToQuery/migrate, plus buildRelationalQueryWithoutPK for the
+relational query builder). The dialect is where SQL strings are
+emitted — agents touching SQL output land here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 59
+end = 64
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^\\tasync migrate\\([^)]+\\)" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 114
+end = 114
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 118
+end = 118
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 122
+end = 122
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 140
+end = 140
+render = { kind = "truncated", pattern = "^\\tbuildDeleteQuery\\(\\{" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 152
+end = 152
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 174
+end = 174
+render = { kind = "truncated", pattern = "^\\tbuildUpdateQuery\\(\\{" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 341
+end = 341
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 450
+end = 450
+render = { kind = "truncated", pattern = "^\\tbuildSetOperations\\(" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 468
+end = 468
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 513
+end = 513
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 582
+end = 582
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 591
+end = 591
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 609
+end = 609
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/dialect.ts"
+start = 1150
+end = 1150
+render = { kind = "full" }
+
+# ============================================================
+# Tier 5 — Column types + query builders for each dialect. The
+# highest-cardinality location class: "where is timestamp /
+# jsonb / vector / blob / serial?" is one read away from these
+# listings.
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "pg-core/columns/ listing — every PG column type"
+justification = """
+Names every PG column file (bigint, bigserial, boolean, char, cidr,
+common, custom, date, double-precision, enum, inet, int.common,
+integer, interval, json, jsonb, line, macaddr*, numeric, point,
+real, serial, smallint, smallserial, text, time, timestamp, uuid,
+varchar) plus the two extension subdirs (postgis_extension/,
+vector_extension/). Catastrophic-omission: agent can be sure a
+column type either exists here or doesn't exist for pg.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/pg-core/columns"
+entries = "all"
+
+[[batches]]
+id = "5.2"
+descriptor = "mysql-core/columns/ + sqlite-core/columns/ listings"
+justification = """
+The two parallel column directories. mysql has 25+ types (datetime/
+year/binary/varbinary/decimal/tinyint/mediumint/smallint/bigint/
+int/float/double/real/serial/boolean/char/varchar/text/json/enum/
+timestamp/date/time + custom/common/all). sqlite has 6 types (blob,
+integer, numeric, real, text + common/custom). The cardinality
+difference itself is informative.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/mysql-core/columns"
+entries = "all"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/sqlite-core/columns"
+entries = "all"
+
+[[batches]]
+id = "5.3"
+descriptor = "PG postgis + vector extension column listings"
+justification = """
+The two sub-subdirs under pg-core/columns/ that aren't immediately
+visible. postgis_extension exposes `geometry` + utils; vector_extension
+exposes `vector`, `halfvec`, `sparsevec`, `bit` (for pgvector). An
+agent asked about "PG vector support" lands directly here.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/pg-core/columns/postgis_extension"
+entries = "all"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/pg-core/columns/vector_extension"
+entries = "all"
+
+[[batches]]
+id = "5.4"
+descriptor = "Column type factory pattern — integer example"
+justification = """
+Every column file follows the same pattern: `*Builder` extends
+column-builder base, `*Column` (`extends PgColumn`) overrides
+`getSQLType()`, and an exported factory function (the user-facing
+name). Showing `integer()`'s full file (54 lines) gives the agent
+the template to read any other column file as 1-2 lines once they
+know what to look for.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/columns/integer.ts"
+start = 1
+end = 53
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "Column-builder chain methods — universal API"
+justification = """
+The shared `.notNull()` / `.default()` / `.$defaultFn()` /
+`.$onUpdateFn()` / `.primaryKey()` / `.$type()` chain methods that
+every column inherits from `ColumnBuilder`. This is what every
+schema declaration looks like; query "how do I make a column nullable
+with a default and a runtime onUpdate?" is answered without a
+follow-up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 185
+end = 191
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 225
+end = 227
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 234
+end = 237
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 246
+end = 250
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 258
+end = 264
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 278
+end = 284
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/column-builder.ts"
+start = 296
+end = 303
+render = { kind = "full" }
+
+[[batches]]
+id = "5.6"
+descriptor = "PG column-builder dialect-specific methods — .array(), .references(), .unique()"
+justification = """
+The pg-extension chain methods most every PG schema needs: `array()`
+for array columns, `references()` for FKs (one of the most-asked-
+about features), `unique()`, `generatedAlwaysAs()`. Same pattern
+exists per-dialect — pg is the canonical instance.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/columns/common.ts"
+start = 38
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/columns/common.ts"
+start = 68
+end = 84
+render = { kind = "full" }
+
+[[batches]]
+id = "5.7"
+descriptor = "pg-core/query-builders/ listing"
+justification = """
+Names every PG query-builder file: select, insert, update, delete,
+query (relational), query-builder (the standalone qb), count, raw,
+refresh-materialized-view, select.types, index. Agents asked
+"where is the upsert / on conflict logic?" land here.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/pg-core/query-builders"
+entries = "all"
+
+[[batches]]
+id = "5.8"
+descriptor = "mysql-core + sqlite-core query-builders/ listings"
+justification = """
+Parallel structure. Both lack pg's `raw.ts` and `refresh-materialized-
+view.ts`. mysql lacks `raw.ts`; sqlite has it. Cheap completeness so
+agent doesn't infer wrong shape.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/mysql-core/query-builders"
+entries = "all"
+[[batches.content.groups]]
+parent = "drizzle-orm/src/sqlite-core/query-builders"
+entries = "all"
+
+[[batches]]
+id = "5.9"
+descriptor = "PgDatabase entrypoint methods (select/insert/update/...)"
+justification = """
+The methods every consumer chains off a `db` object: `select`,
+`selectDistinct`, `selectDistinctOn`, `update`, `insert`, `delete`,
+`refreshMaterializedView`, `execute`, `transaction`, `with`, `$with`,
+`$count`. This is the *entry-point inventory* for query construction.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 36
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 125
+end = 125
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 150
+end = 155
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 178
+end = 178
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 435
+end = 437
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 469
+end = 471
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 505
+end = 505
+render = { kind = "truncated", pattern = "^\\tselectDistinctOn\\(on: \\(PgColumn \\| SQLWrapper\\)\\[\\]\\)" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 549
+end = 549
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 577
+end = 577
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 605
+end = 605
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 609
+end = 609
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 615
+end = 617
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 636
+end = 639
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/db.ts"
+start = 644
+end = 646
+render = { kind = "full" }
+
+[[batches]]
+id = "5.10"
+descriptor = "PgSelect chain — .where/.join/.groupBy/.orderBy/.limit/.offset"
+justification = """
+The select-builder's chainable method names: leftJoin, rightJoin,
+innerJoin, fullJoin, crossJoin (+ lateral variants), where, having,
+groupBy, orderBy, limit, offset, for, union/intersect/except (all
++all variants), as, getSQL, toSQL, prepare. The canonical query-
+chain shape an agent will be modifying for select-related tasks.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 343
+end = 343
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 357
+end = 357
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 386
+end = 386
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 415
+end = 415
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 429
+end = 429
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 458
+end = 458
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 486
+end = 486
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 499
+end = 499
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 558
+end = 558
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 585
+end = 585
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 612
+end = 612
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 654
+end = 654
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 681
+end = 681
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 723
+end = 723
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 765
+end = 765
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 802
+end = 802
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 836
+end = 836
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 883
+end = 883
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 935
+end = 935
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 960
+end = 960
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 979
+end = 979
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 989
+end = 989
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pg-core/query-builders/select.ts"
+start = 1107
+end = 1107
+render = { kind = "full" }
+
+# ============================================================
+# Tier 6 — SQL helpers: the `sql` template tag, operator
+# expressions (eq/ne/and/or/...), aggregate functions
+# (count/sum/avg/min/max), vector ops, order-by helpers.
+# These are imported everywhere a query is built.
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "sql/index.ts barrel + sql/expressions/index.ts barrel"
+justification = """
+The two SQL barrels: `sql/index.ts` re-exports `sql.ts` +
+`expressions/` + `functions/`; `expressions/index.ts` re-exports
+conditions + select-order. Tells the agent how to import the
+operators (`import { eq, asc } from 'drizzle-orm/sql/expressions'`
+or the root barrel).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/index.ts"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/index.ts"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/index.ts"
+start = 1
+end = 2
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "sql`...` template tag + SQL class anchors"
+justification = """
+The `sql` tagged-template function (the core escape hatch for raw
+SQL), its `SQL<T>` result class (with `as`/`mapWith`/`inlineParams`/
+`if`), the `SQLWrapper` interface (`getSQL()`), and the helpers
+exposed under the `sql.` namespace (`raw`, `join`, `identifier`,
+`placeholder`, `param`, `empty`). This is the single most-imported
+symbol after `eq`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 65
+end = 72
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 103
+end = 104
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 478
+end = 478
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 485
+end = 485
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 497
+end = 498
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 503
+end = 503
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 511
+end = 511
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 528
+end = 528
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 551
+end = 551
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 555
+end = 555
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 559
+end = 562
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/sql.ts"
+start = 595
+end = 596
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "Condition operators — eq/ne/and/or/not + comparison"
+justification = """
+The "where-clause vocabulary": eq, ne, and, or, not, gt, gte, lt,
+lte. Every conditional query uses these. Truncated to first line so
+the agent sees the names + parameter shapes without the full bodies.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 32
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 62
+end = 62
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 84
+end = 84
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 104
+end = 104
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 143
+end = 143
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 177
+end = 177
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 195
+end = 195
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 215
+end = 215
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 233
+end = 233
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 251
+end = 251
+render = { kind = "full" }
+
+[[batches]]
+id = "6.4"
+descriptor = "Set + null + range conditions — inArray/isNull/exists/between/like"
+justification = """
+The second batch of operator names: inArray, notInArray, isNull,
+isNotNull, exists, notExists, between, notBetween, like, notLike,
+ilike, notIlike. The hedged-omission pair to 6.3: together they
+list every condition op so the agent doesn't infer the absence of
+e.g. `notIlike`.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 281
+end = 281
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 322
+end = 322
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 352
+end = 352
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 372
+end = 372
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 396
+end = 396
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 421
+end = 421
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 459
+end = 459
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 500
+end = 500
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 529
+end = 529
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 551
+end = 551
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 574
+end = 574
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 596
+end = 596
+render = { kind = "full" }
+
+[[batches]]
+id = "6.5"
+descriptor = "PG array operators — arrayContains/arrayContained/arrayOverlaps"
+justification = """
+The three PG-array operators at the tail of conditions.ts. Pg-only,
+high-value for vector/array workloads. Including them next to 6.4
+fully closes the conditions.ts export surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 632
+end = 632
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 680
+end = 680
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/conditions.ts"
+start = 727
+end = 727
+render = { kind = "full" }
+
+[[batches]]
+id = "6.6"
+descriptor = "Order-by + aggregate + vector functions"
+justification = """
+asc/desc (orderBy helpers), count/countDistinct/avg/avgDistinct/
+sum/sumDistinct/max/min (aggregates), l2Distance/l1Distance/
+innerProduct/cosineDistance/hammingDistance/jaccardDistance (PG
+pgvector distance ops). One line per fn name — together with 6.3+
+6.4+6.5 this is the entire SQL-helper surface.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/select.ts"
+start = 23
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/expressions/select.ts"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 19
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 35
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 67
+end = 67
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 83
+end = 83
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 99
+end = 99
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 113
+end = 113
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/aggregate.ts"
+start = 127
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 31
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 61
+end = 61
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 93
+end = 93
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 125
+end = 125
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 150
+end = 150
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/sql/functions/vector.ts"
+start = 170
+end = 170
+render = { kind = "full" }
+
+# ============================================================
+# Tier 7 — Drivers + relations. The two biggest remaining
+# query classes: "wire up driver X" and "express FK/relations".
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "Migrator + runtime errors helpers"
+justification = """
+The lightweight `migrator.ts` core (`readMigrationFiles`,
+`MigrationConfig`, `MigrationMeta`, `KitConfig`) — per-driver
+migrators wrap this. Each driver has its own `migrator.ts`; this is
+the canonical version they delegate to.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/migrator.ts"
+start = 4
+end = 22
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "Relations — One/Many class anchors"
+justification = """
+The `Relation` abstract base, `Relations<T>` container, `One` and
+`Many` concrete relation types — what a `relations()` callback
+returns. Just the class headers, so the agent sees the shape without
+the full constructor bodies (which they can read on demand).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/relations.ts"
+start = 33
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/relations.ts"
+start = 51
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/relations.ts"
+start = 65
+end = 69
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/relations.ts"
+start = 100
+end = 104
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "getOperators + getOrderByOperators — relational-query helpers"
+justification = """
+The two operator bags exposed inside relational-query callbacks:
+`(t, ops) => ops.eq(...)` resolves to `getOperators()`'s return shape.
+Listing all the names lets the agent answer "which ops are in scope
+inside a `where:` callback?" without a follow-up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/relations.ts"
+start = 159
+end = 196
+render = { kind = "full" }
+
+# ============================================================
+# Tier 8 — Driver landscape. One line per driver to name the
+# exported `*Database` class and the location of the `drizzle()`
+# factory. Agent can grep into the right file in one hop.
+# ============================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "PG-family driver factories — *Database classes"
+justification = """
+The exported PG-flavored Database class declarations across drivers:
+NodePgDatabase, PostgresJsDatabase, NeonHttpDatabase, NeonDatabase
+(serverless), VercelPgDatabase, PgliteDatabase, XataHttpDatabase.
+Each one extends `PgDatabase`. One line per file = the agent gets the
+file location + the class name in one hop.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/node-postgres/driver.ts"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/postgres-js/driver.ts"
+start = 16
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/neon-http/driver.ts"
+start = 80
+end = 80
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/neon-serverless/driver.ts"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/vercel-postgres/driver.ts"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/pglite/driver.ts"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/xata-http/driver.ts"
+start = 43
+end = 43
+render = { kind = "full" }
+
+[[batches]]
+id = "8.2"
+descriptor = "MySQL/SQLite driver Database classes"
+justification = """
+The MySQL and SQLite Database-class anchors: MySql2Database,
+PlanetScaleDatabase, BetterSQLite3Database, BunSQLiteDatabase,
+DrizzleD1Database. Together with 8.1 this catalogs the driver
+hierarchy — agent asked "what's the class for X driver?" lands
+without follow-up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "drizzle-orm/src/mysql2/driver.ts"
+start = 50
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/planetscale-serverless/driver.ts"
+start = 23
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/better-sqlite3/driver.ts"
+start = 24
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/bun-sqlite/driver.ts"
+start = 17
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "drizzle-orm/src/d1/driver.ts"
+start = 24
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "8.3"
+descriptor = "docs/ listing — loose docs that aren't in READMEs"
+justification = """
+Cheap completeness: docs/ holds custom-types.md, custom-types.lite.md,
+joins.md, table-introspect-api.md — the only loose docs not in
+README.md or per-package READMEs. Tells the agent where to look for
+prose context that isn't in source.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"

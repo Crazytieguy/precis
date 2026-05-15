@@ -1,0 +1,681 @@
+fixture = "statsmodels"
+revision_pin = "3c102982"
+summary = """
+statsmodels is a large, mature Python package for statistical modeling,
+hypothesis testing, and data exploration: linear regression, GLM/GEE,
+discrete/count models, time-series (AR/ARIMA/SARIMAX, state-space,
+exponential smoothing, VAR/VECM), survival, multivariate (PCA/Factor/
+MANOVA), nonparametric KDE, robust models, GAMs, mediation, MICE
+imputation, plus a deep `stats` toolbox of diagnostic tests and
+multiple testing. The repo is a Python package built with meson-python
+and Cython; the user-facing surface centers on three flat namespaces
+— `statsmodels.api as sm` (cross-sectional models), `statsmodels.tsa.api
+as tsa` (time series), `statsmodels.formula.api as smf` (R-style
+formulas) — each re-exporting model classes that share a common
+`Model -> LikelihoodModel -> ...Model` / `Results -> ResultsWrapper`
+shape rooted in `statsmodels/base/model.py`. Almost every subpackage
+follows the same skeleton: a small `api.py` re-export, one or two big
+`*_model.py` modules with class docstrings carrying parameters / math
+/ examples, and a `tests/` directory comparing against R/Stata/SAS.
+
+Query distribution the ranking serves:
+- "how do I fit/predict/summarize model X with statsmodels" (very
+  common): satisfied via api re-exports + canonical examples + the
+  fit/predict signatures of the model classes most users hit (OLS,
+  GLM, Logit, ARIMA, RLM).
+- "where is the implementation of <statistical test / model>": the
+  walker needs to point precisely to one of dozens of files across
+  regression/, genmod/, discrete/, tsa/, stats/, multivariate/, ...
+  — breadth of locations matters more than depth of any one file.
+- "what's the inheritance / wrapper pattern" / "how do I add a new
+  model": served by base/model.py class anchors + base/wrapper.py +
+  the regression `RegressionModel -> GLS/WLS/OLS/GLSAR` chain.
+- Build / packaging / lint / CI questions: meson.build, pyproject,
+  lint.sh, requirements*.txt.
+- Time series in particular is a heavy subtree; both stattools and
+  the state-space stack get their own pointers.
+- The `sandbox/`, `examples/`, `archive/` subtrees exist but contain
+  experimental or stale code — agents need to know they're there but
+  rarely need their contents preloaded.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — top-level orientation
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede"
+justification = """
+First-line "what is statsmodels": a Python package complementing
+scipy for statistical computations including descriptive stats,
+estimation, and inference. Tiny so the smallest budgets still get
+the one-sentence identity.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.rst", start = 7, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "sm.api — first headline class names"
+justification = """
+Smallest "what's the public API?" — first eight names in
+`statsmodels.api`'s __all__: GEE, GLM, GLS, GLSAR, MANOVA, MI,
+MICE, OLS. Most-recognized model identifiers in 11 lines.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/api.py", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 2 — top-level inventories
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "Top-level package listing — statsmodels/"
+justification = """
+The package itself: every subpackage at one glance (api.py,
+regression, tsa, stats, genmod, discrete, base, tools, multivariate,
+graphics, iolib, datasets, formula, gam, duration, emplike,
+imputation, nonparametric, robust, sandbox, miscmodels, othermod,
+treatment, compat, includes, examples, _build, tests, conftest,
+meson.build). Most important location batch in the file.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Fixture root listing"
+justification = """
+Top-level inventory beyond the package: README, INSTALL, pyproject,
+meson.build, `docs/`, `examples/`, `tools/`, `archive/` siblings,
+the CI yml, license, lint.sh. Catastrophic-omission hedge for root.
+"""
+content = { kind = "fs", groups = [
+    { parent = ".", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3 — small subpackage inventories
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "regression/ listing"
+justification = """
+linear_model.py (GLS/WLS/OLS/GLSAR/RegressionResults),
+mixed_linear_model.py, quantile_regression.py, recursive_ls.py,
+rolling.py, process_regression.py, dimred.py, feasible_gls.py,
+_prediction.py, _tools.py.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/regression", entries = "all" },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "base/ subpackage listing"
+justification = """
+Beyond model.py + wrapper.py: data.py (ModelData/PandasData/
+PatsyData/FormulaicData and missing-handling), optimizer.py,
+covtype.py, transform.py, distributed_estimation.py, elastic_net.py,
+the L1/penalty utility files, _constraints / _parameter_inference /
+_prediction_inference / _penalized / _screening.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/base", entries = "all" },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "discrete/ listing"
+justification = """
+discrete/ holds Logit/Probit/MNLogit/Poisson/NegBin and friends:
+discrete_model.py (the big one), count_model.py (zero-inflated),
+truncated_model.py, conditional_models.py, discrete_margins.py,
+diagnostic.py, _diagnostics_count.py.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/discrete", entries = "all" },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "multivariate.api + iolib.api"
+justification = """
+Two tiny re-exports: multivariate (MANOVA, PCA, CanCorr, Factor,
+FactorResults, factor_rotation) and iolib (SimpleTable, csv2st,
+load_pickle, save_pickle, savetxt).
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/multivariate/api.py", start = 1, end = 14, render = { kind = "full" } },
+    { path = "statsmodels/iolib/api.py", start = 1, end = 10, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 4 — sm.api full surface (split)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "genmod.api"
+justification = """
+GEE, GLM, BinomialBayesMixedGLM, NominalGEE, OrdinalGEE,
+PoissonBayesMixedGLM, cov_struct, families. Compact list of where
+to find generalized-linear-model entry points.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/genmod/api.py", start = 1, end = 14, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "sm.api — middle of __all__"
+justification = """
+The middle slab of sm.api `__all__`: PCA, RLM, WLS, BayesGaussMI,
+BinomialBayesMixedGLM, conditional discrete models, Factor, GLMGam,
+GeneralizedPoisson, HurdleCountModel, Logit, MICEData, MNLogit,
+MixedLM, NegativeBinomial(P), Nominal/OrdinalGEE, PHReg, Poisson,
+ProbPlot, Probit, QuantReg, RecursiveLS, SurvfuncRight, TruncatedLF*,
+ZeroInflated*.
+"""
+predecessor = "1.2"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/api.py", start = 12, end = 42, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "sm.api — tail of __all__ (helpers + subpackage re-exports)"
+justification = """
+Version metadata, free functions (add_constant, categorical,
+qqline, qqplot, qqplot_2samples, show_versions, webdoc, load_pickle,
+load, test), and the long list of subpackage re-exports (datasets,
+distributions, duration, emplike, families, formula, gam, genmod,
+graphics, iolib, multivariate, nonparametric, regression, robust,
+stats, tools, tsa, cov_struct). Closes the catastrophic-omission
+hedge on sm.
+"""
+predecessor = "4.2"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/api.py", start = 43, end = 73, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5 — docs and tsa subpackage listings
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "docs/source — listing"
+justification = """
+Every .rst in docs/source: regression.rst, glm.rst, tsa.rst,
+discretemod.rst, stats.rst, statespace.rst, vector_ar.rst,
+gettingstarted.rst, api.rst, api-structure.rst, install.rst,
+gam.rst, gee.rst, duration.rst, multivariate.rst, optimization.rst,
+plus `examples/`, `dev/`, `release/`, `datasets/`, `plots/`,
+`images/` subdirs.
+"""
+content = { kind = "fs", groups = [
+    { parent = "docs/source", entries = "all" },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "tsa/ subpackage listing"
+justification = """
+The time-series subpackage layout: ar_model.py, arima/,
+arima_model.py (legacy), arima_process.py, ardl/, statespace/,
+holtwinters/, exponential_smoothing/, vector_ar/, regime_switching/,
+seasonal/, forecasting/, filters/, base/, innovations/, interp/,
+stl/, deterministic.py, tsatools.py, varma_process.py, stattools/,
+adfvalues.py, coint_tables.py, x13.py, mlemodel.py, plus the .pyx
+Cython sources (_bds, _innovations, _leybourne). The most complex
+subpackage.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/tsa", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6 — sm.api concrete import mapping (split)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "sm.api — discrete + duration + emplike + formula + gam imports"
+justification = """
+First half of `from .X.Y import Z` block under sm's __all__: maps
+the conditional/count/discrete/truncated discrete model names to
+their files in `discrete/`, plus PHReg/SurvfuncRight in `duration/`,
+emplike, formula, gam re-exports.
+"""
+predecessor = "4.3"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/api.py", start = 76, end = 114, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "sm.api — graphics + imputation + regression + robust + tsa imports"
+justification = """
+Second half of the import block: GLM/GEE from genmod.api, graphics
+qqplot family, imputation MICE/BayesGaussMI, iolib load_pickle,
+multivariate Factor/MANOVA/PCA, nonparametric, regression linear_
+model (GLS/GLSAR/OLS/WLS) + MixedLM/QuantReg/RecursiveLS, RLM from
+robust, stats, tools helpers, tsa.
+"""
+predecessor = "6.1"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/api.py", start = 115, end = 146, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 7 — tsa.api full surface (split into __all__ head/tail and import head/tail)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "tsa.api — __all__ model classes (head)"
+justification = """
+The model-class half of tsa __all__: AR, ARDL, ARIMA, SARIMAX, STL,
+SVAR, UECM, VAR, VARMAX, VECM, ArmaProcess, AutoReg, DynamicFactor,
+DynamicFactorMQ, ETSModel, ExponentialSmoothing, Holt,
+MarkovAutoregression, MarkovRegression, STLForecast,
+SimpleExpSmoothing, UnobservedComponents. The names users type.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/tsa/api.py", start = 1, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "tsa.api — __all__ stats / tools / submodules (tail)"
+justification = """
+Lower-case half of tsa __all__: acf/acovf/adfuller/kpss/coint/pacf*/
+bds (unit-root + correlation tests), tsatools (add_lag, add_trend,
+detrend, lagmat*), filter functions (bk_filter, cf_filter, hp_filter),
+datetools, seasonal_decompose, plus re-exported submodules (filters,
+graphics, innovations, interp, statespace, stattools, tsatools, var)
+and x13_arima_{analysis,select_order}, zivot_andrews.
+"""
+predecessor = "7.1"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/tsa/api.py", start = 24, end = 64, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "tsa.api — model imports (statespace + holtwinters + seasonal)"
+justification = """
+First half of the import block: AR/AutoReg from ar_model, ARDL/UECM
+from ardl, ARIMA from arima.model, statespace's SARIMAX/VARMAX/
+DynamicFactor*/UnobservedComponents/ExponentialSmoothing,
+holtwinters classes, MarkovAuto/Regression from regime_switching,
+STL/seasonal_decompose.
+"""
+predecessor = "7.2"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/tsa/api.py", start = 66, end = 88, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "tsa.api — stattools + tsatools + vector_ar imports"
+justification = """
+Second half of the import block: acf/acovf/adfuller/kpss/coint and
+the rest of stattools, tsatools helpers (add_lag/add_trend/detrend/
+lagmat/lagmat2ds), SVAR/VAR from vector_ar, VECM, x13. Completes
+one-hop name -> file for tsa.
+"""
+predecessor = "7.3"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/tsa/api.py", start = 89, end = 112, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 8 — formula API + graphics + stats listing
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "8.1"
+descriptor = "formula.api — smf.* aliases (first half)"
+justification = """
+First half of the R-style formula entry-points: imports plus
+`gls/wls/ols/glsar/mixedlm/glm/rlm/mnlogit/logit/probit/poisson/
+negativebinomial` aliases. Each a thin `<Model>.from_formula` alias.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/formula/api.py", start = 1, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.2"
+descriptor = "formula.api — remaining aliases + __all__"
+justification = """
+quantreg, phreg, ordinal_gee, nominal_gee, gee, glmgam,
+conditional_logit/mnlogit/poisson aliases, plus the `__all__`
+listing every formula-callable model.
+"""
+predecessor = "8.1"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/formula/api.py", start = 24, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.3"
+descriptor = "graphics/api.py"
+justification = """
+Visualization entry-points: abline_plot, beanplot, fboxplot,
+hdrboxplot, influence_plot, interaction_plot, plot_corr,
+plot_partregress*, plot_regress_exog, qqplot, rainbow, violinplot,
+plus tsaplots aliased as `tsa`.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/graphics/api.py", start = 1, end = 43, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "8.4"
+descriptor = "stats/ subpackage listing"
+justification = """
+The wide stats toolbox: anova.py, contingency_tables.py, contrast.py,
+correlation_tools.py, covariance.py, diagnostic.py, dist_dependence_
+measures.py, effect_size.py, gof.py, inter_rater.py, mediation.py,
+meta_analysis.py, moment_helpers.py, multicomp.py, multitest.py,
+multivariate.py, nonparametric.py, oaxaca.py, oneway.py, outliers_
+influence.py, power.py, proportion.py, rates.py, regularized_
+covariance.py, robust_compare.py, sandwich_covariance.py,
+stattools.py, tabledist.py, weightstats.py, plus private helpers
+(_adnorm, _delta_method, _knockoff, _lilliefors, ...) and libqsturng.
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/stats", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 9 — README features + build deps + more subpackage listings
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "9.1"
+descriptor = "README — regression / GLM / GEE / discrete features"
+justification = """
+Linear regression flavours (OLS/GLS/WLS/least squares with AR
+errors / QuantReg / RecursiveLS), MixedLM, GLM with one-parameter
+exponential families, Bayesian mixed GLM, GEE, discrete (Logit/
+Probit/MNLogit/Poisson/GenPoisson/NegBin/ZeroInflated).
+"""
+content = { kind = "lines", spans = [
+    { path = "README.rst", start = 37, end = 59, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.2"
+descriptor = "pyproject — runtime dependencies"
+justification = """
+The `[project]` dependencies block — numpy>=1.22, scipy>=1.8,
+pandas>=1.4, patsy>=0.5.6, packaging, formulaic>=1.1, plus
+`requires-python = '>=3.9'`. Single highest-value spot for "what
+does this depend on?" — build-system + optional-deps deferred.
+"""
+content = { kind = "lines", spans = [
+    { path = "pyproject.toml", start = 57, end = 67, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.3"
+descriptor = "README — TSA / survival / multivariate / nonparametric"
+justification = """
+Time-series block (state-space, Seasonal ARIMA, VARMA(X),
+DynamicFactor, UnobservedComponents, Markov switching/HMM,
+AR/ARIMA, VAR/SVAR, VECM, Holt-Winters, unit-root/cointegration),
+survival (Cox/Kaplan-Meier), multivariate (PCA, Factor, MANOVA,
+CanonicalCorrelation), nonparametric KDE.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.rst", start = 60, end = 90, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.4"
+descriptor = "README — datasets, stats, imputation, sandbox"
+justification = """
+Tail of features: datasets-for-examples, statistical tests breadth,
+MICE / ROS / Gaussian imputation, mediation, graphics, I/O (Stata
+.dta / ascii/latex/html tables), `sandbox/` is experimental (GMM,
+kernel regression, panel data, info-theory).
+"""
+content = { kind = "lines", spans = [
+    { path = "README.rst", start = 91, end = 118, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "9.5"
+descriptor = "multivariate/, graphics/, iolib/ subpackage listings"
+justification = """
+Three medium-sized subpackages enumerated together: multivariate
+(cancorr, factor, factor_rotation/, manova, multivariate_ols, pca,
+plots), graphics (agreement, boxplots, correlation, dotplots,
+factorplots, functional, gofplots, mosaicplot, plot_grids,
+plottools, regressionplots, tsaplots, tukeyplot, utils), iolib
+(foreign, openfile, smpickle, summary, summary2, table,
+tableformatting).
+"""
+content = { kind = "fs", groups = [
+    { parent = "statsmodels/multivariate", entries = "all" },
+    { parent = "statsmodels/graphics", entries = "all" },
+    { parent = "statsmodels/iolib", entries = "all" },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 10 — getting-started prose + import paths
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "10.1"
+descriptor = "Getting started — formula-based OLS (smf.ols)"
+justification = """
+The first canonical example: formula-based `smf.ols('Lottery ~
+Literacy + np.log(Pop1831)', data=dat).fit()` on the Guerry
+dataset, plus `print(results.summary())`. Zero-follow-up answer for
+"how do I fit a regression with a formula?" — the most common
+entry-point query.
+"""
+content = { kind = "lines", spans = [
+    { path = "docs/source/index.rst", start = 6, end = 35, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.2"
+descriptor = "Getting started — array-based OLS (sm.OLS)"
+justification = """
+The second canonical example: numpy-array-based `sm.OLS(y, X).fit()`
+with `add_constant` and synthetic data, plus the `dir(results) /
+results.__doc__` pointers. Zero-follow-up for the non-formula path.
+"""
+content = { kind = "lines", spans = [
+    { path = "docs/source/index.rst", start = 36, end = 58, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "10.3"
+descriptor = "Import paths — sm vs tsa vs smf (prose)"
+justification = """
+The prose half of `api-structure.rst`: the three flat API
+namespaces and why interactive imports use sm vs program imports
+use the deep path. Drops the dir() dumps (redundant with the
+already-included api.py __all__ batches).
+"""
+content = { kind = "lines", spans = [
+    { path = "docs/source/api-structure.rst", start = 1, end = 31, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 11 — base abstractions
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "11.1"
+descriptor = "base/model.py — class declaration lines"
+justification = """
+Inheritance backbone in one cheap location-batch: Model,
+LikelihoodModel, GenericLikelihoodModel, Results,
+LikelihoodModelResults, LikelihoodResultsWrapper, ResultMixin,
+_LLRMixin, GenericLikelihoodModelResults.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/base/model.py", start = 65, end = 65, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 279, end = 279, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 830, end = 830, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 1112, end = 1112, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 1276, end = 1276, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 2498, end = 2498, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 2516, end = 2516, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 2665, end = 2665, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 2802, end = 2802, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.2"
+descriptor = "Model — endog/exog/missing doc templates"
+justification = """
+The `_model_params_doc` + `_missing_param_doc` strings that get
+spliced into every model's docstring via `.format(...)`.
+Establishes the endog/exog/missing contract every estimator inherits.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/base/model.py", start = 39, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.3"
+descriptor = "Model.__init__ + fit/predict stubs + from_formula signature"
+justification = """
+Model class's __init__ handling endog/exog/missing/hasconst, the
+placeholder `fit`/`predict` raising NotImplementedError, and the
+from_formula classmethod signature.
+"""
+predecessor = "11.1"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/base/model.py", start = 100, end = 116, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 156, end = 157, render = { kind = "full" } },
+    { path = "statsmodels/base/model.py", start = 264, end = 276, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "11.4"
+descriptor = "LikelihoodModel.fit — solver list"
+justification = """
+The MLE `fit` on LikelihoodModel: signature + the prose listing
+scipy.optimize solvers ("newton", "nm", "bfgs", "lbfgs", "powell",
+"cg", "ncg", "basinhopping", "minimize"). Powers every
+GLM/discrete/tsa fit.
+"""
+predecessor = "11.1"
+content = { kind = "lines", spans = [
+    { path = "statsmodels/base/model.py", start = 362, end = 394, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 12 — regression: the most-used model family
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "12.1"
+descriptor = "linear_model.py — class & top-level fn anchors"
+justification = """
+Class declarations: RegressionModel, GLS, WLS, OLS, GLSAR,
+RegressionResults, OLSResults, RegressionResultsWrapper. Plus the
+top-level `yule_walker` (AR-coefficient estimator) and `burg`.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/regression/linear_model.py", start = 213, end = 213, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 486, end = 486, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 733, end = 733, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 933, end = 933, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 1306, end = 1306, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 1482, end = 1482, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 1597, end = 1597, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 1659, end = 1659, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 3133, end = 3133, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 3448, end = 3448, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "12.2"
+descriptor = "linear_model.py — module docstring + __all__"
+justification = """
+Header naming the four classes (GLS, OLS, WLS, GLSAR), explaining
+the whiten/fit pattern, and `__all__` (GLS, GLSAR, OLS, WLS,
+PredictionResults, RegressionResultsWrapper).
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/regression/linear_model.py", start = 6, end = 32, render = { kind = "full" } },
+    { path = "statsmodels/regression/linear_model.py", start = 70, end = 77, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 13 — GLM, discrete, key tsa anchors
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "13.1"
+descriptor = "genmod/generalized_linear_model.py — GLM/GLMResults anchors"
+justification = """
+Three class lines locating the canonical GLM implementation:
+`class GLM(base.LikelihoodModel)` at 85, `class GLMResults(...)` at
+1767, `class GLMResultsWrapper(...)` at 2844. One-hop pointer for
+"where is GLM?" / "where are GLM results?".
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/genmod/generalized_linear_model.py", start = 85, end = 85, render = { kind = "full" } },
+    { path = "statsmodels/genmod/generalized_linear_model.py", start = 1767, end = 1767, render = { kind = "full" } },
+    { path = "statsmodels/genmod/generalized_linear_model.py", start = 2844, end = 2844, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "13.2"
+descriptor = "discrete_model.py — class anchors"
+justification = """
+Class declarations for the classical discrete-choice models:
+DiscreteModel, BinaryModel, MultinomialModel, CountModel, Poisson,
+GeneralizedPoisson, Logit, Probit, MNLogit, NegativeBinomial,
+NegativeBinomialP, plus the DiscreteResults base.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/discrete/discrete_model.py", start = 185, end = 185, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 521, end = 521, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 758, end = 758, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 1037, end = 1037, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 1338, end = 1338, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 1962, end = 1962, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 2622, end = 2622, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 2929, end = 2929, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 3255, end = 3255, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 3597, end = 3597, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 4224, end = 4224, render = { kind = "full" } },
+    { path = "statsmodels/discrete/discrete_model.py", start = 4905, end = 4905, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "13.3"
+descriptor = "Key TSA model class locations"
+justification = """
+One-hop pointers to where the major time-series model classes
+live: ARIMA in `tsa/arima/model.py:26`, SARIMAX in
+`tsa/statespace/sarimax.py:37`, AutoReg in `tsa/ar_model.py:100`,
+ExponentialSmoothing in `tsa/holtwinters/model.py:116`, VAR in
+`tsa/vector_ar/var_model.py:523`.
+"""
+content = { kind = "lines", spans = [
+    { path = "statsmodels/tsa/arima/model.py", start = 26, end = 26, render = { kind = "full" } },
+    { path = "statsmodels/tsa/statespace/sarimax.py", start = 37, end = 37, render = { kind = "full" } },
+    { path = "statsmodels/tsa/ar_model.py", start = 100, end = 100, render = { kind = "full" } },
+    { path = "statsmodels/tsa/holtwinters/model.py", start = 116, end = 116, render = { kind = "full" } },
+    { path = "statsmodels/tsa/vector_ar/var_model.py", start = 523, end = 523, render = { kind = "full" } },
+] }

@@ -1,0 +1,750 @@
+fixture = "crawlee-python"
+revision_pin = "b3b8c59b"
+summary = """
+crawlee-python is a Python web scraping / crawling framework: instantiate
+a crawler (BeautifulSoupCrawler / ParselCrawler / PlaywrightCrawler /
+HttpCrawler / Adaptive*, Stagehand*), register
+`@crawler.router.default_handler` and/or labelled handlers,
+`await crawler.run([urls])`. The PyPI package is `crawlee`, src layout
+under `src/crawlee/`. A coding-agent session against this repo
+overwhelmingly needs: (a) the user-facing crawler + context + router
+shape so generated example code compiles, (b) where the heavy
+`BasicCrawler` lifecycle methods live so behavioural questions
+(retries, sessions, autoscaling, robots) land in the right file fast,
+(c) the storage / storage-client split and the
+Dataset/KVS/RequestQueue surface, (d) HTTP-client and Playwright
+pluggability, (e) the docs/examples corpus that doubles as
+copy-pasteable tutorial code. Ranking front-loads the README lede,
+the public re-export surface, the canonical quick-start example, and
+the CLAUDE.md architecture summary, then drills into BasicCrawler /
+context / router / Request / Configuration. Catastrophic-omission
+risk is "agent assumes a crawler type or storage backend doesn't
+exist because we only listed some" — every subpackage __init__/tree
+gets a locations-style batch.
+"""
+
+# =========================================================================
+# Tier 1 — orientation. Stair-stepped to respect the growth envelope.
+# =========================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README crawler tagline"
+justification = """
+Two-line "Python web scraping / browser automation library" pitch.
+Tiny so a 100-token budget gets something useful.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "README.md", start = 9, end = 9, render.kind = "full" },
+  { path = "README.md", start = 24, end = 24, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Public `crawlee` package — imports"
+justification = """
+Top-level `crawlee/__init__.py` imports: Request, RequestOptions,
+RequestState, service_locator, ConcurrencySettings, EnqueueStrategy,
+HttpHeaders, RequestTransformAction, SkippedReason, Glob.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/__init__.py", start = 1, end = 8, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Top-level filesystem layout"
+justification = """
+src/, docs/, tests/, website/, CHANGELOG, README, CLAUDE.md = AGENTS.md
+= GEMINI.md (symlinks to `.rules.md`), CONTRIBUTING, pyproject.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "src/crawlee/ subpackage tree"
+justification = """
+crawlers/, storages/, storage_clients/, http_clients/, browsers/,
+sessions/, events/, _autoscaling/, fingerprint_suite/,
+request_loaders/, statistics/, _utils/, otel/, project_template/,
+plus top-level modules. Catastrophic-omission hedge.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/crawlee", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "CLAUDE.md crawler hierarchy (ASCII tree)"
+justification = """
+The single densest architecture summary in the repo: BasicCrawler →
+AbstractHttpCrawler → Http/BS/Parsel; PlaywrightCrawler;
+AdaptivePlaywrightCrawler.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "CLAUDE.md", start = 64, end = 71, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "CLAUDE.md crawler-layer bullets"
+justification = """
+Bullets clarify what BasicCrawler / AbstractHttpCrawler /
+PlaywrightCrawler each add (request lifecycle, HTTP-client
+integration, browser-based crawling).
+"""
+content.kind = "lines"
+predecessor = "1.5"
+content.spans = [
+  { path = "CLAUDE.md", start = 73, end = 75, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "CLAUDE.md context pipeline chain"
+justification = """
+Completes the architecture mental model:
+BasicCrawlingContext → HttpCrawlingContext → ParsedHttpCrawlingContext
+→ BeautifulSoupCrawlingContext middleware chain, with async-generator
+middleware semantics.
+"""
+content.kind = "lines"
+predecessor = "1.6"
+content.spans = [
+  { path = "CLAUDE.md", start = 77, end = 85, render.kind = "full" },
+]
+
+# =========================================================================
+# Tier 2 — user-facing API: enough to write a working crawler.
+# =========================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "RequestState enum (lifecycle states)"
+justification = """
+The 8-state Request lifecycle (UNPROCESSED→BEFORE_NAV→AFTER_NAV→
+REQUEST_HANDLER→DONE/ERROR_HANDLER/ERROR/SKIPPED) the codebase
+branches on. Small enough to grow cumulative budget before the
+quick-start examples.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_request.py", start = 21, end = 31, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "EnqueueStrategy / HttpMethod / SkippedReason / LogLevel / RequestTransformAction literals"
+justification = """
+The string-literal vocabularies the API accepts: HttpMethod
+(GET/POST/...), EnqueueStrategy (all/same-domain/same-hostname/
+same-origin), SkippedReason (robots_txt), LogLevel, RequestTransformAction.
+Constantly-needed, and pulled here both for early access and to
+clear the envelope path to the quick-start examples.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_types.py", start = 38, end = 52, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Quick-start BeautifulSoup example"
+justification = """
+Most-likely "show me a working crawler" target. Covers:
+`BeautifulSoupCrawler(max_requests_per_crawl=...)`,
+`@crawler.router.default_handler`, `BeautifulSoupCrawlingContext`,
+`context.request.url`, `context.soup.title`, `context.push_data`,
+`context.enqueue_links`, `await crawler.run([urls])`. Zero-follow-up
+dividend.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/quick-start/code_examples/beautifulsoup_crawler_example.py", start = 1, end = 31, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Quick-start Playwright example"
+justification = """
+Sibling to 2.3 for browser-based crawling. Uses `PlaywrightCrawler`,
+`PlaywrightCrawlingContext`, `await context.page.title()`. Together
+they establish the swappable-crawler pattern.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "docs/quick-start/code_examples/playwright_crawler_example.py", start = 1, end = 31, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "crawlers package `__all__` (every exported class)"
+justification = """
+Canonical list of every crawler/context/options class. Catastrophic-
+omission hedge against "the agent forgot Stagehand/Adaptive exists".
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/__init__.py", start = 69, end = 102, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "BasicCrawlingContext fields (what's on `context`)"
+justification = """
+The single most-asked question about handler bodies: "what
+attributes/methods does `context` have?" — request, session,
+proxy_info, send_request, add_requests, push_data, use_state,
+get_key_value_store, log, register_deferred_cleanup, get_snapshot.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_types.py", start = 631, end = 672, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Router class usage block (decorator pattern)"
+justification = """
+The shape every multi-handler crawler uses: `@router.use` middleware,
+`@router.default_handler`, `@router.handler(label='product')`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/router.py", start = 20, end = 61, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Router method signatures (default_handler/handler/use/__call__)"
+justification = """
+Refines 2.7 with the executable surface — header lines only.
+"""
+content.kind = "lines"
+predecessor = "2.7"
+content.spans = [
+  { path = "src/crawlee/router.py", start = 68, end = 68, render.kind = "full" },
+  { path = "src/crawlee/router.py", start = 81, end = 84, render.kind = "full" },
+  { path = "src/crawlee/router.py", start = 99, end = 99, render.kind = "full" },
+  { path = "src/crawlee/router.py", start = 107, end = 107, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "RequestOptions TypedDict (Request.from_url kwargs)"
+justification = """
+Construction-site kwargs: url, method, headers, payload, label,
+session_id, unique_key, id, keep_url_fragment,
+use_extended_unique_key, always_enqueue, user_data, no_retry,
+enqueue_strategy, max_retries.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_request.py", start = 121, end = 142, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "Request model field names"
+justification = """
+Field names on the Request pydantic model: unique_key, url, method,
+payload, headers, user_data, retry_count, no_retry, loaded_url,
+handled_at.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_request.py", start = 171, end = 171, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 183, end = 183, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 187, end = 187, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 190, end = 190, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 209, end = 209, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 213, end = 214, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 230, end = 230, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 233, end = 233, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 236, end = 236, render.kind = "full" },
+  { path = "src/crawlee/_request.py", start = 239, end = 239, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "EnqueueLinksKwargs + strategy docs"
+justification = """
+`context.enqueue_links(strategy=..., include=..., exclude=...,
+limit=..., base_url=...)` + strategy docstring covering all four
+options (all/same-domain/same-hostname/same-origin).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_types.py", start = 147, end = 176, render.kind = "full" },
+]
+
+# =========================================================================
+# Tier 3 — BasicCrawler + the abstract/Playwright shapes.
+# =========================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "BasicCrawler class docstring (responsibilities)"
+justification = """
+The 1720-line class every other crawler subclasses; docstring lists
+autoscaling, retries, session management, statistics, label routing,
+proxy rotation, direct storage helpers.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 249, end = 272, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "BasicCrawler.__init__ kwargs"
+justification = """
+Public configuration surface for every concrete crawler. 35 kwargs
+with defaults: max_request_retries=3, max_session_rotations=10,
+max_crawl_depth, use_session_pool=True, retry_on_blocked=True,
+request_handler_timeout=1min, abort_on_error, keep_alive,
+respect_robots_txt_file, etc.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 278, end = 312, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "BasicCrawler public method headers"
+justification = """
+Header lines for every public method/property on a BasicCrawler
+instance: stop, get_request_manager, get_dataset, get_key_value_store,
+error_handler, failed_request_handler, on_skipped_request, run,
+add_requests, use_state, get_data, export_data.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 537, end = 537, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 615, end = 615, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 625, end = 625, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 641, end = 641, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 657, end = 657, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 667, end = 667, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 677, end = 677, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 685, end = 685, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 809, end = 809, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 857, end = 857, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 868, end = 868, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 898, end = 898, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "BasicCrawler private lifecycle method locations"
+justification = """
+Where retries / session rotation / dispatch / robots live:
+_run_crawler (775), _should_retry_request (965),
+_handle_request_retries (1134), _handle_request_error (1173),
+_handle_failed_request (1199), _handle_skipped_request (1212),
+_commit_request_handler_result (1324), __run_task_function (1376),
+_run_request_handler (1511), _raise_for_error_status_code (1524),
+_raise_for_session_blocked_status_code (1546),
+_is_allowed_based_on_robots_txt_file (1612).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 775, end = 775, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 965, end = 965, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1134, end = 1134, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1173, end = 1173, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1199, end = 1199, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1212, end = 1212, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1324, end = 1324, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1376, end = 1376, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1511, end = 1511, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1524, end = 1524, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1546, end = 1546, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_basic_crawler.py", start = 1612, end = 1612, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "AbstractHttpCrawler class doc"
+justification = """
+Bridge from BasicCrawler to BS/Parsel/Http crawlers — class header
++ docstring; navigation_timeout option from HttpCrawlerOptions.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_abstract_http/_abstract_http_crawler.py", start = 46, end = 47, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_abstract_http/_abstract_http_crawler.py", start = 51, end = 68, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "BeautifulSoupCrawler concrete class header + __init__"
+justification = """
+Template every concrete HTTP-parser crawler copies: subclass
+`AbstractHttpCrawler[Ctx, BeautifulSoup, Tag]`, add a `final_step`
+middleware promoting ParsedHttpCrawlingContext, plug in
+`BeautifulSoupParser`.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_beautifulsoup/_beautifulsoup_crawler.py", start = 21, end = 31, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_beautifulsoup/_beautifulsoup_crawler.py", start = 57, end = 81, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "PlaywrightCrawler class header + generics"
+justification = """
+Browser-based crawler with three TPreNav/TPostNav/TCrawlingContext
+generics behind the pre/post-navigation hook system.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 67, end = 73, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "PlaywrightCrawler method locations"
+justification = """
+Where navigation interception, cookie sync, and hooks live:
+_open_page (325), _navigate (370), _create_extract_links_function
+(436), _handle_status_code_response (518),
+_handle_blocked_request_by_content (543), pre_navigation_hook (588),
+post_navigation_hook (596), _get_cookies (604), _update_cookies (609).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 325, end = 325, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 370, end = 370, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 436, end = 436, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 518, end = 518, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 543, end = 543, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 588, end = 588, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 596, end = 596, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 604, end = 604, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_playwright/_playwright_crawler.py", start = 609, end = 609, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "ContextPipeline class header + compose"
+justification = """
+The middleware-pipeline class. Header + the `compose` factory
+method (how subclasses add their context-enhancing middleware).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/crawlers/_basic/_context_pipeline.py", start = 56, end = 62, render.kind = "full" },
+  { path = "src/crawlee/crawlers/_basic/_context_pipeline.py", start = 125, end = 146, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "crawlers/ subpackage tree"
+justification = """
+Listing of every concrete crawler subdir (_basic, _abstract_http,
+_beautifulsoup, _parsel, _http, _playwright, _adaptive_playwright,
+_stagehand) and its contents. Catastrophic-omission hedge.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/crawlee/crawlers", entries = "all" },
+  { parent = "src/crawlee/crawlers/_basic", entries = "all" },
+  { parent = "src/crawlee/crawlers/_abstract_http", entries = "all" },
+  { parent = "src/crawlee/crawlers/_beautifulsoup", entries = "all" },
+  { parent = "src/crawlee/crawlers/_parsel", entries = "all" },
+  { parent = "src/crawlee/crawlers/_http", entries = "all" },
+  { parent = "src/crawlee/crawlers/_playwright", entries = "all" },
+  { parent = "src/crawlee/crawlers/_adaptive_playwright", entries = "all" },
+  { parent = "src/crawlee/crawlers/_stagehand", entries = "all" },
+]
+
+# =========================================================================
+# Tier 4 — pluggable backends + supporting subsystems.
+# =========================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "storages package re-exports + class headers"
+justification = """
+Dataset, KeyValueStore, RequestQueue — three high-level storage
+classes — each as a one-line class header.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/storages/__init__.py", start = 1, end = 9, render.kind = "full" },
+  { path = "src/crawlee/storages/_dataset.py", start = 33, end = 34, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 40, end = 41, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 33, end = 34, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Storage method locations (Dataset + KVS + RequestQueue)"
+justification = """
+Header lines for every public method on the three storages.
+Catastrophic-omission hedge for the combined storage method
+surface.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/storages/_dataset.py", start = 137, end = 137, render.kind = "full" },
+  { path = "src/crawlee/storages/_dataset.py", start = 150, end = 150, render.kind = "full" },
+  { path = "src/crawlee/storages/_dataset.py", start = 201, end = 201, render.kind = "full" },
+  { path = "src/crawlee/storages/_dataset.py", start = 249, end = 249, render.kind = "full" },
+  { path = "src/crawlee/storages/_dataset.py", start = 300, end = 300, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 160, end = 160, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 173, end = 173, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 188, end = 188, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 196, end = 196, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 216, end = 216, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 240, end = 240, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 251, end = 251, render.kind = "full" },
+  { path = "src/crawlee/storages/_key_value_store.py", start = 262, end = 262, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 177, end = 177, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 201, end = 201, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 251, end = 251, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 268, end = 268, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 279, end = 279, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 294, end = 294, render.kind = "full" },
+  { path = "src/crawlee/storages/_request_queue.py", start = 316, end = 316, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "storage_clients + http_clients `__all__` lists"
+justification = """
+Every storage backend (FileSystemStorageClient, MemoryStorageClient,
+SqlStorageClient, RedisStorageClient, StorageClient ABC) and every
+HTTP client (ImpitHttpClient default, HttpClient ABC,
+HttpCrawlingResult, HttpResponse, HttpxHttpClient,
+CurlImpersonateHttpClient) — just the __all__ entries.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/storage_clients/__init__.py", start = 19, end = 25, render.kind = "full" },
+  { path = "src/crawlee/http_clients/__init__.py", start = 19, end = 26, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "HttpClient ABC method headers"
+justification = """
+The HttpClient contract every backend implements: __init__, crawl,
+send_request, stream, cleanup.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/http_clients/_base.py", start = 75, end = 76, render.kind = "full" },
+  { path = "src/crawlee/http_clients/_base.py", start = 100, end = 100, render.kind = "full" },
+  { path = "src/crawlee/http_clients/_base.py", start = 128, end = 128, render.kind = "full" },
+  { path = "src/crawlee/http_clients/_base.py", start = 160, end = 160, render.kind = "full" },
+  { path = "src/crawlee/http_clients/_base.py", start = 193, end = 193, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "Configuration: env-var driven field names"
+justification = """
+pydantic-settings reading `CRAWLEE_*` / `APIFY_*` env vars. Field
+names: internal_timeout, default_browser_path, disable_browser_sandbox,
+log_level, purge_on_start, persist_state_interval (=1min),
+system_info_interval (=1s), max_used_cpu_ratio (=0.95),
+max_used_memory_ratio (=0.9), max_event_loop_delay (=50ms),
+max_client_errors, memory_mbytes, available_memory_ratio (=0.25),
+storage_dir (=./storage), headless (=True).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/configuration.py", start = 35, end = 35, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 38, end = 38, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 53, end = 53, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 67, end = 67, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 79, end = 79, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 90, end = 90, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 102, end = 102, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 114, end = 114, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 126, end = 126, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 138, end = 138, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 150, end = 150, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 162, end = 162, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 174, end = 174, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 189, end = 189, render.kind = "full" },
+  { path = "src/crawlee/configuration.py", start = 200, end = 200, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "service_locator method names"
+justification = """
+Global registry getter/setter pairs for Configuration, EventManager,
+StorageClient, StorageInstanceManager.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_service_locator.py", start = 20, end = 21, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 38, end = 38, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 46, end = 46, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 63, end = 63, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 76, end = 76, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 93, end = 93, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 106, end = 106, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 124, end = 124, render.kind = "full" },
+  { path = "src/crawlee/_service_locator.py", start = 135, end = 135, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "errors module: every public exception name"
+justification = """
+Every error agents may raise/catch: UserDefinedErrorHandlerError,
+UserHandlerTimeoutError, SessionError, ServiceConflictError,
+ProxyError, HttpStatusCodeError, HttpClientStatusCodeError,
+RequestHandlerError, ContextPipeline{Init,Final,Interrupted}Error,
+RequestCollisionError.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/errors.py", start = 28, end = 28, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 32, end = 32, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 37, end = 37, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 45, end = 45, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 56, end = 56, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 61, end = 61, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 71, end = 71, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 76, end = 76, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 86, end = 86, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 99, end = 99, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 112, end = 112, render.kind = "full" },
+  { path = "src/crawlee/errors.py", start = 117, end = 117, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "ProxyConfiguration constructor + ProxyInfo dataclass"
+justification = """
+ProxyConfiguration enforces "exactly one of {proxy_urls,
+tiered_proxy_urls, new_url_function}" — agents will get this wrong
+without the signature. ProxyInfo: what `context.proxy_info` holds.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/proxy_configuration.py", start = 26, end = 27, render.kind = "full" },
+  { path = "src/crawlee/proxy_configuration.py", start = 56, end = 56, render.kind = "full" },
+  { path = "src/crawlee/proxy_configuration.py", start = 68, end = 74, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "ConcurrencySettings + Event enum"
+justification = """
+ConcurrencySettings(min_concurrency=1, max_concurrency=100,
+desired_concurrency=10, max_tasks_per_minute=inf) + the Event enum
+(PERSIST_STATE / SYSTEM_INFO / MIGRATING / ABORTING / EXIT /
+SESSION_RETIRED / BROWSER_LAUNCHED/RETIRED/CLOSED /
+PAGE_CREATED/CLOSED / CRAWLER_STATUS).
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "src/crawlee/_types.py", start = 105, end = 114, render.kind = "full" },
+  { path = "src/crawlee/events/_types.py", start = 15, end = 36, render.kind = "full" },
+]
+
+# =========================================================================
+# Tier 5 — long tail under tight remaining budget: only the
+# highest-catastrophic-omission targets.
+# =========================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "Remaining subpackage trees (storage backends, browsers, request_loaders)"
+justification = """
+Catastrophic-omission hedge for the most surprising backends:
+storage_clients (file_system / sql / redis each mirror the
+dataset/kvs/rq trio plus _client_mixin / _utils on sql+redis),
+browsers (BrowserPool, PlaywrightBrowser*, StagehandBrowser*),
+request_loaders (RequestList, SitemapRequestLoader,
+ThrottlingRequestManager, RequestManagerTandem).
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "src/crawlee/storage_clients", entries = "all" },
+  { parent = "src/crawlee/browsers", entries = "all" },
+  { parent = "src/crawlee/request_loaders", entries = "all" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "pyproject optional-extras keys (`crawlee[X]`)"
+justification = """
+Names of every extras group: adaptive-crawler, beautifulsoup, cli,
+curl-impersonate, httpx, parsel, playwright, otel, sql_postgres,
+sql_sqlite, sql_mysql, stagehand, redis, all. Anchors
+"pip install 'crawlee[X]'" questions.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "pyproject.toml", start = 53, end = 53, render.kind = "full" },
+  { path = "pyproject.toml", start = 61, end = 61, render.kind = "full" },
+  { path = "pyproject.toml", start = 62, end = 62, render.kind = "full" },
+  { path = "pyproject.toml", start = 63, end = 63, render.kind = "full" },
+  { path = "pyproject.toml", start = 64, end = 64, render.kind = "full" },
+  { path = "pyproject.toml", start = 65, end = 65, render.kind = "full" },
+  { path = "pyproject.toml", start = 66, end = 66, render.kind = "full" },
+  { path = "pyproject.toml", start = 67, end = 67, render.kind = "full" },
+  { path = "pyproject.toml", start = 76, end = 76, render.kind = "full" },
+  { path = "pyproject.toml", start = 80, end = 80, render.kind = "full" },
+  { path = "pyproject.toml", start = 86, end = 86, render.kind = "full" },
+  { path = "pyproject.toml", start = 90, end = 90, render.kind = "full" },
+  { path = "pyproject.toml", start = 95, end = 95, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "pyproject poe task names + project script"
+justification = """
+"How do I run tests / lint / build?" — task header lines (clean,
+install-sync, build, type-check, check-code, install-dev, lint,
+format, unit-tests, unit-tests-cov, e2e-templates-tests, build-docs,
+run-docs) + the `crawlee = "crawlee._cli:cli"` script.
+"""
+content.kind = "lines"
+content.spans = [
+  { path = "pyproject.toml", start = 97, end = 98, render.kind = "full" },
+  { path = "pyproject.toml", start = 307, end = 312, render.kind = "full" },
+  { path = "pyproject.toml", start = 314, end = 314, render.kind = "full" },
+  { path = "pyproject.toml", start = 317, end = 317, render.kind = "full" },
+  { path = "pyproject.toml", start = 320, end = 320, render.kind = "full" },
+  { path = "pyproject.toml", start = 323, end = 323, render.kind = "full" },
+  { path = "pyproject.toml", start = 335, end = 335, render.kind = "full" },
+  { path = "pyproject.toml", start = 352, end = 352, render.kind = "full" },
+  { path = "pyproject.toml", start = 364, end = 364, render.kind = "full" },
+  { path = "pyproject.toml", start = 368, end = 368, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "docs/guides tree (every named guide)"
+justification = """
+Final catastrophic-omission hedge for the long-form docs corpus:
+architecture, avoid_blocking, error_handling, http_clients,
+http_crawlers, playwright_crawler*, proxy_management,
+request_loaders, request_router, request_throttling,
+running_in_web_server, scaling_crawlers, service_locator,
+session_management, stagehand_crawler, storage_clients, storages,
+trace_and_monitor_crawlers, crawler_login, creating_web_archive.
+Agent greps a topic and lands on the guide in one read.
+"""
+content.kind = "fs"
+content.groups = [
+  { parent = "docs/guides", entries = "all" },
+]

@@ -188,6 +188,25 @@ impl Scores {
     pub fn primary(&self) -> f64 {
         self.vector[PRIMARY_BUDGET_INDEX].score
     }
+
+    /// One-line headline rendering: the same first line emitted at the
+    /// top of `tests/divergence/<fixture>.md`. Used by the divergence
+    /// report and by the validation-tier baseline (which only commits
+    /// this line — no per-row table).
+    pub fn headline(&self) -> String {
+        let primary = &self.vector[PRIMARY_BUDGET_INDEX];
+        format!(
+            "Score(3000)={:.3} I={:.3} C={:.3} ns_rows≤3K={}/{} (reached={} partial={} missing={})",
+            primary.score,
+            primary.importance,
+            primary.coverage,
+            self.rows_in_primary,
+            self.total_ns,
+            self.reached,
+            self.partial,
+            self.missing,
+        )
+    }
 }
 
 /// Primary budget for headline counts and per-row attention direction.

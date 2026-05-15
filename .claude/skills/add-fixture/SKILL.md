@@ -18,6 +18,24 @@ and agent spawn strings are derived from it.
 invocation explicitly asks for a human checkpoint on the NS ("let me
 review the north star first"), pause at step 3; otherwise proceed.
 
+## Training vs validation tier
+
+Fixtures land in one of two tiers, registered by different macros in
+`tests/fixture_baselines.rs`:
+
+- **Training** (`per_fixture_tests!`) — drives walker / value
+  calibration via the full per-row divergence report at
+  `tests/divergence/<name>.md`. Most fixtures are training.
+- **Validation** (`per_validation_fixture_tests!`) — held out from
+  calibration. Only the `Score(3000)=…` headline is committed, to
+  `tests/validation/<name>.md`; no schedule TOML, no rendered
+  snapshot, no per-row diff. Used to detect overfitting to the
+  training set; `iterate-divergence` is forbidden from opening them.
+
+Default to training unless the invocation says otherwise. The flow
+below is identical except in step 4 (which macro to use) and the
+artifact set produced in step 5.
+
 **Idempotency**: skip steps whose output already exists.
 
 - `tests/fixtures/<name>/` exists → skip step 1's clone.
@@ -67,12 +85,18 @@ path. Otherwise: continue.
 
 ## 4. Register in the test macro
 
-Edit `tests/fixture_baselines.rs` — add a `per_fixture_tests!(<name>);`
-line alongside the existing fixtures. This generates one
-`fixture_baselines_<name>` test that checks the schedule TOML,
-divergence report (when an NS exists), and rendered snapshot in one
-walker pass. The `ns_pins_match_fixture_pins` test picks up the new NS
-automatically.
+Edit `tests/fixture_baselines.rs`. Choose the tier:
+
+- Training: `per_fixture_tests!(<name>);` — alongside the existing
+  training fixtures. Generates `fixture_baselines_<name>` covering
+  schedule TOML, divergence report, and rendered snapshot in one
+  walker pass.
+- Validation: `per_validation_fixture_tests!(<name>);` — alongside
+  the validation block. Generates `fixture_baselines_validation_<name>`
+  which commits *only* `tests/validation/<name>.md` (the headline).
+
+The `ns_pins_match_fixture_pins` test picks up the new NS regardless
+of tier (it scans `tests/north-stars/`).
 
 ## 5. Generate baselines
 
@@ -80,15 +104,19 @@ automatically.
 UPDATE_BASELINES=1 cargo t
 ```
 
-Produces all baselines in one invocation:
+Training fixtures produce:
 
 - `tests/snapshots/schedule/<name>.toml`
 - `tests/divergence/<name>.md` (only when an NS exists for the fixture)
 - `tests/snapshots/rendered/<name>.snap`
 
-Score lines print to stdout as the divergence tests run, for fast
-eyeballing. `git diff tests/divergence/` shows the per-batch story for
-this fixture and any fixtures whose reports shifted.
+Validation fixtures produce only:
+
+- `tests/validation/<name>.md` (one line — the `Score(3000)=…` headline)
+
+Score lines print to stdout as tests run, for fast eyeballing.
+`git diff tests/divergence/` shows the per-batch story for training
+fixtures whose reports shifted.
 
 ## 6. Iterate (or report back)
 

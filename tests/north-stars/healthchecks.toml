@@ -1,0 +1,610 @@
+fixture = "healthchecks"
+revision_pin = "ac7b523a"
+summary = """
+Healthchecks is a self-hosted Django web application that monitors cron jobs
+and similar periodic tasks by listening for HTTP "pings". Checks that don't
+ping on time raise alerts through 30+ pluggable notification integrations
+(Slack, email, Telegram, PagerDuty, SMS, etc.). Built on Django 6.0,
+Python 3.12+, PostgreSQL/MySQL/SQLite, organized as a `hc/` package with
+sub-apps `api/`, `front/`, `accounts/`, `logs/`, `payments/`, and one
+`integrations/<kind>/` package per notification transport.
+
+The query distribution this ranking serves:
+- "where does X live" navigation across a large Django codebase with sub-apps
+- understanding the central data model (Check / Ping / Flip / Channel /
+  Notification / TokenBucket and how they connect via the ping flow and
+  alert flow)
+- adding or modifying a notification integration (CONTRIBUTING.md
+  explicitly outlines this workflow; integrations are highly parallel)
+- configuration / env-var / self-hosting questions (a large fraction of
+  this codebase is config knobs in `hc/settings.py` plus the docs in
+  `templates/docs/*.md`)
+- bug-fixing in views, forms, transports, management commands
+- understanding the test setup (`hc/test.py` `BaseTestCase`)
+
+Top priority is breadth — locations of every URL route, view function,
+transport class, management command, and integration package — so the
+agent can grep precisely. Catastrophic-omission risk is high because
+the `integrations/` package has 30 highly-parallel sub-packages and
+because `hc/settings.py` has many integration-toggle constants whose
+absence would lead an agent to "this integration doesn't exist".
+"""
+
+# =============================================================================
+# Tier 1: concept, fixture shape, top-level files
+# =============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README title + one-line concept"
+justification = "Smallest possible orient: project name + the one paragraph that defines what it does. Stays under the 100-token floor."
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+    { path = "README.md", start = 5, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Repository root listing"
+justification = "Names every top-level file and dir so the agent can see `hc/`, `templates/`, `docker/`, `static/`, the requirement files, `manage.py`, `mypy.ini`, `CHANGELOG.md`, `CONTRIBUTING.md`. Catastrophic-omission mitigation for the root."
+content = { kind = "fs", groups = [
+    { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README — features + tech stack lines"
+justification = "Names the major features (dashboard, API, 25+ integrations, reports, WebAuthn, team mgmt) and the building-blocks (Python 3.12+, Django 6.0, Postgres/MySQL/MariaDB)."
+predecessor = "1.1"
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 9, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "hc/ package listing — the Django project"
+justification = "The five+ sub-apps (accounts, api, front, integrations, lib, logs, payments) plus settings.py, urls.py, wsgi.py, test.py. Without this the agent has to guess where features live."
+content = { kind = "fs", groups = [
+    { parent = "hc", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "integrations/ subpackages — all 30 notification transports"
+justification = "Catastrophic-omission mitigation: list every integration sub-package, otherwise agent assumes the unlisted ones don't exist. Single most asymmetric piece of info in the repo — no other way to know that, say, `victorops` or `gotify` are supported."
+content = { kind = "fs", groups = [
+    { parent = "hc/integrations", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "Python runtime dependencies"
+justification = "Names every third-party Python library used at runtime: Django, pycurl, pydantic, cronsim, oncalendar, aiosmtpd, fido2, segno, pyotp, whitenoise, psycopg, statsd, PyJWT, django-compressor."
+content = { kind = "lines", spans = [
+    { path = "requirements.txt", start = 1, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "Python dev/optional dependencies"
+justification = "Optional libs and dev tooling: apprise, minio, mypy, Markdown, Pygments, mysqlclient, time-machine, type stubs. Pairs with 1.6 to enumerate Python deps."
+predecessor = "1.6"
+content = { kind = "lines", spans = [
+    { path = "requirements-dev.txt", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "Django entrypoint (manage.py)"
+justification = "Tiny script that sets `DJANGO_SETTINGS_MODULE=hc.settings` and forwards to django-admin. Confirms the project layout for anyone unfamiliar with Django."
+content = { kind = "lines", spans = [
+    { path = "manage.py", start = 1, end = 17, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 2: core data model — Check, Ping, Flip, Channel, Notification, TokenBucket
+# =============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "api/models.py — class roster (locations)"
+justification = "One-line class header for every model in api/models.py. This is the single most consulted file in the repo (everything imports Check/Ping/Flip/Channel/Notification from here). Catastrophic-omission mitigation: shows the agent that Check, Ping, Channel, Notification, Flip, TokenBucket all exist, plus the Pydantic *Conf classes (TelegramConf, ZulipConf, NtfyConf, …) that decode each Channel.value JSON shape."
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 109, end = 109, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 146, end = 146, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 161, end = 161, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 184, end = 184, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 671, end = 671, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 684, end = 684, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 875, end = 875, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 882, end = 882, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 889, end = 889, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 894, end = 894, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 907, end = 907, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 913, end = 913, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 927, end = 927, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 932, end = 932, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 955, end = 955, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 967, end = 967, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 974, end = 974, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 980, end = 980, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 985, end = 985, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 1300, end = 1300, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 1322, end = 1322, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 1380, end = 1380, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "api/models.py — domain constants"
+justification = "STATUSES, DEFAULT_TIMEOUT, DEFAULT_GRACE, CHECK_KINDS, MAX_DURATION, REASONS — the shared constants every model/view references. CHECK_KINDS ('simple', 'cron', 'oncalendar') drives a lot of scheduling logic."
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 37, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "TRANSPORTS dispatch table — first half"
+justification = "Top half of the channel-kind → transport-class dispatch map (apprise through ntfy). The table that `Channel.transport` uses to instantiate a transport. Pairs with 1.5: 1.5 lists the integration directories, 2.3/2.4 list the kinds the application code actually dispatches on, with their full Python paths."
+predecessor = "1.5"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 47, end = 62, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "TRANSPORTS dispatch table — second half"
+justification = "Continuation of the dispatch map (opsgenie through zulip). Paired with 2.3 to fully enumerate the 30 transport classes the application registers."
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 63, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Check model — field list"
+justification = "All persistent fields on a Check: name, slug, tags, code (UUID), desc, project FK, kind, timeout, grace, schedule, tz, filter_* booleans, *_kw keywords, methods, manual_resume, badge_key, n_pings, last_ping, last_start, last_duration, alert_after, status. Half of every bug investigation in this codebase needs to know these field names."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 184, end = 215, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Top-level URL conf (hc/urls.py) — non-integration includes + prefix"
+justification = "Top of hc/urls.py: site prefix logic + the admin/accounts/api/front/payments routes. Shows that hc.api.urls owns the ping endpoint and that hc.accounts.urls is mounted at the prefix root."
+content = { kind = "lines", spans = [
+    { path = "hc/urls.py", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Check — methods (locations, names only)"
+justification = "Lists every method on Check by name: ping, prune, get_status, get_grace_start, going_down_after, downtimes, create_flip, to_dict, url, email, channels_str, tags_list, rename_and_delete, visible_pings, etc. Catastrophic-omission mitigation for the Check method surface."
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 232, end = 232, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 235, end = 235, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 241, end = 241, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 259, end = 259, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 264, end = 264, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 267, end = 267, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 270, end = 270, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 287, end = 287, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 292, end = 292, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 331, end = 331, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 344, end = 344, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 347, end = 347, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 374, end = 374, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 401, end = 401, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 405, end = 405, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 408, end = 408, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 411, end = 411, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 424, end = 424, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 428, end = 428, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 431, end = 431, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 485, end = 485, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 571, end = 571, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 604, end = 604, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 608, end = 608, render = { kind = "full" } },
+    { path = "hc/api/models.py", start = 644, end = 644, render = { kind = "truncated", pattern = "    def [^(]+" } },
+    { path = "hc/api/models.py", start = 648, end = 648, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Channel model — field list"
+justification = "Channel's persistent fields (name, code, project, kind, value, email_verified, disabled, last_notify, last_error, M2M to Check). One Channel row stores one transport-instance; its `kind` selects the entry from TRANSPORTS (2.3/2.4) and its `value` is parsed by per-kind Pydantic *Conf classes."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 985, end = 998, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Flip model — fields + Meta indexes"
+justification = "Flip records check-status transitions. The Meta indexes (api_flip_not_processed, api_flip_owner_created) are what `sendalerts` consumes when polling for unprocessed flips and what `_get_events` uses for the event timeline."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+    { path = "hc/api/models.py", start = 1322, end = 1345, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 3: routing + auth scaffolding
+# =============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "hc/api/urls.py — REST API routes (api_urls)"
+justification = "Names every REST URL handler under /api/v{1,2,3}/: checks/, checks/<uuid>, checks/<uuid>/pause|resume, pings/, pings/<n>/body, flips/, channels/, badges/, metrics/, status/, bounces/."
+content = { kind = "lines", spans = [
+    { path = "hc/api/urls.py", start = 48, end = 72, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "hc/api/urls.py — ping receiver + badge routes"
+justification = "Outer `urlpatterns` for hc.api: ping/<uuid>, ping/<slug>/<slug>, /api/v1|v2|v3/ (each including the same api_urls list), badge/<key>/<sig>/<tag>.<fmt>, b/<states>/<key>.<fmt>. Three API versions sharing one route list is non-obvious."
+predecessor = "3.1"
+content = { kind = "lines", spans = [
+    { path = "hc/api/urls.py", start = 74, end = 81, render = { kind = "full" } },
+    { path = "hc/api/urls.py", start = 83, end = 83, render = { kind = "full" } },
+    { path = "hc/api/urls.py", start = 88, end = 88, render = { kind = "full" } },
+    { path = "hc/api/urls.py", start = 94, end = 94, render = { kind = "full" } },
+    { path = "hc/api/urls.py", start = 98, end = 98, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "hc/front/urls.py — per-check web URLs"
+justification = "Names every /checks/<code>/<action>/ web-UI route: name, details, filtering_rules, timeout, pause, resume, remove, clear_events, log, log_events, status, last_ping, transfer, copy, pings/<n>/, ping_body/, channels/<channel_code>/enabled."
+content = { kind = "lines", spans = [
+    { path = "hc/front/urls.py", start = 6, end = 29, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "hc/front/urls.py — channel + project + top-level"
+justification = "Channel-level routes (integrations/<code>/{checks,name,edit,test,remove}/), project-level (projects/<code>/{badges,checks,checks/add,checks/status,integrations}/), top-level (/, /tv/, /checks/<code>/, /cloaked/<key>/, projects/menu/, /docs/, /docs/<doc>/, contact.vcf)."
+predecessor = "3.3"
+content = { kind = "lines", spans = [
+    { path = "hc/front/urls.py", start = 31, end = 38, render = { kind = "full" } },
+    { path = "hc/front/urls.py", start = 40, end = 47, render = { kind = "full" } },
+    { path = "hc/front/urls.py", start = 49, end = 66, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "hc/accounts/urls.py — auth + project routes"
+justification = "Names every account URL: login, logout, signup, signup/csrf, login_link_sent, check_token/<u>/<t>, profile, profile/appearance, profile/notifications, close, unsubscribe_reports/<sig>, set_password, change_email, change_email/<sig>, login/two_factor/{webauthn,totp}, two_factor/{webauthn,totp,totp/remove,<code>/remove}, projects/{add,<code>/settings,<code>/remove}."
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/urls.py", start = 7, end = 51, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "hc/api/decorators.py — ApiRequest + @authorize + @cors signatures"
+justification = "How every REST view authenticates. ApiRequest extends HttpRequest with `project`, `readonly`, `v`, `json`. `authorize` requires a 32-char X-Api-Key in header (or `api_key` in JSON body). `authorize_read` also accepts read-only keys (hcr_ prefix). The CORS decorator handles OPTIONS preflight."
+content = { kind = "lines", spans = [
+    { path = "hc/api/decorators.py", start = 12, end = 16, render = { kind = "full" } },
+    { path = "hc/api/decorators.py", start = 19, end = 28, render = { kind = "full" } },
+    { path = "hc/api/decorators.py", start = 31, end = 31, render = { kind = "full" } },
+    { path = "hc/api/decorators.py", start = 47, end = 65, render = { kind = "full" } },
+    { path = "hc/api/decorators.py", start = 69, end = 69, render = { kind = "full" } },
+    { path = "hc/api/decorators.py", start = 94, end = 94, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "hc/accounts/middleware.py — TeamAccessMiddleware + CustomHeaderMiddleware"
+justification = "Two middleware classes listed in settings.MIDDLEWARE. TeamAccessMiddleware attaches `request.profile`. CustomHeaderMiddleware enables REMOTE_USER_HEADER external-auth (SSO via proxy). High value for 'why is request.profile populated?' and 'how does SSO work?'."
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/middleware.py", start = 15, end = 24, render = { kind = "full" } },
+    { path = "hc/accounts/middleware.py", start = 27, end = 35, render = { kind = "full" } },
+    { path = "hc/accounts/middleware.py", start = 37, end = 41, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "hc/accounts/backends.py — three auth backends (signatures)"
+justification = "The three Django authentication backends listed in settings.AUTHENTICATION_BACKENDS. EmailBackend = standard email+password; ProfileBackend = login via signed token (sent via login link email); CustomHeaderBackend = SSO proxy."
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/backends.py", start = 11, end = 18, render = { kind = "full" } },
+    { path = "hc/accounts/backends.py", start = 22, end = 28, render = { kind = "full" } },
+    { path = "hc/accounts/backends.py", start = 44, end = 50, render = { kind = "full" } },
+    { path = "hc/accounts/backends.py", start = 65, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "AuthenticatedHttpRequest type alias"
+justification = "Tiny but load-bearing — `hc/accounts/http.py` defines `AuthenticatedHttpRequest`, the type used in every authenticated view's signature in front/views.py and accounts/views.py."
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/http.py", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "hc/payments/urls.py + views stub"
+justification = "Tiny — confirms the payments app is a placeholder (pricing/billing return 'not implemented'). Saves the agent from misreading payments as fully wired."
+content = { kind = "lines", spans = [
+    { path = "hc/payments/urls.py", start = 7, end = 11, render = { kind = "full" } },
+    { path = "hc/payments/views.py", start = 9, end = 17, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 4: view function rosters + integration transport classes + lib helpers
+# (the breadth of "where can I find function X" answers for ~3000 lines of
+# views + 30 transport classes + a dozen lib helpers)
+# =============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "hc/api/views.py — function roster"
+justification = "Names every top-level function in hc.api.views (935 lines): ping, ping_by_slug, get_checks, create_check, checks, channels, get_check, get_check_by_unique_key, update_check, delete_check, single, pause, resume, pings, ping_body, flips, flips_by_uuid, flips_by_unique_key, badges, badge, check_badge, notification_status, metrics, status, bounces, plus helpers (Spec, guess_kind, valid_ip, _lookup, _update). Catastrophic-omission mitigation for the REST/ping handler surface."
+content = { kind = "lines", spans = [
+    { path = "hc/api/views.py", start = 52, end = 52, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 60, end = 60, render = { kind = "full" } },
+    { path = "hc/api/views.py", start = 160, end = 160, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 170, end = 170, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 180, end = 180, render = { kind = "full" } },
+    { path = "hc/api/views.py", start = 247, end = 247, render = { kind = "full" } },
+    { path = "hc/api/views.py", start = 282, end = 282, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 307, end = 307, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 405, end = 405, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 430, end = 430, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 455, end = 455, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 465, end = 465, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 472, end = 472, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 483, end = 483, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 491, end = 491, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 517, end = 517, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 530, end = 530, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 543, end = 543, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 570, end = 570, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 592, end = 592, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 618, end = 618, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 641, end = 641, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 667, end = 667, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 675, end = 675, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 685, end = 685, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 721, end = 721, render = { kind = "full" } },
+    { path = "hc/api/views.py", start = 775, end = 775, render = { kind = "full" } },
+    { path = "hc/api/views.py", start = 808, end = 808, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 847, end = 847, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 865, end = 865, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/api/views.py", start = 874, end = 874, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "hc/front/views.py — function roster"
+justification = "Names every top-level function in hc.front.views (1406 lines): checks, status, switch_channel, index, projects_menu, dashboard, serve_doc, docs_search, docs_cron, add_check, update_name, filtering_rules, update_timeout, cron_preview, oncalendar_preview, validate_schedule, ping_details, ping_body, pause, resume, remove_check, clear_events, log, details, uncloak, transfer, copy, status_single, badges, channels, channel_checks, update_channel_name, send_test_notification, remove_channel, edit_channel, log_events, contact_vcf — plus helpers and the _replace_placeholders / _get_events private functions."
+content = { kind = "lines", spans = [
+    { path = "hc/front/views.py", start = 224, end = 224, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 317, end = 317, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 345, end = 345, render = { kind = "full" } },
+    { path = "hc/front/views.py", start = 386, end = 386, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 424, end = 424, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 441, end = 441, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 475, end = 475, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 500, end = 500, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 524, end = 524, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 530, end = 530, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 559, end = 559, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 580, end = 580, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 602, end = 602, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 671, end = 671, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 689, end = 689, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 712, end = 712, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 732, end = 732, render = { kind = "full" } },
+    { path = "hc/front/views.py", start = 793, end = 793, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 813, end = 813, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 841, end = 841, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 859, end = 859, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 869, end = 869, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 941, end = 941, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 981, end = 981, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1023, end = 1023, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1032, end = 1032, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1058, end = 1058, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1100, end = 1100, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1133, end = 1133, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1183, end = 1183, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1257, end = 1257, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1269, end = 1269, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1282, end = 1282, render = { kind = "full" } },
+    { path = "hc/front/views.py", start = 1319, end = 1319, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1328, end = 1328, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1362, end = 1362, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/front/views.py", start = 1396, end = 1396, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "hc/accounts/views.py — function roster (public views)"
+justification = "Names every public auth view in hc.accounts.views (943 lines): login, logout, signup, signup_csrf, login_link_sent, check_token, profile, add_project, project, notifications, set_password, change_email, change_email_verify, unsubscribe_reports, close, remove_project, add_webauthn, add_totp, remove_totp, remove_credential, login_webauthn, login_totp, appearance. Plus the _make_user, _check_2fa, _redirect_after_login helpers."
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/views.py", start = 76, end = 76, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 110, end = 110, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 125, end = 125, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 162, end = 162, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 205, end = 205, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 210, end = 210, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 218, end = 218, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 250, end = 250, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 254, end = 254, render = { kind = "full" } },
+    { path = "hc/accounts/views.py", start = 288, end = 288, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 348, end = 348, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 362, end = 362, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 546, end = 546, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 580, end = 580, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 603, end = 603, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 631, end = 631, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 641, end = 641, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 685, end = 685, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 710, end = 710, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 720, end = 720, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 756, end = 756, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 791, end = 791, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 805, end = 805, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 828, end = 828, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 883, end = 883, render = { kind = "truncated", pattern = "^def [^(]+" } },
+    { path = "hc/accounts/views.py", start = 927, end = 927, render = { kind = "truncated", pattern = "^def [^(]+" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "hc/api/transports.py — Transport / HttpTransport base classes"
+justification = "Class headers + the Transport notify/is_noop/down_checks/last_ping/tmpl interface, plus HttpTransport.{request,post,put} that wraps lib.curl. Every integration's transport.py inherits from one of these. High zero-follow-up value for understanding the transport-class contract."
+content = { kind = "lines", spans = [
+    { path = "hc/api/transports.py", start = 18, end = 18, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 41, end = 44, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 47, end = 51, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 61, end = 61, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 72, end = 72, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 90, end = 90, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 104, end = 104, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 110, end = 111, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 117, end = 119, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 152, end = 152, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 185, end = 185, render = { kind = "full" } },
+    { path = "hc/api/transports.py", start = 209, end = 209, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Integration transport classes — locations (1 line per integration)"
+justification = "Single-line class header for every concrete transport class: Apprise, Call, Discord, Email, GitHub, GoogleChat, Gotify, Group, Matrix, Mattermost, MsTeamsWorkflow, Ntfy, Opsgenie, PagerTree, PagerDuty, Pushover, Pushbullet, RocketChat, Shell, Signal, Slack/Slackalike, Sms, Spike, Telegram, Trello, VictorOps, Webhook, WhatsApp, Zulip. Catastrophic-omission mitigation: the agent learns each transport's class name and base class (HttpTransport vs Transport vs Slackalike) in one shot."
+predecessor = "1.5"
+content = { kind = "lines", spans = [
+    { path = "hc/integrations/apprise/transport.py", start = 15, end = 15, render = { kind = "full" } },
+    { path = "hc/integrations/call/transport.py", start = 17, end = 17, render = { kind = "full" } },
+    { path = "hc/integrations/discord/transport.py", start = 11, end = 11, render = { kind = "full" } },
+    { path = "hc/integrations/email/transport.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "hc/integrations/github/transport.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "hc/integrations/googlechat/transport.py", start = 17, end = 17, render = { kind = "full" } },
+    { path = "hc/integrations/gotify/transport.py", start = 9, end = 9, render = { kind = "full" } },
+    { path = "hc/integrations/group/transport.py", start = 7, end = 7, render = { kind = "full" } },
+    { path = "hc/integrations/matrix/transport.py", start = 11, end = 11, render = { kind = "full" } },
+    { path = "hc/integrations/mattermost/transport.py", start = 9, end = 9, render = { kind = "full" } },
+    { path = "hc/integrations/msteamsw/transport.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "hc/integrations/ntfy/transport.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "hc/integrations/opsgenie/transport.py", start = 14, end = 14, render = { kind = "full" } },
+    { path = "hc/integrations/pagertree/transport.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "hc/integrations/pd/transport.py", start = 10, end = 10, render = { kind = "full" } },
+    { path = "hc/integrations/po/transport.py", start = 15, end = 15, render = { kind = "full" } },
+    { path = "hc/integrations/pushbullet/transport.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "hc/integrations/rocketchat/transport.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "hc/integrations/shell/transport.py", start = 13, end = 13, render = { kind = "full" } },
+    { path = "hc/integrations/signal/transport.py", start = 26, end = 26, render = { kind = "full" } },
+    { path = "hc/integrations/slack/transport.py", start = 27, end = 27, render = { kind = "full" } },
+    { path = "hc/integrations/slack/transport.py", start = 92, end = 92, render = { kind = "full" } },
+    { path = "hc/integrations/sms/transport.py", start = 16, end = 16, render = { kind = "full" } },
+    { path = "hc/integrations/spike/transport.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "hc/integrations/telegram/transport.py", start = 18, end = 18, render = { kind = "full" } },
+    { path = "hc/integrations/trello/transport.py", start = 8, end = 8, render = { kind = "full" } },
+    { path = "hc/integrations/victorops/transport.py", start = 11, end = 11, render = { kind = "full" } },
+    { path = "hc/integrations/webhook/transport.py", start = 12, end = 12, render = { kind = "full" } },
+    { path = "hc/integrations/whatsapp/transport.py", start = 18, end = 18, render = { kind = "full" } },
+    { path = "hc/integrations/zulip/transport.py", start = 12, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "hc/lib/ listing"
+justification = "Names every helper module under hc/lib/: badges, curl, date, emails, html, s3, signing, statsd, string, tests, typealias, tz, urls, webauthn. Catastrophic-omission mitigation for the lib surface — many of these helpers are imported throughout the codebase."
+content = { kind = "fs", groups = [
+    { parent = "hc/lib", entries = "all" },
+] }
+
+# =============================================================================
+# Tier 5: documentation surfaces, contributing workflow, management commands
+# =============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "README — H2 section index (locations)"
+justification = "Lists every H2 section heading in README.md (Setting Up for Development, Configuration, Accessing Administration Panel, Sending Emails, Receiving Emails, Sending Alerts and Reports, Database Cleanup, Two-factor Authentication, External Authentication, External Object Storage, Integrations, Running in Production, Docker Image). Catastrophic-omission mitigation for the README structure — a self-hosting question is best answered by jumping to the right section."
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 58, end = 58, render = { kind = "full" } },
+    { path = "README.md", start = 140, end = 140, render = { kind = "full" } },
+    { path = "README.md", start = 154, end = 154, render = { kind = "full" } },
+    { path = "README.md", start = 167, end = 167, render = { kind = "full" } },
+    { path = "README.md", start = 199, end = 199, render = { kind = "full" } },
+    { path = "README.md", start = 221, end = 221, render = { kind = "full" } },
+    { path = "README.md", start = 251, end = 251, render = { kind = "full" } },
+    { path = "README.md", start = 295, end = 295, render = { kind = "full" } },
+    { path = "README.md", start = 303, end = 303, render = { kind = "full" } },
+    { path = "README.md", start = 344, end = 344, render = { kind = "full" } },
+    { path = "README.md", start = 376, end = 376, render = { kind = "full" } },
+    { path = "README.md", start = 534, end = 534, render = { kind = "full" } },
+    { path = "README.md", start = 589, end = 589, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "CONTRIBUTING.md — Developing a New Integration workflow"
+justification = "Maintainer-authored checklist of every file an integration must touch when adding a new transport: hc/integrations/<kind>/{transport.py,templates/,tests/test_notify.py,views.py,templates/add_<kind>.py,static/img/}, hc/api/models.py TRANSPORTS, templates/front/{channels,event_summary}.html, hc/urls.py. Highest-value single batch for the 'how do I add an integration?' query."
+content = { kind = "lines", spans = [
+    { path = "CONTRIBUTING.md", start = 39, end = 77, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "Management commands inventory (locations)"
+justification = "Lists every Django management command across all sub-apps so the agent knows what `./manage.py <cmd>` operations exist: sendalerts, sendreports, smtpd, pruneobjects, prunepingsslow, prunetokenbucket, settelegramwebhook, submitchallenge (api); createsuperuser, pruneusers, senddeletionscheduled, sendflappingnotices, sendinactivitynotices (accounts); populate_searchdb, pygmentize, render_docs (front); sendlogs (logs). Catastrophic-omission mitigation for the operations CLI."
+content = { kind = "fs", groups = [
+    { parent = "hc/api/management/commands", entries = "all" },
+    { parent = "hc/accounts/management/commands", entries = "all" },
+    { parent = "hc/front/management/commands", entries = "all" },
+    { parent = "hc/logs/management/commands", entries = "all" },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "templates/docs — .md doc page index"
+justification = "Names every .md doc page under templates/docs/. The agent learns these doc topics exist: api/apiv1/apiv2 (REST API reference), bash/python/ruby/php/csharp/go/javascript/powershell (per-language client examples), configuring_checks, configuring_notifications, configuring_prometheus, monitoring_cron_jobs, monitoring_systemd_tasks, reliability_tips, self_hosted, self_hosted_configuration, self_hosted_docker, signaling_failures, slug_urls. Each .md also has a generated .html-fragment companion (omitted to halve list size)."
+content = { kind = "fs", groups = [
+    { parent = "templates/docs", entries = ["api.md", "apiv1.md", "apiv2.md", "arduino.md", "attaching_logs.md", "autoprovisioning.md", "badges.md", "bash.md", "cloning_checks.md", "configuring_checks.md", "configuring_notifications.md", "configuring_prometheus.md", "csharp.md", "email.md", "github_actions.md", "go.md", "http_api.md", "introduction.md", "javascript.md", "measuring_script_run_time.md", "monitoring_cron_jobs.md", "monitoring_systemd_tasks.md", "network_routers.md", "php.md", "powershell.md", "projects_teams.md", "python.md", "reliability_tips.md", "resources.md", "ruby.md", "self_hosted_configuration.md", "self_hosted_docker.md", "self_hosted.md", "signaling_failures.md", "slug_urls.md"] },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "CHANGELOG head — recent versions"
+justification = "Top of CHANGELOG.md shows v4.3-dev (unreleased), v4.2 (2026-04-28), v4.1.1 (2026-03-25), v4.1, v4.0 (2026-01-22 — Django 6.0 upgrade, drops Python 3.11), v3.13, v3.12, v3.11.x. Tells the agent which version they're on and what changed lately. The `## v4.0` line is also referenced by hc/settings.py:85-88 to parse the running VERSION at startup."
+content = { kind = "lines", spans = [
+    { path = "CHANGELOG.md", start = 1, end = 8, render = { kind = "full" } },
+    { path = "CHANGELOG.md", start = 14, end = 14, render = { kind = "full" } },
+    { path = "CHANGELOG.md", start = 26, end = 26, render = { kind = "full" } },
+    { path = "CHANGELOG.md", start = 31, end = 31, render = { kind = "full" } },
+    { path = "CHANGELOG.md", start = 46, end = 46, render = { kind = "full" } },
+    { path = "CHANGELOG.md", start = 65, end = 65, render = { kind = "full" } },
+] }
+
+# =============================================================================
+# Tier 6: completing the data model (accounts) + alert-loop anchor
+# =============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "accounts/models.py — Profile, Project, Member, Credential class headers"
+justification = "The four account-side models. Profile holds per-user prefs (ping_log_limit, sms_limit, nag_period, reports, deletion_scheduled_date). Project holds API keys + ping_key + show_slugs. Member is the M2M between User and Project with a role (READONLY/REGULAR/MANAGER). Credential is a WebAuthn key. Completes the data model picture started in 2.1 (api models)."
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+    { path = "hc/accounts/models.py", start = 61, end = 61, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 77, end = 77, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 389, end = 389, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 435, end = 435, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 589, end = 589, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 590, end = 593, render = { kind = "full" } },
+    { path = "hc/accounts/models.py", start = 615, end = 615, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "templates/ — top-level templates layout"
+justification = "Names the template directories used by hc.settings.TEMPLATES.DIRS: templates/{accounts,admin,docs,emails,front} plus base.html, base_bare.html, base_project.html, badge.svg, contact.vcf, bad_link.html, try_later.html. Catastrophic-omission mitigation for template lookups."
+content = { kind = "fs", groups = [
+    { parent = "templates", entries = "all" },
+] }
