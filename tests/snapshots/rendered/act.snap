@@ -52,6 +52,7 @@ README.md
     …
 VERIFICATION
 VERSION
+    1→0.2.88
 act-cli.nuspec
 cmd/
     dir.go
@@ -228,10 +229,6 @@ pkg/
             …
         git/
         job_error.go
-            1→package common
-            3→import (
-            4→	"context"
-            5→)
         line_writer.go
             8→// LineHandler is a callback function for handling a line
             9→type LineHandler func(line string) bool

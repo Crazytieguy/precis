@@ -1,7 +1,7 @@
 fixture = "sqlite-vec"
 budget = 10000
-cumulative_tokens = 9944
-batch_count = 158
+cumulative_tokens = 9977
+batch_count = 154
 
 [[batches]]
 position = 1
@@ -33,10 +33,28 @@ entries = ["go", "python", "rust"]
 
 [[batches]]
 position = 3
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/VERSION" })'
+descriptor = "plaintext config VERSION"
+cost_tokens = 13
+cum_tokens = 96
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/VERSION"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 56
-cum_tokens = 139
+cum_tokens = 152
 
 [batches.content]
 kind = "lines"
@@ -58,11 +76,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 4
+position = 5
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-dist.toml" })'
 descriptor = "[package] in sqlite-dist.toml"
 cost_tokens = 102
-cum_tokens = 241
+cum_tokens = 254
 
 [batches.content]
 kind = "lines"
@@ -76,11 +94,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 5
+position = 6
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 38
-cum_tokens = 279
+cum_tokens = 292
 
 [batches.content]
 kind = "lines"
@@ -150,11 +168,11 @@ end = 153
 kind = "ellipsis"
 
 [[batches]]
-position = 6
+position = 7
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md" })'
 descriptor = "headings outline in ARCHITECTURE.md"
 cost_tokens = 45
-cum_tokens = 324
+cum_tokens = 337
 
 [batches.content]
 kind = "lines"
@@ -224,11 +242,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 7
+position = 8
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tmp-static.py" })'
 descriptor = "python imports in tmp-static.py"
 cost_tokens = 17
-cum_tokens = 341
+cum_tokens = 354
 
 [batches.content]
 kind = "lines"
@@ -242,11 +260,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 8
+position = 9
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/rust" })'
 descriptor = "listing of 'bindings/rust'"
 cost_tokens = 27
-cum_tokens = 368
+cum_tokens = 381
 
 [batches.content]
 kind = "fs"
@@ -256,11 +274,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/rust"
 entries = [".gitignore", "Cargo.lock", "Cargo.toml.tmpl", "Makefile", "build.rs", "src"]
 
 [[batches]]
-position = 9
+position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site" })'
 descriptor = "listing of 'site'"
 cost_tokens = 72
-cum_tokens = 440
+cum_tokens = 453
 
 [batches.content]
 kind = "fs"
@@ -270,11 +288,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site"
 entries = [".gitignore", ".vitepress", "api-reference.md", "build-ref.mjs", "compiling.md", "features", "getting-started", "guides", "index.md", "package-lock.json", "package.json", "project.data.ts", "public", "sqlite.tmlanguage.json", "using", "versioning.md"]
 
 [[batches]]
-position = 10
+position = 11
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/compiling.md" })'
 descriptor = "headings outline in site/compiling.md"
 cost_tokens = 48
-cum_tokens = 488
+cum_tokens = 501
 
 [batches.content]
 kind = "lines"
@@ -344,11 +362,11 @@ end = 55
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 12
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/project.data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in site/project.data.ts"
 cost_tokens = 9
-cum_tokens = 497
+cum_tokens = 510
 
 [batches.content]
 kind = "lines"
@@ -370,11 +388,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 13
 key = 'C(InitTableRows { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 9800, end_line: 9810 })'
 descriptor = "c init table rows at sqlite-vec.c:9800-9810"
 cost_tokens = 42
-cum_tokens = 539
+cum_tokens = 552
 
 [batches.content]
 kind = "lines"
@@ -388,11 +406,11 @@ end = 9808
 kind = "full"
 
 [[batches]]
-position = 13
+position = 14
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 19
-cum_tokens = 558
+cum_tokens = 571
 
 [batches.content]
 kind = "fs"
@@ -402,11 +420,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks"
 entries = ["README.md", "exhaustive-memory", "micro", "profiling", "self-params"]
 
 [[batches]]
-position = 14
+position = 15
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/rust/src" })'
 descriptor = "listing of 'bindings/rust/src'"
 cost_tokens = 4
-cum_tokens = 562
+cum_tokens = 575
 
 [batches.content]
 kind = "fs"
@@ -416,11 +434,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/rust/sr
 entries = ["lib.rs"]
 
 [[batches]]
-position = 15
+position = 16
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/rust/src/lib.rs" })'
 descriptor = "mod/use plumbing in bindings/rust/src/lib.rs"
 cost_tokens = 9
-cum_tokens = 571
+cum_tokens = 584
 
 [batches.content]
 kind = "lines"
@@ -442,11 +460,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 17
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides" })'
 descriptor = "listing of 'site/guides'"
 cost_tokens = 45
-cum_tokens = 616
+cum_tokens = 629
 
 [batches.content]
 kind = "fs"
@@ -456,11 +474,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides"
 entries = ["arithmetic.md", "binary-quant.md", "classifiers.md", "hybrid-search.md", "matryoshka.md", "performance.md", "rag.md", "scalar-quant.md", "semantic-search.md"]
 
 [[batches]]
-position = 17
+position = 18
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/scalar-quant.md" })'
 descriptor = "headings outline in site/guides/scalar-quant.md"
 cost_tokens = 21
-cum_tokens = 637
+cum_tokens = 650
 
 [batches.content]
 kind = "lines"
@@ -490,11 +508,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 18
+position = 19
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/scalar-quant.md", section_index: 1 })'
 descriptor = "site/guides/scalar-quant.md section #1"
 cost_tokens = 0
-cum_tokens = 637
+cum_tokens = 650
 
 [batches.content]
 kind = "lines"
@@ -508,11 +526,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 19
+position = 20
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/package.json" })'
 descriptor = "package scripts in site/package.json"
 cost_tokens = 69
-cum_tokens = 706
+cum_tokens = 719
 
 [batches.content]
 kind = "lines"
@@ -526,11 +544,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 20
+position = 21
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/public" })'
 descriptor = "listing of 'site/public'"
 cost_tokens = 46
-cum_tokens = 752
+cum_tokens = 765
 
 [batches.content]
 kind = "fs"
@@ -540,11 +558,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/public"
 entries = ["flyio.svg", "fonts", "logo.dark.svg", "logo.light.svg", "mozilla.svg", "shinkai.dark.svg", "shinkai.svg", "sqlitecloud.svg", "turso.svg"]
 
 [[batches]]
-position = 21
+position = 22
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/go" })'
 descriptor = "listing of 'bindings/go'"
 cost_tokens = 5
-cum_tokens = 757
+cum_tokens = 770
 
 [batches.content]
 kind = "fs"
@@ -554,11 +572,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/go"
 entries = ["ncruces"]
 
 [[batches]]
-position = 22
+position = 23
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python" })'
 descriptor = "listing of 'bindings/python'"
 cost_tokens = 5
-cum_tokens = 762
+cum_tokens = 775
 
 [batches.content]
 kind = "fs"
@@ -568,11 +586,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python"
 entries = ["extra_init.py"]
 
 [[batches]]
-position = 23
+position = 24
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using" })'
 descriptor = "listing of 'site/using'"
 cost_tokens = 49
-cum_tokens = 811
+cum_tokens = 824
 
 [batches.content]
 kind = "fs"
@@ -582,11 +600,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using"
 entries = ["android-ios.md", "c.md", "datasette.md", "go.md", "js.md", "python.md", "rqlite.md", "ruby.md", "rust.md", "sqlite-utils.md", "wasm.md"]
 
 [[batches]]
-position = 24
+position = 25
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/ruby.md" })'
 descriptor = "headings outline in site/using/ruby.md"
 cost_tokens = 29
-cum_tokens = 840
+cum_tokens = 853
 
 [batches.content]
 kind = "lines"
@@ -624,11 +642,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 25
+position = 26
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/rust.md" })'
 descriptor = "headings outline in site/using/rust.md"
 cost_tokens = 29
-cum_tokens = 869
+cum_tokens = 882
 
 [batches.content]
 kind = "lines"
@@ -666,11 +684,11 @@ end = 58
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 27
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/compiling.md", section_index: 0 })'
 descriptor = "site/compiling.md section #0"
 cost_tokens = 32
-cum_tokens = 901
+cum_tokens = 914
 
 [batches.content]
 kind = "lines"
@@ -692,11 +710,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 27
+position = 28
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/project.data.ts", start_line: 12 })'
 descriptor = "export at site/project.data.ts:12"
 cost_tokens = 44
-cum_tokens = 945
+cum_tokens = 958
 
 [batches.content]
 kind = "lines"
@@ -710,11 +728,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 28
+position = 29
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/wasm.md" })'
 descriptor = "headings outline in site/using/wasm.md"
 cost_tokens = 39
-cum_tokens = 984
+cum_tokens = 997
 
 [batches.content]
 kind = "lines"
@@ -752,11 +770,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/matryoshka.md" })'
 descriptor = "headings outline in site/guides/matryoshka.md"
 cost_tokens = 58
-cum_tokens = 1042
+cum_tokens = 1055
 
 [batches.content]
 kind = "lines"
@@ -826,11 +844,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/matryoshka.md", section_index: 2 })'
 descriptor = "site/guides/matryoshka.md section #2"
 cost_tokens = 0
-cum_tokens = 1042
+cum_tokens = 1055
 
 [batches.content]
 kind = "lines"
@@ -844,11 +862,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tmp-static.py", chunk_index: 0 })'
 descriptor = "python decl names surface in tmp-static.py"
 cost_tokens = 130
-cum_tokens = 1172
+cum_tokens = 1185
 
 [batches.content]
 kind = "lines"
@@ -886,11 +904,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 33
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tmp-static.py", start_line: 25 })'
 descriptor = "python decl at tmp-static.py:25"
 cost_tokens = 0
-cum_tokens = 1172
+cum_tokens = 1185
 
 [batches.content]
 kind = "lines"
@@ -904,11 +922,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 33
+position = 34
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/binary-quant.md" })'
 descriptor = "headings outline in site/guides/binary-quant.md"
 cost_tokens = 66
-cum_tokens = 1238
+cum_tokens = 1251
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +1028,11 @@ end = 115
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 35
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started" })'
 descriptor = "listing of 'site/getting-started'"
 cost_tokens = 8
-cum_tokens = 1246
+cum_tokens = 1259
 
 [batches.content]
 kind = "fs"
@@ -1024,11 +1042,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-sta
 entries = ["installation.md", "introduction.md"]
 
 [[batches]]
-position = 35
+position = 36
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md" })'
 descriptor = "headings outline in site/getting-started/installation.md"
 cost_tokens = 43
-cum_tokens = 1289
+cum_tokens = 1302
 
 [batches.content]
 kind = "lines"
@@ -1098,11 +1116,11 @@ end = 75
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 37
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/introduction.md" })'
 descriptor = "headings outline in site/getting-started/introduction.md"
 cost_tokens = 52
-cum_tokens = 1341
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -1164,11 +1182,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/introduction.md", section_index: 0 })'
 descriptor = "site/getting-started/introduction.md section #0"
 cost_tokens = 0
-cum_tokens = 1341
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -1182,11 +1200,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/introduction.md", section_index: 1 })'
 descriptor = "site/getting-started/introduction.md section #1"
 cost_tokens = 0
-cum_tokens = 1341
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -1200,11 +1218,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/introduction.md", section_index: 2 })'
 descriptor = "site/getting-started/introduction.md section #2"
 cost_tokens = 0
-cum_tokens = 1341
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -1218,11 +1236,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/introduction.md", section_index: 3 })'
 descriptor = "site/getting-started/introduction.md section #3"
 cost_tokens = 0
-cum_tokens = 1341
+cum_tokens = 1354
 
 [batches.content]
 kind = "lines"
@@ -1236,11 +1254,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/public/fonts" })'
 descriptor = "listing of 'site/public/fonts'"
 cost_tokens = 44
-cum_tokens = 1385
+cum_tokens = 1398
 
 [batches.content]
 kind = "fs"
@@ -1250,11 +1268,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/public/font
 entries = ["ZillaSlab-SemiBold.otf", "ZillaSlab-SemiBold.ttf", "ZillaSlab-SemiBold.woff", "ZillaSlab-SemiBold.woff2"]
 
 [[batches]]
-position = 42
+position = 43
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 0 })'
 descriptor = "ARCHITECTURE.md section #0"
 cost_tokens = 113
-cum_tokens = 1498
+cum_tokens = 1511
 
 [batches.content]
 kind = "lines"
@@ -1284,11 +1302,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/rag.md", section_index: 0 })'
 descriptor = "site/guides/rag.md section #0"
 cost_tokens = 32
-cum_tokens = 1530
+cum_tokens = 1543
 
 [batches.content]
 kind = "lines"
@@ -1310,11 +1328,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/js.md" })'
 descriptor = "headings outline in site/using/js.md"
 cost_tokens = 66
-cum_tokens = 1596
+cum_tokens = 1609
 
 [batches.content]
 kind = "lines"
@@ -1400,11 +1418,11 @@ end = 148
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", chunk_index: 0 })'
 descriptor = "python decl names surface in bindings/python/extra_init.py"
 cost_tokens = 37
-cum_tokens = 1633
+cum_tokens = 1646
 
 [batches.content]
 kind = "lines"
@@ -1442,11 +1460,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl at bindings/python/extra_init.py:6"
 cost_tokens = 0
-cum_tokens = 1633
+cum_tokens = 1646
 
 [batches.content]
 kind = "lines"
@@ -1460,11 +1478,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl at bindings/python/extra_init.py:11"
 cost_tokens = 0
-cum_tokens = 1633
+cum_tokens = 1646
 
 [batches.content]
 kind = "lines"
@@ -1478,11 +1496,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 6, body_start_line: 8 })'
 descriptor = "python decl body at bindings/python/extra_init.py:6 body 8"
 cost_tokens = 17
-cum_tokens = 1650
+cum_tokens = 1663
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1514,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 49
+position = 50
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 11, body_start_line: 13 })'
 descriptor = "python decl body at bindings/python/extra_init.py:11 body 13"
 cost_tokens = 17
-cum_tokens = 1667
+cum_tokens = 1680
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1532,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 50
+position = 51
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 6 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:6"
 cost_tokens = 22
-cum_tokens = 1689
+cum_tokens = 1702
 
 [batches.content]
 kind = "lines"
@@ -1532,11 +1550,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 51
+position = 52
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py", start_line: 11 })'
 descriptor = "python decl doc at bindings/python/extra_init.py:11"
 cost_tokens = 22
-cum_tokens = 1711
+cum_tokens = 1724
 
 [batches.content]
 kind = "lines"
@@ -1550,11 +1568,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 52
+position = 53
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 571
-cum_tokens = 2282
+cum_tokens = 2295
 
 [batches.content]
 kind = "lines"
@@ -1608,11 +1626,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 53
+position = 54
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features" })'
 descriptor = "listing of 'site/features'"
 cost_tokens = 10
-cum_tokens = 2292
+cum_tokens = 2305
 
 [batches.content]
 kind = "fs"
@@ -1622,11 +1640,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features"
 entries = ["knn.md", "vec0.md"]
 
 [[batches]]
-position = 54
+position = 55
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features/knn.md" })'
 descriptor = "headings outline in site/features/knn.md"
 cost_tokens = 39
-cum_tokens = 2331
+cum_tokens = 2344
 
 [batches.content]
 kind = "lines"
@@ -1680,11 +1698,11 @@ end = 88
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 56
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features/vec0.md" })'
 descriptor = "headings outline in site/features/vec0.md"
 cost_tokens = 77
-cum_tokens = 2408
+cum_tokens = 2421
 
 [batches.content]
 kind = "lines"
@@ -1770,11 +1788,11 @@ end = 188
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 57
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features/vec0.md", section_index: 0 })'
 descriptor = "site/features/vec0.md section #0"
 cost_tokens = 0
-cum_tokens = 2408
+cum_tokens = 2421
 
 [batches.content]
 kind = "lines"
@@ -1788,11 +1806,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 57
+position = 58
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/guides/arithmetic.md", section_index: 0 })'
 descriptor = "site/guides/arithmetic.md section #0"
 cost_tokens = 38
-cum_tokens = 2446
+cum_tokens = 2459
 
 [batches.content]
 kind = "lines"
@@ -1814,11 +1832,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 58
+position = 59
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/go.md" })'
 descriptor = "headings outline in site/using/go.md"
 cost_tokens = 78
-cum_tokens = 2524
+cum_tokens = 2537
 
 [batches.content]
 kind = "lines"
@@ -1888,11 +1906,11 @@ end = 103
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 60
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro" })'
 descriptor = "listing of 'benchmarks/micro'"
 cost_tokens = 24
-cum_tokens = 2548
+cum_tokens = 2561
 
 [batches.content]
 kind = "fs"
@@ -1902,11 +1920,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro
 entries = [".gitignore", "Cargo.lock", "Cargo.toml", "benches", "build.rs", "src"]
 
 [[batches]]
-position = 60
+position = 61
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tmp-static.py", start_line: 13 })'
 descriptor = "python decl at tmp-static.py:13"
 cost_tokens = 152
-cum_tokens = 2700
+cum_tokens = 2713
 
 [batches.content]
 kind = "lines"
@@ -1920,11 +1938,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 61
+position = 62
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/package.json" })'
 descriptor = "package dependencies in site/package.json"
 cost_tokens = 146
-cum_tokens = 2846
+cum_tokens = 2859
 
 [batches.content]
 kind = "lines"
@@ -1938,11 +1956,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 62
+position = 63
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md", section_index: 0 })'
 descriptor = "site/getting-started/installation.md section #0"
 cost_tokens = 45
-cum_tokens = 2891
+cum_tokens = 2904
 
 [batches.content]
 kind = "lines"
@@ -1964,11 +1982,37 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 63
+position = 64
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/TODO" })'
+descriptor = "plaintext config TODO"
+cost_tokens = 244
+cum_tokens = 3148
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/TODO"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/TODO"
+start = 3
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/go/ncruces" })'
 descriptor = "listing of 'bindings/go/ncruces'"
 cost_tokens = 8
-cum_tokens = 2899
+cum_tokens = 3156
 
 [batches.content]
 kind = "fs"
@@ -1978,11 +2022,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/go/ncru
 entries = ["go-sqlite3.patch"]
 
 [[batches]]
-position = 64
+position = 66
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/bindings/python/extra_init.py" })'
 descriptor = "python imports in bindings/python/extra_init.py"
 cost_tokens = 28
-cum_tokens = 2927
+cum_tokens = 3184
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +2040,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 65
+position = 67
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/self-params" })'
 descriptor = "listing of 'benchmarks/self-params'"
 cost_tokens = 13
-cum_tokens = 2940
+cum_tokens = 3197
 
 [batches.content]
 kind = "fs"
@@ -2010,11 +2054,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/self-
 entries = ["build.py", "knn.py", "test.py"]
 
 [[batches]]
-position = 66
+position = 68
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/examples" })'
 descriptor = "listing of 'examples'"
 cost_tokens = 80
-cum_tokens = 3020
+cum_tokens = 3277
 
 [batches.content]
 kind = "fs"
@@ -2024,11 +2068,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/examples"
 entries = ["nbc-headlines", "python-recipes", "simple-bun", "simple-c", "simple-deno", "simple-go-cgo", "simple-go-ncruces", "simple-node", "simple-node2", "simple-python", "simple-ruby", "simple-rust", "simple-sqlite", "simple-wasm", "sqlite3-cli", "wasm"]
 
 [[batches]]
-position = 67
+position = 69
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/python.md" })'
 descriptor = "headings outline in site/using/python.md"
 cost_tokens = 125
-cum_tokens = 3145
+cum_tokens = 3402
 
 [batches.content]
 kind = "lines"
@@ -2178,11 +2222,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 70
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/src" })'
 descriptor = "listing of 'benchmarks/micro/src'"
 cost_tokens = 4
-cum_tokens = 3149
+cum_tokens = 3406
 
 [batches.content]
 kind = "fs"
@@ -2192,11 +2236,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro
 entries = ["lib.rs"]
 
 [[batches]]
-position = 69
+position = 71
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/src/lib.rs", start_line: 8 })'
 descriptor = "pub item at benchmarks/micro/src/lib.rs:8"
 cost_tokens = 12
-cum_tokens = 3161
+cum_tokens = 3418
 
 [batches.content]
 kind = "lines"
@@ -2218,11 +2262,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 72
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md" })'
 descriptor = "headings outline in site/api-reference.md"
 cost_tokens = 486
-cum_tokens = 3647
+cum_tokens = 3904
 
 [batches.content]
 kind = "lines"
@@ -2660,11 +2704,11 @@ end = 664
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 73
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 8 })'
 descriptor = "site/api-reference.md section #8"
 cost_tokens = 13
-cum_tokens = 3660
+cum_tokens = 3917
 
 [batches.content]
 kind = "lines"
@@ -2686,11 +2730,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 72
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 29 })'
 descriptor = "site/api-reference.md section #29"
 cost_tokens = 13
-cum_tokens = 3673
+cum_tokens = 3930
 
 [batches.content]
 kind = "lines"
@@ -2712,11 +2756,11 @@ end = 433
 kind = "full"
 
 [[batches]]
-position = 73
+position = 75
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 39 })'
 descriptor = "site/api-reference.md section #39"
 cost_tokens = 18
-cum_tokens = 3691
+cum_tokens = 3948
 
 [batches.content]
 kind = "lines"
@@ -2738,11 +2782,11 @@ end = 529
 kind = "full"
 
 [[batches]]
-position = 74
+position = 76
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 45 })'
 descriptor = "site/api-reference.md section #45"
 cost_tokens = 22
-cum_tokens = 3713
+cum_tokens = 3970
 
 [batches.content]
 kind = "lines"
@@ -2764,11 +2808,11 @@ end = 665
 kind = "full"
 
 [[batches]]
-position = 75
+position = 77
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 0 })'
 descriptor = "site/api-reference.md section #0"
 cost_tokens = 63
-cum_tokens = 3776
+cum_tokens = 4033
 
 [batches.content]
 kind = "lines"
@@ -2806,11 +2850,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 76
+position = 78
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 1 })'
 descriptor = "site/api-reference.md section #1"
 cost_tokens = 39
-cum_tokens = 3815
+cum_tokens = 4072
 
 [batches.content]
 kind = "lines"
@@ -2840,11 +2884,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 77
+position = 79
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 6 })'
 descriptor = "site/api-reference.md section #6"
 cost_tokens = 13
-cum_tokens = 3828
+cum_tokens = 4085
 
 [batches.content]
 kind = "lines"
@@ -2858,11 +2902,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 78
+position = 80
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 154
-cum_tokens = 3982
+cum_tokens = 4239
 
 [batches.content]
 kind = "lines"
@@ -2884,11 +2928,11 @@ end = 160
 kind = "full"
 
 [[batches]]
-position = 79
+position = 81
 key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c" })'
 descriptor = "c includes in sqlite-vec.c"
 cost_tokens = 113
-cum_tokens = 4095
+cum_tokens = 4352
 
 [batches.content]
 kind = "lines"
@@ -2910,11 +2954,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 80
+position = 82
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", chunk_index: 0 })'
 descriptor = "c decl names surface in sqlite-vec.c"
 cost_tokens = 379
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3160,11 +3204,11 @@ end = 684
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 83
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl at sqlite-vec.c:591"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3186,11 +3230,11 @@ end = 592
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 84
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl at sqlite-vec.c:614"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3212,11 +3256,11 @@ end = 615
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 85
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 629 })'
 descriptor = "c decl at sqlite-vec.c:629"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3238,11 +3282,11 @@ end = 630
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 86
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl at sqlite-vec.c:646"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3264,11 +3308,11 @@ end = 647
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 87
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl at sqlite-vec.c:656"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3290,11 +3334,11 @@ end = 657
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 88
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl at sqlite-vec.c:667"
 cost_tokens = 0
-cum_tokens = 4474
+cum_tokens = 4731
 
 [batches.content]
 kind = "lines"
@@ -3316,11 +3360,11 @@ end = 668
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 89
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 598 })'
 descriptor = "c decl at sqlite-vec.c:598"
 cost_tokens = 40
-cum_tokens = 4514
+cum_tokens = 4771
 
 [batches.content]
 kind = "lines"
@@ -3334,11 +3378,11 @@ end = 603
 kind = "full"
 
 [[batches]]
-position = 88
+position = 90
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 115 })'
 descriptor = "c decl at sqlite-vec.c:115"
 cost_tokens = 78
-cum_tokens = 4592
+cum_tokens = 4849
 
 [batches.content]
 kind = "lines"
@@ -3352,11 +3396,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 89
+position = 91
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl doc at sqlite-vec.c:614"
 cost_tokens = 92
-cum_tokens = 4684
+cum_tokens = 4941
 
 [batches.content]
 kind = "lines"
@@ -3370,11 +3414,11 @@ end = 613
 kind = "full"
 
 [[batches]]
-position = 90
+position = 92
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 591 })'
 descriptor = "c decl body at sqlite-vec.c:591"
 cost_tokens = 66
-cum_tokens = 4750
+cum_tokens = 5007
 
 [batches.content]
 kind = "lines"
@@ -3388,11 +3432,11 @@ end = 596
 kind = "full"
 
 [[batches]]
-position = 91
+position = 93
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 3 })'
 descriptor = "ARCHITECTURE.md section #3"
 cost_tokens = 31
-cum_tokens = 4781
+cum_tokens = 5038
 
 [batches.content]
 kind = "lines"
@@ -3414,11 +3458,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 92
+position = 94
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 5 })'
 descriptor = "ARCHITECTURE.md section #5"
 cost_tokens = 31
-cum_tokens = 4812
+cum_tokens = 5069
 
 [batches.content]
 kind = "lines"
@@ -3440,11 +3484,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 93
+position = 95
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/c.md", section_index: 0 })'
 descriptor = "site/using/c.md section #0"
 cost_tokens = 96
-cum_tokens = 4908
+cum_tokens = 5165
 
 [batches.content]
 kind = "lines"
@@ -3474,11 +3518,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 94
+position = 96
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 4 })'
 descriptor = "ARCHITECTURE.md section #4"
 cost_tokens = 32
-cum_tokens = 4940
+cum_tokens = 5197
 
 [batches.content]
 kind = "lines"
@@ -3500,11 +3544,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 95
+position = 97
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 6 })'
 descriptor = "ARCHITECTURE.md section #6"
 cost_tokens = 32
-cum_tokens = 4972
+cum_tokens = 5229
 
 [batches.content]
 kind = "lines"
@@ -3526,11 +3570,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 96
+position = 98
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 6
-cum_tokens = 4978
+cum_tokens = 5235
 
 [batches.content]
 kind = "fs"
@@ -3540,11 +3584,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/.github"
 entries = ["logos", "workflows"]
 
 [[batches]]
-position = 97
+position = 99
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 12
-cum_tokens = 4990
+cum_tokens = 5247
 
 [batches.content]
 kind = "fs"
@@ -3554,11 +3598,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/.github/workflow
 entries = ["release.yaml", "site.yaml", "test.yaml"]
 
 [[batches]]
-position = 98
+position = 100
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/go.md", section_index: 0 })'
 descriptor = "site/using/go.md section #0"
 cost_tokens = 104
-cum_tokens = 5094
+cum_tokens = 5351
 
 [batches.content]
 kind = "lines"
@@ -3580,11 +3624,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 99
+position = 101
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 646 })'
 descriptor = "c decl body at sqlite-vec.c:646"
 cost_tokens = 74
-cum_tokens = 5168
+cum_tokens = 5425
 
 [batches.content]
 kind = "lines"
@@ -3598,11 +3642,11 @@ end = 653
 kind = "full"
 
 [[batches]]
-position = 100
+position = 102
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tmp-static.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python decl body at tmp-static.py:25 body 26"
 cost_tokens = 189
-cum_tokens = 5357
+cum_tokens = 5614
 
 [batches.content]
 kind = "lines"
@@ -3648,11 +3692,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 101
+position = 103
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 144
-cum_tokens = 5501
+cum_tokens = 5758
 
 [batches.content]
 kind = "fs"
@@ -3662,11 +3706,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests"
 entries = [".gitignore", ".python-version", "Cargo.lock", "Cargo.toml", "__snapshots__", "afbd", "build.rs", "conftest.py", "correctness", "fuzz", "fuzz.py", "leak-fixtures", "minimum", "pyproject.toml", "skip.test-correctness.py", "sqlite-vec-internal.h", "test-auxiliary.py", "test-general.py", "test-knn-distance-constraints.py", "test-loadable.py", "test-metadata.py", "test-partition-keys.py", "test-unit.c", "test-wasm.mjs", "unittest.rs", "utils.py", "uv.lock"]
 
 [[batches]]
-position = 102
+position = 104
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/sqlite-vec-internal.h", chunk_index: 0 })'
 descriptor = "c decl names surface in tests/sqlite-vec-internal.h"
 cost_tokens = 10
-cum_tokens = 5511
+cum_tokens = 5768
 
 [batches.content]
 kind = "lines"
@@ -3688,11 +3732,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 103
+position = 105
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/fuzz" })'
 descriptor = "listing of 'tests/fuzz'"
 cost_tokens = 48
-cum_tokens = 5559
+cum_tokens = 5816
 
 [batches.content]
 kind = "fs"
@@ -3702,11 +3746,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/fuzz"
 entries = [".gitignore", "Makefile", "README.md", "corpus", "exec.c", "exec.dict", "json.c", "numpy.c", "numpy.dict", "vec0-create.c", "vec0-create.dict"]
 
 [[batches]]
-position = 104
+position = 106
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 19 })'
 descriptor = "site/api-reference.md section #19"
 cost_tokens = 22
-cum_tokens = 5581
+cum_tokens = 5838
 
 [batches.content]
 kind = "lines"
@@ -3720,11 +3764,11 @@ end = 244
 kind = "full"
 
 [[batches]]
-position = 105
+position = 107
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 7 })'
 descriptor = "ARCHITECTURE.md section #7"
 cost_tokens = 40
-cum_tokens = 5621
+cum_tokens = 5878
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3782,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 106
+position = 108
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 8 })'
 descriptor = "ARCHITECTURE.md section #8"
 cost_tokens = 41
-cum_tokens = 5662
+cum_tokens = 5919
 
 [batches.content]
 kind = "lines"
@@ -3756,11 +3800,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 107
+position = 109
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/features/knn.md", section_index: 0 })'
 descriptor = "site/features/knn.md section #0"
 cost_tokens = 134
-cum_tokens = 5796
+cum_tokens = 6053
 
 [batches.content]
 kind = "lines"
@@ -3798,11 +3842,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 108
+position = 110
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 656 })'
 descriptor = "c decl body at sqlite-vec.c:656"
 cost_tokens = 89
-cum_tokens = 5885
+cum_tokens = 6142
 
 [batches.content]
 kind = "lines"
@@ -3816,11 +3860,11 @@ end = 665
 kind = "full"
 
 [[batches]]
-position = 109
+position = 111
 key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/benchmarks/micro/src/lib.rs" })'
 descriptor = "mod/use plumbing in benchmarks/micro/src/lib.rs"
 cost_tokens = 16
-cum_tokens = 5901
+cum_tokens = 6158
 
 [batches.content]
 kind = "lines"
@@ -3834,11 +3878,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 110
+position = 112
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/sqlite-utils.md", section_index: 0 })'
 descriptor = "site/using/sqlite-utils.md section #0"
 cost_tokens = 143
-cum_tokens = 6044
+cum_tokens = 6301
 
 [batches.content]
 kind = "lines"
@@ -3876,11 +3920,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 111
+position = 113
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 25 })'
 descriptor = "site/api-reference.md section #25"
 cost_tokens = 25
-cum_tokens = 6069
+cum_tokens = 6326
 
 [batches.content]
 kind = "lines"
@@ -3894,11 +3938,11 @@ end = 317
 kind = "full"
 
 [[batches]]
-position = 112
+position = 114
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 2 })'
 descriptor = "ARCHITECTURE.md section #2"
 cost_tokens = 48
-cum_tokens = 6117
+cum_tokens = 6374
 
 [batches.content]
 kind = "lines"
@@ -3920,11 +3964,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 113
+position = 115
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 36 })'
 descriptor = "site/api-reference.md section #36"
 cost_tokens = 27
-cum_tokens = 6144
+cum_tokens = 6401
 
 [batches.content]
 kind = "lines"
@@ -3938,11 +3982,11 @@ end = 503
 kind = "full"
 
 [[batches]]
-position = 114
+position = 116
 key = 'C(InitTableRows { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 9772, end_line: 9798 })'
 descriptor = "c init table rows at sqlite-vec.c:9772-9798"
 cost_tokens = 498
-cum_tokens = 6642
+cum_tokens = 6899
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +4000,11 @@ end = 9796
 kind = "full"
 
 [[batches]]
-position = 115
+position = 117
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 1 })'
 descriptor = "ARCHITECTURE.md section #1"
 cost_tokens = 50
-cum_tokens = 6692
+cum_tokens = 6949
 
 [batches.content]
 kind = "lines"
@@ -3982,11 +4026,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 116
+position = 118
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 33 })'
 descriptor = "site/api-reference.md section #33"
 cost_tokens = 28
-cum_tokens = 6720
+cum_tokens = 6977
 
 [batches.content]
 kind = "lines"
@@ -4000,11 +4044,11 @@ end = 470
 kind = "full"
 
 [[batches]]
-position = 117
+position = 119
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/versioning.md", section_index: 0 })'
 descriptor = "site/versioning.md section #0"
 cost_tokens = 318
-cum_tokens = 7038
+cum_tokens = 7295
 
 [batches.content]
 kind = "lines"
@@ -4058,11 +4102,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 118
+position = 120
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 667 })'
 descriptor = "c decl body at sqlite-vec.c:667"
 cost_tokens = 113
-cum_tokens = 7151
+cum_tokens = 7408
 
 [batches.content]
 kind = "lines"
@@ -4076,11 +4120,11 @@ end = 680
 kind = "full"
 
 [[batches]]
-position = 119
+position = 121
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/tests/Cargo.toml" })'
 descriptor = "[package] in tests/Cargo.toml"
 cost_tokens = 39
-cum_tokens = 7190
+cum_tokens = 7447
 
 [batches.content]
 kind = "lines"
@@ -4094,11 +4138,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 120
+position = 122
 key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", chunk_index: 1 })'
 descriptor = "c decl names surface #1 in sqlite-vec.c"
 cost_tokens = 494
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4440,11 +4484,11 @@ end = 2112
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 123
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1317 })'
 descriptor = "c decl at sqlite-vec.c:1317"
 cost_tokens = 0
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4466,11 +4510,11 @@ end = 1318
 kind = "ellipsis"
 
 [[batches]]
-position = 122
+position = 124
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1812 })'
 descriptor = "c decl at sqlite-vec.c:1812"
 cost_tokens = 0
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4492,11 +4536,11 @@ end = 1813
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 125
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1816 })'
 descriptor = "c decl at sqlite-vec.c:1816"
 cost_tokens = 0
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4518,11 +4562,11 @@ end = 1817
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 126
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1824 })'
 descriptor = "c decl at sqlite-vec.c:1824"
 cost_tokens = 0
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4544,11 +4588,11 @@ end = 1825
 kind = "ellipsis"
 
 [[batches]]
-position = 125
+position = 127
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1892 })'
 descriptor = "c decl at sqlite-vec.c:1892"
 cost_tokens = 0
-cum_tokens = 7684
+cum_tokens = 7941
 
 [batches.content]
 kind = "lines"
@@ -4570,11 +4614,11 @@ end = 1893
 kind = "ellipsis"
 
 [[batches]]
-position = 126
+position = 128
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1886 })'
 descriptor = "c decl at sqlite-vec.c:1886"
 cost_tokens = 11
-cum_tokens = 7695
+cum_tokens = 7952
 
 [batches.content]
 kind = "lines"
@@ -4596,11 +4640,11 @@ end = 1888
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 129
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1050 })'
 descriptor = "c decl at sqlite-vec.c:1050"
 cost_tokens = 25
-cum_tokens = 7720
+cum_tokens = 7977
 
 [batches.content]
 kind = "lines"
@@ -4614,11 +4658,11 @@ end = 1053
 kind = "full"
 
 [[batches]]
-position = 128
+position = 130
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1880 })'
 descriptor = "c decl at sqlite-vec.c:1880"
 cost_tokens = 34
-cum_tokens = 7754
+cum_tokens = 8011
 
 [batches.content]
 kind = "lines"
@@ -4632,11 +4676,11 @@ end = 1884
 kind = "full"
 
 [[batches]]
-position = 129
+position = 131
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 964 })'
 descriptor = "c decl at sqlite-vec.c:964"
 cost_tokens = 30
-cum_tokens = 7784
+cum_tokens = 8041
 
 [batches.content]
 kind = "lines"
@@ -4658,11 +4702,11 @@ end = 967
 kind = "ellipsis"
 
 [[batches]]
-position = 130
+position = 132
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1806 })'
 descriptor = "c decl at sqlite-vec.c:1806"
 cost_tokens = 38
-cum_tokens = 7822
+cum_tokens = 8079
 
 [batches.content]
 kind = "lines"
@@ -4676,11 +4720,11 @@ end = 1810
 kind = "full"
 
 [[batches]]
-position = 131
+position = 133
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1900 })'
 descriptor = "c decl at sqlite-vec.c:1900"
 cost_tokens = 35
-cum_tokens = 7857
+cum_tokens = 8114
 
 [batches.content]
 kind = "lines"
@@ -4702,11 +4746,11 @@ end = 1903
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 134
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1956 })'
 descriptor = "c decl at sqlite-vec.c:1956"
 cost_tokens = 38
-cum_tokens = 7895
+cum_tokens = 8152
 
 [batches.content]
 kind = "lines"
@@ -4728,11 +4772,11 @@ end = 1960
 kind = "ellipsis"
 
 [[batches]]
-position = 133
+position = 135
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2033 })'
 descriptor = "c decl at sqlite-vec.c:2033"
 cost_tokens = 38
-cum_tokens = 7933
+cum_tokens = 8190
 
 [batches.content]
 kind = "lines"
@@ -4754,11 +4798,11 @@ end = 2037
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 136
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2111 })'
 descriptor = "c decl at sqlite-vec.c:2111"
 cost_tokens = 42
-cum_tokens = 7975
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -4780,11 +4824,11 @@ end = 2115
 kind = "ellipsis"
 
 [[batches]]
-position = 135
+position = 137
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 998 })'
 descriptor = "c decl at sqlite-vec.c:998"
 cost_tokens = 54
-cum_tokens = 8029
+cum_tokens = 8286
 
 [batches.content]
 kind = "lines"
@@ -4806,11 +4850,11 @@ end = 1002
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 138
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1816 })'
 descriptor = "c decl body at sqlite-vec.c:1816"
 cost_tokens = 27
-cum_tokens = 8056
+cum_tokens = 8313
 
 [batches.content]
 kind = "lines"
@@ -4824,11 +4868,11 @@ end = 1817
 kind = "full"
 
 [[batches]]
-position = 137
+position = 139
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1798 })'
 descriptor = "c decl at sqlite-vec.c:1798"
 cost_tokens = 69
-cum_tokens = 8125
+cum_tokens = 8382
 
 [batches.content]
 kind = "lines"
@@ -4842,11 +4886,11 @@ end = 1805
 kind = "full"
 
 [[batches]]
-position = 138
+position = 140
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1812 })'
 descriptor = "c decl body at sqlite-vec.c:1812"
 cost_tokens = 30
-cum_tokens = 8155
+cum_tokens = 8412
 
 [batches.content]
 kind = "lines"
@@ -4860,11 +4904,11 @@ end = 1813
 kind = "full"
 
 [[batches]]
-position = 139
+position = 141
 key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2091 })'
 descriptor = "c decl at sqlite-vec.c:2091"
 cost_tokens = 81
-cum_tokens = 8236
+cum_tokens = 8493
 
 [batches.content]
 kind = "lines"
@@ -4878,11 +4922,11 @@ end = 2097
 kind = "full"
 
 [[batches]]
-position = 140
+position = 142
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1886 })'
 descriptor = "c decl body at sqlite-vec.c:1886"
 cost_tokens = 46
-cum_tokens = 8282
+cum_tokens = 8539
 
 [batches.content]
 kind = "lines"
@@ -4896,11 +4940,11 @@ end = 1890
 kind = "full"
 
 [[batches]]
-position = 141
+position = 143
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 964 })'
 descriptor = "c decl doc at sqlite-vec.c:964"
 cost_tokens = 148
-cum_tokens = 8430
+cum_tokens = 8687
 
 [batches.content]
 kind = "lines"
@@ -4914,11 +4958,11 @@ end = 963
 kind = "full"
 
 [[batches]]
-position = 142
+position = 144
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1892 })'
 descriptor = "c decl body at sqlite-vec.c:1892"
 cost_tokens = 70
-cum_tokens = 8500
+cum_tokens = 8757
 
 [batches.content]
 kind = "lines"
@@ -4932,11 +4976,11 @@ end = 1897
 kind = "full"
 
 [[batches]]
-position = 143
+position = 145
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1956 })'
 descriptor = "c decl doc at sqlite-vec.c:1956"
 cost_tokens = 193
-cum_tokens = 8693
+cum_tokens = 8950
 
 [batches.content]
 kind = "lines"
@@ -4950,11 +4994,11 @@ end = 1955
 kind = "full"
 
 [[batches]]
-position = 144
+position = 146
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2111 })'
 descriptor = "c decl doc at sqlite-vec.c:2111"
 cost_tokens = 210
-cum_tokens = 8903
+cum_tokens = 9160
 
 [batches.content]
 kind = "lines"
@@ -4968,11 +5012,11 @@ end = 2110
 kind = "full"
 
 [[batches]]
-position = 145
+position = 147
 key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 2033 })'
 descriptor = "c decl doc at sqlite-vec.c:2033"
 cost_tokens = 216
-cum_tokens = 9119
+cum_tokens = 9376
 
 [batches.content]
 kind = "lines"
@@ -4986,11 +5030,11 @@ end = 2032
 kind = "full"
 
 [[batches]]
-position = 146
+position = 148
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 1317 })'
 descriptor = "c decl body at sqlite-vec.c:1317"
 cost_tokens = 98
-cum_tokens = 9217
+cum_tokens = 9474
 
 [batches.content]
 kind = "lines"
@@ -5004,11 +5048,11 @@ end = 1326
 kind = "full"
 
 [[batches]]
-position = 147
+position = 149
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 11 })'
 descriptor = "ARCHITECTURE.md section #11"
 cost_tokens = 56
-cum_tokens = 9273
+cum_tokens = 9530
 
 [batches.content]
 kind = "lines"
@@ -5038,11 +5082,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 148
+position = 150
 key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/sqlite-vec.c", start_line: 614 })'
 descriptor = "c decl body at sqlite-vec.c:614"
 cost_tokens = 122
-cum_tokens = 9395
+cum_tokens = 9652
 
 [batches.content]
 kind = "lines"
@@ -5064,11 +5108,11 @@ end = 626
 kind = "full"
 
 [[batches]]
-position = 149
+position = 151
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/ARCHITECTURE.md", section_index: 12 })'
 descriptor = "ARCHITECTURE.md section #12"
 cost_tokens = 57
-cum_tokens = 9452
+cum_tokens = 9709
 
 [batches.content]
 kind = "lines"
@@ -5098,11 +5142,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 150
+position = 152
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/using/datasette.md", section_index: 0 })'
 descriptor = "site/using/datasette.md section #0"
 cost_tokens = 204
-cum_tokens = 9656
+cum_tokens = 9913
 
 [batches.content]
 kind = "lines"
@@ -5156,11 +5200,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 151
+position = 153
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 14 })'
 descriptor = "site/api-reference.md section #14"
 cost_tokens = 32
-cum_tokens = 9688
+cum_tokens = 9945
 
 [batches.content]
 kind = "lines"
@@ -5174,11 +5218,11 @@ end = 163
 kind = "full"
 
 [[batches]]
-position = 152
+position = 154
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 17 })'
 descriptor = "site/api-reference.md section #17"
 cost_tokens = 32
-cum_tokens = 9720
+cum_tokens = 9977
 
 [batches.content]
 kind = "lines"
@@ -5187,126 +5231,6 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md"
 start = 205
 end = 205
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 153
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 21 })'
-descriptor = "site/api-reference.md section #21"
-cost_tokens = 32
-cum_tokens = 9752
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md"
-start = 271
-end = 271
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 30 })'
-descriptor = "site/api-reference.md section #30"
-cost_tokens = 32
-cum_tokens = 9784
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md"
-start = 437
-end = 437
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md", section_index: 3 })'
-descriptor = "site/getting-started/installation.md section #3"
-cost_tokens = 66
-cum_tokens = 9850
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md"
-start = 74
-end = 74
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md"
-start = 76
-end = 76
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/getting-started/installation.md"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 156
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/scripts" })'
-descriptor = "listing of 'scripts'"
-cost_tokens = 13
-cum_tokens = 9863
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/scripts"
-entries = ["progress.ts", "publish-release.sh", "vendor.sh"]
-
-[[batches]]
-position = 157
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md", section_index: 11 })'
-descriptor = "site/api-reference.md section #11"
-cost_tokens = 34
-cum_tokens = 9897
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/api-reference.md"
-start = 134
-end = 134
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 158
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/project.data.ts" })'
-descriptor = "imports in site/project.data.ts"
-cost_tokens = 47
-cum_tokens = 9944
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sqlite-vec/site/project.data.ts"
-start = 1
-end = 3
 
 [batches.content.spans.render]
 kind = "full"

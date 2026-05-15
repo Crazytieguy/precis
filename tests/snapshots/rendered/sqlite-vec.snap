@@ -66,6 +66,7 @@ README.md
 SECURITY.md
 TODO
 VERSION
+    1→0.1.7-alpha.10
 benchmarks/
     README.md
     exhaustive-memory/
@@ -78,18 +79,11 @@ benchmarks/
         src/
     profiling/
     self-params/
-        build.py
-        knn.py
-        test.py
 bindings/
     go/
         ncruces/
-            go-sqlite3.patch
     python/
         extra_init.py
-            1→from typing import List
-            2→from struct import pack
-            3→from sqlite3 import Connection
             6→def serialize_float32(vector: List[float]) -> bytes:
             7→    """Serializes a list of floats into the "raw bytes" format sqlite-vec expects"""
             8→    return pack("%sf" % len(vector), *vector)

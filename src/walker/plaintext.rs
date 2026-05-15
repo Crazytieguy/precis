@@ -56,6 +56,14 @@ pub(crate) enum Class {
     /// `.npmrc` is intentionally absent (auth-token risk — see module
     /// doc).
     Toolchain,
+    /// VERSION file: a one-line version stamp (`0.1.7-alpha.10`). NS
+    /// authors anchor on this when no `pyproject.toml` / `package.json`
+    /// / `Cargo.toml` carries the canonical version (sqlite-vec, act).
+    Version,
+    /// TODO file: an open backlog in plain text. NS authors anchor on
+    /// the header item as a "what's pending" orientation signal
+    /// (sqlite-vec).
+    Todo,
 }
 
 /// Classify a file by its name. Returns `None` for any file the walker
@@ -86,13 +94,23 @@ pub(crate) fn classify_plaintext(name: &str) -> Option<Class> {
         return Some(Class::License);
     }
     match name {
-        ".gitignore" | ".dockerignore" => Some(Class::IgnoreList),
-        ".editorconfig" | ".eslintrc" | ".prettierrc" => Some(Class::EditorConfig),
+        ".gitignore" | ".dockerignore" => return Some(Class::IgnoreList),
+        ".editorconfig" | ".eslintrc" | ".prettierrc" => return Some(Class::EditorConfig),
         ".nvmrc" | ".python-version" | ".tool-versions" | "pnpm-workspace.yaml" => {
-            Some(Class::Toolchain)
+            return Some(Class::Toolchain);
         }
-        _ => None,
+        _ => {}
     }
+    // Extensionless orientation files matched case-insensitively. Kept
+    // separate from the `LICENSE` block so we don't accidentally match
+    // `version.h` or similar — `lower` is only used here.
+    if lower == "version" {
+        return Some(Class::Version);
+    }
+    if lower == "todo" {
+        return Some(Class::Todo);
+    }
+    None
 }
 
 pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
@@ -144,6 +162,12 @@ fn class_value(class: Class, file: &Path, ctx: &WalkCtx) -> f64 {
         Class::IgnoreList => (0.20, 0.30, 0.25),
         Class::EditorConfig => (0.25, 0.35, 0.30),
         Class::Toolchain => (0.30, 0.35, 0.30),
+        // Version stamp: a single short line answers "what version is
+        // this?" — high orientation value relative to the trivial cost.
+        Class::Version => (0.55, 0.40, 0.45),
+        // TODO backlog: short header items are tier-1 orientation for
+        // "what's pending / known limitations"; rest is appendix.
+        Class::Todo => (0.40, 0.50, 0.40),
     };
     mix_signals(cat, fu, ztu, path_depth_factor(file, ctx))
 }
@@ -179,6 +203,12 @@ mod tests {
             (".python-version", Some(Class::Toolchain)),
             (".tool-versions", Some(Class::Toolchain)),
             ("pnpm-workspace.yaml", Some(Class::Toolchain)),
+            // Extensionless orientation files (case-insensitive on the
+            // stem). `VERSION` is a one-line version stamp common in
+            // C-shaped projects; `TODO` is a plain backlog file.
+            ("VERSION", Some(Class::Version)),
+            ("version", Some(Class::Version)),
+            ("TODO", Some(Class::Todo)),
             // Owned by other walkers.
             ("LICENSE.md", None),
             (".eslintrc.json", None),
