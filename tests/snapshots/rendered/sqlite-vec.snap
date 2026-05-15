@@ -65,6 +65,22 @@ README.md
     …
 SECURITY.md
 TODO
+    1→- [ ] add `xyz_info` shadow table with version etc.
+    3→- later
+    4→  - [ ] partition: UPDATE support
+    5→  - [ ] skip invalid validity entries in knn filter?
+    6→  - [ ] nulls in metadata
+    7→  - [ ] partition `x in (...)` handling
+    8→  - [ ] blobs/date/datetime
+    9→  - [ ] uuid/ulid perf
+    10→  - [ ] Aux columns: `NOT NULL` constraint
+    11→  - [ ] Metadata columns: `NOT NULL` constraint
+    12→   - [ ] Partiion key: `NOT NULL` constraint
+    13→  - [ ] dictionary encoding?
+    14→  - [ ] properly sqlite3_vtab_nochange / sqlite3_value_nochange handling
+    15→  - [ ] perf
+    16→    - [ ] aux: cache INSERT
+    17→    - [ ] aux: LEFT JOIN on `_rowids` queries to avoid N lookup queries
 VERSION
     1→0.1.7-alpha.10
 benchmarks/
@@ -235,14 +251,6 @@ site/
         c.md
         datasette.md
         go.md
-            1→# Using `sqlite-vec` in Go
-            …
-            11→## Option 1: CGO {#cgo}
-            …
-            57→## Option 2: WASM based with `ncruces/go-sqlite3` {#ncruces}
-            …
-            102→## Working with vectors in Go
-            …
         js.md
             1→# Using `sqlite-vec` in Node.js, Deno, and Bun
             …

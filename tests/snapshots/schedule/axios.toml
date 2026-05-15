@@ -1,7 +1,7 @@
 fixture = "axios"
 budget = 10000
-cumulative_tokens = 9989
-batch_count = 275
+cumulative_tokens = 9960
+batch_count = 274
 
 [[batches]]
 position = 1
@@ -277,10 +277,68 @@ kind = "full"
 
 [[batches]]
 position = 15
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/defaults/index.js", start_line: 11 })'
+descriptor = "module item at lib/defaults/index.js:11"
+cost_tokens = 33
+cum_tokens = 546
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/defaults/index.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters" })'
+descriptor = "listing of 'lib/adapters'"
+cost_tokens = 20
+cum_tokens = 566
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters"
+entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
+
+[[batches]]
+position = 17
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md" })'
+descriptor = "README headline in lib/adapters/README.md"
+cost_tokens = 42
+cum_tokens = 608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md" })'
 descriptor = "headings outline in CONTRIBUTORS.md"
 cost_tokens = 42
-cum_tokens = 555
+cum_tokens = 650
 
 [batches.content]
 kind = "lines"
@@ -350,75 +408,17 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 19
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md", section_index: 0 })'
 descriptor = "CONTRIBUTORS.md section #0"
 cost_tokens = 17
-cum_tokens = 572
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 17
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/defaults/index.js", start_line: 11 })'
-descriptor = "module item at lib/defaults/index.js:11"
-cost_tokens = 33
-cum_tokens = 605
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/defaults/index.js"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters" })'
-descriptor = "listing of 'lib/adapters'"
-cost_tokens = 20
-cum_tokens = 625
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters"
-entries = ["README.md", "adapters.js", "fetch.js", "http.js", "xhr.js"]
-
-[[batches]]
-position = 19
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md" })'
-descriptor = "README headline in lib/adapters/README.md"
-cost_tokens = 42
 cum_tokens = 667
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md"
 start = 1
 end = 1
 
@@ -426,7 +426,7 @@ end = 1
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/adapters/README.md"
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/CONTRIBUTORS.md"
 start = 3
 end = 3
 
@@ -529,10 +529,104 @@ kind = "full"
 
 [[batches]]
 position = 25
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages" })'
+descriptor = "listing of 'docs/pages'"
+cost_tokens = 11
+cum_tokens = 860
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages"
+entries = ["advanced", "getting-started", "misc"]
+
+[[batches]]
+position = 26
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env" })'
+descriptor = "listing of 'lib/env'"
+cost_tokens = 11
+cum_tokens = 871
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env"
+entries = ["README.md", "classes", "data.js"]
+
+[[batches]]
+position = 27
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md" })'
+descriptor = "README headline in lib/env/README.md"
+cost_tokens = 36
+cum_tokens = 907
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/utils.js"
+cost_tokens = 9
+cum_tokens = 916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js"
+start = 872
+end = 872
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js"
+start = 873
+end = 873
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/getting-started" })'
+descriptor = "listing of 'docs/pages/getting-started'"
+cost_tokens = 18
+cum_tokens = 934
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/getting-started"
+entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
+
+[[batches]]
+position = 30
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/ECOSYSTEM.md" })'
 descriptor = "headings outline in ECOSYSTEM.md"
 cost_tokens = 70
-cum_tokens = 919
+cum_tokens = 1004
 
 [batches.content]
 kind = "lines"
@@ -650,11 +744,11 @@ end = 44
 kind = "ellipsis"
 
 [[batches]]
-position = 26
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/ECOSYSTEM.md", section_index: 0 })'
 descriptor = "ECOSYSTEM.md section #0"
 cost_tokens = 33
-cum_tokens = 952
+cum_tokens = 1037
 
 [batches.content]
 kind = "lines"
@@ -676,91 +770,25 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 27
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages" })'
-descriptor = "listing of 'docs/pages'"
-cost_tokens = 11
-cum_tokens = 963
+position = 32
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/data" })'
+descriptor = "listing of 'docs/data'"
+cost_tokens = 4
+cum_tokens = 1041
 
 [batches.content]
 kind = "fs"
 
 [[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages"
-entries = ["advanced", "getting-started", "misc"]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/data"
+entries = ["sponsors.json"]
 
 [[batches]]
-position = 28
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env" })'
-descriptor = "listing of 'lib/env'"
-cost_tokens = 11
-cum_tokens = 974
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env"
-entries = ["README.md", "classes", "data.js"]
-
-[[batches]]
-position = 29
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md" })'
-descriptor = "README headline in lib/env/README.md"
-cost_tokens = 36
-cum_tokens = 1010
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/env/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 30
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/utils.js"
-cost_tokens = 9
-cum_tokens = 1019
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js"
-start = 872
-end = 872
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/utils.js"
-start = 873
-end = 873
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 31
+position = 33
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md" })'
 descriptor = "headings outline in COLLABORATOR_GUIDE.md"
 cost_tokens = 79
-cum_tokens = 1098
+cum_tokens = 1120
 
 [batches.content]
 kind = "lines"
@@ -876,34 +904,6 @@ end = 49
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/getting-started" })'
-descriptor = "listing of 'docs/pages/getting-started'"
-cost_tokens = 18
-cum_tokens = 1116
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/getting-started"
-entries = ["examples", "features.md", "first-steps.md", "upgrade-guide.md"]
-
-[[batches]]
-position = 33
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/data" })'
-descriptor = "listing of 'docs/data'"
-cost_tokens = 4
-cum_tokens = 1120
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/data"
-entries = ["sponsors.json"]
 
 [[batches]]
 position = 34
@@ -2943,10 +2943,1154 @@ kind = "ellipsis"
 
 [[batches]]
 position = 120
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc" })'
+descriptor = "listing of 'docs/es/pages/misc'"
+cost_tokens = 13
+cum_tokens = 3653
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 121
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc" })'
+descriptor = "listing of 'docs/fr/pages/misc'"
+cost_tokens = 13
+cum_tokens = 3666
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 122
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc" })'
+descriptor = "listing of 'docs/zh/pages/misc'"
+cost_tokens = 13
+cum_tokens = 3679
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc"
+entries = ["security.md", "semver.md", "sponsors.md"]
+
+[[batches]]
+position = 123
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md" })'
+descriptor = "headings outline in docs/zh/pages/misc/semver.md"
+cost_tokens = 59
+cum_tokens = 3738
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 50
+cum_tokens = 3788
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/examples"
+entries = ["README.md", "abort-controller", "all", "amd", "get", "improved-network-errors.md", "network_enhanced.js", "post", "postMultipartFormData", "server.js", "transform-response", "upload"]
+
+[[batches]]
+position = 125
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/core/settle.js"
+cost_tokens = 17
+cum_tokens = 3805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js", start_line: 14 })'
+descriptor = "export at lib/core/settle.js:14"
+cost_tokens = 0
+cum_tokens = 3805
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/core/transformData.js"
+cost_tokens = 17
+cum_tokens = 3822
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js", start_line: 15 })'
+descriptor = "export at lib/core/transformData.js:15"
+cost_tokens = 0
+cum_tokens = 3822
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 129
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 33 })'
+descriptor = "README.md section #33"
+cost_tokens = 29
+cum_tokens = 3851
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
+start = 386
+end = 386
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 38 })'
+descriptor = "README.md section #38"
+cost_tokens = 29
+cum_tokens = 3880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
+start = 391
+end = 391
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md" })'
+descriptor = "headings outline in docs/es/pages/misc/semver.md"
+cost_tokens = 63
+cum_tokens = 3943
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 132
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md" })'
+descriptor = "headings outline in docs/fr/pages/misc/semver.md"
+cost_tokens = 63
+cum_tokens = 4006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 133
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md", section_index: 3 })'
+descriptor = "COLLABORATOR_GUIDE.md section #3"
+cost_tokens = 51
+cum_tokens = 4057
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/core/mergeConfig.js"
+cost_tokens = 18
+cum_tokens = 4075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 135
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js", start_line: 17 })'
+descriptor = "export at lib/core/mergeConfig.js:17"
+cost_tokens = 0
+cum_tokens = 4075
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", chunk_index: 0, export_count: 62, type_only_export_count: 47 })'
+descriptor = "export names surface in index.d.ts"
+cost_tokens = 187
+cum_tokens = 4262
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 137
+end = 137
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 158
+end = 158
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 113
+end = 113
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 140
+end = 140
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 137
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 6 })'
+descriptor = "export at index.d.ts:6"
+cost_tokens = 17
+cum_tokens = 4279
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 154 })'
+descriptor = "export at index.d.ts:154"
+cost_tokens = 19
+cum_tokens = 4298
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 154
+end = 156
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 158 })'
+descriptor = "export at index.d.ts:158"
+cost_tokens = 21
+cum_tokens = 4319
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 158
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 141 })'
+descriptor = "export at index.d.ts:141"
+cost_tokens = 28
+cum_tokens = 4347
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 141
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 163 })'
+descriptor = "export at index.d.ts:163"
+cost_tokens = 41
+cum_tokens = 4388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 163
+end = 168
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 145 })'
+descriptor = "export at index.d.ts:145"
+cost_tokens = 58
+cum_tokens = 4446
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
+start = 145
+end = 152
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser" })'
+descriptor = "listing of 'lib/platform/browser'"
+cost_tokens = 7
+cum_tokens = 4453
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 144
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/platform/browser/index.js"
+cost_tokens = 9
+cum_tokens = 4462
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 145
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js", start_line: 5 })'
+descriptor = "export at lib/platform/browser/index.js:5"
+cost_tokens = 76
+cum_tokens = 4538
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
+start = 5
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js" })'
+descriptor = "imports in lib/platform/browser/index.js"
+cost_tokens = 44
+cum_tokens = 4582
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/classes" })'
+descriptor = "listing of 'lib/platform/browser/classes'"
+cost_tokens = 15
+cum_tokens = 4597
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/classes"
+entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
+
+[[batches]]
+position = 148
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node" })'
+descriptor = "listing of 'lib/platform/node'"
+cost_tokens = 7
+cum_tokens = 4604
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node"
+entries = ["classes", "index.js"]
+
+[[batches]]
+position = 149
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/platform/node/index.js"
+cost_tokens = 9
+cum_tokens = 4613
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 150
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 5 })'
+descriptor = "module item at lib/platform/node/index.js:5"
+cost_tokens = 11
+cum_tokens = 4624
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 7 })'
+descriptor = "module item at lib/platform/node/index.js:7"
+cost_tokens = 14
+cum_tokens = 4638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 27 })'
+descriptor = "export at lib/platform/node/index.js:27"
+cost_tokens = 100
+cum_tokens = 4738
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 27
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 15 })'
+descriptor = "module item at lib/platform/node/index.js:15"
+cost_tokens = 29
+cum_tokens = 4767
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 9 })'
+descriptor = "module item at lib/platform/node/index.js:9"
+cost_tokens = 54
+cum_tokens = 4821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 9
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js" })'
+descriptor = "imports in lib/platform/node/index.js"
+cost_tokens = 41
+cum_tokens = 4862
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 15, body_start_line: 16 })'
+descriptor = "module item body at lib/platform/node/index.js:15 body 16"
+cost_tokens = 95
+cum_tokens = 4957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 16
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 39 })'
+descriptor = "README.md section #39"
+cost_tokens = 32
+cum_tokens = 4989
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
+start = 392
+end = 392
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md" })'
 descriptor = "headings outline in THREATMODEL.md"
 cost_tokens = 250
-cum_tokens = 3890
+cum_tokens = 5239
 
 [batches.content]
 kind = "lines"
@@ -3224,11 +4368,11 @@ end = 466
 kind = "ellipsis"
 
 [[batches]]
-position = 121
+position = 159
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 10 })'
 descriptor = "THREATMODEL.md section #10"
 cost_tokens = 5
-cum_tokens = 3895
+cum_tokens = 5244
 
 [batches.content]
 kind = "lines"
@@ -3242,11 +4386,11 @@ end = 85
 kind = "full"
 
 [[batches]]
-position = 122
+position = 160
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 24 })'
 descriptor = "THREATMODEL.md section #24"
 cost_tokens = 5
-cum_tokens = 3900
+cum_tokens = 5249
 
 [batches.content]
 kind = "lines"
@@ -3260,11 +4404,11 @@ end = 243
 kind = "full"
 
 [[batches]]
-position = 123
+position = 161
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 33 })'
 descriptor = "THREATMODEL.md section #33"
 cost_tokens = 5
-cum_tokens = 3905
+cum_tokens = 5254
 
 [batches.content]
 kind = "lines"
@@ -3278,11 +4422,11 @@ end = 316
 kind = "full"
 
 [[batches]]
-position = 124
+position = 162
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 44 })'
 descriptor = "THREATMODEL.md section #44"
 cost_tokens = 5
-cum_tokens = 3910
+cum_tokens = 5259
 
 [batches.content]
 kind = "lines"
@@ -3296,11 +4440,11 @@ end = 463
 kind = "full"
 
 [[batches]]
-position = 125
+position = 163
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 53 })'
 descriptor = "THREATMODEL.md section #53"
 cost_tokens = 5
-cum_tokens = 3915
+cum_tokens = 5264
 
 [batches.content]
 kind = "lines"
@@ -3314,11 +4458,11 @@ end = 509
 kind = "full"
 
 [[batches]]
-position = 126
+position = 164
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 0 })'
 descriptor = "THREATMODEL.md section #0"
 cost_tokens = 98
-cum_tokens = 4013
+cum_tokens = 5362
 
 [batches.content]
 kind = "lines"
@@ -3356,261 +4500,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 127
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc" })'
-descriptor = "listing of 'docs/es/pages/misc'"
-cost_tokens = 13
-cum_tokens = 4026
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 128
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc" })'
-descriptor = "listing of 'docs/fr/pages/misc'"
-cost_tokens = 13
-cum_tokens = 4039
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 129
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc" })'
-descriptor = "listing of 'docs/zh/pages/misc'"
-cost_tokens = 13
-cum_tokens = 4052
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc"
-entries = ["security.md", "semver.md", "sponsors.md"]
-
-[[batches]]
-position = 130
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md" })'
-descriptor = "headings outline in docs/zh/pages/misc/semver.md"
-cost_tokens = 59
-cum_tokens = 4111
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/zh/pages/misc/semver.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 131
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/examples" })'
-descriptor = "listing of 'examples'"
-cost_tokens = 50
-cum_tokens = 4161
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/examples"
-entries = ["README.md", "abort-controller", "all", "amd", "get", "improved-network-errors.md", "network_enhanced.js", "post", "postMultipartFormData", "server.js", "transform-response", "upload"]
-
-[[batches]]
-position = 132
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/core/settle.js"
-cost_tokens = 17
-cum_tokens = 4178
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 133
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js", start_line: 14 })'
-descriptor = "export at lib/core/settle.js:14"
-cost_tokens = 0
-cum_tokens = 4178
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/settle.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 134
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/core/transformData.js"
-cost_tokens = 17
-cum_tokens = 4195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 135
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js", start_line: 15 })'
-descriptor = "export at lib/core/transformData.js:15"
-cost_tokens = 0
-cum_tokens = 4195
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/transformData.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 136
+position = 165
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md", section_index: 25 })'
 descriptor = "THREATMODEL.md section #25"
 cost_tokens = 49
-cum_tokens = 4244
+cum_tokens = 5411
 
 [batches.content]
 kind = "lines"
@@ -3627,900 +4521,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/axios/THREATMODEL.md"
 start = 247
 end = 247
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 137
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 33 })'
-descriptor = "README.md section #33"
-cost_tokens = 29
-cum_tokens = 4273
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
-start = 386
-end = 386
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 138
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 38 })'
-descriptor = "README.md section #38"
-cost_tokens = 29
-cum_tokens = 4302
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
-start = 391
-end = 391
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 139
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md" })'
-descriptor = "headings outline in docs/es/pages/misc/semver.md"
-cost_tokens = 63
-cum_tokens = 4365
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/es/pages/misc/semver.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 140
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md" })'
-descriptor = "headings outline in docs/fr/pages/misc/semver.md"
-cost_tokens = 63
-cum_tokens = 4428
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 13
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 14
-end = 14
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/fr/pages/misc/semver.md"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 141
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md", section_index: 3 })'
-descriptor = "COLLABORATOR_GUIDE.md section #3"
-cost_tokens = 51
-cum_tokens = 4479
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/COLLABORATOR_GUIDE.md"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 142
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/core/mergeConfig.js"
-cost_tokens = 18
-cum_tokens = 4497
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 143
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js", start_line: 17 })'
-descriptor = "export at lib/core/mergeConfig.js:17"
-cost_tokens = 0
-cum_tokens = 4497
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
-start = 17
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/core/mergeConfig.js"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 144
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", chunk_index: 0, export_count: 62, type_only_export_count: 47 })'
-descriptor = "export names surface in index.d.ts"
-cost_tokens = 187
-cum_tokens = 4684
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 23
-end = 23
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 137
-end = 137
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 139
-end = 139
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 141
-end = 141
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 145
-end = 145
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 154
-end = 154
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 158
-end = 158
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 163
-end = 163
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 113
-end = 113
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 138
-end = 138
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 140
-end = 140
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 142
-end = 142
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 146
-end = 146
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 155
-end = 155
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 159
-end = 159
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 164
-end = 164
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 145
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 6 })'
-descriptor = "export at index.d.ts:6"
-cost_tokens = 17
-cum_tokens = 4701
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 6
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 146
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 154 })'
-descriptor = "export at index.d.ts:154"
-cost_tokens = 19
-cum_tokens = 4720
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 154
-end = 156
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 147
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 158 })'
-descriptor = "export at index.d.ts:158"
-cost_tokens = 21
-cum_tokens = 4741
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 158
-end = 161
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 148
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 141 })'
-descriptor = "export at index.d.ts:141"
-cost_tokens = 28
-cum_tokens = 4769
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 141
-end = 143
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 149
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 163 })'
-descriptor = "export at index.d.ts:163"
-cost_tokens = 41
-cum_tokens = 4810
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 163
-end = 168
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 150
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts", start_line: 145 })'
-descriptor = "export at index.d.ts:145"
-cost_tokens = 58
-cum_tokens = 4868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/index.d.ts"
-start = 145
-end = 152
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 151
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser" })'
-descriptor = "listing of 'lib/platform/browser'"
-cost_tokens = 7
-cum_tokens = 4875
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser"
-entries = ["classes", "index.js"]
-
-[[batches]]
-position = 152
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/platform/browser/index.js"
-cost_tokens = 9
-cum_tokens = 4884
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
-start = 6
-end = 6
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 153
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js", start_line: 5 })'
-descriptor = "export at lib/platform/browser/index.js:5"
-cost_tokens = 76
-cum_tokens = 4960
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
-start = 5
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 154
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js" })'
-descriptor = "imports in lib/platform/browser/index.js"
-cost_tokens = 44
-cum_tokens = 5004
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/index.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 155
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/classes" })'
-descriptor = "listing of 'lib/platform/browser/classes'"
-cost_tokens = 15
-cum_tokens = 5019
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/browser/classes"
-entries = ["Blob.js", "FormData.js", "URLSearchParams.js"]
-
-[[batches]]
-position = 156
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node" })'
-descriptor = "listing of 'lib/platform/node'"
-cost_tokens = 7
-cum_tokens = 5026
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node"
-entries = ["classes", "index.js"]
-
-[[batches]]
-position = 157
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in lib/platform/node/index.js"
-cost_tokens = 9
-cum_tokens = 5035
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 27
-end = 27
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 28
-end = 28
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 158
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 5 })'
-descriptor = "module item at lib/platform/node/index.js:5"
-cost_tokens = 11
-cum_tokens = 5046
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 159
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 7 })'
-descriptor = "module item at lib/platform/node/index.js:7"
-cost_tokens = 14
-cum_tokens = 5060
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 160
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 27 })'
-descriptor = "export at lib/platform/node/index.js:27"
-cost_tokens = 100
-cum_tokens = 5160
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 27
-end = 37
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 15 })'
-descriptor = "module item at lib/platform/node/index.js:15"
-cost_tokens = 29
-cum_tokens = 5189
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 15
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 16
-end = 16
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 162
-key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 9 })'
-descriptor = "module item at lib/platform/node/index.js:9"
-cost_tokens = 54
-cum_tokens = 5243
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 9
-end = 13
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 163
-key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js" })'
-descriptor = "imports in lib/platform/node/index.js"
-cost_tokens = 41
-cum_tokens = 5284
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 164
-key = 'Typescript(ModuleItemBody { file: "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js", start_line: 15, body_start_line: 16 })'
-descriptor = "module item body at lib/platform/node/index.js:15 body 16"
-cost_tokens = 95
-cum_tokens = 5379
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 16
-end = 22
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/lib/platform/node/index.js"
-start = 24
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 165
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/axios/README.md", section_index: 39 })'
-descriptor = "README.md section #39"
-cost_tokens = 32
-cum_tokens = 5411
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/README.md"
-start = 392
-end = 392
 
 [batches.content.spans.render]
 kind = "full"
@@ -7366,45 +7366,3 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced"
 entries = ["adapters.md", "api-reference.md", "authentication.md", "cancellation.md", "config-defaults.md", "create-an-instance.md", "error-handling.md", "fetch-adapter.md", "file-posting.md", "header-methods.md", "headers.md", "html-form-processing.md", "http2.md", "interceptors.md", "multipart-form-data-format.md", "progress-capturing.md", "promises.md", "rate-limiting.md", "request-config.md", "request-method-aliases.md", "response-schema.md", "retry.md", "testing.md", "type-script.md", "x-www-form-urlencoded-format.md"]
-
-[[batches]]
-position = 275
-key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced/cancellation.md" })'
-descriptor = "headings outline in docs/pages/advanced/cancellation.md"
-cost_tokens = 29
-cum_tokens = 9989
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced/cancellation.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced/cancellation.md"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced/cancellation.md"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/axios/docs/pages/advanced/cancellation.md"
-start = 20
-end = 20
-
-[batches.content.spans.render]
-kind = "ellipsis"

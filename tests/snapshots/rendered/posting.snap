@@ -64,25 +64,8 @@ docs/
             5→### Getting help for the focused widget
             …
         importing.md
-            1→## Overview
-            …
-            3→Posting supports importing from external sources.
-            5→## Importing from curl
-            …
-            13→## Importing from OpenAPI
-            …
-            27→## Importing from Postman
-            …
         index.md
         keymap.md
-            1→## Overview
-            …
-            8→### Changing the keymap
-            …
-            43→### Key format
-            …
-            65→### Binding IDs
-            …
         navigation.md
         requests.md
         scripting.md
@@ -260,11 +243,16 @@ src/
         jumper.py
             9→@runtime_checkable
             10→class Jumpable(Protocol):
+            11→    """A widget which we can jump focus to."""
             13→    jump_key: str
             16→class JumpInfo(NamedTuple):
             17→    """Information returned by the jumper for each jump target."""
             26→class Jumper:
             27→    """An Amp-like jumping mechanism for quick spatial navigation"""
+            29→    def __init__(self, ids_to_keys: Mapping[str, str], screen: Screen[Any]) -> None:
+            …
+            34→    def get_overlays(self) -> dict[Offset, JumpInfo]:
+            35→        """Return a dictionary of all the jump targets"""
         locations.py
         messages.py
             6→@dataclass

@@ -311,7 +311,7 @@ fn dense_md_sibling_factor(file: &Path) -> f64 {
     let Some(parent) = file.parent() else {
         return 1.0;
     };
-    const DENSE_THRESHOLD: usize = 7;
+    const DENSE_THRESHOLD: usize = 6;
     let Ok(read_dir) = std::fs::read_dir(parent) else {
         return 1.0;
     };

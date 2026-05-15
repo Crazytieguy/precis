@@ -21,28 +21,28 @@ Score(3000)=0.398 I=0.458 C=0.346 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 366 | 13 | imports in index.js |  |  | 0.604 |
 | ns | 400 |  | 85 | lib/core, lib/adapters, lib/cancel — children | 1.5 |  | 0.479 |
 | walker |  | 513 | 147 | export at index.js:26 |  |  | 0.483 |
-| walker |  | 555 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.483 |
-| walker |  | 572 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.483 |
-| ns | 590 |  | 190 | lib/helpers — full child listing | 1.6 |  | 0.365 |
-| walker |  | 605 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.365 |
-| walker |  | 625 | 20 | listing of 'lib/adapters' |  |  | 0.376 |
-| walker |  | 667 | 42 | README headline in lib/adapters/README.md |  |  | 0.376 |
+| walker |  | 546 | 33 | module item at lib/defaults/index.js:11 |  |  | 0.483 |
+| walker |  | 566 | 20 | listing of 'lib/adapters' |  |  | 0.499 |
+| ns | 590 |  | 190 | lib/helpers — full child listing | 1.6 |  | 0.376 |
+| walker |  | 608 | 42 | README headline in lib/adapters/README.md |  |  | 0.376 |
+| walker |  | 650 | 42 | headings outline in CONTRIBUTORS.md |  |  | 0.376 |
+| walker |  | 667 | 17 | CONTRIBUTORS.md section #0 |  |  | 0.376 |
 | ns | 671 |  | 81 | lib/defaults, lib/env, lib/platform — tree | 1.7 |  | 0.345 |
 | walker |  | 693 | 26 | imports in lib/platform/index.js |  |  | 0.345 |
 | walker |  | 744 | 51 | listing of 'docs' |  |  | 0.345 |
 | walker |  | 818 | 74 | package identity in docs/package.json |  |  | 0.345 |
 | walker |  | 833 | 15 | export names surface in gulpfile.js |  |  | 0.345 |
 | walker |  | 849 | 16 | CONTRIBUTORS.md section #2 |  |  | 0.345 |
-| ns | 918 |  | 247 | AGENTS.md — Architecture Boundaries | 1.8 |  | 0.332 |
-| walker |  | 919 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.332 |
-| walker |  | 952 | 33 | ECOSYSTEM.md section #0 |  |  | 0.332 |
-| walker |  | 963 | 11 | listing of 'docs/pages' |  |  | 0.332 |
-| walker |  | 974 | 11 | listing of 'lib/env' |  |  | 0.346 |
-| walker |  | 1010 | 36 | README headline in lib/env/README.md |  |  | 0.346 |
-| walker |  | 1019 | 9 | export names surface in lib/utils.js |  |  | 0.346 |
-| walker |  | 1098 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.346 |
-| walker |  | 1116 | 18 | listing of 'docs/pages/getting-started' |  |  | 0.346 |
-| walker |  | 1120 | 4 | listing of 'docs/data' |  |  | 0.346 |
+| walker |  | 860 | 11 | listing of 'docs/pages' |  |  | 0.345 |
+| walker |  | 871 | 11 | listing of 'lib/env' |  |  | 0.359 |
+| walker |  | 907 | 36 | README headline in lib/env/README.md |  |  | 0.359 |
+| walker |  | 916 | 9 | export names surface in lib/utils.js |  |  | 0.359 |
+| ns | 918 |  | 247 | AGENTS.md — Architecture Boundaries | 1.8 |  | 0.346 |
+| walker |  | 934 | 18 | listing of 'docs/pages/getting-started' |  |  | 0.346 |
+| walker |  | 1004 | 70 | headings outline in ECOSYSTEM.md |  |  | 0.346 |
+| walker |  | 1037 | 33 | ECOSYSTEM.md section #0 |  |  | 0.346 |
+| walker |  | 1041 | 4 | listing of 'docs/data' |  |  | 0.346 |
+| walker |  | 1120 | 79 | headings outline in COLLABORATOR_GUIDE.md |  |  | 0.346 |
 | walker |  | 1139 | 19 | listing of 'tests' |  |  | 0.346 |
 | walker |  | 1155 | 16 | listing of 'lib/cancel' |  |  | 0.361 |
 | ns | 1187 |  | 269 | AGENTS.md — Commands | 1.9 |  | 0.347 |
@@ -139,58 +139,58 @@ Score(3000)=0.398 I=0.458 C=0.346 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | walker |  | 3529 | 55 | headings outline in docs/fr/pages/getting-started/first-steps.md |  |  | 0.362 |
 | walker |  | 3584 | 55 | headings outline in docs/zh/pages/getting-started/first-steps.md |  |  | 0.362 |
 | walker |  | 3640 | 56 | headings outline in docs/es/pages/getting-started/first-steps.md |  |  | 0.362 |
+| walker |  | 3653 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.362 |
+| walker |  | 3666 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.362 |
+| walker |  | 3679 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.362 |
+| walker |  | 3738 | 59 | headings outline in docs/zh/pages/misc/semver.md |  |  | 0.362 |
+| walker |  | 3788 | 50 | listing of 'examples' |  |  | 0.362 |
 | ns | 3803 |  | 424 | lib/core/Axios.js — method-alias loops (get/post/…/postForm/query) | 2.8 | 2.6 | 0.338 |
-| walker |  | 3890 | 250 | headings outline in THREATMODEL.md |  |  | 0.338 |
-| walker |  | 3895 | 5 | THREATMODEL.md section #10 |  |  | 0.338 |
-| walker |  | 3900 | 5 | THREATMODEL.md section #24 |  |  | 0.338 |
-| walker |  | 3905 | 5 | THREATMODEL.md section #33 |  |  | 0.334 |
+| walker |  | 3805 | 17 | export names surface in lib/core/settle.js |  |  | 0.338 |
+| walker |  | 3805 | 0 | export at lib/core/settle.js:14 |  |  | 0.338 |
+| walker |  | 3822 | 17 | export names surface in lib/core/transformData.js |  |  | 0.338 |
+| walker |  | 3822 | 0 | export at lib/core/transformData.js:15 |  |  | 0.338 |
+| walker |  | 3851 | 29 | README.md section #33 |  |  | 0.338 |
+| walker |  | 3880 | 29 | README.md section #38 |  |  | 0.338 |
 | ns | 3905 |  | 102 | lib/core/AxiosError.js — class header, constructor sig, static from sig | 2.9 |  | 0.334 |
-| walker |  | 3910 | 5 | THREATMODEL.md section #44 |  |  | 0.334 |
-| walker |  | 3915 | 5 | THREATMODEL.md section #53 |  |  | 0.334 |
-| walker |  | 4013 | 98 | THREATMODEL.md section #0 |  |  | 0.334 |
-| walker |  | 4026 | 13 | listing of 'docs/es/pages/misc' |  |  | 0.334 |
-| walker |  | 4039 | 13 | listing of 'docs/fr/pages/misc' |  |  | 0.334 |
-| walker |  | 4052 | 13 | listing of 'docs/zh/pages/misc' |  |  | 0.334 |
-| walker |  | 4111 | 59 | headings outline in docs/zh/pages/misc/semver.md |  |  | 0.334 |
-| walker |  | 4161 | 50 | listing of 'examples' |  |  | 0.334 |
-| walker |  | 4178 | 17 | export names surface in lib/core/settle.js |  |  | 0.334 |
-| walker |  | 4178 | 0 | export at lib/core/settle.js:14 |  |  | 0.334 |
-| walker |  | 4195 | 17 | export names surface in lib/core/transformData.js |  |  | 0.334 |
-| walker |  | 4195 | 0 | export at lib/core/transformData.js:15 |  |  | 0.334 |
+| walker |  | 3943 | 63 | headings outline in docs/es/pages/misc/semver.md |  |  | 0.334 |
+| walker |  | 4006 | 63 | headings outline in docs/fr/pages/misc/semver.md |  |  | 0.334 |
+| walker |  | 4057 | 51 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.334 |
+| walker |  | 4075 | 18 | export names surface in lib/core/mergeConfig.js |  |  | 0.334 |
+| walker |  | 4075 | 0 | export at lib/core/mergeConfig.js:17 |  |  | 0.334 |
 | ns | 4204 |  | 299 | lib/core/AxiosError.js — full static error-code table | 2.10 | 2.9 | 0.325 |
-| walker |  | 4244 | 49 | THREATMODEL.md section #25 |  |  | 0.325 |
-| walker |  | 4273 | 29 | README.md section #33 |  |  | 0.325 |
-| walker |  | 4302 | 29 | README.md section #38 |  |  | 0.325 |
-| walker |  | 4365 | 63 | headings outline in docs/es/pages/misc/semver.md |  |  | 0.325 |
+| walker |  | 4262 | 187 | export names surface in index.d.ts |  |  | 0.325 |
+| walker |  | 4279 | 17 | export at index.d.ts:6 |  |  | 0.325 |
+| walker |  | 4298 | 19 | export at index.d.ts:154 |  |  | 0.325 |
+| walker |  | 4319 | 21 | export at index.d.ts:158 |  |  | 0.325 |
+| walker |  | 4347 | 28 | export at index.d.ts:141 |  |  | 0.325 |
+| walker |  | 4388 | 41 | export at index.d.ts:163 |  |  | 0.325 |
 | ns | 4414 |  | 210 | AGENTS.md — Error Handling rules | 2.11 |  | 0.322 |
-| walker |  | 4428 | 63 | headings outline in docs/fr/pages/misc/semver.md |  |  | 0.322 |
-| walker |  | 4479 | 51 | COLLABORATOR_GUIDE.md section #3 |  |  | 0.322 |
-| walker |  | 4497 | 18 | export names surface in lib/core/mergeConfig.js |  |  | 0.322 |
-| walker |  | 4497 | 0 | export at lib/core/mergeConfig.js:17 |  |  | 0.322 |
-| walker |  | 4684 | 187 | export names surface in index.d.ts |  |  | 0.322 |
-| ns | 4687 |  | 273 | AGENTS.md — Interceptor Execution Order + Request Lifecycle | 2.12 |  | 0.314 |
-| walker |  | 4701 | 17 | export at index.d.ts:6 |  |  | 0.314 |
-| walker |  | 4720 | 19 | export at index.d.ts:154 |  |  | 0.314 |
-| walker |  | 4741 | 21 | export at index.d.ts:158 |  |  | 0.314 |
-| walker |  | 4769 | 28 | export at index.d.ts:141 |  |  | 0.314 |
-| walker |  | 4810 | 41 | export at index.d.ts:163 |  |  | 0.314 |
-| walker |  | 4868 | 58 | export at index.d.ts:145 |  |  | 0.314 |
-| walker |  | 4875 | 7 | listing of 'lib/platform/browser' |  |  | 0.319 |
-| walker |  | 4884 | 9 | export names surface in lib/platform/browser/index.js |  |  | 0.319 |
-| walker |  | 4960 | 76 | export at lib/platform/browser/index.js:5 |  |  | 0.319 |
-| walker |  | 5004 | 44 | imports in lib/platform/browser/index.js |  |  | 0.319 |
-| ns | 5012 |  | 325 | lib/core/InterceptorManager.js — class + method code (jsdocs elided) | 2.13 |  | 0.304 |
-| walker |  | 5019 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.313 |
-| walker |  | 5026 | 7 | listing of 'lib/platform/node' |  |  | 0.320 |
-| walker |  | 5035 | 9 | export names surface in lib/platform/node/index.js |  |  | 0.320 |
-| walker |  | 5046 | 11 | module item at lib/platform/node/index.js:5 |  |  | 0.320 |
-| walker |  | 5060 | 14 | module item at lib/platform/node/index.js:7 |  |  | 0.320 |
-| walker |  | 5160 | 100 | export at lib/platform/node/index.js:27 |  |  | 0.320 |
-| walker |  | 5189 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.320 |
-| walker |  | 5243 | 54 | module item at lib/platform/node/index.js:9 |  |  | 0.320 |
-| walker |  | 5284 | 41 | imports in lib/platform/node/index.js |  |  | 0.320 |
-| walker |  | 5379 | 95 | module item body at lib/platform/node/index.js:15 body 16 |  |  | 0.320 |
-| walker |  | 5411 | 32 | README.md section #39 |  |  | 0.320 |
+| walker |  | 4446 | 58 | export at index.d.ts:145 |  |  | 0.322 |
+| walker |  | 4453 | 7 | listing of 'lib/platform/browser' |  |  | 0.327 |
+| walker |  | 4462 | 9 | export names surface in lib/platform/browser/index.js |  |  | 0.327 |
+| walker |  | 4538 | 76 | export at lib/platform/browser/index.js:5 |  |  | 0.327 |
+| walker |  | 4582 | 44 | imports in lib/platform/browser/index.js |  |  | 0.327 |
+| walker |  | 4597 | 15 | listing of 'lib/platform/browser/classes' |  |  | 0.337 |
+| walker |  | 4604 | 7 | listing of 'lib/platform/node' |  |  | 0.345 |
+| walker |  | 4613 | 9 | export names surface in lib/platform/node/index.js |  |  | 0.345 |
+| walker |  | 4624 | 11 | module item at lib/platform/node/index.js:5 |  |  | 0.345 |
+| walker |  | 4638 | 14 | module item at lib/platform/node/index.js:7 |  |  | 0.345 |
+| ns | 4687 |  | 273 | AGENTS.md — Interceptor Execution Order + Request Lifecycle | 2.12 |  | 0.336 |
+| walker |  | 4738 | 100 | export at lib/platform/node/index.js:27 |  |  | 0.336 |
+| walker |  | 4767 | 29 | module item at lib/platform/node/index.js:15 |  |  | 0.336 |
+| walker |  | 4821 | 54 | module item at lib/platform/node/index.js:9 |  |  | 0.336 |
+| walker |  | 4862 | 41 | imports in lib/platform/node/index.js |  |  | 0.336 |
+| walker |  | 4957 | 95 | module item body at lib/platform/node/index.js:15 body 16 |  |  | 0.336 |
+| walker |  | 4989 | 32 | README.md section #39 |  |  | 0.336 |
+| ns | 5012 |  | 325 | lib/core/InterceptorManager.js — class + method code (jsdocs elided) | 2.13 |  | 0.320 |
+| walker |  | 5239 | 250 | headings outline in THREATMODEL.md |  |  | 0.320 |
+| walker |  | 5244 | 5 | THREATMODEL.md section #10 |  |  | 0.320 |
+| walker |  | 5249 | 5 | THREATMODEL.md section #24 |  |  | 0.320 |
+| walker |  | 5254 | 5 | THREATMODEL.md section #33 |  |  | 0.320 |
+| walker |  | 5259 | 5 | THREATMODEL.md section #44 |  |  | 0.320 |
+| walker |  | 5264 | 5 | THREATMODEL.md section #53 |  |  | 0.320 |
+| walker |  | 5362 | 98 | THREATMODEL.md section #0 |  |  | 0.320 |
+| walker |  | 5411 | 49 | THREATMODEL.md section #25 |  |  | 0.320 |
 | walker |  | 5467 | 56 | COLLABORATOR_GUIDE.md section #5 |  |  | 0.320 |
 | walker |  | 5523 | 56 | export at index.d.ts:112 |  |  | 0.320 |
 | walker |  | 5678 | 155 | export names surface #1 in index.d.ts |  |  | 0.320 |
@@ -316,4 +316,3 @@ Score(3000)=0.398 I=0.458 C=0.346 ns_rows≤3K=15/40 (reached=4 partial=1 missin
 | ns | 9922 |  | 90 | AGENTS.md — Security-Sensitive Code | 5.1 |  | 0.293 |
 | walker |  | 9960 | 137 | listing of 'docs/pages/advanced' |  |  | 0.293 |
 | ns | 9972 |  | 50 | URL-building helper signatures (buildFullPath, isAbsoluteURL, combineURLs) | 5.2 |  | 0.295 |
-| walker |  | 9989 | 29 | headings outline in docs/pages/advanced/cancellation.md |  |  | 0.295 |

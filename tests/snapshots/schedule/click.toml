@@ -881,10 +881,44 @@ kind = "full"
 
 [[batches]]
 position = 35
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md", section_index: 0 })'
+descriptor = "docs/design-opinions.md section #0"
+cost_tokens = 60
+cum_tokens = 1377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
+start = 7
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/entry-points.md" })'
 descriptor = "headings outline in docs/entry-points.md"
 cost_tokens = 30
-cum_tokens = 1347
+cum_tokens = 1407
 
 [batches.content]
 kind = "lines"
@@ -936,40 +970,6 @@ end = 72
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 36
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md", section_index: 0 })'
-descriptor = "docs/design-opinions.md section #0"
-cost_tokens = 60
-cum_tokens = 1407
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
-start = 3
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/design-opinions.md"
-start = 7
-end = 10
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 37
@@ -1351,10 +1351,52 @@ kind = "full"
 
 [[batches]]
 position = 46
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md", section_index: 0 })'
+descriptor = "docs/wincmd.md section #0"
+cost_tokens = 74
+cum_tokens = 1941
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/parameters.md" })'
 descriptor = "headings outline in docs/parameters.md"
 cost_tokens = 37
-cum_tokens = 1904
+cum_tokens = 1978
 
 [batches.content]
 kind = "lines"
@@ -1424,11 +1466,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/parameters.md", section_index: 0 })'
 descriptor = "docs/parameters.md section #0"
 cost_tokens = 39
-cum_tokens = 1943
+cum_tokens = 2017
 
 [batches.content]
 kind = "lines"
@@ -1453,48 +1495,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/parameters.md"
 start = 8
 end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 48
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md", section_index: 0 })'
-descriptor = "docs/wincmd.md section #0"
-cost_tokens = 74
-cum_tokens = 2017
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
-start = 3
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
-start = 6
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/wincmd.md"
-start = 9
-end = 9
 
 [batches.content.spans.render]
 kind = "full"
@@ -2047,10 +2047,60 @@ entries = ["__init__.py", "cmd_init.py", "cmd_status.py"]
 
 [[batches]]
 position = 68
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 202
+cum_tokens = 2817
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
+start = 26
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
+start = 38
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/arguments.md" })'
 descriptor = "headings outline in docs/arguments.md"
 cost_tokens = 51
-cum_tokens = 2666
+cum_tokens = 2868
 
 [batches.content]
 kind = "lines"
@@ -2134,56 +2184,6 @@ end = 141
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 69
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/README.md", section_index: 1 })'
-descriptor = "README.md section #1"
-cost_tokens = 202
-cum_tokens = 2868
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
-start = 21
-end = 21
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
-start = 23
-end = 24
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
-start = 26
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
-start = 34
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
-start = 38
-end = 44
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 70
@@ -5641,10 +5641,60 @@ kind = "full"
 
 [[batches]]
 position = 169
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md", section_index: 0 })'
+descriptor = "docs/shell-completion.md section #0"
+cost_tokens = 193
+cum_tokens = 7069
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
+start = 14
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/quickstart.md" })'
 descriptor = "headings outline in docs/quickstart.md"
 cost_tokens = 97
-cum_tokens = 6973
+cum_tokens = 7166
 
 [batches.content]
 kind = "lines"
@@ -5794,11 +5844,11 @@ end = 178
 kind = "ellipsis"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/quickstart.md", section_index: 0 })'
 descriptor = "docs/quickstart.md section #0"
 cost_tokens = 17
-cum_tokens = 6990
+cum_tokens = 7183
 
 [batches.content]
 kind = "lines"
@@ -5820,11 +5870,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/quickstart.md", section_index: 1 })'
 descriptor = "docs/quickstart.md section #1"
 cost_tokens = 52
-cum_tokens = 7042
+cum_tokens = 7235
 
 [batches.content]
 kind = "lines"
@@ -5857,56 +5907,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/quickstart.md"
 start = 14
 end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 172
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md", section_index: 0 })'
-descriptor = "docs/shell-completion.md section #0"
-cost_tokens = 193
-cum_tokens = 7235
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
-start = 8
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
-start = 11
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/shell-completion.md"
-start = 14
-end = 19
 
 [batches.content.spans.render]
 kind = "full"
@@ -6031,10 +6031,52 @@ kind = "full"
 
 [[batches]]
 position = 176
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md", section_index: 0 })'
+descriptor = "docs/standalone-apps.md section #0"
+cost_tokens = 220
+cum_tokens = 7938
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
+start = 3
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
+start = 13
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/api.md" })'
 descriptor = "headings outline in docs/api.md"
 cost_tokens = 110
-cum_tokens = 7828
+cum_tokens = 8048
 
 [batches.content]
 kind = "lines"
@@ -6232,11 +6274,11 @@ end = 344
 kind = "ellipsis"
 
 [[batches]]
-position = 177
+position = 178
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/api.md", section_index: 0 })'
 descriptor = "docs/api.md section #0"
 cost_tokens = 76
-cum_tokens = 7904
+cum_tokens = 8124
 
 [batches.content]
 kind = "lines"
@@ -6274,11 +6316,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 178
+position = 179
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/api.md", section_index: 9 })'
 descriptor = "docs/api.md section #9"
 cost_tokens = 35
-cum_tokens = 7939
+cum_tokens = 8159
 
 [batches.content]
 kind = "lines"
@@ -6308,11 +6350,11 @@ end = 315
 kind = "full"
 
 [[batches]]
-position = 179
+position = 180
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/api.md", section_index: 8 })'
 descriptor = "docs/api.md section #8"
 cost_tokens = 62
-cum_tokens = 8001
+cum_tokens = 8221
 
 [batches.content]
 kind = "lines"
@@ -6342,53 +6384,301 @@ end = 307
 kind = "full"
 
 [[batches]]
-position = 180
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md", section_index: 0 })'
-descriptor = "docs/standalone-apps.md section #0"
-cost_tokens = 220
-cum_tokens = 8221
+position = 181
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/click/parser.py"
+cost_tokens = 127
+cum_tokens = 8348
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
-start = 1
-end = 1
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 48
+end = 48
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
-start = 3
-end = 6
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 51
+end = 51
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
-start = 8
-end = 11
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 111
+end = 111
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/standalone-apps.md"
-start = 13
-end = 16
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 112
+end = 112
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 121
+end = 121
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 217
+end = 217
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 504
+end = 504
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 182
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 111 })'
+descriptor = "python decl at src/click/parser.py:111"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 111
+end = 111
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 181
+position = 183
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 120 })'
+descriptor = "python decl at src/click/parser.py:120"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 127 })'
+descriptor = "python decl at src/click/parser.py:127"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 185 })'
+descriptor = "python decl at src/click/parser.py:185"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 216 })'
+descriptor = "python decl at src/click/parser.py:216"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 187
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 224 })'
+descriptor = "python decl at src/click/parser.py:224"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 224
+end = 224
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 503 })'
+descriptor = "python decl at src/click/parser.py:503"
+cost_tokens = 0
+cum_tokens = 8348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 51 })'
+descriptor = "python decl at src/click/parser.py:51"
+cost_tokens = 47
+cum_tokens = 8395
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
+start = 51
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/commands.md" })'
 descriptor = "headings outline in docs/commands.md"
 cost_tokens = 111
-cum_tokens = 8332
+cum_tokens = 8506
 
 [batches.content]
 kind = "lines"
@@ -6554,11 +6844,11 @@ end = 424
 kind = "ellipsis"
 
 [[batches]]
-position = 182
+position = 191
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/docs/commands.md", section_index: 0 })'
 descriptor = "docs/commands.md section #0"
 cost_tokens = 88
-cum_tokens = 8420
+cum_tokens = 8594
 
 [batches.content]
 kind = "lines"
@@ -6591,296 +6881,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/click/docs/commands.md"
 start = 9
 end = 14
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 183
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", chunk_index: 0 })'
-descriptor = "python decl names surface in src/click/parser.py"
-cost_tokens = 127
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 48
-end = 48
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 51
-end = 51
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 216
-end = 216
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 503
-end = 503
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 112
-end = 112
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 121
-end = 121
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 128
-end = 128
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 186
-end = 186
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 217
-end = 217
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 225
-end = 225
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 504
-end = 504
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 184
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 111 })'
-descriptor = "python decl at src/click/parser.py:111"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 111
-end = 111
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 185
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 120 })'
-descriptor = "python decl at src/click/parser.py:120"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 120
-end = 120
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 186
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 127 })'
-descriptor = "python decl at src/click/parser.py:127"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 127
-end = 127
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 187
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 185 })'
-descriptor = "python decl at src/click/parser.py:185"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 185
-end = 185
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 188
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 216 })'
-descriptor = "python decl at src/click/parser.py:216"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 216
-end = 216
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 189
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 224 })'
-descriptor = "python decl at src/click/parser.py:224"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 224
-end = 224
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 503 })'
-descriptor = "python decl at src/click/parser.py:503"
-cost_tokens = 0
-cum_tokens = 8547
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 503
-end = 503
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 191
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py", start_line: 51 })'
-descriptor = "python decl at src/click/parser.py:51"
-cost_tokens = 47
-cum_tokens = 8594
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/parser.py"
-start = 51
-end = 53
 
 [batches.content.spans.render]
 kind = "full"

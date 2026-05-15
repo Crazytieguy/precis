@@ -47,9 +47,9 @@ Score(3000)=0.492 I=0.772 C=0.314 ns_rows≤3K=20/52 (reached=6 partial=2 missin
 | walker |  | 1289 | 48 | docs/license.md section #0 |  |  | 0.553 |
 | ns | 1302 |  | 182 | __init__.py: built-in type re-exports | 1.11 | 1.10 | 0.511 |
 | walker |  | 1317 | 28 | python imports in docs/conf.py |  |  | 0.511 |
-| walker |  | 1347 | 30 | headings outline in docs/entry-points.md |  |  | 0.511 |
+| walker |  | 1377 | 60 | docs/design-opinions.md section #0 |  |  | 0.511 |
 | ns | 1395 |  | 93 | __init__.py: utils re-exports | 1.12 | 1.11 | 0.493 |
-| walker |  | 1407 | 60 | docs/design-opinions.md section #0 |  |  | 0.493 |
+| walker |  | 1407 | 30 | headings outline in docs/entry-points.md |  |  | 0.493 |
 | walker |  | 1439 | 32 | headings outline in docs/extending-click.md |  |  | 0.493 |
 | walker |  | 1504 | 65 | docs/click-concepts.md section #0 |  |  | 0.493 |
 | walker |  | 1537 | 33 | headings outline in docs/faqs.md |  |  | 0.493 |
@@ -60,10 +60,10 @@ Score(3000)=0.492 I=0.772 C=0.314 ns_rows≤3K=20/52 (reached=6 partial=2 missin
 | walker |  | 1832 | 161 | python imports #3 in src/click/__init__.py |  |  | 0.513 |
 | walker |  | 1867 | 35 | headings outline in docs/virtualenv.md |  |  | 0.513 |
 | walker |  | 1867 | 0 | docs/virtualenv.md section #0 |  |  | 0.513 |
-| walker |  | 1904 | 37 | headings outline in docs/parameters.md |  |  | 0.513 |
 | ns | 1916 |  | 269 | Deprecation shim: OptionParser, __version__ | 1.14 | 1.13 | 0.467 |
-| walker |  | 1943 | 39 | docs/parameters.md section #0 |  |  | 0.467 |
-| walker |  | 2017 | 74 | docs/wincmd.md section #0 |  |  | 0.467 |
+| walker |  | 1941 | 74 | docs/wincmd.md section #0 |  |  | 0.467 |
+| walker |  | 1978 | 37 | headings outline in docs/parameters.md |  |  | 0.467 |
+| walker |  | 2017 | 39 | docs/parameters.md section #0 |  |  | 0.467 |
 | walker |  | 2059 | 42 | headings outline in docs/option-decorators.md |  |  | 0.467 |
 | walker |  | 2087 | 28 | docs/option-decorators.md section #3 |  |  | 0.467 |
 | ns | 2121 |  | 205 | decorators.py: location of every public decorator | 2.1 |  | 0.448 |
@@ -87,9 +87,9 @@ Score(3000)=0.492 I=0.772 C=0.314 ns_rows≤3K=20/52 (reached=6 partial=2 missin
 | walker |  | 2586 | 12 | listing of 'examples/complex' |  |  | 0.472 |
 | walker |  | 2599 | 13 | listing of 'examples/complex/complex' |  |  | 0.472 |
 | walker |  | 2615 | 16 | listing of 'examples/complex/complex/commands' |  |  | 0.472 |
-| walker |  | 2666 | 51 | headings outline in docs/arguments.md |  |  | 0.472 |
 | ns | 2688 |  | 163 | @group: signature + 1-liner | 2.5 | 2.1 | 0.456 |
-| walker |  | 2868 | 202 | README.md section #1 |  |  | 0.519 |
+| walker |  | 2817 | 202 | README.md section #1 |  |  | 0.519 |
+| walker |  | 2868 | 51 | headings outline in docs/arguments.md |  |  | 0.519 |
 | walker |  | 2920 | 52 | headings outline in docs/support-multiple-versions.md |  |  | 0.519 |
 | ns | 2923 |  | 235 | @pass_context / @pass_obj signatures + docstrings | 2.6 | 2.1 | 0.492 |
 | walker |  | 3026 | 106 | docs/extending-click.md section #0 |  |  | 0.492 |
@@ -205,36 +205,36 @@ Score(3000)=0.492 I=0.772 C=0.314 ns_rows≤3K=20/52 (reached=6 partial=2 missin
 | walker |  | 6810 | 92 | headings outline in docs/advanced.md |  |  | 0.337 |
 | ns | 6856 |  | 289 | Parameter.__init__ signature | 3.11 | 3.10 | 0.330 |
 | walker |  | 6876 | 66 | docs/advanced.md section #0 |  |  | 0.330 |
-| walker |  | 6973 | 97 | headings outline in docs/quickstart.md |  |  | 0.330 |
-| walker |  | 6990 | 17 | docs/quickstart.md section #0 |  |  | 0.330 |
-| walker |  | 7042 | 52 | docs/quickstart.md section #1 |  |  | 0.330 |
+| walker |  | 7069 | 193 | docs/shell-completion.md section #0 |  |  | 0.330 |
+| walker |  | 7166 | 97 | headings outline in docs/quickstart.md |  |  | 0.330 |
+| walker |  | 7183 | 17 | docs/quickstart.md section #0 |  |  | 0.330 |
 | ns | 7202 |  | 346 | Option: lede + __init__ signature | 3.12 | 3.10 | 0.321 |
-| walker |  | 7235 | 193 | docs/shell-completion.md section #0 |  |  | 0.321 |
+| walker |  | 7235 | 52 | docs/quickstart.md section #1 |  |  | 0.321 |
 | ns | 7355 |  | 153 | Argument: lede + __init__ signature + required-by-default logic | 3.13 | 3.10 | 0.317 |
 | walker |  | 7432 | 197 | docs/contrib.md section #0 |  |  | 0.317 |
 | walker |  | 7641 | 209 | docs/entry-points.md section #0 |  |  | 0.317 |
 | walker |  | 7718 | 77 | python method doc at src/click/formatting.py:147 |  |  | 0.317 |
 | ns | 7722 |  | 367 | Parameter/Option/Argument: method locations | 3.14 | 3.11 | 0.311 |
-| walker |  | 7828 | 110 | headings outline in docs/api.md |  |  | 0.311 |
-| walker |  | 7904 | 76 | docs/api.md section #0 |  |  | 0.311 |
-| walker |  | 7939 | 35 | docs/api.md section #9 |  |  | 0.311 |
-| walker |  | 8001 | 62 | docs/api.md section #8 |  |  | 0.311 |
+| walker |  | 7938 | 220 | docs/standalone-apps.md section #0 |  |  | 0.311 |
 | ns | 8019 |  | 297 | types.py: every ParamType subclass header | 4.1 |  | 0.306 |
-| walker |  | 8221 | 220 | docs/standalone-apps.md section #0 |  |  | 0.306 |
+| walker |  | 8048 | 110 | headings outline in docs/api.md |  |  | 0.306 |
+| walker |  | 8124 | 76 | docs/api.md section #0 |  |  | 0.306 |
+| walker |  | 8159 | 35 | docs/api.md section #9 |  |  | 0.306 |
+| walker |  | 8221 | 62 | docs/api.md section #8 |  |  | 0.306 |
 | ns | 8250 |  | 231 | ParamType: the subclassing recipe | 4.2 | 4.1 | 0.301 |
-| walker |  | 8332 | 111 | headings outline in docs/commands.md |  |  | 0.301 |
-| walker |  | 8420 | 88 | docs/commands.md section #0 |  |  | 0.301 |
+| walker |  | 8348 | 127 | python decl names surface in src/click/parser.py |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:111 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:120 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:127 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:185 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:216 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:224 |  |  | 0.301 |
+| walker |  | 8348 | 0 | python decl at src/click/parser.py:503 |  |  | 0.301 |
+| walker |  | 8395 | 47 | python decl at src/click/parser.py:51 |  |  | 0.301 |
 | ns | 8431 |  | 181 | ParamType.convert + ParamType.shell_complete signatures | 4.3 | 4.2 | 0.297 |
-| walker |  | 8547 | 127 | python decl names surface in src/click/parser.py |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:111 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:120 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:127 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:185 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:216 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:224 |  |  | 0.297 |
-| walker |  | 8547 | 0 | python decl at src/click/parser.py:503 |  |  | 0.297 |
+| walker |  | 8506 | 111 | headings outline in docs/commands.md |  |  | 0.297 |
 | ns | 8564 |  | 133 | exceptions.py: every class header | 4.4 |  | 0.294 |
-| walker |  | 8594 | 47 | python decl at src/click/parser.py:51 |  |  | 0.294 |
+| walker |  | 8594 | 88 | docs/commands.md section #0 |  |  | 0.294 |
 | walker |  | 8669 | 75 | python decl body at src/click/formatting.py:14 body 15 |  |  | 0.294 |
 | walker |  | 8737 | 68 | python imports in src/click/formatting.py |  |  | 0.294 |
 | ns | 8790 |  | 226 | ClickException + UsageError ledes + exit_code | 4.5 | 4.4 | 0.290 |
