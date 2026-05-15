@@ -196,6 +196,9 @@ fn non_essential_factor_inner(
                     | "scripts"
                     | "tools"
                     | "tooling"
+                    | "e2e"
+                    | "cypress"
+                    | "playwright"
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")

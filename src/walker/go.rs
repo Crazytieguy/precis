@@ -333,7 +333,7 @@ fn expand_source_files(source_files: &[PathBuf], ctx: &WalkCtx) -> Vec<Batch<Bat
 /// ~22 tokens each) — a 12-name chunk often still won't fit at 3K for
 /// an oversized API file (command.go's 12-name chunk is 261 tokens),
 /// so the first chunk must hold fewer names. NS authors anchor on
-/// per-class / per-flag-group rows that comfortably fit within ~8
+/// per-class / per-flag-group rows that comfortably fit within ~10
 /// names.
 const GO_DECL_NAMES_CHUNK_SIZE: usize = 8;
 

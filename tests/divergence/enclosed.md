@@ -184,27 +184,27 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 6182 | 42 | listing of 'packages/app-server/src/modules/app/auth' |  |  | 0.551 |
 | ns | 6202 |  | 327 | Node.js entrypoint — static + SPA fallback + cron + listen | 4.5 | 4.4 | 0.531 |
 | walker |  | 6245 | 63 | listing of 'packages/app-server/src/modules/notes' |  |  | 0.561 |
-| walker |  | 6268 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.561 |
-| walker |  | 6278 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.561 |
-| walker |  | 6288 | 10 | listing of 'packages/docs/src/components' |  |  | 0.561 |
-| walker |  | 6450 | 162 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.561 |
+| walker |  | 6297 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.561 |
+| walker |  | 6320 | 23 | listing of 'packages/app-client/src/modules/i18n' |  |  | 0.561 |
+| walker |  | 6330 | 10 | listing of 'packages/cli/src/shared' |  |  | 0.561 |
+| walker |  | 6340 | 10 | listing of 'packages/docs/src/components' |  |  | 0.561 |
 | ns | 6457 |  | 255 | Storage drivers — memory + fs-lite | 4.6 |  | 0.549 |
-| walker |  | 6490 | 40 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.549 |
-| walker |  | 6499 | 9 | export names surface in packages/cli/src/config/config.usecases.ts |  |  | 0.549 |
-| walker |  | 6523 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.549 |
-| walker |  | 6571 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.549 |
-| walker |  | 6585 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.549 |
-| walker |  | 6590 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.549 |
-| walker |  | 6595 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.549 |
-| walker |  | 6606 | 11 | listing of 'packages/cli/src/files' |  |  | 0.549 |
-| walker |  | 6617 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.549 |
-| walker |  | 6652 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.549 |
-| walker |  | 6674 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.549 |
-| walker |  | 6778 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.549 |
-| walker |  | 6806 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.549 |
-| walker |  | 6854 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.549 |
+| walker |  | 6502 | 162 | headings outline in packages/docs/src/self-hosting/docker.md |  |  | 0.549 |
+| walker |  | 6542 | 40 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.549 |
+| walker |  | 6551 | 9 | export names surface in packages/cli/src/config/config.usecases.ts |  |  | 0.549 |
+| walker |  | 6575 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.549 |
+| walker |  | 6623 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.549 |
+| walker |  | 6637 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.549 |
+| walker |  | 6642 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.549 |
+| walker |  | 6647 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.549 |
+| walker |  | 6658 | 11 | listing of 'packages/cli/src/files' |  |  | 0.549 |
+| walker |  | 6669 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.549 |
+| walker |  | 6704 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.549 |
+| walker |  | 6726 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.549 |
+| walker |  | 6830 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.549 |
+| walker |  | 6858 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.549 |
 | ns | 6892 |  | 435 | Storage driver — Cloudflare KV (with 413 translation) | 4.7 |  | 0.533 |
-| walker |  | 6906 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.533 |
+| walker |  | 6906 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.533 |
 | walker |  | 6921 | 15 | export names surface in packages/app-client/src/routes.tsx |  |  | 0.533 |
 | walker |  | 6921 | 0 | export at packages/app-client/src/routes.tsx:11 |  |  | 0.533 |
 | walker |  | 6936 | 15 | imports in packages/lib/src/notes/notes.services.ts |  |  | 0.533 |
@@ -295,9 +295,8 @@ Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 9774 | 47 | export at packages/docs/src/data/configuration.data.ts:55 |  |  | 0.460 |
 | walker |  | 9804 | 30 | imports in packages/lib/src/files/files.models.ts |  |  | 0.460 |
 | walker |  | 9818 | 14 | export names surface in packages/app-server/src/modules/notes/notes.usecases.ts |  |  | 0.460 |
-| walker |  | 9826 | 8 | listing of 'packages/app-server/src/modules/app/auth/e2e' |  |  | 0.460 |
-| walker |  | 9877 | 51 | packages/docs/src/how-it-works.md section #2 |  |  | 0.460 |
+| walker |  | 9869 | 51 | packages/docs/src/how-it-works.md section #2 |  |  | 0.460 |
 | ns | 9903 |  | 364 | App-client — Solid Router routes | 6.4 |  | 0.451 |
-| walker |  | 9928 | 51 | packages/docs/src/how-it-works.md section #4 |  |  | 0.451 |
-| walker |  | 9980 | 52 | packages/docs/src/how-it-works.md section #6 |  |  | 0.451 |
+| walker |  | 9920 | 51 | packages/docs/src/how-it-works.md section #4 |  |  | 0.451 |
+| walker |  | 9972 | 52 | packages/docs/src/how-it-works.md section #6 |  |  | 0.451 |
 | ns | 9990 |  | 87 | Docs site — page map (VitePress src layout) | 6.5 |  | 0.464 |
