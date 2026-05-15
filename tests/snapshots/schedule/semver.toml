@@ -19,24 +19,10 @@ entries = [".commitlintrc.js", ".eslintrc.js", ".eslintrc.local.js", ".github", 
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/tap-snapshots" })'
-descriptor = "listing of 'tap-snapshots'"
-cost_tokens = 3
-cum_tokens = 106
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/semver/tap-snapshots"
-entries = ["test"]
-
-[[batches]]
-position = 3
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/semver/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in index.js"
 cost_tokens = 10
-cum_tokens = 116
+cum_tokens = 113
 
 [batches.content]
 kind = "lines"
@@ -58,11 +44,11 @@ end = 46
 kind = "ellipsis"
 
 [[batches]]
-position = 4
+position = 3
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 24
-cum_tokens = 140
+cum_tokens = 137
 
 [batches.content]
 kind = "lines"
@@ -76,11 +62,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/bin" })'
 descriptor = "listing of 'bin'"
 cost_tokens = 5
-cum_tokens = 145
+cum_tokens = 142
 
 [batches.content]
 kind = "fs"
@@ -90,11 +76,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/bin"
 entries = ["semver.js"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 55
-cum_tokens = 200
+cum_tokens = 197
 
 [batches.content]
 kind = "lines"
@@ -116,11 +102,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/classes" })'
 descriptor = "listing of 'classes'"
 cost_tokens = 17
-cum_tokens = 217
+cum_tokens = 214
 
 [batches.content]
 kind = "fs"
@@ -130,11 +116,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/classes"
 entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/internal" })'
 descriptor = "listing of 'internal'"
 cost_tokens = 27
-cum_tokens = 244
+cum_tokens = 241
 
 [batches.content]
 kind = "fs"
@@ -144,11 +130,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/internal"
 entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/ranges" })'
 descriptor = "listing of 'ranges'"
 cost_tokens = 56
-cum_tokens = 300
+cum_tokens = 297
 
 [batches.content]
 kind = "fs"
@@ -158,11 +144,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/ranges"
 entries = ["gtr.js", "intersects.js", "ltr.js", "max-satisfying.js", "min-satisfying.js", "min-version.js", "outside.js", "simplify.js", "subset.js", "to-comparators.js", "valid.js"]
 
 [[batches]]
-position = 10
+position = 9
 key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 60
-cum_tokens = 360
+cum_tokens = 357
 
 [batches.content]
 kind = "lines"
@@ -184,11 +170,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 182
-cum_tokens = 542
+cum_tokens = 539
 
 [batches.content]
 kind = "lines"
@@ -482,11 +468,11 @@ end = 611
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 22
-cum_tokens = 564
+cum_tokens = 561
 
 [batches.content]
 kind = "lines"
@@ -508,11 +494,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 54 })'
 descriptor = "README.md section #54"
 cost_tokens = 24
-cum_tokens = 588
+cum_tokens = 585
 
 [batches.content]
 kind = "lines"
@@ -534,11 +520,11 @@ end = 578
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 135
-cum_tokens = 723
+cum_tokens = 720
 
 [batches.content]
 kind = "lines"
@@ -560,11 +546,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 28
-cum_tokens = 751
+cum_tokens = 748
 
 [batches.content]
 kind = "lines"
@@ -578,11 +564,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 144
-cum_tokens = 895
+cum_tokens = 892
 
 [batches.content]
 kind = "lines"
@@ -596,11 +582,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/semver/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 84
-cum_tokens = 979
+cum_tokens = 976
 
 [batches.content]
 kind = "lines"
@@ -614,11 +600,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/functions" })'
 descriptor = "listing of 'functions'"
 cost_tokens = 105
-cum_tokens = 1084
+cum_tokens = 1081
 
 [batches.content]
 kind = "fs"
@@ -628,11 +614,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/functions"
 entries = ["clean.js", "cmp.js", "coerce.js", "compare-build.js", "compare-loose.js", "compare.js", "diff.js", "eq.js", "gt.js", "gte.js", "inc.js", "lt.js", "lte.js", "major.js", "minor.js", "neq.js", "parse.js", "patch.js", "prerelease.js", "rcompare.js", "rsort.js", "satisfies.js", "sort.js", "valid.js"]
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/semver/index.js", start_line: 45 })'
 descriptor = "export at index.js:45"
 cost_tokens = 380
-cum_tokens = 1464
+cum_tokens = 1461
 
 [batches.content]
 kind = "lines"
@@ -646,11 +632,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 33
-cum_tokens = 1497
+cum_tokens = 1494
 
 [batches.content]
 kind = "fs"
@@ -660,11 +646,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/test"
 entries = ["bin", "classes", "fixtures", "functions", "index.js", "integration", "internal", "map.js", "preload.js", "ranges"]
 
 [[batches]]
-position = 21
+position = 20
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/test/classes" })'
 descriptor = "listing of 'test/classes'"
 cost_tokens = 17
-cum_tokens = 1514
+cum_tokens = 1511
 
 [batches.content]
 kind = "fs"
@@ -674,11 +660,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/test/classes"
 entries = ["comparator.js", "index.js", "range.js", "semver.js"]
 
 [[batches]]
-position = 22
+position = 21
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 20 })'
 descriptor = "README.md section #20"
 cost_tokens = 21
-cum_tokens = 1535
+cum_tokens = 1532
 
 [batches.content]
 kind = "lines"
@@ -692,11 +678,11 @@ end = 455
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 21 })'
 descriptor = "README.md section #21"
 cost_tokens = 21
-cum_tokens = 1556
+cum_tokens = 1553
 
 [batches.content]
 kind = "lines"
@@ -710,11 +696,11 @@ end = 456
 kind = "full"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 21
-cum_tokens = 1577
+cum_tokens = 1574
 
 [batches.content]
 kind = "lines"
@@ -728,11 +714,11 @@ end = 457
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 23 })'
 descriptor = "README.md section #23"
 cost_tokens = 21
-cum_tokens = 1598
+cum_tokens = 1595
 
 [batches.content]
 kind = "lines"
@@ -746,11 +732,11 @@ end = 458
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/benchmarks" })'
 descriptor = "listing of 'benchmarks'"
 cost_tokens = 38
-cum_tokens = 1636
+cum_tokens = 1633
 
 [batches.content]
 kind = "fs"
@@ -760,11 +746,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/benchmarks"
 entries = ["bench-compare.js", "bench-diff.js", "bench-parse-options.js", "bench-parse.js", "bench-satisfies.js", "bench-subset.js"]
 
 [[batches]]
-position = 27
+position = 26
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 34 })'
 descriptor = "README.md section #34"
 cost_tokens = 22
-cum_tokens = 1658
+cum_tokens = 1655
 
 [batches.content]
 kind = "lines"
@@ -778,11 +764,11 @@ end = 491
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 42 })'
 descriptor = "README.md section #42"
 cost_tokens = 22
-cum_tokens = 1680
+cum_tokens = 1677
 
 [batches.content]
 kind = "lines"
@@ -796,11 +782,11 @@ end = 508
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 51 })'
 descriptor = "README.md section #51"
 cost_tokens = 22
-cum_tokens = 1702
+cum_tokens = 1699
 
 [batches.content]
 kind = "lines"
@@ -814,11 +800,11 @@ end = 560
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 25
-cum_tokens = 1727
+cum_tokens = 1724
 
 [batches.content]
 kind = "lines"
@@ -832,11 +818,11 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 47 })'
 descriptor = "README.md section #47"
 cost_tokens = 24
-cum_tokens = 1751
+cum_tokens = 1748
 
 [batches.content]
 kind = "lines"
@@ -850,11 +836,11 @@ end = 533
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 25 })'
 descriptor = "README.md section #25"
 cost_tokens = 27
-cum_tokens = 1778
+cum_tokens = 1775
 
 [batches.content]
 kind = "lines"
@@ -868,11 +854,11 @@ end = 462
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 13 })'
 descriptor = "README.md section #13"
 cost_tokens = 29
-cum_tokens = 1807
+cum_tokens = 1804
 
 [batches.content]
 kind = "lines"
@@ -886,11 +872,11 @@ end = 285
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 98
-cum_tokens = 1905
+cum_tokens = 1902
 
 [batches.content]
 kind = "lines"
@@ -920,11 +906,11 @@ end = 146
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 38 })'
 descriptor = "README.md section #38"
 cost_tokens = 28
-cum_tokens = 1933
+cum_tokens = 1930
 
 [batches.content]
 kind = "lines"
@@ -938,11 +924,11 @@ end = 499
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 35 })'
 descriptor = "README.md section #35"
 cost_tokens = 29
-cum_tokens = 1962
+cum_tokens = 1959
 
 [batches.content]
 kind = "lines"
@@ -956,11 +942,11 @@ end = 493
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/test/internal" })'
 descriptor = "listing of 'test/internal'"
 cost_tokens = 27
-cum_tokens = 1989
+cum_tokens = 1986
 
 [batches.content]
 kind = "fs"
@@ -970,11 +956,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/semver/test/internal"
 entries = ["constants.js", "debug.js", "identifiers.js", "lrucache.js", "parse-options.js", "re.js"]
 
 [[batches]]
-position = 38
+position = 37
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/semver/README.md", section_index: 30 })'
 descriptor = "README.md section #30"
 cost_tokens = 31
-cum_tokens = 2020
+cum_tokens = 2017
 
 [batches.content]
 kind = "lines"
@@ -986,6 +972,20 @@ end = 473
 
 [batches.content.spans.render]
 kind = "full"
+
+[[batches]]
+position = 38
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/semver/tap-snapshots" })'
+descriptor = "listing of 'tap-snapshots'"
+cost_tokens = 3
+cum_tokens = 2020
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/semver/tap-snapshots"
+entries = ["test"]
 
 [[batches]]
 position = 39

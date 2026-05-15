@@ -261,15 +261,34 @@ fn non_essential_factor_inner(
 /// they're more likely to be a real module name in a non-proc-macro
 /// package (`bevy/macros`, `core::macros`).
 /// True for root-level directory names that conventionally hold
-/// vendored / third-party content. Matched case-insensitively. Only
-/// applied at depth 1 from the repo root — projects that vendor as
-/// part of their *own* source tree (chalk's `source/vendor/ansi-styles/`
-/// holds load-bearing chalk modules, not upstream) keep full weight.
+/// vendored / third-party content, release artifacts, or other
+/// repo-level admin subtrees that NS authors don't anchor on.
+/// Matched case-insensitively. Only applied at depth 1 from the repo
+/// root — projects that vendor as part of their *own* source tree
+/// (chalk's `source/vendor/ansi-styles/` holds load-bearing chalk
+/// modules, not upstream) keep full weight.
 fn is_root_level_vendor_dir_name(s: &str) -> bool {
     let lower = s.to_ascii_lowercase();
     matches!(
         lower.as_str(),
-        "deps" | "vendor" | "vendored" | "third_party" | "third-party" | "external" | "extern"
+        // Vendored / third-party deps.
+        "deps"
+            | "vendor"
+            | "vendored"
+            | "third_party"
+            | "third-party"
+            | "3rd"
+            | "3rdparty"
+            | "external"
+            | "extern"
+            // Release artifacts / signatures (jq's `sig/`).
+            | "sig"
+            | "signatures"
+            // Test snapshot frameworks at the repo root (semver's
+            // `tap-snapshots/`). Snapshot dirs nested under `tests/`
+            // are already caught by the existing `tests`/`test_*`
+            // classifier.
+            | "tap-snapshots"
     )
 }
 

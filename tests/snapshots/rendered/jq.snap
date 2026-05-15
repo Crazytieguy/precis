@@ -106,50 +106,6 @@ m4/
     ax_pthread.m4
 scripts/
 sig/
-    jq-release-new.key
-    jq-release-old.key
-    v1.3/
-        jq-linux-x86.asc
-        jq-linux-x86_64.asc
-        jq-osx-x86.asc
-        jq-osx-x86_64.asc
-        jq-win32.exe.asc
-        jq-win64.exe.asc
-        sha256sum.txt
-    v1.4/
-    v1.5/
-        jq-linux32-no-oniguruma.asc
-        jq-linux32.asc
-        jq-linux64.asc
-        jq-osx-amd64.asc
-        jq-win32.exe.asc
-        jq-win64.exe.asc
-        sha256sum.txt
-    v1.5rc1/
-        jq-linux-x86_64-static.asc
-        jq-win32.exe.asc
-        jq-win64.exe.asc
-        sha256sum.txt
-    v1.5rc2/
-        jq-linux-x86.asc
-        jq-linux-x86_64.asc
-        jq-osx-x86_64.asc
-        jq-win32.exe.asc
-        jq-win64.exe.asc
-        sha256sum.txt
-    v1.6/
-        jq-linux32.asc
-        jq-linux64.asc
-        jq-osx-amd64.asc
-        jq-win32.exe.asc
-        jq-win64.exe.asc
-        sha256sum.txt
-    v1.7/
-    v1.7.1/
-    v1.7rc1/
-    v1.7rc2/
-    v1.8.0/
-    v1.8.1/
 src/
     builtin.c
     builtin.h
@@ -183,7 +139,15 @@ src/
         …
         47→#define MAX_CFUNCTION_ARGS 4
         48→struct cfunction {
-        …
+        49→  union {
+        50→    jv (*a1)(jq_state *, jv);
+        51→    jv (*a2)(jq_state *, jv, jv);
+        52→    jv (*a3)(jq_state *, jv, jv, jv);
+        53→    jv (*a4)(jq_state *, jv, jv, jv, jv);
+        54→  } fptr;
+        55→  const char* name;
+        56→  int nargs;
+        57→};
         59→struct symbol_table {
         60→  struct cfunction* cfunctions;
         61→  int ncfunctions;
@@ -192,7 +156,17 @@ src/
         70→#define ARG_NEWCLOSURE 0x1000
         …
         72→struct bytecode {
-        …
+        73→  uint16_t* code;
+        74→  int codelen;
+        76→  int nlocals;
+        77→  int nclosures;
+        79→  jv constants; // JSON array of constants
+        80→  struct symbol_table* globals;
+        82→  struct bytecode** subfunctions;
+        83→  int nsubfunctions;
+        85→  struct bytecode* parent;
+        87→  jv debuginfo;
+        88→};
         90→void dump_disassembly(int, struct bytecode* code);
         91→void dump_operation(struct bytecode* bc, uint16_t* op);
         …
@@ -231,6 +205,11 @@ src/
         7→int jq_parse_library(struct locfile* locations, block* answer);
         …
     jq_test.c
+        21→int jq_testsuite(jv libdirs, int verbose, int argc, char* argv[]) {
+        …
+        78→struct err_data {
+        79→  char buf[4096];
+        80→};
     jv.c
     jv.h
         4→#include <stdarg.h>
