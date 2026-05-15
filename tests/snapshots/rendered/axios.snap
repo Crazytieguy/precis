@@ -1,0 +1,362 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+.husky/
+    commit-msg
+.npmignore
+.npmrc
+.prettierignore
+.prettierrc
+AGENTS.md
+CHANGELOG.md
+CLAUDE.md
+CODE_OF_CONDUCT.md
+COLLABORATOR_GUIDE.md
+    1→# Collaborator Guide
+    …
+    3→As a collaborator you share in the administrative responsibility for axios. This guide covers what we expect from you and how we keep the project healthy. For the technical bar (architecture, lifecycle, security-sensitive code, conventions), see [AGENTS.md](./AGENTS.md) — it is the canonical contributor guide.
+    5→## Code of Conduct
+    …
+    9→## Triage Issues
+    …
+    16→## Answer Questions
+    …
+    20→## Submit PRs
+    …
+    44→## Security Disclosures
+    …
+    48→## What Collaborators Should Not Do
+    …
+CONTRIBUTING.md
+CONTRIBUTORS.md
+    1→# Contributors
+    …
+    3→Thank you to all the wonderful people who have contributed to axios!
+    5→## Core Team
+    …
+    11→## Notable Contributors
+    …
+    13→<!-- Add contributors here in alphabetical order by GitHub username -->
+    15→## How to Contribute
+    …
+ECOSYSTEM.md
+    1→# Ecosystem
+    …
+    3→This is a list of axios related libraries and resources. If you have a suggestion on what to add, please don't hesitate to submit a PR.
+    5→## Libraries
+    …
+    7→### General
+    …
+    23→### API clients
+    …
+    29→### Logging and debugging
+    …
+    35→### React and redux
+    …
+    43→### Unit testing
+    …
+LICENSE
+MIGRATION_GUIDE.md
+README.md
+    1→<h3 align="center">💎 Platinum sponsors <br /></h3>
+    331→## Table of Contents
+    333→- [Features](#features)
+    334→- [Browser Support](#browser-support)
+    335→- [Installing](#installing)
+    336→  - [Package manager](#package-manager)
+    337→  - [CDN](#cdn)
+    338→- [Example](#example)
+    339→- [Axios API](#axios-api)
+    340→- [Request method aliases](#request-method-aliases)
+    341→- [Concurrency 👎](#concurrency-deprecated)
+    342→- [Creating an instance](#creating-an-instance)
+    343→- [Instance methods](#instance-methods)
+    344→- [Request Config](#request-config)
+    345→- [Response Schema](#response-schema)
+    346→- [Config Defaults](#config-defaults)
+    347→  - [Global axios defaults](#global-axios-defaults)
+    348→  - [Custom instance defaults](#custom-instance-defaults)
+    349→  - [Config order of precedence](#config-order-of-precedence)
+    350→- [Interceptors](#interceptors)
+    351→  - [Multiple Interceptors](#multiple-interceptors)
+    352→- [Handling Errors](#handling-errors)
+    353→- [Handling Timeouts](#handling-timeouts)
+    354→- [Cancellation](#cancellation)
+    355→  - [AbortController](#abortcontroller)
+    356→  - [CancelToken 👎](#canceltoken-deprecated)
+    357→- [Using application/x-www-form-urlencoded format](#using-applicationx-www-form-urlencoded-format)
+    358→  - [URLSearchParams](#urlsearchparams)
+    359→  - [Query string](#query-string-older-browsers)
+    360→  - [🆕 Automatic serialization](#-automatic-serialization-to-urlsearchparams)
+    361→- [Using multipart/form-data format](#using-multipartform-data-format)
+    362→  - [FormData](#formdata)
+    363→  - [🆕 Automatic serialization](#-automatic-serialization-to-formdata)
+    364→- [Files Posting](#files-posting)
+    365→- [HTML Form Posting](#-html-form-posting-browser)
+    366→- [🆕 Progress capturing](#-progress-capturing)
+    367→- [🆕 Rate limiting](#-rate-limiting)
+    368→- [🆕 AxiosHeaders](#-axiosheaders)
+    369→- [🔥 Fetch adapter](#-fetch-adapter)
+    370→  - [🔥 Custom fetch](#-custom-fetch)
+    371→    - [🔥 Using with Tauri](#-using-with-tauri)
+    372→    - [🔥 Using with SvelteKit](#-using-with-sveltekit)
+    373→- [🔥 HTTP2](#-http2)
+    374→- [Semver](#semver)
+    375→- [Promises](#promises)
+    376→- [TypeScript](#typescript)
+    377→- [Contributing](#contributing)
+    378→  - [Local setup](#local-setup)
+    379→- [Resources](#resources)
+    380→- [Credits](#credits)
+    381→- [License](#license)
+    388→- **Interceptors:** Intercept requests and responses to add custom logic or transform data.
+    389→- **Data Transformation:** Transform request and response data automatically.
+    390→- **Request Cancellation:** Cancel requests using built-in mechanisms.
+    2341→## Semver
+    2343→Since Axios has reached a `v.1.0.0` we will fully embrace semver as per the spec [here](https://semver.org/)
+    2424→## License
+    2426→[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+SECURITY.md
+THREATMODEL.md
+    1→# Axios Threat Model
+    …
+    9→## 1. Scope & Methodology
+    …
+    24→## 2. Runtime Threat Model
+    …
+    26→### 2.1 System Overview
+    …
+    55→### 2.2 Assets
+    …
+    65→### 2.3 Trust Boundaries
+    …
+    72→### 2.4 Threat Actors
+    …
+    81→### 2.5 Threats
+    …
+    85→---
+    233→### 2.6 Explicit Non-Goals (Runtime)
+    …
+    243→---
+    245→## 3. Project / Supply-Chain Threat Model
+    …
+    249→### 3.1 System Overview
+    …
+    285→### 3.2 Assets
+    …
+    297→### 3.3 Trust Boundaries
+    …
+    304→### 3.4 Threat Actors
+    …
+    314→### 3.5 Threats
+    …
+    316→---
+    448→### 3.6 Summary: Project Risk Posture
+    …
+    463→---
+    465→### 3.7 Incident Response Runbook
+    …
+    509→---
+docs/
+    .vitepress/
+    data/
+        sponsors.json
+    es/
+        index.md
+        pages/
+            advanced/
+            getting-started/
+            misc/
+    favicon.ico
+    fr/
+    index.md
+    package-lock.json
+    package.json
+        2→  "name": "axios",
+        3→  "version": "1.0.0",
+        4→  "description": "Documentation for the Axios HTTP client",
+        5→  "license": "MIT",
+        6→  "type": "module",
+        7→  "private": true,
+    pages/
+        advanced/
+        getting-started/
+            examples/
+            features.md
+            first-steps.md
+                1→# First steps
+                …
+                5→## Installing
+                …
+                55→## Importing axios
+                …
+                92→## Making your first request
+                …
+                120→## Next steps
+                …
+            upgrade-guide.md
+        misc/
+            security.md
+            semver.md
+                1→# Semantic versioning
+                …
+                5→## axios versioning
+                …
+                13→## Version format
+                …
+                27→## Pre-release versions
+                …
+                33→## Version ranges
+                …
+            sponsors.md
+    patches/
+    public/
+    scripts/
+    site.webmanifest
+    zh/
+eslint.config.js
+examples/
+gulpfile.js
+    79→export { env, clear, version, packageJSON };
+index.d.cts
+index.d.ts
+index.js
+    1→import axios from './lib/axios.js';
+    26→export {
+    27→  axios as default,
+    28→  create,
+    29→  Axios,
+    30→  AxiosError,
+    31→  CanceledError,
+    32→  isCancel,
+    33→  CancelToken,
+    34→  VERSION,
+    35→  all,
+    36→  Cancel,
+    37→  isAxiosError,
+    38→  spread,
+    39→  toFormData,
+    40→  AxiosHeaders,
+    41→  HttpStatusCode,
+    42→  formToJSON,
+    43→  getAdapter,
+    44→  mergeConfig,
+    45→};
+lib/
+    adapters/
+        README.md
+            1→# axios // adapters
+            3→The modules under `adapters/` are modules that handle dispatching a request and settling a returned `Promise` once a response is received.
+        adapters.js
+            120→export default {
+            …
+        fetch.js
+        http.js
+        xhr.js
+    axios.js
+        89→export default axios;
+    cancel/
+        CancelToken.js
+            135→export default CancelToken;
+        CanceledError.js
+            22→export default CanceledError;
+        isCancel.js
+    core/
+        Axios.js
+            281→export default Axios;
+        AxiosError.js
+            176→export default AxiosError;
+        AxiosHeaders.js
+            348→export default AxiosHeaders;
+        InterceptorManager.js
+            72→export default InterceptorManager;
+        README.md
+            1→# axios // core
+            3→The modules found in `core/` should be modules that are specific to the domain logic of axios. These modules would most likely not make sense to be consumed outside of the axios module, as their logic is too specific. Some examples of core modules are:
+            5→- Dispatching requests
+            6→  - Requests sent via `adapters/` (see lib/adapters/README.md)
+            7→- Managing interceptors
+            8→- Handling config
+        buildFullPath.js
+        dispatchRequest.js
+        mergeConfig.js
+        settle.js
+        transformData.js
+    defaults/
+        index.js
+            11→const own = (obj, key) => (obj != null && utils.hasOwnProp(obj, key) ? obj[key] : undefined);
+            23→function stringifySafely(rawValue, parser, encoder) {
+            24→  if (utils.isString(rawValue)) {
+            25→    try {
+            26→      (parser || JSON.parse)(rawValue);
+            27→      return utils.trim(rawValue);
+            28→    } catch (e) {
+            29→      if (e.name !== 'SyntaxError') {
+            30→        throw e;
+            31→      }
+            32→    }
+            33→  }
+            35→  return (encoder || JSON.stringify)(rawValue);
+            177→export default defaults;
+        transitional.js
+    env/
+        README.md
+            1→# axios // env
+            3→The `data.js` file is updated automatically when the package version is upgrading. Please do not edit it manually.
+        classes/
+        data.js
+    helpers/
+    platform/
+        browser/
+        common/
+        index.js
+            1→import platform from './node/index.js';
+            2→import * as utils from './common/utils.js';
+            4→export default {
+            5→  ...utils,
+            6→  ...platform,
+            7→};
+        node/
+    utils.js
+        872→export default {
+        …
+package-lock.json
+package.json
+    2→  "name": "axios",
+    3→  "version": "1.16.1",
+    4→  "description": "Promise based HTTP client for the browser and node.js",
+    7→  "type": "module",
+    95→  "license": "MIT",
+rollup.config.js
+sandbox/
+    client.html
+    client.js
+    server.js
+scripts/
+tests/
+    README.md
+    browser/
+    module/
+    setup/
+    smoke/
+        bun/
+        cjs/
+        deno/
+        esm/
+    unit/
+tsconfig.json
+    1→{
+    2→  "compilerOptions": {
+    3→    "module": "node16",
+    4→    "lib": ["dom", "es2015"],
+    5→    "types": [],
+    6→    "strict": true,
+    7→    "noEmit": true
+    8→  }
+    9→}
+tslint.json
+vitest.config.js
+webpack.config.js

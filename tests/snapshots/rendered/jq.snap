@@ -1,0 +1,382 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.gitattributes
+.github/
+.gitignore
+.gitmodules
+AUTHORS
+COPYING
+ChangeLog
+Dockerfile
+KEYS
+Makefile.am
+NEWS.md
+    1→# 1.8.1
+    …
+    6→## Security fixes
+    …
+    13→## CLI changes
+    …
+    17→## Changes to existing functions
+    …
+    21→## Language changes
+    …
+    26→## Documentation changes
+    …
+    30→## Build improvements
+    …
+    34→# 1.8.0
+    …
+    42→## Releasing
+    …
+    52→## Security fixes
+    …
+    67→## CLI changes
+    …
+    117→## New functions
+    …
+    164→## Changes to existing functions
+    …
+    187→## Language changes
+    …
+    239→## Documentation changes
+    …
+    251→## Build improvements
+    …
+    267→## Test improvements
+    …
+    276→# 1.7.1
+    …
+    278→## Security
+    …
+    283→## CLI changes
+    …
+    290→## Language changes
+    …
+    306→## Documentation changes
+    …
+    311→## libjq
+    …
+    315→## Build and test changes
+    …
+    324→# 1.7
+    …
+    348→## CLI changes
+    …
+    411→## Language changes
+    …
+    554→# Previous releases
+    …
+README.md
+    1→# jq
+    3→`jq` is a lightweight and flexible command-line JSON processor akin to `sed`,`awk`,`grep`, and friends for JSON data. It's written in portable C and has zero runtime dependencies, allowing you to easily slice, filter, map, and transform structured data.
+    5→## Documentation
+    …
+    7→- **Official Documentation**: [jqlang.org](https://jqlang.org)
+    8→- **Try jq Online**: [play.jqlang.org](https://play.jqlang.org)
+    10→## Installation
+    …
+    12→### Prebuilt Binaries
+    …
+    16→### Docker Image
+    …
+    34→### Building from source
+    …
+    67→## Community & Support
+    …
+    73→## License
+    …
+SECURITY.md
+build/
+compile-ios.sh
+config/
+    .gitignore
+    m4/
+        .gitignore
+        check-math-func.m4
+        find-func-no-libs.m4
+        find-func-no-libs2.m4
+        find-func.m4
+        misc.m4
+configure.ac
+docs/
+    Pipfile
+    Pipfile.lock
+    README.md
+        1→Documentation
+        2→=============
+        4→The jq website, manpages and some of the tests are generated from this
+        5→directory. The manual is a YAML file in `content/manual`.
+    build_manpage.py
+    build_mantests.py
+        2→import yaml
+        3→import re
+        5→regex_program_pattern = re.compile(
+        6→    r'\b(?:test|match|capture|scan|split|splits|sub|gsub)\s*\(')
+    build_website.py
+        13→env = Environment(
+        14→    loader=FileSystemLoader('templates'),
+        15→    autoescape=select_autoescape(['html.j2']),
+        16→)
+        19→def load_yml_file(fn):
+        20→    with open(fn) as f:
+        21→        return yaml.safe_load(f)
+        43→def raise_handler(message):
+        44→    raise Exception(message)
+        50→def generate_file(env, fname):
+        …
+        73→def copy_public_files(root=''):
+        …
+    content/
+        download/
+        index.yml
+        manual/
+        tutorial/
+    manual_schema.yml
+    public/
+        .htaccess
+        CNAME
+        css/
+        icon.png
+        icon.svg
+        jq.svg
+        js/
+        robots.txt
+    templates/
+        default.html.j2
+        index.html.j2
+        manual.html.j2
+        shared/
+    validate_manual_schema.py
+        2→import jsonschema
+        3→import sys
+        4→import yaml
+jq.1.prebuilt
+jq.spec
+libjq.pc.in
+m4/
+    ax_compare_version.m4
+    ax_prog_bison_version.m4
+    ax_pthread.m4
+scripts/
+sig/
+    jq-release-new.key
+    jq-release-old.key
+    v1.3/
+        jq-linux-x86.asc
+        jq-linux-x86_64.asc
+        jq-osx-x86.asc
+        jq-osx-x86_64.asc
+        jq-win32.exe.asc
+        jq-win64.exe.asc
+        sha256sum.txt
+    v1.4/
+    v1.5/
+        jq-linux32-no-oniguruma.asc
+        jq-linux32.asc
+        jq-linux64.asc
+        jq-osx-amd64.asc
+        jq-win32.exe.asc
+        jq-win64.exe.asc
+        sha256sum.txt
+    v1.5rc1/
+        jq-linux-x86_64-static.asc
+        jq-win32.exe.asc
+        jq-win64.exe.asc
+        sha256sum.txt
+    v1.5rc2/
+        jq-linux-x86.asc
+        jq-linux-x86_64.asc
+        jq-osx-x86_64.asc
+        jq-win32.exe.asc
+        jq-win64.exe.asc
+        sha256sum.txt
+    v1.6/
+        jq-linux32.asc
+        jq-linux64.asc
+        jq-osx-amd64.asc
+        jq-win32.exe.asc
+        jq-win64.exe.asc
+        sha256sum.txt
+    v1.7/
+    v1.7.1/
+    v1.7rc1/
+    v1.7rc2/
+    v1.8.0/
+    v1.8.1/
+src/
+    builtin.c
+    builtin.h
+        4→#include "jq.h"
+        5→#include "bytecode.h"
+        6→#include "compile.h"
+        8→int builtins_bind(jq_state *, block*);
+        …
+        10→#define BINOPS \
+        …
+        24→#define BINOP(name) jv binop_ ## name(jv, jv);
+        …
+    builtin.jq
+    bytecode.c
+    bytecode.h
+        20→enum {
+        …
+        32→struct opcode_description {
+        33→  opcode op;
+        34→  const char* name;
+        36→  int flags;
+        38→  // length in 16-bit units
+        39→  int length;
+        41→  int stack_in, stack_out;
+        42→};
+        44→const struct opcode_description* opcode_describe(opcode op);
+        …
+        47→#define MAX_CFUNCTION_ARGS 4
+        48→struct cfunction {
+        …
+        59→struct symbol_table {
+        60→  struct cfunction* cfunctions;
+        61→  int ncfunctions;
+        62→  jv cfunc_names;
+        63→};
+        70→#define ARG_NEWCLOSURE 0x1000
+        …
+        72→struct bytecode {
+        …
+        90→void dump_disassembly(int, struct bytecode* code);
+        91→void dump_operation(struct bytecode* bc, uint16_t* op);
+        …
+        93→int bytecode_operation_length(uint16_t* codeptr);
+        94→void bytecode_free(struct bytecode* bc);
+        …
+    compile.c
+    compile.h
+    exec_stack.h
+        40→struct determine_alignment {
+        41→  char x;
+        42→  union { int i; double d; uint64_t u64; size_t sz; void* ptr; } u;
+        43→};
+        44→enum {ALIGNMENT = offsetof(struct determine_alignment, u)};
+        …
+        50→typedef int stack_ptr;
+        …
+        52→struct stack {
+        53→  char* mem_end; // one-past-the-end of allocated region
+        54→  stack_ptr bound;
+        55→  stack_ptr limit; // 0 - stack is empty
+        56→};
+    execute.c
+    inject_errors.c
+    jq.h
+        4→#include <stdio.h>
+        5→#include "jv.h"
+    jq_parser.h
+        3→#include "locfile.h"
+        4→#include "compile.h"
+        6→int jq_parse(struct locfile* source, block* answer);
+        7→int jq_parse_library(struct locfile* locations, block* answer);
+        …
+    jq_test.c
+    jv.c
+    jv.h
+        4→#include <stdarg.h>
+        5→#include <stdint.h>
+        6→#include <stdio.h>
+    jv_alloc.c
+    jv_alloc.h
+        4→#include <stddef.h>
+        6→void* jv_mem_alloc(size_t);
+        7→void* jv_mem_alloc_unguarded(size_t);
+        8→void* jv_mem_calloc(size_t, size_t);
+        9→void* jv_mem_calloc_unguarded(size_t, size_t);
+        10→char* jv_mem_strdup(const char *);
+        11→char* jv_mem_strdup_unguarded(const char *);
+        12→void jv_mem_free(void*);
+        13→__attribute__((warn_unused_result)) void* jv_mem_realloc(void*, size_t);
+        …
+    jv_aux.c
+    jv_dtoa.c
+    jv_dtoa.h
+    jv_dtoa_tsd.c
+    jv_dtoa_tsd.h
+        3→struct dtoa_context *tsd_dtoa_context_get(void);
+        …
+    jv_file.c
+        12→jv jv_load_file(const char* filename, int raw) {
+        …
+    jv_parse.c
+    jv_print.c
+    jv_private.h
+        4→int jvp_number_cmp(jv, jv);
+        5→int jvp_number_is_nan(jv);
+        …
+    jv_thread.h
+    jv_unicode.c
+    jv_unicode.h
+        4→const char* jvp_utf8_backtrack(const char* start, const char* min, int *missing_bytes);
+        5→const char* jvp_utf8_next(const char* in, const char* end, int* codepoint);
+        6→int jvp_utf8_is_valid(const char* in, const char* end);
+        …
+        8→int jvp_utf8_decode_length(char startchar);
+        …
+        10→int jvp_utf8_encode_length(int codepoint);
+        11→int jvp_utf8_encode(int codepoint, char* out);
+        …
+        13→int jvp_codepoint_is_whitespace(int c);
+        …
+    jv_utf8_tables.h
+        1→#define UTF8_CONTINUATION_BYTE ((unsigned char)255)
+        …
+    lexer.c
+    lexer.h
+    lexer.l
+    libm.h
+    linker.c
+    linker.h
+        4→int load_program(jq_state *jq, struct locfile* src, block *out_block);
+        5→jv load_module_meta(jq_state *jq, jv modname);
+        …
+    locfile.c
+    locfile.h
+        4→#include "jq.h"
+        6→typedef struct {
+        7→  int start, end;
+        8→} location;
+        12→struct locfile {
+        13→  jv fname;
+        14→  const char* data;
+        15→  int length;
+        16→  int* linemap;
+        17→  int nlines;
+        18→  char *error;
+        19→  jq_state *jq;
+        20→  int refct;
+        21→};
+        23→struct locfile* locfile_init(jq_state *, const char *, const char *, int);
+        24→struct locfile* locfile_retain(struct locfile *);
+        25→int locfile_get_line(struct locfile *, int);
+        26→void locfile_free(struct locfile *);
+        27→void locfile_locate(struct locfile *, location, const char *, ...);
+        …
+    main.c
+    opcode_list.h
+    parser.c
+    parser.h
+        50→#include "locfile.h"
+    parser.y
+    util.c
+    util.h
+        14→#include "jv.h"
+        16→jv expand_path(jv);
+        17→jv get_home(void);
+        18→jv jq_realpath(jv);
+        …
+        44→const void *_jq_memmem(const void *haystack, size_t haystacklen,
+        45→                       const void *needle, size_t needlelen);
+        60→#include <time.h>
+tests/
+vendor/
+    decNumber/
+    oniguruma/

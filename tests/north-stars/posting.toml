@@ -1,0 +1,789 @@
+fixture = "posting"
+revision_pin = "56703a11"
+summary = """
+Posting is a Textual-based TUI HTTP client (à la Postman/Insomnia, but keyboard-driven and run in a terminal).
+Requests are persisted as `.posting.yaml` files inside a *collection* directory and loaded via `--collection`.
+Variables resolved from `--env` dotenv files are substituted into URLs/headers/bodies/auth using `$VAR` /
+`${VAR}` syntax; `:name` placeholders in URL paths become "path params" with their own tab.
+Users can attach Python *scripts* (`setup`, `on_request`, `on_response`) per request; scripts get a `Posting`
+context object exposing variables + notifications.
+
+The codebase is a single Python package `src/posting/`: `app.py` is the entrypoint (Textual `App` + `MainScreen`,
+~1700 lines including most action handlers); `collection.py` holds the pydantic `RequestModel`/`Collection`
+schema; `config.py` defines `Settings` (`POSTING_*` env vars, `config.yaml`); `widgets/` is the bulk of the
+code, split into `widgets/request/*` (URL bar, method, headers/body/auth/...), `widgets/response/*`,
+`widgets/collection/*`, and shared widgets at the top level. CLI is a Click group: `posting` (default TUI),
+`posting locate <thing>`, `posting import` (OpenAPI/Postman), `posting sponsors`.
+
+The ranking expects queries to span: configuration ("how do I change the theme / keymap"), request lifecycle
+("where does a request get built and sent"), the YAML on-disk format, scripting, importing/exporting, theming,
+specific widgets, and the Textual integration. The most load-bearing model is `RequestModel` + `apply_template`
++ the `send_request` pipeline in `MainScreen`.
+"""
+
+# ── Tier 1 ─────────────────────────────────────────────────────────────────
+# Orient: what is Posting, repo shape, CLI entrypoints, package map.
+
+[[batches]]
+id = "1.1"
+descriptor = "README tagline"
+justification = "Single sentence: 'HTTP client that lives in your terminal'. Smallest possible orientation batch."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 1, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo root listing"
+justification = "Every top-level file/dir (LICENSE, Makefile, pyproject.toml, mkdocs.yml, uv.lock, .precis-pin, README/CONTRIBUTING/NOTICE, docs/src/tests/.github). Catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "pyproject identity"
+justification = "Package name (`posting`), version, Python floor (`>=3.11`), and the `posting = posting.__main__:cli` script entry point."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 1, end = 4, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 26, end = 26, render = { kind = "full" } },
+  { path = "pyproject.toml", start = 49, end = 50, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Package tree (src/posting/)"
+justification = "All immediate children of src/posting/. The agent should not guess what modules exist (e.g. `posting.scss`, `locations.py`, `tuple_to_multidict.py`, `_start_time.py`)."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src/posting", entries = "all" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "README feature list (first half)"
+justification = "Features: jump mode, variables, autocompletion, syntax highlighting (tree-sitter), Vim keys, custom keymaps. These are the named features queries will reference."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 9, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "README feature list (second half)"
+justification = "Remaining bullets: themes, scripts (run Python before/after requests), configuration, $EDITOR/$PAGER, curl import via paste, curl export, Postman/OpenAPI import, command palette."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 17, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "CLI command names"
+justification = "Just the def-line of each Click command so the agent knows all four sub-commands exist: default TUI, `locate`, `import` (with `-t openapi|postman`), `sponsors`. Catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/__main__.py", start = 45, end = 47, render = { kind = "full" } },
+  { path = "src/posting/__main__.py", start = 64, end = 64, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/__main__.py", start = 80, end = 80, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/__main__.py", start = 108, end = 109, render = { kind = "full" } },
+  { path = "src/posting/__main__.py", start = 178, end = 179, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Runtime dependencies (CLI, HTTP, OpenAPI, clipboard)"
+justification = "First chunk of dependencies: click + click-default-group (CLI), httpx[brotli]==0.28.1 (HTTP, pinned because monkeypatched), openapi-pydantic (import command), pyperclip (clipboard export), xdg-base-dirs (config/data dirs)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 8, end = 15, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Runtime dependencies (pydantic, YAML, watchers, Textual)"
+justification = "Second chunk: pydantic + pydantic-settings, pyyaml, python-dotenv, watchfiles (reload themes/scripts/.env), textual==6.1.0 + textual-autocomplete==4.0.6."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 16, end = 24, render = { kind = "full" } },
+]
+
+# ── Tier 2 ─────────────────────────────────────────────────────────────────
+# Data model: collection.py — RequestModel, Collection, Auth, Body. Every
+# request, every import, every save, every send goes through these classes.
+
+[[batches]]
+id = "2.1"
+descriptor = "collection.py class index"
+justification = "Every public name in collection.py at once: HttpRequestMethod, Auth/BasicAuth/DigestAuth/BearerTokenAuth, PathParam, Header, FormItem, QueryParam, Cookie, Options, RequestBody, Scripts, RequestModel, Contact/License/ExternalDocs/APIInfo, Collection. Catastrophic-omission hedge — agent should know every model that lives here before exploring."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 19, end = 20, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 23, end = 23, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 61, end = 61, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 66, end = 66, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 70, end = 70, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 75, end = 75, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 81, end = 81, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 87, end = 87, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 103, end = 103, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 138, end = 138, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 155, end = 155, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 401, end = 401, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 407, end = 407, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 412, end = 412, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 417, end = 417, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 427, end = 427, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Example request YAML"
+justification = "Real `.posting.yaml` example from the user guide (name/description/method/url/body/headers/params). Zero-follow-up case for 'what does a request file look like?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/guide/requests.md", start = 9, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "RequestModel fields"
+justification = "Every field of RequestModel: name, description, method, url, path, body, auth (declared twice in source), headers, params, path_params, cookies, posting_version, scripts, options. This is the YAML on-disk schema."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 155, end = 156, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 163, end = 163, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 166, end = 166, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 169, end = 169, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 173, end = 173, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 176, end = 176, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 179, end = 179, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 182, end = 182, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 188, end = 188, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 196, end = 196, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 199, end = 199, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 202, end = 202, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "RequestModel method list"
+justification = "Every method on the central RequestModel class: apply_template (variable substitution), to_httpx (build httpx.Request), save_to_disk (YAML dump), delete_from_disk, to_curl (curl export), __lt__/__eq__ (sortable by request_sort_key)."
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 205, end = 205, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 269, end = 269, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 291, end = 291, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 303, end = 303, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 312, end = 312, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 392, end = 392, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/collection.py", start = 395, end = 395, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Options + Scripts bodies"
+justification = "Options has 5 knobs (follow_redirects/verify_ssl/attach_cookies/proxy_url/timeout) and Scripts holds three optional script paths (setup/on_request/on_response). Both are nested in RequestModel and surface in YAML."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 103, end = 108, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 138, end = 151, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Auth model + factories"
+justification = "Auth Literal discriminator (basic/digest/bearer_token), the three sub-model bodies, and the three classmethod factories used by curl/openapi importers."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 23, end = 27, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 41, end = 53, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 56, end = 67, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Pair-models + RequestBody"
+justification = "PathParam/Header/FormItem/QueryParam/Cookie/RequestBody bodies: each is `name`+`value` (+`enabled` for everything except PathParam). RequestBody is `content` (raw string) XOR `form_data` (list[FormItem]) with a derived `content_type`."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 70, end = 100, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 111, end = 120, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "RequestModel.apply_template body"
+justification = "The variable-substitution code: walks URL, description, proxy_url, body content/form_data, every header, every param, auth basic/digest/bearer_token, then substitutes :path_params into the URL and ensure_protocol. Raises SubstitutionError on missing variable. The canonical place to add new templated fields."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 205, end = 267, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Collection model headers + entry points"
+justification = "Collection (the tree node) has path/name/requests/children/readme. Class-method `from_directory` rglobs `*.posting.yaml`, `from_openapi_spec` builds one with a generated README, `save_to_disk` writes the inverse. Plus the loader fn `load_request_from_yaml`."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 427, end = 432, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 434, end = 437, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 480, end = 481, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 541, end = 541, render = { kind = "full" } },
+  { path = "src/posting/collection.py", start = 553, end = 554, render = { kind = "full" } },
+]
+
+# ── Tier 3 ─────────────────────────────────────────────────────────────────
+# app.py — entrypoint, MainScreen, Posting App. Most actions/handlers/bindings
+# live here. The file the agent will hit for "where is X handled".
+
+[[batches]]
+id = "3.1"
+descriptor = "app.py top-level classes"
+justification = "Four classes in app.py: AppHeader (title bar), AppBody (body container), MainScreen (the main screen with all action handlers), Posting (the Textual App)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 93, end = 93, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 108, end = 108, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 112, end = 112, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 1205, end = 1205, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "make_posting bootstrap"
+justification = "TUI lifecycle: `default` CLI handler → `make_posting(collection, env, using_default_collection)` builds Collection (from_directory), loads variables, instantiates Settings, constructs Posting. Zero-follow-up case for 'what happens when posting starts?'."
+predecessor = "1.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/__main__.py", start = 64, end = 73, render = { kind = "full" } },
+  { path = "src/posting/__main__.py", start = 194, end = 211, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "MainScreen.BINDINGS — keymap action IDs"
+justification = "All 9 main-screen bindings with their action IDs: send-request (ctrl+j / alt+enter), focus-method (ctrl+t), jump (ctrl+o), focus-url (ctrl+l), save-request (ctrl+s), new-request (ctrl+n), expand-section (ctrl+m), toggle-collection (ctrl+h), search-requests (ctrl+P / ctrl+shift+p). These IDs are what users override in `config.yaml: keymap:`."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 115, end = 183, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Posting.BINDINGS — global keys"
+justification = "Four global bindings on the Posting App: commands (ctrl+p → palette), quit (ctrl+c, priority), help (f1 / ctrl+question_mark), save_screenshot (f8)."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 1211, end = 1235, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "MainScreen.compose layout"
+justification = "MainScreen.compose lays out the UI: AppHeader, UrlBar, AppBody with CollectionBrowser + RequestEditor + ResponseArea, Footer. The compose order is the user's mental model of the screen."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 255, end = 269, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "MainScreen action method index"
+justification = "Every MainScreen `action_*` method + key event handlers — the action_IDs from 3.3 map here. Lists send_request/send_via_worker, action_change_method, action_toggle_collection_browser, action_toggle_expanded, action_save_request, action_new_request, action_open_request_search_palette, action_toggle_jump_mode, plus build_request_model, load_request_model, and curl/response/path-param event handlers."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 354, end = 354, render = { kind = "truncated", pattern = "^    async def [a-z_]+" } },
+  { path = "src/posting/app.py", start = 513, end = 513, render = { kind = "truncated", pattern = "^    async def [a-z_]+" } },
+  { path = "src/posting/app.py", start = 517, end = 517, render = { kind = "truncated", pattern = "^    def on_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 527, end = 527, render = { kind = "truncated", pattern = "^    def on_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 545, end = 545, render = { kind = "truncated", pattern = "^    def on_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 663, end = 663, render = { kind = "truncated", pattern = "^    async def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 667, end = 667, render = { kind = "truncated", pattern = "^    def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 673, end = 673, render = { kind = "truncated", pattern = "^    def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 678, end = 678, render = { kind = "truncated", pattern = "^    def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 712, end = 712, render = { kind = "truncated", pattern = "^    async def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 748, end = 748, render = { kind = "truncated", pattern = "^    async def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 836, end = 836, render = { kind = "truncated", pattern = "^    def on_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 906, end = 906, render = { kind = "truncated", pattern = "^    def build_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 950, end = 950, render = { kind = "truncated", pattern = "^    def on_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 969, end = 969, render = { kind = "truncated", pattern = "^    def action_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 999, end = 1001, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 1061, end = 1061, render = { kind = "truncated", pattern = "^    def action_[a-z_]+" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Posting App methods"
+justification = "Posting (the App) has command_layout, command_toggle_spacing, command_export_to_curl, command_copy_request_yaml, action_open_web_docs, action_save_screenshot, action_help, exit, plus the @work-decorated file watchers (watch_environment_files, watch_collection_files, watch_themes). Most reachable from the command palette."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 1303, end = 1303, render = { kind = "truncated", pattern = "^    async def watch_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1331, end = 1331, render = { kind = "truncated", pattern = "^    async def watch_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1362, end = 1362, render = { kind = "truncated", pattern = "^    async def watch_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1461, end = 1461, render = { kind = "truncated", pattern = "^    def command_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1464, end = 1464, render = { kind = "truncated", pattern = "^    def command_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1467, end = 1467, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 1472, end = 1472, render = { kind = "truncated", pattern = "^    def command_[a-z_]+" } },
+  { path = "src/posting/app.py", start = 1535, end = 1535, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 1620, end = 1620, render = { kind = "full" } },
+  { path = "src/posting/app.py", start = 1643, end = 1643, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "send_request — build + template + httpx client"
+justification = "The most load-bearing function in app.py: build request model, run setup script, apply variable templates, build httpx.AsyncClient with verify/cert/proxy/timeout/auth from request_model.options, then on_request → send → HttpResponseReceived → on_response. The canonical send pipeline."
+predecessor = "3.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/app.py", start = 354, end = 423, render = { kind = "full" } },
+]
+
+# ── Tier 4 ─────────────────────────────────────────────────────────────────
+# Configuration: Settings, on-disk locations.
+
+[[batches]]
+id = "4.1"
+descriptor = "locations.py — config/data dirs"
+justification = "Every public path helper signature: data_directory, theme_directory, default_collection_directory, config_directory, config_file. XDG-base-dirs-backed paths that `posting locate config|collection|themes` prints."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/locations.py", start = 12, end = 12, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/locations.py", start = 17, end = 17, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/locations.py", start = 24, end = 24, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/locations.py", start = 29, end = 29, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/locations.py", start = 34, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Settings class header + env wiring"
+justification = "The pydantic-settings `Settings` config: env_prefix=`posting_`, env_nested_delimiter=`__`, env-file=`.env`. Plus the SETTINGS ContextVar."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/config.py", start = 116, end = 125, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 251, end = 251, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Nested config model headers"
+justification = "Settings is composed of 8 nested pydantic models: HeadingSettings, UrlBarSettings, ResponseSettings, FocusSettings, CertificateSettings, TextInputSettings, CommandPaletteSettings, CollectionBrowserSettings. Catastrophic-omission hedge for the `POSTING_X__Y` env namespace."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/config.py", start = 18, end = 18, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 34, end = 34, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 46, end = 46, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 79, end = 79, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 92, end = 92, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 99, end = 99, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 106, end = 106, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "Settings scalar field index"
+justification = "One-line declaration of every top-level Settings field: theme, theme_directory, load_user_themes, load_builtin_themes, layout, use_host_environment, watch_env_files, watch_collection_files, watch_themes, animation, pager, pager_json, editor, use_xresources, keymap, curl_export_extra_args, spacing. Catastrophic-omission hedge for the env-var namespace."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/config.py", start = 126, end = 126, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 129, end = 129, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 132, end = 132, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 136, end = 136, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 140, end = 140, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 143, end = 143, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 148, end = 148, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 151, end = 151, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 154, end = 154, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 160, end = 160, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 182, end = 182, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 185, end = 185, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 197, end = 197, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 200, end = 200, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 209, end = 209, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 212, end = 212, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 215, end = 215, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "FocusSettings + CertificateSettings fields"
+justification = "FocusSettings.on_startup/on_response/on_request_open Literal types (referenced by app.py focus handlers) and CertificateSettings.ca_bundle/certificate_path/key_file/password (read by send_request)."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/config.py", start = 56, end = 56, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 59, end = 59, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 62, end = 62, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 67, end = 69, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 79, end = 79, render = { kind = "full" } },
+  { path = "src/posting/config.py", start = 82, end = 88, render = { kind = "full" } },
+]
+
+# ── Tier 5 ─────────────────────────────────────────────────────────────────
+# Variables, scripts, themes — the user-facing extensibility surface.
+
+[[batches]]
+id = "5.1"
+descriptor = "variables.py public surface"
+justification = "Module-level: VARIABLES (SharedVariables singleton), the `$VAR`/`${VAR}` regex, load_variables/get_variables/update_variables, the cursor-aware lookups (find_variables, get_variable_at_cursor, is_cursor_within_variable, find_variable_start/end), and SubstitutionError."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/variables.py", start = 10, end = 12, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 15, end = 15, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 32, end = 32, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 36, end = 36, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 73, end = 73, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 86, end = 86, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 95, end = 95, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 108, end = 108, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 125, end = 125, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 134, end = 134, render = { kind = "full" } },
+  { path = "src/posting/variables.py", start = 157, end = 158, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "scripts.Posting context class"
+justification = "The `Posting` object scripts receive: `request`, `response`, and methods `variables`, `get_variable`, `set_variable`, `clear_variable`, `clear_all_variables`, `notify`. Catastrophic-omission hedge for the scripting API."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/scripts.py", start = 23, end = 24, render = { kind = "full" } },
+  { path = "src/posting/scripts.py", start = 30, end = 34, render = { kind = "full" } },
+  { path = "src/posting/scripts.py", start = 45, end = 45, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/scripts.py", start = 59, end = 59, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/scripts.py", start = 71, end = 71, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/scripts.py", start = 81, end = 81, render = { kind = "truncated", pattern = "^    def [a-z_]+" } },
+  { path = "src/posting/scripts.py", start = 86, end = 93, render = { kind = "full" } },
+  { path = "src/posting/scripts.py", start = 121, end = 123, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "Script function signatures (user-facing)"
+justification = "The three callable forms (`setup(posting)`, `on_request(request, posting)`, `on_response(response, posting)`) and the `path/to/script.py:function_name` override syntax. Zero-follow-up answer for 'how do I write a posting script?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/guide/scripting.md", start = 25, end = 39, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "Theme model header + loader fns"
+justification = "Theme pydantic model header (name/primary/secondary/background/surface/panel/warning/error/success/accent/dark) + load_user_theme + load_user_themes + BUILTIN_THEMES dict. Themes are pydantic-validated YAML under $XDG_DATA_HOME/posting/themes/."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/themes.py", start = 106, end = 117, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 314, end = 314, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/themes.py", start = 341, end = 341, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/themes.py", start = 365, end = 365, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "BUILTIN_THEMES — every theme name"
+justification = "One line per shipped theme so the agent knows every name: galaxy (default), nebula, sunset, aurora, nautilus, cobalt, twilight, hacker, manuscript, hypernova, synthwave. Catastrophic-omission hedge — agent should not invent theme names."
+predecessor = "5.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/themes.py", start = 367, end = 367, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 384, end = 384, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 400, end = 400, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 420, end = 420, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 440, end = 440, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 453, end = 453, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 469, end = 469, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 482, end = 482, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 504, end = 504, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 532, end = 532, render = { kind = "full" } },
+  { path = "src/posting/themes.py", start = 560, end = 560, render = { kind = "full" } },
+]
+
+# ── Tier 6 ─────────────────────────────────────────────────────────────────
+# Importing & exporting: curl, OpenAPI, Postman.
+
+[[batches]]
+id = "6.1"
+descriptor = "Importing — module list"
+justification = "src/posting/importing/ contents: curl.py, open_api.py, postman.py. Catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src/posting/importing", entries = "all" },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "CurlImport — public surface"
+justification = "CurlImport parses curl flags (-X, -H, -d, --data-raw, --data-binary, --data-urlencode, -F, -u, --compressed, -k, -e, -A, -m, --digest) via argparse; `to_request_model()` returns a RequestModel. Entry point: `MainScreen.on_curl_message` calls this when a curl is pasted into the URL bar."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/importing/curl.py", start = 22, end = 27, render = { kind = "full" } },
+  { path = "src/posting/importing/curl.py", start = 261, end = 263, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "OpenAPI import — entry points"
+justification = "open_api.py public surface: `import_openapi_spec(path) -> Collection`, the SecurityScheme→Auth helpers, JsonBodyGenerator (synthesizes JSON request bodies from schema), parse_schema_ref. Supports both 3.0.x and 3.1.x specs."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/importing/open_api.py", start = 51, end = 52, render = { kind = "full" } },
+  { path = "src/posting/importing/open_api.py", start = 125, end = 127, render = { kind = "full" } },
+  { path = "src/posting/importing/open_api.py", start = 153, end = 155, render = { kind = "full" } },
+  { path = "src/posting/importing/open_api.py", start = 287, end = 287, render = { kind = "full" } },
+  { path = "src/posting/importing/open_api.py", start = 315, end = 316, render = { kind = "full" } },
+  { path = "src/posting/importing/open_api.py", start = 382, end = 383, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "Postman import — top-level types + entry"
+justification = "postman.py defines Variable/RequestOptions/Body/Url/PostmanRequest/RequestItem/PostmanCollection pydantic models for the Postman JSON schema, then converts to Posting's RequestModel + Collection. Variable names get sanitized to `$UPPER_CASE`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/importing/postman.py", start = 24, end = 25, render = { kind = "full" } },
+  { path = "src/posting/importing/postman.py", start = 56, end = 57, render = { kind = "full" } },
+  { path = "src/posting/importing/postman.py", start = 64, end = 65, render = { kind = "full" } },
+  { path = "src/posting/importing/postman.py", start = 70, end = 71, render = { kind = "full" } },
+  { path = "src/posting/importing/postman.py", start = 77, end = 79, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "to_curl signature + opening"
+justification = "Pointer to RequestModel.to_curl (curl export used by the `export: copy as curl` command). Just the docstring + opening so the agent can find it; the full impl walks every Header, body, form_data, auth (basic/digest/-u), cookies, follow_redirects, verify_ssl, timeout, proxy_url."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/collection.py", start = 312, end = 322, render = { kind = "full" } },
+]
+
+# ── Tier 7 ─────────────────────────────────────────────────────────────────
+# Widget tree — every widget the agent might need to find by name.
+
+[[batches]]
+id = "7.1"
+descriptor = "Top-level widgets directory"
+justification = "src/posting/widgets/ children: collection/, request/, response/ subdirs plus shared widgets (center_middle, confirmation, datatable, input, key_value, key_value_copy_modal, load_env_file_dialog, rich_log, select, tabbed_content, text_area, tree, variable_autocomplete, variable_input). Catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src/posting/widgets", entries = "all" },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "widgets/request/, widgets/response/, widgets/collection/"
+justification = "Per-tab editor modules: request/ has form_editor, header_editor, method_selection, path_editor, query_editor, request_auth, request_body, request_editor, request_metadata, request_options, request_scripts, url_bar. response/ has cookies_table, response_area, response_body, response_headers, response_trace, script_output. collection/ has browser.py + new_request_modal.py."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src/posting/widgets/request", entries = "all" },
+  { parent = "src/posting/widgets/response", entries = "all" },
+  { parent = "src/posting/widgets/collection", entries = "all" },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "RequestEditor.compose tabs"
+justification = "The 8 TabPanes on the request side: Headers (HeaderEditor), Body (RequestBodyEditor, lazy), Path (PathEditor, lazy), Query (QueryStringEditor, lazy), Auth (RequestAuth, lazy), Info (RequestMetadata, lazy), Scripts (RequestScripts, lazy), Options (RequestOptions, lazy). Catastrophic-omission hedge — agent shouldn't think there's a tenth tab."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/widgets/request/request_editor.py", start = 38, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "ResponseArea.compose tabs"
+justification = "Five TabPanes on the response side: Body (TextEditor), Headers (ResponseHeadersTable, lazy), Cookies (CookiesSection, lazy), Scripts (ScriptOutput, lazy), Trace (ResponseTrace, lazy). Catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/widgets/response/response_area.py", start = 42, end = 58, render = { kind = "full" } },
+]
+
+# ── Tier 8 ─────────────────────────────────────────────────────────────────
+# Path params, highlighters, helpers — small load-bearing utilities.
+
+[[batches]]
+id = "8.1"
+descriptor = "urls.py — path-param helpers"
+justification = "Path-param machinery: `_PATH_PARAM_PATTERN` regex (single colon `:name`, ignore `::name` as escaped), `ensure_protocol`, `extract_path_param_names`, `substitute_path_params`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/urls.py", start = 5, end = 6, render = { kind = "full" } },
+  { path = "src/posting/urls.py", start = 9, end = 9, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/urls.py", start = 24, end = 24, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/urls.py", start = 49, end = 49, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "highlighters.py — URL/variable/path-param styling"
+justification = "Rich highlighters used by Input fields: highlight_url (protocol/base/path with UrlStyles), highlight_variables (resolved/unresolved using current VARIABLES), highlight_path_params (`:name` tokens), and the VariablesAndUrlHighlighter Highlighter subclass."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/highlighters.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "src/posting/highlighters.py", start = 20, end = 20, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/highlighters.py", start = 35, end = 35, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/highlighters.py", start = 45, end = 45, render = { kind = "full" } },
+  { path = "src/posting/highlighters.py", start = 48, end = 50, render = { kind = "full" } },
+  { path = "src/posting/highlighters.py", start = 60, end = 60, render = { kind = "full" } },
+  { path = "src/posting/highlighters.py", start = 71, end = 71, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "Small helper modules — auth, yaml, save_request, files"
+justification = "Four tiny utility modules. posting.auth: HttpxBearerTokenAuth. posting.yaml: load/dump wrappers with multi-line block-scalar str presenter + CLoader. posting.save_request: FILE_SUFFIX=`.posting.yaml` + slugify + generate_request_filename. posting.files: is_valid_filename, request_file_exists, get_unique_request_filename."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/auth.py", start = 6, end = 6, render = { kind = "full" } },
+  { path = "src/posting/save_request.py", start = 5, end = 5, render = { kind = "full" } },
+  { path = "src/posting/save_request.py", start = 8, end = 8, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/save_request.py", start = 15, end = 15, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/files.py", start = 10, end = 10, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/files.py", start = 62, end = 62, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/files.py", start = 72, end = 72, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+  { path = "src/posting/files.py", start = 99, end = 99, render = { kind = "truncated", pattern = "^def [a-z_]+" } },
+]
+
+# ── Tier 9 ─────────────────────────────────────────────────────────────────
+# Tests + user docs.
+
+[[batches]]
+id = "9.1"
+descriptor = "Tests directory"
+justification = "tests/ layout: per-feature test_*.py (curl_import/curl_export/postman_import/open_api_import/files/urls/variables/load_env_file_dialog/snapshots) + sample-* dirs + posting_snapshot_app.py + __snapshots__/ SVGs."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests", entries = "all" },
+]
+
+[[batches]]
+id = "9.2"
+descriptor = "Test sample assets"
+justification = "Sample collections, configs, themes, envs live under tests/ for snapshot tests. Useful for hand-running posting against a real collection."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests/sample-collections", entries = "all" },
+  { parent = "tests/sample-themes", entries = "all" },
+  { parent = "tests/sample-envs", entries = "all" },
+]
+
+[[batches]]
+id = "9.3"
+descriptor = "Snapshot test app entry"
+justification = "tests/posting_snapshot_app.py is the test harness — builds a Posting app with a sample collection + sample env files. Most tests in test_snapshots.py drive this via Pilot.press()."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tests/posting_snapshot_app.py", start = 1, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.4"
+descriptor = "User docs index"
+justification = "docs/guide/ per-feature prose: index (getting started), navigation, collections, requests, configuration, environments, command_palette, themes, external_tools, keymap, importing, scripting, help_system. Plus CHANGELOG/faq/roadmap at docs/ root."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "docs/guide", entries = "all" },
+  { parent = "docs", entries = "all" },
+]
+
+# ── Tier 10 ────────────────────────────────────────────────────────────────
+# Trivial public surfaces + Make.
+
+[[batches]]
+id = "10.1"
+descriptor = "Make test target"
+justification = "How tests run: `make test` uses pytest -n 24 with serial fallback for tests marked `serial`. Zero-follow-up answer for 'how do I run posting's tests'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Makefile", start = 3, end = 6, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "10.2"
+descriptor = "Trivial module surfaces — version, types, messages"
+justification = "posting.version (`VERSION = importlib.metadata.version('posting')`), posting.types (PostingLayout Literal + CertTypes httpx alias), posting.messages (HttpResponseReceived dataclass)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/posting/version.py", start = 3, end = 3, render = { kind = "full" } },
+  { path = "src/posting/types.py", start = 3, end = 3, render = { kind = "full" } },
+  { path = "src/posting/messages.py", start = 7, end = 8, render = { kind = "full" } },
+]

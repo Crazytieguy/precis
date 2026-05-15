@@ -1,0 +1,1053 @@
+fixture = "svgo"
+revision_pin = "581fe687"
+summary = """
+SVGO is a Node.js library + CLI that optimizes SVG files by parsing
+them into an xast-like AST, running an ordered list of visitor-based
+plugins over it, and stringifying the result. The public entry point
+is `optimize(input, config)` exported from `lib/svgo.js` (browser) and
+re-exported with Node.js-platform defaults + `loadConfig` from
+`lib/svgo-node.js`. The pipeline is parse → invokePlugins → stringify,
+optionally repeated when `multipass: true`. Plugins are 50+ small
+modules under `plugins/*.js`, each exporting `name`, `description`,
+and `fn: Plugin<P>`. `preset-default` (also under `plugins/`) defines
+the canonical ordered subset enabled by default. The ranking front-
+loads orientation (README, exports, plugin catalogue), then the
+plugin engine + visitor + preset list, then the parser/stringifier/
+style/xast support modules, then per-plugin signatures and bodies in
+roughly the order they're invoked by the preset. Common queries:
+"what plugin does X / what's its option name", "how do plugins
+register / where's the visitor loop", "how is the SVG parsed /
+stringified", "what's the CLI flag for Y", "what's the public API
+when embedding SVGO".
+"""
+
+# =========================================================================
+# Tier 1 — Repository orientation & catalogue
+# =========================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README one-line description"
+justification = "Single-sentence definition. Smallest possible useful slice — even a 50-token budget gets the project's identity."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 7
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level fs listing"
+justification = "Catastrophic-omission hedge for the repo shape: shows that `lib/`, `plugins/`, `bin/`, `docs/`, `test/`, plus the config/build files all exist. Without this, an agent guesses at filenames."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "package.json identity"
+justification = "Name, version, license, type=module — the bits the agent needs to know what's installed and which module format applies."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json entry-points (bin/types/exports)"
+justification = "Tells the agent which file is loaded by `import 'svgo'` vs `'svgo/browser'` vs the CLI. Zero-follow-up answer to 'where does the CLI start' / 'what's the browser bundle'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 53
+end = 65
+render = { kind = "full" }
+
+[[batches]]
+id = "1.5"
+descriptor = "README CLI usage"
+justification = "Shows the most-asked-about CLI flags (`-o`, `-r`, `-f`, `--help`). A small budget after the listing benefits."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 28
+end = 46
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "README config example"
+justification = "The minimal `svgo.config.mjs` shape. With this and the per-plugin descriptions later, the agent can write a config without reading further."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 54
+end = 77
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "README preset-default overrides example"
+justification = "The other canonical config shape — disabling/overriding a default plugin. Common 'how do I turn off plugin X' answer in zero follow-ups."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 79
+end = 107
+render = { kind = "full" }
+
+[[batches]]
+id = "1.8"
+descriptor = "README API usage (optimize + loadConfig)"
+justification = "The two public programmatic entry points with sample call shapes. Combined with the lib/svgo.js export-list batch later, this is usually the whole answer for embedding SVGO."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 134
+end = 167
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "lib/ listing"
+justification = "First view inside the source tree. Names every file the agent might want to read next: `svgo.js`, `svgo-node.js`, `parser.js`, `stringifier.js`, `path.js`, `style.js`, `xast.js`, `types.ts`, `builtin.js`, `version.js`, plus the `svgo/` and `util/` subdirs."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "lib"
+entries = "all"
+
+[[batches]]
+id = "1.10"
+descriptor = "plugins/ listing"
+justification = "Names every built-in plugin file. Catastrophic-omission hedge for 'does plugin X exist?' — without this the agent guesses or greps repeatedly."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "plugins"
+entries = "all"
+
+[[batches]]
+id = "1.11"
+descriptor = "lib/svgo + lib/util subdir listings"
+justification = "Locate `coa.js`/`plugins.js`/`tools.js`/`css-select-adapter.js` and the two util modules. Each is one read away after this batch."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "lib/svgo"
+entries = "all"
+[[batches.content.groups]]
+parent = "lib/util"
+entries = "all"
+
+[[batches]]
+id = "1.12"
+descriptor = "bin/ + scripts/ + docs/ subdir listings"
+justification = "Locate the CLI entry, the version-sync script, and the documentation source tree (which mirrors `plugins/`)."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "bin"
+entries = "all"
+[[batches.content.groups]]
+parent = "scripts"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/02-usage"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs/06-migrations"
+entries = "all"
+
+[[batches]]
+id = "1.13"
+descriptor = "test/ listing"
+justification = "Names the test surface (`plugins/`, `cli/`, `svgo/`, `regression/`, …) so the agent knows where to add or read tests."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+
+# =========================================================================
+# Tier 2 — Public API surface
+# =========================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "lib/svgo.js — optimize signature + JSDoc"
+justification = "The core export's signature and types are usually enough to answer 'how do I call optimize'. One-hop to the body."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 74
+end = 81
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "lib/svgo.js — top-level imports"
+justification = "Names every internal module `optimize` orchestrates: parser, stringifier, plugins, builtin, xast, version. Tells the agent which file a follow-up question routes to."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 1
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "lib/svgo.js — final exports block"
+justification = "Lists the public re-exports beyond `optimize`: `VERSION`, `builtinPlugins`, `mapNodesToParents`, `querySelector{,All}`, `_collections`, plus `export * from './types.js'`. Catastrophic-omission hedge for 'what can I import from svgo'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 72
+end = 72
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 136
+end = 143
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "lib/types.ts — Config + Output"
+justification = "User-facing top-level config keys (`path`, `multipass`, `floatPrecision`, `plugins`, `js2svg`, `datauri`) and the `{ data }` output. Zero-follow-up answer to 'what fields can I pass to optimize'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/types.ts"
+start = 334
+end = 359
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "lib/svgo-node.js — loadConfig signature"
+justification = "The Node entry's config-loader: walks up dirs for `svgo.config.{js,mjs,cjs}`. Signature + JSDoc is the usual zero-follow-up answer."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo-node.js"
+start = 37
+end = 44
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "lib/version.js — VERSION constant"
+justification = "Tiny but high-utility: pins what `import { VERSION } from 'svgo'` returns. `scripts/sync-version.js` rewrites this from package.json."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/version.js"
+start = 7
+end = 7
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "lib/types.ts — Plugin + PluginInfo"
+justification = "Plugin function shape `(root, params, info) => Visitor | null | void`. The contract a new plugin must satisfy. Visitor type batched separately so 'just give me the signature' fits a small budget."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/types.ts"
+start = 263
+end = 273
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "lib/types.ts — Visitor + VisitorNode"
+justification = "The enter/exit callback dispatch table — what a plugin's `fn` returns. Names every visitable node type."
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/types.ts"
+start = 243
+end = 262
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "lib/types.ts — PluginConfig + CustomPlugin"
+justification = "The exact discriminated-union a user puts in `plugins: [...]`: string name, `{name, params}`, or `{name, fn, params?}`. Resolves 'can I write a plugin inline?'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/types.ts"
+start = 111
+end = 131
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "lib/types.ts — BuiltinPlugin + preset shape"
+justification = "`BuiltinPlugin<Name, Params>`, `BuiltinPluginOrPreset`, `PresetProperties` — the shape used to register both leaf plugins and preset-default. Explains why `plugin.isPreset && plugin.plugins` works."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/types.ts"
+start = 133
+end = 159
+render = { kind = "full" }
+
+[[batches]]
+id = "2.11"
+descriptor = "lib/svgo.js — optimize body"
+justification = "The multipass loop, default-plugins-list (`['preset-default']`), invokePlugins call, datauri post-step. Answers 'how does multipass work' / 'where are the default plugins applied'."
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo.js"
+start = 81
+end = 134
+render = { kind = "full" }
+
+
+# =========================================================================
+# Tier 3 — Plugin engine, visitor loop, preset list, per-plugin catalogue
+# =========================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "plugins/preset-default.js — ordered plugin list"
+justification = "The ground-truth runtime order of plugins in `preset-default`. Combined with 2.12 (the typed list), the agent knows *what* runs and *in what order*. Critical for 'why is plugin A's output going into plugin B'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/preset-default.js"
+start = 37
+end = 75
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "lib/svgo/plugins.js — invokePlugins + createPreset"
+justification = "Tiny, central: `invokePlugins` walks each plugin, resolves overrides + global overrides, calls `plugin.fn(ast, params, info)`, then `visit(ast, visitor)`. `createPreset` wraps the inner list with the override-warning logic. Almost always one read for 'how do plugin params get merged'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo/plugins.js"
+start = 1
+end = 71
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "lib/util/visit.js — visitor loop"
+justification = "Every plugin's behavior runs through this 36-line file: enter, recurse into children (root + element only, with a re-check that the element is still attached after enter), then exit. `visitSkip` symbol shortcut. Frequently load-bearing for 'why isn't my element callback firing'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/util/visit.js"
+start = 1
+end = 36
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "lib/xast.js — exports list (locations)"
+justification = "Names every helper a plugin imports from xast: `querySelectorAll`, `querySelector`, `matches`, `detachNodeFromParent`. Catastrophic-omission hedge for 'what utilities can I use from xast'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 22
+end = 22
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 42
+end = 42
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/xast.js"
+start = 50
+end = 50
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+[[batches]]
+id = "3.5"
+descriptor = "lib/svgo/tools.js — exports list (locations)"
+justification = "Names every helper exposed in tools.js: data-URI encode/decode, `cleanupOutData`, `removeLeadingZero`, `hasScripts`, `includesUrlReference`, `includesCssVarReference`, `findReferences`, `toFixed`. One-hop to each."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 21
+end = 21
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 78
+end = 78
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 134
+end = 134
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 163
+end = 163
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 194
+end = 194
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 206
+end = 206
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 215
+end = 215
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/svgo/tools.js"
+start = 250
+end = 250
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+[[batches]]
+id = "3.6"
+descriptor = "lib/style.js — exports list (locations)"
+justification = "Names the style/CSS helpers plugins reuse: `compareSpecificity`, `collectStylesheet`, `computeStyle`, `includesAttrSelector`. Tells the agent where to look for 'how does inlineStyles compute matched declarations'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 195
+end = 195
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 211
+end = 211
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 253
+end = 253
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "lib/style.js"
+start = 286
+end = 286
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+[[batches]]
+id = "3.7"
+descriptor = "lib/builtin.js — builtinPlugins registry frame"
+justification = "Shows the `Object.freeze([presetDefault, …])` registration site. Combined with 1.10 (plugins/ listing) and 3.1 (preset list), this closes the loop on 'how do plugins reach optimize'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/builtin.js"
+start = 56
+end = 65
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/builtin.js"
+start = 117
+end = 117
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "Plugin name+description: doctype/proc-inst/comments/metadata/deprecatedAttrs"
+justification = "Group 1 of preset-default plugins — name + description lines per plugin. These four-line slices are the per-plugin 'what does it do' index. Splitting by groups keeps each batch cheap and lets the agent cherry-pick."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/removeDoctype.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeXMLProcInst.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeComments.js"
+start = 8
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeDeprecatedAttrs.js"
+start = 10
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeMetadata.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeEditorsNSData.js"
+start = 9
+end = 10
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "Plugin name+description: cleanup* attrs/ids/numeric + style group"
+justification = "Group 2 of preset-default plugins: cleanupAttrs, mergeStyles, inlineStyles, minifyStyles, cleanupIds, removeUselessDefs, cleanupNumericValues."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/cleanupAttrs.js"
+start = 8
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/mergeStyles.js"
+start = 4
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/inlineStyles.js"
+start = 21
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/minifyStyles.js"
+start = 26
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/cleanupIds.js"
+start = 13
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeUselessDefs.js"
+start = 4
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/cleanupNumericValues.js"
+start = 11
+end = 13
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "Plugin name+description: convertColors + unknowns/non-inheritable/stroke-fill"
+justification = "Group 3 of preset-default plugins: convertColors, removeUnknownsAndDefaults, removeNonInheritableGroupAttrs, removeUselessStrokeAndFill, cleanupEnableBackground, removeHiddenElems, removeEmptyText."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/convertColors.js"
+start = 17
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeUnknownsAndDefaults.js"
+start = 31
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeNonInheritableGroupAttrs.js"
+start = 7
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeUselessStrokeAndFill.js"
+start = 14
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/cleanupEnableBackground.js"
+start = 4
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeHiddenElems.js"
+start = 29
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeEmptyText.js"
+start = 10
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "Plugin name+description: shape/transform/path/sort/etc. — remaining preset"
+justification = "Group 4 (the rest of preset-default): convertShapeToPath, convertEllipseToCircle, moveElemsAttrsToGroup, moveGroupAttrsToElems, collapseGroups, convertPathData, convertTransform, removeEmptyAttrs, removeEmptyContainers, mergePaths, removeUnusedNS, sortAttrs, sortDefsChildren, removeDesc."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/convertShapeToPath.js"
+start = 10
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/convertEllipseToCircle.js"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/moveElemsAttrsToGroup.js"
+start = 4
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/moveGroupAttrsToElems.js"
+start = 4
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/collapseGroups.js"
+start = 4
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/convertPathData.js"
+start = 42
+end = 44
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/convertTransform.js"
+start = 43
+end = 45
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeEmptyAttrs.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeEmptyContainers.js"
+start = 6
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/mergePaths.js"
+start = 12
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeUnusedNS.js"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/sortAttrs.js"
+start = 7
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/sortDefsChildren.js"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeDesc.js"
+start = 8
+end = 9
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "Plugin name+description: opt-in plugins (not in preset-default)"
+justification = "Every plugin NOT in preset-default, with its descriptive line: addAttrs/addClasses, cleanupListOfValues, convertOneStopGradients, convertStyleToAttrs, prefixIds, removeAttrs/attrsBySelector/elementsByAttr, removeDimensions, removeRasterImages/scripts/styleElement/title/viewBox/xlink/XMLNS, reusePaths. Catastrophic-omission hedge: with this + 3.8-3.11 every plugin is covered."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/addAttributesToSVGElement.js"
+start = 7
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/addClassesToSVGElement.js"
+start = 7
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/cleanupListOfValues.js"
+start = 11
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/convertOneStopGradients.js"
+start = 9
+end = 11
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/convertStyleToAttrs.js"
+start = 8
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/prefixIds.js"
+start = 12
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeAttributesBySelector.js"
+start = 21
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeAttrs.js"
+start = 8
+end = 9
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeDimensions.js"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeElementsByAttr.js"
+start = 9
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeOffCanvasPaths.js"
+start = 6
+end = 8
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeRasterImages.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeScripts.js"
+start = 4
+end = 5
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeStyleElement.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeTitle.js"
+start = 3
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeViewBox.js"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeXlink.js"
+start = 10
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeXMLNS.js"
+start = 1
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/reusePaths.js"
+start = 4
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "3.13"
+descriptor = "plugins/_collections.js — exports list (locations)"
+justification = "Lists every collection a plugin can import: `elemsGroups`, `textElems`, `pathElems`, `attrsGroups`, `attrsGroupsDefaults`, `attrsGroupsDeprecated`, `elems`, `editorNamespaces`, `referencesProps`, `inheritableAttrs`, `presentationNonInheritableGroupAttrs`, `colorsNames`, `colorsShortNames`, `colorsProps`, `pseudoClasses`. One-hop into a 2455-line ref file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 8
+end = 8
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 112
+end = 112
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 117
+end = 117
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 123
+end = 123
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 321
+end = 321
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 389
+end = 389
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 419
+end = 419
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2080
+end = 2080
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2111
+end = 2111
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2128
+end = 2128
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2179
+end = 2179
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2194
+end = 2194
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2348
+end = 2348
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2387
+end = 2387
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_collections.js"
+start = 2400
+end = 2400
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+
+# =========================================================================
+# Tier 4 — CLI, parser, stringifier, path/transform helpers
+# =========================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "bin/svgo.js — CLI bootstrap"
+justification = "The 10-line shebang/entry that wires commander to `makeProgram` and prints errors. Closes the loop for 'where does the CLI start'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bin/svgo.js"
+start = 1
+end = 10
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "lib/parser.js — SAX config + parseSvg signature"
+justification = "The SAX config dict (`strict`, `xmlns`, `position`, `unparsedEntities`, …) plus the entity-declaration regex and `parseSvg` JSDoc. Tells the agent how the parser is configured before it dives into the handlers."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/parser.js"
+start = 61
+end = 80
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "plugins/_transforms.js — exports list (locations)"
+justification = "The toolkit `convertTransform` / `applyTransforms` build on: `transform2js`, `transformsMultiply`, `matrixToTransform`, `transformArc`, `roundTransform`, `js2transform`. One hop to each."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 43
+end = 43
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 80
+end = 80
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 463
+end = 463
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 552
+end = 552
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 631
+end = 631
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_transforms.js"
+start = 746
+end = 746
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+[[batches]]
+id = "4.4"
+descriptor = "plugins/_path.js — exports list (locations)"
+justification = "Names `path2js`, `js2path`, `intersects` — the three exports `convertPathData`/`mergePaths` reach for."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/_path.js"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_path.js"
+start = 192
+end = 192
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+[[batches.content.spans]]
+path = "plugins/_path.js"
+start = 241
+end = 241
+render = { kind = "truncated", pattern = "^export const [^ ]+" }
+
+[[batches]]
+id = "4.5"
+descriptor = "lib/path.js — argsCountPerCommand + parsePathData/stringifyPathData sigs"
+justification = "The `argsCountPerCommand` table enumerates every SVG path command supported (M m Z z L l H h V v C c S s Q q T t A a). Plus the two function signatures. Often a zero-follow-up answer to 'does svgo understand path command X'."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/path.js"
+start = 16
+end = 37
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/path.js"
+start = 137
+end = 141
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/path.js"
+start = 298
+end = 306
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "lib/stringifier.js — defaults dict"
+justification = "Every key the stringifier honors (`doctypeStart/End`, `tagOpenStart/End`, `tagShortStart/End`, `attrStart/End`, `commentStart/End`, `indent`, `regEntities`, `pretty`, `useShortTags`, `eol`, `finalNewline`). Catastrophic-omission hedge for 'what `js2svg` options exist' — refines the `StringifyOptions` type."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/stringifier.js"
+start = 20
+end = 48
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "lib/svgo/coa.js — commander flags declarations"
+justification = "Every `-x/--xxx` flag with its description, in one slice. Zero-follow-up answer to 'what does --datauri do' / 'is there a --recursive option'. Catastrophic-omission hedge for the CLI surface."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/svgo/coa.js"
+start = 30
+end = 85
+render = { kind = "full" }
+
+# =========================================================================
+# Tier 5 — Canonical plugin bodies (visitor-pattern examples)
+# =========================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "plugins/removeDoctype.js — minimal-plugin pattern"
+justification = "The smallest non-trivial plugin (10 lines): import `detachNodeFromParent`, export `fn = () => { return { doctype: { enter: (node, parentNode) => detachNodeFromParent(node, parentNode) } } }`. Canonical reference for writing a custom plugin."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/removeDoctype.js"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeDoctype.js"
+start = 30
+end = 38
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "plugins/removeComments.js — params shape + default"
+justification = "Templates the `params`-with-default-array pattern: a JSDoc `@typedef` for the params, a module-level `DEFAULT_PRESERVE_PATTERNS = [/^!/]` (preserves copyright/license comments), and a single-line fn-signature pointer."
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "plugins/removeComments.js"
+start = 3
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeComments.js"
+start = 11
+end = 15
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "plugins/removeComments.js"
+start = 28
+end = 29
+render = { kind = "full" }

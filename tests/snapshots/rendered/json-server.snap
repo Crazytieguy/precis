@@ -1,0 +1,294 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.gitattributes
+.github/
+.gitignore
+    1→**/*.log
+    2→.DS_Store
+    3→.idea
+    4→lib
+    5→node_modules
+    6→public/output.css
+    7→tmp
+.husky/
+    pre-commit
+.oxfmtrc.json
+    1→{
+    2→  "semi": false,
+    3→  "singleQuote": true,
+    4→}
+LICENSE
+README.md
+    1→# JSON-Server
+    3→[![Node.js CI](https://github.com/typicode/json-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/typicode/json-server/actions/workflows/node.js.yml)
+    5→> [!IMPORTANT]
+    6→> Viewing beta v1 documentation – usable but expect breaking changes. For stable version, see [here](https://github.com/typicode/json-server/tree/v0.17.4)
+    8→> [!NOTE]
+    9→> Using React ⚛️ and tired of CSS-in-JS? See [MistCSS](https://github.com/typicode/mistcss) 👀
+    11→## Install
+    …
+    13→```shell
+    14→npm install json-server
+    15→```
+    17→## Usage
+    …
+    91→## Sponsors ✨
+    …
+    93→### Gold
+    …
+    104→### Silver
+    …
+    110→### Bronze
+    …
+    116→[Become a sponsor and have your company logo here](https://github.com/users/typicode/sponsorship)
+    118→## Query Capabilities
+    …
+    120→JSON Server supports advanced querying out of the box:
+    122→```http
+    123→GET /posts?views:gt=100                  # Filter by condition
+    124→GET /posts?_sort=-views                  # Sort by field (descending)
+    125→GET /posts?_page=1&_per_page=10          # Pagination
+    126→GET /posts?_embed=comments               # Include relations
+    127→GET /posts?_where={"or":[...]}           # Complex queries
+    128→```
+    130→See detailed documentation below for each feature.
+    132→## Routes
+    …
+    134→### Array Resources
+    …
+    136→For array resources like `posts` and `comments`:
+    138→```http
+    139→GET    /posts
+    140→GET    /posts/:id
+    141→POST   /posts
+    142→PUT    /posts/:id
+    143→PATCH  /posts/:id
+    144→DELETE /posts/:id
+    145→```
+    147→### Object Resources
+    …
+    149→For singular object resources like `profile`:
+    151→```http
+    152→GET   /profile
+    153→PUT   /profile
+    154→PATCH /profile
+    155→```
+    157→## Query params
+    …
+    159→### Conditions
+    …
+    161→Use `field:operator=value`.
+    186→### Sort
+    …
+    194→### Pagination
+    …
+    196→```http
+    197→GET /posts?_page=1&_per_page=25
+    198→```
+    216→**Notes:**
+    217→- `_per_page` defaults to `10` if not specified
+    218→- Invalid `_page` or `_per_page` values are automatically normalized to valid ranges
+    220→### Embed
+    …
+    227→### Complex filter with `_where`
+    …
+    235→## Delete dependents
+    …
+    237→```http
+    238→DELETE /posts/1?_dependent=comments
+    239→```
+    241→## Static Files
+    …
+    243→JSON Server automatically serves files from the `./public` directory.
+    245→To serve additional static directories:
+    247→```bash
+    248→json-server db.json -s ./static
+    249→json-server db.json -s ./static -s ./node_modules
+    250→```
+    252→Static files are served with standard MIME types and can include HTML, CSS, JavaScript, images, and other assets.
+    254→## Migration Notes (v0 → v1)
+    …
+    256→If you are upgrading from json-server v0.x, note these behavioral changes:
+    258→- **ID handling:** `id` is always a string and will be auto-generated if not provided
+    259→- **Pagination:** Use `_per_page` with `_page` instead of the deprecated `_limit` parameter
+    260→- **Relationships:** Use `_embed` instead of `_expand` for including related resources
+    261→- **Request delays:** Use browser DevTools (Network tab > throttling) instead of the removed `--delay` CLI option
+    263→> **New to json-server?** These notes are for users migrating from v0. If this is your first time using json-server, you can ignore this section.
+fixtures/
+package.json
+    2→  "name": "json-server",
+    3→  "version": "1.0.0-beta.15",
+    4→  "description": "",
+    5→  "keywords": [
+    6→    "JSON",
+    7→    "server",
+    8→    "fake",
+    9→    "REST",
+    10→    "API",
+    11→    "prototyping",
+    12→    "mock",
+    13→    "mocking",
+    14→    "test",
+    15→    "testing",
+    16→    "rest",
+    17→    "data",
+    18→    "dummy"
+    19→  ],
+    20→  "license": "MIT",
+    21→  "author": "typicode <typicode@gmail.com>",
+    22→  "repository": {
+    23→    "type": "git",
+    24→    "url": "git+https://github.com/typicode/json-server.git"
+    25→  },
+    26→  "bin": {
+    27→    "json-server": "lib/bin.js"
+    28→  },
+    29→  "files": [
+    30→    "lib",
+    31→    "views",
+    32→    "schema.json"
+    33→  ],
+    34→  "type": "module",
+    35→  "scripts": {
+    36→    "dev": "node --watch --experimental-strip-types src/bin.ts fixtures/db.json",
+    37→    "build": "rm -rf lib && tsc",
+    38→    "prepublishOnly": "rm -rf lib && tsc",
+    39→    "typecheck": "tsc --noEmit",
+    40→    "test": "node --experimental-strip-types --test src/*.test.ts",
+    41→    "lint": "oxlint src",
+    42→    "fmt": "oxfmt",
+    43→    "fmt:check": "oxfmt --check",
+    44→    "prepare": "husky"
+    45→  },
+    46→  "dependencies": {
+    47→    "@tinyhttp/app": "^3.0.1",
+    48→    "@tinyhttp/cors": "^2.0.1",
+    49→    "@tinyhttp/logger": "^2.1.0",
+    50→    "chalk": "^5.6.2",
+    51→    "chokidar": "^5.0.0",
+    52→    "dot-prop": "^10.1.0",
+    53→    "eta": "^4.5.0",
+    54→    "inflection": "^3.0.2",
+    55→    "json5": "^2.2.3",
+    56→    "lowdb": "^7.0.1",
+    57→    "milliparsec": "^5.1.0",
+    58→    "sirv": "^3.0.2",
+    59→    "sort-on": "^7.0.0"
+    60→  },
+    61→  "devDependencies": {
+    62→    "@types/node": "^25.0.8",
+    63→    "concurrently": "^9.2.1",
+    64→    "get-port": "^7.1.0",
+    65→    "husky": "^9.1.7",
+    66→    "oxfmt": "^0.24.0",
+    67→    "oxlint": "^1.39.0",
+    68→    "tempy": "^3.1.0",
+    69→    "type-fest": "^5.4.0",
+    70→    "typescript": "^5.9.3"
+    71→  },
+    72→  "engines": {
+    73→    "node": ">=22.12.0"
+    74→  }
+pnpm-lock.yaml
+public/
+    test.html
+schema.json
+    1→{
+    2→  "$schema": "https://json-schema.org/draft/2020-12/schema",
+    3→  "type": "object",
+    4→  "additionalProperties": {
+    5→    "oneOf": [
+    6→      { "type": "array" },
+    7→      { "type": "object" }
+    8→    ]
+    9→  }
+    10→}
+src/
+    adapters/
+        normalized-adapter.test.ts
+        normalized-adapter.ts
+        observer.ts
+            4→export class Observer<T> {
+            …
+    app.test.ts
+    app.ts
+        18→export type AppOptions = {
+        19→  logger?: boolean
+        20→  static?: string[]
+        21→}
+        94→export function createApp(db: Low<Data>, options: AppOptions = {}) {
+        …
+    bin.ts
+    matches-where.test.ts
+    matches-where.ts
+        24→export function matchesWhere(obj: JsonObject, where: JsonObject): boolean {
+        …
+    paginate.test.ts
+    paginate.ts
+        1→export type PaginationResult<T> = {
+        2→  first: number
+        3→  prev: number | null
+        4→  next: number | null
+        5→  last: number
+        6→  pages: number
+        7→  items: number
+        8→  data: T[]
+        9→}
+        11→export function paginate<T>(items: T[], page: number, perPage: number): PaginationResult<T> {
+        …
+    parse-where.test.ts
+    parse-where.ts
+        58→export function parseWhere(query: string): JsonObject {
+        …
+    random-id.ts
+        1→import { randomBytes } from 'node:crypto'
+        3→export function randomId(): string {
+        4→  return randomBytes(8).toString('base64url')
+    service.test.ts
+    service.ts
+        9→export type Item = Record<string, unknown>
+        …
+        11→export type Data = Record<string, Item[] | Item>
+        …
+        13→export function isItem(obj: unknown): obj is Item {
+        14→  return typeof obj === 'object' && obj !== null && !Array.isArray(obj)
+        17→export type PaginatedItems = PaginationResult<Item>
+        …
+        81→export class Service {
+        …
+    where-operators.ts
+        1→export const WHERE_OPERATORS = [
+        2→  'lt',
+        3→  'lte',
+        4→  'gt',
+        5→  'gte',
+        6→  'eq',
+        7→  'ne',
+        8→  'in',
+        9→  'contains',
+        10→  'startsWith',
+        11→  'endsWith',
+        12→] as const
+        14→export type WhereOperator = (typeof WHERE_OPERATORS)[number]
+        …
+        16→export function isWhereOperator(value: string): value is WhereOperator {
+        17→  return (WHERE_OPERATORS as readonly string[]).includes(value)
+tsconfig.json
+    1→{
+    2→  "exclude": ["src/**/*.test.ts"],
+    3→  "compilerOptions": {
+    4→    "outDir": "./lib",
+    5→    "target": "esnext",
+    6→    "module": "nodenext",
+    7→    "skipLibCheck": true,
+    8→    "strict": true,
+    9→    "allowImportingTsExtensions": true,
+    10→    "rewriteRelativeImportExtensions": true,
+    11→    "erasableSyntaxOnly": true,
+    12→    "verbatimModuleSyntax": true
+    13→  }
+    14→}
+views/
+    index.html

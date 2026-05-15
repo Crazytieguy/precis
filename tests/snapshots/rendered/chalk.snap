@@ -1,0 +1,256 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.editorconfig
+    1→root = true
+    3→[*]
+    4→indent_style = tab
+    5→end_of_line = lf
+    6→charset = utf-8
+    7→trim_trailing_whitespace = true
+    8→insert_final_newline = true
+    10→[*.yml]
+    11→indent_style = space
+    12→indent_size = 2
+.gitattributes
+.github/
+.gitignore
+    1→node_modules
+    2→yarn.lock
+    3→coverage
+    4→.nyc_output
+.npmrc
+benchmark.js
+    2→import chalk from './index.js';
+code-of-conduct.md
+    1→# Contributor Covenant Code of Conduct
+    …
+    3→## Our Pledge
+    …
+    5→In the interest of fostering an open and welcoming environment, we as
+    6→contributors and maintainers pledge to making participation in our project and
+    7→our community a harassment-free experience for everyone, regardless of age, body
+    8→size, disability, ethnicity, gender identity and expression, level of experience,
+    9→nationality, personal appearance, race, religion, or sexual identity and
+    10→orientation.
+    12→## Our Standards
+    …
+    34→## Our Responsibilities
+    …
+    36→Project maintainers are responsible for clarifying the standards of acceptable
+    37→behavior and are expected to take appropriate and fair corrective action in
+    38→response to any instances of unacceptable behavior.
+    40→Project maintainers have the right and responsibility to remove, edit, or
+    41→reject comments, commits, code, wiki edits, issues, and other contributions
+    42→that are not aligned to this Code of Conduct, or to ban temporarily or
+    43→permanently any contributor for other behaviors that they deem inappropriate,
+    44→threatening, offensive, or harmful.
+    46→## Scope
+    …
+    48→This Code of Conduct applies both within project spaces and in public spaces
+    49→when an individual is representing the project or its community. Examples of
+    50→representing a project or community include using an official project e-mail
+    51→address, posting via an official social media account, or acting as an appointed
+    52→representative at an online or offline event. Representation of a project may be
+    53→further defined and clarified by project maintainers.
+    55→## Enforcement
+    …
+    68→## Attribution
+    …
+    70→This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 1.4,
+    71→available at [http://contributor-covenant.org/version/1/4][version]
+    73→[homepage]: http://contributor-covenant.org
+    74→[version]: http://contributor-covenant.org/version/1/4/
+contributing.md
+examples/
+    rainbow.js
+    screenshot.js
+license
+media/
+    logo.png
+    logo.svg
+    screenshot.png
+package.json
+    2→	"name": "chalk",
+    3→	"version": "5.6.2",
+    4→	"description": "Terminal string styling done right",
+    5→	"license": "MIT",
+    6→	"repository": "chalk/chalk",
+    7→	"funding": "https://github.com/chalk/chalk?sponsor=1",
+    8→	"type": "module",
+    9→	"main": "./source/index.js",
+    10→	"exports": "./source/index.js",
+    11→	"imports": {
+    12→		"#ansi-styles": "./source/vendor/ansi-styles/index.js",
+    13→		"#supports-color": {
+    14→			"node": "./source/vendor/supports-color/index.js",
+    15→			"default": "./source/vendor/supports-color/browser.js"
+    16→		}
+    17→	},
+    18→	"types": "./source/index.d.ts",
+    19→	"sideEffects": false,
+    20→	"engines": {
+    21→		"node": "^12.17.0 || ^14.13 || >=16.0.0"
+    22→	},
+    23→	"scripts": {
+    24→		"test": "xo && c8 ava && tsd",
+    25→		"bench": "matcha benchmark.js"
+    26→	},
+    27→	"files": [
+    28→		"source",
+    29→		"!source/index.test-d.ts"
+    30→	],
+    31→	"keywords": [
+    32→		"color",
+    33→		"colour",
+    34→		"colors",
+    35→		"terminal",
+    36→		"console",
+    37→		"cli",
+    38→		"string",
+    39→		"ansi",
+    40→		"style",
+    41→		"styles",
+    42→		"tty",
+    43→		"formatting",
+    44→		"rgb",
+    45→		"256",
+    46→		"shell",
+    47→		"xterm",
+    48→		"log",
+    49→		"logging",
+    50→		"command-line",
+    51→		"text"
+    52→	],
+    53→	"devDependencies": {
+    54→		"@types/node": "^16.11.10",
+    55→		"ava": "^3.15.0",
+    56→		"c8": "^7.10.0",
+    57→		"color-convert": "^2.0.1",
+    58→		"execa": "^6.0.0",
+    59→		"log-update": "^5.0.0",
+    60→		"matcha": "^0.7.0",
+    61→		"tsd": "^0.19.0",
+    62→		"xo": "^0.57.0",
+    63→		"yoctodelay": "^2.0.0"
+    64→	},
+readme.md
+    10→> Terminal string styling done right
+    18→## Info
+    20→- [Why not switch to a smaller coloring package?](https://github.com/chalk/chalk?tab=readme-ov-file#why-not-switch-to-a-smaller-coloring-package)
+    21→- See [yoctocolors](https://github.com/sindresorhus/yoctocolors) for a smaller alternative
+    23→## Highlights
+    …
+    25→- Expressive API
+    26→- Highly performant
+    27→- No dependencies
+    28→- Ability to nest styles
+    29→- [256/Truecolor color support](#256-and-truecolor-color-support)
+    30→- Auto-detects color support
+    31→- Doesn't extend `String.prototype`
+    32→- Clean and focused
+    33→- Actively maintained
+    34→- [Used by ~115,000 packages](https://www.npmjs.com/browse/depended/chalk) as of July 4, 2024
+    36→## Install
+    …
+    38→```sh
+    39→npm install chalk
+    40→```
+    42→**IMPORTANT:** Chalk 5 is ESM. If you want to use Chalk with TypeScript or a build tool, you will probably want to use Chalk 4 for now. [Read more.](https://github.com/chalk/chalk/releases/tag/v5.0.0)
+    44→## Usage
+    …
+    112→## API
+    …
+    114→### chalk.`<style>[.<style>...](string, [string...])`
+    …
+    116→Example: `chalk.red.bold.underline('Hello', 'world');`
+    118→Chain [styles](#styles) and call the last one as a method with a string argument. Order doesn't matter, and later styles take precedent in case of a conflict. This simply means that `chalk.red.yellow.green` is equivalent to `chalk.green`.
+    120→Multiple arguments will be separated by space.
+    122→### chalk.level
+    …
+    124→Specifies the level of color support.
+    126→Color support is automatically detected, but you can override it by setting the `level` property. You should however only do this in your own code as it applies globally to all Chalk consumers.
+    128→If you need to change this in a reusable module, create a new instance:
+    130→```js
+    131→import {Chalk} from 'chalk';
+    133→const customChalk = new Chalk({level: 0});
+    134→```
+    136→| Level | Description |
+    137→| :---: | :--- |
+    138→| `0` | All colors disabled |
+    139→| `1` | Basic color support (16 colors) |
+    140→| `2` | 256 color support |
+    141→| `3` | Truecolor support (16 million colors) |
+    143→### supportsColor
+    …
+    145→Detect whether the terminal [supports color](https://github.com/chalk/supports-color). Used internally and handled for you, but exposed for convenience.
+    149→Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
+    151→### chalkStderr and supportsColorStderr
+    …
+    155→### modifierNames, foregroundColorNames, backgroundColorNames, and colorNames
+    …
+    157→All supported style strings are exposed as an array of strings for convenience. `colorNames` is the combination of `foregroundColorNames` and `backgroundColorNames`.
+    171→## Styles
+    …
+    173→### Modifiers
+    …
+    175→- `reset` - Reset the current style.
+    176→- `bold` - Make the text bold.
+    177→- `dim` - Make the text have lower opacity.
+    178→- `italic` - Make the text italic. *(Not widely supported)*
+    179→- `underline` - Put a horizontal line below the text. *(Not widely supported)*
+    180→- `overline` - Put a horizontal line above the text. *(Not widely supported)*
+    181→- `inverse` - Invert background and foreground colors.
+    182→- `hidden` - Print the text but make it invisible.
+    183→- `strikethrough` - Puts a horizontal line through the center of the text. *(Not widely supported)*
+    184→- `visible` - Print the text only when Chalk has a color level above zero. Can be useful for things that are purely cosmetic.
+    186→### Colors
+    …
+    205→### Background colors
+    …
+    224→## 256 and Truecolor color support
+    …
+    246→## Browser support
+    …
+    248→Since Chrome 69, ANSI escape codes are natively supported in the developer console.
+    250→## Windows
+    …
+    252→If you're on Windows, do yourself a favor and use [Windows Terminal](https://github.com/microsoft/terminal) instead of `cmd.exe`.
+    254→## FAQ
+    …
+    256→### Why not switch to a smaller coloring package?
+    …
+    258→Chalk may be larger, but there is a reason for that. It offers a more user-friendly API, well-documented types, supports millions of colors, and covers edge cases that smaller alternatives miss. Chalk is mature, reliable, and built to last.
+    262→Chalk is also likely already in your dependency tree (since 100K+ packages depend on it), so switching won’t save space—in fact, it might increase it. npm deduplicates dependencies, so multiple Chalk instances turn into one, but adding another package alongside it will increase your overall size.
+    266→If absolute package size is important to you, I also maintain [yoctocolors](https://github.com/sindresorhus/yoctocolors), one of the smallest color packages out there.
+    268→*\- [Sindre](https://github.com/sindresorhus)*
+    270→### But the smaller coloring package has benchmarks showing it is faster
+    …
+    274→## Related
+    …
+    294→## Maintainers
+    …
+    296→- [Sindre Sorhus](https://github.com/sindresorhus)
+    297→- [Josh Junon](https://github.com/qix-)
+source/
+    index.d.ts
+    index.js
+    index.test-d.ts
+    utilities.js
+    vendor/
+        ansi-styles/
+            index.d.ts
+            index.js
+        supports-color/
+            browser.d.ts
+            browser.js
+            index.d.ts
+            index.js
+test/
+    _fixture.js
+    chalk.js
+    instance.js
+    level.js
+    no-color-support.js
+    visible.js

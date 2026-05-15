@@ -1,0 +1,1253 @@
+fixture = "linkding"
+revision_pin = "573b6f54"
+summary = """
+linkding is a self-hosted bookmark manager: a Django 6 webapp with a
+Hotwired-Turbo + LitElement frontend, packaged as a Docker image and
+configured almost exclusively through `LD_*` environment variables.
+There is a single Django app, `bookmarks/`, that owns everything —
+models (Bookmark, Tag, BookmarkBundle saved searches, BookmarkAsset
+snapshots, UserProfile, FeedToken, ApiToken, GlobalSettings, Toast,
+plus a non-ORM BookmarkSearch value type), DRF API viewsets, server-
+rendered HTML views, a services layer (bookmarks CRUD, importer/
+exporter for Netscape HTML, parser, search_query_parser with a
+recursive-descent AST, auto_tagging rule matcher, single-file/PDF
+snapshot pipeline, favicon/preview/wayback loaders), Huey background
+tasks, Django migrations, templates, and the rolled-up JS bundle in
+`bookmarks/frontend/`.
+
+Likely sessions an agent walks into: adding/tweaking a settings option
+(`LD_*` plumbed through `bookmarks/settings/base.py` → service modules,
+documented in `docs/src/content/docs/options.md` and `.env.sample`);
+extending the REST API (`bookmarks/api/routes.py` viewsets +
+`serializers.py` + `bookmarks/urls.py` router includes); changing
+bookmark fields (`models.py` Bookmark + a numbered migration in
+`bookmarks/migrations/`); search behaviour (the new
+`services/search_query_parser.py` AST + `queries._convert_ast_to_q_object`,
+or `queries._filter_search_query_legacy` for `profile.legacy_search`);
+import/export (`services/importer.py` + `services/parser.py`'s
+NetscapeBookmark HTMLParser, `services/exporter.py`); auto-tagging
+rules; snapshot/archival pipeline (`services/tasks.py` Huey tasks +
+`services/assets.py` + `services/singlefile.py` + supervisord configs);
+auth (DRF token via `api/auth.py`, session + OIDC + auth-proxy
+configured in `settings/base.py`, `middlewares.py` for the request
+extension); deployment (Dockerfile multi-stage, `bootstrap.sh`,
+`uwsgi.ini`, supervisord-*.conf).
+
+The ranking front-loads identity + the top-level layout, then the
+`LD_*` configuration surface (because so many sessions are
+config-driven), then the data model (models.py is the single source of
+truth most other modules ground against), then the URL/API routing
+table, then service- and view-module signatures so the agent knows
+where every public function lives, then domain-logic bodies (bookmark
+lifecycle, search parsing, importer, auto-tagging, tasks, asset
+pipeline), then frontend/templates/deployment last.
+"""
+
+# ─────────────────────── Tier 1: identity & layout ───────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede — what linkding is"
+justification = "Two sentences naming the project and its design goals: self-hosted bookmark manager, minimal/fast/Docker. Cheapest possible orientation slice."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 9
+end = 12
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "Version pin"
+justification = "Single line of version.txt. Lets the agent name the release."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "version.txt"
+start = 1
+end = 1
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "pyproject [project] header"
+justification = "Project name, version, one-line description, requires-python = >=3.13. Cheapest possible \"what's the package\" slice."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 1
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "Top-level root listing (essentials)"
+justification = "Names the load-bearing children of the repo root — the bookmarks/ app plus docs/, docker/, scripts/, and the top-level config / deployment / build files an agent will need to find quickly. Smaller than `entries = \"all\"` while still covering the targets of most \"where does X live\" questions."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = [
+    "bookmarks",
+    "docs",
+    "docker",
+    "scripts",
+    "assets",
+    "Makefile",
+    "pyproject.toml",
+    "uv.lock",
+    "manage.py",
+    "package.json",
+    "package-lock.json",
+    "rollup.config.mjs",
+    "postcss.config.js",
+    "docker-compose.yml",
+    "bootstrap.sh",
+    "install-linkding.sh",
+    "uwsgi.ini",
+    "supervisord-all.conf",
+    "supervisord-tasks.conf",
+    ".env.sample",
+    "pytest.ini",
+    "CHANGELOG.md",
+    "README.md",
+    "SECURITY.md",
+    "LICENSE.txt",
+    "version.txt",
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "bookmarks/ app directory listing"
+justification = "The single Django app where every interesting file lives. Listing all immediate children (admin, api/, feeds, forms, management/, middlewares, migrations/, models, queries, services/, settings/, signals, static/, styles/, tasks, templates/, templatetags/, tests/, tests_e2e/, type_defs, urls, utils, validators, views/, widgets, wsgi, frontend/) is the master pointer table for everything else. Catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "bookmarks"
+entries = "all"
+
+[[batches]]
+id = "1.6"
+descriptor = "Runtime Python deps"
+justification = "Names the stack: Django 6, DRF, Huey, mozilla-django-oidc, waybackpy, bleach/markdown, beautifulsoup4, requests, supervisor, uwsgi. Many \"how do X\" answers are shaped by which lib is in play."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "pyproject.toml"
+start = 7
+end = 21
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "Makefile — core dev targets"
+justification = "init / serve / tasks / test / lint / format — answers \"how do I run X\" zero-follow-up. Reveals lint = ruff, format = ruff + djlint + prettier, test = pytest -n auto."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 1
+end = 26
+render = { kind = "full" }
+
+[[batches]]
+id = "1.8"
+descriptor = "Makefile — e2e + frontend targets"
+justification = "prepare-e2e / e2e / frontend targets — answers \"how do I run playwright e2e\" and \"how do I run the JS dev build\"."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Makefile"
+start = 27
+end = 38
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "README feature overview"
+justification = "Bulleted feature list — tags, bulk edit, Markdown notes, read-it-later, sharing/guests, auto-scraped metadata, archival (local HTML or Internet Archive), Netscape import/export, PWA, browser extensions, SSO via OIDC/auth-proxy, REST API, admin panel. Most \"does linkding support X\" questions answered zero-follow-up."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 19
+end = 31
+render = { kind = "full" }
+
+[[batches]]
+id = "1.10"
+descriptor = "README Development setup"
+justification = "Prerequisites (Python 3.13, uv, Node.js) and the exact dev commands (`make init`, `createsuperuser`, `make frontend`, `make serve`, frontend at http://localhost:8000). Plus the sentence that maps the codebase: \"the `bookmarks` folder contains the actual bookmark application\"."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 59
+end = 91
+render = { kind = "full" }
+
+# ────────────────── Tier 2: configuration surface (LD_*) ──────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "settings/__init__.py — env-vs-prod selector"
+justification = "Six lines that explain a non-obvious mechanism: settings/__init__.py tries `from .dev import *` first and falls back to `from .prod import *`. Both end with `from .custom import *`, the install-time override hook."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/__init__.py"
+start = 1
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "settings/base.py — INSTALLED_APPS + MIDDLEWARE"
+justification = "The two lists agents look up first. Lands the bookmarks app config, DRF, Huey djhuey, mozilla-django-oidc as installed apps, plus the custom LinkdingMiddleware position in the chain. Most \"add an app / middleware\" sessions start here."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 41
+end = 65
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = ".env.sample — LD_* var names"
+justification = "Locations of every LD_* var users set on a real deployment (truncated to the var name to save tokens, surrounding comments visible from line numbers). Catastrophic-omission hedge for the deployment env-var list."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = ".env.sample"
+start = 2
+end = 2
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 4
+end = 4
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 6
+end = 6
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 10
+end = 10
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 12
+end = 12
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 14
+end = 14
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 16
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 20
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 23
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 26
+end = 26
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 31
+end = 31
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 38
+end = 38
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 40
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 42
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 44
+end = 44
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 46
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = ".env.sample"
+start = 51
+end = 51
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "options.md — section headings (all LD_*)"
+justification = "Every `### LD_*` heading of options.md as a Full line — the master list of *documented* options, including ones absent from .env.sample (LD_SUPERVISOR_MANAGED, LD_REQUEST_TIMEOUT, LD_REQUEST_MAX_CONTENT_LENGTH, LD_SERVER_HOST/PORT, LD_ENABLE_OIDC, LD_USE_X_FORWARDED_HOST, LD_LOG_X_FORWARDED_FOR, LD_FAVICON_PROVIDER, LD_SINGLEFILE_TIMEOUT_SEC, LD_SINGLEFILE_OPTIONS, LD_DISABLE_REQUEST_LOGS). Catastrophic-omission hedge: agent never has to guess whether an option is documented."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 36
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 43
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 70
+end = 70
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 76
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 82
+end = 82
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 88
+end = 88
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 94
+end = 94
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 101
+end = 101
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 120
+end = 120
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 194
+end = 194
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 202
+end = 202
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 217
+end = 217
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 225
+end = 225
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 231
+end = 231
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 240
+end = 240
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 246
+end = 246
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 252
+end = 252
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 259
+end = 259
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 265
+end = 265
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 272
+end = 272
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 278
+end = 278
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 299
+end = 299
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 306
+end = 306
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docs/src/content/docs/options.md"
+start = 315
+end = 315
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "settings/base.py — LD_CONTEXT_PATH + LOGIN URLs"
+justification = "Single non-obvious mechanism: LD_CONTEXT_PATH gets prepended to LOGIN_URL / LOGIN_REDIRECT_URL / LOGOUT_REDIRECT_URL / STATIC_URL. Critical for \"why does my proxy break login redirects\"."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 110
+end = 114
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "settings/base.py — DRF + Huey config"
+justification = "REST_FRAMEWORK dict (LinkdingTokenAuthentication + SessionAuthentication, IsAuthenticated default, LimitOffsetPagination with PAGE_SIZE = 100) and the HUEY dict (SqliteHuey backed by data/tasks.sqlite3, 2 thread workers, exponential backoff, periodic enabled). Frames most API/auth and background-task questions."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 136
+end = 181
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "settings/base.py — DB sqlite/postgres branch"
+justification = "LD_DB_* envs assembled into DATABASES, postgres-vs-sqlite branch, plus the load-bearing details: SQLite uses CONN_MAX_AGE=None to counter an ICU collation memory leak; case-insensitive search/ordering relies on a compiled libicu.so flagged by USE_SQLITE_ICU_EXTENSION (loaded in signals.py)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 242
+end = 276
+render = { kind = "full" }
+
+[[batches]]
+id = "2.8"
+descriptor = "settings/base.py — other LD_* assignment lines"
+justification = "Location pointers (mostly truncated to the var name + getenv prefix) for the LD_* vars read outside 2.6/2.7's ranges — LD_USE_X_FORWARDED_HOST, LD_DISABLE_LOGIN_FORM, LD_ENABLE_OIDC, LD_ENABLE_AUTH_PROXY, LD_AUTH_PROXY_USERNAME_HEADER + LD_AUTH_PROXY_LOGOUT_URL, LD_CSRF_TRUSTED_ORIGINS, LD_FAVICON_PROVIDER/FOLDER + LD_ENABLE_REFRESH_FAVICONS, LD_PREVIEW_FOLDER/MAX_SIZE, LD_ASSET_FOLDER, LD_ENABLE_SNAPSHOTS, LD_DISABLE_ASSET_UPLOAD, LD_SINGLEFILE_*, LD_SNAPSHOT_PDF_MAX_SIZE, LD_MONOLITH_*. Catastrophic-omission hedge for \"which envs Django actually reads\"."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 32
+end = 32
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 184
+end = 184
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 192
+end = 192
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 213
+end = 213
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 219
+end = 220
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 222
+end = 222
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 235
+end = 235
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 280
+end = 281
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 282
+end = 282
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 290
+end = 290
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 291
+end = 291
+render = { kind = "truncated", pattern = "^[A-Z_]+ = int\\(os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 302
+end = 302
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 304
+end = 304
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 310
+end = 310
+render = { kind = "truncated", pattern = "^[A-Z_]+ = os\\.getenv\\(\"[A-Z_]+\"" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 316
+end = 317
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 328
+end = 328
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 329
+end = 330
+render = { kind = "truncated", pattern = "^[A-Z_]+ = " }
+[[batches.content.spans]]
+path = "bookmarks/settings/base.py"
+start = 335
+end = 336
+render = { kind = "full" }
+
+[[batches]]
+id = "2.9"
+descriptor = "LinkdingMiddleware + auth-proxy header shim"
+justification = "Tiny module wiring two things: CustomRemoteUserMiddleware setting header = LD_AUTH_PROXY_USERNAME_HEADER, and LinkdingMiddleware attaching `request.global_settings` (from GlobalSettings.get()) and `request.user_profile` (real profile, or guest_profile_user.profile, or a fresh standard_profile with enable_favicons=True) on every request. Every view depends on these attributes."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/middlewares.py"
+start = 1
+end = 41
+render = { kind = "full" }
+
+[[batches]]
+id = "2.10"
+descriptor = "signals.py — SQLite ICU loader"
+justification = "On every connection_created, if USE_SQLITE_ICU_EXTENSION, enable_load_extension + load_extension(SQLITE_ICU_EXTENSION_PATH) + execute `SELECT icu_load_collation('', 'ICU')`. The hidden mechanism behind \"why are searches case-insensitive across umlauts\"."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/signals.py"
+start = 1
+end = 21
+render = { kind = "full" }
+
+# ─────────────────────────── Tier 3: data model ───────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "models.py — class header locations"
+justification = "Every model class header (Tag, Bookmark, BookmarkAsset, BookmarkBundle, BookmarkSearch non-ORM, UserProfile, Toast, FeedToken, ApiToken, GlobalSettings). Cheap catastrophic-omission hedge; later batches refine via predecessor."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 21
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 53
+end = 53
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 129
+end = 129
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 183
+end = 183
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 224
+end = 224
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 346
+end = 346
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 483
+end = 483
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 490
+end = 490
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 516
+end = 516
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 539
+end = 539
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Tag + tag-string helpers"
+justification = "Tag's 2 real fields (name max 64, owner FK) and parse_tag_string / sanitize_tag_name / build_tag_string. Called wherever tags get parsed. parse_tag_string default delimiter is `,` but `_filter_bundle` etc. pass `' '`."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 22
+end = 50
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Bookmark fields — truncated"
+justification = "Field names of Bookmark with type-decl arguments dropped — url, url_normalized, title, description, notes, the two obsolete website_* kept to avoid migration drift, web_archive_snapshot_url, favicon_file, preview_image_file, unread, is_archived, shared, date_added/modified/accessed, owner FK, tags M2M, latest_snapshot. Catastrophic-omission hedge — \"what fields exist on Bookmark\" without paying for the verbose CharField args. Properties + save() get added later by refinement."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 54
+end = 58
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 60
+end = 60
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 62
+end = 73
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 74
+end = 80
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "Bookmark — resolved_*, normalize, query_existing"
+justification = "Refines 3.3 with the four load-bearing pieces of Bookmark behaviour: resolved_title (title or url fallback), resolved_description, tag_names sorted, save() that calls normalize_url, and the static query_existing(owner, url) that looks bookmarks up by url_normalized OR by exact url-vs-empty-normalized (used by BookmarkViewSet.check + bookmarks.create_bookmark + BookmarkForm.clean_url for dup-detection)."
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 82
+end = 113
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "BookmarkSearch — params + defaults"
+justification = "Class-level constants: SORT_ADDED/TITLE × ASC/DESC, FILTER_SHARED/UNREAD OFF/YES/NO, the `params` list (q, user, bundle, sort, shared, unread, modified_since, added_since), `preferences` (sort/shared/unread — persisted in UserProfile.search_preferences), and `defaults`. Authoritative for \"what search query params does linkding accept\"."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 225
+end = 259
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "BookmarkAsset — type/content/status constants"
+justification = "The class-level constants — TYPE_SNAPSHOT/UPLOAD, CONTENT_TYPE_HTML/PDF, STATUS_PENDING/COMPLETE/FAILURE — that every asset-handling code path checks against. Plus the field list truncated to names only, and the `download_name` property body (appends .pdf/.html for snapshots)."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 130
+end = 138
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 140
+end = 148
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 150
+end = 156
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "BookmarkBundle field list (truncated)"
+justification = "BookmarkBundle (the saved-filter row) field names: name, search free-text, any_tags / all_tags / excluded_tags space-separated strings, filter_unread + filter_shared CharField choices with FILTER_STATE_OFF/YES/NO, order int, dates, owner. Class-level FILTER_*_CHOICES lists shown in full so the agent knows the literal storage values."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 184
+end = 197
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 198
+end = 202
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 215
+end = 218
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+
+[[batches]]
+id = "3.8"
+descriptor = "UserProfile fields — names (truncated)"
+justification = "Every UserProfile field as a truncated location — names theme, bookmark_date/description/link_target/description_display, web_archive_integration, tag_search strict/lax, tag_grouping, then the bool toggles enable_sharing/public_sharing/favicons/preview_images, display_url + display_*_action toggles, permanent_notes, custom_css + custom_css_hash, auto_tagging_rules, search_preferences JSONField, enable_automatic_html_snapshots, default_mark_unread/shared, items_per_page, sticky_pagination, collapse_side_panel, hide_bundles, legacy_search. Catastrophic-omission hedge for the user-pref surface."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 393
+end = 393
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 394
+end = 394
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 397
+end = 397
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 403
+end = 403
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 409
+end = 409
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 413
+end = 413
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 419
+end = 419
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 425
+end = 425
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 431
+end = 431
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 437
+end = 446
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 447
+end = 453
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 454
+end = 454
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+[[batches.content.spans]]
+path = "bookmarks/models.py"
+start = 457
+end = 460
+render = { kind = "truncated", pattern = "^    [a-z_]+ = models\\." }
+
+[[batches]]
+id = "3.9"
+descriptor = "type_defs.py — HttpRequest type"
+justification = "5-line HttpRequest subclass adding `global_settings: GlobalSettings`, `user_profile: UserProfile`, `user: User | AnonymousUser`. Contract every view's `request:` arg conforms to (LinkdingMiddleware at 2.9 does the attachment)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/type_defs.py"
+start = 1
+end = 14
+render = { kind = "full" }
+
+# ────────────────── Tier 4: URL routing + REST API ──────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "urls.py — view imports + namespace wrap"
+justification = "Cheap structural slice: the imports block (names every view module wired in: bookmarks_views, assets_views, linkding_auth_views, bundles_views, settings_views, tags_views, toasts_views, feeds, custom_css/health/manifest/opensearch/root views, plus DRF api_routes + admin), the section comments framing the path() groups, the API include block (api/, api/bookmarks/, api/bookmarks/<id>/assets/, api/tags/, api/bundles/, api/user/), and the bottom rewrite block (linkding: namespace, login/logout/change-password auth routes, admin mount, OIDC mount, LD_CONTEXT_PATH wrap). Individual `path(\"X\", view)` literals are inferable from the imports + section comments."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 1
+end = 20
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 22
+end = 22
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 46
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 57
+end = 57
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 63
+end = 63
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 89
+end = 89
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 91
+end = 100
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 101
+end = 101
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 110
+end = 117
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 127
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 129
+end = 154
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/urls.py"
+start = 162
+end = 163
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "api/routes.py — viewset classes + routers"
+justification = "Five DRF GenericViewSet headers showing the mixin combinations (= which CRUD verbs are supported): BookmarkViewSet (List+Retrieve+Create+Update+Destroy), BookmarkAssetViewSet (List+Retrieve+Destroy — no Update or Create via the standard route), TagViewSet (List+Retrieve+Create — no Update or Destroy), UserViewSet (pure GenericViewSet — only the `profile` @action), BookmarkBundleViewSet (full CRUD). Plus the router instantiation block at the bottom which is the only place that maps url path-fragments to viewsets (bookmark_router, tag_router, user_router, bundle_router, bookmark_asset_router all register at \"\" because urls.py mounts each at a distinct prefix). Catastrophic-omission hedge for the REST surface."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 36
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 171
+end = 176
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 249
+end = 254
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 266
+end = 266
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 272
+end = 279
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 294
+end = 312
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "api/routes.py — extra @action endpoints"
+justification = "Beyond mixin CRUD, the @action-decorated extras as single-line signatures: BookmarkViewSet.archived (GET detail=False), .shared (GET detail=False, get_permissions returns [AllowAny()] when action == \"shared\"), .archive/.unarchive (POST detail=True), .check (GET — looks up existing bookmark + runs website_loader.load_website_metadata + auto_tagging.get_tags), .singlefile (POST — upload prebuilt HTML snapshot, gated by LD_DISABLE_ASSET_UPLOAD); BookmarkAssetViewSet.download (GET url_path=\"download\" — streams via StreamingHttpResponse, opens GzipFile when asset.gzip) and .upload (POST detail=False); UserViewSet.profile (GET detail=False — returns UserProfileSerializer)."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 86
+end = 87
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 90
+end = 91
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 94
+end = 95
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 100
+end = 101
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 106
+end = 107
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 138
+end = 139
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 191
+end = 192
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 216
+end = 217
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/routes.py"
+start = 267
+end = 268
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "api/serializers.py — Meta.fields lists"
+justification = "The Meta.fields tuples (authoritative JSON-shape lists) for BookmarkBundleSerializer, BookmarkSerializer, BookmarkAssetSerializer, TagSerializer, UserProfileSerializer — with read-only fields lists so the agent knows which keys are server-set. Plus BookmarkSerializer's custom-field declarations: tag_names = TagListField, favicon_url / preview_image_url / web_archive_snapshot_url = SerializerMethodField, website_title/description = EmtpyField always null for backwards-compat."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/api/serializers.py"
+start = 38
+end = 58
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/serializers.py"
+start = 66
+end = 85
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/serializers.py"
+start = 97
+end = 97
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/serializers.py"
+start = 99
+end = 104
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/api/serializers.py"
+start = 182
+end = 193
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "api/auth.py — LinkdingTokenAuthentication"
+justification = "DRF TokenAuthentication subclass overriding `model = ApiToken` and accepting both `Token` and `Bearer` keywords. authenticate() body delegates to `authenticate_credentials(token)` after the header split. Used by every REST endpoint."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/api/auth.py"
+start = 8
+end = 16
+render = { kind = "full" }
+
+# ─────────── Tier 5: services + view module signatures ───────────
+
+[[batches]]
+id = "5.1"
+descriptor = "services/ + views/ directory listings"
+justification = "fs listings of bookmarks/services and bookmarks/views — names every module: services (assets, auto_tagging, bookmarks, bundles, exporter, favicon_loader, importer, monolith, parser, preview_image_loader, search_query_parser, singlefile, tags, tasks, wayback, website_loader); views (access, assets, auth, bookmarks, bundles, contexts, custom_css, health, manifest, opensearch, reload, root, settings, tags, toasts, turbo). Catastrophic-omission hedge for these surfaces. Names a route from a precis-query like \"where is auto-tagging implemented\" to a single follow-up read."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "bookmarks/services"
+entries = "all"
+[[batches.content.groups]]
+parent = "bookmarks/views"
+entries = "all"
+
+[[batches]]
+id = "5.2"
+descriptor = "services/bookmarks.py — public fn signatures"
+justification = "Single-line signatures of every public fn in services/bookmarks.py: create_bookmark, update_bookmark, enhance_with_website_metadata, archive_bookmark/archive_bookmarks (single + bulk), unarchive_*, delete_bookmarks, tag_bookmarks/untag_bookmarks (bulk), mark_bookmarks_as_read/unread, share_bookmarks/unshare_bookmarks, refresh_bookmarks_metadata, create_html_snapshots. The boundary every view + API calls into."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 55
+end = 55
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 76
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 87
+end = 87
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 94
+end = 94
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 117
+end = 117
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 123
+end = 123
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 146
+end = 146
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/bookmarks.py"
+start = 166
+end = 166
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "queries.py — public fn signatures"
+justification = "Query module entry points called by views/feeds/API: query_bookmarks/query_archived_bookmarks/query_shared_bookmarks (the three top-level filters; each routes through `_base_bookmarks_query`, branching on `profile.legacy_search` between `_filter_search_query` (new AST) and `_filter_search_query_legacy`), query_bookmark_tags / query_archived_bookmark_tags / query_shared_bookmark_tags, query_shared_bookmark_users, get_user_tags, get_tags_for_query, get_shared_tags_for_query, parse_query_string (legacy-only)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 33
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 47
+end = 47
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 308
+end = 308
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 355
+end = 355
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/queries.py"
+start = 394
+end = 394
+render = { kind = "full" }
+
+# ─────────── Tier 6: domain depth + deployment ───────────
+
+[[batches]]
+id = "6.1"
+descriptor = "views/bookmarks.py — entry-point view names"
+justification = "Single-line headers of the @login_required views every URL pattern points at: index / archived / shared / new / edit / close (HTML responses), plus index_action / archived_action / shared_action (bulk dispatchers calling handle_action), plus the underlying remove / archive / unarchive / mark_as_read / update_state / upload_asset / remove_asset / create_html_snapshot helpers and handle_action itself."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/views/bookmarks.py"
+start = 42
+end = 43
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/views/bookmarks.py"
+start = 81
+end = 82
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/views/bookmarks.py"
+start = 312
+end = 313
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/views/bookmarks.py"
+start = 361
+end = 361
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "auto_tagging.get_tags + parser.parse signatures"
+justification = "Two distinctive entry points: services.auto_tagging.get_tags(script, url) parses the user's auto_tagging_rules text (line-oriented: \"url-pattern tag1 tag2\") and matches against a URL by host/path/qs/fragment; services.parser.parse(html) returns a list[NetscapeBookmark] (the dataclass that feeds importer)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "bookmarks/services/auto_tagging.py"
+start = 7
+end = 7
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "bookmarks/services/parser.py"
+start = 110
+end = 110
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "Dockerfile — multi-stage outline"
+justification = "Each `FROM ... AS stage` line in docker/default.Dockerfile — node-build, build-deps, compile-icu, linkding, ublock-build, linkding-plus. Tells the agent at a glance that there are two final images (linkding and linkding-plus, where -plus adds chromium + single-file-cli + uBlock for snapshots)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "docker/default.Dockerfile"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docker/default.Dockerfile"
+start = 13
+end = 13
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "docker/default.Dockerfile"
+start = 49
+end = 49
+render = { kind = "full" }

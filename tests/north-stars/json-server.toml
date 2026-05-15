@@ -1,0 +1,862 @@
+fixture = "json-server"
+revision_pin = "89a34a44"
+summary = """
+json-server v1 beta: a TypeScript Node CLI that turns a `db.json`/`db.json5`
+file into a REST API backed by lowdb + tinyhttp. The repo is small (~1.5k SLOC
+across ~10 source files) and structured by concern: `bin.ts` is the CLI entry,
+`app.ts` builds the HTTP routes via `createApp`, `service.ts` holds the
+`Service` class (CRUD over an in-memory `Data` map), `parse-where.ts` /
+`matches-where.ts` / `where-operators.ts` implement an operator-based query
+language (`field:op=value`), `paginate.ts` formats list responses, and
+`adapters/` plugs lowdb into normalized read/write with observer hooks for
+live reload. The ranking serves the spread of tasks an agent might face:
+adding/changing routes, extending operators, adjusting CRUD semantics,
+debugging response shapes, tweaking CLI flags, wiring tests, or just
+understanding what the project is. Breadth (Service signatures, route table,
+operator list, response shapes) outranks deep dives into any one body —
+those land later in narrower batches.
+"""
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 1 — Identity & orientation
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "README title + v1-beta notice"
+justification = "Project identity in three lines: name, CI badge, and the load-bearing 'beta v1' note telling the agent this is the pre-release branch with breaking changes vs the stable v0.17."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 1
+end = 1
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 5
+end = 6
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level project tree"
+justification = "Every directory + top-level file under the repo root. Establishes that there's a `src/` (with an `adapters/` subdir), `views/` (templates), `public/` (static), `fixtures/` (sample dbs), plus standard config files. Catastrophic-omission hedge for 'what files exist'."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ tree"
+justification = "Lists every source file plus the `adapters/` subdir contents — the working surface for almost any task. Without this, the agent has to guess where `parse-where` lives, whether `paginate` is a file, etc."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "src"
+entries = "all"
+[[batches.content.groups]]
+parent = "src/adapters"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json name + version + ESM type"
+justification = "Locates the package on npm as `json-server@1.0.0-beta.15`, ESM-only. Pair-of-truth with the README's beta note: confirms the v1 line."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 34
+end = 34
+render = { kind = "full" }
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json bin + files + engines"
+justification = "Says the CLI shim is `lib/bin.js`, the published payload is `lib/` + `views/` + `schema.json`, and Node ≥22.12 is required. Together with 1.2 the agent now knows how the build (`tsc` → `lib/`) maps to what users actually install."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 26
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 72
+end = 74
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "Install + start command from README"
+justification = "How a user actually runs this: `npm install json-server`, then `npx json-server db.json` → server on `http://localhost:3000`. Zero-follow-up for invocation."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 11
+end = 19
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "README.md"
+start = 62
+end = 73
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "Canonical db.json shape"
+justification = "The running example throughout the codebase + tests: a posts array, a comments array (FK `postId` → posts.id), a singleton `profile` object. Cementing this shape early makes every later route/service batch self-explanatory."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 21
+end = 36
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 2 — REST surface (the public API users see)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "Routes table (array + object resources)"
+justification = "The whole HTTP surface in one block: GET/POST/PUT/PATCH/DELETE on `/:name` and `/:name/:id` for arrays; GET/PUT/PATCH only for object resources (no POST/DELETE on singletons). High-signal for 'what endpoints exist' — answers without follow-up."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 132
+end = 155
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "Query cheat sheet (filter/sort/page/embed/where)"
+justification = "The five families of query params in one place — `field:op=v`, `_sort`, `_page`/`_per_page`, `_embed`, `_where`. Together with 2.1 the agent can answer almost any 'how do I call this' query with zero follow-up."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 118
+end = 130
+render = { kind = "full" }
+
+[[batches]]
+id = "2.3"
+descriptor = "Conditions operators list"
+justification = "Enumerates every operator name (`lt`/`lte`/`gt`/`gte`/`eq`/`ne`/`in`/`contains`/`startsWith`/`endsWith`) with one-line semantics. Catastrophic-omission hedge: without this an agent could easily assume the set is shorter or different."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 157
+end = 184
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "Pagination response shape"
+justification = "The exact JSON envelope returned when `_page` is set — `first`/`prev`/`next`/`last`/`pages`/`items`/`data`. Lets the agent debug pagination output without reading `paginate.ts`. Also notes the `_per_page` default = 10."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 194
+end = 218
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "Embed + _where + dependent-delete syntax"
+justification = "Three smaller features that complete the README's HTTP coverage: `_embed=relation`, `_where=<JSON>` (overrides query params), and `DELETE /posts/1?_dependent=comments` (cascade)."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 220
+end = 239
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "Migration notes (v0 → v1)"
+justification = "Calls out the four behavioral changes from json-server v0: ids are strings & auto-generated, `_per_page` replaces `_limit`, `_embed` replaces `_expand`, no `--delay`. Anyone porting from v0 needs this; everyone else now understands why the API looks the way it does."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 254
+end = 263
+render = { kind = "full" }
+
+[[batches]]
+id = "2.7"
+descriptor = "Static files docs"
+justification = "Explains the `./public` auto-serve and the `-s <dir>` flag for extra static dirs. Connects the `public/` dir from the tree to the `-s` CLI option."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "README.md"
+start = 241
+end = 252
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 3 — Service API (the in-memory CRUD core)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "service.ts public types (Item, Data, PaginatedItems, isItem)"
+justification = "The three load-bearing type aliases the rest of the codebase imports from `./service.ts`: `Item = Record<string, unknown>`, `Data = Record<string, Item[] | Item>` (the whole DB shape), `PaginatedItems`, plus the `isItem` runtime guard. Lets the agent reason about route handler bodies and adapter glue with zero follow-up."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 1
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "Service class — every method name"
+justification = "All public + private members of `Service` (signatures truncated at the opening paren) on their own lines. Covers: `constructor`, `#get`, `has`, `findById`, `find`, `create`, `#updateOrPatch`, `#updateOrPatchById`, `update`, `patch`, `updateById`, `patchById`, `destroyById`. Catastrophic-omission hedge — without this an agent could easily miss e.g. `has` or assume `findAll` exists."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 81
+end = 81
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 82
+end = 82
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 84
+end = 84
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 88
+end = 88
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 92
+end = 92
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 96
+end = 96
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 110
+end = 110
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 145
+end = 145
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 156
+end = 156
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 166
+end = 166
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 186
+end = 186
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 190
+end = 190
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 194
+end = 194
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 198
+end = 198
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 202
+end = 202
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Service public reads: findById + find signatures (full)"
+justification = "Full signatures of the two read methods, including `find`'s options object `{ where, sort?, page?, perPage?, embed? }` and its return-union `Item[] | PaginatedItems | Item | undefined`. The return-union encodes the key invariant: arrays paginate, objects return as-is. Refines 3.2 with the exact arg/return types."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 96
+end = 96
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 110
+end = 119
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "Service top-level helpers (embed, nullifyForeignKey, deleteDependents) signatures"
+justification = "The three module-level helpers that aren't methods. `embed` (resolves `_embed=related` via inflection singular/plural), `nullifyForeignKey` (used by `destroyById` to null `<name>Id` on other resources), `deleteDependents` (cascade-delete companion). Surfaces the relationship machinery without needing to read the bodies."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 23
+end = 23
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 49
+end = 49
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 67
+end = 67
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 4 — Query language (parse + match)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "where-operators.ts — full file"
+justification = "Tiny module (18 lines) listing the entire operator set in source: `WHERE_OPERATORS` array, the derived `WhereOperator` type, and `isWhereOperator` type guard. The single source of truth that both `parseWhere` and `matchesWhere` consume — load it whole."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/where-operators.ts"
+start = 1
+end = 18
+render = { kind = "full" }
+
+[[batches]]
+id = "4.2"
+descriptor = "parse-where.ts public signature + key helpers"
+justification = "The public `parseWhere(query: string) -> JsonObject` plus the internal `splitKey` / `coerceValue` signatures. `splitKey` notably handles both the canonical `field:op` form and v0.17-compatible `field_op` form — non-obvious from the README. Locates the v0-style fallback for anyone debugging legacy queries."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 6
+end = 6
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 31
+end = 31
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 45
+end = 45
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 58
+end = 58
+render = { kind = "full" }
+
+[[batches]]
+id = "4.3"
+descriptor = "matches-where.ts — exported entry point"
+justification = "`matchesWhere(obj, where)` is the predicate every list-GET filter goes through. The signature line plus the two tiny helpers (`isJSONObject`, `getKnownOperators`) make the recursive-match shape obvious without reading the body."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 7
+end = 7
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 11
+end = 11
+render = { pattern = "^[^(]+", kind = "truncated" }
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 24
+end = 24
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "parseWhere body (full)"
+justification = "Whole 12-line `parseWhere` function. Reveals: `URLSearchParams` is used to parse the query, each entry runs through `splitKey` and `setPathOp`, and unknown ops cause `continue` (filter is silently dropped — important debugging fact)."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 58
+end = 69
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "coerceValue body — string→primitive coercion rules"
+justification = "Documents how raw URL strings turn into typed values: `'true'`/`'false'` → bool, `'null'` → null, finite numeric → Number, else string. Non-obvious behavior that's easy to mis-guess; cheap to include in full."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/parse-where.ts"
+start = 45
+end = 56
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 5 — HTTP layer (app.ts wiring)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "5.1"
+descriptor = "app.ts — createApp signature + AppOptions"
+justification = "The single export that wires DB + tinyhttp into an `App`. Signature + the options shape (`logger?`, `static?: string[]`) make it clear what consumers pass. Plus the `RESERVED_QUERY_KEYS` constant that defines which `_*` params are intercepted vs forwarded to `parseWhere`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 18
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 28
+end = 28
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 94
+end = 94
+render = { kind = "full" }
+
+[[batches]]
+id = "5.2"
+descriptor = "app.ts — body-less route bindings (POST/PUT/PATCH/DELETE + GET /:name/:id)"
+justification = "Every HTTP→Service mapping that fits on one line: POST→create, PUT→update[ById], PATCH→patch[ById], DELETE→destroyById, plus the short GET-by-id handler. Catastrophic-omission hedge against missing a route or guessing the wrong service method. Splits the route table into manageable pieces; the GET-list handler + fallback land in 5.3/5.4."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 137
+end = 141
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 143
+end = 157
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "app.ts — GET / and GET /:name (list handler)"
+justification = "The two GET registrations that have non-trivial bodies. `GET /` calls `eta.render('index.html', { data: db.data })` (locates view rendering). `GET /:name` is the list handler that wires `parseListParams` → `service.find` — the entry point for every filter/sort/page request."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 121
+end = 121
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 123
+end = 135
+render = { kind = "full" }
+
+[[batches]]
+id = "5.4"
+descriptor = "app.ts — fallback handler (404 + POST→201)"
+justification = "`app.use('/:name', …)` runs after every route handler — emits `{ error: 'Not Found' }` with status 404 when `res.locals.data === undefined`, otherwise responds with 201 for POST and 200 for the rest. The mechanism behind both 404 responses and the POST status-code bump."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 159
+end = 167
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "parseListParams + with*-body middleware signatures"
+justification = "The three private helpers app.ts uses to glue express-style handlers to the typed Service API. `parseListParams(req)` is where every list-GET's query is unpacked into `{ where, sort, page, perPage, embed }` — important for debugging filter behavior. `withBody` and `withIdAndBody` enforce the `isItem(req.body)` check and emit the 400 'Body must be a JSON object' error."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 30
+end = 30
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 68
+end = 68
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 80
+end = 82
+render = { kind = "full" }
+
+[[batches]]
+id = "5.6"
+descriptor = "parseListParams body — _where override + page parsing"
+justification = "Full body. Shows the precedence rule: parsed query params become a where object via `parseWhere`, then `_where` (when present + valid JSON object) replaces it entirely. Also the page/perPage NaN-fallback handling. Refines 5.5."
+predecessor = "5.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 30
+end = 66
+render = { kind = "full" }
+
+[[batches]]
+id = "5.7"
+descriptor = "Middleware stack — sirv + cors + json"
+justification = "How requests get pre-processed: `sirv('public', …)` for static, then user-provided `-s` dirs (absolute-aware), then a CORS middleware that echoes `access-control-request-headers`, then `json()` body parser. Refines 5.1/5.2 — answers 'why is /test.html served?' and 'how does CORS work here?'"
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 101
+end = 119
+render = { kind = "full" }
+
+[[batches]]
+id = "5.8"
+descriptor = "app.ts imports — dependency surface"
+justification = "Every external dep this module pulls in: `@tinyhttp/app`, `@tinyhttp/cors`, `eta`, `lowdb`, `milliparsec` (the `json` body parser), `sirv`. Pairs with package.json to ground 'which library does what'. Cheap, high-signal for navigation."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/app.ts"
+start = 1
+end = 13
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 6 — CLI entry (bin.ts)
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "6.1"
+descriptor = "bin.ts shebang + imports"
+justification = "Confirms `#!/usr/bin/env node`, then every import: node:fs/path/url/util, chalk, chokidar, JSON5, lowdb (`Low`, `DataFile`/`JSONFile`), the two adapters, and `createApp`. Tells the agent where each behavior is wired without reading the whole file."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 1
+end = 19
+render = { kind = "full" }
+
+[[batches]]
+id = "6.2"
+descriptor = "bin.ts help text"
+justification = "The `--help` output as source — enumerates every CLI flag (`-p`/`--port`, `-h`/`--host`, `-s`/`--static`, `--help`, `--version`) with defaults. Catastrophic-omission hedge for 'what flags does the CLI accept' — leaving this out makes the agent guess from `parseArgs` config."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 21
+end = 31
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "bin.ts args() — parseArgs configuration"
+justification = "The `parseArgs({ options: { ... } })` block defines every CLI flag's type, short alias, default (incl. `PORT`/`HOST` env-var fallbacks), and exposes the deprecated `--watch` flag. Pairs with 6.2 to ground both the help text and the parseArgs schema."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 34
+end = 72
+render = { kind = "full" }
+
+[[batches]]
+id = "6.4"
+descriptor = "bin.ts — adapter selection + DB wiring"
+justification = "Where lowdb gets plugged in: `.json5` → `DataFile<RawData>` with JSON5 parse/stringify, else `JSONFile<RawData>`; both wrapped in `NormalizedAdapter` + `Observer`. Then `new Low<Data>(observer, {})` + `await db.read()` + `createApp(db, { logger: false, static: staticArr })`. The whole boot sequence in 30 lines."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 115
+end = 143
+render = { kind = "full" }
+
+[[batches]]
+id = "6.5"
+descriptor = "bin.ts — file watch + auto-reload"
+justification = "How json-server v1 watches `db.json` for external changes (no `--watch` flag needed): chokidar `.on('change')` triggers `db.read()`, with `Observer.onWriteStart`/`onWriteEnd` flags to skip reloads caused by the app's own writes. Hadn't been obvious from the README; one of the biggest behavior changes from v0."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 186
+end = 224
+render = { kind = "full" }
+
+[[batches]]
+id = "6.6"
+descriptor = "bin.ts — version + watch-deprecation handling"
+justification = "Two small but quirky branches inside `args()`: `--version` reads `../package.json` via `fileURLToPath(new URL('../package.json', import.meta.url))` (the only place the package's runtime version lookup happens), and `--watch/-w` prints a yellow deprecation note."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 74
+end = 95
+render = { kind = "full" }
+
+[[batches]]
+id = "6.7"
+descriptor = "bin.ts — logRoutes signature + app.listen entry"
+justification = "Where the startup banner gets emitted: `logRoutes(data: Data)` builds the `http://host:port/<resource>` list, and `app.listen(port, () => { ... logRoutes(db.data) })` is the actual server entry. Body of the banner array is decorative and omitted; the structure is what matters."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 145
+end = 145
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 165
+end = 165
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/bin.ts"
+start = 182
+end = 183
+render = { kind = "full" }
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 7 — Adapters, pagination, id, view template
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "7.1"
+descriptor = "normalized-adapter.ts — RawData type + class shape"
+justification = "RawData is the on-disk lowdb shape (allows `$schema` string + other `Item | Item[]`), Data is the in-memory shape (no `$schema`). The Normalized adapter strips `$schema` on read, coerces numeric `id`s to strings, fills missing ids via `randomId()`, and re-injects `$schema` on write. The id-normalization invariant the v1 migration notes promise."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/adapters/normalized-adapter.ts"
+start = 1
+end = 47
+render = { kind = "full" }
+
+[[batches]]
+id = "7.2"
+descriptor = "observer.ts — full file"
+justification = "The lowdb wrapper that exposes `onReadStart`/`onReadEnd`/`onWriteStart`/`onWriteEnd` hooks (36 lines total). Used by `bin.ts` to suppress chokidar reloads during app-initiated writes and to log endpoint changes when the file is edited externally."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/adapters/observer.ts"
+start = 1
+end = 36
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "paginate.ts — full file"
+justification = "Only 38 lines; defines `PaginationResult<T>` shape (matches the README pagination response 1:1) and `paginate(items, page, perPage)` with clamp behavior: `perPage ≤ 0` → `1`, `pages = max(1, ceil(total/perPage))`, page clamped to `[1, pages]`. Answers paginate-edge-case questions in zero hops."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/paginate.ts"
+start = 1
+end = 38
+render = { kind = "full" }
+
+[[batches]]
+id = "7.4"
+descriptor = "random-id.ts — full file"
+justification = "Five lines. Says `id = randomBytes(8).toString('base64url')`. Answers 'what shape are auto-generated ids?' (~11-char base64url) instantly."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/random-id.ts"
+start = 1
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "7.5"
+descriptor = "views/index.html — Eta resource-list block"
+justification = "The Eta loop rendered at `GET /`: pulls `Object.entries(it.data)`, prints each resource as `<a href=\"/name\">` with an item-count meta tag for arrays or the literal `object` for singletons, and shows a 'create public/index.html to replace' footer hint. (CSS-only header skipped — it's pure styling.)"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "views/index.html"
+start = 114
+end = 114
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "views/index.html"
+start = 124
+end = 142
+render = { kind = "full" }
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Tier 8 — Internals, configs, body fragments
+# ─────────────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "8.1"
+descriptor = "package.json scripts"
+justification = "The `dev`/`build`/`typecheck`/`test`/`lint`/`fmt` script definitions. `test` uses `node --experimental-strip-types --test src/*.test.ts` — no jest/vitest. `dev` runs `bin.ts` against `fixtures/db.json`. Catches any agent that would otherwise propose `npm run test:unit`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 35
+end = 45
+render = { kind = "full" }
+
+[[batches]]
+id = "8.2"
+descriptor = "package.json runtime dependencies"
+justification = "Names + version ranges for every runtime dep: `@tinyhttp/app`/`cors`/`logger`, `chalk`, `chokidar`, `dot-prop`, `eta`, `inflection`, `json5`, `lowdb`, `milliparsec`, `sirv`, `sort-on`. Catastrophic-omission hedge — pairs with the per-module imports."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 46
+end = 60
+render = { kind = "full" }
+
+[[batches]]
+id = "8.3"
+descriptor = "tsconfig.json — full"
+justification = "All 14 lines. Notable: `target: esnext`, `module: nodenext`, `strict: true`, `allowImportingTsExtensions`/`rewriteRelativeImportExtensions` (why source uses `./service.ts` imports), `erasableSyntaxOnly`, `verbatimModuleSyntax`, and `exclude: ['src/**/*.test.ts']`."
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "tsconfig.json"
+start = 1
+end = 14
+render = { kind = "full" }
+
+[[batches]]
+id = "8.4"
+descriptor = "Remaining content directories — fixtures / .github / .husky / public"
+justification = "The non-source content directories listed exhaustively: `fixtures/db.json` + `db.json5` (sample DBs the `dev` script runs against), `.github/workflows/{node.js.yml, publish.yml}` (CI + npm release), `.husky/pre-commit` (test gate), `public/test.html` (proof of static-serving). Tiny but mitigates catastrophic-omission for 'what else is in the repo'."
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "fixtures"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+[[batches.content.groups]]
+parent = ".husky"
+entries = "all"
+[[batches.content.groups]]
+parent = "public"
+entries = "all"
+
+[[batches]]
+id = "8.5"
+descriptor = "service.ts — find body (filter/sort/page pipeline)"
+justification = "Order of operations inside `find`: `embed` first, then `matchesWhere` filter, then `sortOn(opts.sort.split(','))`, finally `paginate` if `page !== undefined`. Locks in the exact pipeline order — easy to get wrong otherwise."
+predecessor = "3.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 110
+end = 143
+render = { kind = "full" }
+
+[[batches]]
+id = "8.6"
+descriptor = "service.ts — destroyById body (FK nullify + dependent cascade)"
+justification = "The exact destroy semantics: splice the item, then `nullifyForeignKey` zeroes `<name>Id` on every other resource by default, and `deleteDependents` further removes named dependents. Critical for understanding `DELETE /:name/:id?_dependent=…`."
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/service.ts"
+start = 202
+end = 222
+render = { kind = "full" }
+
+[[batches]]
+id = "8.7"
+descriptor = "matchesWhere body — operator dispatch core"
+justification = "The middle of `matchesWhere`: when a value is an object with known ops, each operator gets a hard-coded comparator (lt/lte/gt/gte/eq/ne use raw JS `<`/`<=` cast to any; `in` array-membership; `contains/startsWith/endsWith` are case-insensitive string ops with non-string short-circuit). Answers the most common 'why is my filter wrong' questions."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 43
+end = 73
+render = { kind = "full" }
+
+
+[[batches]]
+id = "8.8"
+descriptor = "matchesWhere body — `or` + recursion fallback"
+justification = "The two non-operator code paths: `or: [...]` short-circuits to OR-semantics across sub-wheres; otherwise an object value with no known ops recurses into nested fields; a leaf undefined returns false. Smaller and load-bears the `or` semantics that the README only mentions in passing."
+predecessor = "4.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 24
+end = 42
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "src/matches-where.ts"
+start = 74
+end = 88
+render = { kind = "full" }

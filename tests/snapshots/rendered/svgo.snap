@@ -1,0 +1,377 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.gitattributes
+.github/
+    ISSUE_TEMPLATE/
+        bug_report.md
+        config.yml
+        feature_request.md
+        plugin_request.md
+    dependabot.yml
+    workflows/
+        ci.yml
+        codeql.yml
+        publish.yml
+        regression.yml
+        test-report.yml
+.gitignore
+.prettierignore
+.prettierrc
+    1→{
+    2→  "singleQuote": true
+    3→}
+.yarn/
+    patches/
+        sax-npm-1.5.0-d40bca2226.patch
+    plugins/
+        @yarnpkg/
+            plugin-interactive-tools.cjs
+.yarnrc.yml
+CONTRIBUTING.md
+LICENSE
+README.md
+    5→# SVGO…
+    7→SVGO, short for **SVG O**ptimizer, is a Node.js library and command-line application for optimizing SVG files.
+    9→## Why?
+    …
+    11→SVG files, especially those exported from vector editors, usually contain a lot of redundant information. This includes editor metadata, comments, hidden elements, default or suboptimal values, and other stuff that can be safely removed or converted without impacting rendering.
+    13→## Installation
+    …
+    15→You can install SVGO globally through npm, yarn, or pnpm. Alternatively, drop the global flag (`global`/`-g`) to use it in your Node.js project.
+    17→```sh
+    18→# npm
+    19→npm install -g svgo
+    21→# yarn
+    22→yarn global add svgo
+    24→# pnpm
+    25→pnpm add -g svgo
+    26→```
+    28→## Command-line usage
+    …
+    30→Process single files:
+    32→```sh
+    33→svgo one.svg two.svg -o one.min.svg two.min.svg
+    34→```
+    36→Process a directory of files recursively with `-r`/`--recursive` and `-f`/`--folder`:
+    38→```sh
+    39→svgo -rf path/to/directory_with_svgs -o path/to/output_directory
+    40→```
+    42→Help for advanced usage:
+    44→```sh
+    45→svgo --help
+    46→```
+    48→## Configuration
+    …
+    79→### Default preset
+    …
+    81→Instead of configuring SVGO from scratch, you can tweak the default preset to suit your needs by configuring or disabling the respective plugin.
+    106→You can find a list of the default plugins in the order they run in [Preset Default | SVGO Documentation](https://svgo.dev/docs/preset-default/#plugins-list).
+    108→### Custom plugins
+    …
+    110→You can also specify custom plugins:
+    134→## API usage
+    …
+    136→SVGO provides a few low level utilities.
+    138→### optimize
+    …
+    153→### loadConfig
+    …
+    169→## Donors
+    …
+    171→| [<img src="https://sheetjs.com/sketch128.png" width="80">](https://sheetjs.com/) | [<img src="https://raw.githubusercontent.com/fontello/fontello/8.0.0/fontello-image.svg" width="80">](https://fontello.com/) |
+    172→| :------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------: |
+    173→|                       [SheetJS LLC](https://sheetjs.com/)                        |                                              [Fontello](https://fontello.com/)                                               |
+    175→## License and Copyright
+    …
+    177→This software is released under the terms of the [MIT license](https://github.com/svg/svgo/blob/main/LICENSE).
+    179→Logo by [André Castillo](https://github.com/DerianAndre).
+bin/
+    svgo.js
+cspell.jsonc
+docs/
+    01-index.mdx
+    02-usage/
+        01-node.mdx
+        02-browser.mdx
+        index.mdx
+    03-preset-default.mdx
+    04-plugins/
+    05-plugins-api.mdx
+    06-migrations/
+        01-migration-from-v3-to-v4.mdx
+        02-migration-from-v2-to-v3.mdx
+        _category_.json
+            1→{
+            2→  "label": "Migrations"
+            3→}
+eslint.config.mjs
+lib/
+    builtin.js
+        62→export const builtinPlugins = Object.freeze([
+        …
+    parser.js
+        4→export class SvgoParserError extends Error {
+        …
+        12→  constructor(message, line, column, source, file) {
+        …
+        25→  toString() {
+        …
+        80→export const parseSvg = (data, from) => {
+        …
+    parser.test.js
+    path.js
+        141→export const parsePathData = (string) => {
+        …
+        302→export const stringifyPathData = ({
+        303→  pathData,
+        304→  precision,
+        305→  disableSpaceAfterFlags,
+        306→}) => {
+        …
+    path.test.js
+    stringifier.js
+        66→export const stringifySvg = (data, userOptions = {}) => {
+        …
+    style.js
+        195→export const compareSpecificity = (a, b) => {
+        …
+        211→export const collectStylesheet = (root) => {
+        …
+        253→export const computeStyle = (stylesheet, node) => {
+        …
+        286→export const includesAttrSelector = (
+        287→  selector,
+        288→  name,
+        289→  value = null,
+        290→  traversed = false,
+        291→) => {
+        …
+    style.test.js
+    svgo/
+        coa.js
+            19→export function checkIsDir(filePath) {
+            …
+            30→export default function makeProgram(program) {
+            …
+        css-select-adapter.js
+            78→export function createAdapter(relativeNode, parents) {
+            …
+        plugins.js
+            14→export const invokePlugins = (
+            …
+            40→export const createPreset = ({ name, plugins }) => {
+            …
+        tools.js
+    svgo-node.js
+        44→export const loadConfig = async (configFile, cwd = process.cwd()) => {
+        …
+        83→export const optimize = (input, config) => {
+        …
+    svgo-node.test.js
+    svgo.js
+        81→export const optimize = (input, config) => {
+        …
+        136→export {
+        137→  VERSION,
+        138→  builtinPlugins,
+        139→  mapNodesToParents,
+        140→  querySelector,
+        141→  querySelectorAll,
+        142→  _collections,
+        143→};
+    svgo.test.js
+    types.js
+        1→export default {};
+    types.ts
+    util/
+        map-nodes-to-parents.js
+            9→export function mapNodesToParents(node) {
+            …
+        visit.js
+            1→export const visitSkip = Symbol();
+            …
+            8→export const visit = (node, visitor, parentNode) => {
+            …
+    version.js
+        7→export const VERSION = '4.0.1';
+    xast.js
+    xast.test.js
+logo/
+    isotype-white.svg
+    isotype.svg
+    logo-web.svg
+    logo-white.svg
+    logo.svg
+package.json
+    3→  "name": "svgo",
+    4→  "version": "4.0.1",
+    5→  "description": "SVGO is a Node.js library and command-line application for optimizing vector images.",
+    6→  "license": "MIT",
+    7→  "type": "module",
+    8→  "keywords": [
+    9→    "svgo",
+    10→    "svg",
+    11→    "optimize",
+    12→    "minify"
+    13→  ],
+    14→  "homepage": "https://svgo.dev",
+    15→  "bugs": {
+    16→    "url": "https://github.com/svg/svgo/issues"
+    17→  },
+    18→  "author": {
+    19→    "name": "Kir Belevich",
+    20→    "email": "kir@belevi.ch",
+    21→    "url": "https://github.com/deepsweet"
+    22→  },
+    23→  "contributors": [
+    24→    {
+    25→      "name": "Sergey Belov",
+    26→      "email": "peimei@ya.ru",
+    27→      "url": "https://github.com/arikon"
+    28→    },
+    29→    {
+    30→      "name": "Lev Solntsev",
+    31→      "email": "lev.sun@ya.ru",
+    32→      "url": "https://github.com/GreLI"
+    33→    },
+    34→    {
+    35→      "name": "Bogdan Chadkin",
+    36→      "email": "trysound@yandex.ru",
+    37→      "url": "https://github.com/TrySound"
+    38→    },
+    39→    {
+    40→      "name": "Seth Falco",
+    41→      "email": "seth@falco.fun",
+    42→      "url": "https://falco.fun/"
+    43→    }
+    44→  ],
+    45→  "repository": {
+    46→    "type": "git",
+    47→    "url": "git://github.com/svg/svgo.git"
+    48→  },
+    49→  "funding": {
+    50→    "type": "opencollective",
+    51→    "url": "https://opencollective.com/svgo"
+    52→  },
+plugins/
+    _collections.js
+    _path.js
+    _transforms.js
+    addAttributesToSVGElement.js
+    addClassesToSVGElement.js
+    applyTransforms.js
+    cleanupAttrs.js
+    cleanupEnableBackground.js
+    cleanupIds.js
+    cleanupListOfValues.js
+    cleanupNumericValues.js
+    collapseGroups.js
+    convertColors.js
+    convertEllipseToCircle.js
+    convertOneStopGradients.js
+    convertPathData.js
+    convertShapeToPath.js
+    convertStyleToAttrs.js
+    convertTransform.js
+    inlineStyles.js
+    mergePaths.js
+    mergeStyles.js
+    minifyStyles.js
+    moveElemsAttrsToGroup.js
+    moveGroupAttrsToElems.js
+    prefixIds.js
+    preset-default.js
+    removeAttributesBySelector.js
+    removeAttrs.js
+    removeComments.js
+    removeDeprecatedAttrs.js
+    removeDesc.js
+    removeDimensions.js
+    removeDoctype.js
+    removeEditorsNSData.js
+    removeElementsByAttr.js
+    removeEmptyAttrs.js
+    removeEmptyContainers.js
+    removeEmptyText.js
+    removeHiddenElems.js
+    removeMetadata.js
+    removeNonInheritableGroupAttrs.js
+    removeOffCanvasPaths.js
+    removeRasterImages.js
+    removeScripts.js
+    removeStyleElement.js
+    removeTitle.js
+    removeUnknownsAndDefaults.js
+    removeUnusedNS.js
+    removeUselessDefs.js
+    removeUselessStrokeAndFill.js
+    removeViewBox.js
+    removeXMLNS.js
+    removeXMLProcInst.js
+    removeXlink.js
+    reusePaths.js
+    sortAttrs.js
+    sortDefsChildren.js
+rollup.config.js
+scripts/
+    sync-version.js
+test/
+    browser.js
+    cli/
+    coa/
+    fixtures/
+        config-loader/
+            cjs/
+            invalid-array.js
+            invalid-null.js
+            invalid-runtime.js
+            invalid-runtime.mjs
+            invalid-string.js
+            mjs/
+            module-not-found.js
+            one/
+            svgo.config.js
+    plugins/
+    regression/
+        compare.js
+        delta.js
+        extract.js
+        file-lists.js
+        lib.js
+        lists/
+        optimize.js
+        regression-io.js
+    svg2js/
+    svgo/
+    svgo.cjs
+test-d/
+    lib/
+        svgo-node.test-d.ts
+tsconfig.build.json
+tsconfig.json
+    1→{
+    2→  "compilerOptions": {
+    3→    "noEmit": true,
+    4→    "module": "node16",
+    5→    "target": "es2021",
+    6→    "lib": ["es2021"],
+    7→    "allowJs": true,
+    8→    "checkJs": true,
+    9→    "strict": true,
+    10→    "resolveJsonModule": true,
+    11→    "skipLibCheck": true
+    12→  },
+    13→  "exclude": [
+    14→    ".yarn/",
+    15→    "coverage/",
+    16→    "dist/",
+    17→    "node_modules/",
+    18→    "rollup.config.js",
+    19→    "test-d/",
+    20→    "test/browser.js",
+    21→    "test/svgo.cjs"
+    22→  ]
+    23→}
+yarn.lock

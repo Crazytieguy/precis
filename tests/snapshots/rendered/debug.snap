@@ -1,0 +1,243 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.editorconfig
+.gitignore
+    1→.DS_Store
+    2→node_modules/
+    3→*.sock
+    4→/build/
+    5→npm-debug.log
+    6→yarn-error.log
+    7→/dist/
+    8→/coverage/
+    10→# lockfiles
+    11→yarn.lock
+    12→package-lock.json
+.travis.yml
+LICENSE
+README.md
+    1→# debug
+    7→A tiny JavaScript debugging utility modelled after Node.js core's debugging
+    8→technique. Works in Node.js and web browsers.
+    10→## Installation
+    …
+    12→```bash
+    13→$ npm install debug
+    14→```
+    16→## Usage
+    …
+    110→## Namespace Colors
+    …
+    112→Every debug instance has a color generated for it based on its namespace name.
+    113→This helps when visually parsing the debug output to identify which debug instance
+    114→a debug line belongs to.
+    116→#### Node.js
+    118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
+    119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
+    120→otherwise debug will only use a small handful of basic colors.
+    122→<img width="521" src="https://user-images.githubusercontent.com/71256/29092181-47f6a9e6-7c3a-11e7-9a14-1928d8a711cd.png">
+    124→#### Web Browser
+    126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
+    127→option. These are WebKit web inspectors, Firefox ([since version
+    128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
+    129→and the Firebug plugin for Firefox (any version).
+    131→<img width="524" src="https://user-images.githubusercontent.com/71256/29092033-b65f9f2e-7c39-11e7-8e32-f6f0d8e865c1.png">
+    134→## Millisecond diff
+    …
+    136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
+    138→<img width="647" src="https://user-images.githubusercontent.com/71256/29091486-fa38524c-7c37-11e7-895f-e7ec8e1039b6.png">
+    140→When stdout is not a TTY, `Date#toISOString()` is used, making it more useful for logging the debug information as shown below:
+    142→<img width="647" src="https://user-images.githubusercontent.com/71256/29091956-6bd78372-7c39-11e7-8c55-c948396d6edd.png">
+    145→## Conventions
+    …
+    147→If you're using this in one or more of your libraries, you _should_ use the name of your library so that developers may toggle debugging as desired without guessing names. If you have more than one debuggers you _should_ prefix them with your library name and use ":" to separate features. For example "bodyParser" from Connect would then be "connect:bodyParser".  If you append a "*" to the end of your name, it will always be enabled regardless of the setting of the DEBUG environment variable.  You can then use it for normal output as well as debug output.
+    149→## Wildcards
+    …
+    151→The `*` character may be used as a wildcard. Suppose for example your library has
+    152→debuggers named "connect:bodyParser", "connect:compress", "connect:session",
+    153→instead of listing all three with
+    154→`DEBUG=connect:bodyParser,connect:compress,connect:session`, you may simply do
+    155→`DEBUG=connect:*`, or to run everything using this module simply use `DEBUG=*`.
+    157→You can also exclude specific debuggers by prefixing them with a "-" character.
+    158→For example, `DEBUG=*,-connect:*` would include all debuggers except those
+    159→starting with "connect:".
+    161→## Environment Variables
+    …
+    163→When running through Node.js, you can set a few environment variables that will
+    164→change the behavior of the debug logging:
+    166→| Name      | Purpose                                         |
+    167→|-----------|-------------------------------------------------|
+    168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
+    169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
+    170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
+    171→| `DEBUG_DEPTH` | Object inspection depth.                    |
+    172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
+    175→__Note:__ The environment variables beginning with `DEBUG_` end up being
+    176→converted into an Options object that gets used with `%o`/`%O` formatters.
+    177→See the Node.js documentation for
+    178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
+    179→for the complete list.
+    181→## Formatters
+    …
+    196→### Custom formatters
+    …
+    215→## Browser Support
+    …
+    248→## Output streams
+    …
+    274→## Extend
+    275→You can simply extend debugger 
+    276→```js
+    277→const log = require('debug')('auth');
+    279→//creates new debug instance with extended namespace
+    280→const logSign = log.extend('sign');
+    281→const logLogin = log.extend('login');
+    283→log('hello'); // auth hello
+    284→logSign('hello'); //auth:sign hello
+    285→logLogin('hello'); //auth:login hello
+    286→```
+    288→## Set dynamically
+    …
+    341→## Checking whether a debug target is enabled
+    …
+    343→After you've created a debug instance, you can determine whether or not it is
+    344→enabled by checking the `enabled` property:
+    346→```javascript
+    347→const debug = require('debug')('http');
+    349→if (debug.enabled) {
+    350→  // do stuff...
+    351→}
+    352→```
+    354→You can also manually toggle this property to force the debug instance to be
+    355→enabled or disabled.
+    357→## Usage in child processes
+    …
+    359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
+    360→For example:
+    362→```javascript
+    363→worker = fork(WORKER_WRAP_PATH, [workerPath], {
+    364→  stdio: [
+    365→    /* stdin: */ 0,
+    366→    /* stdout: */ 'pipe',
+    367→    /* stderr: */ 'pipe',
+    368→    'ipc',
+    369→  ],
+    370→  env: Object.assign({}, process.env, {
+    371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
+    372→  }),
+    373→});
+    375→worker.stderr.pipe(process.stderr, { end: false });
+    376→```
+    379→## Authors
+    …
+    381→ - TJ Holowaychuk
+    382→ - Nathan Rajlich
+    383→ - Andrew Rhyne
+    384→ - Josh Junon
+    386→## Backers
+    …
+    422→## Sponsors
+    …
+    457→## License
+    …
+karma.conf.js
+    1→module.exports = function (config) {
+    …
+package.json
+    2→  "name": "debug",
+    3→  "version": "4.4.3",
+    4→  "repository": {
+    5→    "type": "git",
+    6→    "url": "https://github.com/debug-js/debug.git"
+    7→  },
+    8→  "description": "Lightweight debugging utility for Node.js and the browser",
+    9→  "keywords": [
+    10→    "debug",
+    11→    "log",
+    12→    "debugger"
+    13→  ],
+    14→  "files": [
+    15→    "src",
+    16→    "LICENSE",
+    17→    "README.md"
+    18→  ],
+    19→  "author": "Josh Junon (https://github.com/qix-)",
+    20→  "contributors": [
+    21→    "TJ Holowaychuk <tj@vision-media.ca>",
+    22→    "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io)",
+    23→    "Andrew Rhyne <rhyneandrew@gmail.com>"
+    24→  ],
+    25→  "license": "MIT",
+    26→  "scripts": {
+    27→    "lint": "xo",
+    28→    "test": "npm run test:node && npm run test:browser && npm run lint",
+    29→    "test:node": "mocha test.js test.node.js",
+    30→    "test:browser": "karma start --single-run",
+    31→    "test:coverage": "cat ./coverage/lcov.info | coveralls"
+    32→  },
+    33→  "dependencies": {
+    34→    "ms": "^2.1.3"
+    35→  },
+    36→  "devDependencies": {
+    37→    "brfs": "^2.0.1",
+    38→    "browserify": "^16.2.3",
+    39→    "coveralls": "^3.0.2",
+    40→    "karma": "^3.1.4",
+    41→    "karma-browserify": "^6.0.0",
+    42→    "karma-chrome-launcher": "^2.2.0",
+    43→    "karma-mocha": "^1.3.0",
+    44→    "mocha": "^5.2.0",
+    45→    "mocha-lcov-reporter": "^1.2.0",
+    46→    "sinon": "^14.0.0",
+    47→    "xo": "^0.23.0"
+    48→  },
+    49→  "peerDependenciesMeta": {
+    50→    "supports-color": {
+    51→      "optional": true
+    52→    }
+    53→  },
+    54→  "main": "./src/index.js",
+    55→  "browser": "./src/browser.js",
+    56→  "engines": {
+    57→    "node": ">=6.0"
+    58→  },
+src/
+    browser.js
+        258→module.exports = require('./common')(exports);
+        …
+    common.js
+        7→function setup(env) {
+        …
+        292→module.exports = setup;
+    index.js
+        1→/**
+        2→ * Detect Electron renderer / nwjs process, which is node, but we should
+        3→ * treat as a browser.
+        4→ */
+    node.js
+        5→const tty = require('tty');
+        6→const util = require('util');
+        203→function save(namespaces) {
+        204→	if (namespaces) {
+        205→		process.env.DEBUG = namespaces;
+        206→	} else {
+        207→		// If you set a process.env field to null or undefined, it gets cast to the
+        208→		// string 'null' or 'undefined'. Just delete instead.
+        209→		delete process.env.DEBUG;
+        210→	}
+        220→function load() {
+        …
+        231→function init(debug) {
+        …
+        240→module.exports = require('./common')(exports);
+        …
+test.js
+    3→const assert = require('assert');
+    4→const debug = require('./src');
+test.node.js
+    3→const assert = require('assert');
+    4→const util = require('util');
+    5→const sinon = require('sinon');
+    6→const debug = require('./src/node');

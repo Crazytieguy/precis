@@ -1,0 +1,656 @@
+fixture = "act"
+revision_pin = "123167dc"
+summary = """
+`act` is a Go CLI (`nektos/act`) that runs GitHub Actions workflows
+locally by parsing `.github/workflows/*.yml`, building an execution
+plan, and using the Docker API (or a host-environment shim) to run
+containers for each job. The CLI in `cmd/` parses flags into an
+`Input`, lets the user `--list`/`--graph`/`--validate` or actually
+run; the run path constructs a `runner.Config`, calls
+`runner.New(...).NewPlanExecutor(plan)`, and serves an artifact and
+cache server alongside the job containers.
+
+The internals are spread over `pkg/`: `model/` parses workflow YAML
+into `Workflow`/`Job`/`Step` and computes a `Plan` of `Stage`s of
+parallel `Run`s; `runner/` is the execution engine — `runner.go`
+walks the plan, `run_context.go` holds per-job state (env, matrix,
+container, expression evaluator), `job_executor.go` chains pre/main/
+post step executors, and `step_factory.go` dispatches per step kind
+to `step_run.go`, `step_docker.go`, `step_action_local.go`,
+`step_action_remote.go`. The whole codebase composes via the
+`common.Executor` type — a `func(ctx) error` with `Then`/`Finally`/
+`OnError`/`If` combinators and `NewPipelineExecutor`/
+`NewParallelExecutor` constructors in `pkg/common/executor.go`.
+
+The query distribution this NS serves: explaining what act is and
+how it runs a workflow; locating where a CLI flag is parsed and
+threaded into runtime; finding where a specific `step.uses` shape
+(local action / remote action / docker-url / reusable workflow) is
+dispatched; finding `${{ }}` expression-language behaviour;
+locating where step types, action types, matrix expansion, services,
+or the action cache live; debugging the docker / host-env split.
+"""
+
+# ============================================================
+# Tier 1 — repo-level orientation
+# Top-level listings + the project's own self-description.
+# Even a tiny budget should answer "what is this and how is it
+# organised?" with file pointers.
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README tagline + one-line pitch"
+justification = """
+Tagline ("Think globally, `act` locally") plus the single
+introductory sentence that says what act does. Tiny lead-in,
+budget-friendly.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
+    { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Module name + Go version"
+justification = """
+`go.mod` first three lines — module path `github.com/nektos/act`
+(the import root used in every package's import statements) and
+required Go 1.25. Tiny batch, lands before the larger listings to
+keep the growth envelope happy.
+"""
+content = { kind = "lines", spans = [
+    { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "pkg/ subpackage listing"
+justification = """
+Enumerates the 12 sub-packages under `pkg/`: `model`, `runner`,
+`container`, `common`, `exprparser`, `artifacts`, `artifactcache`,
+`filecollector`, `gh`, `lookpath`, `schema`, `workflowpattern`.
+Each name is a domain hint; the agent can grep into any of them
+without exploration.
+"""
+content = { kind = "fs", groups = [
+    { parent = "pkg", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "cmd/ file listing"
+justification = """
+Lists `root.go` (huge — flag definitions), `input.go`, `list.go`,
+`graph.go`, `notices.go`, `secrets.go`, `platforms.go`, `dir.go`,
+plus test files. Catastrophic-omission hedge for the CLI surface.
+"""
+content = { kind = "fs", groups = [
+    { parent = "cmd", entries = "all" },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "Repo root file listing"
+justification = """
+Single-glance map of the repo: shows `cmd/`, `pkg/`, `main.go`,
+`Makefile`, `go.mod`/`go.sum`, `.github/`, build/lint configs,
+`CLAUDE.md`, `CONTRIBUTING.md`, `IMAGES.md`, `install.sh` exist
+so the agent can grep them by name later. `all` sentinel —
+mitigates catastrophic omission at the top level.
+"""
+content = { kind = "fs", groups = [
+    { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "main.go entry point (full)"
+justification = """
+19-line file pulled whole: `main` builds a graceful-cancel context
+via `common.CreateGracefulJobCancellationContext` and calls
+`cmd.Execute(ctx, version)` with the version embedded from the
+`VERSION` file. Pins the entry path with no follow-up needed.
+"""
+content = { kind = "lines", spans = [
+    { path = "main.go", start = 1, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "CLAUDE.md architecture: execution flow"
+justification = """
+Hand-curated numbered flow naming the load-bearing files for each
+stage: `cmd/root.go` (CLI / Cobra flag parsing), `pkg/model/
+planner.go` (Plan/Stage/Run), `pkg/runner/runner.go` (Plan →
+Executor), `pkg/runner/run_context.go` (per-job state),
+`pkg/runner/step.go` (step interface). Five named file pointers in
+~9 lines — the highest-density orientation in the whole repo.
+"""
+content = { kind = "lines", spans = [
+    { path = "CLAUDE.md", start = 20, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "CLAUDE.md: Executor pattern + combinators"
+justification = """
+Names `pkg/common/executor.go` and lists the Executor combinators
+(`.Then()`, `.Finally()`, `.OnError()`, `NewPipelineExecutor`,
+`NewParallelExecutor`, `.If()`, `.IfNot()`).
+"""
+content = { kind = "lines", spans = [
+    { path = "CLAUDE.md", start = 30, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "CLAUDE.md: Key Packages"
+justification = """
+Per-package one-line summaries: `pkg/model/` (YAML parsing, plan
+creation, action defs), `pkg/runner/` (engine, expressions, step
+types), `pkg/container/` (Docker API wrapper, host env),
+`pkg/common/` (Executor, context, logging), `pkg/exprparser/`
+(`${{ }}` interpreter), `pkg/artifacts/` + `pkg/artifactcache/`
+(servers).
+"""
+content = { kind = "lines", spans = [
+    { path = "CLAUDE.md", start = 39, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "CLAUDE.md: build/test commands"
+justification = """
+`make build`, `make test`, `make lint-go`, `make format`, `make
+tidy`, `make pr` plus the `go test ./pkg/runner/...` and `-run
+TestRunEvent` patterns. Zero follow-up for "how do I run a single
+test in this repo".
+"""
+content = { kind = "lines", spans = [
+    { path = "CLAUDE.md", start = 9, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "README rationale bullets (Fast Feedback / Local Task Runner)"
+justification = """
+The two-bullet "why use act" — *Fast Feedback* (run actions
+locally instead of commit+push) and *Local Task Runner* (replace
+Makefile with workflows). Heavier than the lede because each
+bullet has multiple embedded URLs, so deferred to here.
+"""
+content = { kind = "lines", spans = [
+    { path = "README.md", start = 9, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "CLAUDE.md: linting + testing rules"
+justification = """
+Lint/test conventions — `errors` not `pkg/errors`, `logrus` as
+`log`, `testify/assert`, max cyclomatic 20, test fixtures in
+`testdata/` next to packages, `pkg/runner/testdata/` holds
+integration workflow fixtures.
+"""
+content = { kind = "lines", spans = [
+    { path = "CLAUDE.md", start = 48, end = 63, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 2 — core domain types & the Executor abstraction
+# Defines the data the runner moves around (Plan/Stage/Run,
+# Workflow/Job/Step, Action) and the Executor primitive every
+# package threads through. After this tier the agent can read
+# any signature in the codebase without confusion.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "common.Executor type + Conditional"
+justification = """
+The single most-named type in the codebase. Defines `Executor
+func(ctx context.Context) error` and `Conditional func(ctx) bool`.
+Every function in `pkg/runner/` returns or composes Executors.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/common/executor.go", start = 29, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "Plan / Stage / Run types"
+justification = """
+The output of the planner and the input of the runner. `Plan` is
+a list of `Stage`s (serial); each `Stage` holds `Run`s (parallel
+jobs); each `Run` is `{Workflow, JobID}`.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/planner.go", start = 24, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Workflow struct + YAML tags"
+justification = """
+Top-level YAML shape: `File`, `Name`, `RawOn`, `Env`, `Jobs`
+(map by jobID), `Defaults`. Tags let the agent map workflow files
+to fields without reading `UnmarshalYAML`.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 18, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "WorkflowPlanner interface"
+justification = """
+The CLI talks to the planner through this 4-method interface:
+`PlanEvent(eventName)`, `PlanJob(jobName)`, `PlanAll()`,
+`GetEvents()`. Drives --list / --graph / running.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/planner.go", start = 16, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Step struct (YAML fields)"
+justification = """
+Step YAML shape: `ID`, `If`, `Name`, `Uses`, `Run`,
+`WorkingDirectory`, `WorkflowShell` (computed, not YAML-tagged),
+`Shell`, `Env`, `With`, `RawContinueOnError`, `TimeoutMinutes`.
+The Uses/Run pair is the discriminator for step-type dispatch.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 568, end = 583, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Job struct (YAML fields)"
+justification = """
+The Job YAML shape — `RawNeeds`, `RawRunsOn`, `Env`, `If`,
+`Steps`, `TimeoutMinutes`, `Services`, `Strategy`, `RawContainer`,
+`Defaults`, `Outputs`, `Uses` (reusable workflow), `With`,
+`RawSecrets`, computed `Result`. After this batch "where does
+field X come from" maps directly to its YAML tag.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 195, end = 213, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Strategy + Defaults + RunDefaults"
+justification = """
+Matrix strategy (`FailFast`, `MaxParallel`, `RawMatrix`) and the
+defaults block (`Run.Shell`, `Run.WorkingDirectory`) that apply
+to all steps in a job or workflow.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 216, end = 233, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "ContainerSpec (services / container YAML)"
+justification = """
+The `services:` / `container:` YAML shape — `Image`, `Env`,
+`Ports`, `Volumes`, `Options`, `Credentials`, plus runtime-set
+`Entrypoint`/`Args`/`Name`/`Reuse`.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 554, end = 566, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "JobType enum constants"
+justification = """
+4-variant `JobType`: `JobTypeDefault`, `JobTypeReusableWorkflow
+Local`, `JobTypeReusableWorkflowRemote`, `JobTypeInvalid`. Used
+by `RunContext.Executor()` to pick between `newJobExecutor` and
+the reusable-workflow executors. Enum body only; `Job.Type()`
+dispatch comes later.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 500, end = 515, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "StepType enum constants"
+justification = """
+The 7-variant `StepType` discriminator threaded through
+`stepFactoryImpl.newStep`: `StepTypeRun`, `StepTypeUsesDocker
+URL`, `StepTypeUsesActionLocal`, `StepTypeUsesActionRemote`,
+`StepTypeReusableWorkflowLocal`, `StepTypeReusableWorkflowRemote`,
+`StepTypeInvalid`. Catastrophic-omission hedge: any step kind
+the agent reasons about must appear here in full.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 644, end = 668, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Step.Type() dispatch body"
+justification = """
+The actual `uses:` / `run:` classifier that produces a `StepType`
+— `docker://` prefix → DockerURL, `./.github/workflows` →
+ReusableWorkflowLocal, `*/.github/workflows/*@*` →
+ReusableWorkflowRemote, `./` → ActionLocal, otherwise
+ActionRemote. The behavioural ground truth for "what kind of
+step is this".
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 690, end = 711, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "ActionRunsUsing constants (node12/16/20/24, docker, composite)"
+justification = """
+Enumerates every `runs.using:` value the runner knows: node12,
+node16, node20, node24, docker, composite. Plus `IsNode()` /
+`IsDocker()` / `IsComposite()` predicates. The dispatch keys used
+by `runActionImpl` to pick a backend.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/action.go", start = 39, end = 69, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "Action + ActionRuns structs"
+justification = """
+The shape of `action.yml`: `ActionRuns` holds `Using`, `Env`,
+`Main`/`Pre`/`Post`, `PreIf`/`PostIf`, `Image`, `PreEntrypoint`/
+`Entrypoint`/`PostEntrypoint`, `Args`, `Steps`. `Action` itself:
+`Name`, `Author`, `Description`, `Inputs`, `Outputs`, `Runs`,
+`Branding`. Together they're the file the action loader produces.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/action.go", start = 71, end = 100, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.14"
+descriptor = "Action Input + Output + ReadAction"
+justification = """
+`Input` (description, required, default) and `Output`
+(description, value) — fields under `inputs:` / `outputs:` in
+action.yml. Plus `ReadAction`, the entry point that parses the
+file and defaults `Runs.PreIf`/`Runs.PostIf` to `always()`.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/action.go", start = 119, end = 149, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.15"
+descriptor = "Job.Type() dispatch body"
+justification = """
+The classifier that distinguishes a normal job from a reusable
+workflow call: regex on `j.Uses` checks for `.yaml`/`.yml`,
+`./` prefix for local, `org/repo/...@ref` for remote, else
+`JobTypeInvalid`. Used inside `RunContext.Executor()` to choose
+the right executor path.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/model/workflow.go", start = 529, end = 552, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.16"
+descriptor = "RunContext struct"
+justification = """
+The per-job mutable state struct — `Name`, `Config`, `Matrix`,
+`Run`, `EventJSON`, `Env`, `GlobalEnv`, `ExtraPath`,
+`CurrentStep`, `StepResults`, `IntraActionState`, `ExprEval`,
+`JobContainer` (`container.ExecutionsEnvironment` interface),
+`ServiceContainers`, `OutputMappings`, `ActionPath`, `Parent`
+(composite actions), `Masks`, `caller` (reusable workflow caller),
+`Cancelled`, `nodeToolFullPath`. Touched by every step impl.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/run_context.go", start = 31, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.17"
+descriptor = "Executor combinators (Then/OnError/Finally/If/IfNot)"
+justification = """
+The method bodies for `.Then(then Executor)`, `.OnError(then)`,
+`.Finally(finally)`, `.If(conditional)`, `.IfNot(conditional)` —
+the actual semantics behind the CLAUDE.md combinators bullet.
+Includes the Warning-pass-through behaviour where a `Warning` is
+logged but does not abort the chain.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/common/executor.go", start = 140, end = 234, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.18"
+descriptor = "NewPipelineExecutor + NewParallelExecutor"
+justification = """
+The two top-level Executor constructors: `NewPipelineExecutor`
+(serial Then chain, no-op on empty) and `NewParallelExecutor`
+(spawns N workers, returns first error, respects ctx
+cancellation). Backbone of `runner.NewPlanExecutor`.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/common/executor.go", start = 53, end = 132, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 3 — execution dispatch & step routing
+# How a CLI invocation lands on a concrete step implementation:
+# `runner.NewPlanExecutor` → `RunContext.Executor` →
+# `newJobExecutor` → `stepFactory.newStep` → `step.main`. Also
+# the runtime side of step dispatch (run vs action vs docker)
+# and the runner↔container interface seam.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "stepFactoryImpl.newStep — step-type dispatch"
+justification = """
+The exact `switch stepModel.Type()` that maps `StepType` to a
+concrete `step` impl: `StepTypeRun` → `stepRun`,
+`StepTypeUsesActionLocal` → `stepActionLocal`,
+`StepTypeUsesActionRemote` → `stepActionRemote`,
+`StepTypeUsesDockerURL` → `stepDocker`. The single hop between
+the model layer and the runner layer.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/step_factory.go", start = 9, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "step interface (pre/main/post)"
+justification = """
+The 7-method `step` interface every step implementation
+satisfies: `pre()`, `main()`, `post()` (each returning a
+`common.Executor`), plus accessors `getRunContext`,
+`getGithubContext`, `getStepModel`, `getEnv`,
+`getIfExpression(ctx, stage)`. Plus the 3-variant `stepStage`
+enum (`stepStagePre`, `stepStageMain`, `stepStagePost`).
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/step.go", start = 21, end = 42, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "RunContext.Executor — JobType dispatch"
+justification = """
+The branching point: based on `JobType` either `newJobExecutor`
+(default), `newLocalReusableWorkflowExecutor`, or
+`newRemoteReusableWorkflowExecutor`. Wrapped with `isEnabled`
+check so jobs with `if:` evaluating false are skipped. This is
+the meeting point of model and runner.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/run_context.go", start = 706, end = 732, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "actionStep interface + action loader signatures"
+justification = """
+`actionStep` extends `step` with `getActionModel()`,
+`getCompositeRunContext(ctx)`, `getCompositeSteps()`. Plus the
+typedefs `readAction` / `actionYamlReader` / `fileWriter` /
+`runAction` that the local/remote step structs receive as
+injected fields — so tests can stub action loading.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/action.go", start = 24, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "runActionImpl — Node/Docker/Composite dispatch (switch body)"
+justification = """
+The inner switch in `runActionImpl` that picks the action backend
+by `action.Runs.Using`: `IsNode()` → exec node with the action's
+Main script via `execJobContainer`; `IsDocker()` → `execAsDocker`;
+`IsComposite()` → `execAsComposite`. The only place where "how to
+actually run an action" branches.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/action.go", start = 175, end = 211, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "ExecutionsEnvironment interface (container abstraction)"
+justification = """
+The interface that both Docker `*containerReference` and
+`*HostEnvironment` satisfy — `ToContainerPath(string)`,
+`GetActPath()`, `GetPathVariableName()`, `DefaultPathVariable()`,
+`JoinPathVariable(...)`, `GetRunnerContext(ctx)`,
+`IsEnvironmentCaseInsensitive()`. Together with `Container`
+(below) it's the runner↔container seam.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/container/executions_environment.go", start = 1, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "Container interface (Docker wrapper API)"
+justification = """
+The 14-method interface that wraps Docker — `Create`, `Copy`,
+`CopyTarStream`, `CopyDir`, `GetContainerArchive`, `Pull`,
+`Start`, `Exec`, `UpdateFromEnv`, `UpdateFromImageEnv`, `Remove`,
+`Close`, `ReplaceLogWriter`, `GetHealth`. Catastrophic-omission
+hedge: missing one of these methods would leave a hole in the
+agent's mental model of the container subsystem.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/container/container_types.go", start = 42, end = 58, render = { kind = "full" } },
+] }
+
+# ============================================================
+# Tier 4 — runtime glue (CLI config, expression engine, command
+# parsing). Specific high-traffic surfaces the agent reaches for
+# after the orientation tiers.
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "runner.Config field names (truncated, with marker)"
+justification = """
+Field-name-only sketch of `runner.Config`. Each field line is
+truncated before the column-aligned type+comment so the agent
+gets the *name* of every option the CLI sets (Actor, Workdir,
+ActionCacheDir, ActionOfflineMode, BindWorkdir, EventName,
+EventPath, DefaultBranch, ReuseContainers, ForcePull,
+ForceRebuild, LogOutput, JSONLogger, LogPrefixJobID, Env, Inputs,
+Secrets, Vars, Token, InsecureSecrets, Platforms, Privileged,
+UsernsMode, ContainerArchitecture, ContainerDaemonSocket,
+ContainerOptions, UseGitIgnore, GitHubInstance, …). The remaining
+fields (ContainerCapAdd/Drop, AutoRemove, ArtifactServer*,
+NoSkipCheckout, RemoteName, ReplaceGheAction*, Matrix,
+ContainerNetworkMode, ActionCache, ConcurrentJobs) are marked
+with one ellipsis line at the start of that range; the agent can
+read 50–64 directly when needed. Catastrophic-omission hedge for
+the CLI↔runtime contract.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/runner.go", start = 21, end = 22, render = { kind = "full" } },
+    { path = "pkg/runner/runner.go", start = 23, end = 50, render = { kind = "truncated", pattern = "^\\s*\\S+" } },
+    { path = "pkg/runner/runner.go", start = 51, end = 51, render = { kind = "ellipsis" } },
+    { path = "pkg/runner/runner.go", start = 65, end = 65, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "EvaluationEnvironment (expression context bag)"
+justification = """
+The set of named contexts the `${{ }}` interpreter resolves
+against: `Github`, `Env`, `Job`, `Jobs`, `Steps`, `Runner`,
+`Secrets`, `Vars`, `Strategy`, `Matrix`, `Needs`, `Inputs`, plus
+the injected `HashFiles` function.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/exprparser/interpreter.go", start = 14, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "exprparser function names (locations)"
+justification = """
+One truncated `func (impl *interperterImpl) <name>` line per
+expression-language built-in in `functions.go`: contains,
+startsWith, endsWith, format, join, toJSON, fromJSON, hashFiles,
+always, jobSuccess, stepSuccess, jobFailure, stepFailure,
+cancelled. Locations only — bodies are not load-bearing for the
+typical query.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/exprparser/functions.go", start = 22, end = 22, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 54, end = 54, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 67, end = 67, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 140, end = 140, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 168, end = 168, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 183, end = 183, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 255, end = 255, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 259, end = 259, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 276, end = 276, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 289, end = 289, render = { kind = "truncated", pattern = "^[^(]+" } },
+    { path = "pkg/exprparser/functions.go", start = 293, end = 293, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "command.go workflow-command case lines (locations)"
+justification = """
+The `case "<command>"` lines of the `::name::value` parser in
+`commandHandler`: set-env, set-output, add-path, debug, warning,
+error, add-mask, stop-commands, save-state, add-matcher. Tells
+the agent which workflow commands `act` understands without
+pulling the handler bodies; the `ACTIONS_ALLOW_UNSECURE_COMMANDS`
+guard for set-env/add-path lives at lines 54 and 62 if needed.
+"""
+content = { kind = "lines", spans = [
+    { path = "pkg/runner/command.go", start = 53, end = 53, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 59, end = 59, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 61, end = 61, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 67, end = 67, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 69, end = 69, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 71, end = 71, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 73, end = 73, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 76, end = 76, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 82, end = 82, render = { kind = "full" } },
+    { path = "pkg/runner/command.go", start = 85, end = 85, render = { kind = "full" } },
+] }

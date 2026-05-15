@@ -1,0 +1,502 @@
+fixture = "dockly"
+revision_pin = "a817de79"
+summary = """
+Dockly is a Node.js terminal UI (TUI) for Docker, built on the
+`blessed` + `blessed-contrib` widget toolkit. The runtime has three
+top-level modes — containers, services, images — each rendering a
+12×12 grid of widgets that observe a `dockerode` connection. The
+codebase is a small plugin system: `src/screen.js` orchestrates;
+`src/assetsLoader.js` glob-loads everything matching
+`hooks/*.hook.js` (event emitters that pump docker data) and
+`widgets/**/*.widget.js` (presentation). `src/grid.config.js`
+decides which widgets land in which mode + at what grid coordinates.
+Most concrete widget files are thin shells over base classes in
+`src/widgetsTemplates/`.
+
+The ranking front-loads the load-bearing conventions (assets glob,
+modes, grid keys, baseWidget mixin), then surfaces complete listings
+of `dockerUtil`'s methods and the toolbar key dispatch, then breadth-
+hedges (full directory listings of hooks/ and widgets/). Concrete
+widget bodies are mostly signature-only — the templates do the work.
+Goal: an agent asked "where does pressing 'r' restart a container?"
+or "where is image listing rendered?" can land in one hop.
+"""
+
+# ===================================================================
+# Tier 1: top-level shape. Tiny batches so the growth envelope holds.
+# ===================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README tagline"
+justification = "Single semantic line at top of README — names this as an immersive terminal interface for docker containers, services and images."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "README.md", start = 5, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Modes enum (containers/services/images)"
+justification = "Three string values; keys of grid.config dicts and widget subdir names. Tiny and load-bearing."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "lib/modes.js", start = 3, end = 7, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "package.json: identity"
+justification = "Name, version, description, main — identifies the npm package and its entry."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "package.json", start = 2, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Repo top-level listing"
+justification = "Names every dir / file in the root so the agent sees the four code dirs (src/, lib/, widgets/, hooks/), docs/, Dockerfile, scripts. The widgets/ ⟂ hooks/ split is non-obvious — this batch makes it visible."
+[batches.content]
+kind = "fs"
+groups = [{ parent = ".", entries = "all" }]
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json: runtime dependencies (first chunk)"
+justification = "First half of dependencies — blessed, blessed-contrib, chalk, clipboardy, command-line-args, command-line-usage. The TUI stack + CLI parser."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "package.json", start = 68, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json: deps (second chunk) + bin"
+justification = "Remaining deps — dockerode, figures, glob, lockfile-lint, semver — plus the `bin` map naming the dockly CLI entry."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "package.json", start = 75, end = 80, render = { kind = "full" } },
+    { path = "package.json", start = 24, end = 26, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 2: the spine — entry point, assetsLoader convention, screen
+# orchestrator, grid config.
+# ===================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "index.js: imports"
+justification = "Names the five collaborators index.js boots: nodeVersion, Screen, DockerUtil, cli, plus semver/chalk."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "index.js", start = 9, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "index.js: top-level flow"
+justification = "Top-level statements: CLI parse → help/version exits → node-version gate → initDockerConnection.then(initScreens). Avoids the longer function bodies."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "index.js", start = 17, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "assetsLoader: the glob convention (config + glob calls)"
+justification = "Single load-bearing convention of the whole codebase. Hooks: `hooks/*.hook.js`; widgets: `widgets/**/*.widget.js`. The two `glob.sync(config.X).forEach(item => map.set(formatAsset(item), require(item)))` calls. `formatAsset` splits on '.' and takes the first segment — that's how widgets get keyed by names like `containerList` or `toolbar`."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/assetsLoader.js", start = 5, end = 9, render = { kind = "full" } },
+    { path = "src/assetsLoader.js", start = 25, end = 31, render = { kind = "full" } },
+    { path = "src/assetsLoader.js", start = 39, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Grid config: containers mode layout"
+justification = "First of three layout tables — every widget in container view (default mode) and its `[row, col, rowSpan, colSpan]` slot. Authoritative answer to 'which widgets are in container view?'"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/grid.config.js", start = 1, end = 14, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Grid config: services + images layouts"
+justification = "The other two mode tables. Both smaller than CONTAINERS_GRID_LAYOUT — services has 10 widgets, images only 7."
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/grid.config.js", start = 16, end = 37, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Screen: constructor (state shape)"
+justification = "Class + constructor names the Maps the orchestrator maintains: `widgetsRepository`, `hooks`, `widgets`, plus `mode` and `toggleWidgetFocus`. Property names referenced across every other file."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/screen.js", start = 18, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Screen.init(): boot order"
+justification = "The single method wiring the whole UI. Loads assets, initScreen + initHooks + initWidgets, render, setWidgetsRepo/Utils/Init, registerEvents. Reading just this tells the agent the runtime lifecycle."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/screen.js", start = 48, end = 69, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 3: dockerUtil — single point of contact with dockerode.
+# ===================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "dockerUtil: all public method names"
+justification = "Every Docker interaction goes through one method on this class. Listing all of them (signature lines truncated at the opening paren) means an agent asking 'how do I list services?' / 'is there a way to remove an image?' finds the name without opening the file. Strong catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/dockerUtil.js", start = 1, end = 6, render = { kind = "full" } },
+    { path = "src/dockerUtil.js", start = 33, end = 33, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 43, end = 43, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 55, end = 55, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 65, end = 65, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 78, end = 78, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 88, end = 88, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 100, end = 100, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 112, end = 112, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 124, end = 124, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 155, end = 155, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 160, end = 160, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 165, end = 165, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 170, end = 170, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 175, end = 175, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 180, end = 180, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 187, end = 187, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 194, end = 194, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 208, end = 208, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "src/dockerUtil.js", start = 220, end = 220, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "dockerUtil: constructor (config + containerFilters parse)"
+justification = "How the dockerode connection is configured from CLI options (socketPath / host / port / protocol) and how `--containerFilters` x-www-form-urlencoded becomes a JSON filters object."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/dockerUtil.js", start = 7, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "dockerUtil: getInfo body"
+justification = "Only method doing non-trivial shaping — stitches `info()` + `version()` and projects host fields (Containers, ContainersRunning, OperatingSystem, ApiVersion, …). Useful for anyone wiring a new status widget."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/dockerUtil.js", start = 125, end = 153, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "dockerUtil: logs option shape"
+justification = "`getContainerLogs` / `getServiceLogs` pass identical options to dockerode — follow/stdout/stderr/tail=50/timestamps. Common point of customization."
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/dockerUtil.js", start = 209, end = 230, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 4: base classes shared by every widget/hook.
+# ===================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "baseWidget mixin (full)"
+justification = "Every widget extends this. Defines `widgetsRepo`, `utilsRepo` properties and `renderWidget`, `focus`, `getWidgetStyle` methods called everywhere. Full 26 lines is cheaper than describing it."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/baseWidget.js", start = 1, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "widgetsTemplates/ listing"
+justification = "Names the five template files (base.hook, help, info, list, logs) so the agent sees the inheritance options up front."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "src/widgetsTemplates", entries = "all" }]
+
+[[batches]]
+id = "4.3"
+descriptor = "list.widget.template: abstract methods"
+justification = "Block of `throw new Error('method X not implemented')` lines names exactly what a per-mode list widget must override: getLabel, getListItems, getItemLogs, updateItemLogs, clearItemLogs, filterList, formatList."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/widgetsTemplates/list.widget.template.js", start = 1, end = 8, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/list.widget.template.js", start = 127, end = 154, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "info.widget.template: abstract methods + `i` keypress wire-up"
+justification = "Modal popup pattern. Toolbar `i` triggers; abstract `getItemById` + `getSelectedItemId` fetch + identify; util.inspect formats. Header + abstract methods + the keystring branch."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/widgetsTemplates/info.widget.template.js", start = 1, end = 8, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/info.widget.template.js", start = 32, end = 36, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/info.widget.template.js", start = 51, end = 56, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/info.widget.template.js", start = 64, end = 70, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "logs.widget.template: expand toggle"
+justification = "Logs widget toggles between its grid slot and full-screen (`EXPANDED_LAYOUT = [0, 0, 11, 12]`) on `-` keypress; subclasses must override `getList`."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/widgetsTemplates/logs.widget.template.js", start = 5, end = 5, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/logs.widget.template.js", start = 25, end = 42, render = { kind = "full" } },
+    { path = "src/widgetsTemplates/logs.widget.template.js", start = 84, end = 86, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "base.hook.template: copyItemIdToClipboard"
+justification = "Every hook extends this. Defines `copyItemIdToClipboard` (the `c` key universal handler) and `getSelectedItem` abstract slot."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/widgetsTemplates/base.hook.template.js", start = 1, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "help.widget.template: key reference"
+justification = "Authoritative keybinding cheat sheet from the user's perspective. h/<space>/`/`/i/<RET>/c/v/q globally, plus per-mode (l/r/s/m for containers; r for images)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/widgetsTemplates/help.widget.template.js", start = 102, end = 127, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 5: breadth pass + screen wiring.
+# ===================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "hooks/ listing"
+justification = "Names the four hook files (containers, images, services, shell). Glob-discovered — agent can't see them otherwise."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "hooks", entries = "all" }]
+
+[[batches]]
+id = "5.2"
+descriptor = "widgets/ tree listing (top-level + 3 mode subdirs)"
+justification = "Every widget file in one batch — top-level (toolbar, actionsMenu, actionStatus, help, searchInput) plus containers/, services/, images/. Most load-bearing fs hedge."
+[batches.content]
+kind = "fs"
+groups = [
+    { parent = "widgets", entries = "all" },
+    { parent = "widgets/containers", entries = "all" },
+    { parent = "widgets/services", entries = "all" },
+    { parent = "widgets/images", entries = "all" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "src/ listing"
+justification = "Names every child of src/ (assetsLoader, baseWidget, cli, dockerUtil, enum, grid.config, screen) plus themes/, widgetsTemplates/."
+[batches.content]
+kind = "fs"
+groups = [{ parent = "src", entries = "all" }]
+
+[[batches]]
+id = "5.4"
+descriptor = "Screen: initWidgets (widget construction args)"
+justification = "Shows that each widget gets `{ blessed, contrib, mode, screen, grid: { gridObj, gridLayout } }` — the standard constructor shape every concrete widget destructures. Widgets only instantiate if `layout[widgetName]` exists, which is why grid.config is the gatekeeper of which widgets render per mode."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/screen.js", start = 86, end = 105, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "Screen: mode toggle + global keys (v, q)"
+justification = "How `v` switches modes (destroys + re-inits everything; the TODO acknowledges the reload cost), how `q` quits, and the focus-border-color effect."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "src/screen.js", start = 138, end = 178, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 6: hooks — concrete event-bus bodies.
+# ===================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "containers.hook: key dispatch + emitted events"
+justification = "Most important hook. init() body shows the keystring branches: space → refresh, r → restartContainer, s → stopContainer, c → copy. Plus emitted `containersAndImagesList` and tab focus-switch wiring."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "hooks/containers.hook.js", start = 1, end = 6, render = { kind = "full" } },
+    { path = "hooks/containers.hook.js", start = 20, end = 53, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "containers.hook: 500ms polling + restart pattern"
+justification = "Two `setInterval(…, 500)` notifiers emit `containerStatus` and `containerUtilization`. Plus `restartContainer` — the actionStatus emit pattern reused by every action-bearing hook."
+predecessor = "6.1"
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "hooks/containers.hook.js", start = 70, end = 92, render = { kind = "full" } },
+    { path = "hooks/containers.hook.js", start = 108, end = 136, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "images.hook: use/unuse partition + removeImage"
+justification = "Image hook's distinctive logic: `systemDf` response gets split into `UseImages` (Containers > 0) and `UnuseImages`, emitted as `imagesUtilization` + `imageSize`. Plus `removeImage` (key 'r')."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "hooks/images.hook.js", start = 1, end = 5, render = { kind = "full" } },
+    { path = "hooks/images.hook.js", start = 35, end = 63, render = { kind = "full" } },
+    { path = "hooks/images.hook.js", start = 65, end = 95, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "services.hook: init + emitted events"
+justification = "Services hook init mirrors containers.hook but without restart/stop. Emits `servicesAndImagesList`; tab focus-switch between servicesLogs/servicesList. No utilization notifier — services don't have CPU/memory."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "hooks/services.hook.js", start = 1, end = 6, render = { kind = "full" } },
+    { path = "hooks/services.hook.js", start = 7, end = 44, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "shell.hook: openShell"
+justification = "Shell hook is special — only hook that doesn't extend baseHook (extends baseWidget directly) and the only one that shells out. Handles `l`, picks docker-exec on Windows vs `dockerRunScript.sh` elsewhere, falls back bash-or-sh, reallocates screen on return."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "hooks/shell.hook.js", start = 1, end = 8, render = { kind = "full" } },
+    { path = "hooks/shell.hook.js", start = 23, end = 56, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 7: the toolbar — source of truth for every keybinding.
+# ===================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "toolbar.widget: command dicts (every keybinding)"
+justification = "`baseCommands` / `containerCommands` / `imageCommands` / `logCommands` literals enumerate every key. space/i/`/`/c (base); [RETURN]/- (logs); l/r/s/m/o (container); r (image); plus h/v/q (always). Single file an agent edits to add a key."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "widgets/toolbar.widget.js", start = 30, end = 89, render = { kind = "full" } },
+    { path = "widgets/toolbar.widget.js", start = 125, end = 138, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 8: per-mode concrete widgets — light signature batches.
+# ===================================================================
+
+[[batches]]
+id = "8.1"
+descriptor = "containerList: overrides + getSelectedContainer"
+justification = "Concrete container list. Header, getLabel, getSelectedContainer (called by every hook), plus method-name signatures of the overrides truncated at the opening paren — getItemLogs, getListItems, filterList, formatList, formatContainerStatus, formatContainerState, sortContainers."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "widgets/containers/containerList.widget.js", start = 1, end = 21, render = { kind = "full" } },
+    { path = "widgets/containers/containerList.widget.js", start = 22, end = 22, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 40, end = 40, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 44, end = 44, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 81, end = 81, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 127, end = 127, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 139, end = 139, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+    { path = "widgets/containers/containerList.widget.js", start = 169, end = 169, render = { kind = "truncated", pattern = "^\\s*[^(]+" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "imageList + servicesList: headers + Selected getters"
+justification = "Image and service lists both subclass ListWidget. Class headers, label-getters, `getSelectedImage` / `getSelectedService` (the methods other widgets call to retrieve current selection)."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "widgets/images/imageList.widget.js", start = 1, end = 14, render = { kind = "full" } },
+    { path = "widgets/images/imageList.widget.js", start = 119, end = 121, render = { kind = "full" } },
+    { path = "widgets/services/servicesList.widget.js", start = 1, end = 14, render = { kind = "full" } },
+    { path = "widgets/services/servicesList.widget.js", start = 87, end = 89, render = { kind = "full" } },
+]
+
+# ===================================================================
+# Tier 9: auxiliary widget anchors.
+# ===================================================================
+
+[[batches]]
+id = "9.1"
+descriptor = "actionStatus + searchInput + actionsMenu: identity anchors"
+justification = "Three top-level widgets the agent should know exist. actionStatus is the message-bus every hook emits to (label is 'Status'). searchInput captures `/`-typed buffer. actionsMenu is the `m` menu with four bulk actions."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "widgets/actionStatus.widget.js", start = 14, end = 14, render = { kind = "full" } },
+    { path = "widgets/searchInput.widget.js", start = 7, end = 8, render = { kind = "full" } },
+    { path = "widgets/actionsMenu.widget.js", start = 18, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "9.2"
+descriptor = "containerInfo + servicesInfo + imageInfo: identity anchors"
+justification = "Three trivial subclasses of InfoWidget — class headers + label-getters confirm the symmetry. Bodies of getSelectedItemId / getItemById are one-liners pointing into widgetsRepo / utilsRepo."
+[batches.content]
+kind = "lines"
+spans = [
+    { path = "widgets/containers/containerInfo.widget.js", start = 6, end = 8, render = { kind = "full" } },
+    { path = "widgets/services/servicesInfo.widget.js", start = 6, end = 8, render = { kind = "full" } },
+    { path = "widgets/images/imageInfo.widget.js", start = 6, end = 8, render = { kind = "full" } },
+]

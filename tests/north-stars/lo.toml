@@ -1,0 +1,873 @@
+fixture = "lo"
+revision_pin = "ea94cc5c"
+summary = """
+samber/lo is a large, generics-based Lodash-style utility library for Go. The
+codebase is essentially a flat catalog of helpers grouped by category file
+(`slice.go`, `map.go`, `find.go`, `string.go`, `tuples.go`, `errors.go`,
+`channel.go`, etc.) plus four parallel sub-packages that mirror parts of the
+API with different evaluation semantics: `it/` (Go 1.23 lazy iterators),
+`parallel/` (concurrent), `mutable/` (in-place), and `exp/simd/` (Go 1.26 SIMD
+experiment). Most "interesting" content per file is the *roster of public
+helpers*, not implementation — the bodies are short, repetitive, and largely
+template-driven (Async2..Async6, T2..T9, Tuple2..Tuple9, Try0..Try6,
+Must..Must6, Duration0..Duration10, Partial1..Partial5, Zip2..Zip9). The
+ranking therefore prioritizes (a) the README's master index of categories +
+helper names (a single artifact that subsumes hundreds of "does X exist?"
+queries), (b) sub-package identity, and (c) full public-API name listings per
+.go file so the agent can answer "does function Y exist? in which package?"
+in zero hops. Bodies are demoted to late tiers and shown only for shapes that
+aren't obvious from a signature (ifElse builder, Transaction, Debounce,
+ChannelDispatcher, SIMD feature dispatch). Tests, examples, benchmarks, and
+the Docusaurus docs site are surfaced as locations only; their contents are
+derivable from category and pattern.
+"""
+
+# ============================================================================
+# Tier 1 — identity one-liner
+# ============================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Crate-doc lede — title + one-line identity"
+justification = "Title line + the single sentence summary 'Lodash-style Go library based on Go 1.18+ Generics'. Smallest useful batch — frames everything downstream."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 2, end = 2, render = { kind = "full" } },
+  { path = "README.md", start = 13, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "README elaboration — domain (slices, maps, strings, channels, fns)"
+justification = "One additional sentence: 'utility library… work with slices, maps, strings, channels, and functions… simplify common coding tasks'. Pins what shape of code lives here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 15, end = 15, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "README — vs stdlib slices/maps"
+justification = "One sentence stating lo overlaps with stdlib slices/maps in a handful of helpers but is broader. Helps the agent decide when to reach for stdlib vs lo."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 17, end = 17, render = { kind = "full" } },
+]
+
+# ============================================================================
+# Tier 2 — module + sub-package map
+# ============================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "go.mod — module path, Go floor, deps"
+justification = "Module path (`github.com/samber/lo`), Go version floor (1.18), and the very short dependency list (testify, go-funk, goleak, x/text). Resolves 'what import path?' and 'what Go version?' in zero hops."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "go.mod", start = 1, end = 14, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Canonical four-package import block"
+justification = "README import-block names all four sibling packages (lo, lo/parallel, lo/mutable, lo/it) at one glance. Without this the agent has the directory names but not the conventional aliases (lop, lom, loi) used throughout examples."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 73, end = 79, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Repository root listing"
+justification = "Fs listing of the fixture root. Tells the agent every category file at the top level plus the sub-package directories — the highest-leverage map of the repo for the smallest cost."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "constraints.go — Clonable interface (whole file)"
+justification = "Six-line file defining the only constraint exported from the root package. Used by Fill/Repeat and their it/ analogues."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "constraints.go", start = 1, end = 6, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Sub-package directory listings — it/, parallel/, mutable/"
+justification = "Listings of the three mirror sub-packages. Catastrophic-omission hedge: shows that it/ has 28 files, parallel/ has 2, mutable/ has 3 — not all categories are mirrored everywhere."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "it", entries = "all" },
+  { parent = "parallel", entries = "all" },
+  { parent = "mutable", entries = "all" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Sub-package directory listings — internal/*"
+justification = "internal/ holds three small packages: constraints (Signed/Integer/Float/etc.), xrand (random shim with build-tag forks), xtime (Clock interface)."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "internal", entries = "all" },
+  { parent = "internal/constraints", entries = "all" },
+  { parent = "internal/xrand", entries = "all" },
+  { parent = "internal/xtime", entries = "all" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Sub-package directory listings — exp/, exp/simd/, benchmark/"
+justification = "exp/simd is the Go 1.26 SIMD experiment (separate go.mod, build-tagged); benchmark/ is the per-category benchmark suite."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "exp", entries = "all" },
+  { parent = "exp/simd", entries = "all" },
+  { parent = "benchmark", entries = "all" },
+]
+
+# ============================================================================
+# Tier 3 — README master index of all helper categories (names only)
+# ============================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Helper index — slice (a): Filter..PartitionBy"
+justification = "First chunk of the slice helpers bullet list — names, no bodies. Bullet lists are extremely token-cheap per helper name; this is the highest 'does X exist?' yield per token in the repo."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 106, end = 125, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Helper index — slice (b): Flatten..Reject and friends"
+justification = "Middle chunk of the slice helpers."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 126, end = 149, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Helper index — slice (c): Count..TrimSuffix"
+justification = "Last chunk of the slice helpers list."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 150, end = 170, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Helper index — map helpers"
+justification = "All map helpers: Keys/Values/Entries/Invert/Assign/Pick/Omit/MapKeys/MapValues/MapEntries/FilterMapToSlice/etc."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 171, end = 197, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Helper index — math + strings"
+justification = "Math (Range/Clamp/Sum/Product/Mean/Mode) and strings (RandomString, Substring, ChunkString, *Case, Words, Capitalize, Ellipsis)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 198, end = 223, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Helper index — tuples + time + channels"
+justification = "Tuple family (T2..T9, Unpack/Zip/Unzip/CrossJoin), Duration0..Duration10, and channel helpers (ChannelDispatcher, FanIn/FanOut, Generator, Buffer*)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 224, end = 250, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Helper index — intersection helpers"
+justification = "Contains/Every/Some/None/Intersect*/Difference/Union/Without*/ElementsMatch*."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 251, end = 272, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Helper index — search/find helpers"
+justification = "The large search group: IndexOf/LastIndexOf, HasPrefix/HasSuffix, Find/FindIndexOf/FindLastIndexOf/FindOrElse/FindKey/FindUniques/FindDuplicates, Min/Max + their By/Index variants, Earliest/Latest, First/FirstOr*/Last/LastOr*, Nth/NthOr*, Sample/Samples*."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 273, end = 314, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Helper index — conditional + type manipulation"
+justification = "Ternary/TernaryF/If/ElseIf/Else/Switch/Case/Default plus the IsNil/IsNotNil/ToPtr/FromPtr/Empty/IsEmpty/Coalesce/CoalesceMap/CoalesceSlice families."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 315, end = 345, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Helper index — function + concurrency"
+justification = "Partial/Partial1..Partial5; and concurrency: Attempt*, Debounce*, Throttle*, Synchronize, Async{0..6}, Transaction, WaitFor/WaitForWithContext."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 346, end = 369, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "Helper index — error handling + constraints"
+justification = "Validate, Must0..Must6, Try0..Try6, TryOr*, TryCatch*, ErrorsAs, Assert/Assertf — and the single Clonable constraint."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 370, end = 388, render = { kind = "full" } },
+]
+
+# ============================================================================
+# Tier 4 — types, internal vocabulary, project conventions
+# ============================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "internal/constraints — Signed/Unsigned/Integer/Float/Complex"
+justification = "All the numeric type constraints used throughout math.go/find.go/it/math.go. Small but pervasive vocabulary."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/constraints/constraints.go", start = 5, end = 42, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "types.go — Entry + Tuple2 + Tuple3 declarations"
+justification = "Entry[K,V] and the two smallest tuple shapes. Tuple4–Tuple9 are mechanical extensions; their headers come next."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "types.go", start = 3, end = 7, render = { kind = "full" } },
+  { path = "types.go", start = 9, end = 13, render = { kind = "full" } },
+  { path = "types.go", start = 21, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "types.go — Tuple4..Tuple9 type-declaration locations"
+justification = "Names + headers of the remaining tuple structs. Catastrophic-omission hedge: without these, the agent might assume 'lo' only exposes Tuple2/Tuple3."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "types.go", start = 34, end = 34, render = { kind = "full" } },
+  { path = "types.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "types.go", start = 63, end = 63, render = { kind = "full" } },
+  { path = "types.go", start = 79, end = 79, render = { kind = "full" } },
+  { path = "types.go", start = 96, end = 96, render = { kind = "full" } },
+  { path = "types.go", start = 114, end = 114, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "internal/xtime/time.go — Clock interface + global wrappers"
+justification = "Reveals lo wraps time.Now/Since/Until/Sleep behind a swappable Clock. Explains why retry.go uses xtime.Sleep and why TestMain in lo_test.go installs a FakeClock — answers 'how is time mocked in tests?' in zero hops."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "internal/xtime/time.go", start = 6, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "lo_test.go — TestMain (goleak + fake clock)"
+justification = "Package-wide test setup: goroutine-leak detection + fake clock. Important context for tests that touch retry/debounce/throttle/wait."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "lo_test.go", start = 14, end = 17, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "4.6"
+descriptor = ".golangci.yml — enabled linter list"
+justification = "The block listing every linter enabled (govet, staticcheck, gocritic, gocyclo, revive, errcheck, funlen, perfsprint, modernize…) — answers 'will this style pass lint?' Trimmed to the linters section; settings (funlen=120, gocyclo=15) come next."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".golangci.yml", start = 7, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = ".golangci.yml — settings (funlen/gocyclo/goconst/dupl/testifylint)"
+justification = "Key thresholds and per-linter knobs: funlen lines=120 statements=80, gocyclo min-complexity=15, dupl threshold=20, errcheck check-type-assertions=true."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = ".golangci.yml", start = 46, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "Makefile — target headers (locations)"
+justification = "Just the target headers — `build:`, `test:`, `bench:`, `coverage:`, `tools:`, `lint:`, `lint-fix:`, `audit:`, `doc:` — let the agent grep one file to expand any specific recipe. Catastrophic-omission hedge: shows every available target."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "Makefile", start = 5, end = 5, render = { kind = "full" } },
+  { path = "Makefile", start = 9, end = 9, render = { kind = "full" } },
+  { path = "Makefile", start = 12, end = 12, render = { kind = "full" } },
+  { path = "Makefile", start = 15, end = 15, render = { kind = "full" } },
+  { path = "Makefile", start = 17, end = 17, render = { kind = "full" } },
+  { path = "Makefile", start = 20, end = 20, render = { kind = "full" } },
+  { path = "Makefile", start = 24, end = 24, render = { kind = "full" } },
+  { path = "Makefile", start = 38, end = 38, render = { kind = "full" } },
+  { path = "Makefile", start = 42, end = 42, render = { kind = "full" } },
+  { path = "Makefile", start = 47, end = 47, render = { kind = "full" } },
+  { path = "Makefile", start = 50, end = 50, render = { kind = "full" } },
+  { path = "Makefile", start = 53, end = 53, render = { kind = "full" } },
+  { path = "Makefile", start = 56, end = 56, render = { kind = "full" } },
+]
+
+# ============================================================================
+# Tier 5 — function-signature roster for the root package
+#   Strategy: name-only via Truncated (drop generic args + body). Tier 6 adds
+#   sample type signatures (Full) for one canonical helper per family so the
+#   agent can read the actual shape.
+# ============================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "func.go — Partial..Partial5 name locations"
+justification = "Six Partial variants. Pattern `name-truncation pattern` shows just `func Partial1`, etc. — name-only catalog for the family."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "func.go", start = 5, end = 5, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "func.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "func.go", start = 19, end = 19, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "func.go", start = 27, end = 27, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "func.go", start = 35, end = 35, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "func.go", start = 43, end = 43, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "time.go — Duration..Duration10 name locations"
+justification = "Twelve Duration variants. Name-only catalog confirms the family stops at Duration10 (an actual upper-bound surprise vs Async which stops at Async6)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "time.go", start = 9, end = 9, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 15, end = 15, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 23, end = 23, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 31, end = 31, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 39, end = 39, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 47, end = 47, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 55, end = 55, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 63, end = 63, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 71, end = 71, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 79, end = 79, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 87, end = 87, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "time.go", start = 95, end = 95, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "concurrency.go — Synchronize/Async*/WaitFor name locations"
+justification = "Synchronize, Async/Async0..Async6, WaitFor, WaitForWithContext. Confirms the Async family stops at Async6."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "concurrency.go", start = 21, end = 21, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 35, end = 35, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 56, end = 56, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 62, end = 62, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 82, end = 82, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 92, end = 92, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 102, end = 102, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 112, end = 112, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "concurrency.go", start = 121, end = 121, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "condition.go — Ternary/If/Switch + ifElse/switchCase types"
+justification = "Conditional helpers + the unexported receiver types ifElse[T] and switchCase[T,R]. The fluent chains are unusual enough that the type-decl lines are load-bearing."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "condition.go", start = 6, end = 6, render = { kind = "full" } },
+  { path = "condition.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "condition.go", start = 26, end = 29, render = { kind = "full" } },
+  { path = "condition.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "condition.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "condition.go", start = 97, end = 101, render = { kind = "full" } },
+  { path = "condition.go", start = 105, end = 105, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "math.go — public helper signatures (Range/Clamp/Sum*/Product*/Mean*/Mode)"
+justification = "All 14 math sigs Full. The numeric constraint bound (constraints.Integer | constraints.Float | constraints.Complex) per helper is the load-bearing detail — telling the agent which numeric kinds are allowed."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "math.go", start = 11, end = 11, render = { kind = "full" } },
+  { path = "math.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "math.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "math.go", start = 71, end = 71, render = { kind = "full" } },
+  { path = "math.go", start = 82, end = 82, render = { kind = "full" } },
+  { path = "math.go", start = 92, end = 92, render = { kind = "full" } },
+  { path = "math.go", start = 103, end = 103, render = { kind = "full" } },
+  { path = "math.go", start = 117, end = 117, render = { kind = "full" } },
+  { path = "math.go", start = 127, end = 127, render = { kind = "full" } },
+  { path = "math.go", start = 138, end = 138, render = { kind = "full" } },
+  { path = "math.go", start = 152, end = 152, render = { kind = "full" } },
+  { path = "math.go", start = 163, end = 163, render = { kind = "full" } },
+  { path = "math.go", start = 175, end = 175, render = { kind = "full" } },
+  { path = "math.go", start = 191, end = 191, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "string.go — charset vars + helper signatures"
+justification = "Exported charset vars (LowerCase*, UpperCase*, Letters, Numbers, Alphanumeric, Special, AllCharset) are the only state-shaped public surface in the file. Helper sigs Full so the *T ~string generic constraint is visible (Substring/ChunkString are generic over string-derived types)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "string.go", start = 18, end = 24, render = { kind = "full" } },
+  { path = "string.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "string.go", start = 109, end = 109, render = { kind = "full" } },
+  { path = "string.go", start = 199, end = 199, render = { kind = "full" } },
+  { path = "string.go", start = 225, end = 225, render = { kind = "full" } },
+  { path = "string.go", start = 231, end = 231, render = { kind = "full" } },
+  { path = "string.go", start = 241, end = 241, render = { kind = "full" } },
+  { path = "string.go", start = 255, end = 255, render = { kind = "full" } },
+  { path = "string.go", start = 265, end = 265, render = { kind = "full" } },
+  { path = "string.go", start = 275, end = 275, render = { kind = "full" } },
+  { path = "string.go", start = 293, end = 293, render = { kind = "full" } },
+  { path = "string.go", start = 301, end = 301, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "intersect.go — name locations"
+justification = "Contains/ContainsBy/Every/EveryBy/Some/SomeBy/None/NoneBy/Intersect/IntersectBy/Difference/Union/Without/WithoutBy/WithoutByErr/WithoutEmpty/WithoutNth/ElementsMatch/ElementsMatchBy."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "intersect.go", start = 5, end = 5, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 17, end = 17, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 29, end = 29, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 47, end = 47, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 60, end = 60, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 78, end = 78, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 90, end = 90, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 107, end = 107, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 119, end = 119, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 162, end = 162, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 210, end = 210, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 235, end = 235, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 259, end = 259, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 274, end = 274, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 288, end = 288, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 308, end = 308, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 314, end = 314, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 331, end = 331, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "intersect.go", start = 339, end = 339, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "type_manipulation.go — name locations"
+justification = "IsNil/IsNotNil/ToPtr/Nil/EmptyableToPtr/FromPtr/FromPtrOr/ToSlicePtr/FromSlicePtr/FromSlicePtrOr/ToAnySlice/FromAnySlice/Empty/IsEmpty/IsNotEmpty/Coalesce/CoalesceOrEmpty/CoalesceSlice/CoalesceSliceOrEmpty/CoalesceMap/CoalesceMapOrEmpty."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "type_manipulation.go", start = 7, end = 7, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 22, end = 22, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 28, end = 28, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 34, end = 34, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 41, end = 41, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 63, end = 63, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 73, end = 73, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 85, end = 85, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 99, end = 99, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 115, end = 115, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 126, end = 126, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 140, end = 140, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 147, end = 147, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 154, end = 154, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 161, end = 161, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 175, end = 175, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 182, end = 182, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 193, end = 193, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 204, end = 204, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "type_manipulation.go", start = 215, end = 215, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.9"
+descriptor = "channel.go — name locations + DispatchingStrategy type"
+justification = "ChannelDispatcher/DispatchingStrategy{RoundRobin,Random,WeightedRandom,First,Least,Most}/SliceToChannel/ChannelToSlice/Generator/Buffer/BufferWithContext/BufferWithTimeout/FanIn/FanOut. Includes the DispatchingStrategy type definition for full disambiguation."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "channel.go", start = 11, end = 12, render = { kind = "full" } },
+  { path = "channel.go", start = 18, end = 18, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 73, end = 73, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 88, end = 88, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 102, end = 102, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 126, end = 126, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 140, end = 140, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 151, end = 151, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 161, end = 161, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 177, end = 177, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 191, end = 191, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 209, end = 209, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 228, end = 228, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 251, end = 251, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 260, end = 260, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "channel.go", start = 287, end = 287, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.10"
+descriptor = "errors.go — name locations + Assert/Assertf var declarations"
+justification = "Validate/Must/Must0..Must6/Try/Try0..Try6/TryOr/TryOr1..TryOr6/TryWithErrorValue/TryCatch/TryCatchWithErrorValue/ErrorsAs/Assert/Assertf. Note Assert and Assertf are vars (panic with a custom message) so they are reassignable — load-bearing surprise."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "errors.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 65, end = 65, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 78, end = 78, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 84, end = 84, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 91, end = 91, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 98, end = 98, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 105, end = 105, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 112, end = 112, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 118, end = 118, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 137, end = 137, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 146, end = 146, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 152, end = 152, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 161, end = 161, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 170, end = 170, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 179, end = 179, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 188, end = 188, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 197, end = 197, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 203, end = 203, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 219, end = 219, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 236, end = 236, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 254, end = 254, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 273, end = 273, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 293, end = 293, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 314, end = 314, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 335, end = 335, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 343, end = 343, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 351, end = 351, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "errors.go", start = 359, end = 359, render = { kind = "full" } },
+  { path = "errors.go", start = 373, end = 373, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.11"
+descriptor = "retry.go — Attempt/Debounce/Throttle/Transaction name locations + Transaction type"
+justification = "NewDebounce/NewDebounceBy/Attempt/AttemptWithDelay/AttemptWhile/AttemptWhileWithDelay/NewTransaction/NewThrottle/NewThrottleWithCount/NewThrottleBy/NewThrottleByWithCount + the Transaction[T] type signature (it's a stateful builder, not just a function)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "retry.go", start = 56, end = 56, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "retry.go", start = 139, end = 139, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "retry.go", start = 155, end = 155, render = { kind = "full" } },
+  { path = "retry.go", start = 174, end = 174, render = { kind = "full" } },
+  { path = "retry.go", start = 200, end = 200, render = { kind = "full" } },
+  { path = "retry.go", start = 225, end = 225, render = { kind = "full" } },
+  { path = "retry.go", start = 255, end = 255, render = { kind = "full" } },
+  { path = "retry.go", start = 261, end = 264, render = { kind = "full" } },
+  { path = "retry.go", start = 268, end = 268, render = { kind = "full" } },
+  { path = "retry.go", start = 279, end = 279, render = { kind = "full" } },
+  { path = "retry.go", start = 347, end = 347, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "retry.go", start = 353, end = 353, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "retry.go", start = 369, end = 369, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "retry.go", start = 375, end = 375, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.12"
+descriptor = "map.go — name locations"
+justification = "All 35 helpers in map.go (Keys/UniqKeys/HasKey/Values/UniqValues/ValueOr, PickBy*/PickByKeys/PickByValues, OmitBy*/OmitByKeys/OmitByValues, Entries/ToPairs/FromEntries/FromPairs/Invert/Assign/ChunkEntries, MapKeys*/MapValues*/MapEntries*/MapToSlice*, FilterMapToSlice*/FilterKeys*/FilterValues*). Name-only via truncation."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "map.go", start = 5, end = 5, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 23, end = 23, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 47, end = 47, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 54, end = 54, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 96, end = 96, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 105, end = 105, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 117, end = 117, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 133, end = 133, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 145, end = 145, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 159, end = 159, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 171, end = 171, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 187, end = 187, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 200, end = 200, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 215, end = 215, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 231, end = 231, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 237, end = 237, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 250, end = 250, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 258, end = 258, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 270, end = 270, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 289, end = 289, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 314, end = 314, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 326, end = 326, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 342, end = 342, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 354, end = 354, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 370, end = 370, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 383, end = 383, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 399, end = 399, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 411, end = 411, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 430, end = 430, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 448, end = 448, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 467, end = 467, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 482, end = 482, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 500, end = 500, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "map.go", start = 522, end = 522, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.13"
+descriptor = "slice.go — name locations (a)"
+justification = "First half of slice.go (the largest single file): Filter through CountValuesBy. Truncated names so the agent can grep 'is FilterMap defined?' or 'where is GroupBy?' in zero hops."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "slice.go", start = 12, end = 12, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 27, end = 27, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 45, end = 45, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 57, end = 57, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 73, end = 73, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 94, end = 94, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 110, end = 110, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 124, end = 124, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 141, end = 141, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 152, end = 152, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 167, end = 167, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 177, end = 177, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 192, end = 192, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 201, end = 201, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 212, end = 212, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 225, end = 225, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 245, end = 245, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 267, end = 267, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 290, end = 290, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 305, end = 305, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 322, end = 322, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 336, end = 336, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 354, end = 354, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 385, end = 385, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 412, end = 412, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 437, end = 437, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 454, end = 454, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 461, end = 461, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 472, end = 472, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 499, end = 499, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 539, end = 539, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 548, end = 548, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 555, end = 555, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 567, end = 567, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 579, end = 579, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 591, end = 591, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 607, end = 607, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 621, end = 621, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 639, end = 639, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 649, end = 649, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+
+[[batches]]
+id = "5.14"
+descriptor = "slice.go — name locations (b: sample)"
+justification = "Sparse pointer coverage for the lower half of slice.go (SliceToMap, Take/Drop family, Replace*, Clone, Compact, IsSorted*, Splice, Cut*, Trim*). Sampled rather than exhaustive — README index already names every helper; this batch only adds the file-location pointer."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "slice.go", start = 665, end = 665, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 709, end = 709, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 779, end = 779, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 862, end = 862, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 889, end = 889, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 958, end = 958, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1030, end = 1030, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1098, end = 1098, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1113, end = 1113, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1129, end = 1129, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1162, end = 1162, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1188, end = 1188, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "slice.go", start = 1234, end = 1234, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.15"
+descriptor = "find.go — name locations (sample)"
+justification = "Pointer-cover the find.go file. Sample: IndexOf, HasPrefix, Find, FindKey, FindUniques, FindDuplicates, Min, MinBy, Earliest, Max, Latest, First, Last, Nth, Sample, Samples — one per sub-family. README index covers every name."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "find.go", start = 13, end = 13, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 40, end = 40, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 72, end = 72, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 148, end = 148, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 173, end = 173, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 238, end = 238, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 352, end = 352, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 403, end = 403, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 519, end = 519, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 599, end = 599, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 778, end = 778, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 857, end = 857, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 888, end = 888, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 920, end = 920, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 966, end = 966, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "find.go", start = 982, end = 982, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+[[batches]]
+id = "5.16"
+descriptor = "tuples.go — family head pointers (T2/Unpack2/Zip2/ZipBy2/Unzip2/UnzipBy2/CrossJoin2/CrossJoinByErr9)"
+justification = "Head of each tuple-arity family + the very last function. README index already enumerates the whole 2..9 ladder; this batch only adds file-location pointers so the agent can jump to e.g. ZipBy3 quickly."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tuples.go", start = 5, end = 5, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 53, end = 53, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 103, end = 103, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 341, end = 341, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 521, end = 521, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 724, end = 724, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 908, end = 908, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 1101, end = 1101, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 1318, end = 1318, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 1429, end = 1429, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 1545, end = 1545, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+  { path = "tuples.go", start = 1839, end = 1839, render = { kind = "truncated", pattern = '^func [^\[(]+' } },
+]
+
+# ============================================================================
+# Tier 6 — mirror sub-packages (parallel/mutable/it) + SIMD experiment
+# ============================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "parallel/slice.go — all 5 helper signatures"
+justification = "Whole public surface of the parallel sub-package: Map, ForEach, Times, GroupBy, PartitionBy — all goroutine-per-element. Smallest mirror package; one batch covers it."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "parallel/slice.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "parallel/slice.go", start = 8, end = 8, render = { kind = "full" } },
+  { path = "parallel/slice.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "parallel/slice.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "parallel/slice.go", start = 75, end = 75, render = { kind = "full" } },
+  { path = "parallel/slice.go", start = 95, end = 95, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "mutable/slice.go — all 6 helper signatures"
+justification = "Whole public surface of the mutable sub-package: Filter, FilterI, Map, MapI, Shuffle, Reverse — all modify in place. Smallest mirror package; one batch."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mutable/slice.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 11, end = 11, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 27, end = 27, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 49, end = 49, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 57, end = 57, render = { kind = "full" } },
+  { path = "mutable/slice.go", start = 65, end = 65, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "types.go — Unpack methods (Tuple2.Unpack + family endpoint)"
+justification = "Each Tuple[N] type has a uniform `Unpack()` method that returns the N components. Tuple2.Unpack and Tuple9.Unpack are enough to fix the pattern."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "types.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "types.go", start = 129, end = 129, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "it/seq.go — head + family pointers (Length/Filter/Map/Reduce/ForEach/Chunk/Window/Drop/Take/Buffer)"
+justification = "Iterator package's central file. Sample one fn from each major family. The `iter.Seq[T]`/`I ~func(func(T) bool)` constraint pattern is load-bearing — different from the slice-based core package."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "it/seq.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "it/seq.go", start = 34, end = 34, render = { kind = "full" } },
+  { path = "it/seq.go", start = 54, end = 54, render = { kind = "full" } },
+  { path = "it/seq.go", start = 146, end = 146, render = { kind = "full" } },
+  { path = "it/seq.go", start = 290, end = 290, render = { kind = "full" } },
+  { path = "it/seq.go", start = 1169, end = 1169, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "6.5"
+descriptor = "exp/simd/math.go — build tag + SumInt8 dispatcher signature"
+justification = "exp/simd is build-tagged (go1.26 && goexperiment.simd && amd64). simd.go is a 4-line file noting the package exists for non-supported archs. math.go has SumInt8 dispatching to AVX/AVX2/AVX-512 sub-functions — the canonical pattern for the entire package."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "exp/simd/math.go", start = 13, end = 13, render = { kind = "full" } },
+]
+
+# ============================================================================
+# Tier 7 — repo conventions for maintainers (docs/benchmark site rules)
+# ============================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "docs/CLAUDE.md — per-helper frontmatter schema (locations)"
+justification = "When adding/updating a helper, a Docusaurus markdown file under docs/data/core-<slug>.md must be written with a strict frontmatter (name/slug/sourceRef/category/subCategory/signatures/playUrl/variantHelpers/similarHelpers/position). Show just the YAML example block; the rest of the file elaborates the fields."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/CLAUDE.md", start = 14, end = 19, render = { kind = "full" } },
+]

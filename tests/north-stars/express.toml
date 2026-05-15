@@ -1,0 +1,1164 @@
+fixture = "express"
+revision_pin = "f873ac23"
+summary = """
+Express is a mature, unopinionated Node.js HTTP framework. Its public
+surface is three prototypes — `app` (application), `req` (request),
+`res` (response) — plus a `Router`/`Route` re-export and a handful of
+body-parser/static middleware re-exports on the `express` function
+itself. The lib is six files: `lib/express.js` (factory + exports),
+`lib/application.js` (settings, mounting, routing entrypoints, render,
+listen), `lib/request.js` (header / content-negotiation / proxy
+methods + getters), `lib/response.js` (send/json/render/sendFile/
+cookie/redirect on the response prototype), `lib/view.js` (default
+`View` class with engine resolution), `lib/utils.js` (setting
+compilers for etag, query parser, trust proxy).
+
+The query distribution this ranking serves is roughly: "how do I use
+res.X / req.X / app.X" (huge — most plausible question), "how does
+mounting / routing / settings work internally" (lib/application.js
+walkthroughs), "what does Express's view layer do" (view.js +
+app.engine / res.render), and "how is feature X tested / shown in an
+example" (test/* and examples/*). Because the count of public methods
+is large and each one is plausibly the target, exhaustive *location
+maps* of every method on each prototype rank very early — the
+snapshot's chief job is to make "where does X live" trivially
+answerable.
+
+Tests are one-test-per-method (`test/res.send.js`, `test/req.is.js`,
+`test/app.use.js`, …) so the test directory listing is also a
+secondary public-API index. The 27 `examples/` apps are the
+user-facing tutorial surface.
+"""
+
+# ============================================================
+# Tier 1 — orientation: identity, entry chain, top-level shape
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level directory listing"
+justification = """
+First thing an agent needs: what's in the repo. Six lib files, an
+examples/ tree, a test/ tree, the README, package.json, and the
+entry index.js. Establishes that this is a Node package with all
+source in lib/.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = ["lib", "test", "examples", "index.js", "package.json", "Readme.md", "History.md", "LICENSE", ".github", ".eslintrc.yml", ".eslintignore", ".editorconfig", ".gitignore", ".npmrc"]
+
+[[batches]]
+id = "1.2"
+descriptor = "Readme lede"
+justification = """
+The README's first line says what Express is in one sentence
+("Fast, unopinionated, minimalist web framework for Node.js").
+Zero-follow-up framing for every subsequent batch.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Readme.md"
+start = 3
+end = 3
+render = { kind = "full" }
+
+[[batches]]
+id = "1.3"
+descriptor = "lib/ directory contents"
+justification = """
+All six source files. Critical for "what files exist" — partial
+listings here would have the agent assume e.g. utils.js doesn't
+exist. Catastrophic-omission mitigation at the highest level of
+the source tree.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "lib"
+entries = "all"
+
+[[batches]]
+id = "1.4"
+descriptor = "index.js entry stub"
+justification = """
+The whole entry point is one require line. Trivial to include and
+it removes any mystery about how the published package wires up.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "index.js"
+start = 11
+end = 11
+render = { kind = "full" }
+
+[[batches]]
+id = "1.5"
+descriptor = "Readme hello-world snippet"
+justification = """
+The canonical 13-line Express snippet — import, app.get('/'),
+res.send('Hello World'), app.listen(3000). Best zero-follow-up
+answer to "how do you write an Express app".
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "Readme.md"
+start = 34
+end = 46
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json identity"
+justification = """
+Name, version, license, repo, Node version requirement, and main
+test/lint scripts. Tells the agent what version is being read and
+that mocha is the test runner.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 1
+end = 3
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 15
+end = 16
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 82
+end = 84
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "package.json"
+start = 91
+end = 94
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "lib/express.js — public exports"
+justification = """
+The complete public surface of the `express` module: the
+createApplication factory signature, the application/request/
+response prototype re-exports, the Route/Router constructors, and
+the json/raw/static/text/urlencoded middleware. Factory body is
+deferred — the export list is the most load-bearing information.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 15
+end = 21
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 27
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 36
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 62
+end = 64
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 70
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 77
+end = 81
+render = { kind = "full" }
+
+# ============================================================
+# Tier 2 — public-method location maps. Every method on each
+# prototype gets a signature line.
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Application prototype — method names"
+justification = """
+Every `app.*` definition in lib/application.js, signature line each
+(name-truncated where args are long). Load-bearing answer to "what
+methods does the Express app have". Includes init /
+defaultConfiguration / handle / use / route / engine / param / set /
+path / enabled / disabled / enable / disable / all / render / listen,
+plus the methods.forEach VERB-binding loop so the agent knows
+app.get/post/put/… come from there.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 59
+end = 59
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 90
+end = 90
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 152
+end = 152
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 190
+end = 190
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 256
+end = 256
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 294
+end = 294
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 322
+end = 322
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 351
+end = 351
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 399
+end = 399
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 420
+end = 420
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 439
+end = 439
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 451
+end = 451
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 463
+end = 463
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 471
+end = 472
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 494
+end = 494
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 522
+end = 522
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 598
+end = 598
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "Response prototype — method names"
+justification = """
+Every `res.*` definition in lib/response.js. status / links / send /
+json / jsonp / sendStatus / sendFile / download / contentType+type /
+format / attachment / append / set+header / get / clearCookie /
+cookie / location / redirect / vary / render. Agents typically
+reach for res.X by name and need a one-line confirmation it lives
+here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 64
+end = 64
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 97
+end = 97
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 125
+end = 125
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 232
+end = 232
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 260
+end = 260
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 321
+end = 321
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 371
+end = 371
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 433
+end = 433
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 503
+end = 504
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 569
+end = 569
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 604
+end = 604
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 629
+end = 629
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 664
+end = 665
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 696
+end = 696
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 709
+end = 709
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 742
+end = 742
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 794
+end = 794
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 812
+end = 812
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 875
+end = 875
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 894
+end = 894
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.3"
+descriptor = "Request prototype — method + getter names"
+justification = """
+Every `req.*` method and `defineGetter(req, …)` getter declaration
+in lib/request.js. Methods (get/header, accepts, acceptsEncodings,
+acceptsCharsets, acceptsLanguages, range, is). Getters (query,
+protocol, secure, ip, ips, subdomains, path, host, hostname, fresh,
+stale, xhr). Distinguishing methods from getters matters — req.path
+and req.ip are properties not functions.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 63
+end = 64
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 127
+end = 127
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 140
+end = 140
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 171
+end = 171
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 185
+end = 185
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 214
+end = 214
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 230
+end = 230
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 269
+end = 269
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 297
+end = 297
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 326
+end = 326
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 340
+end = 340
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 357
+end = 357
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 383
+end = 383
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 403
+end = 403
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 418
+end = 418
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 444
+end = 444
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 469
+end = 469
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 497
+end = 497
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 508
+end = 508
+render = { kind = "truncated", pattern = "^[^,]+, '[^']+'" }
+
+[[batches]]
+id = "2.4"
+descriptor = "lib/utils.js — all exports"
+justification = """
+Utils is a small helper file whose exports are mostly setting
+compilers (etag, query-parser, trust-proxy) referenced by name from
+application.js. Listing all 8 exports + the two unexported helpers
+lets the agent infer where setting semantics live without opening
+the file.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 29
+end = 29
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 40
+end = 40
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 61
+end = 61
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 75
+end = 75
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 89
+end = 89
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 130
+end = 130
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 162
+end = 162
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 194
+end = 194
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 225
+end = 225
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 249
+end = 249
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 267
+end = 267
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.5"
+descriptor = "lib/view.js — View class shape"
+justification = """
+The View constructor + three prototype methods (lookup, render,
+resolve) + tryStat. View is the engine-resolution layer behind
+app.render/res.render.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 36
+end = 36
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 52
+end = 52
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 104
+end = 104
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 133
+end = 133
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 197
+end = 197
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.6"
+descriptor = "examples/ directory listing"
+justification = """
+27 example apps. Knowing all of them by name turns "is there an
+example for X" into a zero-follow-up answer. Cheap fs batch with
+high coverage.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
+
+[[batches]]
+id = "2.7"
+descriptor = "examples/README.md — example catalog"
+justification = """
+30 lines mapping example directory name → one-line description.
+For "show me an example of X" queries this is the directory of
+directories.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "examples/README.md"
+start = 1
+end = 29
+render = { kind = "full" }
+
+# ============================================================
+# Tier 3 — feature/concept dives: hot-method bodies, key config,
+# factory body. Predecessors override the prior signature line.
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "createApplication factory body"
+justification = """
+The body called by `require('express')()`: the merge-descriptors
+mixin combining EventEmitter + application prototype, per-app
+request/response prototype forks with an `app` back-reference,
+and the call to app.init().
+"""
+predecessor = "1.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/express.js"
+start = 36
+end = 56
+render = { kind = "full" }
+
+[[batches]]
+id = "3.2"
+descriptor = "app.init — lazy router setup"
+justification = """
+Sets up cache/engines/settings, calls defaultConfiguration, then
+installs a lazy getter for `app.router` that constructs a Router
+with case-sensitivity / strict-routing options. Explains why
+there's no explicit Router construction call in user code.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 59
+end = 83
+render = { kind = "full" }
+
+[[batches]]
+id = "3.3"
+descriptor = "Default app configuration body"
+justification = """
+defaultConfiguration is where every Express setting gets its
+default (etag=weak, env, query parser=simple, subdomain offset=2,
+trust proxy=false, view, views=resolve('views'), jsonp callback
+name, view cache in production). Single most-asked "what are the
+default settings" batch.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 90
+end = 141
+render = { kind = "full" }
+
+[[batches]]
+id = "3.4"
+descriptor = "app.handle — request entry"
+justification = """
+The pipeline entry: sets up finalhandler, the X-Powered-By header,
+the circular req.res / res.req references, alters the prototypes
+to add Express's req/res methods, and delegates to
+this.router.handle. Indispensable for "how does a request flow
+through Express".
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 152
+end = 178
+render = { kind = "full" }
+
+[[batches]]
+id = "3.5"
+descriptor = "app.use body"
+justification = """
+app.use is the most-used mounting method; its body shows the
+path-vs-fn disambiguation, the array-flattening, and the special
+case for mounting a sub-app (sets fn.mountpath and fn.parent,
+re-wires the request prototype chain).
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 190
+end = 244
+render = { kind = "full" }
+
+[[batches]]
+id = "3.6"
+descriptor = "app.set body"
+justification = """
+The settings setter is the entry point for `etag`, `query parser`,
+and `trust proxy` value→function compilation (calls into
+utils.compileETag / compileQueryParser / compileTrust). One-arg
+form returns current value.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 351
+end = 383
+render = { kind = "full" }
+
+[[batches]]
+id = "3.7"
+descriptor = "app.listen + verb dispatch loop"
+justification = """
+listen() wraps http.createServer(this), guards the callback with
+`once`. The verb dispatch loop (methods.forEach binding
+app[method]) is where `app.get`/`post`/`put`/etc actually come from
+— shows the `app.get(setting)` one-arg overload.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 471
+end = 482
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 598
+end = 606
+render = { kind = "full" }
+
+[[batches]]
+id = "3.8"
+descriptor = "app.engine, app.param, app.route, app.all"
+justification = """
+Four short app-prototype methods grouped: engine() with extension
+normalization; param() that also accepts an array of names; route()
+one-liner proxying to the router; all() looping over every HTTP
+method.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 256
+end = 258
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 294
+end = 308
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 322
+end = 334
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 494
+end = 503
+render = { kind = "full" }
+
+[[batches]]
+id = "3.9"
+descriptor = "app.enabled/disabled/enable/disable + app.path"
+justification = """
+The settings convenience-method cluster — each is a one-liner
+around app.set. Mountpath traversal (app.path) is the recursive
+parent.path() + this.mountpath idiom.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 399
+end = 403
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 420
+end = 422
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 439
+end = 441
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 451
+end = 453
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 463
+end = 465
+render = { kind = "full" }
+
+[[batches]]
+id = "3.10"
+descriptor = "examples/hello-world/index.js"
+justification = """
+The simplest possible standalone Express program (15 lines). Pairs
+with the Readme snippet but uses the actual project layout so
+imports + the `module.parent` guard are visible.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "examples/hello-world/index.js"
+start = 1
+end = 15
+render = { kind = "full" }
+
+[[batches]]
+id = "3.11"
+descriptor = "res.send body"
+justification = """
+The workhorse responder: type-switch on body (string→html,
+buffer→bin, object→json), Content-Type negotiation, ETag
+generation, Content-Length, 204/304/205 header stripping, and
+HEAD short-circuit.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 125
+end = 218
+render = { kind = "full" }
+
+[[batches]]
+id = "3.12"
+descriptor = "Setting compilers — compileETag/QueryParser/Trust"
+justification = """
+The three value→function dispatchers behind `etag`, `query parser`,
+and `trust proxy`. Common question: "what values can I pass for
+trust proxy" — the answer is right here (boolean/number/string
+hop-count/comma-list/function/array).
+"""
+predecessor = "2.4"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/utils.js"
+start = 130
+end = 214
+render = { kind = "full" }
+
+[[batches]]
+id = "3.13"
+descriptor = "res.redirect body"
+justification = """
+Shows the canonical 302 + Location pattern, the 2-arg (status, url)
+signature, depd deprecations for missing/non-string URL, and the
+format() call producing both text and html bodies.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 812
+end = 864
+render = { kind = "full" }
+
+[[batches]]
+id = "3.14"
+descriptor = "res.sendFile body"
+justification = """
+Static file delivery: arg validation, requires absolute path or
+opts.root, wires app.etag through to the `send` package, hands off
+to the local sendfile() pipe helper.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 371
+end = 413
+render = { kind = "full" }
+
+[[batches]]
+id = "3.15"
+descriptor = "app.render body"
+justification = """
+View resolution and cache. Pulls view / view engine / views
+settings, builds a View, primes the cache when enabled, delegates
+to tryRender. Pairs with res.render (next batch).
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 522
+end = 575
+render = { kind = "full" }
+
+[[batches]]
+id = "3.16"
+descriptor = "res.render body + tryRender helper"
+justification = """
+A thin res.locals merge + default callback that calls res.send,
+forwarding to app.render. Includes tryRender (the try/catch
+wrapper at the bottom of application.js).
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 894
+end = 918
+render = { kind = "full" }
+
+# ============================================================
+# Tier 4 — supporting context: cheap fs batches, smaller method
+# bodies, imports. Priority-ordered so smaller budgets benefit.
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "examples/mvc layout"
+justification = """
+mvc is the canonical "real-app shape" example: db.js + lib/ +
+controllers/ + views/ + public/. Listing the directory shows
+agents the conventional Express MVC carving.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "examples/mvc"
+entries = "all"
+
+[[batches]]
+id = "4.2"
+descriptor = "test/acceptance/ — example-as-test directory"
+justification = """
+Acceptance tests run the actual example apps against expectations.
+Tells the agent that every major example has a matching acceptance
+test — "how should X work" can often be answered by reading the
+matching acceptance test.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test/acceptance"
+entries = "all"
+
+[[batches]]
+id = "4.3"
+descriptor = "Module imports — application.js"
+justification = """
+What application.js depends on: finalhandler, debug, ./view,
+node:http, ./utils, node:path.resolve, once, router. Important
+for "where does the Router come from" — it's the external
+`router` package, not in-tree.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/application.js"
+start = 16
+end = 27
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "test/ root listing"
+justification = """
+One-test-per-method naming makes this directory a secondary
+public-API index — "where is X tested" becomes one path away.
+Catastrophic-omission applies: a partial listing would suggest
+features without tests.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+
+[[batches]]
+id = "4.5"
+descriptor = "View constructor body"
+justification = """
+Resolves the extension (from name or defaultEngine), lazy-loads
+the engine module by ext via require(mod).__express, stores it,
+then runs lookup. The "how does view engine resolution work"
+answer.
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/view.js"
+start = 52
+end = 95
+render = { kind = "full" }
+
+[[batches]]
+id = "4.6"
+descriptor = "res.status + res.type bodies"
+justification = """
+Two of the smallest, most-used response setters. status() ints +
+range check (throws on non-int or out-of-range), type() mime-vs-
+explicit branching via mime.contentType.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 64
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/response.js"
+start = 503
+end = 510
+render = { kind = "full" }
+
+[[batches]]
+id = "4.7"
+descriptor = "req.is body"
+justification = """
+req.is with arguments-flattening into type-is. Common hot call.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 269
+end = 281
+render = { kind = "full" }
+
+[[batches]]
+id = "4.8"
+descriptor = ".github workflows"
+justification = """
+What CI runs on PRs. Cheap reference for "what checks must pass".
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = ".github"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+
+[[batches]]
+id = "4.9"
+descriptor = "req.accepts + req.acceptsEncodings bodies"
+justification = """
+Two of the content-negotiation methods — one-liners delegating to
+the `accepts` package.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 127
+end = 130
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 140
+end = 143
+render = { kind = "full" }
+
+[[batches]]
+id = "4.10"
+descriptor = "req.acceptsCharsets + req.acceptsLanguages bodies"
+justification = """
+The remaining content-negotiation methods, delegating to the
+`accepts` package — both use the ...rest spread idiom.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 171
+end = 174
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "lib/request.js"
+start = 185
+end = 187
+render = { kind = "full" }

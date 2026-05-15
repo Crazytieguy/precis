@@ -1,0 +1,359 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.devcontainer/
+    devcontainer.json
+    on-create-command.sh
+.editorconfig
+.github/
+    ISSUE_TEMPLATE/
+    pull_request_template.md
+    workflows/
+        lock.yaml
+        pre-commit.yaml
+        publish.yaml
+        tests.yaml
+        zizmor.yaml
+.gitignore
+.pre-commit-config.yaml
+.readthedocs.yaml
+CHANGES.rst
+LICENSE.txt
+README.md
+    3→# Flask
+    5→Flask is a lightweight [WSGI] web application framework. It is designed
+    6→to make getting started quick and easy, with the ability to scale up to
+    7→complex applications. It began as a simple wrapper around [Werkzeug]
+    8→and [Jinja], and has become one of the most popular Python web
+    9→application frameworks.
+    11→Flask offers suggestions, but doesn't enforce any dependencies or
+    12→project layout. It is up to the developer to choose the tools and
+    13→libraries they want to use. There are many extensions provided by the
+    14→community that make adding new functionality easy.
+    16→[WSGI]: https://wsgi.readthedocs.io/
+    17→[Werkzeug]: https://werkzeug.palletsprojects.com/
+    18→[Jinja]: https://jinja.palletsprojects.com/
+    20→## A Simple Example
+    …
+    22→```python
+    23→# save this as app.py
+    24→from flask import Flask
+    26→app = Flask(__name__)
+    28→@app.route("/")
+    29→def hello():
+    30→    return "Hello, World!"
+    31→```
+    33→```
+    34→$ flask run
+    35→  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+    36→```
+    38→## Donate
+    …
+    40→The Pallets organization develops and supports Flask and the libraries
+    41→it uses. In order to grow the community of contributors and users, and
+    42→allow the maintainers to devote more time to the projects, [please
+    43→donate today].
+    45→[please donate today]: https://palletsprojects.com/donate
+    47→## Contributing
+    …
+    49→See our [detailed contributing documentation][contrib] for many ways to
+    50→contribute, including reporting issues, requesting features, asking or answering
+    51→questions, and making PRs.
+    53→[contrib]: https://palletsprojects.com/contributing/
+docs/
+    Makefile
+    _static/
+        debugger.png
+        flask-icon.svg
+        flask-logo.svg
+        flask-name.svg
+        pycharm-run-config.png
+    api.rst
+    appcontext.rst
+    async-await.rst
+    blueprints.rst
+    changes.rst
+    cli.rst
+    conf.py
+        1→import packaging.version
+        2→from pallets_sphinx_themes import get_version
+        3→from pallets_sphinx_themes import ProjectLink
+    config.rst
+    contributing.rst
+    debugging.rst
+    deploying/
+        apache-httpd.rst
+        asgi.rst
+        eventlet.rst
+        gevent.rst
+        gunicorn.rst
+        index.rst
+        mod_wsgi.rst
+        nginx.rst
+        proxy_fix.rst
+        uwsgi.rst
+        waitress.rst
+    design.rst
+    errorhandling.rst
+    extensiondev.rst
+    extensions.rst
+    gevent.rst
+    index.rst
+    installation.rst
+    license.rst
+    lifecycle.rst
+    logging.rst
+    make.bat
+    patterns/
+        appdispatch.rst
+        appfactories.rst
+        caching.rst
+        celery.rst
+        deferredcallbacks.rst
+        favicon.rst
+        fileuploads.rst
+        flashing.rst
+        index.rst
+        javascript.rst
+        jquery.rst
+        lazyloading.rst
+        methodoverrides.rst
+        mongoengine.rst
+        packages.rst
+        requestchecksum.rst
+        singlepageapplications.rst
+        sqlalchemy.rst
+        sqlite3.rst
+        streaming.rst
+        subclassing.rst
+        templateinheritance.rst
+        urlprocessors.rst
+        viewdecorators.rst
+        wtforms.rst
+    quickstart.rst
+    reqcontext.rst
+    server.rst
+    shell.rst
+    signals.rst
+    templating.rst
+    testing.rst
+    tutorial/
+        blog.rst
+        database.rst
+        deploy.rst
+        factory.rst
+        flaskr_edit.png
+        flaskr_index.png
+        flaskr_login.png
+        index.rst
+        install.rst
+        layout.rst
+        next.rst
+        static.rst
+        templates.rst
+        tests.rst
+        views.rst
+    views.rst
+    web-security.rst
+examples/
+    celery/
+        README.md
+        make_celery.py
+        pyproject.toml
+        requirements.txt
+        src/
+    javascript/
+        .gitignore
+        LICENSE.txt
+        README.rst
+        js_example/
+            __init__.py
+            templates/
+            views.py
+        pyproject.toml
+        tests/
+    tutorial/
+        .gitignore
+        LICENSE.txt
+        README.rst
+        flaskr/
+            __init__.py
+            auth.py
+            blog.py
+            db.py
+            schema.sql
+            static/
+            templates/
+        pyproject.toml
+        tests/
+            conftest.py
+            data.sql
+            test_auth.py
+            test_blog.py
+            test_db.py
+            test_factory.py
+pyproject.toml
+    1→[project]
+    2→name = "Flask"
+    4→description = "A simple framework for building complex web applications."
+src/
+    flask/
+        __init__.py
+            1→from . import json as json
+            2→from .app import Flask as Flask
+            3→from .blueprints import Blueprint as Blueprint
+            4→from .config import Config as Config
+            5→from .ctx import after_this_request as after_this_request
+            6→from .ctx import copy_current_request_context as copy_current_request_context
+            7→from .ctx import has_app_context as has_app_context
+            8→from .ctx import has_request_context as has_request_context
+            9→from .globals import current_app as current_app
+            10→from .globals import g as g
+            11→from .globals import request as request
+            12→from .globals import session as session
+            23→from .json import jsonify as jsonify
+            38→from .wrappers import Request as Request
+            39→from .wrappers import Response as Response
+        __main__.py
+            1→from .cli import main
+        app.py
+        blueprints.py
+            18→class Blueprint(SansioBlueprint):
+            19→    def __init__(
+            …
+            55→    def get_send_file_max_age(self, filename: str | None) -> int | None:
+            …
+            82→    def send_static_file(self, filename: str) -> Response:
+            …
+            104→    def open_resource(
+            105→        self, resource: str, mode: str = "rb", encoding: str | None = "utf-8"
+            106→    ) -> t.IO[t.AnyStr]:
+        cli.py
+        config.py
+            17→T = t.TypeVar("T")
+            20→class ConfigAttribute(t.Generic[T]):
+            21→    """Makes an attribute forward to the config"""
+            50→class Config(dict):  # type: ignore[type-arg]
+            …
+        ctx.py
+        debughelpers.py
+        globals.py
+        helpers.py
+        json/
+            __init__.py
+                1→from __future__ import annotations
+                3→import json as _json
+                4→import typing as t
+                6→from ..globals import current_app
+                7→from .provider import _default
+                9→if t.TYPE_CHECKING:  # pragma: no cover
+                10→    from ..wrappers import Response
+                13→def dumps(obj: t.Any, **kwargs: t.Any) -> str:
+                …
+                47→def dump(obj: t.Any, fp: t.IO[str], **kwargs: t.Any) -> None:
+                48→    """Serialize data as JSON and write to a file.
+                50→    If :data:`~flask.current_app` is available, it will use its
+                51→    :meth:`app.json.dump() <flask.json.provider.JSONProvider.dump>`
+                52→    method, otherwise it will use :func:`json.dump`.
+                54→    :param obj: The data to serialize.
+                55→    :param fp: A file opened for writing text. Should use the UTF-8
+                56→        encoding to be valid JSON.
+                57→    :param kwargs: Arguments passed to the ``dump`` implementation.
+                59→    .. versionchanged:: 2.3
+                60→        The ``app`` parameter was removed.
+                62→    .. versionchanged:: 2.2
+                63→        Calls ``current_app.json.dump``, allowing an app to override
+                64→        the behavior.
+                66→    .. versionchanged:: 2.0
+                67→        Writing to a binary file, and the ``encoding`` argument, will be
+                68→        removed in Flask 2.1.
+                69→    """
+                70→    if current_app:
+                71→        current_app.json.dump(obj, fp, **kwargs)
+                72→    else:
+                73→        kwargs.setdefault("default", _default)
+                74→        _json.dump(obj, fp, **kwargs)
+                77→def loads(s: str | bytes, **kwargs: t.Any) -> t.Any:
+                …
+                102→    if current_app:
+                103→        return current_app.json.loads(s, **kwargs)
+                105→    return _json.loads(s, **kwargs)
+                108→def load(fp: t.IO[t.AnyStr], **kwargs: t.Any) -> t.Any:
+                …
+                132→    if current_app:
+                133→        return current_app.json.load(fp, **kwargs)
+                135→    return _json.load(fp, **kwargs)
+                138→def jsonify(*args: t.Any, **kwargs: t.Any) -> Response:
+                …
+                170→    return current_app.json.response(*args, **kwargs)  # type: ignore[return-value]
+            provider.py
+                19→class JSONProvider:
+                …
+                108→def _default(o: t.Any) -> t.Any:
+                …
+                124→class DefaultJSONProvider(JSONProvider):
+                …
+            tag.py
+        logging.py
+            15→@LocalProxy
+            …
+            31→def has_level_handler(logger: logging.Logger) -> bool:
+            …
+            52→default_handler = logging.StreamHandler(wsgi_errors_stream)  # type: ignore
+            58→def create_logger(app: App) -> logging.Logger:
+            …
+        py.typed
+        sansio/
+            README.md
+                1→# Sansio
+                3→This folder contains code that can be used by alternative Flask
+                4→implementations, for example Quart. The code therefore cannot do any
+                5→IO, nor be part of a likely IO path. Finally this code cannot use the
+                6→Flask globals.
+            app.py
+            blueprints.py
+                119→class Blueprint(Scaffold):
+                …
+                172→    _got_registered_once = False
+            scaffold.py
+        sessions.py
+        signals.py
+            1→from __future__ import annotations
+            3→from blinker import Namespace
+        templating.py
+        testing.py
+        typing.py
+            1→from __future__ import annotations
+            3→import collections.abc as cabc
+            4→import typing as t
+        views.py
+            9→F = t.TypeVar("F", bound=t.Callable[..., t.Any])
+            11→http_method_funcs = frozenset(
+            12→    ["get", "post", "head", "options", "delete", "put", "trace", "patch"]
+            13→)
+            16→class View:
+            …
+            78→    def dispatch_request(self) -> ft.ResponseReturnValue:
+            …
+            83→        raise NotImplementedError()
+            85→    @classmethod
+            86→    def as_view(
+            87→        cls, name: str, *class_args: t.Any, **class_kwargs: t.Any
+            88→    ) -> ft.RouteCallable:
+            138→class MethodView(View):
+            …
+            165→    def __init_subclass__(cls, **kwargs: t.Any) -> None:
+            …
+            182→    def dispatch_request(self, **kwargs: t.Any) -> ft.ResponseReturnValue:
+            …
+        wrappers.py
+            18→class Request(RequestBase):
+            …
+            222→class Response(ResponseBase):
+            …
+            240→    default_mimetype: str | None = "text/html"
+            242→    json_module = json
+            244→    autocorrect_location_header = False
+tests/
+uv.lock

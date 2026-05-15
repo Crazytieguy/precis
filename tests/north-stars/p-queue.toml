@@ -1,0 +1,864 @@
+fixture = "p-queue"
+revision_pin = "fc4b7369"
+summary = """
+p-queue is a TypeScript ESM library: a promise queue with concurrency control,
+optional rate limiting (intervalCap + interval, with strict sliding-window
+mode), priority ordering, abort-signal cancellation, per-task timeouts, and a
+rich event/promise lifecycle surface (active/idle/empty/pendingZero/rateLimit
+/rateLimitCleared/error etc.). Public surface is `source/index.ts`
+(the `PQueue` class) plus `source/priority-queue.ts` (the default queue
+implementation). The README is unusually long and doubles as API + FAQ docs;
+many user queries are answerable from its prose. The ranking prioritizes:
+(1) crate identity + the fact that PQueue is the default export, (2) a
+catastrophic-omission-safe enumeration of every public method, getter, event
+name, and constructor option, (3) the readme's API/options/events sections,
+(4) priority-queue internals + key behavioral hot spots in PQueue (add(),
+tryToStartAnother(), rate-limit state), and (5) a survey of the test files
+including all test names so the agent can find behavioral precedents
+quickly.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — identity, top-level layout, default export.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Package name + description"
+justification = """
+Cheapest possible identity hit: name, version, one-line description.
+Anchors tiny-budget output.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 4, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Readme lede"
+justification = """
+Title + tagline + the "useful for rate-limiting async operations" framing.
+Single-sentence semantic context that often suffices on its own.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 1, end = 5, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Repo root listing"
+justification = """
+Tells the agent every top-level file/dir exists. Catastrophic-omission
+mitigation for the project layout — readme.md, bench.ts, source/, test/,
+test-d/, .github/, tsconfig.json, license.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "PQueue default-export class declaration"
+justification = """
+Doc-comment + class line — the single most important location pointer in
+the codebase. Truncated to drop the long generic tail.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 13, end = 15, render = { kind = "full" } },
+  { path = "source/index.ts", start = 16, end = 16, render = { kind = "truncated", pattern = "^export default class PQueue" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "source/ and test/ listings"
+justification = """
+Enumerates every source module (index, priority-queue, queue, options,
+lower-bound) and every test file. Without this, the agent can't tell that
+e.g. `lower-bound.ts` or `strict.ts` exist.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "source", entries = "all" },
+  { parent = "test", entries = "all" },
+  { parent = "test-d", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json — module type, exports, engine"
+justification = """
+Surfaces the ESM-only nature (`"type": "module"`), the dist entry points,
+and the Node engine floor (>=20). Loadbearing for any "how do I import
+this" / "what node version" question.
+"""
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 8, end = 16, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "EventName union (all 10 event names)"
+justification = """
+Single line listing every event the queue can emit:
+active|idle|empty|add|next|completed|error|pendingZero|rateLimit
+|rateLimitCleared. Tiny, very high signal — answers "what events does this
+emit?" outright and primes any `.on(…)` lookup.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 11, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Readme — Install + ESM warning"
+justification = """
+Install section: npm install p-queue + the load-bearing "no CommonJS
+export" warning that recurs in bug reports.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 39, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "Readme — basic usage (import + single example)"
+justification = """
+The minimal canonical "what does calling this look like" snippet: import,
+`new PQueue({concurrency: 1})`, and one `.add()` call. Enough on its own
+to answer "how do I use this".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 47, end = 61, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 2 — public API surface.
+# Catastrophic-omission mitigation: no method/getter/option goes unmentioned.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "PQueue public method signature locations"
+justification = """
+One line per public method: setPriority, add (overload), addAll, start,
+pause, clear, onEmpty, onSizeLessThan, onIdle, onPendingZero, onRateLimit,
+onRateLimitCleared, onError, sizeBy. With 2.2, the full API shape is
+visible without bodies.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 432, end = 432, render = { kind = "full" } },
+  { path = "source/index.ts", start = 443, end = 443, render = { kind = "truncated", pattern = "^\\s*async add[^(]+" } },
+  { path = "source/index.ts", start = 581, end = 581, render = { kind = "full" } },
+  { path = "source/index.ts", start = 595, end = 595, render = { kind = "full" } },
+  { path = "source/index.ts", start = 609, end = 609, render = { kind = "full" } },
+  { path = "source/index.ts", start = 616, end = 616, render = { kind = "full" } },
+  { path = "source/index.ts", start = 652, end = 652, render = { kind = "full" } },
+  { path = "source/index.ts", start = 668, end = 668, render = { kind = "full" } },
+  { path = "source/index.ts", start = 682, end = 682, render = { kind = "full" } },
+  { path = "source/index.ts", start = 696, end = 696, render = { kind = "full" } },
+  { path = "source/index.ts", start = 707, end = 707, render = { kind = "full" } },
+  { path = "source/index.ts", start = 718, end = 718, render = { kind = "full" } },
+  { path = "source/index.ts", start = 756, end = 756, render = { kind = "full" } },
+  { path = "source/index.ts", start = 794, end = 794, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "PQueue public getters + the public `timeout` field"
+justification = """
+All exposed observables: the public `timeout` field, concurrency get/set,
+size, pending, isPaused, isRateLimited, isSaturated, runningTasks. With
+2.1 this is the entire instance surface.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 83, end = 83, render = { kind = "full" } },
+  { path = "source/index.ts", start = 382, end = 382, render = { kind = "full" } },
+  { path = "source/index.ts", start = 386, end = 386, render = { kind = "full" } },
+  { path = "source/index.ts", start = 785, end = 785, render = { kind = "full" } },
+  { path = "source/index.ts", start = 802, end = 802, render = { kind = "full" } },
+  { path = "source/index.ts", start = 809, end = 809, render = { kind = "full" } },
+  { path = "source/index.ts", start = 888, end = 888, render = { kind = "full" } },
+  { path = "source/index.ts", start = 918, end = 918, render = { kind = "full" } },
+  { path = "source/index.ts", start = 952, end = 952, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Module exports at the bottom of source/index.ts"
+justification = """
+The four `export` lines: re-exports of Queue type, PriorityQueue default,
+QueueAddOptions/Options types, and TimeoutError. Answers "what can I
+import from this package?" with no follow-up.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 963, end = 965, render = { kind = "full" } },
+  { path = "source/index.ts", start = 985, end = 985, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Options<…> field names (constructor options)"
+justification = """
+Every constructor option: concurrency, autoStart, queueClass, intervalCap,
+interval, carryoverIntervalCount, carryoverConcurrencyCount (deprecated),
+strict, plus the inherited TimeoutOptions.timeout. Critical catastrophic-
+omission hedge — without this batch an agent can easily believe a feature
+like `strict` doesn't exist.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/options.ts", start = 24, end = 24, render = { kind = "full" } },
+  { path = "source/options.ts", start = 27, end = 27, render = { kind = "truncated", pattern = "^export type Options" } },
+  { path = "source/options.ts", start = 35, end = 35, render = { kind = "full" } },
+  { path = "source/options.ts", start = 42, end = 42, render = { kind = "full" } },
+  { path = "source/options.ts", start = 47, end = 47, render = { kind = "full" } },
+  { path = "source/options.ts", start = 56, end = 56, render = { kind = "full" } },
+  { path = "source/options.ts", start = 65, end = 65, render = { kind = "full" } },
+  { path = "source/options.ts", start = 72, end = 72, render = { kind = "full" } },
+  { path = "source/options.ts", start = 77, end = 77, render = { kind = "full" } },
+  { path = "source/options.ts", start = 94, end = 94, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "QueueAddOptions + TaskOptions field names (per-task options)"
+justification = """
+Names every per-task option: priority, id, signal, timeout.
+Catastrophic-omission hedge for `.add(fn, options)`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/options.ts", start = 97, end = 97, render = { kind = "full" } },
+  { path = "source/options.ts", start = 103, end = 103, render = { kind = "full" } },
+  { path = "source/options.ts", start = 108, end = 108, render = { kind = "full" } },
+  { path = "source/options.ts", start = 111, end = 111, render = { kind = "full" } },
+  { path = "source/options.ts", start = 147, end = 147, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Queue<…> custom queue-class interface"
+justification = """
+Full content of source/queue.ts (11 lines): the structural type any
+custom `queueClass` must satisfy. Answers "how do I plug in my own
+queue?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/queue.ts", start = 1, end = 11, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 3 — readme prose: option/lifecycle/event/FAQ semantics.
+# Strategy: cheap heading-locations batches first, then highest-leverage
+# semantic chunks. Detail batches predecessor onto the matching heading
+# batch so they can overlap the heading line.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "Readme — top-level ## section headings"
+justification = """
+The eight ##-level chapters: API, Events, Advanced example, Handling
+timeouts, Custom QueueClass, FAQ, Maintainers, Related. Cheap, high-
+leverage map of the docs.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 68, end = 68, render = { kind = "full" } },
+  { path = "readme.md", start = 512, end = 512, render = { kind = "full" } },
+  { path = "readme.md", start = 698, end = 698, render = { kind = "full" } },
+  { path = "readme.md", start = 768, end = 768, render = { kind = "full" } },
+  { path = "readme.md", start = 813, end = 813, render = { kind = "full" } },
+  { path = "readme.md", start = 847, end = 847, render = { kind = "full" } },
+  { path = "readme.md", start = 1066, end = 1066, render = { kind = "full" } },
+  { path = "readme.md", start = 1071, end = 1071, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Readme — API/option subsection headings"
+justification = """
+Every #### in the API/options area: option names (concurrency, timeout,
+autoStart, queueClass, intervalCap, interval, carryoverIntervalCount,
+strict), lifecycle methods (.add, .addAll, .pause, .start, onEmpty,
+onIdle, onPendingZero, onRateLimit, onRateLimitCleared, onError,
+onSizeLessThan, clear, setPriority), and read-side properties.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 70, end = 70, render = { kind = "full" } },
+  { path = "readme.md", start = 74, end = 74, render = { kind = "full" } },
+  { path = "readme.md", start = 78, end = 78, render = { kind = "full" } },
+  { path = "readme.md", start = 86, end = 86, render = { kind = "full" } },
+  { path = "readme.md", start = 107, end = 107, render = { kind = "full" } },
+  { path = "readme.md", start = 114, end = 114, render = { kind = "full" } },
+  { path = "readme.md", start = 120, end = 120, render = { kind = "full" } },
+  { path = "readme.md", start = 128, end = 128, render = { kind = "full" } },
+  { path = "readme.md", start = 136, end = 136, render = { kind = "full" } },
+  { path = "readme.md", start = 143, end = 143, render = { kind = "full" } },
+  { path = "readme.md", start = 162, end = 162, render = { kind = "full" } },
+  { path = "readme.md", start = 166, end = 166, render = { kind = "full" } },
+  { path = "readme.md", start = 188, end = 188, render = { kind = "full" } },
+  { path = "readme.md", start = 195, end = 195, render = { kind = "full" } },
+  { path = "readme.md", start = 201, end = 201, render = { kind = "full" } },
+  { path = "readme.md", start = 236, end = 236, render = { kind = "full" } },
+  { path = "readme.md", start = 240, end = 240, render = { kind = "full" } },
+  { path = "readme.md", start = 244, end = 244, render = { kind = "full" } },
+  { path = "readme.md", start = 250, end = 250, render = { kind = "full" } },
+  { path = "readme.md", start = 259, end = 259, render = { kind = "full" } },
+  { path = "readme.md", start = 268, end = 268, render = { kind = "full" } },
+  { path = "readme.md", start = 280, end = 280, render = { kind = "full" } },
+  { path = "readme.md", start = 298, end = 298, render = { kind = "full" } },
+  { path = "readme.md", start = 310, end = 310, render = { kind = "full" } },
+  { path = "readme.md", start = 340, end = 340, render = { kind = "full" } },
+  { path = "readme.md", start = 348, end = 348, render = { kind = "full" } },
+  { path = "readme.md", start = 355, end = 355, render = { kind = "full" } },
+  { path = "readme.md", start = 359, end = 359, render = { kind = "full" } },
+  { path = "readme.md", start = 381, end = 381, render = { kind = "full" } },
+  { path = "readme.md", start = 419, end = 419, render = { kind = "full" } },
+  { path = "readme.md", start = 423, end = 423, render = { kind = "full" } },
+  { path = "readme.md", start = 440, end = 440, render = { kind = "full" } },
+  { path = "readme.md", start = 442, end = 442, render = { kind = "full" } },
+  { path = "readme.md", start = 446, end = 446, render = { kind = "full" } },
+  { path = "readme.md", start = 450, end = 450, render = { kind = "full" } },
+  { path = "readme.md", start = 477, end = 477, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Readme — strict mode (sliding window) full description"
+justification = """
+The 18-line strict-mode write-up: sliding-window vs. fixed-window with a
+concrete intervalCap:2/interval:1000 example and the two NOTE callouts.
+Richest single piece of behavioral prose in the readme.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 143, end = 161, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Readme — rate-limit option bodies (intervalCap, interval, carryoverIntervalCount)"
+justification = """
+The three options that together define non-strict rate limiting.
+Foundational for any throttling task.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 121, end = 142, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Readme — onEmpty / onIdle / onPendingZero descriptions"
+justification = """
+The three lifecycle wait-promises with the load-bearing distinction
+between onIdle (empty + nothing pending) vs onEmpty (empty but possibly
+pending) vs onPendingZero (no running, queue may still have items).
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 251, end = 279, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Readme — .add(fn, options?) docs (notes + priority/id options)"
+justification = """
+The important `await defeats concurrency` and unhandled-rejection notes
+plus the priority/id option explanations. Anchors any "how do I add
+tasks" question.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 167, end = 187, render = { kind = "full" } },
+  { path = "readme.md", start = 189, end = 194, render = { kind = "full" } },
+  { path = "readme.md", start = 196, end = 200, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Readme — .signal AbortSignal cancellation example"
+justification = """
+The full AbortSignal example showing the inside-the-task signal handling
+pattern. Critical for any cancellation question.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 202, end = 235, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Readme — onError fail-fast pattern + .clear() warning"
+justification = """
+The fail-fast-on-error pattern with Promise.race and the load-bearing
+`.clear()` warning about never-settling promises. Two of the most-cited
+footguns.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 311, end = 339, render = { kind = "full" } },
+  { path = "readme.md", start = 349, end = 354, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Readme — FAQ headings"
+justification = """
+The eight `#### How do I …` FAQ headings. Catastrophic-omission hedge:
+agent sees every "common question" the docs address.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 849, end = 849, render = { kind = "full" } },
+  { path = "readme.md", start = 853, end = 853, render = { kind = "full" } },
+  { path = "readme.md", start = 865, end = 865, render = { kind = "full" } },
+  { path = "readme.md", start = 881, end = 881, render = { kind = "full" } },
+  { path = "readme.md", start = 919, end = 919, render = { kind = "full" } },
+  { path = "readme.md", start = 948, end = 948, render = { kind = "full" } },
+  { path = "readme.md", start = 978, end = 978, render = { kind = "full" } },
+  { path = "readme.md", start = 1049, end = 1049, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Readme — concurrency / autoStart / queueClass option bodies"
+justification = """
+First constructor options (sans timeout which is in 3.13) with one-
+paragraph descriptions. Covers the bulk of "how do I configure this".
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 79, end = 85, render = { kind = "full" } },
+  { path = "readme.md", start = 108, end = 113, render = { kind = "full" } },
+  { path = "readme.md", start = 115, end = 119, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "Readme — onRateLimit / onRateLimitCleared docs"
+justification = """
+The rate-limit lifecycle promises with backpressure use case. Pairs with
+the rate-limit option descriptions in 3.3 and 3.4.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 281, end = 285, render = { kind = "full" } },
+  { path = "readme.md", start = 299, end = 302, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "Readme — FAQ: concurrency-vs-intervalCap + strict-mode usage"
+justification = """
+First two FAQ entries: relationship between concurrency and intervalCap,
+and when to choose strict mode.
+"""
+predecessor = "3.9"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 850, end = 852, render = { kind = "full" } },
+  { path = "readme.md", start = 854, end = 864, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "Readme — timeout option body + Handling timeouts section intro"
+justification = """
+The timeout option description (with the per-task override example) and
+the leading paragraph of the Handling timeouts section showing the
+TimeoutError-catching pattern.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 87, end = 106, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.14"
+descriptor = "Readme — .runningTasks debugging example"
+justification = """
+Shows the `{id, priority, startTime, timeout}` shape of running-task
+info. Critical for any "why is my queue stuck" debugging.
+"""
+predecessor = "3.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 478, end = 482, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.15"
+descriptor = "Readme — Events: active / completed / error / empty / idle descriptions"
+justification = """
+Per-event prose for the most common lifecycle events plus the
+empty-vs-idle distinction. Pairs with the EventName union in 1.7 — gives
+semantics for each name.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 514, end = 516, render = { kind = "full" } },
+  { path = "readme.md", start = 536, end = 538, render = { kind = "full" } },
+  { path = "readme.md", start = 553, end = 555, render = { kind = "full" } },
+  { path = "readme.md", start = 572, end = 582, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.16"
+descriptor = "Readme — FAQ: backpressure + cancellation/abort patterns"
+justification = """
+Backpressure (onSizeLessThan + onRateLimit) and the bulk-cancellation
+AbortController pattern with the explicit guidance to avoid clear() for
+cancellation.
+"""
+predecessor = "3.9"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 882, end = 900, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 4 — behavioral hot spots: priority-queue internals + key PQueue
+# method bodies. Surfaces only the most central spans; full sources are
+# easy to fetch with one read.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "priority-queue.ts — class declaration + every method signature"
+justification = """
+Skeleton of the default queue implementation: enqueue, setPriority,
+remove (overloads), dequeue, filter, size getter, #compact. Bodies follow.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/priority-queue.ts", start = 1, end = 16, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 17, end = 17, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 50, end = 50, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 61, end = 63, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 82, end = 82, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 102, end = 102, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 115, end = 115, render = { kind = "full" } },
+  { path = "source/priority-queue.ts", start = 119, end = 119, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "lower-bound.ts — full content"
+justification = """
+21 lines: the C++-style binary-search helper used by PriorityQueue's
+enqueue. Self-contained; answers "how does priority insertion work?".
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/lower-bound.ts", start = 1, end = 20, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "priority-queue.ts — enqueue() body (binary insertion + cursor)"
+justification = """
+Heart of the priority-queue: the empty-queue reset, same-priority FIFO
+append, the binary-search insert, and the #head cursor compaction
+interplay.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/priority-queue.ts", start = 17, end = 48, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "PQueue constructor — option defaults + validation"
+justification = """
+Defines defaults (autoStart: true, intervalCap: Infinity, interval: 0,
+concurrency: Infinity, strict: false) and the TypeError-validation rules
+for intervalCap, interval, the strict constraints, and timeout.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 85, end = 99, render = { kind = "full" } },
+  { path = "source/index.ts", start = 108, end = 114, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "PQueue.#tryToStartAnother() — central scheduling loop"
+justification = """
+The scheduling heart of PQueue: queue.size check, empty/idle emission,
+pause + interval + concurrency gates, slot consumption, 'active'
+emission and job dispatch. Almost every behavioral test depends on this.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 289, end = 338, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "PQueue.add() — abort-signal wiring core (signal/timeout/queue-abort)"
+justification = """
+The hotspot inside add(): the throwIfAborted + rollback path, the
+pTimeout wrap, the signal Promise.race for in-flight cancellation, and
+the queueAbortHandler that removes a not-yet-running task. Skips the
+non-critical surrounding scaffolding.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 474, end = 510, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "PQueue.clear() body — strict-state preservation comment"
+justification = """
+Implementation of clear() including the load-bearing comments about
+*preserving* strict-mode rate-limit history and *not* clearing
+#runningTasks. Behavior here is often surprising.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 617, end = 645, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "PQueue strict-mode core (#cleanupStrictTicks + #isIntervalPausedAt)"
+justification = """
+The sliding-window state machine: how strict ticks are aged out and how
+the pause-on-cap logic schedules a timeout for when the oldest tick
+ages out. Pairs with strict-mode readme description and strict.ts tests.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 137, end = 146, render = { kind = "full" } },
+  { path = "source/index.ts", start = 219, end = 235, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "PQueue rate-limit state machine (#updateRateLimitState)"
+justification = """
+How isRateLimited is computed and rateLimit / rateLimitCleared events
+are emitted. Critical for any "why isn't my event firing" question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.ts", start = 854, end = 883, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — tests as behavior spec.
+# Surfaces test *names* so an agent can pattern-match a query against the
+# existing test corpus in one grep.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "test/basic.ts — every `test(…)` location (names only)"
+justification = """
+Every test name in basic.ts at its line number: .add() / concurrency /
+priority / timeout / onEmpty / onIdle / onSizeLessThan / onPendingZero /
+.clear / .addAll / throttled / onError. Pattern truncates at the closing
+quote.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/basic.ts", start = 14, end = 14, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 22, end = 22, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 37, end = 37, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 58, end = 58, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 74, end = 74, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 97, end = 97, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 110, end = 110, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 124, end = 124, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 135, end = 135, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 224, end = 224, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 246, end = 246, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 268, end = 268, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 294, end = 294, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 319, end = 319, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 328, end = 328, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 335, end = 335, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 352, end = 352, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 372, end = 372, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 385, end = 385, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 518, end = 518, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 575, end = 575, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 589, end = 589, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 612, end = 612, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 651, end = 651, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 661, end = 661, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 684, end = 684, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 694, end = 694, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 751, end = 751, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 779, end = 779, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 811, end = 811, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 831, end = 831, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 844, end = 844, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 854, end = 854, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 887, end = 887, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 900, end = 900, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 922, end = 922, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 941, end = 941, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 958, end = 958, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 986, end = 986, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1002, end = 1002, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1038, end = 1038, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1085, end = 1085, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1131, end = 1131, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1173, end = 1173, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1224, end = 1224, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1246, end = 1246, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1277, end = 1277, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1308, end = 1308, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/basic.ts", start = 1327, end = 1327, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "test/strict.ts — every `test(…)` location (names only)"
+justification = """
+All 30 strict-mode tests: sliding-window enforcement, boundary bursts,
+clear/abort/timeout/priority interactions in strict mode, circular
+buffer compaction. The behavioral spec for the strict-mode code in 4.8.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/strict.ts", start = 15, end = 15, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 38, end = 38, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 93, end = 93, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 116, end = 116, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 146, end = 146, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 174, end = 174, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 199, end = 199, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 222, end = 222, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 261, end = 261, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 275, end = 275, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 300, end = 300, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 327, end = 327, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 352, end = 352, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 366, end = 366, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 402, end = 402, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 424, end = 424, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 456, end = 456, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 477, end = 477, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 510, end = 510, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 535, end = 535, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 564, end = 564, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 587, end = 587, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 620, end = 620, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 650, end = 650, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 676, end = 676, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 718, end = 718, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 743, end = 743, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 773, end = 773, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 797, end = 797, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/strict.ts", start = 834, end = 834, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "test/priority-queue.ts + test/rate-limit.ts + test/debug.ts + test/validation.ts — test names"
+justification = """
+The four smaller test files combined: PriorityQueue unit tests, rate-
+limit microtask edge cases, runningTasks/isSaturated debugging, and
+constructor/setPriority validation.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test/priority-queue.ts", start = 7, end = 7, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/priority-queue.ts", start = 28, end = 28, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/priority-queue.ts", start = 50, end = 50, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/priority-queue.ts", start = 72, end = 72, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/priority-queue.ts", start = 137, end = 137, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/rate-limit.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/rate-limit.ts", start = 46, end = 46, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/rate-limit.ts", start = 65, end = 65, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/rate-limit.ts", start = 135, end = 135, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/rate-limit.ts", start = 252, end = 252, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 52, end = 52, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 146, end = 146, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 174, end = 174, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 198, end = 198, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/debug.ts", start = 233, end = 233, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/validation.ts", start = 6, end = 6, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/validation.ts", start = 34, end = 34, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/validation.ts", start = 55, end = 55, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/validation.ts", start = 77, end = 77, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+  { path = "test/validation.ts", start = 117, end = 117, render = { kind = "truncated", pattern = "^test\\('[^']+" } },
+]

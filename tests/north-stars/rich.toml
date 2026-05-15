@@ -1,0 +1,1187 @@
+fixture = "rich"
+revision_pin = "46cebbb0"
+summary = """
+Rich is a Python library for rich text and beautiful terminal output: a
+single `Console` object renders structured "renderables" (Text, Table,
+Tree, Panel, Columns, Markdown, Syntax, Progress, Live, Layout, …) to a
+terminal, plus pretty-printing of arbitrary Python objects, BBCode-like
+markup for inline color/style, emoji codes, syntax highlighting via
+pygments, and rich tracebacks. The public entry points (`rich.print`,
+`rich.inspect`, `rich.print_json`, `Console.print`/`log`) drive everything;
+all renderables share the `__rich_console__` / `__rich__` protocol.
+
+The crate is a flat namespace of ~80 modules under `rich/`. The ranking
+front-loads (1) what the library *is* and how to import it, (2) the
+`Console` API surface and shape of `ConsoleOptions`, (3) the renderable
+protocol and the foundational types (Style, Color, Segment, Box,
+markup), then fans out file-by-file across the renderables (Text,
+Table, Tree, Panel, Markdown, Syntax, Progress, Live, Layout, etc.)
+and the specialized helpers (Traceback, RichHandler, Prompt, Pretty,
+JSON, Highlighter). Tests, examples, and the sprawling `_emoji_codes`
+/ `_palettes` / `_spinners` data tables are surfaced as directory
+listings or short pointers only — body content there is low value-per-
+token.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — what is this crate, top-level shape, primary entry points
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede: what Rich is"
+justification = """
+First prose line establishes Python library + rich text + terminal.
+Cheapest possible orientation; useful at any budget.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 30, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "rich/__init__.py docstring + __all__"
+justification = """
+The package's own self-description, and the `__all__` list —
+`get_console`, `reconfigure`, `print`, `inspect`, `print_json`. The
+exported names tell an agent the entry-point shape at minimal cost.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/__init__.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 8, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "pyproject identity: name + version + description"
+justification = """
+Package name (`rich`), version (15.0.0), and the project's own
+description line. Cheapest possible identity beacon.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 1, end = 6, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "README capability line"
+justification = """
+Capability list (color, style, tables, progress bars, markdown,
+syntax-highlighted code, tracebacks). Calibrates expectations.
+"""
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 32, end = 32, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "rich/__init__.py top-level fn def lines"
+justification = """
+`get_console`, `reconfigure`, `print`, `print_json`, `inspect` — the
+five exported callables, def-line only.
+"""
+predecessor = "1.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/__init__.py", start = 23, end = 23, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 39, end = 39, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 53, end = 53, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 77, end = 77, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 120, end = 120, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "pyproject deps"
+justification = """
+Python >=3.9, runtime deps `pygments`, `markdown-it-py`, optional
+`ipywidgets` for jupyter extra.
+"""
+predecessor = "1.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "pyproject.toml", start = 29, end = 36, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Repo top-level listing"
+justification = """
+Repository shape: `rich/`, `tests/`, `docs/`, `examples/`, plus
+metadata files. Avoids the failure where an agent assumes the package
+lives under `src/`.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "rich.print + rich.print_json signatures"
+justification = """
+Full signatures of the two print-style top-level helpers. `print`
+mirrors builtin print (sep / end / file / flush); `print_json`
+exposes the pretty-JSON entry.
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/__init__.py", start = 53, end = 59, render = { kind = "full" } },
+  { path = "rich/__init__.py", start = 77, end = 89, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "rich.inspect signature"
+justification = """
+`rich.inspect(obj, *, console, title, help, methods, docs, private,
+dunder, sort, all, value)` — the long flag list is the load-bearing
+detail.
+"""
+predecessor = "1.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/__init__.py", start = 120, end = 133, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "rich/ package listing (all ~80 modules)"
+justification = """
+Biggest catastrophic-omission risk: ~80 files in `rich/`. Showing
+every module filename here lets the agent map filename → likely role
+for table.py, tree.py, progress.py, markdown.py, syntax.py,
+traceback.py, console.py, style.py, color.py, segment.py, live.py,
+layout.py, prompt.py, logging.py, panel.py, spinner.py, status.py,
+theme.py, markup.py, emoji.py, pretty.py, json.py, align.py, box.py,
+bar.py, columns.py, padding.py, rule.py, highlighter.py, repr.py,
+text.py, measure.py, abc.py, protocol.py, jupyter.py, default_styles
++ internal helpers (_inspect, _log_render, _palettes, _spinners,
+_emoji_codes, _wrap, _ratio, etc.).
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "rich", entries = "all" },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 2 — Console: the central object every renderable funnels through
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "Console class declaration"
+justification = """
+`Console` at console.py:581 with its one-line docstring.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 581, end = 583, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "ConsoleRenderable / RichCast / RenderableType / RenderResult"
+justification = """
+The renderable protocol every Rich object implements:
+`__rich_console__(self, console, options) -> RenderResult` and
+`__rich__(self) -> RenderableType | str`. Plus the `RenderableType` and
+`RenderResult` type aliases. Unlocks every \"how do I make X
+renderable\" question.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 246, end = 271, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "ConsoleOptions dataclass fields"
+justification = """
+The value `__rich_console__` receives. Fields: size, legacy_windows,
+min_width, max_width, is_terminal, encoding, max_height, justify,
+overflow, no_wrap, highlight, markup, height.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 112, end = 141, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "ConsoleOptions method def lines"
+justification = """
+`ascii_only`, `copy`, `update`, `update_width`, `update_height`,
+`reset_height`, `update_dimensions` — the operations renderables use
+to thread per-child constraints.
+"""
+predecessor = "2.3"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 142, end = 143, render = { kind = "full" } },
+  { path = "rich/console.py", start = 147, end = 147, render = { kind = "full" } },
+  { path = "rich/console.py", start = 157, end = 157, render = { kind = "full" } },
+  { path = "rich/console.py", start = 194, end = 194, render = { kind = "full" } },
+  { path = "rich/console.py", start = 207, end = 207, render = { kind = "full" } },
+  { path = "rich/console.py", start = 220, end = 220, render = { kind = "full" } },
+  { path = "rich/console.py", start = 230, end = 230, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Console docstring: most-used configuration knobs"
+justification = """
+Console.__init__ Args block — the knobs an agent reaches for most
+often: color_system, force_terminal, soft_wrap, theme, file, quiet,
+width, height, style, no_color, tab_size, record, markup, emoji,
+highlight, log_time/log_path. The remaining knobs (highlighter,
+legacy_windows, safe_box, get_datetime/get_time) follow at 608-614
+if needed.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 583, end = 597, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Console public method locations (1/2)"
+justification = """
+First half of Console's public method surface, signature lines only.
+Catastrophic-omission mitigation: list them all together. Covers
+file/buffer accessors, lifecycle, theme, color-system, dimensions,
+terminal-detect.
+"""
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 753, end = 753, render = { kind = "full" } },
+  { path = "rich/console.py", start = 757, end = 757, render = { kind = "full" } },
+  { path = "rich/console.py", start = 822, end = 822, render = { kind = "full" } },
+  { path = "rich/console.py", start = 838, end = 838, render = { kind = "full" } },
+  { path = "rich/console.py", start = 843, end = 843, render = { kind = "full" } },
+  { path = "rich/console.py", start = 852, end = 852, render = { kind = "full" } },
+  { path = "rich/console.py", start = 857, end = 857, render = { kind = "full" } },
+  { path = "rich/console.py", start = 862, end = 862, render = { kind = "full" } },
+  { path = "rich/console.py", start = 866, end = 866, render = { kind = "full" } },
+  { path = "rich/console.py", start = 870, end = 870, render = { kind = "full" } },
+  { path = "rich/console.py", start = 881, end = 881, render = { kind = "full" } },
+  { path = "rich/console.py", start = 892, end = 892, render = { kind = "full" } },
+  { path = "rich/console.py", start = 896, end = 896, render = { kind = "full" } },
+  { path = "rich/console.py", start = 909, end = 909, render = { kind = "full" } },
+  { path = "rich/console.py", start = 922, end = 922, render = { kind = "full" } },
+  { path = "rich/console.py", start = 931, end = 931, render = { kind = "full" } },
+  { path = "rich/console.py", start = 979, end = 979, render = { kind = "full" } },
+  { path = "rich/console.py", start = 991, end = 991, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1005, end = 1005, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1057, end = 1057, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1075, end = 1075, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Console public method locations (2/2)"
+justification = """
+Second half: terminal control, output, render/measure, exception/log,
+input/export — `bell`, `capture`, `pager`, `line`, `clear`, `status`,
+`show_cursor`, `set_alt_screen`, `is_alt_screen`, `set_window_title`,
+`screen`, `measure`, `render`, `render_lines`, `render_str`,
+`get_style`, `rule`, `control`, `out`, `print`, `print_json`,
+`update_screen`, `update_screen_lines`, `print_exception`, `log`,
+`on_broken_pipe`, `input`, `export_text`, `save_text`.
+"""
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 1092, end = 1092, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1096, end = 1096, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1113, end = 1113, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1136, end = 1136, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1146, end = 1146, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1157, end = 1157, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1190, end = 1190, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1201, end = 1201, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1223, end = 1223, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1231, end = 1231, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1263, end = 1263, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1277, end = 1277, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1294, end = 1294, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1345, end = 1345, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1409, end = 1409, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1470, end = 1470, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1589, end = 1589, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1610, end = 1610, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1620, end = 1620, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1652, end = 1652, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1758, end = 1758, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1819, end = 1819, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1853, end = 1853, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1873, end = 1873, render = { kind = "full" } },
+  { path = "rich/console.py", start = 1947, end = 1947, render = { kind = "full" } },
+  { path = "rich/console.py", start = 2030, end = 2030, render = { kind = "full" } },
+  { path = "rich/console.py", start = 2156, end = 2156, render = { kind = "full" } },
+  { path = "rich/console.py", start = 2192, end = 2192, render = { kind = "full" } },
+  { path = "rich/console.py", start = 2224, end = 2224, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Console.print signature"
+justification = """
+The most-called method. Every kwarg (style, justify, overflow,
+no_wrap, emoji, markup, highlight, width, height, crop, soft_wrap,
+new_line_start).
+"""
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 1652, end = 1669, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Console.log signature"
+justification = """
+`Console.log()` — adds time + caller info, plus `log_locals=False`.
+The second canonical entry point.
+"""
+predecessor = "2.7"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/console.py", start = 1947, end = 1959, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 3 — Style / Color / Segment / Box / Markup / errors / protocol
+# (the foundation every renderable depends on)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "StyleType alias + Style class"
+justification = """
+`StyleType = Union[str, Style]` — the alias used as a style argument
+everywhere. A plain string is parsed by `Style.parse`; a `Style`
+instance is precomputed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/style.py", start = 18, end = 19, render = { kind = "full" } },
+  { path = "rich/style.py", start = 39, end = 41, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Style.__init__ signature"
+justification = """
+Construction knobs: color, bgcolor, bold, dim, italic, underline,
+blink, blink2, reverse, conceal, strike, underline2, frame, encircle,
+overline, link, meta — each `Optional[bool]` for three states.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/style.py", start = 131, end = 151, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Style factory + op def lines"
+justification = """
+`null`, `from_color`, `from_meta`, `on`, `parse`, `normalize`,
+`pick_first`, `combine`, `chain`, `copy`. Catastrophic-omission
+mitigation for the Style factory surface.
+"""
+predecessor = "3.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/style.py", start = 207, end = 208, render = { kind = "full" } },
+  { path = "rich/style.py", start = 212, end = 213, render = { kind = "full" } },
+  { path = "rich/style.py", start = 236, end = 237, render = { kind = "full" } },
+  { path = "rich/style.py", start = 257, end = 258, render = { kind = "full" } },
+  { path = "rich/style.py", start = 388, end = 389, render = { kind = "full" } },
+  { path = "rich/style.py", start = 404, end = 405, render = { kind = "full" } },
+  { path = "rich/style.py", start = 497, end = 498, render = { kind = "full" } },
+  { path = "rich/style.py", start = 600, end = 601, render = { kind = "full" } },
+  { path = "rich/style.py", start = 613, end = 614, render = { kind = "full" } },
+  { path = "rich/style.py", start = 626, end = 626, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Color: ColorSystem + ColorType enums"
+justification = """
+Enums driving color downgrading (STANDARD/EIGHT_BIT/TRUECOLOR/
+WINDOWS). Used by `Console._detect_color_system` and `Color.downgrade`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/color.py", start = 21, end = 27, render = { kind = "full" } },
+  { path = "rich/color.py", start = 36, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Color NamedTuple + factory / op def lines"
+justification = """
+`Color(name, type, number, triplet)` plus factories `parse`,
+`from_ansi`, `from_triplet`, `from_rgb`, `default`, and ops
+`get_truecolor`, `get_ansi_codes`, `downgrade`, plus top-level
+`parse_rgb_hex` and `blend_rgb`.
+"""
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/color.py", start = 303, end = 305, render = { kind = "full" } },
+  { path = "rich/color.py", start = 349, end = 351, render = { kind = "full" } },
+  { path = "rich/color.py", start = 380, end = 381, render = { kind = "full" } },
+  { path = "rich/color.py", start = 396, end = 397, render = { kind = "full" } },
+  { path = "rich/color.py", start = 408, end = 409, render = { kind = "full" } },
+  { path = "rich/color.py", start = 422, end = 423, render = { kind = "full" } },
+  { path = "rich/color.py", start = 431, end = 433, render = { kind = "full" } },
+  { path = "rich/color.py", start = 485, end = 485, render = { kind = "full" } },
+  { path = "rich/color.py", start = 513, end = 513, render = { kind = "full" } },
+  { path = "rich/color.py", start = 571, end = 571, render = { kind = "full" } },
+  { path = "rich/color.py", start = 580, end = 581, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Segment NamedTuple + ControlType enum"
+justification = """
+`Segment(text, style, control)` is the atomic unit of Rich's rendered
+output. `ControlType` enumerates non-printable codes (BELL,
+CARRIAGE_RETURN, CLEAR, SHOW_CURSOR, ENABLE/DISABLE_ALT_SCREEN,
+CURSOR_*, ERASE_IN_LINE, SET_WINDOW_TITLE).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/segment.py", start = 32, end = 51, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 61, end = 76, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Segment classmethod def lines"
+justification = """
+Render-pipeline ops: `split_cells`, `line`, `apply_style`,
+`filter_control`, `split_lines`, `split_lines_terminator`,
+`split_and_crop_lines`, `adjust_line_length`, `get_line_length`,
+`get_shape`, `set_shape`.
+"""
+predecessor = "3.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/segment.py", start = 155, end = 155, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 181, end = 182, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 186, end = 187, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 227, end = 228, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 246, end = 247, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 275, end = 276, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 306, end = 307, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 353, end = 354, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 398, end = 399, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 411, end = 412, render = { kind = "full" } },
+  { path = "rich/segment.py", start = 425, end = 426, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Box class + HEAVY_HEAD template"
+justification = """
+`Box` defines the 8-line ASCII template (top/head/head_row/mid/row/
+foot_row/foot/bottom) used by tables and panels. `HEAVY_HEAD` literal
+shown as a representative.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/box.py", start = 10, end = 10, render = { kind = "full" } },
+  { path = "rich/box.py", start = 358, end = 367, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Box constant locations (every named box)"
+justification = """
+Every named box constant: ASCII, ASCII2, ASCII_DOUBLE_HEAD, SQUARE,
+SQUARE_DOUBLE_HEAD, MINIMAL, MINIMAL_HEAVY_HEAD, MINIMAL_DOUBLE_HEAD,
+SIMPLE, SIMPLE_HEAD, SIMPLE_HEAVY, HORIZONTALS, ROUNDED, HEAVY,
+HEAVY_EDGE, HEAVY_HEAD, DOUBLE, DOUBLE_EDGE, MARKDOWN.
+"""
+predecessor = "3.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/box.py", start = 186, end = 186, render = { kind = "full" } },
+  { path = "rich/box.py", start = 198, end = 198, render = { kind = "full" } },
+  { path = "rich/box.py", start = 210, end = 210, render = { kind = "full" } },
+  { path = "rich/box.py", start = 222, end = 222, render = { kind = "full" } },
+  { path = "rich/box.py", start = 233, end = 233, render = { kind = "full" } },
+  { path = "rich/box.py", start = 244, end = 244, render = { kind = "full" } },
+  { path = "rich/box.py", start = 256, end = 256, render = { kind = "full" } },
+  { path = "rich/box.py", start = 267, end = 267, render = { kind = "full" } },
+  { path = "rich/box.py", start = 279, end = 279, render = { kind = "full" } },
+  { path = "rich/box.py", start = 290, end = 290, render = { kind = "full" } },
+  { path = "rich/box.py", start = 302, end = 302, render = { kind = "full" } },
+  { path = "rich/box.py", start = 314, end = 314, render = { kind = "full" } },
+  { path = "rich/box.py", start = 325, end = 325, render = { kind = "full" } },
+  { path = "rich/box.py", start = 336, end = 336, render = { kind = "full" } },
+  { path = "rich/box.py", start = 347, end = 347, render = { kind = "full" } },
+  { path = "rich/box.py", start = 369, end = 369, render = { kind = "full" } },
+  { path = "rich/box.py", start = 380, end = 380, render = { kind = "full" } },
+  { path = "rich/box.py", start = 391, end = 391, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Markup: render + escape"
+justification = """
+BBCode-like markup `[bold red]…[/bold red]` parsed into a `Text` by
+`markup.render`. `escape(text)` protects user content from
+re-interpretation. Also supports `[link=URL]`, `[@handler]`
+meta-tags, and emoji `:name:` codes.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/markup.py", start = 48, end = 51, render = { kind = "full" } },
+  { path = "rich/markup.py", start = 106, end = 112, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "Theme + ThemeStack"
+justification = """
+`Theme(styles, inherit=True)` collects named styles; `Console` keeps
+a `ThemeStack` so `use_theme(...)` can layer themes. `Theme.from_file`
+/ `Theme.read` load themes from configparser files.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/theme.py", start = 7, end = 8, render = { kind = "full" } },
+  { path = "rich/theme.py", start = 17, end = 19, render = { kind = "full" } },
+  { path = "rich/theme.py", start = 37, end = 38, render = { kind = "full" } },
+  { path = "rich/theme.py", start = 59, end = 61, render = { kind = "full" } },
+  { path = "rich/theme.py", start = 81, end = 82, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "rich.errors exception class lines"
+justification = """
+Every Rich exception type, declarations only: ConsoleError, StyleError,
+StyleSyntaxError, MissingStyle, StyleStackError, NotRenderableError,
+MarkupError, LiveError, NoAltScreen.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/errors.py", start = 1, end = 1, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 5, end = 5, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 9, end = 9, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 13, end = 13, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 21, end = 21, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 29, end = 29, render = { kind = "full" } },
+  { path = "rich/errors.py", start = 33, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.13"
+descriptor = "rich.protocol helpers"
+justification = """
+`is_renderable(obj)` / `rich_cast(obj)` — the runtime checks Console
+uses internally to decide if something has `__rich__` /
+`__rich_console__`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/protocol.py", start = 9, end = 10, render = { kind = "full" } },
+  { path = "rich/protocol.py", start = 18, end = 19, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 4 — Text, Measurement, JupyterMixin, Highlighter
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "Text class + Span + TextType alias"
+justification = """
+`Text` is the styled-string renderable: plain string + list of
+`Span(start, end, style)` overlays. `TextType = Union[str, Text]`
+is accepted where a labeled string is needed.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/text.py", start = 41, end = 42, render = { kind = "full" } },
+  { path = "rich/text.py", start = 47, end = 49, render = { kind = "full" } },
+  { path = "rich/text.py", start = 118, end = 118, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Text constructor + factory def lines"
+justification = """
+`Text(text, style, *, justify, overflow, no_wrap, end, tab_size,
+spans)`. Class-method factories `from_markup`, `from_ansi`, `styled`,
+`assemble`.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/text.py", start = 144, end = 144, render = { kind = "full" } },
+  { path = "rich/text.py", start = 259, end = 260, render = { kind = "full" } },
+  { path = "rich/text.py", start = 293, end = 294, render = { kind = "full" } },
+  { path = "rich/text.py", start = 331, end = 332, render = { kind = "full" } },
+  { path = "rich/text.py", start = 356, end = 357, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Text method def lines (mutators / ops)"
+justification = """
+Mutation/op surface: stylize, stylize_before, apply_meta, on,
+remove_suffix, get_style_at_offset, extend_style, highlight_regex,
+highlight_words, rstrip, set_length, expand_tabs, truncate, pad,
+pad_left, pad_right, align, append, append_text, append_tokens,
+copy_styles, split, divide, right_crop, wrap, fit,
+detect_indentation, with_indent_guides.
+"""
+predecessor = "4.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/text.py", start = 457, end = 457, render = { kind = "full" } },
+  { path = "rich/text.py", start = 483, end = 483, render = { kind = "full" } },
+  { path = "rich/text.py", start = 509, end = 509, render = { kind = "full" } },
+  { path = "rich/text.py", start = 523, end = 523, render = { kind = "full" } },
+  { path = "rich/text.py", start = 543, end = 543, render = { kind = "full" } },
+  { path = "rich/text.py", start = 552, end = 552, render = { kind = "full" } },
+  { path = "rich/text.py", start = 572, end = 572, render = { kind = "full" } },
+  { path = "rich/text.py", start = 593, end = 593, render = { kind = "full" } },
+  { path = "rich/text.py", start = 633, end = 633, render = { kind = "full" } },
+  { path = "rich/text.py", start = 662, end = 662, render = { kind = "full" } },
+  { path = "rich/text.py", start = 680, end = 680, render = { kind = "full" } },
+  { path = "rich/text.py", start = 778, end = 778, render = { kind = "full" } },
+  { path = "rich/text.py", start = 817, end = 817, render = { kind = "full" } },
+  { path = "rich/text.py", start = 859, end = 859, render = { kind = "full" } },
+  { path = "rich/text.py", start = 900, end = 900, render = { kind = "full" } },
+  { path = "rich/text.py", start = 944, end = 944, render = { kind = "full" } },
+  { path = "rich/text.py", start = 964, end = 964, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1008, end = 1008, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1030, end = 1030, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1062, end = 1062, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1106, end = 1106, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1201, end = 1201, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1252, end = 1252, render = { kind = "full" } },
+  { path = "rich/text.py", start = 1289, end = 1289, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "Measurement + measure_renderables"
+justification = """
+`Measurement(minimum, maximum)` is what `__rich_measure__` returns.
+`Measurement.get(console, options, renderable)` / `measure_renderables`
+are the entry points used by Console / Table / Layout.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/measure.py", start = 11, end = 17, render = { kind = "full" } },
+  { path = "rich/measure.py", start = 78, end = 81, render = { kind = "full" } },
+  { path = "rich/measure.py", start = 125, end = 125, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "JupyterMixin + Highlighter hierarchy"
+justification = """
+`JupyterMixin` — concrete renderables inherit it so notebooks
+pretty-print via `_repr_mimebundle_`. `Highlighter` ABC +
+`RegexHighlighter` is what `Console.highlight=True` runs over rendered
+text; bundled subclasses `ReprHighlighter`, `JSONHighlighter`,
+`ISO8601Highlighter`, `NullHighlighter`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/jupyter.py", start = 36, end = 37, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 17, end = 18, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 50, end = 51, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 61, end = 62, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 80, end = 81, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 106, end = 107, render = { kind = "full" } },
+  { path = "rich/highlighter.py", start = 143, end = 144, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — Common renderables (Table, Tree, Panel, Padding, Columns,
+# Align, Rule, Bar, Group, Styled, Constrain, Screen)
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "Table + Column class lines"
+justification = """
+`Table(*headers, …)` is the largest renderable. `Column` dataclass
+holds per-column settings. `Row` / `_Cell` NamedTuple are co-located.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/table.py", start = 38, end = 39, render = { kind = "full" } },
+  { path = "rich/table.py", start = 131, end = 132, render = { kind = "full" } },
+  { path = "rich/table.py", start = 142, end = 142, render = { kind = "full" } },
+  { path = "rich/table.py", start = 153, end = 153, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "Table.__init__ kwargs"
+justification = """
+The full `Table` constructor: title, caption, width, min_width, box,
+safe_box, padding, collapse_padding, pad_edge, expand, show_header,
+show_footer, show_edge, show_lines, leading, style, row_styles,
+header_style, footer_style, border_style, title_style, caption_style,
+title_justify, caption_justify, highlight.
+"""
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/table.py", start = 188, end = 216, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "Table method def lines"
+justification = """
+`Table.grid` (no-borders factory), `add_column`, `add_row`,
+`add_section`. The two add_* methods are the API for 99% of users.
+"""
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/table.py", start = 252, end = 253, render = { kind = "full" } },
+  { path = "rich/table.py", start = 364, end = 365, render = { kind = "full" } },
+  { path = "rich/table.py", start = 422, end = 423, render = { kind = "full" } },
+  { path = "rich/table.py", start = 469, end = 469, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "Tree class + __init__ + add()"
+justification = """
+`Tree(label, *, style=\"tree\", guide_style=\"tree.line\", expanded,
+highlight, hide_root)` plus `Tree.add(label, *, style, guide_style,
+expanded, highlight) -> Tree`. Class-level `ASCII_GUIDES`/`TREE_GUIDES`
+constants drive guide-character selection.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/tree.py", start = 14, end = 14, render = { kind = "full" } },
+  { path = "rich/tree.py", start = 37, end = 46, render = { kind = "full" } },
+  { path = "rich/tree.py", start = 55, end = 55, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "Panel class + __init__"
+justification = """
+`Panel(renderable, box=ROUNDED, *, title, title_align, subtitle,
+subtitle_align, safe_box, expand, style, border_style, width, height,
+padding, highlight)` + `Panel.fit(...)` alt-constructor.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/panel.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "rich/panel.py", start = 40, end = 57, render = { kind = "full" } },
+  { path = "rich/panel.py", start = 73, end = 74, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "Padding / Align / Columns / Rule / Bar / Group class lines"
+justification = """
+Compact location pass over smaller composable renderables: `Padding`
++ `PaddingDimensions` alias + `Padding.indent`; `Align` +
+`VerticalCenter`; `Columns`; `Rule`; `Bar` (sub-cell);
+`Group(*renderables, fit=True)` + `@group` decorator.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/padding.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "rich/padding.py", start = 19, end = 19, render = { kind = "full" } },
+  { path = "rich/padding.py", start = 46, end = 47, render = { kind = "full" } },
+  { path = "rich/align.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "rich/align.py", start = 242, end = 242, render = { kind = "full" } },
+  { path = "rich/columns.py", start = 16, end = 16, render = { kind = "full" } },
+  { path = "rich/rule.py", start = 12, end = 12, render = { kind = "full" } },
+  { path = "rich/bar.py", start = 17, end = 17, render = { kind = "full" } },
+  { path = "rich/console.py", start = 450, end = 450, render = { kind = "full" } },
+  { path = "rich/console.py", start = 483, end = 483, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "Styled / Constrain / Screen wrappers"
+justification = """
+`Styled(renderable, style)` applies a base style to a renderable.
+`Constrain(renderable, width)` clamps width. `Screen(*renderables,
+style, application_mode)` fills the alt-screen background.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/styled.py", start = 10, end = 10, render = { kind = "full" } },
+  { path = "rich/constrain.py", start = 8, end = 8, render = { kind = "full" } },
+  { path = "rich/screen.py", start = 8, end = 8, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 6 — Dynamic / live displays
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "Progress + track() + TaskID"
+justification = """
+`Progress(*columns, …)` is the long-form context-managed API. Top-
+level `track(sequence, description, total, …)` is the canonical
+one-shot helper. `TaskID` newtype identifies tasks.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/progress.py", start = 54, end = 54, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 104, end = 105, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1061, end = 1061, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1077, end = 1090, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Progress + column hierarchy def lines"
+justification = """
+`Progress.{add_task, update, advance, refresh, reset, remove_task,
+start_task, stop_task, track, wrap_file, open, get_default_columns,
+make_tasks_table}`, the column hierarchy (`ProgressColumn`,
+`RenderableColumn`, `SpinnerColumn`, `TextColumn`, `BarColumn`,
+`TimeElapsedColumn`, `TaskProgressColumn`, `TimeRemainingColumn`,
+`FileSizeColumn`, `TotalFileSizeColumn`, `MofNCompleteColumn`,
+`DownloadColumn`, `TransferSpeedColumn`), and the per-task `Task`.
+"""
+predecessor = "6.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/progress.py", start = 1417, end = 1417, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1478, end = 1478, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1517, end = 1517, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1547, end = 1547, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1600, end = 1600, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 1643, end = 1643, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 507, end = 507, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 549, end = 549, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 566, end = 566, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 616, end = 616, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 646, end = 646, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 688, end = 688, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 700, end = 700, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 772, end = 772, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 820, end = 820, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 829, end = 829, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 838, end = 838, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 865, end = 865, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 914, end = 914, render = { kind = "full" } },
+  { path = "rich/progress.py", start = 936, end = 936, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Live + Layout + Status + Spinner class lines"
+justification = """
+`Live(renderable, *, console, screen, auto_refresh, refresh_per_second,
+transient, redirect_stdout, redirect_stderr, vertical_overflow,
+get_renderable)` — the re-rendering engine under Progress / Status.
+`Layout(renderable, *, name, size, minimum_size, ratio, visible)` +
+`Splitter`/`RowSplitter`/`ColumnSplitter`.
+`Status(status, *, console, spinner, …)`. `Spinner(name, text, *,
+style, speed)`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/live.py", start = 41, end = 41, render = { kind = "full" } },
+  { path = "rich/live.py", start = 111, end = 111, render = { kind = "full" } },
+  { path = "rich/live.py", start = 145, end = 145, render = { kind = "full" } },
+  { path = "rich/live.py", start = 230, end = 230, render = { kind = "full" } },
+  { path = "rich/live.py", start = 244, end = 244, render = { kind = "full" } },
+  { path = "rich/layout.py", start = 80, end = 80, render = { kind = "full" } },
+  { path = "rich/layout.py", start = 101, end = 101, render = { kind = "full" } },
+  { path = "rich/layout.py", start = 121, end = 121, render = { kind = "full" } },
+  { path = "rich/layout.py", start = 142, end = 142, render = { kind = "full" } },
+  { path = "rich/status.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "rich/spinner.py", start = 13, end = 13, render = { kind = "full" } },
+  { path = "rich/spinner.py", start = 26, end = 33, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 7 — Specialized: Markdown, Syntax, JSON, Pretty, Traceback,
+# Logging, Prompt, Emoji, Inspect
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "Markdown + element hierarchy"
+justification = """
+`Markdown(markup, code_theme, justify, style, hyperlinks,
+inline_code_lexer, inline_code_theme)` parses via `markdown-it-py`.
+MarkdownElement subclasses drive rendering: `Paragraph`, `Heading`,
+`CodeBlock`, `BlockQuote`, `HorizontalRule`, `TableElement` (with
+`TableHeader`, `TableBody`, `TableRow`, `TableData` sub-elements),
+`ListElement`, `ListItem`, `Link`, `ImageItem`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/markdown.py", start = 513, end = 513, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 25, end = 25, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 107, end = 107, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 133, end = 133, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 167, end = 167, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 192, end = 192, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 218, end = 218, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 231, end = 231, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 340, end = 340, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 372, end = 372, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 414, end = 414, render = { kind = "full" } },
+  { path = "rich/markdown.py", start = 425, end = 425, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "Syntax + theme classes"
+justification = """
+`Syntax(code, lexer, *, theme, dedent, line_numbers, start_line,
+line_range, highlight_lines, code_width, tab_size, word_wrap,
+background_color, indent_guides, padding)` plus `Syntax.from_path`.
+`SyntaxTheme` ABC with `PygmentsSyntaxTheme` / `ANSISyntaxTheme`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/syntax.py", start = 243, end = 243, render = { kind = "full" } },
+  { path = "rich/syntax.py", start = 279, end = 296, render = { kind = "full" } },
+  { path = "rich/syntax.py", start = 319, end = 320, render = { kind = "full" } },
+  { path = "rich/syntax.py", start = 127, end = 127, render = { kind = "full" } },
+  { path = "rich/syntax.py", start = 141, end = 141, render = { kind = "full" } },
+  { path = "rich/syntax.py", start = 183, end = 183, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.3"
+descriptor = "Traceback + install"
+justification = """
+`Traceback(trace, width, code_width, extra_lines, theme, word_wrap,
+show_locals, indent_guides, locals_max_length, locals_max_string,
+locals_max_depth, locals_hide_dunder, locals_hide_sunder,
+locals_overflow, suppress, max_frames)`. Top-level `install(...)` sets
+Rich as default `sys.excepthook`. Data records `Frame`, `Stack`,
+`Trace`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/traceback.py", start = 262, end = 262, render = { kind = "full" } },
+  { path = "rich/traceback.py", start = 84, end = 84, render = { kind = "full" } },
+  { path = "rich/traceback.py", start = 222, end = 222, render = { kind = "full" } },
+  { path = "rich/traceback.py", start = 242, end = 242, render = { kind = "full" } },
+  { path = "rich/traceback.py", start = 254, end = 254, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.4"
+descriptor = "RichHandler (logging)"
+justification = """
+`RichHandler(level, console, *, show_time, omit_repeated_times,
+show_level, show_path, enable_link_path, highlighter, markup,
+rich_tracebacks, tracebacks_*, locals_*, log_time_format, keywords)`
+— swaps plain logging output for colored Rich rendering.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/logging.py", start = 24, end = 24, render = { kind = "full" } },
+  { path = "rich/logging.py", start = 71, end = 71, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.5"
+descriptor = "Pretty + pprint + JSON"
+justification = """
+`Pretty(_object, highlighter, *, indent_size, justify, overflow,
+no_wrap, indent_guides, max_length, max_string, max_depth, expand_all,
+margin, insert_line)`. `pretty.install()` patches REPL displayhook.
+Top-level `pretty_repr(...)` / `pprint(...)`. `JSON(json, indent,
+highlight, …)`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/pretty.py", start = 253, end = 253, render = { kind = "full" } },
+  { path = "rich/pretty.py", start = 171, end = 171, render = { kind = "full" } },
+  { path = "rich/pretty.py", start = 878, end = 878, render = { kind = "full" } },
+  { path = "rich/pretty.py", start = 918, end = 918, render = { kind = "full" } },
+  { path = "rich/json.py", start = 9, end = 9, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.6"
+descriptor = "Prompt hierarchy"
+justification = """
+`PromptBase[T]` generic-typed base; `Prompt` (str), `IntPrompt`,
+`FloatPrompt`, `Confirm` (bool). All expose `.ask(prompt, *, console,
+password, choices, show_default, show_choices, default, stream) -> T`.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/prompt.py", start = 11, end = 11, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 15, end = 15, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 30, end = 30, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 304, end = 304, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 316, end = 316, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 328, end = 328, render = { kind = "full" } },
+  { path = "rich/prompt.py", start = 340, end = 340, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "7.7"
+descriptor = "Emoji + Inspect"
+justification = """
+`Emoji(name, style, variant)` renders `:smiley:`-style codes
+(looked up in `_emoji_codes.EMOJI`). `_inspect.Inspect(obj, ...)` is
+what `rich.inspect(...)` instantiates — walks attrs, formats
+classes/callables, renders inside a Panel.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/emoji.py", start = 20, end = 20, render = { kind = "full" } },
+  { path = "rich/_inspect.py", start = 21, end = 21, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 8 — Smaller support modules + tests/examples/docs listings
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "8.1"
+descriptor = "Small support: filesize / cells / control / containers"
+justification = """
+`filesize.decimal/binary/pick_unit_and_suffix` for human file sizes
+(DownloadColumn). `cells.cell_len` for grapheme width.
+`Control` codes Console accepts via `Console.control(...)`.
+`Renderables` / `Lines` from containers.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/filesize.py", start = 43, end = 43, render = { kind = "full" } },
+  { path = "rich/filesize.py", start = 52, end = 52, render = { kind = "full" } },
+  { path = "rich/cells.py", start = 98, end = 98, render = { kind = "full" } },
+  { path = "rich/control.py", start = 48, end = 48, render = { kind = "full" } },
+  { path = "rich/containers.py", start = 30, end = 30, render = { kind = "full" } },
+  { path = "rich/containers.py", start = 66, end = 66, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.2"
+descriptor = "@rich_repr / @auto decorators"
+justification = """
+`@rich_repr` / `@auto` give a class a `__rich_repr__` method so
+Pretty / ReprHighlighter can colorize it. Used pervasively by Rich's
+own classes.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "rich/repr.py", start = 27, end = 27, render = { kind = "full" } },
+  { path = "rich/repr.py", start = 106, end = 106, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "8.3"
+descriptor = "examples/ listing"
+justification = """
+The `examples/` directory has runnable demos for almost every
+renderable — table.py, tree.py, progress.py, live_progress.py,
+layout.py, exception.py, downloader.py, top_lite_simulator.py, etc.
+High catastrophic-omission cost if unmapped: users ask \"is there
+an example of X?\".
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "examples", entries = "all" },
+]
+
+[[batches]]
+id = "8.4"
+descriptor = "tests/ listing"
+justification = """
+Tests follow `test_<module>.py` mirroring `rich/<module>.py`. Listing
+them protects against \"is there already a test for X?\" → invented
+duplicate.
+"""
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests", entries = "all" },
+]

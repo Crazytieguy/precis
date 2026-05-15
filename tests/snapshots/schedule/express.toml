@@ -1,0 +1,4114 @@
+fixture = "express"
+budget = 10000
+cumulative_tokens = 9958
+batch_count = 177
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express" })'
+descriptor = "listing of '.'"
+cost_tokens = 43
+cum_tokens = 43
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express"
+entries = [".editorconfig", ".eslintignore", ".eslintrc.yml", ".github", ".gitignore", ".npmrc", "History.md", "LICENSE", "Readme.md", "examples", "index.js", "lib", "package.json", "test"]
+
+[[batches]]
+position = 2
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in index.js"
+cost_tokens = 13
+cum_tokens = 56
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/index.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 3
+key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package identity in package.json"
+cost_tokens = 57
+cum_tokens = 113
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 4
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/index.js" })'
+descriptor = "imports in index.js"
+cost_tokens = 8
+cum_tokens = 121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/index.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/lib" })'
+descriptor = "listing of 'lib'"
+cost_tokens = 24
+cum_tokens = 145
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/lib"
+entries = ["application.js", "express.js", "request.js", "response.js", "utils.js", "view.js"]
+
+[[batches]]
+position = 6
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/request.js"
+cost_tokens = 11
+cum_tokens = 156
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js", start_line: 37 })'
+descriptor = "export at lib/request.js:37"
+cost_tokens = 0
+cum_tokens = 156
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/response.js"
+cost_tokens = 11
+cum_tokens = 167
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js", start_line: 49 })'
+descriptor = "export at lib/response.js:49"
+cost_tokens = 0
+cum_tokens = 167
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md" })'
+descriptor = "README headline in Readme.md"
+cost_tokens = 469
+cum_tokens = 636
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 9
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 27
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 34
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 39
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 43
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md" })'
+descriptor = "headings outline in Readme.md"
+cost_tokens = 130
+cum_tokens = 766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 263
+end = 263
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 80
+end = 80
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 128
+end = 128
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 156
+end = 156
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 160
+end = 160
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 206
+end = 206
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 264
+end = 264
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 2 })'
+descriptor = "Readme.md section #2"
+cost_tokens = 84
+cum_tokens = 850
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 69
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 71
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/view.js"
+cost_tokens = 24
+cum_tokens = 874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 14
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 36 })'
+descriptor = "export at lib/view.js:36"
+cost_tokens = 0
+cum_tokens = 874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 52 })'
+descriptor = "export at lib/view.js:52"
+cost_tokens = 0
+cum_tokens = 874
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 16
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 19 })'
+descriptor = "Readme.md section #19"
+cost_tokens = 21
+cum_tokens = 895
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 192
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 30 })'
+descriptor = "Readme.md section #30"
+cost_tokens = 21
+cum_tokens = 916
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 216
+end = 216
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 12 })'
+descriptor = "Readme.md section #12"
+cost_tokens = 22
+cum_tokens = 938
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 32 })'
+descriptor = "Readme.md section #32"
+cost_tokens = 22
+cum_tokens = 960
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 219
+end = 220
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 20
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 7 })'
+descriptor = "Readme.md section #7"
+cost_tokens = 74
+cum_tokens = 1034
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 149
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 21
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 23 })'
+descriptor = "Readme.md section #23"
+cost_tokens = 24
+cum_tokens = 1058
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 18 })'
+descriptor = "Readme.md section #18"
+cost_tokens = 25
+cum_tokens = 1083
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 190
+end = 190
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 23
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 24 })'
+descriptor = "Readme.md section #24"
+cost_tokens = 25
+cum_tokens = 1108
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 24
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 14 })'
+descriptor = "Readme.md section #14"
+cost_tokens = 26
+cum_tokens = 1134
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 16 })'
+descriptor = "Readme.md section #16"
+cost_tokens = 26
+cum_tokens = 1160
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 13 })'
+descriptor = "Readme.md section #13"
+cost_tokens = 27
+cum_tokens = 1187
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 15 })'
+descriptor = "Readme.md section #15"
+cost_tokens = 27
+cum_tokens = 1214
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 17 })'
+descriptor = "Readme.md section #17"
+cost_tokens = 27
+cum_tokens = 1241
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 189
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 22 })'
+descriptor = "Readme.md section #22"
+cost_tokens = 28
+cum_tokens = 1269
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 27 })'
+descriptor = "Readme.md section #27"
+cost_tokens = 28
+cum_tokens = 1297
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 10 })'
+descriptor = "Readme.md section #10"
+cost_tokens = 91
+cum_tokens = 1388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 173
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 177
+end = 177
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 29 })'
+descriptor = "Readme.md section #29"
+cost_tokens = 30
+cum_tokens = 1418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 215
+end = 215
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 3 })'
+descriptor = "Readme.md section #3"
+cost_tokens = 123
+cum_tokens = 1541
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 81
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 28 })'
+descriptor = "Readme.md section #28"
+cost_tokens = 31
+cum_tokens = 1572
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 214
+end = 214
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/express/.editorconfig" })'
+descriptor = "plaintext config .editorconfig"
+cost_tokens = 92
+cum_tokens = 1664
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.editorconfig"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.editorconfig"
+start = 4
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.editorconfig"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package identity metadata in package.json"
+cost_tokens = 342
+cum_tokens = 2006
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 5
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 16
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package entrypoints in package.json"
+cost_tokens = 50
+cum_tokens = 2056
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 85
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package runtime metadata in package.json"
+cost_tokens = 29
+cum_tokens = 2085
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 82
+end = 84
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package scripts in package.json"
+cost_tokens = 176
+cum_tokens = 2261
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 91
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 5 })'
+descriptor = "Readme.md section #5"
+cost_tokens = 116
+cum_tokens = 2377
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 119
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 123
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 26 })'
+descriptor = "Readme.md section #26"
+cost_tokens = 33
+cum_tokens = 2410
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js" })'
+descriptor = "imports in lib/view.js"
+cost_tokens = 8
+cum_tokens = 2418
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 11 })'
+descriptor = "Readme.md section #11"
+cost_tokens = 34
+cum_tokens = 2452
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 21 })'
+descriptor = "Readme.md section #21"
+cost_tokens = 34
+cum_tokens = 2486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 207
+end = 207
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 25 })'
+descriptor = "Readme.md section #25"
+cost_tokens = 34
+cum_tokens = 2520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 31 })'
+descriptor = "Readme.md section #31"
+cost_tokens = 34
+cum_tokens = 2554
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 217
+end = 217
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 6 })'
+descriptor = "Readme.md section #6"
+cost_tokens = 118
+cum_tokens = 2672
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 129
+end = 129
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 131
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 137
+end = 139
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 143
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 101
+cum_tokens = 2773
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples"
+entries = ["README.md", "auth", "content-negotiation", "cookie-sessions", "cookies", "downloads", "ejs", "error", "error-pages", "hello-world", "markdown", "multi-router", "mvc", "online", "params", "resource", "route-map", "route-middleware", "route-separation", "search", "session", "static-files", "vhost", "view-constructor", "view-locals", "web-service"]
+
+[[batches]]
+position = 49
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc" })'
+descriptor = "listing of 'examples/mvc'"
+cost_tokens = 20
+cum_tokens = 2793
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc"
+entries = ["controllers", "db.js", "index.js", "lib", "public", "views"]
+
+[[batches]]
+position = 50
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers" })'
+descriptor = "listing of 'examples/mvc/controllers'"
+cost_tokens = 14
+cum_tokens = 2807
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers"
+entries = ["main", "pet", "user", "user-pet"]
+
+[[batches]]
+position = 51
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation" })'
+descriptor = "listing of 'examples/route-separation'"
+cost_tokens = 22
+cum_tokens = 2829
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation"
+entries = ["index.js", "post.js", "public", "site.js", "user.js", "views"]
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/content-negotiation" })'
+descriptor = "listing of 'examples/content-negotiation'"
+cost_tokens = 12
+cum_tokens = 2841
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/content-negotiation"
+entries = ["db.js", "index.js", "users.js"]
+
+[[batches]]
+position = 53
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib" })'
+descriptor = "listing of 'examples/mvc/lib'"
+cost_tokens = 4
+cum_tokens = 2845
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib"
+entries = ["boot.js"]
+
+[[batches]]
+position = 54
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 1 })'
+descriptor = "Readme.md section #1"
+cost_tokens = 214
+cum_tokens = 3059
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 50
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 56
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 59
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 62
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 66
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 55
+key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/express/package.json" })'
+descriptor = "package dependencies in package.json"
+cost_tokens = 732
+cum_tokens = 3791
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/package.json"
+start = 34
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 4 })'
+descriptor = "Readme.md section #4"
+cost_tokens = 197
+cum_tokens = 3988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 91
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 93
+end = 95
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 99
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 105
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 111
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-router" })'
+descriptor = "listing of 'examples/multi-router'"
+cost_tokens = 7
+cum_tokens = 3995
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-router"
+entries = ["controllers", "index.js"]
+
+[[batches]]
+position = 58
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", chunk_index: 0, export_count: 10, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/express.js"
+cost_tokens = 106
+cum_tokens = 4101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 62
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 70
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 77
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 62 })'
+descriptor = "export at lib/express.js:62"
+cost_tokens = 0
+cum_tokens = 4101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 70 })'
+descriptor = "export at lib/express.js:70"
+cost_tokens = 0
+cum_tokens = 4101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 77 })'
+descriptor = "export at lib/express.js:77"
+cost_tokens = 0
+cum_tokens = 4101
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md" })'
+descriptor = "README headline in examples/README.md"
+cost_tokens = 21
+cum_tokens = 4122
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 8
+cum_tokens = 4130
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/.github"
+entries = ["dependabot.yml", "workflows"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 18
+cum_tokens = 4148
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/.github/workflows"
+entries = ["ci.yml", "codeql.yml", "legacy.yml", "scorecard.yml"]
+
+[[batches]]
+position = 65
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 8 })'
+descriptor = "Readme.md section #8"
+cost_tokens = 34
+cum_tokens = 4182
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 157
+end = 157
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 70 })'
+descriptor = "export doc at lib/express.js:70"
+cost_tokens = 19
+cum_tokens = 4201
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 66
+end = 68
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 77 })'
+descriptor = "export doc at lib/express.js:77"
+cost_tokens = 19
+cum_tokens = 4220
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 73
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js", start_line: 62 })'
+descriptor = "export doc at lib/express.js:62"
+cost_tokens = 20
+cum_tokens = 4240
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 58
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore" })'
+descriptor = "plaintext config .gitignore"
+cost_tokens = 139
+cum_tokens = 4379
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore"
+start = 8
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/.gitignore"
+start = 19
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 70
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js" })'
+descriptor = "imports in lib/request.js"
+cost_tokens = 20
+cum_tokens = 4399
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js" })'
+descriptor = "imports in lib/application.js"
+cost_tokens = 21
+cum_tokens = 4420
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/application.js"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js" })'
+descriptor = "imports in lib/express.js"
+cost_tokens = 21
+cum_tokens = 4441
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/express.js"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", chunk_index: 0, export_count: 9, type_only_export_count: 0 })'
+descriptor = "export names surface in lib/utils.js"
+cost_tokens = 150
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 226
+end = 226
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 74
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 29 })'
+descriptor = "export at lib/utils.js:29"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 40 })'
+descriptor = "export at lib/utils.js:40"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 51 })'
+descriptor = "export at lib/utils.js:51"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 61 })'
+descriptor = "export at lib/utils.js:61"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 61
+end = 61
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 62
+end = 62
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 78
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 75 })'
+descriptor = "export at lib/utils.js:75"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 75
+end = 75
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 79
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 130 })'
+descriptor = "export at lib/utils.js:130"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 130
+end = 130
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 80
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 162 })'
+descriptor = "export at lib/utils.js:162"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 81
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 194 })'
+descriptor = "export at lib/utils.js:194"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 82
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 225 })'
+descriptor = "export at lib/utils.js:225"
+cost_tokens = 0
+cum_tokens = 4591
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 225
+end = 225
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 226
+end = 226
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 75, body_start_line: 76 })'
+descriptor = "export body at lib/utils.js:75 body 76"
+cost_tokens = 10
+cum_tokens = 4601
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 76
+end = 76
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 61, body_start_line: 62 })'
+descriptor = "export body at lib/utils.js:61 body 62"
+cost_tokens = 43
+cum_tokens = 4644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 62
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js", start_line: 37 })'
+descriptor = "export doc at lib/request.js:37"
+cost_tokens = 26
+cum_tokens = 4670
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/request.js"
+start = 32
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js", start_line: 49 })'
+descriptor = "export doc at lib/response.js:49"
+cost_tokens = 26
+cum_tokens = 4696
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 44
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 36 })'
+descriptor = "export doc at lib/view.js:36"
+cost_tokens = 26
+cum_tokens = 4722
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 31
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/History.md", section_index: 0 })'
+descriptor = "History.md section #0"
+cost_tokens = 9
+cum_tokens = 4731
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/History.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js" })'
+descriptor = "imports in lib/response.js"
+cost_tokens = 35
+cum_tokens = 4766
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/response.js"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 34 })'
+descriptor = "Readme.md section #34"
+cost_tokens = 332
+cum_tokens = 5098
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 263
+end = 263
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 267
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 376
+cum_tokens = 5474
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test"
+entries = ["Route.js", "Router.js", "acceptance", "app.all.js", "app.engine.js", "app.head.js", "app.js", "app.listen.js", "app.locals.js", "app.options.js", "app.param.js", "app.render.js", "app.request.js", "app.response.js", "app.route.js", "app.router.js", "app.routes.error.js", "app.use.js", "config.js", "exports.js", "express.json.js", "express.raw.js", "express.static.js", "express.text.js", "express.urlencoded.js", "fixtures", "middleware.basic.js", "regression.js", "req.accepts.js", "req.acceptsCharsets.js", "req.acceptsEncodings.js", "req.acceptsLanguages.js", "req.baseUrl.js", "req.fresh.js", "req.get.js", "req.host.js", "req.hostname.js", "req.ip.js", "req.ips.js", "req.is.js", "req.path.js", "req.protocol.js", "req.query.js", "req.range.js", "req.route.js", "req.secure.js", "req.signedCookies.js", "req.stale.js", "req.subdomains.js", "req.xhr.js", "res.append.js", "res.attachment.js", "res.clearCookie.js", "res.cookie.js", "res.download.js", "res.format.js", "res.get.js", "res.json.js", "res.jsonp.js", "res.links.js", "res.locals.js", "res.location.js", "res.redirect.js", "res.render.js", "res.send.js", "res.sendFile.js", "res.sendStatus.js", "res.set.js", "res.status.js", "res.type.js", "res.vary.js", "support", "utils.js"]
+
+[[batches]]
+position = 92
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/support" })'
+descriptor = "listing of 'test/support'"
+cost_tokens = 12
+cum_tokens = 5486
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/support"
+entries = ["env.js", "tmpl.js", "utils.js"]
+
+[[batches]]
+position = 93
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/acceptance" })'
+descriptor = "listing of 'test/acceptance'"
+cost_tokens = 86
+cum_tokens = 5572
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/acceptance"
+entries = ["auth.js", "content-negotiation.js", "cookie-sessions.js", "cookies.js", "downloads.js", "ejs.js", "error-pages.js", "error.js", "hello-world.js", "markdown.js", "multi-router.js", "mvc.js", "params.js", "resource.js", "route-map.js", "route-separation.js", "vhost.js", "web-service.js"]
+
+[[batches]]
+position = 94
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 29 })'
+descriptor = "export doc at lib/utils.js:29"
+cost_tokens = 39
+cum_tokens = 5611
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 25
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 130, body_start_line: 131 })'
+descriptor = "export body at lib/utils.js:130 body 131"
+cost_tokens = 163
+cum_tokens = 5774
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 131
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 133
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 137
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 162, body_start_line: 163 })'
+descriptor = "export body at lib/utils.js:162 body 163"
+cost_tokens = 164
+cum_tokens = 5938
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 165
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 169
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 9 })'
+descriptor = "Readme.md section #9"
+cost_tokens = 66
+cum_tokens = 6004
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 163
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 169
+end = 171
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 162 })'
+descriptor = "export doc at lib/utils.js:162"
+cost_tokens = 63
+cum_tokens = 6067
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 154
+end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 130 })'
+descriptor = "export doc at lib/utils.js:130"
+cost_tokens = 64
+cum_tokens = 6131
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 122
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 75 })'
+descriptor = "export doc at lib/utils.js:75"
+cost_tokens = 65
+cum_tokens = 6196
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 67
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 61 })'
+descriptor = "export doc at lib/utils.js:61"
+cost_tokens = 67
+cum_tokens = 6263
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 53
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 194 })'
+descriptor = "export doc at lib/utils.js:194"
+cost_tokens = 69
+cum_tokens = 6332
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 186
+end = 192
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 20 })'
+descriptor = "Readme.md section #20"
+cost_tokens = 154
+cum_tokens = 6486
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 195
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 197
+end = 202
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 225 })'
+descriptor = "export doc at lib/utils.js:225"
+cost_tokens = 73
+cum_tokens = 6559
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 216
+end = 223
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 40 })'
+descriptor = "export doc at lib/utils.js:40"
+cost_tokens = 74
+cum_tokens = 6633
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 31
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js", start_line: 51 })'
+descriptor = "export doc at lib/utils.js:51"
+cost_tokens = 74
+cum_tokens = 6707
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 42
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 52, body_start_line: 53 })'
+descriptor = "export body at lib/view.js:52 body 53"
+cost_tokens = 369
+cum_tokens = 7076
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 55
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 60
+end = 62
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 66
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 72
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 75
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 80
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 83
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 87
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 90
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 93
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js", start_line: 52 })'
+descriptor = "export doc at lib/view.js:52"
+cost_tokens = 131
+cum_tokens = 7207
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/view.js"
+start = 38
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js" })'
+descriptor = "imports in lib/utils.js"
+cost_tokens = 114
+cum_tokens = 7321
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/lib/utils.js"
+start = 15
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs" })'
+descriptor = "listing of 'examples/ejs'"
+cost_tokens = 10
+cum_tokens = 7331
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs"
+entries = ["index.js", "public", "views"]
+
+[[batches]]
+position = 111
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-locals" })'
+descriptor = "listing of 'examples/view-locals'"
+cost_tokens = 11
+cum_tokens = 7342
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-locals"
+entries = ["index.js", "user.js", "views"]
+
+[[batches]]
+position = 112
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views" })'
+descriptor = "listing of 'examples/route-separation/views'"
+cost_tokens = 21
+cum_tokens = 7363
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views"
+entries = ["footer.ejs", "header.ejs", "index.ejs", "posts", "users"]
+
+[[batches]]
+position = 113
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/cookie-sessions" })'
+descriptor = "listing of 'examples/cookie-sessions'"
+cost_tokens = 4
+cum_tokens = 7367
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/cookie-sessions"
+entries = ["index.js"]
+
+[[batches]]
+position = 114
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/cookies" })'
+descriptor = "listing of 'examples/cookies'"
+cost_tokens = 4
+cum_tokens = 7371
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/cookies"
+entries = ["index.js"]
+
+[[batches]]
+position = 115
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/error" })'
+descriptor = "listing of 'examples/error'"
+cost_tokens = 4
+cum_tokens = 7375
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/error"
+entries = ["index.js"]
+
+[[batches]]
+position = 116
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/hello-world" })'
+descriptor = "listing of 'examples/hello-world'"
+cost_tokens = 4
+cum_tokens = 7379
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/hello-world"
+entries = ["index.js"]
+
+[[batches]]
+position = 117
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/online" })'
+descriptor = "listing of 'examples/online'"
+cost_tokens = 4
+cum_tokens = 7383
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/online"
+entries = ["index.js"]
+
+[[batches]]
+position = 118
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/params" })'
+descriptor = "listing of 'examples/params'"
+cost_tokens = 4
+cum_tokens = 7387
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/params"
+entries = ["index.js"]
+
+[[batches]]
+position = 119
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/resource" })'
+descriptor = "listing of 'examples/resource'"
+cost_tokens = 4
+cum_tokens = 7391
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/resource"
+entries = ["index.js"]
+
+[[batches]]
+position = 120
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-map" })'
+descriptor = "listing of 'examples/route-map'"
+cost_tokens = 4
+cum_tokens = 7395
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-map"
+entries = ["index.js"]
+
+[[batches]]
+position = 121
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-middleware" })'
+descriptor = "listing of 'examples/route-middleware'"
+cost_tokens = 4
+cum_tokens = 7399
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-middleware"
+entries = ["index.js"]
+
+[[batches]]
+position = 122
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/vhost" })'
+descriptor = "listing of 'examples/vhost'"
+cost_tokens = 4
+cum_tokens = 7403
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/vhost"
+entries = ["index.js"]
+
+[[batches]]
+position = 123
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/web-service" })'
+descriptor = "listing of 'examples/web-service'"
+cost_tokens = 4
+cum_tokens = 7407
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/web-service"
+entries = ["index.js"]
+
+[[batches]]
+position = 124
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/views" })'
+descriptor = "listing of 'examples/ejs/views'"
+cost_tokens = 12
+cum_tokens = 7419
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/views"
+entries = ["footer.html", "header.html", "users.html"]
+
+[[batches]]
+position = 125
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/auth" })'
+descriptor = "listing of 'examples/auth'"
+cost_tokens = 7
+cum_tokens = 7426
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/auth"
+entries = ["index.js", "views"]
+
+[[batches]]
+position = 126
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads" })'
+descriptor = "listing of 'examples/downloads'"
+cost_tokens = 7
+cum_tokens = 7433
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads"
+entries = ["files", "index.js"]
+
+[[batches]]
+position = 127
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/error-pages" })'
+descriptor = "listing of 'examples/error-pages'"
+cost_tokens = 7
+cum_tokens = 7440
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/error-pages"
+entries = ["index.js", "views"]
+
+[[batches]]
+position = 128
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/error-pages/views" })'
+descriptor = "listing of 'examples/error-pages/views'"
+cost_tokens = 28
+cum_tokens = 7468
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/error-pages/views"
+entries = ["404.ejs", "500.ejs", "error_header.ejs", "footer.ejs", "index.ejs"]
+
+[[batches]]
+position = 129
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown" })'
+descriptor = "listing of 'examples/markdown'"
+cost_tokens = 7
+cum_tokens = 7475
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown"
+entries = ["index.js", "views"]
+
+[[batches]]
+position = 130
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/search" })'
+descriptor = "listing of 'examples/search'"
+cost_tokens = 7
+cum_tokens = 7482
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/search"
+entries = ["index.js", "public"]
+
+[[batches]]
+position = 131
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files" })'
+descriptor = "listing of 'examples/static-files'"
+cost_tokens = 7
+cum_tokens = 7489
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files"
+entries = ["index.js", "public"]
+
+[[batches]]
+position = 132
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public" })'
+descriptor = "listing of 'examples/static-files/public'"
+cost_tokens = 10
+cum_tokens = 7499
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public"
+entries = ["css", "hello.txt", "js"]
+
+[[batches]]
+position = 133
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/public" })'
+descriptor = "listing of 'examples/ejs/public'"
+cost_tokens = 4
+cum_tokens = 7503
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/public"
+entries = ["stylesheets"]
+
+[[batches]]
+position = 134
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown/views" })'
+descriptor = "listing of 'examples/markdown/views'"
+cost_tokens = 4
+cum_tokens = 7507
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown/views"
+entries = ["index.md"]
+
+[[batches]]
+position = 135
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/public" })'
+descriptor = "listing of 'examples/mvc/public'"
+cost_tokens = 4
+cum_tokens = 7511
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/public"
+entries = ["style.css"]
+
+[[batches]]
+position = 136
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/public" })'
+descriptor = "listing of 'examples/route-separation/public'"
+cost_tokens = 4
+cum_tokens = 7515
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/public"
+entries = ["style.css"]
+
+[[batches]]
+position = 137
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures" })'
+descriptor = "listing of 'test/fixtures'"
+cost_tokens = 75
+cum_tokens = 7590
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures"
+entries = ["% of dogs.txt", ".name", "blog", "broken.send", "default_layout", "email.tmpl", "empty.txt", "local_layout", "name.tmpl", "name.txt", "nums.txt", "pets", "snow ☃", "todo.html", "todo.txt", "user.html", "user.tmpl", "users"]
+
+[[batches]]
+position = 138
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/pets" })'
+descriptor = "listing of 'test/fixtures/pets'"
+cost_tokens = 4
+cum_tokens = 7594
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/pets"
+entries = ["names.txt"]
+
+[[batches]]
+position = 139
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/auth/views" })'
+descriptor = "listing of 'examples/auth/views'"
+cost_tokens = 15
+cum_tokens = 7609
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/auth/views"
+entries = ["foot.ejs", "head.ejs", "login.ejs"]
+
+[[batches]]
+position = 140
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/session" })'
+descriptor = "listing of 'examples/session'"
+cost_tokens = 8
+cum_tokens = 7617
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/session"
+entries = ["index.js", "redis.js"]
+
+[[batches]]
+position = 141
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads/files" })'
+descriptor = "listing of 'examples/downloads/files'"
+cost_tokens = 17
+cum_tokens = 7634
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads/files"
+entries = ["CCTV大赛上海分赛区.txt", "amazing.txt", "notes"]
+
+[[batches]]
+position = 142
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-constructor" })'
+descriptor = "listing of 'examples/view-constructor'"
+cost_tokens = 9
+cum_tokens = 7643
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-constructor"
+entries = ["github-view.js", "index.js"]
+
+[[batches]]
+position = 143
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-locals/views" })'
+descriptor = "listing of 'examples/view-locals/views'"
+cost_tokens = 5
+cum_tokens = 7648
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/view-locals/views"
+entries = ["index.ejs"]
+
+[[batches]]
+position = 144
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/local_layout" })'
+descriptor = "listing of 'test/fixtures/local_layout'"
+cost_tokens = 5
+cum_tokens = 7653
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/local_layout"
+entries = ["user.tmpl"]
+
+[[batches]]
+position = 145
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/snow ☃" })'
+descriptor = "listing of 'test/fixtures/snow ☃'"
+cost_tokens = 5
+cum_tokens = 7658
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/snow ☃"
+entries = [".gitkeep"]
+
+[[batches]]
+position = 146
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown/views/index.md", section_index: 0 })'
+descriptor = "examples/markdown/views/index.md section #0"
+cost_tokens = 22
+cum_tokens = 7680
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown/views/index.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/markdown/views/index.md"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads/files/notes" })'
+descriptor = "listing of 'examples/downloads/files/notes'"
+cost_tokens = 4
+cum_tokens = 7684
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/downloads/files/notes"
+entries = ["groceries.txt"]
+
+[[batches]]
+position = 148
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/public/stylesheets" })'
+descriptor = "listing of 'examples/ejs/public/stylesheets'"
+cost_tokens = 4
+cum_tokens = 7688
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/ejs/public/stylesheets"
+entries = ["style.css"]
+
+[[batches]]
+position = 149
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main" })'
+descriptor = "listing of 'examples/mvc/controllers/main'"
+cost_tokens = 4
+cum_tokens = 7692
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main"
+entries = ["index.js"]
+
+[[batches]]
+position = 150
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user-pet" })'
+descriptor = "listing of 'examples/mvc/controllers/user-pet'"
+cost_tokens = 4
+cum_tokens = 7696
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user-pet"
+entries = ["index.js"]
+
+[[batches]]
+position = 151
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public/css" })'
+descriptor = "listing of 'examples/static-files/public/css'"
+cost_tokens = 4
+cum_tokens = 7700
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public/css"
+entries = ["style.css"]
+
+[[batches]]
+position = 152
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public/js" })'
+descriptor = "listing of 'examples/static-files/public/js'"
+cost_tokens = 4
+cum_tokens = 7704
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/static-files/public/js"
+entries = ["app.js"]
+
+[[batches]]
+position = 153
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views/users" })'
+descriptor = "listing of 'examples/route-separation/views/users'"
+cost_tokens = 15
+cum_tokens = 7719
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views/users"
+entries = ["edit.ejs", "index.ejs", "view.ejs"]
+
+[[batches]]
+position = 154
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/blog" })'
+descriptor = "listing of 'test/fixtures/blog'"
+cost_tokens = 7
+cum_tokens = 7726
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/blog"
+entries = ["index.html", "post"]
+
+[[batches]]
+position = 155
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md", section_index: 33 })'
+descriptor = "Readme.md section #33"
+cost_tokens = 993
+cum_tokens = 8719
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 224
+end = 258
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/Readme.md"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/search/public" })'
+descriptor = "listing of 'examples/search/public'"
+cost_tokens = 8
+cum_tokens = 8727
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/search/public"
+entries = ["client.js", "index.html"]
+
+[[batches]]
+position = 157
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views/posts" })'
+descriptor = "listing of 'examples/route-separation/views/posts'"
+cost_tokens = 5
+cum_tokens = 8732
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/views/posts"
+entries = ["index.ejs"]
+
+[[batches]]
+position = 158
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/blog/post" })'
+descriptor = "listing of 'test/fixtures/blog/post'"
+cost_tokens = 5
+cum_tokens = 8737
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/blog/post"
+entries = ["index.tmpl"]
+
+[[batches]]
+position = 159
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in examples/mvc/lib/boot.js"
+cost_tokens = 14
+cum_tokens = 8751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js", start_line: 11 })'
+descriptor = "export at examples/mvc/lib/boot.js:11"
+cost_tokens = 0
+cum_tokens = 8751
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/users" })'
+descriptor = "listing of 'test/fixtures/users'"
+cost_tokens = 9
+cum_tokens = 8760
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/users"
+entries = ["index.html", "tobi.txt"]
+
+[[batches]]
+position = 162
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md", section_index: 0 })'
+descriptor = "examples/README.md section #0"
+cost_tokens = 488
+cum_tokens = 9248
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/README.md"
+start = 5
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/default_layout" })'
+descriptor = "listing of 'test/fixtures/default_layout'"
+cost_tokens = 10
+cum_tokens = 9258
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/test/fixtures/default_layout"
+entries = ["name.tmpl", "user.tmpl"]
+
+[[batches]]
+position = 164
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/pet" })'
+descriptor = "listing of 'examples/mvc/controllers/pet'"
+cost_tokens = 7
+cum_tokens = 9265
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/pet"
+entries = ["index.js", "views"]
+
+[[batches]]
+position = 165
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user" })'
+descriptor = "listing of 'examples/mvc/controllers/user'"
+cost_tokens = 7
+cum_tokens = 9272
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user"
+entries = ["index.js", "views"]
+
+[[batches]]
+position = 166
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user/views" })'
+descriptor = "listing of 'examples/mvc/controllers/user/views'"
+cost_tokens = 15
+cum_tokens = 9287
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/user/views"
+entries = ["edit.hbs", "list.hbs", "show.hbs"]
+
+[[batches]]
+position = 167
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-router/controllers" })'
+descriptor = "listing of 'examples/multi-router/controllers'"
+cost_tokens = 12
+cum_tokens = 9299
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/multi-router/controllers"
+entries = ["api_v1.js", "api_v2.js"]
+
+[[batches]]
+position = 168
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/views" })'
+descriptor = "listing of 'examples/mvc/views'"
+cost_tokens = 13
+cum_tokens = 9312
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/views"
+entries = ["404.ejs", "5xx.ejs"]
+
+[[batches]]
+position = 169
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE" })'
+descriptor = "plaintext config LICENSE"
+cost_tokens = 362
+cum_tokens = 9674
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE"
+start = 3
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE"
+start = 7
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/LICENSE"
+start = 18
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/pet/views" })'
+descriptor = "listing of 'examples/mvc/controllers/pet/views'"
+cost_tokens = 10
+cum_tokens = 9684
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/pet/views"
+entries = ["edit.ejs", "show.ejs"]
+
+[[batches]]
+position = 171
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/History.md", section_index: 1 })'
+descriptor = "History.md section #1"
+cost_tokens = 80
+cum_tokens = 9764
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/History.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/express/History.md", section_index: 2 })'
+descriptor = "History.md section #2"
+cost_tokens = 117
+cum_tokens = 9881
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/History.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/History.md"
+start = 9
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js" })'
+descriptor = "imports in examples/mvc/lib/boot.js"
+cost_tokens = 44
+cum_tokens = 9925
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/lib/boot.js"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in examples/route-separation/index.js"
+cost_tokens = 11
+cum_tokens = 9936
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/index.js"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/route-separation/index.js"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in examples/mvc/controllers/main/index.js"
+cost_tokens = 14
+cum_tokens = 9950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 176
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js", start_line: 3 })'
+descriptor = "export at examples/mvc/controllers/main/index.js:3"
+cost_tokens = 0
+cum_tokens = 9950
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js", start_line: 3, body_start_line: 4 })'
+descriptor = "export body at examples/mvc/controllers/main/index.js:3 body 4"
+cost_tokens = 8
+cum_tokens = 9958
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/express/examples/mvc/controllers/main/index.js"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"

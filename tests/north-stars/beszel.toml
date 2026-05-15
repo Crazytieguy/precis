@@ -1,0 +1,751 @@
+fixture = "beszel"
+revision_pin = "c1c1cd1b"
+summary = """
+Beszel is a Go server-monitoring platform with two binaries that share a
+single Go module: a `beszel-agent` daemon that collects host metrics on
+each monitored system, and a `beszel` hub (a PocketBase-backed web app)
+that aggregates data, serves a React/Vite dashboard from the embedded
+`internal/site/dist`, and routes alerts. Agents push metrics to the hub
+over WebSocket (outbound from agent to hub's `/api/beszel/agent-connect`)
+and fall back to inbound SSH; both transports speak a CBOR-wrapped
+request/response protocol defined in `internal/common/common-ws.go`.
+
+The shape of an agent dev task is dominated by metric-collector source
+files (cpu, memory, disk, network, GPU, sensors, SMART, systemd,
+docker), platform-conditional build-tag variants (`*_linux.go`,
+`*_darwin.go`, `*_windows.go`, `*_stub.go`), and the connection-manager
+state machine that switches between WS and SSH. The shape of a hub task
+is dominated by the PocketBase-style event hook plumbing in
+`internal/hub/hub.go`, the custom routes in `internal/hub/api.go`, the
+per-system updater goroutine in `internal/hub/systems/system.go`, the
+threshold/quiet-hours/shoutrrr alert pipeline in `internal/alerts/`,
+and the time-bucket aggregation in `internal/records/`. The wire
+protocol and the entity types under `internal/entities/` are shared
+across both sides and are load-bearing for almost any query.
+
+The ranking front-loads: (1) what the project *is* and its two-binary
+shape, (2) the wire protocol + shared entity types, (3) the agent's
+metric-gathering surface and the WS/SSH transport switch, (4) the
+hub's startup wiring + per-system updater + agent-connect handshake,
+(5) the alerts and records (aggregation) subsystems, (6) the smaller
+support packages and supplemental install/build assets.
+"""
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 1 — Project shape, top-level layout, entry points
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo root listing"
+justification = """
+First glance at the project's top-level shape: README, Go module
+root, Makefile, the version-defining root `beszel.go` package,
+`agent/` and `internal/`, `supplemental/`, plus .github,
+.dockerignore, .goreleaser, i18n.yml, SECURITY.md. Establishes
+the two-binary layout (no separate `cmd/` at the root).
+"""
+content = { kind = "fs", groups = [{ parent = ".", entries = "all" }] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README one-line description"
+justification = """
+The single-sentence project description from the README lede.
+Smallest useful semantic answer to 'what is beszel'. Ranked first
+so a one-batch budget still gets it.
+"""
+content = { kind = "lines", spans = [
+  { path = "readme.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "go.mod identity + Go toolchain"
+justification = """
+Module path `github.com/henrygd/beszel` and the Go toolchain
+version. Smallest viable answer to 'what is the import path' and
+'what Go version'.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "README Features bullets (first half)"
+justification = """
+First half of the headline features: Lightweight, Simple, Docker
+stats, Alerts. Split from the rest to fit the growth envelope.
+"""
+content = { kind = "lines", spans = [
+  { path = "readme.md", start = 14, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "README Architecture section: hub + agent"
+justification = """
+The load-bearing two-paragraph 'two main components' explanation:
+hub on PocketBase, agent on each monitored system. The semantic
+core that frames almost every query about how the codebase is
+split.
+"""
+content = { kind = "lines", spans = [
+  { path = "readme.md", start = 25, end = 31, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "README Features bullets (second half)"
+justification = """
+Remaining features: Multi-user, OAuth/OIDC, Automatic backups.
+Closes the catastrophic-omission gap on the features list.
+"""
+content = { kind = "lines", spans = [
+  { path = "readme.md", start = 20, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "internal/ subpackage listing"
+justification = """
+Names every immediate subpackage under `internal/` plus the in-tree
+Dockerfiles. Mitigates catastrophic omission: an agent sees that
+alerts, hub, records, migrations, entities, common, users, ghupdate,
+site, cmd, tests are all peer packages, and that the dockerfiles
+live alongside them.
+"""
+content = { kind = "fs", groups = [{ parent = "internal", entries = "all" }] }
+
+[[batches]]
+id = "1.8"
+descriptor = "Two main packages: cmd/agent + cmd/hub entry points"
+justification = """
+Pins the two `main` packages without their bodies. Pattern: tier 1
+declares 'these are the entrypoints'; later tiers expand their
+argument parsing and PocketBase wiring. Catastrophic-omission hedge
+for which directories contain entry points.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/cmd/agent/agent.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "internal/cmd/agent/agent.go", start = 173, end = 173, render = { kind = "truncated", pattern = "^func[^(]+" } },
+  { path = "internal/cmd/hub/hub.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "internal/cmd/hub/hub.go", start = 19, end = 19, render = { kind = "truncated", pattern = "^func[^(]+" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "Root package: Version + protocol min versions (full)"
+justification = """
+`beszel.Version`, `AppName`, and the two `MinVersion*` semvers that
+gate CBOR vs JSON encoding and the legacy-stats fallback path.
+Tiny, referenced from almost every wire path.
+"""
+content = { kind = "lines", spans = [
+  { path = "beszel.go", start = 1, end = 18, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "README Supported metrics list"
+justification = """
+Enumerates every metric category: CPU, memory, disk usage, disk I/O,
+network, load, temperature, GPU vendor list (Nvidia/AMD/Intel),
+battery, containers, SMART (with eMMC and mdraid notes). Mitigates
+catastrophic omission on 'which metrics does this support'.
+"""
+content = { kind = "lines", spans = [
+  { path = "readme.md", start = 42, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "go.mod direct dependencies (first half)"
+justification = """
+First half of the `require` block: blang/semver, coreos/go-systemd,
+purego, fxamacker/cbor, gliderlabs/ssh, google/uuid, lxzan/gws,
+shoutrrr, pocketbase/dbx, pocketbase/pocketbase. The wire and
+transport stack lives here.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 5, end = 15, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "go.mod direct dependencies (second half)"
+justification = """
+Second half: gopsutil (metric-collection workhorse), spf13/cast,
+cobra, pflag, stretchr/testify, x/crypto, x/exp, x/sys, yaml,
+howett.net/plist.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 16, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.13"
+descriptor = "agent/ directory listing"
+justification = """
+Names every metric-collector file (cpu/disk/network/sensors/smart/
+systemd/docker/gpu/battery/zfs/...), the platform-conditional
+variants by suffix, the lhm .NET sidecar dir, test-data and tools
+subdirs, and the agent-side WS/SSH transport files. Without this
+breadth batch, an agent searching for `*_linux.go` or `gpu_*` can't
+see which permutations exist.
+"""
+content = { kind = "fs", groups = [{ parent = "agent", entries = "all" }] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 2 — Wire protocol + shared entity types (CombinedData family)
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "common-ws.go: WebSocketAction enum (full)"
+justification = """
+The 6 action IDs that drive every agent↔hub request: GetData,
+CheckFingerprint, GetContainerLogs, GetContainerInfo, GetSmartData,
+GetSystemdInfo. Cheapest catastrophic-omission hedge for the
+protocol — registry tables on both sides key off these constants.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/common/common-ws.go", start = 10, end = 26, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "internal/entities/ subdirectory listing"
+justification = """
+Names every shared entity file: container, smart, system, systemd.
+Mitigates catastrophic omission about which entity files exist
+before zooming into any individual struct. Tiny.
+"""
+content = { kind = "fs", groups = [
+  { parent = "internal/entities", entries = "all" },
+  { parent = "internal/entities/container", entries = "all" },
+  { parent = "internal/entities/smart", entries = "all" },
+  { parent = "internal/entities/system", entries = "all" },
+  { parent = "internal/entities/systemd", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "system.CombinedData wire shape"
+justification = """
+The outermost agent→hub payload: Stats, Info, Containers,
+SystemdServices, Details. This is what every metric request
+ultimately returns.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/system/system.go", start = 175, end = 182, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "system.go: Os + ConnectionType enums"
+justification = """
+The 4 Os values (Linux, Darwin, Windows, Freebsd) and the 3
+ConnectionType values (None, SSH, WebSocket). Referenced by
+Info/Details and connection-manager code.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/system/system.go", start = 113, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "common-ssh.go: allowed SSH ciphers/macs/kex"
+justification = """
+DefaultKeyExchanges, DefaultMACs, DefaultCiphers — used by both
+agent SSH server and hub SSH client.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/common/common-ssh.go", start = 1, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "common-ws.go: small request types"
+justification = """
+DataRequestOptions (CacheTimeMs + IncludeDetails) and the three
+container/systemd request structs. The smallest body-shape
+information for the per-action handlers.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/common/common-ws.go", start = 61, end = 76, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "system.Stats field names (truncated, drop wire tags)"
+justification = """
+One line per field name+type for the whole `Stats` struct (the
+per-tick metric bag): cpu/mem/disk/network/temperatures/extrafs/
+gpu/bandwidth/loadavg/battery/networkinterfaces/diskio/
+cpubreakdown/cpucoresusage/diskiostats. Truncated to drop the long
+trailing `json:"…" cbor:"…"` tags so this batch fits the envelope
+while still being an exhaustive field roster — wire tags can be
+read from the file when actually wire-debugging.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/system/system.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 14, end = 37, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 41, end = 52, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+[\\[\\]*\\w.]+" } },
+  { path = "internal/entities/system/system.go", start = 53, end = 53, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "system.Info field names (truncated)"
+justification = """
+The fields on the All-Systems-table Info struct: deprecated
+Hostname/KernelVersion/Cores/CpuModel/Os, plus Threads, Uptime,
+Cpu, MemPct, DiskPct, AgentVersion, GpuPct, DashboardTemp,
+BandwidthBytes, LoadAvg, ConnectionType, ExtraFsPct, Services,
+Battery. Same truncation pattern as 2.7.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/system/system.go", start = 130, end = 130, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 131, end = 147, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 152, end = 157, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 158, end = 158, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "system.Details + GPUData + FsStats (truncated)"
+justification = """
+The static-per-process Details (Hostname/Kernel/Cores/Threads/
+CpuModel/Os/OsName/Arch/Podman/MemoryTotal/SmartInterval), the
+GPUData record (Name/Temperature/MemoryUsed/Total/Usage/Power/
+Engines/PowerPkg), and the FsStats struct (DiskTotal/Used/
+ReadBytes/WriteBytes/DiskIoStats/...). Field names only; tags
+remain in the source for follow-up reads.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/system/system.go", start = 72, end = 72, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 73, end = 81, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 82, end = 82, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 85, end = 103, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 104, end = 104, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 161, end = 161, render = { kind = "full" } },
+  { path = "internal/entities/system/system.go", start = 162, end = 172, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/system/system.go", start = 173, end = 173, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "container.Stats wire shape + DockerHealth enum"
+justification = """
+The container-level wire struct (Name/Cpu/Mem/Bandwidth/Health/
+Status/Id/Image/Ports plus deprecated NetworkSent/Recv MB fields)
+and DockerHealth enum (none/starting/healthy/unhealthy). Field
+names truncated; the enum stays full.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/container/container.go", start = 123, end = 138, render = { kind = "full" } },
+  { path = "internal/entities/container/container.go", start = 140, end = 140, render = { kind = "full" } },
+  { path = "internal/entities/container/container.go", start = 141, end = 146, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+[\\[\\]*\\w.]+" } },
+  { path = "internal/entities/container/container.go", start = 148, end = 157, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+[\\[\\]*\\w.]+" } },
+  { path = "internal/entities/container/container.go", start = 158, end = 158, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "systemd.Service wire shape + state enums"
+justification = """
+The Service struct (Name/State/Cpu/Mem/MemPeak/Sub/CpuPeak), the
+ServiceState enum (active, inactive, failed, activating,
+deactivating, reloading), the ServiceSubState enum, plus
+ServiceDependency and `ServiceDetails = map[string]any`.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/systemd/systemd.go", start = 9, end = 30, render = { kind = "full" } },
+  { path = "internal/entities/systemd/systemd.go", start = 69, end = 69, render = { kind = "full" } },
+  { path = "internal/entities/systemd/systemd.go", start = 70, end = 78, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/systemd/systemd.go", start = 79, end = 79, render = { kind = "full" } },
+  { path = "internal/entities/systemd/systemd.go", start = 119, end = 119, render = { kind = "full" } },
+  { path = "internal/entities/systemd/systemd.go", start = 127, end = 127, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "smart.SmartData + SmartAttribute (over-the-wire)"
+justification = """
+The two CBOR-tagged structs that flow agent→hub: SmartData
+(ModelName/SerialNumber/FirmwareVersion/Capacity/SmartStatus/
+DiskName/DiskType/Temperature/Attributes) and SmartAttribute.
+Rest of smart.go is parsing types for smartctl JSON output.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/entities/smart/smart.go", start = 521, end = 522, render = { kind = "full" } },
+  { path = "internal/entities/smart/smart.go", start = 523, end = 531, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+[\\[\\]*\\w.]+" } },
+  { path = "internal/entities/smart/smart.go", start = 532, end = 532, render = { kind = "full" } },
+  { path = "internal/entities/smart/smart.go", start = 534, end = 534, render = { kind = "full" } },
+  { path = "internal/entities/smart/smart.go", start = 535, end = 542, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/entities/smart/smart.go", start = 543, end = 543, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "common-ws.go: HubRequest + AgentResponse envelopes"
+justification = """
+The CBOR-tagged outer envelopes used in both directions. Includes
+the legacy typed fields on AgentResponse (SystemData, Fingerprint,
+SmartData, ServiceInfo) kept for backward compatibility with <=0.17,
+and the generic `Data cbor.RawMessage` for 0.18+ handlers. The
+FingerprintRequest/Response shape is read on demand at the
+agent-connect call site.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/common/common-ws.go", start = 28, end = 46, render = { kind = "full" } },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 3 — Agent core: Agent struct, transport switch, handler registry
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "agent.Agent struct fields (truncated)"
+justification = """
+Every subsystem field on the `Agent` struct — cache, fsStats,
+diskPrev, netInterfaceDeltaTrackers, dockerManager, sensorConfig,
+gpuManager, smartManager, systemdManager, connectionManager,
+handlerRegistry, server, keys, dataDir. Truncated to drop the
+field-purpose comments since the field names themselves point to
+the right subsystem file.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/agent.go", start = 1, end = 5, render = { kind = "full" } },
+  { path = "agent/agent.go", start = 22, end = 24, render = { kind = "full" } },
+  { path = "agent/agent.go", start = 25, end = 50, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "agent/agent.go", start = 51, end = 51, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "agent.ConnectionManager struct + ConnectionState/Event enums"
+justification = """
+The agent's transport state machine: ConnectionManager fields,
+ConnectionState (Disconnected/WebSocketConnected/SSHConnected),
+ConnectionEvent (WebSocketConnect/Disconnect, SSHConnect/Disconnect),
+and the 10-second wsTickerInterval constant.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/connection_manager.go", start = 19, end = 54, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "agent.HandlerRegistry: per-action dispatch table"
+justification = """
+NewHandlerRegistry — the exhaustive table of every action ID
+mapped to its handler struct: GetData→GetDataHandler,
+CheckFingerprint→…, GetContainerLogs/Info, GetSmartData,
+GetSystemdInfo. Catastrophic-omission hedge for 'what actions does
+the agent serve' since the keys here are the complete list.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/handlers.go", start = 38, end = 56, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "agent: top-level fn signatures across every metric file"
+justification = """
+Locations of the entry-point functions across every per-domain
+metric file: cpu (getCpuMetrics, getPerCoreCpuUsage), system
+(refreshSystemDetails, getSystemStats, attachSystemDetails), disk
+(package decl), network (package decl), sensors (package decl),
+docker (package decl), gpu (GPUManager struct), smart
+(SmartManager struct), systemd (systemdManager struct),
+fingerprint (GetFingerprint), data_dir (GetDataDir), update
+(Update). One read into the file gives the body.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/cpu.go", start = 37, end = 37, render = { kind = "truncated", pattern = "^func [A-Za-z]+" } },
+  { path = "agent/cpu.go", start = 78, end = 78, render = { kind = "truncated", pattern = "^func [A-Za-z]+" } },
+  { path = "agent/system.go", start = 26, end = 26, render = { kind = "truncated", pattern = "^func \\(a \\*Agent\\) [A-Za-z]+" } },
+  { path = "agent/system.go", start = 111, end = 111, render = { kind = "truncated", pattern = "^func \\(a \\*Agent\\) [A-Za-z]+" } },
+  { path = "agent/system.go", start = 131, end = 131, render = { kind = "truncated", pattern = "^func \\(a \\*Agent\\) [A-Za-z]+" } },
+  { path = "agent/gpu.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "agent/smart.go", start = 26, end = 26, render = { kind = "full" } },
+  { path = "agent/systemd.go", start = 25, end = 25, render = { kind = "full" } },
+  { path = "agent/fingerprint.go", start = 27, end = 27, render = { kind = "truncated", pattern = "^func [A-Za-z]+" } },
+  { path = "agent/data_dir.go", start = 16, end = 16, render = { kind = "truncated", pattern = "^func [A-Za-z]+" } },
+  { path = "agent/update.go", start = 79, end = 79, render = { kind = "truncated", pattern = "^func [A-Za-z]+" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "agent.WebSocketClient struct + method signatures"
+justification = """
+The outbound WebSocket client: struct fields and signatures for
+Connect / OnOpen / OnClose / OnMessage / OnPing /
+handleAuthChallenge / verifySignature / sendMessage / sendResponse.
+Counterpart of internal/hub/ws.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/client.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "agent/client.go", start = 32, end = 33, render = { kind = "full" } },
+  { path = "agent/client.go", start = 34, end = 42, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "agent/client.go", start = 43, end = 43, render = { kind = "full" } },
+  { path = "agent/client.go", start = 130, end = 130, render = { kind = "full" } },
+  { path = "agent/client.go", start = 163, end = 163, render = { kind = "full" } },
+  { path = "agent/client.go", start = 192, end = 192, render = { kind = "full" } },
+  { path = "agent/client.go", start = 220, end = 220, render = { kind = "full" } },
+  { path = "agent/client.go", start = 272, end = 272, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "agent.ConnectionManager.connect: WS-first/SSH-fallback"
+justification = """
+The state-machine entrypoint. Tries WebSocket, falls back to
+starting the SSH server on failure, exits the process on DNS
+errors when EXIT_ON_DNS_ERROR=true. The single best snippet for
+explaining how agents handle network blips.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/connection_manager.go", start = 201, end = 226, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "agent.SSH server signatures (StartServer / handleSession / Get*)"
+justification = """
+SSH-server-side entrypoints in `agent/server.go`: StartServer,
+StopServer, handleSession, handleSSHRequest, handleLegacyStats,
+writeToSession (CBOR vs JSON encoding based on hub version),
+extractHubVersion, ParseKeys, GetAddress, GetNetwork.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/server.go", start = 39, end = 39, render = { kind = "full" } },
+  { path = "agent/server.go", start = 126, end = 126, render = { kind = "full" } },
+  { path = "agent/server.go", start = 163, end = 163, render = { kind = "full" } },
+  { path = "agent/server.go", start = 195, end = 195, render = { kind = "full" } },
+  { path = "agent/server.go", start = 203, end = 203, render = { kind = "full" } },
+  { path = "agent/server.go", start = 212, end = 212, render = { kind = "full" } },
+  { path = "agent/server.go", start = 219, end = 219, render = { kind = "full" } },
+  { path = "agent/server.go", start = 240, end = 240, render = { kind = "full" } },
+  { path = "agent/server.go", start = 261, end = 261, render = { kind = "full" } },
+  { path = "agent/server.go", start = 273, end = 273, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "agent.NewAgent: subsystem init prologue"
+justification = """
+The first dozen lines of NewAgent that initialise the fundamental
+caches (fsStats, cache, diskPrev, netIoStats, deltaTrackers) and
+resolve the DataDir. Tells you what state every Agent starts in
+before the optional subsystems (docker, smart, gpu, systemd) get
+touched.
+"""
+content = { kind = "lines", spans = [
+  { path = "agent/agent.go", start = 55, end = 75, render = { kind = "full" } },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 4 — Hub: app wiring, agent-connect handshake, per-system updater
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "internal/hub/ subpackage listing"
+justification = """
+Names every hub-side file and subpackage: hub.go, api.go,
+agent_connect.go, collections.go, update.go, server*.go plus
+config/, expirymap/, heartbeat/, systems/, transport/, utils/, ws/.
+Mitigates catastrophic omission about hub-side surface area.
+"""
+content = { kind = "fs", groups = [
+  { parent = "internal/hub", entries = "all" },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "hub.Hub struct + StartHub signatures"
+justification = """
+The `Hub` struct (embeds core.App + AlertManager, holds the
+UserManager/RecordManager/SystemManager/Heartbeat, SSH signer,
+pubKey, appURL) plus NewHub / StartHub / initialize / GetSSHKey
+/ MakeLink / registerCronJobs signatures.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hub/hub.go", start = 1, end = 2, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 27, end = 39, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 76, end = 76, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 120, end = 120, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 138, end = 138, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 147, end = 147, render = { kind = "full" } },
+  { path = "internal/hub/hub.go", start = 200, end = 200, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "hub.api.go: API route table"
+justification = """
+registerApiRoutes — exhaustive `/api/beszel/*` route list: 
+create-user, first-run, info/getkey, update, test-notification,
+heartbeat-status / test-heartbeat, config-yaml, agent-connect,
+universal-token, user-alerts (POST/DELETE), smart/refresh,
+systemd/info, containers/logs, containers/info. Comment lines
+truncated; one read into the file gives the per-route handler.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hub/api.go", start = 88, end = 88, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 90, end = 91, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 93, end = 93, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 96, end = 98, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 100, end = 103, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 105, end = 106, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 108, end = 111, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 113, end = 113, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 115, end = 116, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 118, end = 118, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 120, end = 120, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 122, end = 122, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 124, end = 125, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 127, end = 127, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 129, end = 129, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 131, end = 131, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 133, end = 133, render = { kind = "full" } },
+  { path = "internal/hub/api.go", start = 135, end = 138, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "hub.systems.System struct + status constants"
+justification = """
+The hub-side System struct (Id, Host, Port, Status, manager,
+client, sshTransport, data, WsConn, agentVersion, updateTicker,
+detailsFetched, smartFetching, smartInterval) plus the
+up/down/paused/pending status constants and the 60_000ms `interval`
+default in system_manager.go.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hub/systems/system_manager.go", start = 23, end = 36, render = { kind = "full" } },
+  { path = "internal/hub/systems/system.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "internal/hub/systems/system.go", start = 36, end = 51, render = { kind = "truncated", pattern = "^\\s*\\S+\\s+\\S+" } },
+  { path = "internal/hub/systems/system.go", start = 52, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "hub.System.StartUpdater: per-system ticker loop"
+justification = """
+StartUpdater — the per-system goroutine that runs forever:
+jitter for WS-first connections, downChan from WsConn for setDown
+signalling, and the update-ticker select. Body of update() and
+fetchDataFromAgent are one read into the file away.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hub/systems/system.go", start = 63, end = 66, render = { kind = "full" } },
+  { path = "internal/hub/systems/system.go", start = 93, end = 116, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "hub.agent_connect.go: WebSocket upgrade signatures"
+justification = """
+The `/api/beszel/agent-connect` handler chain. Signatures only:
+handleAgentConnect, agentConnect (validate, find fp, upgrade),
+verifyWsConn (GetFingerprint over WS, AddWebSocketSystem),
+findOrCreateSystemForToken, createSystem, SetFingerprint, plus
+the universalTokenMap declaration that backs ephemeral tokens.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/hub/agent_connect.go", start = 35, end = 36, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 52, end = 52, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 59, end = 59, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 105, end = 105, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 173, end = 173, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 267, end = 267, render = { kind = "full" } },
+  { path = "internal/hub/agent_connect.go", start = 294, end = 294, render = { kind = "full" } },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 5 — Alerts, records, supporting hub subsystems
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "5.1"
+descriptor = "alerts.AlertManager struct + alert types"
+justification = """
+The AlertManager struct (hub ref, pending-alerts sync.Map, the
+alertsCache), AlertMessageData (UserID/SystemID/Title/Message/Link),
+SystemAlertData, the supportsTitle map enumerating notification
+backends. Frames the alert pipeline before the per-alert details.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/alerts/alerts.go", start = 17, end = 36, render = { kind = "full" } },
+  { path = "internal/alerts/alerts.go", start = 81, end = 96, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "alerts: handler signatures across the alert family"
+justification = """
+Top-level alert entrypoints by file: HandleSystemAlerts (alerts_
+system.go), HandleStatusAlerts (alerts_status.go),
+handleSmartDeviceAlert (alerts_smart.go), HandleBatteryAlert,
+IsNotificationSilenced + SendAlert + SendShoutrrrAlert
+(alerts.go). One pointer per alert category — readers jump straight
+to the right file.
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/alerts/alerts.go", start = 129, end = 129, render = { kind = "full" } },
+  { path = "internal/alerts/alerts.go", start = 196, end = 196, render = { kind = "full" } },
+  { path = "internal/alerts/alerts.go", start = 251, end = 251, render = { kind = "full" } },
+  { path = "internal/alerts/alerts_system.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "internal/alerts/alerts_status.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "internal/alerts/alerts_smart.go", start = 12, end = 12, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "records: aggregation cascade table"
+justification = """
+The aggregation cascade in CreateLongerRecords: 1m → 10m (every
+run) → 20m → 120m → 480m with minShorterRecords thresholds
+(9, 2, 6, 4). Single best snippet for chart aggregation queries.
+The cron schedule lives in hub.go registerCronJobs (`8 * * * *`
+for delete-old, `*/10 * * * *` for create-longer).
+"""
+content = { kind = "lines", spans = [
+  { path = "internal/records/records.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "internal/records/records.go", start = 43, end = 69, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "supplemental/ directory listing"
+justification = """
+Install scripts (install-agent.sh, install-agent.ps1,
+install-hub.sh, brew, upgrade-agent), debian/, docker/ compose
+files, kubernetes manifests, guides/systemd.md, the CHANGELOG, and
+licenses/. Catastrophic-omission hedge for deployment questions.
+"""
+content = { kind = "fs", groups = [
+  { parent = "supplemental", entries = "all" },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "Makefile: build/dev targets list"
+justification = """
+The `.PHONY` declaration listing every make target — tidy,
+build-agent, build-hub, build-hub-dev, build, clean, lint,
+dev-server, dev-agent, dev-hub, dev, generate-locales,
+fetch-smartctl-conditional — plus the `.DEFAULT_GOAL := build`
+line. Catastrophic-omission hedge for the build surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "Makefile", start = 44, end = 45, render = { kind = "full" } },
+] }

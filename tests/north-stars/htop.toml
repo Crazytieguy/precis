@@ -1,0 +1,808 @@
+fixture = "htop"
+revision_pin = "b7f9df97"
+summary = """
+htop is a cross-platform interactive process viewer in C99 using an
+object-oriented C pattern with virtual method tables. The codebase is
+roughly three layers: a small reusable OOP core (Object/Row/Process,
+Panel, Meter, Vector/Hashtable) at the top of the source tree; a
+platform-abstraction layer with one directory per OS (linux/, darwin/,
+freebsd/, netbsd/, openbsd/, dragonflybsd/, solaris/, pcp/, plus
+unsupported/) that each ship Platform.[ch] + <P>Machine + <P>Process +
+<P>ProcessTable; and a wide set of concrete UI panels, screens, and
+meters at the top level. Entry is a one-line htop.c that calls
+CommandLine_run() in CommandLine.c; the inner loop lives in
+ScreenManager_run() and dispatches keys through a per-MainPanel
+Htop_Action table set up by Action_setBindings() in Action.c.
+
+The query distribution this ranking serves: agents asking "where is
+the keybinding for X / where is action Y handled", "how do I add a
+meter / column / screen", "what's the platform interface a new OS port
+needs to provide", "how is htoprc parsed", "what's the OOP idiom and
+what's a class struct", "what build flags exist", plus debugging
+journeys that need a precise filepath:line entry point. Early batches
+favour the top-level orientation files (README, AGENTS.md/CLAUDE.md
+architecture section, key entry points and class structures); platform
+breadth comes next because a port-specific question is otherwise an
+expensive hunt; the Action keymap and the central enums get their own
+batches because they are pure index data; per-file body content is
+deferred to late batches because most agent questions can be answered
+from structural pointers + one targeted read.
+"""
+
+# =============================================================
+# TIER 1 — Crate identity & top-level orientation
+# =============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede — one-sentence what-is-htop"
+justification = """
+Cheapest possible "what is this?" line. Whichever budget the user
+picks, this is included.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "README.md", start = 15, end = 15, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level directories — what each OS dir is"
+justification = """
+A directory-only listing of the fixture root, just the subdirs.
+Establishes the platform inventory immediately. File-level inventory
+follows in later batches.
+"""
+content.kind = "fs"
+content.groups = [
+    { parent = ".", entries = ["linux", "darwin", "freebsd", "netbsd", "openbsd", "dragonflybsd", "solaris", "pcp", "unsupported", "generic", "zfs", "docs", "scripts", "m4", "iwyu"] },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Entry point — htop.c main()"
+justification = """
+Two-line main() that just calls CommandLine_run. Pins the entry
+function for any "where does it all start?" question to a precise
+line range.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "htop.c", start = 14, end = 18, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Class-hierarchy one-liner"
+justification = """
+The block naming the OOP backbone: Object → Row → Process; Object →
+Panel; Object → Meter. Sourced from CLAUDE.md to avoid reading the
+header files. Tiny and load-bearing.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 44, end = 48, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "README — what htop does for users (part 1)"
+justification = """
+First half of the README intro: process scrolling, system-wide info,
+configurable display. Expands 1.1 with usable semantic context.
+"""
+predecessor = "1.1"
+content.kind = "lines"
+content.spans = [
+    { path = "README.md", start = 17, end = 20, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Main-loop sketch"
+justification = """
+Names CommandLine_run → ScreenManager_run and the recalc/redraw/
+input cycle. Saves the "where is the main loop?" round-trip.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 60, end = 67, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Platform-abstraction file roles"
+justification = """
+Names every platform dir and the four files each must ship
+(Platform.[ch], <P>Machine.[ch], <P>ProcessTable.[ch],
+<P>Process.[ch]). Otherwise a "what does a new OS port need?"
+question costs many grep calls.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 50, end = 58, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "Key subsystems roster"
+justification = """
+Bulleted list naming Action/Settings/Header/FunctionBar/CRT/Vector/
+Hashtable/XUtils/RichString and what each is for. The cheapest
+"name everything important" batch in the file.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 69, end = 79, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.9"
+descriptor = "README — runtime + history note"
+justification = """
+The remaining lines of the README intro: killing/renicing without
+PIDs, ncurses dependency, C implementation. Catches the tail half of
+the orientation paragraph.
+"""
+predecessor = "1.5"
+content.kind = "lines"
+content.spans = [
+    { path = "README.md", start = 22, end = 28, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.10"
+descriptor = "Style cheat-sheet — names + structure"
+justification = """
+Top half of the CLAUDE.md style block: indentation, filenames,
+function-name prefix, variable conventions, header guards, include
+ordering. Non-optional when writing or reading htop code.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 20, end = 33, render.kind = "full" },
+]
+
+[[batches]]
+id = "1.11"
+descriptor = "Style cheat-sheet — braces, exports, mem/strings"
+justification = """
+Bottom half of the CLAUDE.md style block: brace rules, the static-
+unless-exported norm, the xMalloc/String_eq policy, blank-line
+convention. Refines 1.10 thematically.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CLAUDE.md", start = 34, end = 38, render.kind = "full" },
+]
+
+# =============================================================
+# TIER 2 — OOP backbone (Object / Row / Process / Meter / Panel)
+# =============================================================
+# Compact class-struct + vtable definitions. Dispatch macros and
+# inline accessors are deferred to later tiers; this tier answers
+# "what's the data layout?" not "how do I dispatch a virtual call?".
+
+[[batches]]
+id = "2.1"
+descriptor = "Object — vtable struct + Object base"
+justification = """
+The OOP root: ObjectClass vtable (display/delete/compare fn-
+pointers + extends), struct Object_ holding the klass pointer,
+Arg union, Object_isA prototype, Object_class extern.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Object.h", start = 37, end = 56, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "Row — struct (what every table entity inherits)"
+justification = """
+struct Row_ (id/group/parent ints, tag/show/wasShown/showChildren/
+updated/isRoot flags, tree-mode indent + depth, seen/tomb
+timestamps). Every Process inherits from this.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Row.h", start = 37, end = 77, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Row — vtable"
+justification = """
+RowClass vtable (isHighlighted/isVisible/writeField/matchesFilter/
+sortKeyString/compareByParent) and the Row_compare prototype.
+"""
+predecessor = "2.2"
+content.kind = "lines"
+content.spans = [
+    { path = "Row.h", start = 79, end = 98, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Process — struct field declarations"
+justification = """
+Field declarations of struct Process_ in declaration-order, with
+the per-field comment lines elided. Reveals the full field roster
+(super, pgrp, session, tpgid, thread flags, container flag, tty,
+uids, elevated_priv, time, cmdline + basename offsets, procComm/
+Exe/Cwd, processor, percent_cpu/mem, priority, nice, nlwp,
+starttime, m_virt/m_resident, min/majflt, state, sched policy,
+mergedCommand). Catastrophic-omission hedge: full field set.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Process.h", start = 81, end = 83, render.kind = "full" },
+    { path = "Process.h", start = 86, end = 86, render.kind = "full" },
+    { path = "Process.h", start = 89, end = 89, render.kind = "full" },
+    { path = "Process.h", start = 92, end = 92, render.kind = "full" },
+    { path = "Process.h", start = 95, end = 95, render.kind = "full" },
+    { path = "Process.h", start = 98, end = 98, render.kind = "full" },
+    { path = "Process.h", start = 101, end = 101, render.kind = "full" },
+    { path = "Process.h", start = 104, end = 104, render.kind = "full" },
+    { path = "Process.h", start = 107, end = 107, render.kind = "full" },
+    { path = "Process.h", start = 110, end = 110, render.kind = "full" },
+    { path = "Process.h", start = 113, end = 113, render.kind = "full" },
+    { path = "Process.h", start = 120, end = 120, render.kind = "full" },
+    { path = "Process.h", start = 123, end = 123, render.kind = "full" },
+    { path = "Process.h", start = 129, end = 129, render.kind = "full" },
+    { path = "Process.h", start = 132, end = 132, render.kind = "full" },
+    { path = "Process.h", start = 135, end = 135, render.kind = "full" },
+    { path = "Process.h", start = 138, end = 138, render.kind = "full" },
+    { path = "Process.h", start = 141, end = 141, render.kind = "full" },
+    { path = "Process.h", start = 144, end = 144, render.kind = "full" },
+    { path = "Process.h", start = 147, end = 147, render.kind = "full" },
+    { path = "Process.h", start = 150, end = 150, render.kind = "full" },
+    { path = "Process.h", start = 153, end = 153, render.kind = "full" },
+    { path = "Process.h", start = 156, end = 156, render.kind = "full" },
+    { path = "Process.h", start = 159, end = 159, render.kind = "full" },
+    { path = "Process.h", start = 162, end = 162, render.kind = "full" },
+    { path = "Process.h", start = 165, end = 165, render.kind = "full" },
+    { path = "Process.h", start = 168, end = 168, render.kind = "full" },
+    { path = "Process.h", start = 171, end = 171, render.kind = "full" },
+    { path = "Process.h", start = 174, end = 174, render.kind = "full" },
+    { path = "Process.h", start = 177, end = 177, render.kind = "full" },
+    { path = "Process.h", start = 180, end = 180, render.kind = "full" },
+    { path = "Process.h", start = 183, end = 183, render.kind = "full" },
+    { path = "Process.h", start = 186, end = 186, render.kind = "full" },
+    { path = "Process.h", start = 189, end = 189, render.kind = "full" },
+    { path = "Process.h", start = 192, end = 192, render.kind = "full" },
+    { path = "Process.h", start = 195, end = 195, render.kind = "full" },
+    { path = "Process.h", start = 200, end = 201, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Process — public functions (name-only)"
+justification = """
+First-line of every Process_ public prototype (truncated to drop
+parameter lists). Pure location index. Catastrophic-omission hedge
+for "what public functions exist on Process?".
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Process.h", start = 233, end = 233, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 234, end = 234, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 235, end = 235, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 236, end = 236, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 300, end = 300, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 302, end = 302, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 306, end = 306, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 308, end = 308, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 310, end = 310, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 312, end = 312, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 314, end = 314, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 316, end = 316, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 318, end = 318, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 324, end = 324, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 326, end = 326, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 328, end = 328, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 329, end = 329, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 330, end = 330, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 334, end = 334, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 336, end = 336, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Process.h", start = 338, end = 338, render.kind = "truncated", render.pattern = "^[^(]+" },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Meter — vtable struct"
+justification = """
+MeterClass vtable: init / done / updateMode / updateValues / draw /
+getCaption / getUiName function-pointers; defaultMode + supported-
+Modes + total + attributes + name + uiName + caption + description
++ maxItems + isMultiColumn + isPercentChart flags. Contract for
+every concrete meter.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Meter.h", start = 59, end = 84, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Meter — instance struct + lifecycle prototypes"
+justification = """
+struct Meter_ (host, mode, param, drawData, values array, total,
+txtBuffer[256], meterData void*), MeterRateStatus, GraphData, plus
+Meter_new / Meter_humanUnit / setCaption / setMode /
+nextSupportedMode / toListItem and BlankMeter_class extern.
+"""
+predecessor = "2.6"
+content.kind = "lines"
+content.spans = [
+    { path = "Meter.h", start = 106, end = 156, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Panel — struct + HandlerResult"
+justification = """
+HandlerResult bitset (HANDLED/IGNORED/BREAK_LOOP/REFRESH/REDRAW/
+RESCAN/RESIZE/SYNTH_KEY) and struct Panel_ (geometry, items
+vector, selected/oldSelected, FunctionBar pointers, header
+RichString, selectionColorId).
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Panel.h", start = 23, end = 33, render.kind = "full" },
+    { path = "Panel.h", start = 64, end = 86, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "Panel — public functions (name-only)"
+justification = """
+First-line of every Panel_ public prototype (truncated). Pure
+location index: Panel_new/delete/init/done, setCursorToSelection,
+setSelectionColor, setHeader, move, resize, prune, add/insert/set/
+get/remove/getSelected/moveSelectedUp/Down, getSelectedIndex, size,
+setSelected, draw, splice, onKey, selectByTyping, getCh.
+"""
+predecessor = "2.8"
+content.kind = "lines"
+content.spans = [
+    { path = "Panel.h", start = 97, end = 97, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 99, end = 99, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 101, end = 101, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 103, end = 103, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 105, end = 105, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 107, end = 107, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 109, end = 109, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 111, end = 111, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 113, end = 113, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 115, end = 115, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 117, end = 117, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 119, end = 119, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 121, end = 121, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 123, end = 123, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 125, end = 125, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 127, end = 127, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 129, end = 129, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 131, end = 131, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 133, end = 133, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 135, end = 135, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 137, end = 137, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 139, end = 139, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 141, end = 141, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 143, end = 143, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 145, end = 145, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Panel.h", start = 147, end = 147, render.kind = "truncated", render.pattern = "^[^(]+" },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "Machine — runtime-state struct"
+justification = """
+struct Machine_ (settings, timing tuple, hwloc topology, mem/swap
+totals, CPU counts, UsersTable, htop/max/userId, tables array +
+activeTable + processTable). The "current process snapshot" anchor
+every action reaches via state->host. Machine_* prototypes are
+listed compactly in tier 6.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Machine.h", start = 35, end = 73, render.kind = "full" },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "Htop_Reaction + State struct"
+justification = """
+Htop_Reaction bitset (HTOP_OK / REFRESH / RECALCULATE / SAVE_
+SETTINGS / KEEP_FOLLOWING / QUIT / REDRAW_BAR / UPDATE_PANELHDR /
+RESIZE) and State (host, mainPanel, header, failedUpdate,
+pauseUpdate, hideSelection, hideMeters). Every action returns/reads
+these.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Action.h", start = 21, end = 50, render.kind = "full" },
+]
+
+# =============================================================
+# TIER 3 — Platform abstraction (per-OS layout + Platform interface)
+# =============================================================
+# What each platform directory must ship, what Platform.h declares as
+# the cross-platform contract, and how default screens / signals get
+# wired up per-OS.
+
+[[batches]]
+id = "3.1"
+descriptor = "linux/ directory listing"
+justification = """
+Every Linux-specific source file: CGroupUtils, Compat, GPU, IOPriority
++ Panel, LibNl, LibSensors, LinuxMachine, LinuxProcess, LinuxProcess
+Table, Platform, the Linux-only meters (HugePage, OpenRC, Pressure
+Stall, SELinux, Systemd, Zram) and the Zram/Zswap stats headers.
+Largest platform dir; many Linux questions resolve here.
+"""
+content.kind = "fs"
+content.groups = [
+    { parent = "linux", entries = "all" },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "darwin/ + BSD platform dirs listing"
+justification = """
+Listings of darwin/, freebsd/, netbsd/, openbsd/, dragonflybsd/. Each
+ships the canonical 4-file set (Platform, <P>Machine, <P>Process,
+<P>ProcessTable) plus ProcessField.h. darwin/ additionally has
+PlatformHelpers.{c,h}.
+"""
+content.kind = "fs"
+content.groups = [
+    { parent = "darwin", entries = "all" },
+    { parent = "freebsd", entries = "all" },
+    { parent = "netbsd", entries = "all" },
+    { parent = "openbsd", entries = "all" },
+    { parent = "dragonflybsd", entries = "all" },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "solaris/ + pcp/ + unsupported/ listings"
+justification = """
+Solaris ports + the PCP "platform" (which is really a metric-source
+adaptor) + the unsupported placeholder. pcp/ has its own dynamic
+columns/meters/screens machinery on top of the standard 4 files.
+"""
+content.kind = "fs"
+content.groups = [
+    { parent = "solaris", entries = "all" },
+    { parent = "pcp", entries = "all" },
+    { parent = "unsupported", entries = "all" },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "generic/ + zfs/ shared helpers"
+justification = """
+generic/ holds routines shared across platforms (gettime, hostname,
+uname, fdstat_sysctl, openzfs_sysctl, Demangle, UnwindPtrace). zfs/
+ships the meters that any ZFS-aware platform can pull in. Reveals the
+cross-platform helper surface.
+"""
+content.kind = "fs"
+content.groups = [
+    { parent = "generic", entries = "all" },
+    { parent = "zfs", entries = "all" },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Platform interface — Linux flavour"
+justification = """
+linux/Platform.h declares the full cross-platform contract a port
+must implement: extern data tables (defaultScreens, signals,
+memoryClasses, meterTypes), the lifecycle (Platform_init/done), the
+key-binding hook (setBindings), uptime/load/maxPid/CPU/Memory/Swap/
+Zram/Zfs/etc. value-setters, getProcessEnv/Locks, pressure-stall,
+file-descriptor counts, disk/network IO, battery, hostname/release,
+the PLATFORM_LONG_OPTIONS extension point, dynamic meter/column/
+screen stubs. Linux's copy is the most complete; other platforms
+ship the same surface in their own Platform.h.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "linux/Platform.h", start = 42, end = 118, render.kind = "full" },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "Linux default screens table"
+justification = """
+Platform_defaultScreens[] in linux/Platform.c: the literal "Main"
+and "I/O" screen specs with their default columns + sort keys.
+Pattern repeated in every platform's Platform.c — pin the linux
+copy as the canonical example, and locate the other platforms'
+copies via "grep Platform_defaultScreens darwin/Platform.c" etc.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "linux/Platform.c", start = 89, end = 102, render.kind = "full" },
+]
+
+# =============================================================
+# TIER 4 — Interactive surface (action keymap, menu/panel index)
+# =============================================================
+# How user input becomes behaviour. Action.c holds the keymap and
+# the action functions; the *Panel.c / *Screen.c files are the
+# concrete UI widgets they invoke.
+
+[[batches]]
+id = "4.1"
+descriptor = "Action_setBindings — the keymap table"
+justification = """
+The canonical input-dispatch table: every printable + function-key
+binding mapped to its actionXxx handler. Catastrophic-omission
+hedge: shown in full so "what key does X?" / "what handles k?" /
+"is there a binding for Z?" never needs a grep.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Action.c", start = 969, end = 1034, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "Action_pickFromVector — pointer to modal-list helper"
+justification = """
+Signature only of the reusable "open a popup panel and let the user
+pick" function used by Affinity, IOPriority, SchedPolicy, Signals,
+etc. menus. One read fetches the 40-line body.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Action.c", start = 59, end = 59, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "Function-bar contract"
+justification = """
+struct FunctionBar_ + lifecycle prototypes from FunctionBar.h — the
+F1..F10 footer that every panel uses, with attrs/keys/events arrays
+and the draw/setLabel helpers.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "FunctionBar.h", start = 14, end = 42, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "MainPanel — the process-list widget"
+justification = """
+struct MainPanel_ (super Panel + State pointer + IncSet for
+search/filter + Htop_Action keys array + process/readonly
+FunctionBar pair + idSearch). Plus the public API
+(MainPanel_new/setState/updateLabels/selectedRow/foreachRow/
+setFunctionBar/delete) and the MainPanel_getFunctionBar macro.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "MainPanel.h", start = 21, end = 51, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "ScreenManager struct + ScreenManager_run"
+justification = """
+struct ScreenManager_ (geometry, allowFocusChange, panel stack,
+header, host, state). The public API (new/delete/size/add/insert/
+remove/resize/run). ScreenManager_run is the actual inner-loop
+driver invoked from CommandLine_run.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "ScreenManager.h", start = 19, end = 47, render.kind = "full" },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Header — top-meter container"
+justification = """
+struct Header_ (columns Vector**, host, headerLayout, pad, height)
++ Header_new/delete/setLayout/populateFromSettings/writeBackToSet-
+tings/addMeterByClass/reinit/draw/updateData/calculateHeight, plus
+the Header_forEachColumn macro.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Header.h", start = 18, end = 47, render.kind = "full" },
+]
+
+# =============================================================
+# TIER 5 — Settings + build flags + key data tables
+# =============================================================
+# How configuration is read/written, and the precise locations for
+# build-flag-controlled behaviour and the central process-field
+# table.
+
+[[batches]]
+id = "5.1"
+descriptor = "Settings.h — top-level Settings struct (locations)"
+justification = """
+First-line locations of every Settings_ public prototype plus the
+default-delay + config-version macros + ScreenSettings struct
+header. Catastrophic-omission hedge for "what options does the
+Settings object expose?" — one read of Settings.h gets the bodies.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Settings.h", start = 21, end = 23, render.kind = "full" },
+    { path = "Settings.h", start = 131, end = 131, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 133, end = 133, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 135, end = 135, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 137, end = 137, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 139, end = 139, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 141, end = 141, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 143, end = 143, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 145, end = 145, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 147, end = 147, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 149, end = 149, render.kind = "truncated", render.pattern = "^[^(]+" },
+    { path = "Settings.h", start = 151, end = 151, render.kind = "truncated", render.pattern = "^[^(]+" },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "Settings_read entry point"
+justification = """
+Settings_read signature — the function that parses htoprc by
+splitting key=value lines and walking a long if/else chain. The
+recognised keys live at lines ~426-565 (read once, find the
+behaviour). Pin this signature so the grep for an option name
+lands at the right file.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Settings.c", start = 321, end = 321, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "htoprc key roster (sample of literal names, truncated)"
+justification = """
+Sampled String_eq("key", ...) lines from Settings_read: the literal
+htoprc key names, truncated to the key string only. Hedges against
+"is option X persisted?" by showing the naming convention; the full
+list is at Settings.c:426-565 — one read once you know it.
+"""
+predecessor = "5.2"
+content.kind = "lines"
+content.spans = [
+    { path = "Settings.c", start = 426, end = 426, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 444, end = 444, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 460, end = 460, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 490, end = 490, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 507, end = 507, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 510, end = 510, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+    { path = "Settings.c", start = 525, end = 525, render.kind = "truncated", render.pattern = "\"[a-z_]+\"" },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "PCP dynamic-screen config example (cgroups)"
+justification = """
+pcp/screens/cgroups: a representative dynamic-screen INI file — the
+[name] section, heading/caption/default keys, and per-column blocks
+with metric / format / width entries. Catalogues the surface of
+configurable PCP screens.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "pcp/screens/cgroups", start = 5, end = 13, render.kind = "full" },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "PCP dynamic-column config example"
+justification = """
+pcp/columns/container: the minimal column INI form
+(heading/caption/width/metric/description). Patterned after every
+other file in pcp/columns/. Companion to 5.4.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "pcp/columns/container", start = 5, end = 10, render.kind = "full" },
+]
+
+# =============================================================
+# TIER 6 — Hot-path implementation pointers
+# =============================================================
+# Cheap location-only batches: signature lines of the runtime hot
+# paths the agent will most often need to read in one hop —
+# CommandLine_run, ScreenManager_run, Process_writeField, the
+# meter draw modes, the Linux process scanner.
+
+[[batches]]
+id = "6.1"
+descriptor = "Hot-path entry points (signatures)"
+justification = """
+First-line signatures of the runtime hot paths: CommandLine_run
+(boot/teardown), Settings_read (htoprc parser), Action_setBindings
+(keymap setter), Machine_scan + Machine_scanTables, Process_make-
+CommandStr, Process_writeField. Each is a one-hop read away once
+located.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "CommandLine.c", start = 384, end = 384, render.kind = "full" },
+    { path = "Process.c", start = 183, end = 183, render.kind = "full" },
+    { path = "Process.c", start = 573, end = 573, render.kind = "full" },
+    { path = "Process.c", start = 943, end = 943, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "Meter render modes (locations)"
+justification = """
+Pointers to the four MeterMode_draw implementations in Meter.c
+(TextMeterMode, BarMeterMode, GraphMeterMode, LEDMeterMode) plus
+the Meter_modes table that exposes them. Any "how does the bar/
+graph render?" question becomes a single read.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Meter.c", start = 62, end = 62, render.kind = "full" },
+    { path = "Meter.c", start = 90, end = 90, render.kind = "full" },
+    { path = "Meter.c", start = 221, end = 221, render.kind = "full" },
+    { path = "Meter.c", start = 357, end = 357, render.kind = "full" },
+    { path = "Meter.c", start = 416, end = 416, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "Process_fields table location (Linux)"
+justification = """
+Linux's Process_fields[LAST_PROCESSFIELD] table — the canonical
+ProcessFieldData array indexed by RowField. Each platform's
+LinuxProcess.c / DarwinProcess.c / etc. ships its own copy; this
+pin lands at the Linux entry. The full table is ~200 lines, read
+on demand.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "linux/LinuxProcess.c", start = 34, end = 34, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.4"
+descriptor = "Linux signals table + memory classes"
+justification = """
+Pointers to Platform_signals[] (1..31 signal-name table) and
+Platform_memoryClasses[] (used/shared/compressed/buffers/cache/
+available coloring). Both are short literal-data tables consumed
+by Action_kill and the memory meter.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "linux/Platform.c", start = 104, end = 104, render.kind = "full" },
+    { path = "linux/Platform.c", start = 152, end = 152, render.kind = "full" },
+]
+
+[[batches]]
+id = "6.5"
+descriptor = "Static-inline accessors (Process + Row)"
+justification = """
+The inline setters/getters surfaced by Process.h and Row.h —
+Process_setPid/getPid, Process_setThreadGroup/getThreadGroup,
+Process_setParent/getParent, Process_getGroupOrParent,
+Process_isKernelThread / isUserlandThread / isThread, and the
+Row_idEqualCompare / Row_getGroupOrParent / Row_isChildOf helpers.
+Truncated to first lines.
+"""
+content.kind = "lines"
+content.spans = [
+    { path = "Process.h", start = 258, end = 258, render.kind = "full" },
+    { path = "Process.h", start = 274, end = 274, render.kind = "full" },
+    { path = "Process.h", start = 282, end = 282, render.kind = "full" },
+    { path = "Process.h", start = 290, end = 290, render.kind = "full" },
+    { path = "Row.h", start = 172, end = 172, render.kind = "full" },
+]

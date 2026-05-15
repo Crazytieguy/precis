@@ -95,6 +95,34 @@ per_fixture_tests!(xlstm);
 per_fixture_tests!(peepdb);
 per_fixture_tests!(soluna);
 per_fixture_tests!(sqlite_vec, "sqlite-vec");
+per_fixture_tests!(cobra);
+per_fixture_tests!(gin);
+per_fixture_tests!(lo);
+per_fixture_tests!(migrate);
+per_fixture_tests!(bubbletea);
+per_fixture_tests!(p_queue, "p-queue");
+per_fixture_tests!(express);
+per_fixture_tests!(axios);
+per_fixture_tests!(chalk);
+per_fixture_tests!(debug);
+per_fixture_tests!(flask);
+per_fixture_tests!(requests);
+per_fixture_tests!(rich);
+per_fixture_tests!(click);
+per_fixture_tests!(middleclass);
+per_fixture_tests!(mkcert);
+per_fixture_tests!(act);
+per_fixture_tests!(beszel);
+per_fixture_tests!(linkwarden);
+per_fixture_tests!(json_server, "json-server");
+per_fixture_tests!(beets);
+per_fixture_tests!(posting);
+per_fixture_tests!(linkding);
+per_fixture_tests!(htop);
+per_fixture_tests!(jq);
+per_fixture_tests!(svgo);
+per_fixture_tests!(dockly);
+per_fixture_tests!(audiobookshelf);
 
 // ---- paths -------------------------------------------------------------
 

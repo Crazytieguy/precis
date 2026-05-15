@@ -1,0 +1,771 @@
+fixture = "bubbletea"
+revision_pin = "c60f0c53"
+summary = """
+Bubble Tea is a Go framework for building terminal UIs in the style of The
+Elm Architecture. The user authors a `Model` (`Init`/`Update`/`View`), a
+`Program` wraps it, the runtime translates terminal input events into typed
+`Msg` values, hands them to `Update`, and renders the returned `View`. In
+v2 (this fixture is post-v2 rewrite), what used to be imperative options or
+commands (alt-screen, mouse mode, cursor, window title, colors, ...) became
+declarative fields on `tea.View` returned each frame — that shift drives
+much of the API surface.
+
+Layout: package source is a flat set of single-purpose Go files at the
+repo root grouped by concern (`tea.go` runtime + Program/View/Cursor;
+`key.go`/`mouse.go`/`paste.go`/`focus.go`/`clipboard.go`/`color.go`/
+`screen.go`/`keyboard.go` for message types; `commands.go` for
+Batch/Sequence/Tick/Every; `options.go` for ProgramOptions; `exec.go` for
+sub-process I/O; `logging.go`; `renderer.go`/`cursed_renderer.go`/
+`nil_renderer.go` for output; `input.go`/`tty*.go`/`termios*.go`/
+`signals*.go` for platform-conditional terminal plumbing). The richest
+docs are `README.md` (lede + tutorial) and `UPGRADE_GUIDE_V2.md` (v1->v2
+migration cookbook). `examples/` contains ~60 standalone main.go
+programs (one per feature) plus `tutorials/{basics,commands}`.
+
+Query distribution this NS serves: "how do I do X in Bubble Tea?"
+(View-field knobs, Msg types, Cmds, examples to mimic); v1->v2 migration
+mechanics; explanations of the runtime (event loop, batching, signals,
+TTY, panic recovery, renderer); deep-dives into the cursed_renderer
+(frame diffing, alt screen, kitty keyboard, progress bar, mouse).
+"""
+
+# ---------- Tier 1: orientation — what kind of repo is this? ----------
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede — what Bubble Tea is"
+justification = """
+First batch must be tiny. Title plus the single most query-shaping
+sentence in the repo: ties the package to The Elm Architecture and to
+Go terminal apps. Very high value-per-token; sets the frame for
+everything that follows.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "README.md", start = 10, end = 12, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Module path + Go version"
+justification = """
+The vanity import path (`charm.land/bubbletea/v2`) is the single most
+common detail an agent needs to write a working import statement, and
+go.mod is the canonical source. Tiny early hit.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "go.mod", start = 1, end = 6, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "tea.go package doc lede"
+justification = """
+The godoc on `package tea` (short version): mirrors the README claim
+from inside the source. Drops the trailing URL pointers (those are in
+README anyway) to keep the batch within the early growth envelope.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 1, end = 5, render = { kind = "full" } },
+  { path = "tea.go", start = 10, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Msg + Cmd aliases"
+justification = """
+The two type aliases that frame the contract: `Msg = uv.Event` (so
+input is just a tagged-union of events) and `Cmd = func() Msg` (so I/O
+is a thunk returning a message). Small batch placed before the Model
+interface so the agent has the vocabulary when reading it.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 48, end = 50, render = { kind = "full" } },
+  { path = "tea.go", start = 383, end = 390, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Model interface — the contract"
+justification = """
+Three-method interface (Init/Update/View): the load-bearing user-facing
+contract. If the agent only sees this batch they can write a skeleton
+Bubble Tea program.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 52, end = 65, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Repo root listing"
+justification = """
+Catastrophic-omission hedge: lists every immediate child of the fixture
+root so the agent knows the full file inventory. Reveals the flat-package
+layout (no internal/, no cmd/), the examples/ and tutorials/ subtrees,
+the two heavy docs (README + UPGRADE_GUIDE_V2), the platform-suffix
+families (tty_*, termios_*, signals_*) and the renderer-trio
+(renderer / cursed_renderer / nil_renderer).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+# ---------- Tier 2: the v2 View struct + Program lifecycle ----------
+
+[[batches]]
+id = "2.1"
+descriptor = "View struct — field declarations"
+justification = """
+Catastrophic-omission hedge for the most queried v2 API surface: the
+field roster of `tea.View`. Every behaviour that used to be a program
+option (alt-screen, mouse mode, cursor, window title, colors,
+progress bar, focus/paste/keyboard enhancements) is now a field on this
+struct, and missing even one field name leads the agent down the wrong
+migration path. Each field-decl line is shown Full; their per-field
+doc comments are deferred to later batches.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "tea.go", start = 96, end = 96, render = { kind = "full" } },
+  { path = "tea.go", start = 126, end = 126, render = { kind = "full" } },
+  { path = "tea.go", start = 131, end = 131, render = { kind = "full" } },
+  { path = "tea.go", start = 135, end = 135, render = { kind = "full" } },
+  { path = "tea.go", start = 139, end = 139, render = { kind = "full" } },
+  { path = "tea.go", start = 143, end = 143, render = { kind = "full" } },
+  { path = "tea.go", start = 147, end = 147, render = { kind = "full" } },
+  { path = "tea.go", start = 161, end = 161, render = { kind = "full" } },
+  { path = "tea.go", start = 170, end = 170, render = { kind = "full" } },
+  { path = "tea.go", start = 173, end = 173, render = { kind = "full" } },
+  { path = "tea.go", start = 177, end = 177, render = { kind = "full" } },
+  { path = "tea.go", start = 189, end = 190, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "NewView constructor"
+justification = """
+The single most common way to build a View — `tea.NewView(s string)`.
+Tiny, near-universal in user code. Sets the "you can also configure
+fields after construction" idiom that everything in 2.1 hangs on.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 67, end = 80, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "NewProgram + Run signatures"
+justification = """
+The two function signatures (`NewProgram(model, opts...) *Program` and
+`Program.Run() (Model, error)`) every `main()` calls. Signature lines
+only (no body) let the agent write a correct entry-point.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 594, end = 595, render = { kind = "full" } },
+  { path = "tea.go", start = 988, end = 991, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Program.Send + Quit"
+justification = """
+The two most common host-driven control points: `Send(msg)` to inject
+messages from outside, and `Program.Quit()` (the convenience external
+shutdown). Godocs make the semantics explicit: blocking before start,
+no-op after exit.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 1176, end = 1199, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Quit / Suspend / Interrupt commands + msg types"
+justification = """
+The three special commands that flow back *into* the program from
+inside Update (`tea.Quit`, `tea.Suspend`, `tea.Interrupt`) and their
+matching Msg types. Together with 2.4 they cover the "how do I shut
+down / pause this program?" axis end-to-end.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 554, end = 592, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "README tutorial — Model/Init/Update/View overview"
+justification = """
+The README's prose roadmap of the three Model methods. Comparable
+educational value to the source godoc on the interface, but framed for
+beginners. Big zero-follow-up win for "how do I write a Bubble Tea
+program?" queries.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 79, end = 85, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "UPGRADE_GUIDE_V2 — migration checklist"
+justification = """
+Top-of-file checklist with internal anchors covering every breaking
+v1->v2 change. For an agent landed on a v1 codebase asked to upgrade,
+this is the highest-density single batch. The catastrophic-omission
+risk is real here: missing one bullet (e.g. `case " ":` -> `case
+"space":`) silently breaks the upgrade.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 1, end = 24, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "UPGRADE_GUIDE_V2 — \"The Big Idea\" (declarative views)"
+justification = """
+The single paragraph that explains *why* v2 looks the way it does:
+imperative options/commands moved into declarative View fields. This is
+the same insight 2.1 demonstrates structurally; here it's stated in
+prose, which is what an agent needs to frame migrations correctly.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 39, end = 58, render = { kind = "full" } },
+]
+
+# ---------- Tier 3: message ecosystem + commands ----------
+
+[[batches]]
+id = "3.1"
+descriptor = "Batch + Sequence (commands.go)"
+justification = """
+`tea.Batch(...)` (concurrent commands) and `tea.Sequence(...)` (ordered)
+are the two combinators every non-trivial Cmd-returning Update relies
+on, plus their msg types. Signatures + godoc; difference between them
+is a common bug source.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "commands.go", start = 7, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Tick + Every + RequestWindowSize signatures"
+justification = """
+The three timer/query commands every animated example uses. Signature
+lines and RequestWindowSize doc; the bodies are 10-line tickers easy
+to recreate from the signature.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "commands.go", start = 102, end = 102, render = { kind = "full" } },
+  { path = "commands.go", start = 154, end = 154, render = { kind = "full" } },
+  { path = "commands.go", start = 168, end = 175, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Event → Msg translation table (input.go)"
+justification = """
+The whole `translateInputEvent` switch in one batch. Best in the whole
+fixture for catastrophic-omission mitigation around messages: it
+enumerates every uv.Event variant the runtime knows about and maps it
+to the user-facing Msg type. From this one batch the agent learns the
+complete Msg taxonomy (Key/Mouse/Paste/Focus/Blur/Clipboard/Color/
+CursorPosition/WindowSize/Capability/TerminalVersion/KeyboardEnhancements/
+ModeReport) without needing to grep.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "input.go", start = 1, end = 54, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "KeyPressMsg / KeyReleaseMsg / KeyMsg (key.go)"
+justification = """
+The three message types the agent type-switches against for keyboard
+input: KeyPressMsg, KeyReleaseMsg, and the KeyMsg interface that
+spans both. Just the type decls + a signature for Keystroke (the
+modifier-ordering note is dropped — it appears on every keystroke fn).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "key.go", start = 190, end = 198, render = { kind = "full" } },
+  { path = "key.go", start = 213, end = 215, render = { kind = "full" } },
+  { path = "key.go", start = 223, end = 224, render = { kind = "full" } },
+  { path = "key.go", start = 257, end = 264, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Key struct (key.go)"
+justification = """
+The `Key` struct: Text/Mod/Code/ShiftedCode/BaseCode/IsRepeat. The
+field godocs are where the Kitty-keyboard-protocol caveats live (some
+fields are only populated under Kitty / Windows Console). Predecessor:
+3.4 so the agent already knows where Key shows up.
+"""
+predecessor = "3.4"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "key.go", start = 266, end = 269, render = { kind = "full" } },
+  { path = "key.go", start = 297, end = 343, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "KeyMod constants (mod.go)"
+justification = """
+Full mod.go: every modifier constant (ModShift/Alt/Ctrl/Meta/Hyper/
+Super and the three lock states). Tiny file, near-zero risk of
+partial-class confusion when included whole.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mod.go", start = 1, end = 27, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "Mouse + MouseMsg + per-event types (mouse.go)"
+justification = """
+Catastrophic-omission hedge for mouse handling: button-code commentary,
+the `Mouse` struct, the `MouseMsg` interface, and the four concrete
+message types (MouseClickMsg/MouseReleaseMsg/MouseWheelMsg/
+MouseMotionMsg) — the type-decl line for each, with the repetitive
+String()/Mouse() accessor methods dropped (they're predictable
+boilerplate satisfying the MouseMsg interface).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "mouse.go", start = 1, end = 52, render = { kind = "full" } },
+  { path = "mouse.go", start = 71, end = 75, render = { kind = "full" } },
+  { path = "mouse.go", start = 82, end = 83, render = { kind = "full" } },
+  { path = "mouse.go", start = 97, end = 98, render = { kind = "full" } },
+  { path = "mouse.go", start = 112, end = 113, render = { kind = "full" } },
+  { path = "mouse.go", start = 127, end = 128, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "Cursor + Position + CursorShape (cursor.go)"
+justification = """
+Full cursor.go — the struct, the shape enum, and CursorPositionMsg /
+RequestCursorPosition. Inlines with the View.Cursor field surfaced in
+2.1. Tiny file.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "cursor.go", start = 1, end = 28, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "ProgramOption catalog (options.go signatures)"
+justification = """
+Every `With…` function on Program — one batch listing the signature
+line for each, so the agent knows the full set of construction-time
+knobs (Context, Output, Input, Environment, Without*, Filter, FPS,
+ColorProfile, WindowSize). Catastrophic-omission mitigation: not
+showing one of these leaves the agent guessing.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "options.go", start = 17, end = 17, render = { kind = "full" } },
+  { path = "options.go", start = 22, end = 22, render = { kind = "full" } },
+  { path = "options.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "options.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "options.go", start = 58, end = 58, render = { kind = "full" } },
+  { path = "options.go", start = 66, end = 66, render = { kind = "full" } },
+  { path = "options.go", start = 76, end = 76, render = { kind = "full" } },
+  { path = "options.go", start = 84, end = 84, render = { kind = "full" } },
+  { path = "options.go", start = 98, end = 98, render = { kind = "full" } },
+  { path = "options.go", start = 133, end = 133, render = { kind = "full" } },
+  { path = "options.go", start = 142, end = 142, render = { kind = "full" } },
+  { path = "options.go", start = 153, end = 153, render = { kind = "full" } },
+  { path = "options.go", start = 163, end = 163, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "Program.Kill + Wait"
+justification = """
+Companion to 2.4 — Kill skips the final render and `Run` returns
+ErrProgramKilled; Wait blocks until shutdown. Common in test harnesses
+and supervisory code that drives a Program.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 1201, end = 1211, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "Program.Println + Printf + Cmd helpers"
+justification = """
+Print-above-the-TUI surface in one batch: the *Program methods and the
+matching tea.Println/tea.Printf Cmds in renderer.go. Common need for
+log-style messages that persist across renders without breaking the
+redraw cycle.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 1368, end = 1390, render = { kind = "full" } },
+  { path = "renderer.go", start = 63, end = 92, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.12"
+descriptor = "Message-catalog locations (small msg-type files)"
+justification = """
+Compact locations batch: the declaration line of every public type
+and Cmd-returning function across the small single-purpose message
+files. Lets the agent learn the *names* — PasteMsg/PasteStartMsg/
+PasteEndMsg, FocusMsg/BlurMsg, ClipboardMsg + SetClipboard/
+ReadClipboard/SetPrimaryClipboard/ReadPrimaryClipboard, ColorProfileMsg,
+RawMsg+Raw, KeyboardEnhancementsMsg, WindowSizeMsg+ClearScreen+
+ModeReportMsg, CapabilityMsg+RequestCapability, TerminalVersionMsg+
+RequestTerminalVersion, EnvMsg, *ColorMsg + Request*Color — and where
+they live. Catastrophic-omission hedge: showing one without the others
+would imply the missing siblings don't exist. Bodies are tiny and one
+grep away once the name is known.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "paste.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "paste.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "paste.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "focus.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "focus.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "clipboard.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "clipboard.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "clipboard.go", start = 42, end = 42, render = { kind = "full" } },
+  { path = "clipboard.go", start = 54, end = 54, render = { kind = "full" } },
+  { path = "clipboard.go", start = 68, end = 68, render = { kind = "full" } },
+  { path = "color.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "color.go", start = 21, end = 21, render = { kind = "full" } },
+  { path = "color.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "color.go", start = 36, end = 36, render = { kind = "full" } },
+  { path = "color.go", start = 67, end = 67, render = { kind = "full" } },
+  { path = "color.go", start = 81, end = 81, render = { kind = "full" } },
+  { path = "profile.go", start = 13, end = 13, render = { kind = "full" } },
+  { path = "raw.go", start = 5, end = 5, render = { kind = "full" } },
+  { path = "raw.go", start = 33, end = 33, render = { kind = "full" } },
+  { path = "keyboard.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "screen.go", start = 9, end = 9, render = { kind = "full" } },
+  { path = "screen.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "screen.go", start = 62, end = 62, render = { kind = "full" } },
+  { path = "termcap.go", start = 30, end = 30, render = { kind = "full" } },
+  { path = "termcap.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "xterm.go", start = 4, end = 4, render = { kind = "full" } },
+  { path = "xterm.go", start = 20, end = 20, render = { kind = "full" } },
+  { path = "environ.go", start = 19, end = 19, render = { kind = "full" } },
+]
+
+# ---------- Tier 4: examples, runtime internals, supporting APIs ----------
+
+[[batches]]
+id = "4.1"
+descriptor = "examples/ + tutorials/ directory listing"
+justification = """
+Catastrophic-omission hedge for the example corpus: every immediate
+child of examples/ (one dir per pattern, ~60 of them) and tutorials/
+(basics, commands). Lets the agent know exactly which one-file example
+exists for "how do I do X?" — altscreen-toggle, chat, debounce, exec,
+focus-blur, http, list-*, mouse, package-manager, pager, paginator,
+pipe, progress-*, realtime, send-msg, sequence, spinner(s),
+split-editors, stopwatch, suspend, table*, tabs, textarea, textinput(s),
+timer, tui-daemon-combo, views, window-size, etc.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "examples"
+entries = "all"
+[[batches.content.groups]]
+parent = "tutorials"
+entries = "all"
+
+[[batches]]
+id = "4.2"
+descriptor = "UPGRADE_GUIDE_V2 quick-ref — keys + mouse"
+justification = """
+The flat old->new lookup tables for key and mouse events. Highest-
+density single batch for "what was X in v1?" questions on the two
+most heavily-touched event families.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 476, end = 499, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "UPGRADE_GUIDE_V2 quick-ref — options/commands → View fields"
+justification = """
+Companion to 4.2: options→View fields, commands→View fields,
+renames, and new program options tables. The "Removed Program Methods"
+table is left to the migration checklist in 2.7 to keep this batch
+within the cap.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "UPGRADE_GUIDE_V2.md", start = 501, end = 522, render = { kind = "full" } },
+  { path = "UPGRADE_GUIDE_V2.md", start = 545, end = 557, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "Exec / ExecProcess signatures (exec.go)"
+justification = """
+The two Cmd-returning fns for blocking sub-process execution (used by
+the `exec` example to spawn $EDITOR), plus the ExecCommand interface
+and ExecCallback type. Godocs trimmed to the lede; the full prose
+example is one file-read away.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "exec.go", start = 15, end = 22, render = { kind = "full" } },
+  { path = "exec.go", start = 28, end = 31, render = { kind = "full" } },
+  { path = "exec.go", start = 50, end = 56, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "4.5"
+descriptor = "renderer interface method roster"
+justification = """
+Compact locations batch listing every method of the internal `renderer`
+interface (start/close/render/flush/reset/insertAbove/setSyncdUpdates/
+setWidthMethod/resize/setColorProfile/clearScreen/writeString/onMouse)
+plus the FPS constants. Two impls satisfy it: cursed_renderer.go
+(production) and nil_renderer.go (no-op for WithoutRenderer()).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "renderer.go", start = 13, end = 14, render = { kind = "full" } },
+  { path = "renderer.go", start = 17, end = 20, render = { kind = "full" } },
+  { path = "renderer.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "renderer.go", start = 26, end = 26, render = { kind = "full" } },
+  { path = "renderer.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "renderer.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "renderer.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "renderer.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "renderer.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "renderer.go", start = 44, end = 44, render = { kind = "full" } },
+  { path = "renderer.go", start = 47, end = 47, render = { kind = "full" } },
+  { path = "renderer.go", start = 50, end = 50, render = { kind = "full" } },
+  { path = "renderer.go", start = 53, end = 53, render = { kind = "full" } },
+  { path = "renderer.go", start = 56, end = 57, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "Platform-conditional file map"
+justification = """
+The build-tagged platform fan-out: shows the agent which file applies
+where so they don't edit the wrong one. signals_unix vs signals_windows
+(SIGWINCH resize), termios_unix/bsd/other/windows (tab/backspace
+optimization probes), tty_unix vs tty_windows (raw-mode entry + VT
+input). Just the build-tag headers.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "signals_unix.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "signals_windows.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "termios_unix.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "termios_windows.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "tty_unix.go", start = 1, end = 1, render = { kind = "full" } },
+  { path = "tty_windows.go", start = 1, end = 1, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "examples/simple/main.go skeleton"
+justification = """
+The shortest standalone example — a countdown timer with Tick. Just
+its function decls (main, model.Init/Update/View, the tick Cmd) so the
+agent can navigate to it for a canonical "minimal viable Bubble Tea
+program" template.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "examples/simple/main.go", start = 14, end = 14, render = { kind = "full" } },
+  { path = "examples/simple/main.go", start = 38, end = 38, render = { kind = "full" } },
+  { path = "examples/simple/main.go", start = 45, end = 45, render = { kind = "full" } },
+  { path = "examples/simple/main.go", start = 67, end = 67, render = { kind = "full" } },
+  { path = "examples/simple/main.go", start = 75, end = 75, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "tutorials/basics/main.go skeleton"
+justification = """
+The full tutorial program's function decls — main, initialModel, Init,
+Update (the grocery-list switch), View. Pairs with the README tutorial
+prose by giving the agent the runnable file behind it.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tutorials/basics/main.go", start = 16, end = 16, render = { kind = "full" } },
+  { path = "tutorials/basics/main.go", start = 28, end = 28, render = { kind = "full" } },
+  { path = "tutorials/basics/main.go", start = 32, end = 32, render = { kind = "full" } },
+  { path = "tutorials/basics/main.go", start = 59, end = 59, render = { kind = "full" } },
+  { path = "tutorials/basics/main.go", start = 84, end = 84, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "ErrProgramPanic / ErrProgramKilled / ErrInterrupted"
+justification = """
+The three sentinel error values `Run` may return. The agent needs
+these names verbatim to write `errors.Is(err, tea.ErrProgramKilled)`
+checks; tests in this repo do that several times.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 38, end = 46, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "ProgressBarState enum"
+justification = """
+The ProgressBarState enum (None/Default/Error/Indeterminate/Warning)
+that drives `View.ProgressBar.State`. Pairs with the View.ProgressBar
+field surfaced in 2.1; the struct body + NewProgressBar are a single
+file-read away once the agent knows where to look.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 311, end = 318, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "OpenTTY helper (tty.go)"
+justification = """
+The exported helper that opens the user's terminal for direct read/
+write. Useful when stdin/stdout are taken by a pipe and you still want
+a TUI.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tty.go", start = 129, end = 136, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "LogToFile signatures (logging.go)"
+justification = """
+The two log-redirect helpers — LogToFile and LogToFileWith — for
+Bubble Tea programs (you can't print to stdout because the TUI owns
+it). Just the signatures.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "logging.go", start = 23, end = 23, render = { kind = "full" } },
+  { path = "logging.go", start = 29, end = 32, render = { kind = "full" } },
+  { path = "logging.go", start = 35, end = 35, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "4.13"
+descriptor = "README — Logging Stuff snippet"
+justification = """
+The README's "logging while a TUI owns stdout" recipe heading +
+code block. Near-zero-follow-up payoff for debug-logging questions.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 295, end = 295, render = { kind = "full" } },
+  { path = "README.md", start = 302, end = 309, render = { kind = "full" } },
+]
+
+
+
+[[batches]]
+id = "4.14"
+descriptor = "Bubbles + Lip Gloss companion libs (README)"
+justification = """
+The README's "Libraries we use with Bubble Tea" list — Bubbles
+(components), Lip Gloss (styling), Harmonica (springs), BubbleZone
+(mouse zones), ntcharts (charts). High-value for "where do I find a
+text input?" type queries — those live in Bubbles.
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 317, end = 321, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "4.15"
+descriptor = "Cursor struct godoc + NewCursor (tea.go)"
+justification = """
+Refinement on the Cursor type referenced by View.Cursor: the public
+struct fields (Color, Shape, Blink, Position-embedded) and the
+NewCursor(x, y) constructor that returns a blinking block at (x,y).
+Pairs with 2.1 (View.Cursor field) and 3.8 (CursorShape constants).
+"""
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tea.go", start = 356, end = 357, render = { kind = "full" } },
+  { path = "tea.go", start = 372, end = 374, render = { kind = "full" } },
+]

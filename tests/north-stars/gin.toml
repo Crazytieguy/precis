@@ -1,0 +1,806 @@
+fixture = "gin"
+revision_pin = "5f4f9643"
+summary = """
+gin is the gin-gonic Go web framework: a thin layer on net/http that
+provides routing (radix tree), middleware chains, request binding
+(JSON/XML/YAML/TOML/MsgPack/Protobuf/form/header/uri), response
+rendering (JSON/XML/YAML/TOML/HTML/Protobuf/MsgPack/PDF/redirect/
+reader/data/SSE), and a per-request Context that aggregates almost
+every handler-side API. Public surface is dominated by three types
+(Engine, RouterGroup, Context) plus the binding/ and render/
+subpackages. Likely agent queries: how do I register routes, define
+middleware, bind a request body, render a response, customise the
+Logger/Recovery, configure trusted proxies, swap the JSON codec, run
+TLS/QUIC/Unix sockets, do basic auth, set/read cookies, serve static
+files, stream SSE, write tests. Snapshot prioritises the high-level
+package shape, the Context method index (binders, getters, renderers,
+flow control), and locations for every binding/render variant — body
+content is added only after the names are placed.
+"""
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 1 — Crate identity & top-level filesystem map.
+# Smallest batches first so the growth envelope ramps gracefully.
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "1.1"
+descriptor = "README title"
+justification = """
+Minimum viable identity: this is the Gin Web Framework.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 1, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Package version"
+justification = """
+Pin the release: anyone asking "what version" gets it free.
+"""
+content = { kind = "lines", spans = [
+  { path = "version.go", start = 7, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "Package godoc lede"
+justification = """
+"Package gin implements a HTTP web framework called gin." — single
+sentence; answers "what's this package" zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "doc.go", start = 2, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "Engine entry-point signatures (New / Default)"
+justification = """
+The two factory functions that create the framework's central type.
+Anyone scaffolding a gin app will look for these first.
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 202, end = 202, render = { kind = "full" } },
+  { path = "gin.go", start = 236, end = 236, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "Go module declaration + version"
+justification = """
+Module path + go directive. Tells the agent the import path
+(`github.com/gin-gonic/gin`) and minimum Go (1.25).
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "README — framework pitch"
+justification = """
+Reframes Gin as a high-performance HTTP framework on net/http with a
+Martini-like API and httprouter-derived routing.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 20, end = 20, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "Minimal handler example (doc.go body)"
+justification = """
+The canonical r := gin.Default(); r.GET; r.Run() snippet — the most
+compact "how do I use this" possible. Many "hello world" queries are
+answered here.
+"""
+content = { kind = "lines", spans = [
+  { path = "doc.go", start = 7, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "binding/ directory listing"
+justification = """
+Every wire-format binder file: binding.go (the dispatcher),
+json/xml/yaml/toml/msgpack/protobuf/bson/form*/header/uri/plain/query
+plus the validator. Catastrophic-omission hedge — partial listings
+would imply some binders don't exist.
+"""
+content = { kind = "fs", groups = [
+  { parent = "binding", entries = "all" },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "render/ directory listing"
+justification = """
+Every renderer file: render.go (interface),
+json/xml/yaml/toml/msgpack/protobuf/bson/html/text/pdf/redirect/
+reader/data. Pair to 1.8.
+"""
+content = { kind = "fs", groups = [
+  { parent = "render", entries = "all" },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "Subpackages — codec/json, internal, ginS"
+justification = """
+Smaller subdirectories: build-tagged JSON backends, internal
+utilities, and the package-level singleton wrapper.
+"""
+content = { kind = "fs", groups = [
+  { parent = "codec/json", entries = "all" },
+  { parent = "internal/bytesconv", entries = "all" },
+  { parent = "internal/fs", entries = "all" },
+  { parent = "ginS", entries = "all" },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "Repo root listing"
+justification = """
+Every top-level file/dir for targeting follow-up reads.
+Catastrophic-omission hedge: partial listings would make the agent
+assume e.g. there is no separate `recovery.go` or `response_writer.go`.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.12"
+descriptor = "go.mod direct requires"
+justification = """
+Dependency surface: sonic/jsoniter/go-json for JSON, validator/v10
+for binding validation, quic-go for HTTP/3, ugorji for msgpack,
+mongo-driver for BSON, gin-contrib/sse, goccy yaml, pelletier toml.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 5, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.13"
+descriptor = "docs/doc.md H2 outline"
+justification = """
+Heading locations for the long-form quick-start guide. Sections for
+Build tags, Routing, Middleware, Logging, Request Binding &
+Validation, Response Rendering, Server Configuration, Testing — and
+exactly where each begins.
+"""
+content = { kind = "lines", spans = [
+  { path = "docs/doc.md", start = 1, end = 1, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 79, end = 79, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 113, end = 113, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 402, end = 402, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 608, end = 608, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 812, end = 812, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 1662, end = 1662, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 2090, end = 2090, render = { kind = "full" } },
+  { path = "docs/doc.md", start = 2616, end = 2616, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.14"
+descriptor = "testdata + docs + examples listings"
+justification = """
+Listing of non-code subtrees for the rare query about templates,
+TLS certs, or protobuf fixtures.
+"""
+content = { kind = "fs", groups = [
+  { parent = "docs", entries = "all" },
+  { parent = "examples", entries = "all" },
+  { parent = "testdata", entries = "all" },
+  { parent = "testdata/certificate", entries = "all" },
+  { parent = "testdata/protoexample", entries = "all" },
+  { parent = "testdata/template", entries = "all" },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 2 — Engine / RouterGroup public surface.
+# The framework's central type, every HTTP-verb shortcut, every Run*
+# server-start variant, IRoutes interface, HandlerFunc type. Body of
+# core constructors and the request dispatcher comes later in T3/T5.
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "2.1"
+descriptor = "HandlerFunc / HandlersChain / OptionFunc types"
+justification = """
+The three function types the whole API speaks in. Without them, every
+later signature is unreadable.
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 50, end = 57, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "RouterGroup struct"
+justification = """
+The path-prefix + middleware grouping. Engine embeds it, so every
+GET/POST/Use call ultimately runs through RouterGroup. Pair with the
+IRoutes interface (2.3).
+"""
+content = { kind = "lines", spans = [
+  { path = "routergroup.go", start = 53, end = 60, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "IRouter / IRoutes interfaces"
+justification = """
+Catastrophic-omission hedge for the routing surface: this single
+interface block enumerates every HTTP verb shortcut plus Match / Any /
+StaticFile / StaticFileFS / Static / StaticFS / Use / Group / Handle.
+Both Engine and RouterGroup satisfy IRouter — knowing this saves the
+agent from re-grepping the entire repo.
+"""
+content = { kind = "lines", spans = [
+  { path = "routergroup.go", start = 26, end = 51, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "RouterGroup verb-shortcut signatures"
+justification = """
+Catastrophic-omission hedge by location: signature line of every
+HTTP-verb method on RouterGroup (Handle/POST/GET/DELETE/PATCH/PUT/
+OPTIONS/HEAD/Any/Match). Bodies all just call handle() so signatures
+suffice. Truncated to drop the body brace.
+"""
+content = { kind = "lines", spans = [
+  { path = "routergroup.go", start = 103, end = 103, render = { kind = "full" } },
+  { path = "routergroup.go", start = 111, end = 111, render = { kind = "full" } },
+  { path = "routergroup.go", start = 116, end = 116, render = { kind = "full" } },
+  { path = "routergroup.go", start = 121, end = 121, render = { kind = "full" } },
+  { path = "routergroup.go", start = 126, end = 126, render = { kind = "full" } },
+  { path = "routergroup.go", start = 131, end = 131, render = { kind = "full" } },
+  { path = "routergroup.go", start = 136, end = 136, render = { kind = "full" } },
+  { path = "routergroup.go", start = 141, end = 141, render = { kind = "full" } },
+  { path = "routergroup.go", start = 147, end = 147, render = { kind = "full" } },
+  { path = "routergroup.go", start = 156, end = 156, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "RouterGroup Use / Group / Static* signatures"
+justification = """
+The other half of the IRoutes surface: middleware attachment,
+sub-grouping, and static-file mounting. Body for Static handling is
+non-trivial (deferred) but the signatures land here.
+"""
+content = { kind = "lines", spans = [
+  { path = "routergroup.go", start = 65, end = 65, render = { kind = "full" } },
+  { path = "routergroup.go", start = 72, end = 72, render = { kind = "full" } },
+  { path = "routergroup.go", start = 82, end = 82, render = { kind = "full" } },
+  { path = "routergroup.go", start = 166, end = 166, render = { kind = "full" } },
+  { path = "routergroup.go", start = 175, end = 175, render = { kind = "full" } },
+  { path = "routergroup.go", start = 197, end = 197, render = { kind = "full" } },
+  { path = "routergroup.go", start = 203, end = 203, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "Engine struct identity + config-field doc"
+justification = """
+Engine struct opening lines: it embeds RouterGroup and exposes
+RedirectTrailingSlash / RedirectFixedPath / HandleMethodNotAllowed /
+ForwardedByClientIP / UseRawPath / RemoveExtraSlash etc. as public
+bool fields. Show the comment-rich top half so a config-flag query
+("what does RedirectFixedPath do") is zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 90, end = 124, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "Engine.New defaults + body"
+justification = """
+The default configuration is documented inline. Anyone asking "what
+are gin's defaults" lands here zero-follow-up: RedirectTrailingSlash
+true, RedirectFixedPath false, HandleMethodNotAllowed false,
+ForwardedByClientIP true, RemoteIPHeaders X-Forwarded-For + X-Real-IP,
+trustedProxies 0.0.0.0/0 + ::/0, MaxMultipartMemory 32MB.
+"""
+predecessor = "1.4"
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 193, end = 233, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "Engine.Default + Use + With + Handler"
+justification = """
+Default attaches Logger() + Recovery(); Use chains global middleware
+and rebuilds the 404/405 handlers; Handler unwraps to h2c when UseH2C
+is set. Short bodies, high pickup.
+"""
+predecessor = "1.4"
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 235, end = 250, render = { kind = "full" } },
+  { path = "gin.go", start = 337, end = 354, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "Engine.Run* family — server-start signatures"
+justification = """
+Catastrophic-omission hedge: every way to start a gin server. Run,
+RunTLS, RunUnix, RunFd, RunQUIC, RunListener. Bodies are mostly
+boilerplate around http.Server.* — signatures here, bodies stay
+deferred.
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 540, end = 540, render = { kind = "full" } },
+  { path = "gin.go", start = 561, end = 561, render = { kind = "full" } },
+  { path = "gin.go", start = 581, end = 581, render = { kind = "full" } },
+  { path = "gin.go", start = 607, end = 607, render = { kind = "full" } },
+  { path = "gin.go", start = 630, end = 630, render = { kind = "full" } },
+  { path = "gin.go", start = 645, end = 645, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "Engine other public method signatures"
+justification = """
+Remaining Engine method signatures: Delims, SecureJsonPrefix,
+LoadHTMLGlob/Files/FS, SetHTMLTemplate, SetFuncMap, NoRoute, NoMethod,
+ServeHTTP, HandleContext, Routes, SetTrustedProxies. Catastrophic-
+omission hedge for "what can I call on *Engine".
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 259, end = 259, render = { kind = "full" } },
+  { path = "gin.go", start = 265, end = 265, render = { kind = "full" } },
+  { path = "gin.go", start = 272, end = 272, render = { kind = "full" } },
+  { path = "gin.go", start = 288, end = 288, render = { kind = "full" } },
+  { path = "gin.go", start = 300, end = 300, render = { kind = "full" } },
+  { path = "gin.go", start = 312, end = 312, render = { kind = "full" } },
+  { path = "gin.go", start = 321, end = 321, render = { kind = "full" } },
+  { path = "gin.go", start = 326, end = 326, render = { kind = "full" } },
+  { path = "gin.go", start = 332, end = 332, render = { kind = "full" } },
+  { path = "gin.go", start = 390, end = 390, render = { kind = "full" } },
+  { path = "gin.go", start = 451, end = 451, render = { kind = "full" } },
+  { path = "gin.go", start = 662, end = 662, render = { kind = "full" } },
+  { path = "gin.go", start = 680, end = 680, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.11"
+descriptor = "Trusted platform constants + RouteInfo type"
+justification = """
+Public constants enumerating supported trusted-IP platforms
+(GoogleAppEngine, Cloudflare, Fly.io). RouteInfo + RoutesInfo
+returned by Engine.Routes(). All cheap, easy zero-follow-up answers.
+"""
+content = { kind = "lines", spans = [
+  { path = "gin.go", start = 67, end = 88, render = { kind = "full" } },
+] }
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 3 — Context: the per-request handler API.
+# Context drives almost every gin handler. The strategy is: define
+# the struct + flow/error/metadata bodies, then list every public
+# method's signature line so the agent has a complete map of binders,
+# renderers, query/form/cookie/header getters.
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "3.1"
+descriptor = "Context struct"
+justification = """
+The struct that handlers receive. Public fields: Request, Writer,
+Params, Keys, Errors, Accepted. Private state for the routing index
+and form/query caches. Knowing what's public on c saves the agent
+from spurious method lookups.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 59, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Context flow control — Next + Abort family"
+justification = """
+Next walks the handler chain by index; Abort/AbortWithStatus/
+AbortWithError short-circuit the chain. The core middleware
+contract; bodies are tiny and answer "how do I stop the chain"
+zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 188, end = 196, render = { kind = "full" } },
+  { path = "context.go", start = 207, end = 217, render = { kind = "full" } },
+  { path = "context.go", start = 238, end = 241, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "Context Bind/ShouldBind family (signatures)"
+justification = """
+Catastrophic-omission hedge for the binding surface: every Bind*
+(Bind / BindJSON / BindXML / BindQuery / BindYAML / BindTOML /
+BindPlain / BindHeader / BindUri / MustBindWith) and every
+ShouldBind* (ShouldBind / ShouldBindJSON / …) and the ShouldBindBody*
+trio. Bind aborts with 400 on failure; ShouldBind returns the error
+unchanged.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 757, end = 757, render = { kind = "full" } },
+  { path = "context.go", start = 763, end = 763, render = { kind = "full" } },
+  { path = "context.go", start = 768, end = 768, render = { kind = "full" } },
+  { path = "context.go", start = 773, end = 773, render = { kind = "full" } },
+  { path = "context.go", start = 778, end = 778, render = { kind = "full" } },
+  { path = "context.go", start = 783, end = 783, render = { kind = "full" } },
+  { path = "context.go", start = 788, end = 788, render = { kind = "full" } },
+  { path = "context.go", start = 793, end = 793, render = { kind = "full" } },
+  { path = "context.go", start = 799, end = 799, render = { kind = "full" } },
+  { path = "context.go", start = 810, end = 810, render = { kind = "full" } },
+  { path = "context.go", start = 838, end = 838, render = { kind = "full" } },
+  { path = "context.go", start = 867, end = 867, render = { kind = "full" } },
+  { path = "context.go", start = 873, end = 873, render = { kind = "full" } },
+  { path = "context.go", start = 879, end = 879, render = { kind = "full" } },
+  { path = "context.go", start = 885, end = 885, render = { kind = "full" } },
+  { path = "context.go", start = 891, end = 891, render = { kind = "full" } },
+  { path = "context.go", start = 897, end = 897, render = { kind = "full" } },
+  { path = "context.go", start = 903, end = 903, render = { kind = "full" } },
+  { path = "context.go", start = 909, end = 909, render = { kind = "full" } },
+  { path = "context.go", start = 919, end = 919, render = { kind = "full" } },
+  { path = "context.go", start = 928, end = 928, render = { kind = "full" } },
+  { path = "context.go", start = 946, end = 946, render = { kind = "full" } },
+  { path = "context.go", start = 951, end = 951, render = { kind = "full" } },
+  { path = "context.go", start = 956, end = 956, render = { kind = "full" } },
+  { path = "context.go", start = 961, end = 961, render = { kind = "full" } },
+  { path = "context.go", start = 966, end = 966, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "Context render family (signatures)"
+justification = """
+Catastrophic-omission hedge for the rendering surface: every method
+that writes a response body — Render / HTML / IndentedJSON /
+SecureJSON / JSONP / JSON / AsciiJSON / PureJSON / XML / PDF / YAML
+/ TOML / ProtoBuf / BSON / String / Redirect / Data / DataFromReader
+/ File / FileFromFS / FileAttachment / SSEvent / Stream / Negotiate
+/ NegotiateFormat / SetAccepted.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 1152, end = 1152, render = { kind = "full" } },
+  { path = "context.go", start = 1171, end = 1171, render = { kind = "full" } },
+  { path = "context.go", start = 1180, end = 1180, render = { kind = "full" } },
+  { path = "context.go", start = 1187, end = 1187, render = { kind = "full" } },
+  { path = "context.go", start = 1194, end = 1194, render = { kind = "full" } },
+  { path = "context.go", start = 1205, end = 1205, render = { kind = "full" } },
+  { path = "context.go", start = 1211, end = 1211, render = { kind = "full" } },
+  { path = "context.go", start = 1217, end = 1217, render = { kind = "full" } },
+  { path = "context.go", start = 1223, end = 1223, render = { kind = "full" } },
+  { path = "context.go", start = 1229, end = 1229, render = { kind = "full" } },
+  { path = "context.go", start = 1234, end = 1234, render = { kind = "full" } },
+  { path = "context.go", start = 1239, end = 1239, render = { kind = "full" } },
+  { path = "context.go", start = 1244, end = 1244, render = { kind = "full" } },
+  { path = "context.go", start = 1249, end = 1249, render = { kind = "full" } },
+  { path = "context.go", start = 1254, end = 1254, render = { kind = "full" } },
+  { path = "context.go", start = 1259, end = 1259, render = { kind = "full" } },
+  { path = "context.go", start = 1268, end = 1268, render = { kind = "full" } },
+  { path = "context.go", start = 1276, end = 1276, render = { kind = "full" } },
+  { path = "context.go", start = 1286, end = 1286, render = { kind = "full" } },
+  { path = "context.go", start = 1291, end = 1291, render = { kind = "full" } },
+  { path = "context.go", start = 1309, end = 1309, render = { kind = "full" } },
+  { path = "context.go", start = 1319, end = 1319, render = { kind = "full" } },
+  { path = "context.go", start = 1328, end = 1328, render = { kind = "full" } },
+  { path = "context.go", start = 1364, end = 1364, render = { kind = "full" } },
+  { path = "context.go", start = 1400, end = 1400, render = { kind = "full" } },
+  { path = "context.go", start = 1431, end = 1431, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "Context body / context-key sentinels"
+justification = """
+The BodyBytesKey, ContextKey, and ContextRequestKey constants —
+middleware uses these to stash a re-readable body and to expose
+the gin.Context via the stdlib context.Context. Cheap glue worth
+seeing zero-follow-up. (MIME constants live in binding/binding.go,
+batch 4.3.)
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 46, end = 54, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Context error + metadata signatures (Error/Set/Get/MustGet)"
+justification = """
+c.Error pushes an *Error onto c.Errors; Set/Get/MustGet manage the
+per-request Keys map. Signatures only; bodies are short locks
+around the map.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 252, end = 252, render = { kind = "full" } },
+  { path = "context.go", start = 276, end = 276, render = { kind = "full" } },
+  { path = "context.go", start = 288, end = 288, render = { kind = "full" } },
+  { path = "context.go", start = 296, end = 296, render = { kind = "full" } },
+  { path = "context.go", start = 482, end = 482, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "Context URL-params + query getters (signatures)"
+justification = """
+Catastrophic-omission hedge for the URL-input surface: Param /
+AddParam / Query / DefaultQuery / GetQuery / QueryArray /
+GetQueryArray / QueryMap / GetQueryMap.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 503, end = 503, render = { kind = "full" } },
+  { path = "context.go", start = 512, end = 512, render = { kind = "full" } },
+  { path = "context.go", start = 525, end = 525, render = { kind = "full" } },
+  { path = "context.go", start = 538, end = 538, render = { kind = "full" } },
+  { path = "context.go", start = 554, end = 554, render = { kind = "full" } },
+  { path = "context.go", start = 563, end = 563, render = { kind = "full" } },
+  { path = "context.go", start = 580, end = 580, render = { kind = "full" } },
+  { path = "context.go", start = 587, end = 587, render = { kind = "full" } },
+  { path = "context.go", start = 594, end = 594, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "Context form + multipart getters (signatures)"
+justification = """
+Catastrophic-omission hedge for form / multipart: PostForm /
+DefaultPostForm / GetPostForm / PostFormArray / GetPostFormArray /
+PostFormMap / GetPostFormMap / FormFile / MultipartForm /
+SaveUploadedFile.
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 601, end = 601, render = { kind = "full" } },
+  { path = "context.go", start = 609, end = 609, render = { kind = "full" } },
+  { path = "context.go", start = 624, end = 624, render = { kind = "full" } },
+  { path = "context.go", start = 633, end = 633, render = { kind = "full" } },
+  { path = "context.go", start = 653, end = 653, render = { kind = "full" } },
+  { path = "context.go", start = 660, end = 660, render = { kind = "full" } },
+  { path = "context.go", start = 667, end = 667, render = { kind = "full" } },
+  { path = "context.go", start = 698, end = 698, render = { kind = "full" } },
+  { path = "context.go", start = 713, end = 713, render = { kind = "full" } },
+  { path = "context.go", start = 719, end = 719, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "Context misc public methods (signatures)"
+justification = """
+Remaining handler surface: Copy / HandlerName / HandlerNames /
+Handler / FullPath / ClientIP / RemoteIP / ContentType / IsWebsocket
+/ Status / Header / GetHeader / GetRawData / SetSameSite / SetCookie
+/ SetCookieData / Cookie / Deadline / Done / Err / Value (the
+context.Context interface methods so c works as a stdlib context).
+"""
+content = { kind = "lines", spans = [
+  { path = "context.go", start = 122, end = 122, render = { kind = "full" } },
+  { path = "context.go", start = 149, end = 149, render = { kind = "full" } },
+  { path = "context.go", start = 155, end = 155, render = { kind = "full" } },
+  { path = "context.go", start = 167, end = 167, render = { kind = "full" } },
+  { path = "context.go", start = 177, end = 177, render = { kind = "full" } },
+  { path = "context.go", start = 975, end = 975, render = { kind = "full" } },
+  { path = "context.go", start = 1027, end = 1027, render = { kind = "full" } },
+  { path = "context.go", start = 1036, end = 1036, render = { kind = "full" } },
+  { path = "context.go", start = 1042, end = 1042, render = { kind = "full" } },
+  { path = "context.go", start = 1073, end = 1073, render = { kind = "full" } },
+  { path = "context.go", start = 1080, end = 1080, render = { kind = "full" } },
+  { path = "context.go", start = 1089, end = 1089, render = { kind = "full" } },
+  { path = "context.go", start = 1094, end = 1094, render = { kind = "full" } },
+  { path = "context.go", start = 1102, end = 1102, render = { kind = "full" } },
+  { path = "context.go", start = 1109, end = 1109, render = { kind = "full" } },
+  { path = "context.go", start = 1128, end = 1128, render = { kind = "full" } },
+  { path = "context.go", start = 1142, end = 1142, render = { kind = "full" } },
+  { path = "context.go", start = 1447, end = 1447, render = { kind = "full" } },
+  { path = "context.go", start = 1455, end = 1455, render = { kind = "full" } },
+  { path = "context.go", start = 1463, end = 1463, render = { kind = "full" } },
+  { path = "context.go", start = 1473, end = 1473, render = { kind = "full" } },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 4 — binding/ and render/ subpackages.
+# Top-of-file interfaces, the global binder/render registries, and
+# Default() dispatch logic. Per-codec implementations are tiny
+# (Name + Bind/Render delegating to json.Marshal etc.), so signatures
+# in 1.8/1.9 listings + the Binding/Render interface here usually
+# suffice — selected codec bodies follow for HTML+JSON because they
+# have non-trivial behaviour (templates, content-type writes).
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "4.1"
+descriptor = "binding.Binding / BindingBody / BindingUri interfaces"
+justification = """
+The three interfaces every binder implements. Tells the agent what
+contract a custom binder must satisfy (Name + Bind, plus the
+body-bytes or URI variants).
+"""
+content = { kind = "lines", spans = [
+  { path = "binding/binding.go", start = 29, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "binding global vars + Default() dispatch"
+justification = """
+The package-level JSON/XML/Form/.../BSON singletons that c.MustBindWith
+takes, plus Default(method, contentType) which is what c.Bind calls
+to pick the binder. Catastrophic-omission hedge — partial listings
+would imply some binders don't exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "binding/binding.go", start = 73, end = 120, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "binding MIME constants + nomsgpack build tag"
+justification = """
+The MIMEJSON/HTML/XML/.../BSON constants. Note the //go:build
+!nomsgpack tag at the top — a parallel binding_nomsgpack.go in the
+same package mirrors this file when msgpack is excluded.
+"""
+content = { kind = "lines", spans = [
+  { path = "binding/binding.go", start = 1, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "render.Render interface + assertions"
+justification = """
+The Render interface every response renderer implements
+(Render + WriteContentType). The `var _ Render = (*JSON)(nil)`
+block enumerates every concrete renderer type by name — a
+catastrophic-omission hedge that fixes the renderer surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "render/render.go", start = 9, end = 35, render = { kind = "full" } },
+] }
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 5 — routing tree, response writer, middleware impls
+# (logger/recovery/auth), errors. The "second layer": types that
+# handlers don't usually touch directly but the framework needs.
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "5.1"
+descriptor = "Param / Params types + access helpers"
+justification = """
+The routing-result data: a Param has Key + Value; Params is a slice
+with .Get(name) and .ByName(name) lookups. Context.Param uses these.
+"""
+content = { kind = "lines", spans = [
+  { path = "tree.go", start = 17, end = 25, render = { kind = "full" } },
+  { path = "tree.go", start = 29, end = 29, render = { kind = "full" } },
+  { path = "tree.go", start = 40, end = 40, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "tree.go — node + methodTree types"
+justification = """
+The radix tree implementation: each HTTP method has its own root
+*node; node has path/indices/wildChild/nType/children/handlers/
+fullPath. addRoute / insertChild / getValue do the work. Knowing the
+shape lets the agent debug routing bugs (e.g. wildcard precedence).
+"""
+content = { kind = "lines", spans = [
+  { path = "tree.go", start = 45, end = 50, render = { kind = "full" } },
+  { path = "tree.go", start = 90, end = 108, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "ResponseWriter interface"
+justification = """
+gin's ResponseWriter wraps http.ResponseWriter and exposes Status /
+Size / WriteString / Written / WriteHeaderNow / Pusher; it composes
+http.Hijacker + http.Flusher + http.CloseNotifier. Answers
+"can I hijack the connection / how do I check if the response was
+written" zero-follow-up.
+"""
+content = { kind = "lines", spans = [
+  { path = "response_writer.go", start = 22, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "errors.go — Error type + ErrorType bitfield"
+justification = """
+Error has Err/Type/Meta; ErrorType is a uint64 bitfield with
+ErrorTypeBind/Render/Public/Private/Any. errorMsgs has ByType, Last,
+Errors, JSON, MarshalJSON, String. The whole c.Errors story.
+"""
+content = { kind = "lines", spans = [
+  { path = "errors.go", start = 15, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "logger.go — LoggerConfig + Logger factory signatures"
+justification = """
+LoggerConfig fields (Formatter / Output / SkipPaths / SkipQueryString
+/ Skip) and the Skipper / LogFormatter aliases. Plus DisableConsoleColor /
+ForceConsoleColor and the four Logger constructors
+(Logger / LoggerWithFormatter / LoggerWithWriter / LoggerWithConfig)
+and ErrorLogger / ErrorLoggerT.
+"""
+content = { kind = "lines", spans = [
+  { path = "logger.go", start = 39, end = 39, render = { kind = "full" } },
+  { path = "logger.go", start = 41, end = 41, render = { kind = "full" } },
+  { path = "logger.go", start = 45, end = 45, render = { kind = "full" } },
+  { path = "logger.go", start = 49, end = 49, render = { kind = "full" } },
+  { path = "logger.go", start = 54, end = 54, render = { kind = "full" } },
+  { path = "logger.go", start = 58, end = 58, render = { kind = "full" } },
+  { path = "logger.go", start = 62, end = 62, render = { kind = "full" } },
+  { path = "logger.go", start = 65, end = 65, render = { kind = "full" } },
+  { path = "logger.go", start = 197, end = 197, render = { kind = "full" } },
+  { path = "logger.go", start = 202, end = 202, render = { kind = "full" } },
+  { path = "logger.go", start = 207, end = 207, render = { kind = "full" } },
+  { path = "logger.go", start = 212, end = 212, render = { kind = "full" } },
+  { path = "logger.go", start = 224, end = 224, render = { kind = "full" } },
+  { path = "logger.go", start = 229, end = 229, render = { kind = "full" } },
+  { path = "logger.go", start = 237, end = 237, render = { kind = "full" } },
+  { path = "logger.go", start = 245, end = 245, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.6"
+descriptor = "recovery.go — Recovery / CustomRecovery signatures"
+justification = """
+Recovery + RecoveryWithWriter + CustomRecovery + CustomRecoveryWithWriter
++ RecoveryFunc — the panic-recovery middleware contract. Plus the
+secureRequestDump notice (Authorization header gets masked).
+"""
+content = { kind = "lines", spans = [
+  { path = "recovery.go", start = 31, end = 31, render = { kind = "full" } },
+  { path = "recovery.go", start = 35, end = 35, render = { kind = "full" } },
+  { path = "recovery.go", start = 40, end = 40, render = { kind = "full" } },
+  { path = "recovery.go", start = 45, end = 45, render = { kind = "full" } },
+  { path = "recovery.go", start = 53, end = 53, render = { kind = "full" } },
+  { path = "recovery.go", start = 94, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.7"
+descriptor = "auth.go — Accounts + BasicAuth* signatures"
+justification = """
+The whole basic-auth middleware surface: AuthUserKey / AuthProxyUserKey
+constants, Accounts type, BasicAuth / BasicAuthForRealm /
+BasicAuthForProxy. Cheap and covers a common middleware query.
+"""
+content = { kind = "lines", spans = [
+  { path = "auth.go", start = 16, end = 23, render = { kind = "full" } },
+  { path = "auth.go", start = 48, end = 48, render = { kind = "full" } },
+  { path = "auth.go", start = 72, end = 72, render = { kind = "full" } },
+  { path = "auth.go", start = 98, end = 98, render = { kind = "full" } },
+] }
+
+
+# ─────────────────────────────────────────────────────────────────────
+# Tier 6 — Internal packages + ginS singleton wrapper.
+# Low-frequency queries, deferred to the bottom of the ranking.
+# ─────────────────────────────────────────────────────────────────────
+
+[[batches]]
+id = "6.1"
+descriptor = "ginS — package-level singleton engine"
+justification = """
+The `ginS` package wraps gin.Default() in a sync.OnceValue so the
+caller can call ginS.GET/POST/Run without an explicit *Engine. Every
+gin.Engine method has a free-function mirror here. Common test /
+script-style usage pattern; cheap to surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "ginS/gins.go", start = 15, end = 17, render = { kind = "full" } },
+  { path = "ginS/README.md", start = 1, end = 9, render = { kind = "full" } },
+] }

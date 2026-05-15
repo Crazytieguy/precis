@@ -1,0 +1,6322 @@
+fixture = "flask"
+budget = 10000
+cumulative_tokens = 9871
+batch_count = 245
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask" })'
+descriptor = "listing of '.'"
+cost_tokens = 50
+cum_tokens = 50
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask"
+entries = [".devcontainer", ".editorconfig", ".github", ".gitignore", ".pre-commit-config.yaml", ".readthedocs.yaml", "CHANGES.rst", "LICENSE.txt", "README.md", "docs", "examples", "pyproject.toml", "src", "tests", "uv.lock"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 3
+cum_tokens = 53
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/src"
+entries = ["flask"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/.devcontainer" })'
+descriptor = "listing of '.devcontainer'"
+cost_tokens = 11
+cum_tokens = 64
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/.devcontainer"
+entries = ["devcontainer.json", "on-create-command.sh"]
+
+[[batches]]
+position = 4
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 93
+cum_tokens = 157
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 5
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 30
+cum_tokens = 187
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 6
+key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/flask/pyproject.toml" })'
+descriptor = "[package] in pyproject.toml"
+cost_tokens = 33
+cum_tokens = 220
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/pyproject.toml"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/pyproject.toml"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples" })'
+descriptor = "listing of 'examples'"
+cost_tokens = 9
+cum_tokens = 229
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples"
+entries = ["celery", "javascript", "tutorial"]
+
+[[batches]]
+position = 8
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md", section_index: 0 })'
+descriptor = "README.md section #0"
+cost_tokens = 119
+cum_tokens = 348
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 11
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 16
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask" })'
+descriptor = "listing of 'src/flask'"
+cost_tokens = 91
+cum_tokens = 439
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask"
+entries = ["__init__.py", "__main__.py", "app.py", "blueprints.py", "cli.py", "config.py", "ctx.py", "debughelpers.py", "globals.py", "helpers.py", "json", "logging.py", "py.typed", "sansio", "sessions.py", "signals.py", "templating.py", "testing.py", "typing.py", "views.py", "wrappers.py"]
+
+[[batches]]
+position = 10
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 0 })'
+descriptor = "python imports in src/flask/__init__.py"
+cost_tokens = 11
+cum_tokens = 450
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 1 })'
+descriptor = "python imports #1 in src/flask/__init__.py"
+cost_tokens = 12
+cum_tokens = 462
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json" })'
+descriptor = "listing of 'src/flask/json'"
+cost_tokens = 14
+cum_tokens = 476
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json"
+entries = ["__init__.py", "provider.py", "tag.py"]
+
+[[batches]]
+position = 13
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 2 })'
+descriptor = "python imports #2 in src/flask/__init__.py"
+cost_tokens = 13
+cum_tokens = 489
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 3 })'
+descriptor = "python imports #3 in src/flask/__init__.py"
+cost_tokens = 12
+cum_tokens = 501
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 15
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py" })'
+descriptor = "python imports in src/flask/json/__init__.py"
+cost_tokens = 81
+cum_tokens = 582
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 9
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__main__.py" })'
+descriptor = "python imports in src/flask/__main__.py"
+cost_tokens = 10
+cum_tokens = 592
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__main__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 17
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 7 })'
+descriptor = "python imports #7 in src/flask/__init__.py"
+cost_tokens = 12
+cum_tokens = 604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/.github" })'
+descriptor = "listing of '.github'"
+cost_tokens = 13
+cum_tokens = 617
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/.github"
+entries = ["ISSUE_TEMPLATE", "pull_request_template.md", "workflows"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/.github/workflows" })'
+descriptor = "listing of '.github/workflows'"
+cost_tokens = 23
+cum_tokens = 640
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/.github/workflows"
+entries = ["lock.yaml", "pre-commit.yaml", "publish.yaml", "tests.yaml", "zizmor.yaml"]
+
+[[batches]]
+position = 20
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/blueprints.py"
+cost_tokens = 13
+cum_tokens = 653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 21
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", start_line: 18 })'
+descriptor = "python decl at src/flask/blueprints.py:18"
+cost_tokens = 0
+cum_tokens = 653
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio" })'
+descriptor = "listing of 'src/flask/sansio'"
+cost_tokens = 17
+cum_tokens = 670
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio"
+entries = ["README.md", "app.py", "blueprints.py", "scaffold.py"]
+
+[[batches]]
+position = 23
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/json/__init__.py"
+cost_tokens = 123
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 13 })'
+descriptor = "python decl at src/flask/json/__init__.py:13"
+cost_tokens = 0
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 25
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 47 })'
+descriptor = "python decl at src/flask/json/__init__.py:47"
+cost_tokens = 0
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 77 })'
+descriptor = "python decl at src/flask/json/__init__.py:77"
+cost_tokens = 0
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 108 })'
+descriptor = "python decl at src/flask/json/__init__.py:108"
+cost_tokens = 0
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 138 })'
+descriptor = "python decl at src/flask/json/__init__.py:138"
+cost_tokens = 0
+cum_tokens = 793
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/README.md" })'
+descriptor = "README headline in src/flask/sansio/README.md"
+cost_tokens = 72
+cum_tokens = 865
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/README.md"
+start = 3
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/wrappers.py"
+cost_tokens = 22
+cum_tokens = 887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 223
+end = 223
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 31
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 18 })'
+descriptor = "python decl at src/flask/wrappers.py:18"
+cost_tokens = 0
+cum_tokens = 887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 222 })'
+descriptor = "python decl at src/flask/wrappers.py:222"
+cost_tokens = 0
+cum_tokens = 887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 222
+end = 222
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 4 })'
+descriptor = "python imports #4 in src/flask/__init__.py"
+cost_tokens = 66
+cum_tokens = 953
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 5
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 34
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 5 })'
+descriptor = "python imports #5 in src/flask/__init__.py"
+cost_tokens = 50
+cum_tokens = 1003
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 9
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 35
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 67
+cum_tokens = 1070
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 49
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 36
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 222 })'
+descriptor = "python class body at src/flask/wrappers.py:222"
+cost_tokens = 39
+cum_tokens = 1109
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 240
+end = 240
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 242
+end = 242
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 37
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 82
+cum_tokens = 1191
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 40
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 38
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 47, body_start_line: 70 })'
+descriptor = "python decl body at src/flask/json/__init__.py:47 body 70"
+cost_tokens = 60
+cum_tokens = 1251
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 70
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 39
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/flask/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 117
+cum_tokens = 1368
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 28
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/README.md"
+start = 33
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 40
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 77, body_start_line: 105 })'
+descriptor = "python decl body at src/flask/json/__init__.py:77 body 105"
+cost_tokens = 14
+cum_tokens = 1382
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 41
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 108, body_start_line: 135 })'
+descriptor = "python decl body at src/flask/json/__init__.py:108 body 135"
+cost_tokens = 14
+cum_tokens = 1396
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 42
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 176
+cum_tokens = 1572
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/docs"
+entries = ["Makefile", "_static", "api.rst", "appcontext.rst", "async-await.rst", "blueprints.rst", "changes.rst", "cli.rst", "conf.py", "config.rst", "contributing.rst", "debugging.rst", "deploying", "design.rst", "errorhandling.rst", "extensiondev.rst", "extensions.rst", "gevent.rst", "index.rst", "installation.rst", "license.rst", "lifecycle.rst", "logging.rst", "make.bat", "patterns", "quickstart.rst", "reqcontext.rst", "server.rst", "shell.rst", "signals.rst", "templating.rst", "testing.rst", "tutorial", "views.rst", "web-security.rst"]
+
+[[batches]]
+position = 43
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/_static" })'
+descriptor = "listing of 'docs/_static'"
+cost_tokens = 27
+cum_tokens = 1599
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/_static"
+entries = ["debugger.png", "flask-icon.svg", "flask-logo.svg", "flask-name.svg", "pycharm-run-config.png"]
+
+[[batches]]
+position = 44
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/deploying" })'
+descriptor = "listing of 'docs/deploying'"
+cost_tokens = 64
+cum_tokens = 1663
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/deploying"
+entries = ["apache-httpd.rst", "asgi.rst", "eventlet.rst", "gevent.rst", "gunicorn.rst", "index.rst", "mod_wsgi.rst", "nginx.rst", "proxy_fix.rst", "uwsgi.rst", "waitress.rst"]
+
+[[batches]]
+position = 45
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/tutorial" })'
+descriptor = "listing of 'docs/tutorial'"
+cost_tokens = 78
+cum_tokens = 1741
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/tutorial"
+entries = ["blog.rst", "database.rst", "deploy.rst", "factory.rst", "flaskr_edit.png", "flaskr_index.png", "flaskr_login.png", "index.rst", "install.rst", "layout.rst", "next.rst", "static.rst", "templates.rst", "tests.rst", "views.rst"]
+
+[[batches]]
+position = 46
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/blueprints.py"
+cost_tokens = 66
+cum_tokens = 1807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 104
+end = 104
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 56
+end = 56
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 105
+end = 105
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 47
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", start_line: 55 })'
+descriptor = "python method at src/flask/blueprints.py:55"
+cost_tokens = 0
+cum_tokens = 1807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", start_line: 82 })'
+descriptor = "python method at src/flask/blueprints.py:82"
+cost_tokens = 0
+cum_tokens = 1807
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 49
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py", start_line: 104 })'
+descriptor = "python method at src/flask/blueprints.py:104"
+cost_tokens = 40
+cum_tokens = 1847
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/blueprints.py"
+start = 104
+end = 106
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 10 })'
+descriptor = "python imports #10 in src/flask/__init__.py"
+cost_tokens = 26
+cum_tokens = 1873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 38
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 51
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py" })'
+descriptor = "python imports in docs/conf.py"
+cost_tokens = 36
+cum_tokens = 1909
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 1
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery" })'
+descriptor = "listing of 'examples/celery'"
+cost_tokens = 24
+cum_tokens = 1933
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery"
+entries = ["README.md", "make_celery.py", "pyproject.toml", "requirements.txt", "src"]
+
+[[batches]]
+position = 53
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/signals.py" })'
+descriptor = "python imports in src/flask/signals.py"
+cost_tokens = 21
+cum_tokens = 1954
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/signals.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/signals.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/config.py"
+cost_tokens = 44
+cum_tokens = 1998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 20 })'
+descriptor = "python decl at src/flask/config.py:20"
+cost_tokens = 0
+cum_tokens = 1998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 56
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 50 })'
+descriptor = "python decl at src/flask/config.py:50"
+cost_tokens = 0
+cum_tokens = 1998
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 20 })'
+descriptor = "python decl doc at src/flask/config.py:20"
+cost_tokens = 12
+cum_tokens = 2010
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py", chunk_index: 1 })'
+descriptor = "python decl names surface #1 in src/flask/sansio/blueprints.py"
+cost_tokens = 12
+cum_tokens = 2022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py", start_line: 119 })'
+descriptor = "python decl at src/flask/sansio/blueprints.py:119"
+cost_tokens = 0
+cum_tokens = 2022
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 60
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py", start_line: 119 })'
+descriptor = "python class body at src/flask/sansio/blueprints.py:119"
+cost_tokens = 12
+cum_tokens = 2034
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sansio/blueprints.py"
+start = 172
+end = 172
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript" })'
+descriptor = "listing of 'examples/javascript'"
+cost_tokens = 27
+cum_tokens = 2061
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript"
+entries = [".gitignore", "LICENSE.txt", "README.rst", "js_example", "pyproject.toml", "tests"]
+
+[[batches]]
+position = 62
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example" })'
+descriptor = "listing of 'examples/javascript/js_example'"
+cost_tokens = 13
+cum_tokens = 2074
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example"
+entries = ["__init__.py", "templates", "views.py"]
+
+[[batches]]
+position = 63
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial" })'
+descriptor = "listing of 'examples/tutorial'"
+cost_tokens = 27
+cum_tokens = 2101
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial"
+entries = [".gitignore", "LICENSE.txt", "README.rst", "flaskr", "pyproject.toml", "tests"]
+
+[[batches]]
+position = 64
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr" })'
+descriptor = "listing of 'examples/tutorial/flaskr'"
+cost_tokens = 28
+cum_tokens = 2129
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr"
+entries = ["__init__.py", "auth.py", "blog.py", "db.py", "schema.sql", "static", "templates"]
+
+[[batches]]
+position = 65
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/views.py"
+cost_tokens = 52
+cum_tokens = 2181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 139
+end = 139
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 66
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 16 })'
+descriptor = "python decl at src/flask/views.py:16"
+cost_tokens = 0
+cum_tokens = 2181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 138 })'
+descriptor = "python decl at src/flask/views.py:138"
+cost_tokens = 0
+cum_tokens = 2181
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 138
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 11 })'
+descriptor = "python decl at src/flask/views.py:11"
+cost_tokens = 34
+cum_tokens = 2215
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 11
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/views.py"
+cost_tokens = 76
+cum_tokens = 2291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 166
+end = 166
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 78 })'
+descriptor = "python method at src/flask/views.py:78"
+cost_tokens = 0
+cum_tokens = 2291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 71
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 165 })'
+descriptor = "python method at src/flask/views.py:165"
+cost_tokens = 0
+cum_tokens = 2291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 182 })'
+descriptor = "python method at src/flask/views.py:182"
+cost_tokens = 0
+cum_tokens = 2291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 182
+end = 182
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 78, body_start_line: 83 })'
+descriptor = "python method body at src/flask/views.py:78 body 83"
+cost_tokens = 10
+cum_tokens = 2301
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 74
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 85 })'
+descriptor = "python method at src/flask/views.py:85"
+cost_tokens = 43
+cum_tokens = 2344
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 85
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/tests" })'
+descriptor = "listing of 'examples/tutorial/tests'"
+cost_tokens = 30
+cum_tokens = 2374
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/tests"
+entries = ["conftest.py", "data.sql", "test_auth.py", "test_blog.py", "test_db.py", "test_factory.py"]
+
+[[batches]]
+position = 76
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/patterns" })'
+descriptor = "listing of 'docs/patterns'"
+cost_tokens = 145
+cum_tokens = 2519
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/patterns"
+entries = ["appdispatch.rst", "appfactories.rst", "caching.rst", "celery.rst", "deferredcallbacks.rst", "favicon.rst", "fileuploads.rst", "flashing.rst", "index.rst", "javascript.rst", "jquery.rst", "lazyloading.rst", "methodoverrides.rst", "mongoengine.rst", "packages.rst", "requestchecksum.rst", "singlepageapplications.rst", "sqlalchemy.rst", "sqlite3.rst", "streaming.rst", "subclassing.rst", "templateinheritance.rst", "urlprocessors.rst", "viewdecorators.rst", "wtforms.rst"]
+
+[[batches]]
+position = 77
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 77, body_start_line: 102 })'
+descriptor = "python decl body at src/flask/json/__init__.py:77 body 102"
+cost_tokens = 24
+cum_tokens = 2543
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 102
+end = 103
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 108, body_start_line: 132 })'
+descriptor = "python decl body at src/flask/json/__init__.py:108 body 132"
+cost_tokens = 24
+cum_tokens = 2567
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 132
+end = 133
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 79
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 138, body_start_line: 170 })'
+descriptor = "python decl body at src/flask/json/__init__.py:138 body 170"
+cost_tokens = 25
+cum_tokens = 2592
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 170
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 80
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 47 })'
+descriptor = "python decl doc at src/flask/json/__init__.py:47"
+cost_tokens = 263
+cum_tokens = 2855
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 48
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 50
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 54
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 59
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 62
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 66
+end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/typing.py" })'
+descriptor = "python imports in src/flask/typing.py"
+cost_tokens = 32
+cum_tokens = 2887
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/typing.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/typing.py"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/json/provider.py"
+cost_tokens = 41
+cum_tokens = 2928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py", start_line: 19 })'
+descriptor = "python decl at src/flask/json/provider.py:19"
+cost_tokens = 0
+cum_tokens = 2928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 84
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py", start_line: 108 })'
+descriptor = "python decl at src/flask/json/provider.py:108"
+cost_tokens = 0
+cum_tokens = 2928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 85
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py", start_line: 124 })'
+descriptor = "python decl at src/flask/json/provider.py:124"
+cost_tokens = 0
+cum_tokens = 2928
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/provider.py"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 86
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/logging.py"
+cost_tokens = 66
+cum_tokens = 2994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 87
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 31 })'
+descriptor = "python decl at src/flask/logging.py:31"
+cost_tokens = 0
+cum_tokens = 2994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 58 })'
+descriptor = "python decl at src/flask/logging.py:58"
+cost_tokens = 0
+cum_tokens = 2994
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 89
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 15 })'
+descriptor = "python decl at src/flask/logging.py:15"
+cost_tokens = 13
+cum_tokens = 3007
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 15
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 90
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 31 })'
+descriptor = "python decl doc at src/flask/logging.py:31"
+cost_tokens = 47
+cum_tokens = 3054
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 32
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 91
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 15, body_start_line: 28 })'
+descriptor = "python decl body at src/flask/logging.py:15 body 28"
+cost_tokens = 9
+cum_tokens = 3063
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 77 })'
+descriptor = "python decl doc at src/flask/json/__init__.py:77"
+cost_tokens = 272
+cum_tokens = 3335
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 80
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 84
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 87
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 90
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 94
+end = 96
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 98
+end = 101
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 108 })'
+descriptor = "python decl doc at src/flask/json/__init__.py:108"
+cost_tokens = 275
+cum_tokens = 3610
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 111
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 115
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 118
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 121
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 125
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 128
+end = 131
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 94
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery/src" })'
+descriptor = "listing of 'examples/celery/src'"
+cost_tokens = 4
+cum_tokens = 3614
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery/src"
+entries = ["task_app"]
+
+[[batches]]
+position = 95
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery/src/task_app" })'
+descriptor = "listing of 'examples/celery/src/task_app'"
+cost_tokens = 17
+cum_tokens = 3631
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/celery/src/task_app"
+entries = ["__init__.py", "tasks.py", "templates", "views.py"]
+
+[[batches]]
+position = 96
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/flask/.gitignore" })'
+descriptor = "plaintext config .gitignore"
+cost_tokens = 59
+cum_tokens = 3690
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/.gitignore"
+start = 1
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/testing.py"
+cost_tokens = 70
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 97
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 110
+end = 110
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 266
+end = 266
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 98
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 27 })'
+descriptor = "python decl at src/flask/testing.py:27"
+cost_tokens = 0
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 99
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 100 })'
+descriptor = "python decl at src/flask/testing.py:100"
+cost_tokens = 0
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 109 })'
+descriptor = "python decl at src/flask/testing.py:109"
+cost_tokens = 0
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 109
+end = 109
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 101
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 265 })'
+descriptor = "python decl at src/flask/testing.py:265"
+cost_tokens = 0
+cum_tokens = 3760
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 265
+end = 265
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 109 })'
+descriptor = "python class body at src/flask/testing.py:109"
+cost_tokens = 9
+cum_tokens = 3769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 123
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 103
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 265 })'
+descriptor = "python decl doc at src/flask/testing.py:265"
+cost_tokens = 64
+cum_tokens = 3833
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 266
+end = 269
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 104
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 13 })'
+descriptor = "python decl doc at src/flask/json/__init__.py:13"
+cost_tokens = 288
+cum_tokens = 4121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 16
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 23
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 26
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 30
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 33
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 36
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py", chunk_index: 0 })'
+descriptor = "python decl names surface in docs/conf.py"
+cost_tokens = 135
+cum_tokens = 4256
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 7
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 14
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 23
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 106
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py", start_line: 15 })'
+descriptor = "python decl at docs/conf.py:15"
+cost_tokens = 83
+cum_tokens = 4339
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 15
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py", start_line: 26 })'
+descriptor = "python decl at docs/conf.py:26"
+cost_tokens = 93
+cum_tokens = 4432
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 26
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 108
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 9 })'
+descriptor = "python imports #9 in src/flask/__init__.py"
+cost_tokens = 64
+cum_tokens = 4496
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 34
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py" })'
+descriptor = "python imports in examples/tutorial/flaskr/__init__.py"
+cost_tokens = 16
+cum_tokens = 4512
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 110
+key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/flask/.editorconfig" })'
+descriptor = "plaintext config .editorconfig"
+cost_tokens = 123
+cum_tokens = 4635
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/.editorconfig"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/.editorconfig"
+start = 3
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/.editorconfig"
+start = 12
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 111
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/wrappers.py"
+cost_tokens = 159
+cum_tokens = 4794
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 115
+end = 115
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 161
+end = 161
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 246
+end = 246
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 116
+end = 116
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 120
+end = 120
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 143
+end = 143
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 147
+end = 147
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 181
+end = 181
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 198
+end = 198
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 247
+end = 247
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 197 })'
+descriptor = "python method at src/flask/wrappers.py:197"
+cost_tokens = 0
+cum_tokens = 4794
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 197
+end = 197
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 113
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 212 })'
+descriptor = "python method at src/flask/wrappers.py:212"
+cost_tokens = 0
+cum_tokens = 4794
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 146 })'
+descriptor = "python method at src/flask/wrappers.py:146"
+cost_tokens = 12
+cum_tokens = 4806
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 146
+end = 147
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 161 })'
+descriptor = "python method at src/flask/wrappers.py:161"
+cost_tokens = 12
+cum_tokens = 4818
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 161
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 180 })'
+descriptor = "python method at src/flask/wrappers.py:180"
+cost_tokens = 12
+cum_tokens = 4830
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 180
+end = 181
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 59 })'
+descriptor = "python method at src/flask/wrappers.py:59"
+cost_tokens = 14
+cum_tokens = 4844
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 59
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 119 })'
+descriptor = "python method at src/flask/wrappers.py:119"
+cost_tokens = 14
+cum_tokens = 4858
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 119
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 92 })'
+descriptor = "python method at src/flask/wrappers.py:92"
+cost_tokens = 15
+cum_tokens = 4873
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 92
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 88 })'
+descriptor = "python method at src/flask/wrappers.py:88"
+cost_tokens = 18
+cum_tokens = 4891
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 88
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 142 })'
+descriptor = "python method at src/flask/wrappers.py:142"
+cost_tokens = 18
+cum_tokens = 4909
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 142
+end = 143
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 122
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 246 })'
+descriptor = "python method at src/flask/wrappers.py:246"
+cost_tokens = 18
+cum_tokens = 4927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 246
+end = 247
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 123
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 115 })'
+descriptor = "python method at src/flask/wrappers.py:115"
+cost_tokens = 19
+cum_tokens = 4946
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 115
+end = 116
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 124
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 88, body_start_line: 90 })'
+descriptor = "python method body at src/flask/wrappers.py:88 body 90"
+cost_tokens = 13
+cum_tokens = 4959
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 90
+end = 90
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 142, body_start_line: 144 })'
+descriptor = "python method body at src/flask/wrappers.py:142 body 144"
+cost_tokens = 13
+cum_tokens = 4972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 144
+end = 144
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 126
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 115, body_start_line: 117 })'
+descriptor = "python method body at src/flask/wrappers.py:115 body 117"
+cost_tokens = 14
+cum_tokens = 4986
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py", start_line: 78 })'
+descriptor = "python method doc at src/flask/views.py:78"
+cost_tokens = 51
+cum_tokens = 5037
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 79
+end = 82
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 13, body_start_line: 43 })'
+descriptor = "python decl body at src/flask/json/__init__.py:13 body 43"
+cost_tokens = 13
+cum_tokens = 5050
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/globals.py" })'
+descriptor = "python imports in src/flask/globals.py"
+cost_tokens = 43
+cum_tokens = 5093
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/globals.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/globals.py"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/globals.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py", chunk_index: 6 })'
+descriptor = "python imports #6 in src/flask/__init__.py"
+cost_tokens = 146
+cum_tokens = 5239
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/__init__.py"
+start = 13
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 138 })'
+descriptor = "python decl doc at src/flask/json/__init__.py:138"
+cost_tokens = 374
+cum_tokens = 5613
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 139
+end = 142
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 144
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 147
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 150
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 153
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 157
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 161
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 164
+end = 166
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 168
+end = 169
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 132
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 246 })'
+descriptor = "python method doc at src/flask/wrappers.py:246"
+cost_tokens = 58
+cum_tokens = 5671
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 248
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 250
+end = 252
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 133
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py", start_line: 13, body_start_line: 44 })'
+descriptor = "python decl body at src/flask/json/__init__.py:13 body 44"
+cost_tokens = 14
+cum_tokens = 5685
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/json/__init__.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 134
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/javascript/js_example/__init__.py"
+cost_tokens = 10
+cum_tokens = 5695
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 135
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/testing.py"
+cost_tokens = 198
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 193
+end = 193
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 255
+end = 255
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 271
+end = 271
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 275
+end = 275
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 136
+end = 136
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 186
+end = 186
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 194
+end = 194
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 205
+end = 205
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 250
+end = 250
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 272
+end = 272
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 136
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 88 })'
+descriptor = "python method at src/flask/testing.py:88"
+cost_tokens = 0
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 88
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 137
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 125 })'
+descriptor = "python method at src/flask/testing.py:125"
+cost_tokens = 0
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 138
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 185 })'
+descriptor = "python method at src/flask/testing.py:185"
+cost_tokens = 0
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 185
+end = 185
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 249 })'
+descriptor = "python method at src/flask/testing.py:249"
+cost_tokens = 0
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 249
+end = 249
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 271 })'
+descriptor = "python method at src/flask/testing.py:271"
+cost_tokens = 0
+cum_tokens = 5893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 271
+end = 271
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 141
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 275 })'
+descriptor = "python method at src/flask/testing.py:275"
+cost_tokens = 34
+cum_tokens = 5927
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 275
+end = 277
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 142
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 135 })'
+descriptor = "python method at src/flask/testing.py:135"
+cost_tokens = 39
+cum_tokens = 5966
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 135
+end = 138
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 143
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 88, body_start_line: 94 })'
+descriptor = "python method body at src/flask/testing.py:88 body 94"
+cost_tokens = 15
+cum_tokens = 5981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 144
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 255 })'
+descriptor = "python method at src/flask/testing.py:255"
+cost_tokens = 52
+cum_tokens = 6033
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 255
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 145
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 271, body_start_line: 272 })'
+descriptor = "python method body at src/flask/testing.py:271 body 272"
+cost_tokens = 20
+cum_tokens = 6053
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 272
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 146
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 204 })'
+descriptor = "python method at src/flask/testing.py:204"
+cost_tokens = 61
+cum_tokens = 6114
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 204
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 147
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 255, body_start_line: 261 })'
+descriptor = "python method body at src/flask/testing.py:255 body 261"
+cost_tokens = 23
+cum_tokens = 6137
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 261
+end = 262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 148
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 193 })'
+descriptor = "python method at src/flask/testing.py:193"
+cost_tokens = 31
+cum_tokens = 6168
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 193
+end = 195
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 149
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 88 })'
+descriptor = "python method doc at src/flask/testing.py:88"
+cost_tokens = 52
+cum_tokens = 6220
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 89
+end = 89
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 91
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py" })'
+descriptor = "python imports in src/flask/views.py"
+cost_tokens = 52
+cum_tokens = 6272
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/views.py"
+start = 5
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/debughelpers.py"
+cost_tokens = 104
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 82
+end = 82
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 108
+end = 108
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 152
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 17 })'
+descriptor = "python decl at src/flask/debughelpers.py:17"
+cost_tokens = 0
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 153
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 23 })'
+descriptor = "python decl at src/flask/debughelpers.py:23"
+cost_tokens = 0
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 154
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 50 })'
+descriptor = "python decl at src/flask/debughelpers.py:50"
+cost_tokens = 0
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 155
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 81 })'
+descriptor = "python decl at src/flask/debughelpers.py:81"
+cost_tokens = 0
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 81
+end = 81
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 156
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 107 })'
+descriptor = "python decl at src/flask/debughelpers.py:107"
+cost_tokens = 0
+cum_tokens = 6376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 107
+end = 107
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 157
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 17 })'
+descriptor = "python decl doc at src/flask/debughelpers.py:17"
+cost_tokens = 33
+cum_tokens = 6409
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 18
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 158
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/debughelpers.py"
+cost_tokens = 60
+cum_tokens = 6469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 159
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 28 })'
+descriptor = "python method at src/flask/debughelpers.py:28"
+cost_tokens = 0
+cum_tokens = 6469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 160
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 46 })'
+descriptor = "python method at src/flask/debughelpers.py:46"
+cost_tokens = 0
+cum_tokens = 6469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 161
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 57 })'
+descriptor = "python method at src/flask/debughelpers.py:57"
+cost_tokens = 0
+cum_tokens = 6469
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 46, body_start_line: 47 })'
+descriptor = "python method body at src/flask/debughelpers.py:46 body 47"
+cost_tokens = 7
+cum_tokens = 6476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 23 })'
+descriptor = "python decl doc at src/flask/debughelpers.py:23"
+cost_tokens = 45
+cum_tokens = 6521
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 124 })'
+descriptor = "python decl at src/flask/debughelpers.py:124"
+cost_tokens = 92
+cum_tokens = 6613
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 124
+end = 134
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 124 })'
+descriptor = "python decl doc at src/flask/debughelpers.py:124"
+cost_tokens = 14
+cum_tokens = 6627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 135
+end = 135
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 166
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 50 })'
+descriptor = "python decl doc at src/flask/debughelpers.py:50"
+cost_tokens = 73
+cum_tokens = 6700
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 51
+end = 55
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 167
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py", start_line: 81 })'
+descriptor = "python decl doc at src/flask/debughelpers.py:81"
+cost_tokens = 62
+cum_tokens = 6762
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 82
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/debughelpers.py"
+start = 85
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 168
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py", start_line: 31 })'
+descriptor = "python decl at docs/conf.py:31"
+cost_tokens = 175
+cum_tokens = 6937
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/docs/conf.py"
+start = 31
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 169
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 49 })'
+descriptor = "python method at src/flask/testing.py:49"
+cost_tokens = 98
+cum_tokens = 7035
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 49
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 170
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/sessions.py"
+cost_tokens = 110
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 273
+end = 273
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 84
+end = 84
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 285
+end = 285
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 171
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 24 })'
+descriptor = "python decl at src/flask/sessions.py:24"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 57 })'
+descriptor = "python decl at src/flask/sessions.py:57"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 57
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 83 })'
+descriptor = "python decl at src/flask/sessions.py:83"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 83
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 100 })'
+descriptor = "python decl at src/flask/sessions.py:100"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 175
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 276 })'
+descriptor = "python decl at src/flask/sessions.py:276"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 176
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 284 })'
+descriptor = "python decl at src/flask/sessions.py:284"
+cost_tokens = 0
+cum_tokens = 7145
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 177
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 24 })'
+descriptor = "python decl doc at src/flask/sessions.py:24"
+cost_tokens = 13
+cum_tokens = 7158
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 178
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 83 })'
+descriptor = "python class body at src/flask/sessions.py:83"
+cost_tokens = 39
+cum_tokens = 7197
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 96
+end = 97
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 179
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 284 })'
+descriptor = "python decl doc at src/flask/sessions.py:284"
+cost_tokens = 37
+cum_tokens = 7234
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 285
+end = 287
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 180
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 276, body_start_line: 281 })'
+descriptor = "python decl body at src/flask/sessions.py:276 body 281"
+cost_tokens = 11
+cum_tokens = 7245
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 281
+end = 281
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 83 })'
+descriptor = "python decl doc at src/flask/sessions.py:83"
+cost_tokens = 51
+cum_tokens = 7296
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 84
+end = 87
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 182
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 57 })'
+descriptor = "python class body at src/flask/sessions.py:57"
+cost_tokens = 109
+cum_tokens = 7405
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 66
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 183
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 57 })'
+descriptor = "python decl doc at src/flask/sessions.py:57"
+cost_tokens = 90
+cum_tokens = 7495
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 58
+end = 58
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 60
+end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 184
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 100 })'
+descriptor = "python class body at src/flask/sessions.py:100"
+cost_tokens = 168
+cum_tokens = 7663
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 137
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 143
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 185
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 18 })'
+descriptor = "python decl doc at src/flask/wrappers.py:18"
+cost_tokens = 146
+cum_tokens = 7809
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 19
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 22
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 26
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 186
+key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", chunk_index: 0 })'
+descriptor = "python method sigs in src/flask/config.py"
+cost_tokens = 230
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 218
+end = 218
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 256
+end = 256
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 304
+end = 304
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 323
+end = 323
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 366
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 103
+end = 103
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 127
+end = 127
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 219
+end = 219
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 305
+end = 305
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 187
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 29 })'
+descriptor = "python method at src/flask/config.py:29"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 188
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 32 })'
+descriptor = "python method at src/flask/config.py:32"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 189
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 35 })'
+descriptor = "python method at src/flask/config.py:35"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 190
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 46 })'
+descriptor = "python method at src/flask/config.py:46"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 46
+end = 46
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 191
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 102 })'
+descriptor = "python method at src/flask/config.py:102"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 102
+end = 102
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 192
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 218 })'
+descriptor = "python method at src/flask/config.py:218"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 218
+end = 218
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 193
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 366 })'
+descriptor = "python method at src/flask/config.py:366"
+cost_tokens = 0
+cum_tokens = 8039
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 366
+end = 366
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 194
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 187 })'
+descriptor = "python method at src/flask/config.py:187"
+cost_tokens = 29
+cum_tokens = 8068
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 187
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 195
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 304 })'
+descriptor = "python method at src/flask/config.py:304"
+cost_tokens = 34
+cum_tokens = 8102
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 304
+end = 306
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 196
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 23 })'
+descriptor = "python method at src/flask/config.py:23"
+cost_tokens = 35
+cum_tokens = 8137
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 23
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 197
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 323 })'
+descriptor = "python method at src/flask/config.py:323"
+cost_tokens = 35
+cum_tokens = 8172
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 323
+end = 325
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 198
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 126 })'
+descriptor = "python method at src/flask/config.py:126"
+cost_tokens = 38
+cum_tokens = 8210
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 126
+end = 128
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 199
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 46, body_start_line: 47 })'
+descriptor = "python method body at src/flask/config.py:46 body 47"
+cost_tokens = 13
+cum_tokens = 8223
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 47
+end = 47
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 200
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 94 })'
+descriptor = "python method at src/flask/config.py:94"
+cost_tokens = 47
+cum_tokens = 8270
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 94
+end = 98
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 201
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 366, body_start_line: 367 })'
+descriptor = "python method body at src/flask/config.py:366 body 367"
+cost_tokens = 21
+cum_tokens = 8291
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 367
+end = 367
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 202
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 29, body_start_line: 30 })'
+descriptor = "python method body at src/flask/config.py:29 body 30"
+cost_tokens = 23
+cum_tokens = 8314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 32, body_start_line: 33 })'
+descriptor = "python method body at src/flask/config.py:32 body 33"
+cost_tokens = 23
+cum_tokens = 8337
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 204
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 23, body_start_line: 26 })'
+descriptor = "python method body at src/flask/config.py:23 body 26"
+cost_tokens = 24
+cum_tokens = 8361
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 26
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 205
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 94, body_start_line: 99 })'
+descriptor = "python method body at src/flask/config.py:94 body 99"
+cost_tokens = 24
+cum_tokens = 8385
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 99
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 206
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 256 })'
+descriptor = "python method at src/flask/config.py:256"
+cost_tokens = 73
+cum_tokens = 8458
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 256
+end = 262
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 207
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py", start_line: 304 })'
+descriptor = "python method doc at src/flask/config.py:304"
+cost_tokens = 62
+cum_tokens = 8520
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 307
+end = 308
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 310
+end = 310
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/config.py"
+start = 312
+end = 313
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 208
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py", start_line: 15 })'
+descriptor = "python decl doc at src/flask/logging.py:15"
+cost_tokens = 126
+cum_tokens = 8646
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/logging.py"
+start = 20
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 209
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 145
+cum_tokens = 8791
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests"
+entries = ["conftest.py", "static", "templates", "test_appctx.py", "test_apps", "test_async.py", "test_basic.py", "test_blueprints.py", "test_cli.py", "test_config.py", "test_converters.py", "test_helpers.py", "test_instance_config.py", "test_json.py", "test_json_tag.py", "test_logging.py", "test_regression.py", "test_reqctx.py", "test_request.py", "test_session_interface.py", "test_signals.py", "test_subclassing.py", "test_templating.py", "test_testing.py", "test_user_error_handler.py", "test_views.py", "type_check"]
+
+[[batches]]
+position = 210
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps" })'
+descriptor = "listing of 'tests/test_apps'"
+cost_tokens = 29
+cum_tokens = 8820
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps"
+entries = [".env", ".flaskenv", "blueprintapp", "cliapp", "helloworld", "subdomaintestmodule"]
+
+[[batches]]
+position = 211
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp" })'
+descriptor = "listing of 'tests/test_apps/blueprintapp'"
+cost_tokens = 9
+cum_tokens = 8829
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp"
+entries = ["__init__.py", "apps"]
+
+[[batches]]
+position = 212
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/subdomaintestmodule" })'
+descriptor = "listing of 'tests/test_apps/subdomaintestmodule'"
+cost_tokens = 9
+cum_tokens = 8838
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/subdomaintestmodule"
+entries = ["__init__.py", "static"]
+
+[[batches]]
+position = 213
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps" })'
+descriptor = "listing of 'tests/test_apps/blueprintapp/apps'"
+cost_tokens = 12
+cum_tokens = 8850
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps"
+entries = ["__init__.py", "admin", "frontend"]
+
+[[batches]]
+position = 214
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/frontend" })'
+descriptor = "listing of 'tests/test_apps/blueprintapp/apps/frontend'"
+cost_tokens = 9
+cum_tokens = 8859
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/frontend"
+entries = ["__init__.py", "templates"]
+
+[[batches]]
+position = 215
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/admin" })'
+descriptor = "listing of 'tests/test_apps/blueprintapp/apps/admin'"
+cost_tokens = 12
+cum_tokens = 8871
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/admin"
+entries = ["__init__.py", "static", "templates"]
+
+[[batches]]
+position = 216
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/subdomaintestmodule/__init__.py" })'
+descriptor = "python imports in tests/test_apps/subdomaintestmodule/__init__.py"
+cost_tokens = 9
+cum_tokens = 8880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/subdomaintestmodule/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 217
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp" })'
+descriptor = "listing of 'tests/test_apps/cliapp'"
+cost_tokens = 33
+cum_tokens = 8913
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp"
+entries = ["__init__.py", "app.py", "factory.py", "importerrorapp.py", "inner1", "message.txt", "multiapp.py"]
+
+[[batches]]
+position = 218
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1" })'
+descriptor = "listing of 'tests/test_apps/cliapp/inner1'"
+cost_tokens = 10
+cum_tokens = 8923
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1"
+entries = ["__init__.py", "inner2"]
+
+[[batches]]
+position = 219
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/inner2" })'
+descriptor = "listing of 'tests/test_apps/cliapp/inner1/inner2'"
+cost_tokens = 10
+cum_tokens = 8933
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/inner2"
+entries = ["__init__.py", "flask.py"]
+
+[[batches]]
+position = 220
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/__init__.py" })'
+descriptor = "python imports in tests/test_apps/cliapp/inner1/__init__.py"
+cost_tokens = 9
+cum_tokens = 8942
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 221
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/type_check" })'
+descriptor = "listing of 'tests/type_check'"
+cost_tokens = 19
+cum_tokens = 8961
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/type_check"
+entries = ["typing_app_decorators.py", "typing_error_handler.py", "typing_route.py"]
+
+[[batches]]
+position = 222
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/admin/__init__.py" })'
+descriptor = "python imports in tests/test_apps/blueprintapp/apps/admin/__init__.py"
+cost_tokens = 19
+cum_tokens = 8980
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/admin/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 223
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/frontend/__init__.py" })'
+descriptor = "python imports in tests/test_apps/blueprintapp/apps/frontend/__init__.py"
+cost_tokens = 19
+cum_tokens = 8999
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/apps/frontend/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 224
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in tests/test_apps/blueprintapp/__init__.py"
+cost_tokens = 10
+cum_tokens = 9009
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/blueprintapp/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 225
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in tests/test_apps/cliapp/inner1/__init__.py"
+cost_tokens = 10
+cum_tokens = 9019
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/tests/test_apps/cliapp/inner1/__init__.py"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 226
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 284 })'
+descriptor = "python class body at src/flask/sessions.py:284"
+cost_tokens = 199
+cum_tokens = 9218
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 289
+end = 301
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 227
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 146, body_start_line: 159 })'
+descriptor = "python method body at src/flask/wrappers.py:146 body 159"
+cost_tokens = 8
+cum_tokens = 9226
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 159
+end = 159
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 228
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py", start_line: 109 })'
+descriptor = "python decl doc at src/flask/testing.py:109"
+cost_tokens = 160
+cum_tokens = 9386
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 110
+end = 113
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 115
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/testing.py"
+start = 120
+end = 121
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 229
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 180 })'
+descriptor = "python method doc at src/flask/wrappers.py:180"
+cost_tokens = 77
+cum_tokens = 9463
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 182
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 185
+end = 186
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 188
+end = 189
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 230
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in examples/tutorial/flaskr/__init__.py"
+cost_tokens = 13
+cum_tokens = 9476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 231
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py", start_line: 6 })'
+descriptor = "python decl at examples/tutorial/flaskr/__init__.py:6"
+cost_tokens = 0
+cum_tokens = 9476
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/tutorial/flaskr/__init__.py"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 232
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/flask/ctx.py"
+cost_tokens = 128
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 151
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 528
+end = 528
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 119
+end = 119
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 155
+end = 155
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 210
+end = 210
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 236
+end = 236
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 261
+end = 261
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 529
+end = 529
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 233
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 30 })'
+descriptor = "python decl at src/flask/ctx.py:30"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 234
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 154 })'
+descriptor = "python decl at src/flask/ctx.py:154"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 235
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 209 })'
+descriptor = "python decl at src/flask/ctx.py:209"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 236
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 235 })'
+descriptor = "python decl at src/flask/ctx.py:235"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 235
+end = 235
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 237
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 260 })'
+descriptor = "python decl at src/flask/ctx.py:260"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 260
+end = 260
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 238
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 528 })'
+descriptor = "python decl at src/flask/ctx.py:528"
+cost_tokens = 0
+cum_tokens = 9604
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 528
+end = 528
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 239
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 118 })'
+descriptor = "python decl at src/flask/ctx.py:118"
+cost_tokens = 25
+cum_tokens = 9629
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 118
+end = 120
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 240
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 235, body_start_line: 257 })'
+descriptor = "python decl body at src/flask/ctx.py:235 body 257"
+cost_tokens = 16
+cum_tokens = 9645
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 257
+end = 257
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 241
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 209, body_start_line: 232 })'
+descriptor = "python decl body at src/flask/ctx.py:209 body 232"
+cost_tokens = 23
+cum_tokens = 9668
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 232
+end = 232
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 242
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py", start_line: 30 })'
+descriptor = "python class body at src/flask/ctx.py:30"
+cost_tokens = 31
+cum_tokens = 9699
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/ctx.py"
+start = 50
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 243
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py", start_line: 146 })'
+descriptor = "python method doc at src/flask/wrappers.py:146"
+cost_tokens = 81
+cum_tokens = 9780
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 148
+end = 148
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 150
+end = 151
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/wrappers.py"
+start = 153
+end = 155
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 244
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example/__init__.py" })'
+descriptor = "python imports in examples/javascript/js_example/__init__.py"
+cost_tokens = 28
+cum_tokens = 9808
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example/__init__.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/examples/javascript/js_example/__init__.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 245
+key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py", start_line: 276 })'
+descriptor = "python decl doc at src/flask/sessions.py:276"
+cost_tokens = 63
+cum_tokens = 9871
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/flask/src/flask/sessions.py"
+start = 277
+end = 280
+
+[batches.content.spans.render]
+kind = "full"

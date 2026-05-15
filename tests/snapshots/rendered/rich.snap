@@ -1,0 +1,400 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.coveragerc
+.faq/
+    FAQ.md
+        2→# Frequently Asked Questions 
+        …
+        4→{%- for question in questions %}
+        5→- [{{ question.title }}](#{{ question.slug }})
+        6→{%- endfor %}
+        9→{%- for question in questions %}
+        11→<a name="{{ question.slug }}"></a>
+        12→## {{ question.title }}
+        …
+    suggest.md
+.github/
+    FUNDING.yml
+    ISSUE_TEMPLATE/
+    dependabot.yml
+    pull_request_template.md
+    workflows/
+        codeql.yml
+        codespell.yml
+        comment.yml
+        newissue.yml
+        pythonpackage.yml
+        readmechanged.yml
+.gitignore
+.pre-commit-config.yaml
+.readthedocs.yml
+AI_POLICY.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+CONTRIBUTORS.md
+FAQ.md
+    2→# Frequently Asked Questions
+    …
+    15→## Extra space, not enough space, in Jupyter output
+    …
+    31→## How do I log a renderable?
+    …
+    42→## How do I render console markup in RichHandler?
+    …
+    49→## Incorrect highlights in printed output
+    …
+    63→## Natively inserted ANSI escape sequence characters break alignment of Panel.
+    …
+    72→## python -m rich.spinner shows extra lines.
+    …
+    79→## Rich is automatically installing traceback handler.
+    …
+    86→## Strange colors in console output.
+    …
+    93→## Why does content in square brackets disappear?
+    …
+    101→## Why does emoji break alignment in a Table or Panel?
+    …
+LICENSE
+Makefile
+README.cn.md
+    38→## 兼容性
+    …
+    40→Rich 适用于 Linux，OSX 和 Windows。真彩色/表情符号可与新的 Windows 终端一起使用，Windows 的经典终端仅限 8 种颜色。
+    42→Rich 还可以与 [Jupyter 笔记本](https://jupyter.org/)一起使用，而无需其他配置。
+    44→## 安装说明
+    …
+    46→使用`pip`或其他 PyPI 软件包管理器进行安装。
+    48→```sh
+    49→python -m pip install rich
+    50→```
+    52→## Rich 的打印功能
+    …
+    64→## 在交互式命令行（REPL）中使用 Rich
+    …
+    75→## 使用控制台
+    …
+    113→## Rich Inspect
+    …
+    127→# Rich 库内容
+    …
+    413→## 使用 Rich 的项目
+    …
+README.de-ch.md
+    38→## Kompatibilität
+    …
+    40→Rich funktioniert mit Linux, OSX ond Windows. True color / emoji funktioniert mit em neue Windows Törminäl, s klassische Törminäl isch of 16 Farbe limitiärt. Rich brucht Python 3.6.3 oder neuer.
+    42→Rich funktioniert mit [Jupyter notebooks](https://jupyter.org/) ohni irgendwelchä zuäsätzloche konfiguration.
+    44→## Installation
+    …
+    58→## Rich Print
+    …
+    70→## Rich REPL
+    …
+    81→## Console bruchä
+    …
+    119→## Rich Inspect
+    …
+    133→# Rich-Bibliothek
+    …
+    425→# Rich für Ondernemä
+    …
+    431→# Projekt wo Rich bruched
+    …
+README.de.md
+README.es.md
+README.fa.md
+    47→## سازگاری
+    …
+    49→ریچ با لینوکس، مک او اس و ویندوز کار می کند.
+    50→رنگ واقعی / ایموجی با ترمینال جدید ویندوز کار می کند، ترمینال کلاسیک به 16 رنگ محدود شده است.
+    51→ریچ به پایتون
+    52→3.6.3
+    53→یا جدیدتر نیاز دارد.
+    55→ریچ با  [ژوپیتر نوت بوک (Jupyter notebooks)](https://jupyter.org/)
+    56→بدون نیازمندی اضافه ای کار می کند.
+    58→## نصب کردن
+    …
+    74→## Rich Print
+    …
+    91→## Rich REPL
+    …
+    104→## استفاده از Console
+    …
+    164→## Rich Inspect
+    …
+    178→# Rich Library
+    …
+    477→# Rich CLI
+    …
+    485→# Textual
+    …
+    491→# پروژه هایی که از ریچ استفاده می کنند
+    …
+README.fr.md
+README.hi.md
+README.id.md
+README.it.md
+README.ja.md
+README.kr.md
+    38→## 호환성
+    …
+    40→Rich는 리눅스, OSX, 윈도우에서 동작합니다. 트루 컬러 / 이모지는 새로운 윈도우 터미널에서 동작하지만 구형 터미널에서는 16가지 색으로 제한됩니다. Rich는 파이썬 3.6.3 버전 혹은 그 이후 버전이 필요합니다.
+    42→Rich는 [Jupyter notebooks](https://jupyter.org/)에서 별도의 설정없이 바로 동작합니다.
+    44→## 설치
+    …
+    58→## Rich Print
+    …
+    71→## Rich REPL
+    …
+    82→## 콘솔 사용하기
+    …
+    120→## Rich Inspect
+    …
+    134→# Rich Library
+    …
+    426→# 엔터프라이즈를 위한 Rich
+    …
+    432→# Rich를 사용하는 프로젝트들
+    …
+README.md
+    10→[English readme](https://github.com/textualize/rich/blob/master/README.md)
+    11→ • [简体中文 readme](https://github.com/textualize/rich/blob/master/README.cn.md)
+    12→ • [正體中文 readme](https://github.com/textualize/rich/blob/master/README.zh-tw.md)
+    13→ • [Lengua española readme](https://github.com/textualize/rich/blob/master/README.es.md)
+    14→ • [Deutsche readme](https://github.com/textualize/rich/blob/master/README.de.md)
+    15→ • [Läs på svenska](https://github.com/textualize/rich/blob/master/README.sv.md)
+    16→ • [日本語 readme](https://github.com/textualize/rich/blob/master/README.ja.md)
+    17→ • [한국어 readme](https://github.com/textualize/rich/blob/master/README.kr.md)
+    18→ • [Français readme](https://github.com/textualize/rich/blob/master/README.fr.md)
+    19→ • [Schwizerdütsch readme](https://github.com/textualize/rich/blob/master/README.de-ch.md)
+    20→ • [हिन्दी readme](https://github.com/textualize/rich/blob/master/README.hi.md)
+    21→ • [Português brasileiro readme](https://github.com/textualize/rich/blob/master/README.pt-br.md)
+    22→ • [Italian readme](https://github.com/textualize/rich/blob/master/README.it.md)
+    23→ • [Русский readme](https://github.com/textualize/rich/blob/master/README.ru.md)
+    24→ • [Indonesian readme](https://github.com/textualize/rich/blob/master/README.id.md)
+    25→ • [فارسی readme](https://github.com/textualize/rich/blob/master/README.fa.md)
+    26→ • [Türkçe readme](https://github.com/textualize/rich/blob/master/README.tr.md)
+    27→ • [Polskie readme](https://github.com/textualize/rich/blob/master/README.pl.md)
+    40→## Compatibility
+    42→Rich works with Linux, macOS and Windows. True color / emoji works with new Windows Terminal, classic terminal is limited to 16 colors. Rich requires Python 3.8 or later.
+    44→Rich works with [Jupyter notebooks](https://jupyter.org/) with no additional configuration required.
+    46→## Installing
+    …
+    48→Install with `pip` or your favorite PyPI package manager.
+    50→```sh
+    51→python -m pip install rich
+    52→```
+    54→Run the following to test Rich output on your terminal:
+    56→```sh
+    57→python -m rich
+    58→```
+    60→## Rich Print
+    …
+    72→## Rich REPL
+    …
+    74→Rich can be installed in the Python REPL, so that any data structures will be pretty printed and highlighted.
+    76→```python
+    77→>>> from rich import pretty
+    78→>>> pretty.install()
+    79→```
+    81→![REPL](https://github.com/textualize/rich/raw/master/imgs/repl.png)
+    83→## Using the Console
+    …
+    121→## Rich Inspect
+    …
+    135→# Rich Library
+    …
+    427→# Rich CLI
+    …
+    435→# Textual
+    …
+    441→# Toad
+    …
+README.pl.md
+README.pt-br.md
+README.ru.md
+README.sv.md
+README.tr.md
+README.zh-tw.md
+SECURITY.md
+assets/
+    logo.ai
+    logo.svg
+    logo.txt
+asv.conf.json
+asvhashfile
+benchmarks/
+    README.md
+    __init__.py
+    benchmarks.py
+    results/
+    snippets.py
+docs/
+    Makefile
+    images/
+        box.svg
+        svg_export.svg
+    make.bat
+    requirements.txt
+    source/
+examples/
+faq.yml
+imgs/
+    columns.png
+    downloader.gif
+    features.png
+    hello_world.png
+    inspect.png
+    log.png
+    logging.png
+    logo.svg
+    markdown.png
+    print.png
+    progress.gif
+    progress.png
+    repl.png
+    spinners.gif
+    status.gif
+    syntax.png
+    table.png
+    table2.png
+    table_movie.gif
+    traceback.png
+    tree.png
+    where_there_is_a_will.png
+make.bat
+poetry.lock
+pyproject.toml
+questions/
+    README.md
+        2→# Questions
+        4→Your questions should go in this directory.
+        6→Question files should be named with the extension ".question.md".
+    ansi_escapes.question.md
+    emoji_broken.question.md
+    highlight_incorrect.question.md
+    highlighting_unexpected.question.md
+    jupyter.question.md
+    log_renderables.question.md
+    logging_color.question.md
+    rich_spinner.question.md
+    square_brackets.question.md
+    tracebacks_installed.question.md
+rich/
+    __init__.py
+    __main__.py
+        18→class ColorBox:
+        …
+        39→def make_test_card() -> Table:
+        …
+    _emoji_codes.py
+        1→EMOJI = {
+    _emoji_replace.py
+    _export_format.py
+    _extension.py
+    _fileno.py
+    _inspect.py
+    _log_render.py
+    _loop.py
+    _null_file.py
+    _palettes.py
+    _pick.py
+    _ratio.py
+    _spinners.py
+        22→SPINNERS = {
+    _stack.py
+    _timer.py
+    _unicode_data/
+    _win32_console.py
+    _windows.py
+        5→@dataclass
+        6→class WindowsConsoleFeatures:
+    _windows_renderer.py
+    _wrap.py
+    abc.py
+    align.py
+    ansi.py
+    bar.py
+    box.py
+    cells.py
+    color.py
+    color_triplet.py
+    columns.py
+    console.py
+    constrain.py
+    containers.py
+    control.py
+    default_styles.py
+    diagnose.py
+    emoji.py
+    errors.py
+    file_proxy.py
+    filesize.py
+    highlighter.py
+    json.py
+        9→class JSON:
+        …
+    jupyter.py
+    layout.py
+    live.py
+    live_render.py
+    logging.py
+    markdown.py
+    markup.py
+    measure.py
+    padding.py
+    pager.py
+    palette.py
+        11→class Palette:
+        …
+    panel.py
+    pretty.py
+    progress.py
+    progress_bar.py
+    prompt.py
+    protocol.py
+    py.typed
+    region.py
+    repr.py
+    rule.py
+    scope.py
+        14→def render_scope(
+        …
+    screen.py
+        18→class Screen:
+        …
+        26→    renderable: "RenderableType"
+    segment.py
+    spinner.py
+        13→class Spinner:
+        …
+    status.py
+    style.py
+    styled.py
+        11→class Styled:
+        …
+    syntax.py
+    table.py
+    terminal_theme.py
+    text.py
+    theme.py
+    themes.py
+    traceback.py
+    tree.py
+setup.py
+    5→import setuptools
+tests/
+tools/
+    README.md
+    cats.json
+    make_emoji.py
+    make_width_tables.py
+    movies.md
+    profile_divide.py
+    profile_pretty.py
+    stress_test_pretty.py
+tox.ini

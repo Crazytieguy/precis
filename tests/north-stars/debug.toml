@@ -1,0 +1,587 @@
+fixture = "debug"
+revision_pin = "f405ade8"
+summary = """
+`debug` is a tiny JavaScript logging utility for Node.js and the
+browser. The runtime concept is a `createDebug` factory that returns
+namespaced logger functions, gated by a wildcard-matched `DEBUG` env
+(Node) or `localStorage.debug` (browser). The package has a small,
+two-pronged shape: `src/common.js` houses platform-agnostic logic
+(`setup`, `createDebug`, `enable`/`disable`/`enabled`,
+`matchesTemplate`, `extend`); `src/browser.js` and `src/node.js`
+inject env-specific `formatArgs`/`useColors`/`save`/`load` plus the
+color palette and `formatters`; `src/index.js` picks one at require
+time.
+
+The ranking serves a wide query distribution — how is `DEBUG=*,-foo`
+parsed? where do ANSI escapes come from? how do `%O`/`%o` formatters
+work? how is the browser/node split actually wired? — by frontloading
+the dispatch entry, the public-API surface, and namespace-matching
+semantics, then drilling into env-specific format/IO details and
+color tables.
+"""
+
+# -----------------------------------------------------------------
+# Tier 1 — Orientation: identity, top-level files, dispatch entry.
+# -----------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Repo top-level listing"
+justification = "First glance: every top-level file the agent might want to read. Tiny repo — listing it all up front costs almost nothing and immunises against catastrophic omission for the entire fixture's top layer."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "package.json identity"
+justification = "name/version/description — answers 'what is this package' in three lines."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 3, render = { kind = "full" } },
+  { path = "package.json", start = 8, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "src/ directory listing"
+justification = "Four files: index/common/browser/node. Lists the entire src/ tree so the agent knows the shape of the implementation before any source content is shown."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src", entries = "all" },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json main/browser/engines"
+justification = "`main`/`browser`/`engines` are the load-bearing hints for how require('debug') resolves on each platform — pairs with src/index.js dispatch."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 54, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json dependencies"
+justification = "Single runtime dep (`ms`) — frames the dependency surface. Tells the agent there are no other runtime deps to worry about."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 33, end = 35, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "src/index.js full"
+justification = "11-line dispatch file: detects Electron renderer / nwjs / browser-style globals and forks between `./browser.js` and `./node.js`. Tiny and load-bearing — the entire 'how do I load this on platform X?' question lands here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/index.js", start = 1, end = 10, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------
+# Tier 2 — Structural skeleton: function locations across every
+# source file, plus the platform exports-tables that wire common.js
+# to node.js/browser.js. Lots of cheap pointers — once these land,
+# "where is X defined?" is one hop away for almost any question.
+# -----------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "common.js setup() exports table"
+justification = "Lines 7-15 are the *contract* between common.js and the platform plugins: `createDebug.coerce/disable/enable/enabled/humanize/destroy` are wired here. Tells the agent at a glance what the platform-agnostic surface is. Catastrophic-omission hedge: showing all eight assignments in one batch so the agent can't misread the surface as smaller than it is."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "src/common.js", start = 8, end = 15, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "common.js inner-function name locations"
+justification = "Truncated first-line of every named fn inside `setup`: selectColor, createDebug, debug (inner), extend, enable, matchesTemplate, disable, enabled, coerce, destroy. The agent learns the *full* set of helpers without spending tokens on bodies. Catastrophic-omission hedge — listing only some implies the others don't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 41, end = 41, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 60, end = 60, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 66, end = 66, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 162, end = 162, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 192, end = 192, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 233, end = 233, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 249, end = 249, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 272, end = 272, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/common.js", start = 283, end = 283, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "common.js: setup() signature + bootstrap + module.exports"
+justification = "The factory entry: `function setup(env)` (line 7), the `createDebug.enable(createDebug.load())` bootstrap (287), `return createDebug` (289), and `module.exports = setup` (292). Frames how the platform exports object is consumed and re-exported."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 287, end = 289, render = { kind = "full" } },
+  { path = "src/common.js", start = 292, end = 292, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "node.js exports table (top of file)"
+justification = "Lines 12-21: the platform-side contract — exposes `init`, `log`, `formatArgs`, `save`, `load`, `useColors`, `destroy` to common.js's setup(). Catastrophic-omission hedge: every export shown together."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 12, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "node.js function-name locations"
+justification = "Truncated first-line for each top-level fn: useColors, formatArgs, getDate, log, save, load, init. Lets the agent jump straight to the line for any Node-side hook."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 155, end = 155, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 167, end = 167, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 182, end = 182, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 193, end = 193, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 203, end = 203, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 220, end = 220, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 231, end = 231, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "node.js bottom wiring + formatters registration"
+justification = "`module.exports = require('./common')(exports)` (240) is *the* line that connects the Node plugin to common.js's setup(). Pair with the formatters destructure (242) and the `formatters.o` / `formatters.O` assignment lines (248, 260) — truncated to the assignment so the agent sees both formatters exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 240, end = 240, render = { kind = "full" } },
+  { path = "src/node.js", start = 242, end = 242, render = { kind = "full" } },
+  { path = "src/node.js", start = 248, end = 248, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/node.js", start = 260, end = 260, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "browser.js exports table (top of file)"
+justification = "Lines 7-11: `formatArgs`, `save`, `load`, `useColors`, `storage` exposed to common.js. Note `init` is *not* exported here (vs node.js) — handled by `typeof createDebug.init === 'function'` in common.js. Catastrophic-omission hedge."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 7, end = 11, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "browser.js function-name locations"
+justification = "Truncated first-line for each top-level fn: useColors, formatArgs, save, load, localstorage. Plus `exports.log` (192) and `exports.destroy` IIFE start (12) so the agent sees all platform hooks."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 115, end = 115, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/browser.js", start = 149, end = 149, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/browser.js", start = 192, end = 192, render = { kind = "full" } },
+  { path = "src/browser.js", start = 200, end = 200, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/browser.js", start = 219, end = 219, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "src/browser.js", start = 247, end = 247, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "browser.js bottom wiring + formatters.j"
+justification = "Mirror of 2.6: `module.exports = require('./common')(exports)` (258), formatters destructure (260), `formatters.j = ...` (266). Note the browser registers `j` (vs node's `o`/`O`) — surfaces the asymmetry."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 258, end = 258, render = { kind = "full" } },
+  { path = "src/browser.js", start = 260, end = 260, render = { kind = "full" } },
+  { path = "src/browser.js", start = 266, end = 266, render = { kind = "truncated", pattern = "^[^(]+" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "README H2 heading locations"
+justification = "Every `##` heading in README — Installation, Usage, Namespace Colors, Millisecond diff, Conventions, Wildcards, Environment Variables, Formatters, Browser Support, Output streams, Extend, Set dynamically, Checking whether a debug target is enabled, Usage in child processes, Authors, License (skipping Backers/Sponsors-list/sub-headings). Catastrophic-omission hedge for the prose docs — the agent learns what sections exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 10, end = 10, render = { kind = "full" } },
+  { path = "README.md", start = 16, end = 16, render = { kind = "full" } },
+  { path = "README.md", start = 110, end = 110, render = { kind = "full" } },
+  { path = "README.md", start = 134, end = 134, render = { kind = "full" } },
+  { path = "README.md", start = 145, end = 145, render = { kind = "full" } },
+  { path = "README.md", start = 149, end = 149, render = { kind = "full" } },
+  { path = "README.md", start = 161, end = 161, render = { kind = "full" } },
+  { path = "README.md", start = 181, end = 181, render = { kind = "full" } },
+  { path = "README.md", start = 196, end = 196, render = { kind = "full" } },
+  { path = "README.md", start = 215, end = 215, render = { kind = "full" } },
+  { path = "README.md", start = 248, end = 248, render = { kind = "full" } },
+  { path = "README.md", start = 274, end = 274, render = { kind = "full" } },
+  { path = "README.md", start = 288, end = 288, render = { kind = "full" } },
+  { path = "README.md", start = 341, end = 341, render = { kind = "full" } },
+  { path = "README.md", start = 357, end = 357, render = { kind = "full" } },
+  { path = "README.md", start = 457, end = 457, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------
+# Tier 3 — Core mechanics: namespace gating, the createDebug
+# factory, the per-call debug() body. Where the actual semantics
+# live for the most common queries ("how does DEBUG=foo,-bar work?"
+# / "what runs each call?").
+# -----------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "enabled(name): namespace match loop"
+justification = "15-line body — the function that answers `debug.enabled` for any given namespace. Negative `skips` win over `names`. The whole semantics of `DEBUG=*,-foo:*` lives here. Predecessor is 2.2 which already showed the signature line."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 249, end = 263, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "enable(namespaces): comma/whitespace split + names/skips partition"
+justification = "21-line body: the canonical parser for the DEBUG string — whitespace -> commas, filter Boolean, then partition into `names` vs `skips` by leading `-`. Pair with 3.1 to fully cover gating semantics. Note: `createDebug.save` + `createDebug.namespaces` plumb to platform persistence."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 162, end = 182, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "disable(): rebuild namespaces string, then clear"
+justification = "8-line body — round-trip-prints `names,...,-skip1,-skip2` and re-enables empty. Surfaces the disable-then-restore pattern shown in the README."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 233, end = 240, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "createDebug factory: signature + per-instance setup tail"
+justification = "Lines 60-65 (signature + per-namespace cache vars) and 116-147 (debug.namespace/useColors/color/extend/destroy assignments, the `enabled` getter with caching against `namespacesCache`, and the env-specific `createDebug.init` hook). Tight body without the per-call dispatch — that's 3.6."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 60, end = 65, render = { kind = "full" } },
+  { path = "src/common.js", start = 116, end = 147, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "matchesTemplate(): wildcard match algorithm"
+justification = "34-line body — the `*`-wildcard glob matcher used by both `enabled` and the skip check. Standard backtracking algorithm with `starIndex`/`matchIndex` state. Answers 'how do wildcards resolve when foo:* and foo:bar:* both apply?'."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 184, end = 225, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "debug(...args) inner body: per-call dispatch"
+justification = "48-line body of the actual logger fn — early-exit on `!debug.enabled`, ms-diff bookkeeping (prevTime/diff/prev/curr), coerce, %-formatter replacement loop, env-specific `formatArgs.call`, dispatch to `logFn`. This is what runs *every time* `debug('msg')` is called."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 66, end = 114, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "selectColor + extend bodies"
+justification = "Two small helpers: `selectColor` (hash-based stable color picker, 10 lines) and `extend` (3 lines — concatenates namespace with delimiter ':' default and inherits parent log fn). Common questions: 'why are namespace colors stable across runs?' and 'how does .extend() build sub-loggers?'."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 41, end = 50, render = { kind = "full" } },
+  { path = "src/common.js", start = 149, end = 153, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "coerce + destroy bodies"
+justification = "Two trailing helpers: `coerce` (3 lines — Error→stack/message preprocessing for first arg) and `destroy` (deprecated stub that warns). Tiny but completes the public common.js surface."
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/common.js", start = 272, end = 277, render = { kind = "full" } },
+  { path = "src/common.js", start = 283, end = 285, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------
+# Tier 4 — Platform implementation bodies. Node and browser
+# mirror each other: formatArgs / useColors / save / load /
+# (init|localstorage) / destroy / formatters. Interleaved roughly
+# in importance order — formatArgs first (it's the visible output),
+# then env-parsing, then IO, then deprecated/leaf utilities.
+# -----------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "node.js formatArgs(): ANSI color escapes + ms diff append"
+justification = "14-line body that wraps each log line with `\\u001B[3...;1m{ns}\\u001B[0m` when colored and appends `+Nms` from `humanize(this.diff)`. The function does dual duty: prefix coloring and timing. Predecessor 2.5 already showed its signature."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 167, end = 180, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "node.js log() + getDate() + useColors() bodies"
+justification = "Three tiny bodies: `log` writes to `process.stderr` with `util.formatWithOptions(inspectOpts, ...args)`; `getDate` returns an ISO timestamp prefix (or empty when `hideDate`); `useColors` checks `inspectOpts.colors` then falls back to `tty.isatty(stderr.fd)`. Together they answer 'where does the output go and when are colors on?'."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 155, end = 159, render = { kind = "full" } },
+  { path = "src/node.js", start = 182, end = 187, render = { kind = "full" } },
+  { path = "src/node.js", start = 193, end = 195, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "node.js DEBUG_* env-var parser (inspectOpts)"
+justification = "26-line block (124-149): filters env keys matching `/^debug_/i`, strips the prefix, camel-cases the rest, coerces yes/no/null/Number. Answers 'how does DEBUG_DEPTH=10 become inspectOpts.depth=10?' — directly maps the README's Environment Variables table to behavior."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 124, end = 149, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "node.js save() + load() + init() bodies"
+justification = "Three short bodies (203-222, 231-238): `save` writes `process.env.DEBUG` (or deletes to avoid 'null' cast); `load` returns `process.env.DEBUG`; `init` clones `exports.inspectOpts` onto each debug instance so per-instance overrides don't leak. Answers most env/persistence questions."
+predecessor = "2.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 203, end = 222, render = { kind = "full" } },
+  { path = "src/node.js", start = 231, end = 238, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "node.js supports-color colors override"
+justification = "Lines 27 (the 6-color fallback palette) plus the supports-color try/catch shape (29-34, 113-116) with the inner palette elided — shows that there's an optional 76-color override when `supports-color>=2` is installed, without spending hundreds of tokens on the ANSI-numbers list (kept for tier 5)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 27, end = 27, render = { kind = "full" } },
+  { path = "src/node.js", start = 29, end = 34, render = { kind = "full" } },
+  { path = "src/node.js", start = 35, end = 35, render = { kind = "ellipsis" } },
+  { path = "src/node.js", start = 113, end = 116, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "node.js formatters.o + formatters.O bodies"
+justification = "12-line block (248-263): `%o` joins util.inspect output into one line; `%O` keeps it multi-line. Both set `this.inspectOpts.colors = this.useColors` so output colors track the parent debugger. Directly answers the README Formatters table for `%o`/`%O`."
+predecessor = "2.6"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 248, end = 263, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "node.js requires + tty/util imports"
+justification = "Lines 1-10: `require('tty')` and `require('util')` — establishes the only stdlib deps the Node plugin uses (tty.isatty for color detection, util.formatWithOptions/inspect/deprecate for everything else). Useful for 'where do these primitives come from?' questions."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/node.js", start = 1, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "browser.js formatArgs(): %c-CSS coloring + last-%c trick"
+justification = "34-line body (149-182). Builds `%c{ns} %c{msg}%c +Nms`, then re-scans the format string to find the *last* `%c` index in case the user supplied their own `%c` placeholders. The cleverest function in browser.js — answers 'why does namespace color show up in Chrome DevTools?'."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 149, end = 182, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "browser.js useColors() body: Electron/IE/WebKit/Firebug detection"
+justification = "27-line body (115-141). Five-way detection: Electron renderer (window.process.type), reject IE/Edge, then accept WebKit / Firebug / Firefox>=31. The comment 'eslint-disable-next-line complexity' tips off readers that this is deliberately gnarly."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 115, end = 141, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "browser.js save/load/localstorage bodies"
+justification = "Three IO bodies (200-256): `save` calls `storage.setItem('debug', ns)` (or removeItem); `load` reads `'debug'` or `'DEBUG'` and falls back to `process.env.DEBUG` in Electron; `localstorage()` returns `localStorage` with try/catch (Safari blocks when cookies are disabled). Mirrors node.js save/load."
+predecessor = "2.8"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 200, end = 256, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.11"
+descriptor = "browser.js destroy IIFE warning"
+justification = "10-line IIFE (12-21) — warn-once-on-first-call deprecation stub for the instance-level `destroy`. Same message as node.js's `util.deprecate` wrapper but hand-rolled because browsers don't have util.deprecate. Pairs visually with node.js lines 18-21 in 2.4."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 12, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.12"
+descriptor = "browser.js formatters.j body"
+justification = "7-line body (266-272) — `formatters.j = (v) => JSON.stringify(v)` with try/catch returning `[UnexpectedJSONParseError]: ...`. Browser-only formatter (node uses util.inspect for %j by default). Overrides 2.9's truncated line 266 with the full body."
+predecessor = "2.9"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/browser.js", start = 266, end = 272, render = { kind = "full" } },
+]
+
+# -----------------------------------------------------------------
+# Tier 5 — Detail/breadth fill: tests, README detail sections,
+# infra config. Past this point the agent has all load-bearing
+# semantics; remaining batches improve breadth for tail queries.
+# -----------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "test.js describe/it locations"
+justification = "Truncated first-line of every describe/it block in test.js — 17 truncations across the top-level describe and two nested describes (`extend namespace`, `rebuild namespaces string (disable)`). Lets the agent see the *behavioral contract* covered by tests without reading bodies. Catastrophic-omission hedge for the test suite."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test.js", start = 6, end = 6, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 7, end = 7, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 15, end = 15, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 23, end = 23, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 32, end = 32, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 46, end = 46, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 47, end = 47, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 56, end = 56, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 65, end = 65, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 74, end = 74, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 83, end = 83, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 84, end = 84, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 90, end = 90, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 98, end = 98, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 104, end = 104, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 110, end = 110, render = { kind = "truncated", pattern = "^[^,]+" } },
+  { path = "test.js", start = 121, end = 121, render = { kind = "truncated", pattern = "^[^,]+" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "README Wildcards + Environment Variables sections"
+justification = "Two adjacent README sections (149-179) that document the surface-level user-visible semantics: `*` and `-` wildcards, plus the table mapping DEBUG / DEBUG_HIDE_DATE / DEBUG_COLORS / DEBUG_DEPTH / DEBUG_SHOW_HIDDEN to behaviors. Predecessor 2.10 already showed both H2 headings."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 149, end = 179, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "README Formatters table + Custom formatters example"
+justification = "Lines 181-212: the table of %O/%o/%s/%d/%j/%% formatters and the custom-formatter example with `debug.formatters.h = ...`. Maps directly to the formatter loop in 3.6 and the `formatters.o/O/j` registrations. Predecessor 2.10 covers the headings."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 181, end = 212, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "README Output streams + Conventions"
+justification = "Output streams section (248-272) — per-namespace `log.log = console.log.bind(console)` override pattern, maps directly to `self.log || createDebug.log` in 3.6's debug() body — plus the small Conventions paragraph (145-147) on naming sub-loggers."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 145, end = 147, render = { kind = "full" } },
+  { path = "README.md", start = 248, end = 272, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "README Extend + Set dynamically (key parts)"
+justification = "Extend section (274-286) — documents `debug.extend('sub')` namespace concatenation — and the first half of Set dynamically (288-321) that documents the dynamic `debug.enable()`/`debug.disable()` API plus the 'enable() completely overrides previous DEBUG' caveat. Maps to common.js extend() and enable()/disable() bodies."
+predecessor = "2.10"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 274, end = 321, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "test.js: extend + disable test bodies"
+justification = "Lines 46-138 — the bodies of `extend namespace` and `rebuild namespaces string (disable)` describes. The most semantically dense tests: exercise the wildcard parser, names/skips round-trip, and re-enable-after-disable correctness. Predecessor 5.1 covers the describe/it locations."
+predecessor = "5.1"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test.js", start = 46, end = 138, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "test.node.js full"
+justification = "40-line node-specific test using sinon to spy on `util.formatWithOptions` — verifies it's called and that `inspectOpts` (hideDate, colors, depth, showHidden) is passed through. Catches Node-side `log()`/`inspectOpts` plumbing in one tight file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "test.node.js", start = 1, end = 40, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.8"
+descriptor = "Infra: package.json scripts, .travis.yml, .gitignore"
+justification = "Scripts block (26-32, 36-48 — skipping the dependencies block already shown in 1.5) shows `lint`/`test:node`/`test:browser`/`test:coverage` plus dev deps (mocha, karma, sinon, xo, brfs, browserify). `.travis.yml` shows the CI Node matrix (6/8/10/11). `.gitignore` lists what's excluded (node_modules, lockfiles, dist/coverage). Together: 'how do I run / lint / CI this?'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 26, end = 32, render = { kind = "full" } },
+  { path = "package.json", start = 36, end = 48, render = { kind = "full" } },
+  { path = "package.json", start = 59, end = 63, render = { kind = "full" } },
+  { path = ".travis.yml", start = 1, end = 17, render = { kind = "full" } },
+  { path = ".gitignore", start = 1, end = 12, render = { kind = "full" } },
+]

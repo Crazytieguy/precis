@@ -1,0 +1,371 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+.golangci.yml
+LICENSE
+Makefile
+README.md
+    2→# lo - Iterate over slices, maps, channels...
+    13→✨ **`samber/lo` is a Lodash-style Go library based on Go 1.18+ Generics.**
+    5093→## 👤 Contributors
+    5095→![Contributors](https://contrib.rocks/image?repo=samber/lo)
+    5103→## 📝 License
+    5105→Copyright © 2022 [Samuel Berthe](https://github.com/samber).
+    5107→This project is under [MIT](./LICENSE) license.
+benchmark/
+channel.go
+    1→package lo
+    3→import (
+    4→	"context"
+    5→	"sync"
+    6→	"time"
+    8→	"github.com/samber/lo/internal/xrand"
+    9→)
+channel_test.go
+concurrency.go
+    1→package lo
+    3→import (
+    4→	"context"
+    5→	"sync"
+    6→	"time"
+    7→)
+concurrency_test.go
+condition.go
+    1→package lo
+condition_test.go
+constraints.go
+    1→package lo
+    3→// Clonable defines a constraint of types having Clone() T method.
+    4→type Clonable[T any] interface {
+    5→	Clone() T
+    6→}
+docs/
+    .gitignore
+    CLAUDE.md
+    README.md
+        1→# Website
+        3→This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+        5→## Installation
+        …
+        7→```bash
+        8→yarn
+        9→```
+        11→## Local Development
+        …
+        19→## Build
+        …
+        27→## Deployment
+        …
+    data/
+    docs/
+        _category_.json
+        about.md
+        contributing.md
+        core/
+        experimental/
+        getting-started.md
+        glossary.md
+        iter/
+        mutable/
+        parallel/
+    docusaurus.config.ts
+        439→export default config;
+    package-lock.json
+    package.json
+        2→  "name": "lo",
+        3→  "version": "0.0.0",
+        4→  "private": true,
+        62→  "engines": {
+        63→    "node": ">=20.0"
+        64→  }
+    plugins/
+        helpers-pages/
+    scripts/
+    sidebars.ts
+        70→export default sidebars;
+    src/
+        clientModules/
+        css/
+            custom.css
+        pages/
+            community.module.css
+            community.tsx
+                91→export default Community;
+            index.module.css
+            index.tsx
+                1→import type {ReactNode} from 'react';
+                2→import clsx from 'clsx';
+                3→import Link from '@docusaurus/Link';
+                4→import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+                5→import Layout from '@theme/Layout';
+                6→import Heading from '@theme/Heading';
+                7→import styles from './index.module.css';
+                9→type FeatureItem = {
+                10→  title: string;
+                11→  Svg: React.ComponentType<React.ComponentProps<'svg'>>;
+                12→  description: ReactNode;
+                13→};
+                45→function Feature({title, Svg, description}: FeatureItem) {
+                46→  return (
+                47→    <div className={clsx('col col--4')}>
+                48→      <div className="text--center">
+                49→        <Svg className={styles.featureSvg} role="img" />
+                50→      </div>
+                51→      <div className="text--center padding-horiz--md">
+                52→        <Heading as="h3">{title}</Heading>
+                53→        <p>{description}</p>
+                54→      </div>
+                55→    </div>
+                56→  );
+                59→function HomepageFeatures(): ReactNode {
+                60→  return (
+                61→    <section className={styles.features}>
+                62→      <div className="container">
+                63→        <div className="row">
+                64→          {FeatureList.map((props, idx) => (
+                65→            <Feature key={idx} {...props} />
+                66→          ))}
+                67→        </div>
+                68→      </div>
+                69→    </section>
+                70→  );
+                73→function HomepageHeader() {
+                74→  const {siteConfig} = useDocusaurusContext();
+                101→export default function Home(): JSX.Element {
+                102→  const {siteConfig} = useDocusaurusContext();
+                103→  return (
+                104→    <Layout
+                105→      title={`🏎️ ${siteConfig.title}: ${siteConfig.tagline}`}
+                106→      description="Reusable utility library for Go">
+                107→      <HomepageHeader />
+                108→      <main>
+                109→        <HomepageFeatures />
+                110→      </main>
+                111→    </Layout>
+                112→  );
+        prism-include-languages.js
+        theme/
+            CodeBlock/
+            ColorModeToggle/
+            DocSidebar/
+            NotFound/
+            prism-include-languages.js
+    static/
+        .nojekyll
+        img/
+        llms.txt
+        robots.txt
+    tsconfig.json
+errors.go
+    1→package lo
+    3→import (
+    4→	"errors"
+    5→	"fmt"
+    6→	"reflect"
+    7→)
+errors_test.go
+exp/
+    simd/
+find.go
+    1→package lo
+    3→import (
+    4→	"time"
+    6→	"github.com/samber/lo/internal/constraints"
+    7→	"github.com/samber/lo/internal/xrand"
+    8→)
+find_test.go
+func.go
+    1→package lo
+func_test.go
+go.mod
+    1→module github.com/samber/lo
+    3→go 1.18
+    5→//
+    6→// Dev dependencies are excluded from releases. Please check CI.
+    7→//
+    9→require (
+    10→	github.com/stretchr/testify v1.11.1
+    11→	github.com/thoas/go-funk v0.9.3
+    12→	go.uber.org/goleak v1.2.1
+    13→	golang.org/x/text v0.22.0
+    14→)
+    16→require (
+    23→)
+go.sum
+internal/
+    constraints/
+        README.md
+            2→# Constraints
+            4→This package is for Go 1.18 retrocompatiblity purpose.
+        constraints.go
+            7→package constraints
+            12→type Signed interface {
+            13→	~int | ~int8 | ~int16 | ~int32 | ~int64
+            14→}
+            19→type Unsigned interface {
+            20→	~uint | ~uint8 | ~uint16 | ~uint32 | ~uint64 | ~uintptr
+            21→}
+            26→type Integer interface {
+            27→	Signed | Unsigned
+            28→}
+            33→type Float interface {
+            34→	~float32 | ~float64
+            35→}
+            40→type Complex interface {
+            41→	~complex64 | ~complex128
+            42→}
+        ordered_go118.go
+            3→package constraints
+            9→type Ordered interface {
+            10→	Integer | Float | ~string
+            11→}
+        ordered_go121.go
+            13→type Ordered = cmp.Ordered
+    xrand/
+    xtime/
+        README.md
+            2→# xtime
+            4→Lightweight mock for time package.
+            6→A dedicated package such as [jonboulle/clockwork](https://github.com/jonboulle/clockwork/) would be better, but I would rather limit dependencies for this package. `clockwork` does not support Go 1.18 anymore.
+        fake.go
+        noCopy.go
+            1→package xtime
+            10→type noCopy struct{}
+            …
+            13→func (*noCopy) Lock()   {}
+            14→func (*noCopy) Unlock() {}
+        real.go
+        time.go
+            2→package xtime
+            4→import "time"
+intersect.go
+    1→package lo
+intersect_test.go
+it/
+    channel.go
+        3→package it
+        5→import (
+        6→	"iter"
+        8→	"github.com/samber/lo"
+        9→)
+        11→// SeqToChannel returns a read-only channel of collection elements.
+        12→// Play: https://go.dev/play/p/id3jqJPffT6
+        13→func SeqToChannel[T any](bufferSize int, collection iter.Seq[T]) <-chan T {
+        …
+        27→// SeqToChannel2 returns a read-only channel of collection elements.
+        28→// Play: https://go.dev/play/p/rpJdVnXUaG-
+        29→func SeqToChannel2[K, V any](bufferSize int, collection iter.Seq2[K, V]) <-chan lo.Tuple2[K, V] {
+        …
+        43→// ChannelToSeq returns a sequence built from channels items. Blocks until channel closes.
+        44→// Play: https://go.dev/play/p/IXqSs2Ooqpm
+        45→func ChannelToSeq[T any](ch <-chan T) iter.Seq[T] {
+        …
+    channel_test.go
+    find.go
+    find_example_test.go
+    find_test.go
+    intersect.go
+        3→package it
+        5→import (
+        6→	"iter"
+        8→	"github.com/samber/lo"
+        9→)
+    intersect_example_test.go
+    intersect_test.go
+    lo_test.go
+    map.go
+        3→package it
+        5→import (
+        6→	"iter"
+        7→	"maps"
+        8→)
+    map_example_test.go
+    map_test.go
+    math.go
+    math_example_test.go
+    math_test.go
+    seq.go
+    seq_example_test.go
+    seq_test.go
+    string.go
+        3→package it
+        5→import "iter"
+        13→func ChunkString[T ~string](str T, size int) iter.Seq[T] {
+        …
+    string_example_test.go
+    string_test.go
+    tuples.go
+        3→package it
+        5→import (
+        6→	"iter"
+        8→	"github.com/samber/lo"
+        9→)
+    tuples_example_test.go
+    tuples_test.go
+    type_manipulation.go
+        3→package it
+        5→import (
+        6→	"iter"
+        8→	"github.com/samber/lo"
+        9→)
+    type_manipulation_test.go
+lo_example_test.go
+lo_test.go
+map.go
+    1→package lo
+map_test.go
+math.go
+    1→package lo
+    3→import (
+    4→	"math"
+    6→	"github.com/samber/lo/internal/constraints"
+    7→)
+math_test.go
+mutable/
+    slice.go
+        1→package mutable
+        3→import "github.com/samber/lo/internal/xrand"
+    slice_example_test.go
+    slice_test.go
+parallel/
+    slice.go
+        1→package parallel
+        3→import "sync"
+    slice_test.go
+retry.go
+    1→package lo
+    3→import (
+    4→	"sync"
+    5→	"time"
+    7→	"github.com/samber/lo/internal/xtime"
+    8→)
+retry_example_test.go
+retry_test.go
+slice.go
+    1→package lo
+    3→import (
+    4→	"sort"
+    6→	"github.com/samber/lo/internal/constraints"
+    7→	"github.com/samber/lo/mutable"
+    8→)
+slice_test.go
+string.go
+string_test.go
+time.go
+    1→package lo
+    3→import (
+    4→	"time"
+    5→)
+time_test.go
+tuples.go
+    1→package lo
+tuples_test.go
+type_manipulation.go
+    1→package lo
+    3→import "reflect"
+type_manipulation_test.go
+types.go
+    1→package lo

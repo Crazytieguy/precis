@@ -1,0 +1,6186 @@
+fixture = "jq"
+budget = 10000
+cumulative_tokens = 9784
+batch_count = 181
+
+[[batches]]
+position = 1
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq" })'
+descriptor = "listing of '.'"
+cost_tokens = 81
+cum_tokens = 81
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq"
+entries = [".gitattributes", ".github", ".gitignore", ".gitmodules", "AUTHORS", "COPYING", "ChangeLog", "Dockerfile", "KEYS", "Makefile.am", "NEWS.md", "README.md", "SECURITY.md", "build", "compile-ios.sh", "config", "configure.ac", "docs", "jq.1.prebuilt", "jq.spec", "libjq.pc.in", "m4", "scripts", "sig", "src", "tests", "vendor"]
+
+[[batches]]
+position = 2
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/config" })'
+descriptor = "listing of 'config'"
+cost_tokens = 9
+cum_tokens = 90
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/config"
+entries = [".gitignore", "m4"]
+
+[[batches]]
+position = 3
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor" })'
+descriptor = "listing of 'vendor'"
+cost_tokens = 9
+cum_tokens = 99
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor"
+entries = ["decNumber", "oniguruma"]
+
+[[batches]]
+position = 4
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md" })'
+descriptor = "README headline in README.md"
+cost_tokens = 64
+cum_tokens = 163
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 5
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/m4" })'
+descriptor = "listing of 'm4'"
+cost_tokens = 23
+cum_tokens = 186
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/m4"
+entries = ["ax_compare_version.m4", "ax_prog_bison_version.m4", "ax_pthread.m4"]
+
+[[batches]]
+position = 6
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md" })'
+descriptor = "headings outline in README.md"
+cost_tokens = 71
+cum_tokens = 257
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 7
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 52
+cum_tokens = 309
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs"
+entries = ["Pipfile", "Pipfile.lock", "README.md", "build_manpage.py", "build_mantests.py", "build_website.py", "content", "manual_schema.yml", "public", "templates", "validate_manual_schema.py"]
+
+[[batches]]
+position = 8
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md" })'
+descriptor = "README headline in docs/README.md"
+cost_tokens = 49
+cum_tokens = 358
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py", chunk_index: 0 })'
+descriptor = "python decl names surface in docs/build_mantests.py"
+cost_tokens = 11
+cum_tokens = 369
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content" })'
+descriptor = "listing of 'docs/content'"
+cost_tokens = 13
+cum_tokens = 382
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content"
+entries = ["download", "index.yml", "manual", "tutorial"]
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates" })'
+descriptor = "listing of 'docs/templates'"
+cost_tokens = 21
+cum_tokens = 403
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates"
+entries = ["default.html.j2", "index.html.j2", "manual.html.j2", "shared"]
+
+[[batches]]
+position = 12
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 49
+cum_tokens = 452
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 13
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py", start_line: 5 })'
+descriptor = "python decl at docs/build_mantests.py:5"
+cost_tokens = 31
+cum_tokens = 483
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public" })'
+descriptor = "listing of 'docs/public'"
+cost_tokens = 31
+cum_tokens = 514
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public"
+entries = [".htaccess", "CNAME", "css", "icon.png", "icon.svg", "jq.svg", "js", "robots.txt"]
+
+[[batches]]
+position = 15
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py" })'
+descriptor = "python imports in docs/build_mantests.py"
+cost_tokens = 14
+cum_tokens = 528
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_mantests.py"
+start = 2
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig" })'
+descriptor = "listing of 'sig'"
+cost_tokens = 98
+cum_tokens = 626
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig"
+entries = ["jq-release-new.key", "jq-release-old.key", "v1.3", "v1.4", "v1.5", "v1.5rc1", "v1.5rc2", "v1.6", "v1.7", "v1.7.1", "v1.7rc1", "v1.7rc2", "v1.8.0", "v1.8.1"]
+
+[[batches]]
+position = 17
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5rc1" })'
+descriptor = "listing of 'sig/v1.5rc1'"
+cost_tokens = 30
+cum_tokens = 656
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5rc1"
+entries = ["jq-linux-x86_64-static.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 18
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.6" })'
+descriptor = "listing of 'sig/v1.6'"
+cost_tokens = 41
+cum_tokens = 697
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.6"
+entries = ["jq-linux32.asc", "jq-linux64.asc", "jq-osx-amd64.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 19
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5rc2" })'
+descriptor = "listing of 'sig/v1.5rc2'"
+cost_tokens = 46
+cum_tokens = 743
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5rc2"
+entries = ["jq-linux-x86.asc", "jq-linux-x86_64.asc", "jq-osx-x86_64.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 20
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/config/m4" })'
+descriptor = "listing of 'config/m4'"
+cost_tokens = 47
+cum_tokens = 790
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/config/m4"
+entries = [".gitignore", "check-math-func.m4", "find-func-no-libs.m4", "find-func-no-libs2.m4", "find-func.m4", "misc.m4"]
+
+[[batches]]
+position = 21
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5" })'
+descriptor = "listing of 'sig/v1.5'"
+cost_tokens = 51
+cum_tokens = 841
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.5"
+entries = ["jq-linux32-no-oniguruma.asc", "jq-linux32.asc", "jq-linux64.asc", "jq-osx-amd64.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 22
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.3" })'
+descriptor = "listing of 'sig/v1.3'"
+cost_tokens = 54
+cum_tokens = 895
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.3"
+entries = ["jq-linux-x86.asc", "jq-linux-x86_64.asc", "jq-osx-x86.asc", "jq-osx-x86_64.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 23
+key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md" })'
+descriptor = "headings outline in NEWS.md"
+cost_tokens = 299
+cum_tokens = 1194
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 26
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 117
+end = 117
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 187
+end = 187
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 239
+end = 239
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 267
+end = 267
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 276
+end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 278
+end = 278
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 283
+end = 283
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 290
+end = 290
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 306
+end = 306
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 311
+end = 311
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 315
+end = 315
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 324
+end = 324
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 348
+end = 348
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 411
+end = 411
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 554
+end = 554
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 35
+end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 68
+end = 68
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 118
+end = 118
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 188
+end = 188
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 240
+end = 240
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 252
+end = 252
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 268
+end = 268
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 277
+end = 277
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 279
+end = 279
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 284
+end = 284
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 291
+end = 291
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 307
+end = 307
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 312
+end = 312
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 316
+end = 316
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 325
+end = 325
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 349
+end = 349
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 412
+end = 412
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/NEWS.md"
+start = 555
+end = 555
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 24
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", chunk_index: 0 })'
+descriptor = "python decl names surface in docs/build_website.py"
+cost_tokens = 58
+cum_tokens = 1252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 74
+end = 74
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 25
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 19 })'
+descriptor = "python decl at docs/build_website.py:19"
+cost_tokens = 0
+cum_tokens = 1252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 43 })'
+descriptor = "python decl at docs/build_website.py:43"
+cost_tokens = 0
+cum_tokens = 1252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 27
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 50 })'
+descriptor = "python decl at docs/build_website.py:50"
+cost_tokens = 0
+cum_tokens = 1252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 28
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 73 })'
+descriptor = "python decl at docs/build_website.py:73"
+cost_tokens = 0
+cum_tokens = 1252
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 29
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 43, body_start_line: 44 })'
+descriptor = "python decl body at docs/build_website.py:43 body 44"
+cost_tokens = 7
+cum_tokens = 1259
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 30
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 13 })'
+descriptor = "python decl at docs/build_website.py:13"
+cost_tokens = 34
+cum_tokens = 1293
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 13
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 31
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py", start_line: 19, body_start_line: 20 })'
+descriptor = "python decl body at docs/build_website.py:19 body 20"
+cost_tokens = 21
+cum_tokens = 1314
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_website.py"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 32
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/validate_manual_schema.py" })'
+descriptor = "python imports in docs/validate_manual_schema.py"
+cost_tokens = 22
+cum_tokens = 1336
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/validate_manual_schema.py"
+start = 2
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 33
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/src" })'
+descriptor = "listing of 'src'"
+cost_tokens = 233
+cum_tokens = 1569
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/src"
+entries = ["builtin.c", "builtin.h", "builtin.jq", "bytecode.c", "bytecode.h", "compile.c", "compile.h", "exec_stack.h", "execute.c", "inject_errors.c", "jq.h", "jq_parser.h", "jq_test.c", "jv.c", "jv.h", "jv_alloc.c", "jv_alloc.h", "jv_aux.c", "jv_dtoa.c", "jv_dtoa.h", "jv_dtoa_tsd.c", "jv_dtoa_tsd.h", "jv_file.c", "jv_parse.c", "jv_print.c", "jv_private.h", "jv_thread.h", "jv_unicode.c", "jv_unicode.h", "jv_utf8_tables.h", "lexer.c", "lexer.h", "lexer.l", "libm.h", "linker.c", "linker.h", "locfile.c", "locfile.h", "main.c", "opcode_list.h", "parser.c", "parser.h", "parser.y", "util.c", "util.h"]
+
+[[batches]]
+position = 34
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_dtoa_tsd.h"
+cost_tokens = 19
+cum_tokens = 1588
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 35
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_utf8_tables.h"
+cost_tokens = 20
+cum_tokens = 1608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_utf8_tables.h"
+start = 2
+end = 2
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_private.h"
+cost_tokens = 30
+cum_tokens = 1638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_private.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 37
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jq_parser.h"
+cost_tokens = 37
+cum_tokens = 1675
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+start = 6
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 38
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/linker.h"
+cost_tokens = 46
+cum_tokens = 1721
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 39
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/exec_stack.h"
+cost_tokens = 48
+cum_tokens = 1769
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 53
+end = 53
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 40
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/builtin.h"
+cost_tokens = 52
+cum_tokens = 1821
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 25
+end = 25
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 41
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/util.h"
+cost_tokens = 59
+cum_tokens = 1880
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 16
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 42
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h", start_line: 44 })'
+descriptor = "c decl at src/util.h:44"
+cost_tokens = 13
+cum_tokens = 1893
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 44
+end = 45
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 43
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h" })'
+descriptor = "c includes in src/jv_alloc.h"
+cost_tokens = 10
+cum_tokens = 1903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 44
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h" })'
+descriptor = "c includes in src/locfile.h"
+cost_tokens = 10
+cum_tokens = 1913
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 45
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h" })'
+descriptor = "c includes in src/parser.h"
+cost_tokens = 11
+cum_tokens = 1924
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 46
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", start_line: 40 })'
+descriptor = "c decl at src/exec_stack.h:40"
+cost_tokens = 41
+cum_tokens = 1965
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 40
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 47
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h", start_line: 52 })'
+descriptor = "c decl at src/exec_stack.h:52"
+cost_tokens = 49
+cum_tokens = 2014
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 52
+end = 56
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 48
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/locfile.h"
+cost_tokens = 107
+cum_tokens = 2121
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 6
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 23
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 49
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", start_line: 6 })'
+descriptor = "c decl at src/locfile.h:6"
+cost_tokens = 15
+cum_tokens = 2136
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 6
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 50
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_alloc.h"
+cost_tokens = 131
+cum_tokens = 2267
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+start = 6
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 51
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq.h" })'
+descriptor = "c includes in src/jq.h"
+cost_tokens = 21
+cum_tokens = 2288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq.h"
+start = 4
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 52
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h" })'
+descriptor = "c includes in src/jq_parser.h"
+cost_tokens = 21
+cum_tokens = 2309
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_parser.h"
+start = 3
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 53
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h" })'
+descriptor = "c includes in src/util.h"
+cost_tokens = 21
+cum_tokens = 2330
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/util.h"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 54
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_unicode.h"
+cost_tokens = 147
+cum_tokens = 2477
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 10
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 55
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/bytecode.h"
+cost_tokens = 167
+cum_tokens = 2644
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 20
+end = 20
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 47
+end = 48
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 59
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 70
+end = 70
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 72
+end = 72
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 90
+end = 91
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 93
+end = 94
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 45
+end = 45
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 49
+end = 49
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 71
+end = 71
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 92
+end = 92
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 95
+end = 95
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 56
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 59 })'
+descriptor = "c decl at src/bytecode.h:59"
+cost_tokens = 35
+cum_tokens = 2679
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 59
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 57
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 32 })'
+descriptor = "c decl at src/bytecode.h:32"
+cost_tokens = 62
+cum_tokens = 2741
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 32
+end = 34
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 38
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 41
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 58
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_file.c"
+cost_tokens = 21
+cum_tokens = 2762
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 59
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c", start_line: 12 })'
+descriptor = "c decl at src/jv_file.c:12"
+cost_tokens = 0
+cum_tokens = 2762
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_file.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 60
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h", start_line: 12 })'
+descriptor = "c decl at src/locfile.h:12"
+cost_tokens = 77
+cum_tokens = 2839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.h"
+start = 12
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 61
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h" })'
+descriptor = "c includes in src/builtin.h"
+cost_tokens = 31
+cum_tokens = 2870
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 62
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv.h" })'
+descriptor = "c includes in src/jv.h"
+cost_tokens = 31
+cum_tokens = 2901
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv.h"
+start = 4
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 63
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_dtoa.h"
+cost_tokens = 206
+cum_tokens = 3107
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 11
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 17
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 20
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 64
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h", start_line: 6 })'
+descriptor = "c decl at src/jv_dtoa.h:6"
+cost_tokens = 32
+cum_tokens = 3139
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa.h"
+start = 6
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 65
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h" })'
+descriptor = "c includes in src/lexer.h"
+cost_tokens = 40
+cum_tokens = 3179
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 258
+end = 261
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 66
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h" })'
+descriptor = "c includes in src/bytecode.h"
+cost_tokens = 42
+cum_tokens = 3221
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 67
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h" })'
+descriptor = "c includes in src/compile.h"
+cost_tokens = 43
+cum_tokens = 3264
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 3
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 68
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 72 })'
+descriptor = "c decl at src/bytecode.h:72"
+cost_tokens = 112
+cum_tokens = 3376
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 72
+end = 74
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 76
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 79
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 82
+end = 83
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 87
+end = 88
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 69
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jq_test.c"
+cost_tokens = 36
+cum_tokens = 3412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 79
+end = 79
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 70
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", start_line: 21 })'
+descriptor = "c decl at src/jq_test.c:21"
+cost_tokens = 0
+cum_tokens = 3412
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 21
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 71
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c", start_line: 78 })'
+descriptor = "c decl at src/jq_test.c:78"
+cost_tokens = 14
+cum_tokens = 3426
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jq_test.c"
+start = 78
+end = 80
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 72
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 48 })'
+descriptor = "c decl at src/bytecode.h:48"
+cost_tokens = 123
+cum_tokens = 3549
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 48
+end = 57
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 73
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 2 })'
+descriptor = "c decl names surface #2 in src/lexer.h"
+cost_tokens = 82
+cum_tokens = 3631
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 518
+end = 518
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 520
+end = 520
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 522
+end = 522
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 519
+end = 519
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 521
+end = 521
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 523
+end = 523
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 74
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/parser.h"
+cost_tokens = 266
+cum_tokens = 3897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 53
+end = 54
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 126
+end = 146
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 55
+end = 55
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 75
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 126 })'
+descriptor = "c decl at src/parser.h:126"
+cost_tokens = 0
+cum_tokens = 3897
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 126
+end = 126
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 76
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 126 })'
+descriptor = "c decl doc at src/parser.h:126"
+cost_tokens = 10
+cum_tokens = 3907
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h", start_line: 20 })'
+descriptor = "c decl at src/bytecode.h:20"
+cost_tokens = 144
+cum_tokens = 4051
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/bytecode.h"
+start = 20
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 78
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 2 })'
+descriptor = "c decl names surface #2 in src/parser.h"
+cost_tokens = 96
+cum_tokens = 4147
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 171
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 211
+end = 211
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 212
+end = 212
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 79
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/compile.h"
+cost_tokens = 323
+cum_tokens = 4470
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 8
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 19
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 34
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 80
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", start_line: 12 })'
+descriptor = "c decl at src/compile.h:12"
+cost_tokens = 23
+cum_tokens = 4493
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 12
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 81
+key = 'C(Includes { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h" })'
+descriptor = "c includes in src/exec_stack.h"
+cost_tokens = 72
+cum_tokens = 4565
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/exec_stack.h"
+start = 3
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 82
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_dtoa_tsd.c"
+cost_tokens = 58
+cum_tokens = 4623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 22 })'
+descriptor = "c decl at src/jv_dtoa_tsd.c:22"
+cost_tokens = 0
+cum_tokens = 4623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 84
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 31 })'
+descriptor = "c decl at src/jv_dtoa_tsd.c:31"
+cost_tokens = 0
+cum_tokens = 4623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 85
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c", start_line: 39 })'
+descriptor = "c decl at src/jv_dtoa_tsd.c:39"
+cost_tokens = 0
+cum_tokens = 4623
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 39
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_dtoa_tsd.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 86
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h", start_line: 10 })'
+descriptor = "c decl at src/builtin.h:10"
+cost_tokens = 120
+cum_tokens = 4743
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/builtin.h"
+start = 10
+end = 21
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 87
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", start_line: 54 })'
+descriptor = "c decl at src/parser.h:54"
+cost_tokens = 142
+cum_tokens = 4885
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 54
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 88
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/linker.c"
+cost_tokens = 72
+cum_tokens = 4957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 28
+end = 28
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 409
+end = 409
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 435
+end = 435
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 24
+end = 24
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 410
+end = 410
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 436
+end = 436
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 89
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 409 })'
+descriptor = "c decl at src/linker.c:409"
+cost_tokens = 0
+cum_tokens = 4957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 409
+end = 409
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 410
+end = 410
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 90
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 435 })'
+descriptor = "c decl at src/linker.c:435"
+cost_tokens = 0
+cum_tokens = 4957
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 435
+end = 435
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 436
+end = 436
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 91
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 28 })'
+descriptor = "c decl at src/linker.c:28"
+cost_tokens = 24
+cum_tokens = 4981
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 28
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 92
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 23 })'
+descriptor = "c decl at src/linker.c:23"
+cost_tokens = 28
+cum_tokens = 5009
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 23
+end = 27
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 93
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 0 })'
+descriptor = "c decl names surface in src/lexer.h"
+cost_tokens = 455
+cum_tokens = 5464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 2
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 14
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 352
+end = 359
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 435
+end = 441
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 443
+end = 444
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 337
+end = 337
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 360
+end = 360
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 442
+end = 442
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 94
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 336 })'
+descriptor = "c decl at src/lexer.h:336"
+cost_tokens = 0
+cum_tokens = 5464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 336
+end = 336
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 95
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 352 })'
+descriptor = "c decl at src/lexer.h:352"
+cost_tokens = 0
+cum_tokens = 5464
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 352
+end = 352
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 96
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 336 })'
+descriptor = "c decl doc at src/lexer.h:336"
+cost_tokens = 16
+cum_tokens = 5480
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 335
+end = 335
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 97
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", start_line: 352 })'
+descriptor = "c decl doc at src/lexer.h:352"
+cost_tokens = 33
+cum_tokens = 5513
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 350
+end = 351
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 98
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/download" })'
+descriptor = "listing of 'docs/content/download'"
+cost_tokens = 4
+cum_tokens = 5517
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/download"
+entries = ["default.yml"]
+
+[[batches]]
+position = 99
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/tutorial" })'
+descriptor = "listing of 'docs/content/tutorial'"
+cost_tokens = 4
+cum_tokens = 5521
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/tutorial"
+entries = ["default.yml"]
+
+[[batches]]
+position = 100
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/css" })'
+descriptor = "listing of 'docs/public/css'"
+cost_tokens = 4
+cum_tokens = 5525
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/css"
+entries = ["style.css"]
+
+[[batches]]
+position = 101
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in src/parser.h"
+cost_tokens = 261
+cum_tokens = 5786
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 147
+end = 170
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 102
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.4" })'
+descriptor = "listing of 'sig/v1.4'"
+cost_tokens = 74
+cum_tokens = 5860
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/sig/v1.4"
+entries = ["jq-linux-x86.asc", "jq-linux-x86_64.asc", "jq-osx-x86.asc", "jq-osx-x86_64.asc", "jq-solaris11-32.asc", "jq-solaris11-64.asc", "jq-win32.exe.asc", "jq-win64.exe.asc", "sha256sum.txt"]
+
+[[batches]]
+position = 103
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/main.c"
+cost_tokens = 83
+cum_tokens = 5943
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 43
+end = 43
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 145
+end = 145
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 164
+end = 164
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 172
+end = 173
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 44
+end = 44
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 146
+end = 146
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 165
+end = 165
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/main.c"
+start = 174
+end = 174
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 104
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 7 })'
+descriptor = "README.md section #7"
+cost_tokens = 80
+cum_tokens = 6023
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 69
+end = 71
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 105
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual" })'
+descriptor = "listing of 'docs/content/manual'"
+cost_tokens = 43
+cum_tokens = 6066
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual"
+entries = ["dev", "manual.yml", "v1.3", "v1.4", "v1.5", "v1.6", "v1.7", "v1.8"]
+
+[[batches]]
+position = 106
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 3 })'
+descriptor = "README.md section #3"
+cost_tokens = 31
+cum_tokens = 6097
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 107
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/js" })'
+descriptor = "listing of 'docs/public/js'"
+cost_tokens = 5
+cum_tokens = 6102
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/public/js"
+entries = ["manual-search.js"]
+
+[[batches]]
+position = 108
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 8 })'
+descriptor = "README.md section #8"
+cost_tokens = 82
+cum_tokens = 6184
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 73
+end = 73
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 75
+end = 78
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 109
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_print.c"
+cost_tokens = 104
+cum_tokens = 6288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 24
+end = 26
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 31
+end = 31
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 36
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 27
+end = 27
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 110
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c", start_line: 40 })'
+descriptor = "c decl at src/jv_print.c:40"
+cost_tokens = 0
+cum_tokens = 6288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_print.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 111
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in src/compile.h"
+cost_tokens = 364
+cum_tokens = 6652
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 40
+end = 53
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 55
+end = 59
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 61
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 65
+end = 65
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 67
+end = 67
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 54
+end = 54
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 60
+end = 60
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/compile.h"
+start = 66
+end = 66
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 112
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", chunk_index: 0 })'
+descriptor = "python decl names surface in docs/build_manpage.py"
+cost_tokens = 104
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 244
+end = 244
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 247
+end = 247
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 251
+end = 251
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 23
+end = 23
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 204
+end = 204
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 209
+end = 209
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 214
+end = 214
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 113
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 15 })'
+descriptor = "python decl at docs/build_manpage.py:15"
+cost_tokens = 0
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 114
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 22 })'
+descriptor = "python decl at docs/build_manpage.py:22"
+cost_tokens = 0
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 22
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 115
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 203 })'
+descriptor = "python decl at docs/build_manpage.py:203"
+cost_tokens = 0
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 203
+end = 203
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 116
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 208 })'
+descriptor = "python decl at docs/build_manpage.py:208"
+cost_tokens = 0
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 208
+end = 208
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 117
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 213 })'
+descriptor = "python decl at docs/build_manpage.py:213"
+cost_tokens = 0
+cum_tokens = 6756
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 213
+end = 213
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 118
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 247 })'
+descriptor = "python decl at docs/build_manpage.py:247"
+cost_tokens = 15
+cum_tokens = 6771
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 247
+end = 248
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 119
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 203, body_start_line: 204 })'
+descriptor = "python decl body at docs/build_manpage.py:203 body 204"
+cost_tokens = 21
+cum_tokens = 6792
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 204
+end = 205
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 120
+key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py", start_line: 208, body_start_line: 209 })'
+descriptor = "python decl body at docs/build_manpage.py:208 body 209"
+cost_tokens = 40
+cum_tokens = 6832
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/build_manpage.py"
+start = 209
+end = 210
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 121
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates/shared" })'
+descriptor = "listing of 'docs/templates/shared'"
+cost_tokens = 21
+cum_tokens = 6853
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/templates/shared"
+entries = ["_footer.html.j2", "_head.html.j2", "_navbar.html.j2"]
+
+[[batches]]
+position = 122
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/locfile.c"
+cost_tokens = 119
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 123
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 12 })'
+descriptor = "c decl at src/locfile.c:12"
+cost_tokens = 0
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 124
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 37 })'
+descriptor = "c decl at src/locfile.c:37"
+cost_tokens = 0
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 37
+end = 37
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 38
+end = 38
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 125
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 41 })'
+descriptor = "c decl at src/locfile.c:41"
+cost_tokens = 0
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 41
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 126
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 50 })'
+descriptor = "c decl at src/locfile.c:50"
+cost_tokens = 0
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 50
+end = 50
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 51
+end = 51
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 127
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 63 })'
+descriptor = "c decl at src/locfile.c:63"
+cost_tokens = 0
+cum_tokens = 6972
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 63
+end = 63
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 64
+end = 64
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 128
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c", start_line: 37 })'
+descriptor = "c decl body at src/locfile.c:37"
+cost_tokens = 16
+cum_tokens = 6988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/locfile.c"
+start = 38
+end = 39
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 129
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md", section_index: 0 })'
+descriptor = "docs/README.md section #0"
+cost_tokens = 300
+cum_tokens = 7288
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 7
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 12
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 16
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 19
+end = 22
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/README.md"
+start = 24
+end = 25
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 5 })'
+descriptor = "README.md section #5"
+cost_tokens = 39
+cum_tokens = 7327
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 36
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 38
+end = 41
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 131
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/dev" })'
+descriptor = "listing of 'docs/content/manual/dev'"
+cost_tokens = 4
+cum_tokens = 7331
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/dev"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 132
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.3" })'
+descriptor = "listing of 'docs/content/manual/v1.3'"
+cost_tokens = 4
+cum_tokens = 7335
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.3"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 133
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.4" })'
+descriptor = "listing of 'docs/content/manual/v1.4'"
+cost_tokens = 4
+cum_tokens = 7339
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.4"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 134
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.5" })'
+descriptor = "listing of 'docs/content/manual/v1.5'"
+cost_tokens = 4
+cum_tokens = 7343
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.5"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 135
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.6" })'
+descriptor = "listing of 'docs/content/manual/v1.6'"
+cost_tokens = 4
+cum_tokens = 7347
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.6"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 136
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.7" })'
+descriptor = "listing of 'docs/content/manual/v1.7'"
+cost_tokens = 4
+cum_tokens = 7351
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.7"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 137
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.8" })'
+descriptor = "listing of 'docs/content/manual/v1.8'"
+cost_tokens = 4
+cum_tokens = 7355
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/docs/content/manual/v1.8"
+entries = ["manual.yml"]
+
+[[batches]]
+position = 138
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c", start_line: 409 })'
+descriptor = "c decl doc at src/linker.c:409"
+cost_tokens = 33
+cum_tokens = 7388
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/linker.c"
+start = 407
+end = 408
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 139
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h" })'
+descriptor = "c header banner in src/parser.h"
+cost_tokens = 515
+cum_tokens = 7903
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 8
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 13
+end = 16
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 21
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 31
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/parser.h"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 140
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h", chunk_index: 1 })'
+descriptor = "c decl names surface #1 in src/lexer.h"
+cost_tokens = 519
+cum_tokens = 8422
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 445
+end = 445
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 447
+end = 449
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 456
+end = 456
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 477
+end = 477
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 479
+end = 479
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 481
+end = 481
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 486
+end = 486
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 488
+end = 488
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 490
+end = 490
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 492
+end = 492
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 494
+end = 494
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 496
+end = 496
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 498
+end = 498
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 500
+end = 500
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 502
+end = 502
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 504
+end = 504
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 506
+end = 506
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 508
+end = 508
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 510
+end = 510
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 512
+end = 512
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 514
+end = 514
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 516
+end = 516
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 446
+end = 446
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 450
+end = 450
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 457
+end = 457
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 478
+end = 478
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 480
+end = 480
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 482
+end = 482
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 487
+end = 487
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 489
+end = 489
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 491
+end = 491
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 493
+end = 493
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 495
+end = 495
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 497
+end = 497
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 499
+end = 499
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 501
+end = 501
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 503
+end = 503
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 505
+end = 505
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 507
+end = 507
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 509
+end = 509
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 511
+end = 511
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 513
+end = 513
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 515
+end = 515
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/lexer.h"
+start = 517
+end = 517
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 141
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_unicode.c"
+cost_tokens = 161
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 142
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 11 })'
+descriptor = "c decl at src/jv_unicode.c:11"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 143
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 29 })'
+descriptor = "c decl at src/jv_unicode.c:29"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 29
+end = 29
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 144
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 77 })'
+descriptor = "c decl at src/jv_unicode.c:77"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 145
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 86 })'
+descriptor = "c decl at src/jv_unicode.c:86"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 86
+end = 86
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 87
+end = 87
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 146
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 93 })'
+descriptor = "c decl at src/jv_unicode.c:93"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 93
+end = 93
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 94
+end = 94
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 147
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 100 })'
+descriptor = "c decl at src/jv_unicode.c:100"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 100
+end = 100
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 101
+end = 101
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 148
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 124 })'
+descriptor = "c decl at src/jv_unicode.c:124"
+cost_tokens = 0
+cum_tokens = 8583
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 124
+end = 124
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 125
+end = 125
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 149
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 86 })'
+descriptor = "c decl doc at src/jv_unicode.c:86"
+cost_tokens = 19
+cum_tokens = 8602
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 85
+end = 85
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 150
+key = 'C(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c", start_line: 124 })'
+descriptor = "c decl doc at src/jv_unicode.c:124"
+cost_tokens = 36
+cum_tokens = 8638
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_unicode.c"
+start = 122
+end = 123
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 151
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/jq/README.md", section_index: 2 })'
+descriptor = "README.md section #2"
+cost_tokens = 27
+cum_tokens = 8665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/README.md"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 152
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", chunk_index: 0 })'
+descriptor = "c decl names surface in src/jv_alloc.c"
+cost_tokens = 174
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 153
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 141 })'
+descriptor = "c decl at src/jv_alloc.c:141"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 141
+end = 141
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 142
+end = 142
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 154
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 149 })'
+descriptor = "c decl at src/jv_alloc.c:149"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 149
+end = 149
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 155
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 153 })'
+descriptor = "c decl at src/jv_alloc.c:153"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 153
+end = 153
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 154
+end = 154
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 156
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 162 })'
+descriptor = "c decl at src/jv_alloc.c:162"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 162
+end = 162
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 163
+end = 163
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 157
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 167 })'
+descriptor = "c decl at src/jv_alloc.c:167"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 167
+end = 167
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 168
+end = 168
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 158
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 175 })'
+descriptor = "c decl at src/jv_alloc.c:175"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 175
+end = 175
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 159
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 179 })'
+descriptor = "c decl at src/jv_alloc.c:179"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 179
+end = 179
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 160
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 183 })'
+descriptor = "c decl at src/jv_alloc.c:183"
+cost_tokens = 0
+cum_tokens = 8839
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 183
+end = 183
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 184
+end = 184
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 161
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 179 })'
+descriptor = "c decl body at src/jv_alloc.c:179"
+cost_tokens = 6
+cum_tokens = 8845
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 180
+end = 180
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 162
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 149 })'
+descriptor = "c decl body at src/jv_alloc.c:149"
+cost_tokens = 7
+cum_tokens = 8852
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 150
+end = 150
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 163
+key = 'C(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 175 })'
+descriptor = "c decl body at src/jv_alloc.c:175"
+cost_tokens = 7
+cum_tokens = 8859
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 176
+end = 176
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 164
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c", start_line: 7 })'
+descriptor = "c decl at src/jv_alloc.c:7"
+cost_tokens = 25
+cum_tokens = 8884
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/src/jv_alloc.c"
+start = 7
+end = 10
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 165
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber" })'
+descriptor = "listing of 'vendor/decNumber'"
+cost_tokens = 167
+cum_tokens = 9051
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber"
+entries = ["ICU-license.html", "decBasic.c", "decCommon.c", "decContext.c", "decContext.h", "decDPD.h", "decDouble.c", "decDouble.h", "decNumber.c", "decNumber.h", "decNumberLocal.h", "decPacked.c", "decPacked.h", "decQuad.c", "decQuad.h", "decSingle.c", "decSingle.h", "decimal128.c", "decimal128.h", "decimal32.c", "decimal32.h", "decimal64.c", "decimal64.h", "decnumber.pdf", "example1.c", "example2.c", "example3.c", "example4.c", "example5.c", "example6.c", "example7.c", "example8.c", "readme.txt"]
+
+[[batches]]
+position = 166
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example5.c"
+cost_tokens = 16
+cum_tokens = 9067
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 167
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c", start_line: 13 })'
+descriptor = "c decl at vendor/decNumber/example5.c:13"
+cost_tokens = 0
+cum_tokens = 9067
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c"
+start = 13
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example5.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 168
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example6.c"
+cost_tokens = 16
+cum_tokens = 9083
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 169
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c", start_line: 14 })'
+descriptor = "c decl at vendor/decNumber/example6.c:14"
+cost_tokens = 0
+cum_tokens = 9083
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c"
+start = 14
+end = 14
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example6.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 170
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example7.c"
+cost_tokens = 16
+cum_tokens = 9099
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 171
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c", start_line: 15 })'
+descriptor = "c decl at vendor/decNumber/example7.c:15"
+cost_tokens = 0
+cum_tokens = 9099
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example7.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 172
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example8.c"
+cost_tokens = 16
+cum_tokens = 9115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 173
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c", start_line: 17 })'
+descriptor = "c decl at vendor/decNumber/example8.c:17"
+cost_tokens = 0
+cum_tokens = 9115
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c"
+start = 17
+end = 17
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example8.c"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 174
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example1.c"
+cost_tokens = 41
+cum_tokens = 9156
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 175
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c", start_line: 15 })'
+descriptor = "c decl at vendor/decNumber/example1.c:15"
+cost_tokens = 0
+cum_tokens = 9156
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example1.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 176
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example2.c"
+cost_tokens = 41
+cum_tokens = 9197
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 177
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c", start_line: 15 })'
+descriptor = "c decl at vendor/decNumber/example2.c:15"
+cost_tokens = 0
+cum_tokens = 9197
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example2.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 178
+key = 'C(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c", chunk_index: 0 })'
+descriptor = "c decl names surface in vendor/decNumber/example3.c"
+cost_tokens = 41
+cum_tokens = 9238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 179
+key = 'C(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c", start_line: 15 })'
+descriptor = "c decl at vendor/decNumber/example3.c:15"
+cost_tokens = 0
+cum_tokens = 9238
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 15
+end = 15
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/example3.c"
+start = 16
+end = 16
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 180
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/decNumber.h" })'
+descriptor = "c header banner in vendor/decNumber/decNumber.h"
+cost_tokens = 273
+cum_tokens = 9511
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/decNumber.h"
+start = 1
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 181
+key = 'C(HeaderBanner { file: "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/decPacked.h" })'
+descriptor = "c header banner in vendor/decNumber/decPacked.h"
+cost_tokens = 273
+cum_tokens = 9784
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/jq/vendor/decNumber/decPacked.h"
+start = 1
+end = 18
+
+[batches.content.spans.render]
+kind = "full"

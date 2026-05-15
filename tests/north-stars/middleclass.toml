@@ -1,0 +1,689 @@
+fixture = "middleclass"
+revision_pin = "359f0e27"
+summary = """
+middleclass is a single-file Lua OOP library (~194 lines in
+`middleclass.lua`) plus busted specs, luarocks rockspecs, a tiny perf
+harness, and migration docs. The whole library is one module:
+`require 'middleclass'` returns a callable table whose `class(name, super?)`
+constructor builds a class table with a `DefaultMixin` of instance + static
+methods (`initialize`, `isInstanceOf`, `allocate`, `new`, `subclass`,
+`subclassed`, `isSubclassOf`, `include`). Subclassing copies the instance
+method table down; mixins copy the mixin's keys; metamethods are propagated
+through a custom `__newindex` that intercepts method assignment and walks
+the `subclasses` weak set. Queries the snapshot should serve: "how do I
+use this library?" (Quick Look + DefaultMixin signatures), "how does
+inheritance/mixins/metamethods actually work?" (the propagation helpers
+plus the spec files), "what changed between versions?" (CHANGELOG +
+UPDATING), and the usual project-meta queries (license, deps, Lua
+versions, rockspec layout).
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — Orientation: top-level layout + crate identity + README lede.
+# Small, broadly useful for any first query.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Top-level fixture listing"
+justification = """
+First batch: enumerate every immediate child of the fixture root.
+Anchors every later span and tells the agent what's even *available*
+(single source file, spec/, performance/, rockspecs/, two .md docs,
+travis, license). Listing only some entries would be the canonical
+catastrophic omission for a tiny repo like this.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "middleclass.lua identity header"
+justification = """
+The `_VERSION` / `_DESCRIPTION` / `_URL` constants at the top of the
+single source file. Names the crate, version, what it is, and where
+it lives — the cheapest possible answer to "what is this library?"
+and "what version is pinned?".
+"""
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 1, end = 4, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "README lede"
+justification = """
+One-line description from the README: "A simple OOP library for Lua.
+It has inheritance, metamethods (operators), class variables and weak
+mixin support." Most economical semantic framing of the library's
+feature set.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 7, end = 7, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 2 — Public-API surface (location batches; catastrophic-omission hedges).
+# Cheap "what exists?" listings before any sizeable bodies.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "spec/ directory listing"
+justification = """
+Every spec file by name. The agent needs to know there are split
+metamethod specs for Lua 5.2 and 5.3, plus per-feature specs
+(class/classes/instances/default_methods/mixins). Without this an
+agent searching for behavior tests would miss files.
+"""
+content = { kind = "fs", groups = [
+  { parent = "spec", entries = "all" },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "rockspecs/ directory listing"
+justification = """
+All six rockspec versions (3.0, 3.1, 3.2, 4.0, 4.1, 4.1.1). Tells the
+agent the release history without needing to grep, and pairs with
+the CHANGELOG. Showing some-but-not-all here would mislead.
+"""
+content = { kind = "fs", groups = [
+  { parent = "rockspecs", entries = "all" },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "Internal helper fn signatures in middleclass.lua"
+justification = """
+Names of every local helper function defined above `DefaultMixin`:
+`_createIndexWrapper`, `_propagateInstanceMethod`,
+`_declareInstanceMethod`, `_tostring`, `_call`, `_createClass`,
+`_includeMixin`. Each truncated at the opening paren so only the
+name + line number is shown. Canonical catastrophic-omission hedge —
+naming some but not all helpers would let the agent assume the
+unlisted ones don't exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 31, end = 31, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 57, end = 57, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 68, end = 68, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 78, end = 78, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 79, end = 79, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 81, end = 81, render = { kind = "truncated", pattern = "^[^(]+" } },
+  { path = "middleclass.lua", start = 109, end = 109, render = { kind = "truncated", pattern = "^[^(]+" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "DefaultMixin instance + static method names"
+justification = """
+The `DefaultMixin` table at line 124. Lists every method available on
+every class created via `class(name)` — `__tostring`, `initialize`,
+`isInstanceOf` (instance), plus the `static` sub-table entries
+`allocate`, `new`, `subclass`, `subclassed`, `isSubclassOf`, `include`.
+This is *the* public API. Truncated at `=` so only the key is shown.
+"""
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 124, end = 124, render = { kind = "full" } },
+  { path = "middleclass.lua", start = 125, end = 125, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 127, end = 127, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 129, end = 129, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 138, end = 138, render = { kind = "full" } },
+  { path = "middleclass.lua", start = 139, end = 139, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 144, end = 144, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 151, end = 151, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 170, end = 170, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 172, end = 172, render = { kind = "truncated", pattern = "^[^=]+" } },
+  { path = "middleclass.lua", start = 178, end = 178, render = { kind = "truncated", pattern = "^[^=]+" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "Public entry point: middleclass.class + module export"
+justification = """
+The `function middleclass.class(name, super)` definition (lines
+186-189), the `setmetatable(middleclass, {__call=...})` line (191)
+that makes `class('Foo')` also work, and the trailing `return
+middleclass`. This is *the* function users call. Resolves how
+subclassing dispatches without further reads.
+"""
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 186, end = 193, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "README section headings"
+justification = """
+The seven section titles in README.md (Quick Look, Documentation,
+Installation, Specs, Performance tests, License). Cheap H1-locations
+batch that tells the agent what's covered in the README without
+reproducing the bodies; pairs with 1.3 (lede) and 3.x (Quick Look).
+Without this the agent doesn't know there's a "Performance tests" or
+"Specs" section to look at.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 9, end = 9, render = { kind = "full" } },
+  { path = "README.md", start = 38, end = 38, render = { kind = "full" } },
+  { path = "README.md", start = 47, end = 47, render = { kind = "full" } },
+  { path = "README.md", start = 56, end = 56, render = { kind = "full" } },
+  { path = "README.md", start = 66, end = 66, render = { kind = "full" } },
+  { path = "README.md", start = 75, end = 75, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 3 — Quick Look usage example.
+# Concrete usage, in two pieces so each piece is within the growth envelope.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "Quick Look example, part 1 (basic class + static)"
+justification = """
+First half of README Quick Look: `require`, `class('Fruit')`,
+`initialize`, `static.sweetness_threshold`, an instance method using
+`Fruit.static.x`. Zero-follow-up answer for "how do I declare a class
+with state and a method?".
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 12, end = 25, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "Quick Look example, part 2 (subclassing + super)"
+justification = """
+Second half: `class('Lemon', Fruit)` for subclassing, `Lemon:initialize`
+calling `Fruit.initialize(self, 1)` to invoke superclass init, then
+`Lemon:new()` / `lemon:isSweet()`. Zero-follow-up for "how do I subclass
+and call super?".
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 27, end = 36, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 4 — DefaultMixin method bodies (full text).
+# These are short and define the entire public behavior of a class table —
+# `new`, `allocate`, `isSubclassOf`, `include`, `isInstanceOf`, `__tostring`,
+# `initialize`. Each is ranked individually so smaller budgets can fit one
+# without all. Predecessor on 2.4 since we're filling in lines whose names
+# we already showed.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "Default method: allocate (signature + body)"
+justification = """
+`allocate(self)` — sets the instance's metatable to the class's
+`__instanceDict` so method lookup goes through inheritance. Two-liner;
+overriding 2.4's truncated key line at 139. Answers "how is an instance
+made bare-bones?".
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 139, end = 142, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "Default method: new (signature + body)"
+justification = """
+`new(self, ...)` — the most-invoked function in the library. Shows
+that `Class:new(...)` allocates, calls `initialize`, and returns the
+instance. Overrides 2.4's line 144.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 144, end = 149, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "Default method: isInstanceOf body"
+justification = """
+The instance-side `isInstanceOf(self, aClass)` — checks `self.class ==
+aClass` or walks the class chain via `isSubclassOf`. The exact predicate
+matters for users; CHANGELOG 4.1.0/4.1.1 specifically called out
+behavior changes here.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 129, end = 136, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "Default method: isSubclassOf body"
+justification = """
+`isSubclassOf(self, other)` — recursively walks `self.super`. Short,
+high-leverage for "does subclass check work transitively?" queries.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 172, end = 176, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "Default method: include body + initialize/__tostring/subclassed"
+justification = """
+The remaining short DefaultMixin bodies: `include(self, ...)` (loops
+over varargs calling `_includeMixin`), the trivial `subclassed` hook,
+the `initialize` no-op, and the `__tostring` for instances. Grouping
+the short ones since each alone is too small for its own batch.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 125, end = 125, render = { kind = "full" } },
+  { path = "middleclass.lua", start = 127, end = 127, render = { kind = "full" } },
+  { path = "middleclass.lua", start = 170, end = 170, render = { kind = "full" } },
+  { path = "middleclass.lua", start = 178, end = 182, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "Default method: subclass body"
+justification = """
+`subclass(self, name)` — the longest DefaultMixin static. Calls
+`_createClass(name, self)`, then iterates `self.__instanceDict` to
+propagate every instance method to the subclass, sets up the
+`initialize` delegation, registers in `self.subclasses`, calls the
+`subclassed` hook. Reading this gives the agent the whole subclassing
+algorithm in one place.
+"""
+predecessor = "2.4"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 151, end = 168, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 5 — Class-construction & method-propagation internals.
+# These are the *how* behind tier 4's *what*. Order: _createClass first
+# (it's what every class is), then _includeMixin, then the propagation
+# helpers that drive metamethod inheritance.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "_createClass body"
+justification = """
+The heart of the library: builds the class table with `name`, `super`,
+`static`, `__instanceDict`, `__declaredMethods`, weak `subclasses` set;
+wires `static`'s `__index` to fall back through super; sets the class
+table's metatable so `__index = static`, `__call = _call` (lets
+`Class()` work like `Class:new()`), `__newindex = _declareInstanceMethod`
+(this is what makes `function Class:foo() … end` trigger propagation).
+The single most important function for understanding class internals.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 81, end = 107, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "_includeMixin body"
+justification = """
+Copies non-"included"/non-"static" mixin keys onto the class, copies
+`mixin.static` keys onto the class's static, calls `mixin:included(class)`
+if present. Answers all mixin semantics questions. Used by both
+`include` and the `middleclass.class` entry point to install
+`DefaultMixin` on a root class.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 109, end = 122, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "_propagateInstanceMethod + _declareInstanceMethod"
+justification = """
+The pair that drives method inheritance: `_declareInstanceMethod` is
+the class's `__newindex`, intercepting `Class.foo = fn`; if the key is
+`__index` it wraps `fn` via `_createIndexWrapper`; then
+`_propagateInstanceMethod` writes into `__instanceDict` and recurses
+into every subclass that hasn't shadowed the name. This is the
+mechanism that makes runtime method updates show up on existing
+subclasses — a frequently misunderstood behavior the metamethods spec
+explicitly tests.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 57, end = 76, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.4"
+descriptor = "_createIndexWrapper body"
+justification = """
+Builds the `__index` wrapper used when a class sets a custom `__index`
+function or table. The three branches (nil/function/table) define
+which `__index` setups are supported on classes — load-bearing for the
+"Custom __index and __newindex" feature added in 4.0.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 31, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.5"
+descriptor = "_tostring + _call helpers"
+justification = """
+The two one-liners that back the class metatable: `_tostring(self)`
+returns "class <name>" and `_call(self, ...)` returns `self:new(...)`.
+Tiny but completes the picture from 5.1's `setmetatable(aClass, …)`.
+"""
+predecessor = "2.3"
+content = { kind = "lines", spans = [
+  { path = "middleclass.lua", start = 78, end = 79, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 6 — Spec content (behavior overview + per-feature detail).
+# Spec describe/it headings are dense semantic labels — listing them is a
+# very cheap way to give the agent a behavior map. Order: heading listings
+# first (cheap + broad), then small full specs, then larger specs in
+# rough order of query-frequency.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "Top-level describe titles across all spec files"
+justification = """
+The outer `describe(...)` titles in each spec file — "class()",
+"A Class", "An instance", "Default methods", "A Mixin", "Metamethods",
+"Lua 5.2 Metamethods", "Lua 5.3 Metamethods". A behavior map for the
+whole library; lets the agent jump straight to the right spec for any
+"is X tested? where?" query.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "spec/class_spec.lua", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/classes_spec.lua", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/instances_spec.lua", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/default_methods_spec.lua", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/mixins_spec.lua", start = 3, end = 3, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 19, end = 19, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_2.lua", start = 8, end = 8, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 8, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.2"
+descriptor = "Supported metamethod list (it() lines, Lua 5.1 baseline)"
+justification = """
+Every "implements __X" test title from `metamethods_spec.lua`'s
+"Custom Metamethods" describe — the canonical list of which Lua
+metamethods middleclass supports on the 5.1 baseline (__tostring, __eq,
+__lt, __le, __add, __sub, __div, __concat, __call, __pow, __mul,
+__metatable, __mode). High-leverage catastrophic-omission hedge: a
+partial list would let the agent assume an unlisted metamethod isn't
+supported.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 49, end = 49, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 53, end = 53, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 57, end = 57, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 61, end = 61, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 65, end = 65, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 69, end = 69, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 73, end = 73, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 77, end = 77, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 81, end = 81, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 85, end = 85, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 89, end = 89, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 93, end = 93, render = { kind = "full" } },
+  { path = "spec/metamethods_spec.lua", start = 97, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.3"
+descriptor = "Lua 5.2 + 5.3 specific metamethod test titles"
+justification = """
+The extra metamethods supported only when running on Lua 5.2
+(__len, __pairs, __ipairs) or Lua 5.3 (__gc, __band, __bor, __bxor,
+__shl, __shr, __bnot). Pair this with 6.2 and the agent has the full
+metamethod-support matrix.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_lua_5_2.lua", start = 36, end = 36, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_2.lua", start = 40, end = 40, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_2.lua", start = 48, end = 48, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 35, end = 35, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 42, end = 42, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 46, end = 46, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 50, end = 50, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 54, end = 54, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 58, end = 58, render = { kind = "full" } },
+  { path = "spec/metamethods_lua_5_3.lua", start = 62, end = 62, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.4"
+descriptor = "Metamethod compatibility detection (lua 5.2/5.3 dispatch)"
+justification = """
+Top of `metamethods_spec.lua`: the `is_lua_5_2_compatible` /
+`is_lua_5_3_compatible` checks and the `require 'spec/metamethods_lua_5_2'`
+/ `'spec.metamethods_lua_5_3'` dispatch. Explains *why* there are three
+metamethod spec files and how they're glued together — a non-obvious
+piece of the layout.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 3, end = 17, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.5"
+descriptor = "Custom metamethod setup example (Vector class)"
+justification = """
+The `before_each` Vector class in `metamethods_spec` that defines
+every supported operator metamethod — concrete reference implementation
+for "how do I define operator overloads on a class?". Shows the
+`function Vector.__op(a, b) ... end` pattern (note: dot, not colon).
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 22, end = 46, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.6"
+descriptor = "Mixin spec — included hook + static + override semantics"
+justification = """
+The full mixins_spec covers: `included(theClass)` hook, function
+copying (excluding "included"/"static"), inheritance through
+subclasses, override precedence (class > mixin, subclass > class >
+mixin), and `Mixin.static` table support. Whole file is only 53 lines
+and is the canonical answer to all mixin-semantics queries.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/mixins_spec.lua", start = 5, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.7"
+descriptor = "Metamethod inheritance update semantics"
+justification = """
+The "Updates" describe block under "Inherited Metamethods". Tests that
+spell out the (subtle!) interaction when a subclass overrides a
+metamethod, when the parent updates it, when both override, and when
+the override is reverted to nil. The most likely source of
+bugs/surprises for users of the library.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 188, end = 210, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.8"
+descriptor = "Custom __index/__newindex with fallback tables"
+justification = """
+The "Custom __index and __newindex / Tables" describe — class with
+`__index = fallback_table`, `__newindex = fallback_table`. The
+simpler half of the 4.0+ feature. Powers "how do I make a class
+delegate field lookups to another table?".
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 214, end = 245, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.9"
+descriptor = "Custom __index/__newindex with function dispatchers"
+justification = """
+The "Custom __index and __newindex / Functions" describe — Namespace
+pattern with getter/setter dispatch (Rectangle with scaleGetter,
+scaleSetter, areaGetter). The richer half: virtual fields driven by
+naming convention. Also covers updating inherited __index at runtime.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/metamethods_spec.lua", start = 247, end = 298, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.10"
+descriptor = "class_spec full content (entry-point error/name/super behavior)"
+justification = """
+The whole `class()` constructor spec — what happens with no params
+(error), with a name (class with that name and nil super), with name +
+super (class with that name and the supplied super). Short file.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/class_spec.lua", start = 5, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.11"
+descriptor = "classes_spec — default class behavior (name/tostring/()/include/subclass)"
+justification = """
+First half of classes_spec: the "Default stuff" describe — class.name,
+tostring(class) == "class Name", calling `AClass()` is the same as
+`AClass:new()`, `include` argument validation, `subclass` argument
+validation, the `subclassed` hook getting invoked, and the
+`subclasses` weak set being populated.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/classes_spec.lua", start = 5, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.12"
+descriptor = "classes_spec — static attribute/method inheritance + override"
+justification = """
+Second half of classes_spec: "attributes" and "methods" describes
+covering `A.static.foo = 'foo'`-style class variables and
+`function A.static:foo()`-style static methods — availability on the
+class, availability on subclasses, and overriding-without-affecting-
+superclasses semantics.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/classes_spec.lua", start = 84, end = 137, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.13"
+descriptor = "instances_spec full content"
+justification = """
+Behavior of instances: attribute initialization via own / super
+`initialize`; method dispatch (regular, inherited, overridden). Short
+enough to include in full; canonical "how do I customize init / call
+super.init?" reference alongside Quick Look part 2.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/instances_spec.lua", start = 5, end = 64, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "6.14"
+descriptor = "isInstanceOf — primitive-safety regression tests"
+justification = """
+The "isInstanceOf / primitives" sub-block in `default_methods_spec` —
+the specific tests that pin down the CHANGELOG 4.1.1 fix (don't error
+on primitive `self` or primitive `aClass`; both forms `o:isInstanceOf(p)`
+and `Object.isInstanceOf(p, Object)` return falsy without throwing).
+Narrower than the full isInstanceOf block since the inheritance side
+is already covered by 4.3 + Quick Look.
+"""
+content = { kind = "lines", spans = [
+  { path = "spec/default_methods_spec.lua", start = 122, end = 148, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------------------
+# Tier 7 — Migration, changelog, packaging, .travis, run-instructions.
+# Project-meta queries: "what changed?", "what versions of Lua?",
+# "how do I install / package / run specs?".
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "CHANGELOG (full)"
+justification = """
+The whole CHANGELOG — 4.1.1 → 2.0 release notes. Already short (55
+lines). Powers "what changed in version X?", "when was Y added/removed?",
+and "are there known bug fixes around isInstanceOf?" queries directly.
+"""
+content = { kind = "lines", spans = [
+  { path = "CHANGELOG.md", start = 1, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.2"
+descriptor = "UPDATING — 3.x → 4.x migration only"
+justification = """
+The 3→4 section of the migration guide: removal of global `Object`,
+`__index` metamethod support, `:implements` removal,
+`__instanceDict` → `__index` for libraries that touched internals.
+The most likely migration query in 2026 (4.x is the current line).
+The 2→3 section is dropped — version 2 hasn't been current in a long
+time; if needed, the CHANGELOG entry pointing to it is enough.
+"""
+content = { kind = "lines", spans = [
+  { path = "UPDATING.md", start = 1, end = 19, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.3"
+descriptor = "Rockspec (4.1.1 — current) content"
+justification = """
+The pinned rockspec — package/version/source/description, deps
+("lua >= 5.1"), build (builtin, single module pointed at
+middleclass.lua). Answers "what are the install/build deps?" and
+"how is this distributed?" without follow-up.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "rockspecs/middleclass-4.1.1-0.rockspec", start = 1, end = 21, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.4"
+descriptor = "Run instructions — busted (specs) + lua performance/run.lua (bench)"
+justification = """
+The exact shell commands from the README for running specs (`busted`
+in the spec folder) and the perf suite (`lua performance/run.lua`).
+Pairs with 2.6 (section names) and 7.5 (.travis) for "how do I run X?"
+queries.
+"""
+predecessor = "2.6"
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 59, end = 64, render = { kind = "full" } },
+  { path = "README.md", start = 69, end = 73, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "7.5"
+descriptor = ".travis.yml — supported Lua versions + CI commands"
+justification = """
+Tests run on lua 5.1/5.2/5.3 + luajit 2.0/2.1, via luacheck + busted
+with luacov coverage. Confirms the Lua-version support matrix and
+shows the canonical CI invocation
+(`luacheck --no-unused-args --std max+busted *.lua spec` and
+`busted --verbose --coverage`).
+"""
+content = { kind = "lines", spans = [
+  { path = ".travis.yml", start = 1, end = 36, render = { kind = "full" } },
+] }

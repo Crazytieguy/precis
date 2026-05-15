@@ -1,0 +1,257 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.editorconfig
+    1→# https://editorconfig.org
+    2→root = true
+    4→[*]
+    5→charset = utf-8
+    6→insert_final_newline = true
+    7→trim_trailing_whitespace = true
+    9→[{*.js,*.json,*.yml}]
+    10→indent_size = 2
+    11→indent_style = space
+.eslintignore
+.eslintrc.yml
+.github/
+.gitignore
+.npmrc
+History.md
+LICENSE
+Readme.md
+    3→**Fast, unopinionated, minimalist web framework for [Node.js](https://nodejs.org).**
+    7→## Table of contents
+    9→- [Table of contents](#table-of-contents)
+    10→- [Installation](#installation)
+    11→- [Features](#features)
+    12→- [Docs \& Community](#docs--community)
+    13→- [Quick Start](#quick-start)
+    14→- [Philosophy](#philosophy)
+    15→- [Examples](#examples)
+    16→- [Contributing](#contributing)
+    17→  - [Security Issues](#security-issues)
+    18→  - [Running Tests](#running-tests)
+    19→- [Current project team members](#current-project-team-members)
+    20→  - [TC (Technical Committee)](#tc-technical-committee)
+    21→    - [TC emeriti members](#tc-emeriti-members)
+    22→  - [Triagers](#triagers)
+    23→    - [Emeritus Triagers](#emeritus-triagers)
+    24→- [License](#license)
+    27→[![NPM Version][npm-version-image]][npm-url]
+    28→[![NPM Downloads][npm-downloads-image]][npm-downloads-url]
+    29→[![Linux Build][github-actions-ci-image]][github-actions-ci-url]
+    30→[![Test Coverage][coveralls-image]][coveralls-url]
+    31→[![OpenSSF Scorecard Badge][ossf-scorecard-badge]][ossf-scorecard-visualizer]
+    34→```js
+    35→import express from 'express'
+    37→const app = express()
+    39→app.get('/', (req, res) => {
+    40→  res.send('Hello World')
+    41→})
+    43→app.listen(3000, () => {
+    44→  console.log('Server is running on http://localhost:3000')
+    45→})
+    46→```
+    48→## Installation
+    …
+    69→## Features
+    …
+    71→  * Robust routing
+    72→  * Focus on high performance
+    73→  * Super-high test coverage
+    74→  * HTTP helpers (redirection, caching, etc)
+    75→  * View system supporting 14+ template engines
+    76→  * Content negotiation
+    77→  * Executable for generating applications quickly
+    79→## Docs & Community
+    …
+    81→  * [Website and Documentation](https://expressjs.com/) - [[website repo](https://github.com/expressjs/expressjs.com)]
+    82→  * [GitHub Organization](https://github.com/expressjs) for Official Middleware & Modules
+    83→  * [Github Discussions](https://github.com/expressjs/discussions) for discussion on the development and usage of Express
+    85→**PROTIP** Be sure to read the [migration guide to v5](https://expressjs.com/en/guide/migrating-5)
+    87→## Quick Start
+    …
+    117→## Philosophy
+    …
+    119→  The Express philosophy is to provide small, robust tooling for HTTP servers, making
+    120→  it a great solution for single page applications, websites, hybrids, or public
+    121→  HTTP APIs.
+    123→  Express does not force you to use any specific ORM or template engine. With support for over
+    124→  14 template engines via [@ladjs/consolidate](https://github.com/ladjs/consolidate),
+    125→  you can quickly craft your perfect framework.
+    127→## Examples
+    …
+    129→  To view the examples, clone the Express repository:
+    131→```bash
+    132→git clone https://github.com/expressjs/express.git --depth 1 && cd express
+    133→```
+    135→  Then install the dependencies:
+    137→```bash
+    138→npm install
+    139→```
+    141→  Then run whichever example you want:
+    143→```bash
+    144→node examples/content-negotiation
+    145→```
+    147→## Contributing
+    …
+    149→The Express.js project welcomes all constructive contributions. Contributions take many forms,
+    150→from code for bug fixes and enhancements, to additions and fixes to documentation, additional
+    151→tests, triaging incoming pull requests and issues, and more!
+    153→See the [Contributing Guide] for more technical details on contributing.
+    155→### Security Issues
+    …
+    159→### Running Tests
+    …
+    173→## Current project team members
+    …
+    175→For information about the governance of the express.js project, see [GOVERNANCE.md](https://github.com/expressjs/discussions/blob/HEAD/docs/GOVERNANCE.md).
+    177→The original author of Express is [TJ Holowaychuk](https://github.com/tj)
+    179→[List of all contributors](https://github.com/expressjs/express/graphs/contributors)
+    181→### TC (Technical Committee)
+    …
+    183→* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
+    184→* [jonchurch](https://github.com/jonchurch) - **Jon Church**
+    185→* [wesleytodd](https://github.com/wesleytodd) - **Wes Todd**
+    186→* [LinusU](https://github.com/LinusU) - **Linus Unnebäck**
+    187→* [blakeembrey](https://github.com/blakeembrey) - **Blake Embrey**
+    188→* [sheplu](https://github.com/sheplu) - **Jean Burellier**
+    189→* [crandmck](https://github.com/crandmck) - **Rand McKinney**
+    190→* [ctcpip](https://github.com/ctcpip) - **Chris de Almeida**
+    192→<details>
+    193→<summary>TC emeriti members</summary>
+    205→### Triagers
+    …
+    207→* [aravindvnair99](https://github.com/aravindvnair99) - **Aravind Nair**
+    208→* [bjohansebas](https://github.com/bjohansebas) - **Sebastian Beltran**
+    209→* [carpasse](https://github.com/carpasse) - **Carlos Serrano**
+    210→* [CBID2](https://github.com/CBID2) - **Christine Belzie**
+    211→* [UlisesGascon](https://github.com/UlisesGascon) - **Ulises Gascón** (he/him)
+    212→* [IamLizu](https://github.com/IamLizu) - **S M Mahmudul Hasan** (he/him)
+    213→* [Phillip9587](https://github.com/Phillip9587) - **Phillip Barta**
+    214→* [efekrskl](https://github.com/efekrskl) - **Efe Karasakal**
+    215→* [rxmarbles](https://github.com/rxmarbles) - **Rick Markins** (he/him)
+    216→* [krzysdz](https://github.com/krzysdz)
+    217→* [GroophyLifefor](https://github.com/GroophyLifefor) - **Murat Kirazkaya**
+    219→<details>
+    220→<summary>Triagers emeriti members</summary>
+    263→## License
+    …
+examples/
+    README.md
+    auth/
+    content-negotiation/
+        db.js
+        index.js
+        users.js
+    cookie-sessions/
+    cookies/
+    downloads/
+    ejs/
+    error/
+    error-pages/
+    hello-world/
+    markdown/
+    multi-router/
+    mvc/
+        controllers/
+            main/
+            pet/
+            user/
+            user-pet/
+        db.js
+        index.js
+        lib/
+            boot.js
+        public/
+        views/
+    online/
+    params/
+    resource/
+    route-map/
+    route-middleware/
+    route-separation/
+        index.js
+        post.js
+        public/
+        site.js
+        user.js
+        views/
+    search/
+    session/
+    static-files/
+    vhost/
+    view-constructor/
+    view-locals/
+    web-service/
+index.js
+    9→'use strict';
+    11→module.exports = require('./lib/express');
+lib/
+    application.js
+    express.js
+    request.js
+        37→module.exports = req
+        …
+    response.js
+        49→module.exports = res
+        …
+    utils.js
+    view.js
+        9→'use strict';
+        36→module.exports = View;
+        …
+        52→function View(name, options) {
+        …
+package.json
+    2→  "name": "express",
+    3→  "description": "Fast, unopinionated, minimalist web framework",
+    4→  "version": "5.2.1",
+    5→  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+    6→  "contributors": [
+    7→    "Aaron Heckmann <aaron.heckmann+github@gmail.com>",
+    8→    "Ciaran Jessup <ciaranj@gmail.com>",
+    9→    "Douglas Christopher Wilson <doug@somethingdoug.com>",
+    10→    "Guillermo Rauch <rauchg@gmail.com>",
+    11→    "Jonathan Ong <me@jongleberry.com>",
+    12→    "Roman Shtylman <shtylman+expressjs@gmail.com>",
+    13→    "Young Jae Sim <hanul@hanul.me>"
+    14→  ],
+    15→  "license": "MIT",
+    16→  "repository": "expressjs/express",
+    17→  "homepage": "https://expressjs.com/",
+    18→  "funding": {
+    19→    "type": "opencollective",
+    20→    "url": "https://opencollective.com/express"
+    21→  },
+    22→  "keywords": [
+    23→    "express",
+    24→    "framework",
+    25→    "sinatra",
+    26→    "web",
+    27→    "http",
+    28→    "rest",
+    29→    "restful",
+    30→    "router",
+    31→    "app",
+    32→    "api"
+    33→  ],
+    82→  "engines": {
+    83→    "node": ">= 18"
+    84→  },
+    85→  "files": [
+    86→    "LICENSE",
+    87→    "Readme.md",
+    88→    "index.js",
+    89→    "lib/"
+    90→  ],
+    91→  "scripts": {
+    92→    "lint": "eslint .",
+    93→    "lint:fix": "eslint . --fix",
+    94→    "test": "mocha --require test/support/env --reporter spec --check-leaks test/ test/acceptance/",
+    95→    "test-ci": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=lcovonly --reporter=text npm test",
+    96→    "test-cov": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=html --reporter=text npm test",
+    97→    "test-tap": "mocha --require test/support/env --reporter tap --check-leaks test/ test/acceptance/"
+    98→  }
+test/

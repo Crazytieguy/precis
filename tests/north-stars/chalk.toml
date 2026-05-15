@@ -1,0 +1,613 @@
+fixture = "chalk"
+revision_pin = "aa06bb5a"
+summary = """
+Chalk is a Node.js library for terminal string styling: `chalk.red.bold('foo')`
+returns the string wrapped in ANSI escape codes. The repo is small and
+unusually well-known, so an agent's likely tasks span "how do I use it"
+(API/styles), "how does the chaining work" (internal builder/styler model),
+"why is color enabled/disabled here" (supports-color detection), and "what
+types are exported" (TypeScript surface in `index.d.ts`).
+
+The package's source has three pieces: `source/index.js` (the chainable
+builder factory) plus two vendored modules — `source/vendor/ansi-styles/`
+(ANSI escape tables + color-space conversions) and
+`source/vendor/supports-color/` (environment detection, with a separate
+browser variant). Each ships its own `.d.ts`. The README is the canonical
+reference for the public API and the full list of style/color names; rank
+it early because the style names are not enumerated anywhere terser.
+
+Ranking favours: (1) the README API/styles list, (2) the public exports
+and the chainable factory + style-attaching loops in `index.js`, then the
+core runtime helpers `createStyler`/`createBuilder`/`applyStyle`, (3) the
+ANSI escape tables + color-space conversions, (4) supports-color's
+environment heuristics, with tests/examples/benchmark and peripheral docs
+trailing.
+"""
+
+# ---------------------------------------------------------------------------
+# Tier 1 — Repo identity.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Readme tagline"
+justification = "Identifies the project ('Terminal string styling done right') in one line. Smallest possible useful batch."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 10, end = 10, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo root listing"
+justification = "What files exist at the root (readme, package.json, source/, test/, examples/, benchmark.js, license, .github/). Cheap catastrophic-omission hedge."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "package.json name/version/type"
+justification = "Tightest package identity: name, version, description, license, type=module (ESM-only — README explicitly warns about Chalk 5)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 2, end = 8, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Readme usage example (default import + chain)"
+justification = "The 'how do I use this' answer in one snippet. Common zero-follow-up query."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 44, end = 50, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "source/ tree"
+justification = "Layout of the source: `index.js`, `index.d.ts`, `utilities.js`, `index.test-d.ts`, `vendor/` with its two subdirs. Mitigates catastrophic omission about where logic lives."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "source", entries = "all" },
+  { parent = "source/vendor", entries = "all" },
+  { parent = "source/vendor/ansi-styles", entries = "all" },
+  { parent = "source/vendor/supports-color", entries = "all" },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json main + exports + types"
+justification = "Where the package entry-point and TS types live."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "package.json", start = 9, end = 10, render = { kind = "full" } },
+  { path = "package.json", start = 18, end = 18, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 2 — Public API surface from README + index.js.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "Readme H2/H3 headings"
+justification = "All section/subsection headings in the README. Tells the agent what topics the README covers and where to jump for any 'how do I…' query."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 18, end = 18, render = { kind = "full" } },
+  { path = "readme.md", start = 23, end = 23, render = { kind = "full" } },
+  { path = "readme.md", start = 36, end = 36, render = { kind = "full" } },
+  { path = "readme.md", start = 112, end = 112, render = { kind = "full" } },
+  { path = "readme.md", start = 114, end = 114, render = { kind = "full" } },
+  { path = "readme.md", start = 122, end = 122, render = { kind = "full" } },
+  { path = "readme.md", start = 143, end = 143, render = { kind = "full" } },
+  { path = "readme.md", start = 151, end = 151, render = { kind = "full" } },
+  { path = "readme.md", start = 155, end = 155, render = { kind = "full" } },
+  { path = "readme.md", start = 171, end = 171, render = { kind = "full" } },
+  { path = "readme.md", start = 173, end = 173, render = { kind = "full" } },
+  { path = "readme.md", start = 186, end = 186, render = { kind = "full" } },
+  { path = "readme.md", start = 205, end = 205, render = { kind = "full" } },
+  { path = "readme.md", start = 224, end = 224, render = { kind = "full" } },
+  { path = "readme.md", start = 246, end = 246, render = { kind = "full" } },
+  { path = "readme.md", start = 250, end = 250, render = { kind = "full" } },
+  { path = "readme.md", start = 254, end = 254, render = { kind = "full" } },
+  { path = "readme.md", start = 274, end = 274, render = { kind = "full" } },
+  { path = "readme.md", start = 294, end = 294, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "index.js public exports"
+justification = "All public names exported by `source/index.js`: `Chalk` class, default `chalk`, `chalkStderr`, `supportsColor`/`supportsColorStderr`, plus the re-exported style-name arrays (`modifierNames`, `foregroundColorNames`, `backgroundColorNames`, `colorNames` and their deprecated aliases). Covers most zero-follow-up 'what does it export' queries."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 34, end = 34, render = { kind = "full" } },
+  { path = "source/index.js", start = 205, end = 205, render = { kind = "full" } },
+  { path = "source/index.js", start = 207, end = 218, render = { kind = "full" } },
+  { path = "source/index.js", start = 220, end = 223, render = { kind = "full" } },
+  { path = "source/index.js", start = 225, end = 225, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "Readme: chalk.level table"
+predecessor = "2.1"
+justification = "The level 0/1/2/3 meaning table — referenced from many tests, common 'what does level=2 mean' query. Overrides the 2.1 heading at line 122 with the full section."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 122, end = 141, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "Readme: Modifiers list"
+predecessor = "2.1"
+justification = "The complete list of modifier names with descriptions — `reset`, `bold`, `dim`, `italic`, `underline`, `overline`, `inverse`, `hidden`, `strikethrough`, `visible`. Catastrophic-omission mitigation: any subset list would let the agent assume missing modifiers don't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 173, end = 184, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "Readme: Colors list"
+predecessor = "2.1"
+justification = "Complete list of foreground color names (`black`…`whiteBright`, with `gray`/`grey` aliases). Catastrophic-omission hedge — listing only some would let the agent assume the rest don't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 186, end = 203, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "Readme: Background colors list"
+predecessor = "2.1"
+justification = "Complete list of background color names (`bgBlack`…`bgWhiteBright`, with `bgGray`/`bgGrey` aliases). Companion to 2.5."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 205, end = 222, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "Readme: supportsColor / FORCE_COLOR / flags / chalkStderr"
+predecessor = "2.1"
+justification = "How to override color detection — `--color`/`--no-color`, `FORCE_COLOR=N`, `--color=256`/`--color=16m`, plus the `chalkStderr`/`supportsColorStderr` blurb. Common 'why is color off here' / 'how do I force it' query."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 143, end = 153, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "Readme: 256/Truecolor section"
+predecessor = "2.1"
+justification = "How the higher color modes work — `chalk.rgb()`, `chalk.hex()`, `chalk.ansi256()` and their `bg*` variants. Includes the downsampling note."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "readme.md", start = 224, end = 244, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 3 — Internal architecture of `source/index.js`. How `chalk.red` becomes
+# a getter, how chains accumulate state, how nested styles get re-opened
+# correctly. Targets the "how does this work / fix bug in chaining" queries.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "index.js helper signatures (locations)"
+predecessor = "2.2"
+justification = "First lines of every top-level helper in `source/index.js`: `applyOptions`, `chalkFactory`, `createChalk`, `getModelAnsi`, `createStyler`, `createBuilder`, `applyStyle`. Gives the agent a roadmap of the file before any body is included."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 24, end = 24, render = { kind = "full" } },
+  { path = "source/index.js", start = 41, end = 41, render = { kind = "full" } },
+  { path = "source/index.js", start = 50, end = 50, render = { kind = "full" } },
+  { path = "source/index.js", start = 74, end = 74, render = { kind = "full" } },
+  { path = "source/index.js", start = 132, end = 132, render = { kind = "full" } },
+  { path = "source/index.js", start = 152, end = 152, render = { kind = "full" } },
+  { path = "source/index.js", start = 168, end = 168, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "index.js imports + private symbols"
+justification = "What `index.js` depends on (`#ansi-styles`, `#supports-color`, `./utilities.js`) and the three Symbols (`GENERATOR`, `STYLER`, `IS_EMPTY`) used as per-builder slots. Needed to understand any later snippet."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 1, end = 12, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "levelMapping (color level → ansi style name)"
+justification = "The 4-element array that maps `supportsColor.level` 0..3 to `'ansi'` / `'ansi256'` / `'ansi16m'` lookups in `ansiStyles.color[...]`. Tiny but load-bearing — referenced from the rgb/hex/ansi256 loop."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 14, end = 20, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Style-attach loop (chalk.red etc as getters)"
+justification = "Lines 56-72: the `for (const [styleName, style] of Object.entries(ansiStyles))` loop that installs every modifier/color name as a getter on the prototype, calling `createBuilder`/`createStyler` per access. Plus the `visible` special case. This is the mechanism behind every plain style name on a Chalk instance."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 56, end = 72, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "applyStyle body (nested styles + newline fix)"
+predecessor = "3.1"
+justification = "Lines 168-200: the function that actually wraps a string in escape codes. Contains the load-bearing nested-styles unwind loop (re-opening parent style after a child's close code) and the line-break handling that fixes macOS bleed (chalk PR #92). High-leverage for bug-hunt queries."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 168, end = 200, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.6"
+descriptor = "createStyler body (parent linkage)"
+predecessor = "3.1"
+justification = "Lines 132-150: builds the linked `{open, close, openAll, closeAll, parent}` styler object that threads parent styles through. Critical for the nested-style behaviour."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 132, end = 150, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.7"
+descriptor = "createBuilder body (function with proto)"
+predecessor = "3.1"
+justification = "Lines 152-166: returns a callable function whose prototype is `proto` (so chain access still works), and stashes the styler chain on it via the private symbols."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 152, end = 166, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.8"
+descriptor = "rgb/hex/ansi256 attach loop + getModelAnsi"
+predecessor = "3.1"
+justification = "Lines 94-117 install the `rgb`/`hex`/`ansi256` and `bgRgb`/`bgHex`/`bgAnsi256` callable-method styles, parameterised on the current level. Pair with `getModelAnsi` (74-92) which routes by model+level. Together they answer 'how does chalk.hex work'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 74, end = 92, render = { kind = "full" } },
+  { path = "source/index.js", start = 94, end = 117, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.9"
+descriptor = "Chalk class + chalkFactory + createChalk"
+predecessor = "3.1"
+justification = "Lines 34-54: how `new Chalk(options)` actually returns a callable instance (constructor returns `chalkFactory(options)`; `createChalk.prototype` chains to `Function.prototype`). Answers 'why is Chalk both a class and a function'. Overrides 2.2's `export class Chalk` line at 34 with the full constructor + factory."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 34, end = 54, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.10"
+descriptor = "applyOptions + proto definition"
+predecessor = "3.1"
+justification = "Lines 22-32: `applyOptions` validates `level` 0..3 (the source of the 'should be an integer from 0 to 3' error message tested in `test/level.js`). Plus lines 119-130 where `proto` defines the `level` getter/setter that delegates to `this[GENERATOR].level`, explaining the propagation tested in `test/level.js`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 22, end = 32, render = { kind = "full" } },
+  { path = "source/index.js", start = 119, end = 130, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.11"
+descriptor = "index.js finalization (defineProperties + chalk = createChalk())"
+predecessor = "2.2"
+justification = "Lines 202-205: where the assembled `styles` map is glued onto `createChalk.prototype` and where the singleton `chalk` and `chalkStderr` are created. Bridges 'how is a Chalk instance built' to 'how is the default export produced'. Overrides 2.2's line 205."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.js", start = 202, end = 204, render = { kind = "full" } },
+  { path = "source/index.js", start = 205, end = 205, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 4 — `source/vendor/ansi-styles/`. The ANSI escape tables and color-
+# space conversions chalk builds on. Tier-4 batches answer "what's the ANSI
+# code for X" / "how is the RGB→256 conversion done" / "what's the alias for
+# gray".
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "ansi-styles: modifier table"
+justification = "Lines 10-21: the canonical `{name: [open, close]}` table for every modifier (reset, bold, dim, italic, underline, overline, inverse, hidden, strikethrough). The codes here drive every `chalk.bold` etc. Catastrophic-omission hedge: agent must see the full table, not a sample."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 9, end = 21, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "ansi-styles: color table"
+justification = "Lines 22-43: foreground color codes (`black` 30/39 through `whiteBright` 97/39, with `gray`/`grey` 90/39 aliases). Companion to 4.1 — together they answer 'what ANSI code does chalk emit for X'."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 22, end = 43, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "ansi-styles: bgColor table"
+justification = "Lines 44-66: background color codes (`bgBlack` 40/49 through `bgWhiteBright` 107/49, with `bgGray`/`bgGrey` aliases). Note the +60 bright offset and the +10 fg→bg offset (`ANSI_BACKGROUND_OFFSET`)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 44, end = 66, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "ansi-styles: name arrays + default export"
+justification = "Lines 68-71 + 223: the exported name arrays (`modifierNames`, `foregroundColorNames`, `backgroundColorNames`, `colorNames`) that `source/index.js` re-exports, and the default `ansiStyles` export. Together these are the public surface of this module."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 68, end = 71, render = { kind = "full" } },
+  { path = "source/vendor/ansi-styles/index.js", start = 221, end = 223, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET"
+justification = "Lines 1-7: the three escape-sequence builders. `wrapAnsi16(offset)(code)` → `ESC[<code+offset>m`, `wrapAnsi256(offset)(code)` → `ESC[38+offset;5;<code>m`, `wrapAnsi16m(offset)(r,g,b)` → `ESC[38+offset;2;r;g;bm`. Plus the +10 fg→bg offset constant."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 1, end = 7, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.6"
+descriptor = "ansi-styles: assembleStyles + ansi/ansi256/ansi16m installation"
+justification = "Lines 73-77 + 99-107: how `assembleStyles` flattens the nested `styles` map into per-name `{open, close}` shapes, and installs `color.ansi`/`color.ansi256`/`color.ansi16m` (and bg versions) using the wrappers from 4.5. Skeleton view — the inner detail is in 4.7+."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 73, end = 77, render = { kind = "full" } },
+  { path = "source/vendor/ansi-styles/index.js", start = 99, end = 107, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.7"
+descriptor = "ansi-styles: rgbToAnsi256 conversion"
+justification = "Lines 111-133: the RGB→ANSI-256 quantisation (greyscale ramp in the 232-255 range; 6×6×6 cube via `16 + 36·r + 6·g + b`). Self-contained, ~ load-bearing for hex/rgb at level 2."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 111, end = 133, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.8"
+descriptor = "ansi-styles: hexToRgb conversion"
+justification = "Lines 134-158: hex string → [r,g,b] decode (accepts 3- or 6-char hex, falls back to [0,0,0]). Used by `chalk.hex(...)`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 134, end = 158, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.9"
+descriptor = "ansi-styles: ansi256ToAnsi conversion"
+justification = "Lines 163-207: the ANSI-256 → ANSI-16 downsampling used at level 1. Most complex conversion — bit-twiddly logic for the 6×6×6 cube + greyscale ramp."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 163, end = 207, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.10"
+descriptor = "ansi-styles: hexToAnsi256 / rgbToAnsi / hexToAnsi compositions"
+justification = "Lines 159-162 + 208-219: the small compositions on top of the three primary conversions. `hexToAnsi256 = hex => rgbToAnsi256(...hexToRgb(hex))`, `rgbToAnsi = (r,g,b) => ansi256ToAnsi(rgbToAnsi256(r,g,b))`, `hexToAnsi = hex => ansi256ToAnsi(hexToAnsi256(hex))`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/ansi-styles/index.js", start = 159, end = 162, render = { kind = "full" } },
+  { path = "source/vendor/ansi-styles/index.js", start = 208, end = 219, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 5 — `source/vendor/supports-color/` (env detection) + `utilities.js`
+# (CRLF / replaceAll helpers) + browser supports-color variant. Targets
+# 'why is color level X here?' / 'how does FORCE_COLOR override' / 'how does
+# the CRLF newline fix work'.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "supports-color: helper signatures (locations)"
+justification = "Locations of `hasFlag`, `envForceColor`, `translateLevel`, `_supportsColor`, `createSupportsColor` and the `supportsColor = {stdout, stderr}` final object. Roadmap of the file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.js", start = 7, end = 7, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 33, end = 33, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 47, end = 47, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 60, end = 60, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 176, end = 176, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 185, end = 188, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 190, end = 190, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "supports-color: flag + env force-color resolution"
+predecessor = "5.1"
+justification = "Lines 14-45: how `--no-color` / `--color` flags map to `flagForceColor` and how `FORCE_COLOR` env var resolves to a level (0..3 with `Math.min(...,3)` clamp, treating empty/`true` as 1, `false` as 0). This is the source of truth for the FORCE_COLOR semantics tested in `test/level.js`."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.js", start = 14, end = 45, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "supports-color: hasFlag + translateLevel"
+predecessor = "5.1"
+justification = "Lines 7-12 (argv lookup respecting `--` terminator) and lines 47-58 (level→`{level, hasBasic, has256, has16m}` shape returned by `createSupportsColor`)."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.js", start = 7, end = 12, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.js", start = 47, end = 58, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.4"
+descriptor = "supports-color: _supportsColor early returns"
+predecessor = "5.1"
+justification = "Lines 60-94: the priority chain at the top of `_supportsColor` — force-color override, explicit `--color=16m/256` flags, Azure DevOps (`TF_BUILD`+`AGENT_NAME`), non-TTY fallthrough. Most 'why is level 0' debugging hits this region."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.js", start = 60, end = 94, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.5"
+descriptor = "supports-color: platform / CI / TERM heuristics"
+predecessor = "5.1"
+justification = "Lines 96-174: the long heuristic chain — Windows version detection, CI vendors (GitHub Actions/Gitea/CircleCI → 3; Travis/AppVeyor/GitLab/Buildkite/Drone/Codeship → 1), TeamCity, COLORTERM=truecolor, xterm-kitty/ghostty/wezterm → 3, iTerm/Apple_Terminal version mapping, generic `-256color` / `^screen|^xterm|…` patterns. Most 'how to add a terminal' / 'why does my CI not get color' queries land here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.js", start = 96, end = 174, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "utilities.js: stringReplaceAll + stringEncaseCRLFWithFirstIndex"
+justification = "The two helpers used by `applyStyle` for nested-style unwinding (`stringReplaceAll`) and the macOS-bleed line-break fix (`stringEncaseCRLFWithFirstIndex`). Tiny file (33 lines) — include in full so 'fix a CRLF bug' lands here in zero hops."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/utilities.js", start = 1, end = 33, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.7"
+descriptor = "supports-color: browser variant detection"
+justification = "Lines 3-20 of `vendor/supports-color/browser.js` — the level-detection IIFE. Completely different logic from node: navigator.userAgentData + Chromium version >93 → 3, else generic Chrome/Chromium UA → 1, else 0. Resolved via the `imports` map's `default` branch (see 1.6). Important for 'does chalk work in the browser' queries."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/browser.js", start = 3, end = 20, render = { kind = "full" } },
+]
+
+# ---------------------------------------------------------------------------
+# Tier 6 — TypeScript surface across the three `.d.ts` files. Useful for
+# 'what types does chalk export' / 'what's the return type of chalk.hex' and
+# for typed-API consumers. Compact — much overlaps the README / index.js
+# exports already shown.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "6.1"
+descriptor = "index.d.ts top-level declarations (locations)"
+justification = "First-line locations of every top-level declaration in `source/index.d.ts`: `Options`, `Chalk`, `ChalkInstance`, `chalk` const, `supportsColor`/`chalkStderr`/`supportsColorStderr` consts, re-exports from ansi-styles/supports-color, the deprecated type/const aliases. Catastrophic-omission hedge against assuming a name doesn't exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.d.ts", start = 12, end = 12, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 30, end = 30, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 32, end = 32, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 242, end = 247, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 268, end = 268, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 277, end = 277, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 286, end = 286, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 295, end = 295, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 302, end = 302, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 309, end = 309, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 316, end = 316, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 323, end = 323, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "ChalkInstance call signature + level + color methods"
+predecessor = "6.1"
+justification = "Lines 32-33 (callable), 46 (`level`), 58/72/84/96/110/122 (`rgb`/`hex`/`ansi256` and `bg*` variants typed as `(args) => this`). The full chainable-API type signatures without the JSDoc bodies that the README already provides."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/index.d.ts", start = 32, end = 33, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 46, end = 46, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 58, end = 58, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 72, end = 72, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 84, end = 84, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 96, end = 96, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 110, end = 110, render = { kind = "full" } },
+  { path = "source/index.d.ts", start = 122, end = 122, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.3"
+descriptor = "supports-color types: ColorSupportLevel + ColorSupport + ColorInfo"
+justification = "Lines 19, 21-46 of `vendor/supports-color/index.d.ts`: the `ColorSupportLevel = 0|1|2|3` literal-union and the `ColorSupport` shape (level/hasBasic/has256/has16m) returned to consumers via the chalk default export."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "source/vendor/supports-color/index.d.ts", start = 19, end = 19, render = { kind = "full" } },
+  { path = "source/vendor/supports-color/index.d.ts", start = 21, end = 46, render = { kind = "full" } },
+]
+
+
+# ---------------------------------------------------------------------------
+# Tier 7 — Peripheral content: tests, examples, benchmark, .github, top-level
+# docs. Mostly directory listings — the agent that needs a specific test or
+# example file can navigate from here in one hop.
+# ---------------------------------------------------------------------------
+
+[[batches]]
+id = "7.1"
+descriptor = "test/ + examples/ + .github/ listings"
+justification = "What test files exist (`chalk.js`, `instance.js`, `level.js`, `visible.js`, `no-color-support.js`, `_fixture.js`), what example scripts exist (`rainbow.js`, `screenshot.js`), and the .github contents (`funding.yml`, `security.md`, `workflows/main.yml`). Catastrophic-omission hedge — the agent gets the full picture of non-source content."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "test", entries = "all" },
+  { parent = "examples", entries = "all" },
+  { parent = ".github", entries = "all" },
+  { parent = ".github/workflows", entries = "all" },
+]

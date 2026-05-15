@@ -1,0 +1,351 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.actrc
+.codespellrc
+.editorconfig
+.github/
+.gitignore
+.gitleaks.toml
+.gitleaksignore
+.golangci.yml
+.goreleaser.yml
+.markdownlint.yml
+.mega-linter.yml
+.mergify.yml
+.prettierignore
+.prettierrc.yml
+.vscode/
+    extensions.json
+    settings.json
+CLAUDE.md
+CONTRIBUTING.md
+IMAGES.md
+    1→# List of Docker images for `act`
+    …
+    3→**Warning:** Below badges with size for each image are displaying size of **compressed image size in registry. After pulling the image, size can be drastically different due to Docker uncompressing the image layers.**
+    5→## Images based on [`buildpack-deps`][hub/_/buildpack-deps]
+    …
+    27→## Images based on [`actions/virtual-environments`][gh/actions/virtual-environments]
+    …
+LICENSE
+Makefile
+README.md
+    3→# Overview…
+    5→> "Think globally, `act` locally"
+    7→Run your [GitHub Actions](https://developer.github.com/actions/) locally! Why would you want to do this? Two reasons:
+    9→- **Fast Feedback** - Rather than having to commit/push every time you want to test out the changes you are making to your `.github/workflows/` files (or for any changes to embedded GitHub actions), you can use `act` to run the actions locally. The [environment variables](https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables) and [filesystem](https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners#filesystems-on-github-hosted-runners) are all configured to match what GitHub provides.
+    10→- **Local Task Runner** - I love [make](<https://en.wikipedia.org/wiki/Make_(software)>). However, I also hate repeating myself. With `act`, you can use the GitHub Actions defined in your `.github/workflows/` to replace your `Makefile`!
+    12→> [!TIP]
+    13→> **Now Manage and Run Act Directly From VS Code!**<br/>
+    14→> Check out the [GitHub Local Actions](https://sanjulaganepola.github.io/github-local-actions-docs/) Visual Studio Code extension which allows you to leverage the power of `act` to run and test workflows locally without leaving your editor.
+    16→# How Does It Work?
+    …
+    24→# Act User Guide
+    …
+    26→Please look at the [act user guide](https://nektosact.com) for more documentation.
+    28→# Support
+    …
+    30→Need help? Ask in [discussions](https://github.com/nektos/act/discussions)!
+    32→# Contributing
+    …
+    36→## Manually building from source
+    …
+VERIFICATION
+VERSION
+act-cli.nuspec
+cmd/
+    dir.go
+        10→var (
+        11→	UserHomeDir  string
+        12→	CacheHomeDir string
+        13→)
+        15→func init() {
+        …
+    execute_test.go
+    graph.go
+        10→func drawGraph(plan *model.Plan) error {
+        …
+    input.go
+        1→package cmd
+        3→import (
+        4→	"path/filepath"
+        6→	log "github.com/sirupsen/logrus"
+        7→)
+        10→type Input struct {
+        …
+        70→func (i *Input) resolve(path string) string {
+        …
+        84→// Envfile returns path to .env
+        85→func (i *Input) Envfile() string {
+        86→	return i.resolve(i.envfile)
+        89→// Secretfile returns path to secrets
+        90→func (i *Input) Secretfile() string {
+        91→	return i.resolve(i.secretfile)
+        94→func (i *Input) Varfile() string {
+        95→	return i.resolve(i.varfile)
+        98→// Workdir returns path to workdir
+        99→func (i *Input) Workdir() string {
+        100→	return i.resolve(".")
+        103→// WorkflowsPath returns path to workflow file(s)
+        104→func (i *Input) WorkflowsPath() string {
+        105→	return i.resolve(i.workflowsPath)
+        108→// EventPath returns the path to events file
+        109→func (i *Input) EventPath() string {
+        110→	return i.resolve(i.eventPath)
+        113→// Inputfile returns the path to the input file
+        114→func (i *Input) Inputfile() string {
+        115→	return i.resolve(i.inputfile)
+    list.go
+        11→func printList(plan *model.Plan) error {
+        …
+    notices.go
+        17→type Notice struct {
+        18→	Level   string `json:"level"`
+        19→	Message string `json:"message"`
+        20→}
+        22→func displayNotices(input *Input) {
+        …
+        55→var noticesLoaded = make(chan []Notice)
+        …
+        57→func loadVersionNotices(version string) {
+        …
+        63→const NoticeURL = "https://api.nektosact.com/notices"
+        …
+        65→func getVersionNotices(version string) []Notice {
+        …
+        121→func loadNoticesEtag() string {
+        …
+        130→func saveNoticesEtag(etag string) {
+        …
+        138→func etagPath() string {
+        …
+    platforms.go
+        1→package cmd
+        3→import (
+        4→	"strings"
+        5→)
+        7→func (i *Input) newPlatforms() map[string]string {
+        …
+    root.go
+    root_test.go
+    secrets.go
+        12→type secrets map[string]string
+        …
+        14→func newSecrets(secretList []string) secrets {
+        …
+        40→func (s secrets) AsMap() map[string]string {
+        41→	return s
+    testdata/
+        env.actrc
+        secrets.yml
+        simple.actrc
+        split.actrc
+codecov.yml
+go.mod
+go.sum
+install.sh
+main.go
+    1→package main
+    3→import (
+    4→	_ "embed"
+    6→	"github.com/nektos/act/cmd"
+    7→	"github.com/nektos/act/pkg/common"
+    8→)
+    10→//go:embed VERSION
+    11→var version string
+    …
+    13→func main() {
+    …
+main_test.go
+pkg/
+    artifactcache/
+        doc.go
+            7→package artifactcache
+        handler.go
+        handler_test.go
+        model.go
+            1→package artifactcache
+            3→type Request struct {
+            4→	Key     string `json:"key" `
+            5→	Version string `json:"version"`
+            6→	Size    int64  `json:"cacheSize"`
+            7→}
+            9→func (c *Request) ToCache() *Cache {
+            …
+            26→type Cache struct {
+            …
+        storage.go
+        testdata/
+            example/
+    artifacts/
+        artifact.pb.go
+        artifacts_v4.go
+        server.go
+        server_test.go
+        testdata/
+    common/
+        auth.go
+        auth_test.go
+        cartesian.go
+            1→package common
+            3→// CartesianProduct takes map of lists and returns list of unique tuples
+            4→func CartesianProduct(mapOfLists map[string][]interface{}) []map[string]interface{} {
+            …
+            25→func cartN(a ...[]interface{}) [][]interface{} {
+            …
+        cartesian_test.go
+        context.go
+            10→func createGracefulJobCancellationContext() (context.Context, func(), chan os.Signal) {
+            …
+            42→func CreateGracefulJobCancellationContext() (context.Context, func()) {
+            …
+        context_test.go
+        draw.go
+        dryrun.go
+            7→type dryrunContextKey string
+            …
+            9→const dryrunContextKeyVal = dryrunContextKey("dryrun")
+            …
+            11→// Dryrun returns true if the current context is dryrun
+            12→func Dryrun(ctx context.Context) bool {
+            …
+            22→// WithDryrun adds a value to the context for dryrun
+            23→func WithDryrun(ctx context.Context, dryrun bool) context.Context {
+            24→	return context.WithValue(ctx, dryrunContextKeyVal, dryrun)
+        executor.go
+        executor_test.go
+        file.go
+            9→// CopyFile copy file
+            10→func CopyFile(source string, dest string) (err error) {
+            …
+            36→// CopyDir recursive copy of directory
+            37→func CopyDir(source string, dest string) (err error) {
+            …
+        git/
+        job_error.go
+        line_writer.go
+        line_writer_test.go
+        logger.go
+            9→type loggerContextKey string
+            …
+            11→const loggerContextKeyVal = loggerContextKey("logrus.FieldLogger")
+            …
+            13→// Logger returns the appropriate logger for current context
+            14→func Logger(ctx context.Context) logrus.FieldLogger {
+            …
+            24→// WithLogger adds a value to the context for the logger
+            25→func WithLogger(ctx context.Context, logger logrus.FieldLogger) context.Context {
+            26→	return context.WithValue(ctx, loggerContextKeyVal, logger)
+        outbound_ip.go
+            13→func GetOutboundIP() net.IP {
+            …
+    container/
+    exprparser/
+        functions.go
+        functions_test.go
+        interpreter.go
+        interpreter_test.go
+        testdata/
+    filecollector/
+    gh/
+    lookpath/
+        LICENSE
+        env.go
+            1→package lookpath
+            3→import "os"
+            5→type Env interface {
+            6→	Getenv(name string) string
+            7→}
+            9→type defaultEnv struct {
+            10→}
+            12→func (*defaultEnv) Getenv(name string) string {
+            13→	return os.Getenv(name)
+            16→func LookPath(file string) (string, error) {
+            17→	return LookPath2(file, &defaultEnv{})
+        error.go
+            1→package lookpath
+            3→type Error struct {
+            4→	Name string
+            5→	Err  error
+            6→}
+            8→func (e *Error) Error() string {
+            9→	return e.Err.Error()
+        lp_js.go
+            13→// ErrNotFound is the error resulting if a path search failed to find an executable file.
+            14→var ErrNotFound = errors.New("executable file not found in $PATH")
+            …
+            20→func LookPath2(file string, lenv Env) (string, error) {
+            …
+        lp_plan9.go
+            15→// ErrNotFound is the error resulting if a path search failed to find an executable file.
+            16→var ErrNotFound = errors.New("executable file not found in $path")
+            …
+            18→func findExecutable(file string) error {
+            …
+            34→func LookPath2(file string, lenv Env) (string, error) {
+            …
+        lp_unix.go
+            17→// ErrNotFound is the error resulting if a path search failed to find an executable file.
+            18→var ErrNotFound = errors.New("executable file not found in $PATH")
+            …
+            20→func findExecutable(file string) error {
+            …
+            35→func LookPath2(file string, lenv Env) (string, error) {
+            …
+        lp_windows.go
+    model/
+        action.go
+        anchors.go
+            9→func resolveAliasesExt(node *yaml.Node, path map[*yaml.Node]bool, skipCheck bool) error {
+            …
+            36→func resolveAliases(node *yaml.Node) error {
+            …
+        anchors_test.go
+        github_context.go
+        github_context_test.go
+        job_context.go
+            1→package model
+            3→type JobContext struct {
+            …
+        planner.go
+        planner_test.go
+        step_result.go
+            1→package model
+            3→import "fmt"
+        testdata/
+            container-volumes/
+            empty-workflow/
+            invalid-job-name/
+                invalid-1.yml
+                invalid-2.yml
+                valid-1.yml
+                valid-2.yml
+            nested/
+            strategy/
+        workflow.go
+        workflow_test.go
+    runner/
+    schema/
+        action_schema.json
+        schema.go
+        schema_test.go
+        workflow_schema.json
+    workflowpattern/
+        trace_writer.go
+            1→package workflowpattern
+            3→import "fmt"
+            5→type TraceWriter interface {
+            6→	Info(string, ...interface{})
+            7→}
+            9→type EmptyTraceWriter struct{}
+            …
+            11→func (*EmptyTraceWriter) Info(string, ...interface{}) {
+            …
+            14→type StdOutTraceWriter struct{}
+            …
+            16→func (*StdOutTraceWriter) Info(format string, args ...interface{}) {
+            17→	fmt.Printf(format+"\n", args...)
+        workflow_pattern.go
+        workflow_pattern_test.go

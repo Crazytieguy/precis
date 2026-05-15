@@ -1,0 +1,711 @@
+fixture = "mkcert"
+revision_pin = "1c1dc4ed"
+summary = """
+mkcert is a small Go CLI for generating locally-trusted development
+certificates: it lazily creates a local CA in a user-data folder, can
+install/uninstall that CA into platform trust stores (macOS keychain,
+Windows root store, Linux ca-certificates, Java cacerts, NSS for
+Firefox/Chromium), and signs leaf certs for hostnames / IPs / emails /
+URIs or from a supplied CSR.
+
+The codebase is flat: `main.go` parses flags and dispatches; `cert.go`
+holds CA + leaf-cert generation and file-naming logic; the five
+`truststore_*.go` files implement a duck-typed per-platform interface
+(`installPlatform`/`uninstallPlatform`/`checkPlatform` for system
+stores, plus shared NSS and Java helpers). Build tags on the
+`truststore_{darwin,linux,windows}.go` filenames pick one
+`installPlatform` per GOOS, so the *same* method signature recurs in
+each file — agents need to know which file to read for each platform.
+
+Common tasks: adding a new platform trust store, debugging a flag,
+extending output filename rules, tweaking validity periods or key
+algorithms, understanding the CAROOT discovery rules, or
+explaining/reproducing one of the README install flows. The ranking
+favors breadth across all five truststore files and a complete
+catalogue of public flags + struct methods before drilling into any
+single body.
+"""
+
+# ---------------------------------------------------------------
+# Tier 1 — Orientation: where is this repo, what's in it, what is it?
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "1.1"
+descriptor = "Root directory listing"
+justification = """
+Every plausible task starts with "what files exist here?". Eight Go
+sources sit flat at the root with no subdirs (except .github), so the
+listing itself is a near-complete map of the codebase: main + cert +
+five per-platform truststore files + go.mod/go.sum + README + LICENSE
++ AUTHORS. Cheap catastrophic-omission hedge: shows there is no
+internal package layout to look for.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = "all" },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "README title + one-line description"
+justification = """
+The single most concise statement of what mkcert is. Pairs with the
+root listing to answer "what is this repo?" with near-zero cost.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "main.go package doc line"
+justification = """
+The `Command mkcert` doc comment + package main line tells the agent
+this is a Go CLI (single binary, package main) rather than a library.
+Tiny and unambiguous.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 5, end = 6, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "go.mod module + Go version"
+justification = """
+Names the module path (`filippo.io/mkcert`) — needed by anyone
+importing or building — and the toolchain floor (Go 1.18). Two lines.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "go.mod direct dependencies"
+justification = """
+The three direct deps drive a lot of mkcert's behavior: `x/net/idna`
+(punycode for hostnames), `howett.net/plist` (macOS trust settings
+plist munging), `go-pkcs12` (-pkcs12 output). Knowing them upfront
+short-circuits "where does foo come from?" questions.
+"""
+content = { kind = "lines", spans = [
+  { path = "go.mod", start = 5, end = 9, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "README -install transcript"
+justification = """
+The 4-line install transcript shows the canonical first-run flow: one
+command, three lines of output naming the three trust stores (system,
+Firefox, …). Half the visible UX in five lines.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 5, end = 10, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "README cert generation transcript"
+justification = """
+The leaf-cert generation example: `mkcert example.com "*.example.com"
+example.test localhost 127.0.0.1 ::1`, the "valid for the following
+names" output, and the final `.pem` filename pattern
+(`example.com+5.pem` / `example.com+5-key.pem`). Documents both the
+multi-name CLI shape and the +N filename convention in one block.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 11, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "main.go imports"
+justification = """
+Stdlib + idna imports for main.go. Tells an agent immediately that
+arg handling uses `flag`, that name validation pulls in `net`,
+`net/mail`, `net/url`, that `runtime`/`runtime/debug` are used for
+GOOS branching and version detection, and that idna is the punycode
+path. Short and high-density.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 8, end = 28, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 2 — Function map: where every top-level fn lives. Establishes
+# the duck-typed per-platform interface up front and gives one-or-two-
+# hop pointers for almost any "where is X handled?" query.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "2.1"
+descriptor = "main.go top-level fn signatures"
+justification = """
+Locations of every top-level function in main.go: `main`, `(*mkcert)
+Run`, `getCAROOT`, `install`, `uninstall`, `checkPlatform`,
+`storeEnabled`, `fatalIfErr`, `fatalIfCmdErr`, `pathExists`,
+`binaryExists`, `commandWithSudo`. Listing them as a group prevents
+the agent from inferring an unlisted helper doesn't exist.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 87,  end = 87,  render = { kind = "full" } },
+  { path = "main.go", start = 171, end = 171, render = { kind = "full" } },
+  { path = "main.go", start = 240, end = 240, render = { kind = "full" } },
+  { path = "main.go", start = 267, end = 267, render = { kind = "full" } },
+  { path = "main.go", start = 307, end = 307, render = { kind = "full" } },
+  { path = "main.go", start = 336, end = 336, render = { kind = "full" } },
+  { path = "main.go", start = 345, end = 345, render = { kind = "full" } },
+  { path = "main.go", start = 358, end = 358, render = { kind = "full" } },
+  { path = "main.go", start = 364, end = 364, render = { kind = "full" } },
+  { path = "main.go", start = 370, end = 370, render = { kind = "full" } },
+  { path = "main.go", start = 375, end = 375, render = { kind = "full" } },
+  { path = "main.go", start = 382, end = 382, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "cert.go top-level fn signatures"
+justification = """
+The certificate-generation surface: `init`, `(*mkcert) makeCert`,
+`printHosts`, `generateKey`, `fileNames`, `randomSerialNumber`,
+`makeCertFromCSR`, `loadCA`, `newCA`, `caUniqueName`. Tells an agent
+that filename derivation, leaf-cert and root-CA generation, and CSR
+signing all live here and nowhere else.
+"""
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 37,  end = 37,  render = { kind = "full" } },
+  { path = "cert.go", start = 50,  end = 50,  render = { kind = "full" } },
+  { path = "cert.go", start = 148, end = 148, render = { kind = "full" } },
+  { path = "cert.go", start = 166, end = 166, render = { kind = "full" } },
+  { path = "cert.go", start = 176, end = 176, render = { kind = "full" } },
+  { path = "cert.go", start = 202, end = 202, render = { kind = "full" } },
+  { path = "cert.go", start = 209, end = 209, render = { kind = "full" } },
+  { path = "cert.go", start = 282, end = 282, render = { kind = "full" } },
+  { path = "cert.go", start = 310, end = 310, render = { kind = "full" } },
+  { path = "cert.go", start = 366, end = 366, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "mkcert struct + rootName/rootKeyName consts"
+justification = """
+The state carried through the program: install/uninstall mode bits,
+the three output-file overrides, the CSR path, CAROOT, parsed
+caCert/caKey, and the ignoreCheckFailure escape hatch. Reading this
+struct upfront makes every method body trivially scannable later.
+Includes the `rootName = "rootCA.pem"` / `rootKeyName =
+"rootCA-key.pem"` consts above the struct — the well-known filenames
+in CAROOT.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 152, end = 169, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "truststore_darwin.go fn signatures"
+justification = """
+On macOS the system trust path is two methods: `installPlatform` and
+`uninstallPlatform`. Both branded on `*mkcert`; no extra helpers.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_darwin.go", start = 52,  end = 52,  render = { kind = "full" } },
+  { path = "truststore_darwin.go", start = 105, end = 105, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "truststore_linux.go fn signatures"
+justification = """
+Linux truststore surface: `init` (distro autodetect),
+`systemTrustFilename`, `installPlatform`, `uninstallPlatform`. The
+extra `systemTrustFilename` helper is the Linux-only piece.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_linux.go", start = 27, end = 27, render = { kind = "full" } },
+  { path = "truststore_linux.go", start = 51, end = 51, render = { kind = "full" } },
+  { path = "truststore_linux.go", start = 55, end = 55, render = { kind = "full" } },
+  { path = "truststore_linux.go", start = 77, end = 77, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.6"
+descriptor = "truststore_windows.go fn signatures + windowsRootStore type"
+justification = """
+Windows is the only file with its own type (`windowsRootStore
+uintptr`) and DLL bindings. Top-level signatures: `installPlatform`,
+`uninstallPlatform`, `openWindowsRootStore`, then the
+`windowsRootStore` methods `close` / `addCert` /
+`deleteCertsWithSerial`. The type definition line is what makes the
+distinction between top-level fns and methods on the helper type
+legible.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_windows.go", start = 35,  end = 35,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 54,  end = 54,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 69,  end = 69,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 71,  end = 71,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 83,  end = 83,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 91,  end = 91,  render = { kind = "full" } },
+  { path = "truststore_windows.go", start = 107, end = 107, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "truststore_java.go fn signatures"
+justification = """
+Java path: `init` (JAVA_HOME detection), `checkJava`, `installJava`,
+`uninstallJava`, `execKeytool`. The check/install/uninstall trio
+mirrors NSS's; everyone learns the pattern by seeing both.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_java.go", start = 31,  end = 31,  render = { kind = "full" } },
+  { path = "truststore_java.go", start = 57,  end = 57,  render = { kind = "full" } },
+  { path = "truststore_java.go", start = 81,  end = 81,  render = { kind = "full" } },
+  { path = "truststore_java.go", start = 94,  end = 94,  render = { kind = "full" } },
+  { path = "truststore_java.go", start = 110, end = 110, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.8"
+descriptor = "truststore_nss.go fn signatures"
+justification = """
+NSS (Firefox/Chrome) path: `init`, `checkNSS`, `installNSS`,
+`uninstallNSS`, `execCertutil`, `forEachNSSProfile`. The
+forEachNSSProfile helper signature reveals that profile iteration is
+generic across check/install/uninstall.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_nss.go", start = 39,  end = 39,  render = { kind = "full" } },
+  { path = "truststore_nss.go", start = 73,  end = 73,  render = { kind = "full" } },
+  { path = "truststore_nss.go", start = 89,  end = 89,  render = { kind = "full" } },
+  { path = "truststore_nss.go", start = 106, end = 106, render = { kind = "full" } },
+  { path = "truststore_nss.go", start = 120, end = 120, render = { kind = "full" } },
+  { path = "truststore_nss.go", start = 131, end = 131, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.9"
+descriptor = "README section headings (table of contents)"
+justification = """
+The H2/H3 outline of README — Installation (with macOS/Linux/Windows
+subsections), Supported root stores, Advanced topics (Advanced
+options, S/MIME, Mobile devices, Using the root with Node.js,
+Changing the location of the CA files, Installing the CA on other
+systems). Lets the agent point a user at a section without re-reading
+the whole README.
+"""
+content = { kind = "lines", spans = [
+  { path = "README.md", start = 30,  end = 30,  render = { kind = "full" } },
+  { path = "README.md", start = 34,  end = 34,  render = { kind = "full" } },
+  { path = "README.md", start = 51,  end = 51,  render = { kind = "full" } },
+  { path = "README.md", start = 92,  end = 92,  render = { kind = "full" } },
+  { path = "README.md", start = 111, end = 111, render = { kind = "full" } },
+  { path = "README.md", start = 127, end = 127, render = { kind = "full" } },
+  { path = "README.md", start = 129, end = 129, render = { kind = "full" } },
+  { path = "README.md", start = 152, end = 152, render = { kind = "full" } },
+  { path = "README.md", start = 158, end = 158, render = { kind = "full" } },
+  { path = "README.md", start = 166, end = 166, render = { kind = "full" } },
+  { path = "README.md", start = 174, end = 174, render = { kind = "full" } },
+  { path = "README.md", start = 182, end = 182, render = { kind = "full" } },
+  { path = "README.md", start = 188, end = 188, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 3 — CLI surface + module-level state. After this tier an agent
+# should be able to enumerate every flag, every package var, and
+# every init() side-effect across the codebase.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "3.1"
+descriptor = "main.go flag definitions"
+justification = """
+Every CLI flag in one block: install, uninstall, pkcs12, ecdsa,
+client, help, CAROOT, csr, cert-file, key-file, p12-file, version.
+This is the answer to "is there a flag for X?" without grepping.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 93, end = 106, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "advancedUsage string — per-flag doc"
+justification = """
+mkcert's own one-paragraph description of -cert-file/-key-file/
+-p12-file, -client, -ecdsa, -pkcs12, -csr, -CAROOT, $CAROOT, and
+$TRUST_STORES. Reading this once gives semantic context for every
+flag and saves doc-style questions from going to source.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 49, end = 80, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "getCAROOT body — CAROOT discovery rules"
+justification = """
+The full body that determines where mkcert stores its CA. The order
+matters: $CAROOT env first; then Windows LocalAppData; then
+$XDG_DATA_HOME; then macOS ~/Library/Application Support; then
+~/.local/share. Most "where are my certs?" questions land here.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 240, end = 265, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.4"
+descriptor = "storeEnabled body — TRUST_STORES env var"
+justification = """
+Tiny but semantically central: `storeEnabled(name)` consults
+`$TRUST_STORES` to decide whether "system" / "java" / "nss" stores
+should be touched. Every install/uninstall call site gates on this.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 345, end = 356, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "shortUsage string"
+justification = """
+mkcert's bare-call usage transcript: -install, plain name args,
+wildcard name, -uninstall. Shown when args are empty or after
+`-help`. Smaller than advancedUsage; the two together cover all CLI
+docs.
+"""
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 30, end = 47, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "Run() dispatch — load + warn loop"
+justification = """
+Top half of Run: getCAROOT/mkdir/loadCA, then branch on installMode
+/ uninstallMode, then emit per-backend "not installed" warnings.
+This is the control flow that ties cert generation to platform
+trust-store integration.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 171, end = 204, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "Run() arg validation — hostname / IP / email / URI / punycode"
+justification = """
+The hostname regexp and the loop that walks `args` through
+`net.ParseIP`, `mail.ParseAddress`, `url.Parse`, and idna.ToASCII
+before falling through to the regex check. Explains why an email or
+IP "just works" as a name argument, and where punycode conversion
+happens.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 206, end = 238, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "main() dispatch — flag combinations + Run call"
+justification = """
+The body of main() after flag.Parse: -help/-version/-CAROOT
+short-circuits, the install/uninstall and csr/pkcs12/ecdsa/client
+incompatibility checks, then constructs the mkcert struct and calls
+Run. Where flag combinations are validated.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 107, end = 150, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "truststore_darwin.go package vars"
+justification = """
+macOS-specific package vars: FirefoxProfiles glob, CertutilInstallHelp
+("brew install nss"), NSSBrowsers ("Firefox"). These string vars are
+referenced from main.go's install/uninstall code paths.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_darwin.go", start = 18, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.10"
+descriptor = "truststore_linux.go package vars"
+justification = """
+Linux-specific vars: dual FirefoxProfiles globs (Mozilla + snap),
+NSSBrowsers ("Firefox and/or Chrome/Chromium"), and the
+SystemTrustFilename / SystemTrustCommand / CertutilInstallHelp that
+init() fills in based on which package manager is present.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_linux.go", start = 17, end = 25, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.11"
+descriptor = "truststore_windows.go FirefoxProfiles + cert-help vars"
+justification = """
+The Windows variants of the cross-platform var trio: FirefoxProfiles
+(under USERPROFILE), CertutilInstallHelp = "" (no certutil on
+Windows), NSSBrowsers = "Firefox".
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_windows.go", start = 19, end = 23, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.12"
+descriptor = "truststore_windows.go DLL var block"
+justification = """
+The crypt32.dll lazy procs (CertAddEncodedCertificateToStore,
+CertCloseStore, CertDeleteCertificateFromStore,
+CertDuplicateCertificateContext, CertEnumCertificatesInStore,
+CertOpenSystemStoreW). Names every Win32 API the file uses; an agent
+extending Windows support starts here.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_windows.go", start = 25, end = 33, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.13"
+descriptor = "truststore_linux.go init() — distro autodetect"
+justification = """
+The body that maps installed binaries / paths to certutil install
+hints and to the right system-trust filename pattern + update
+command. Covers Fedora/RHEL/CentOS (`update-ca-trust`),
+Debian/Ubuntu (`update-ca-certificates`), Arch (`trust`), and SUSE.
+"""
+predecessor = "2.5"
+content = { kind = "lines", spans = [
+  { path = "truststore_linux.go", start = 27, end = 49, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.14"
+descriptor = "truststore_java.go package vars + init"
+justification = """
+Java-specific globals: hasJava, hasKeytool, javaHome, cacertsPath,
+keytoolPath, the hardcoded `storePass = "changeit"`, plus the init()
+body that probes JAVA_HOME for `bin/keytool[.exe]` and the JDK vs JRE
+`lib/security/cacerts` paths.
+"""
+predecessor = "2.7"
+content = { kind = "lines", spans = [
+  { path = "truststore_java.go", start = 21, end = 55, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.15"
+descriptor = "truststore_nss.go package vars"
+justification = """
+NSS globals: hasNSS, hasCertutil, certutilPath, the nssDBs list
+(~/.pki/nssdb, snap chromium, CentOS 7), and the firefoxPaths list
+(every known Firefox install location across macOS/Linux/Windows).
+Lists which paths get probed when looking for an NSS DB.
+"""
+content = { kind = "lines", spans = [
+  { path = "truststore_nss.go", start = 17, end = 37, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.16"
+descriptor = "truststore_nss.go init() — certutil discovery"
+justification = """
+Walks nssDBs + firefoxPaths to set hasNSS, then GOOS-branches to
+find certutil (macOS: PATH, default Homebrew path, then `brew
+--prefix nss`; Linux: PATH). Explains why mkcert sometimes shells out
+to brew.
+"""
+predecessor = "2.8"
+content = { kind = "lines", spans = [
+  { path = "truststore_nss.go", start = 39, end = 71, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 4 — Cert generation cores. Template literals first (highest
+# semantic density per token), then file naming + loading + helpers,
+# then CSR-mode specifics.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "4.1"
+descriptor = "cert.go imports + userAndHostname init()"
+justification = """
+The crypto/* and pkcs12 imports tell an agent what algorithms +
+encodings are in play (rsa, ecdsa/elliptic, sha1 for SKID, asn1, pem,
+x509/pkix, plus the third-party pkcs12). The userAndHostname init()
+shows how the OU is built ("user@host" or "user@host (Real Name)").
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 7, end = 48, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "makeCert template literal — validity + Subject + KeyUsage"
+justification = """
+The leaf certificate template literal. Embeds: 2y3m validity (with
+the macOS 825-day cap comment), Organization "mkcert development
+certificate", OU = userAndHostname, KeyUsage
+KeyEncipherment+DigitalSignature. The fixture's authoritative answer
+to "what does a leaf cert look like by default?".
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 59, end = 74, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.3"
+descriptor = "makeCert classification + ExtKeyUsage loop"
+justification = """
+The loop that classifies each host arg as IP / email / URI / DNS and
+appends to the matching SAN list, plus the ExtKeyUsage block that
+sets ServerAuth iff IPs/DNS/URIs, ClientAuth iff -client, and
+EmailProtection iff emails. Documents the type-dispatch behavior of
+positional arguments.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 76, end = 96, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "newCA template literal — root CA defaults"
+justification = """
+How the local root is generated: Organization "mkcert development
+CA", CommonName "mkcert user@host" (iOS requires CN — see issue
+#47), SubjectKeyId from sha1(SPKI), 10-year NotAfter, KeyCertSign,
+IsCA + MaxPathLenZero. The "why does my CA cert look like this?"
+answer.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 327, end = 348, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "fileNames body — output path derivation"
+justification = """
+How `example.com+5.pem` and `_wildcard.example.com.pem` etc. are
+derived: replace ':' with '_', '*' with '_wildcard', append "+N" when
+multiple hosts, append "-client" if -client. Then the
+-cert-file/-key-file/-p12-file overrides win if set. Drives every
+"why is the output named X?" question.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 176, end = 200, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.6"
+descriptor = "loadCA body — CA load + keyless mode"
+justification = """
+Reads `rootCA.pem` (PEM-decode + x509.ParseCertificate). If
+`rootCA-key.pem` is absent, returns early with caKey nil — the
+"keyless mode where only -install works". makeCert /
+makeCertFromCSR both check `m.caKey == nil` and fatal with the
+famous error string.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 282, end = 308, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.7"
+descriptor = "generateKey + randomSerialNumber + caUniqueName"
+justification = """
+Three short helpers in one batch. generateKey: ECDSA P-256 if -ecdsa;
+RSA-3072 if rootCA; RSA-2048 for leaves. randomSerialNumber: 128-bit
+crypto/rand serial. caUniqueName: "mkcert development CA <serial>" —
+used as the keychain alias on Linux trust-source files and as the
+keytool/certutil -n flag value.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 166, end = 174, render = { kind = "full" } },
+  { path = "cert.go", start = 202, end = 207, render = { kind = "full" } },
+  { path = "cert.go", start = 366, end = 368, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.8"
+descriptor = "makeCertFromCSR template + CSR-omits defaults"
+justification = """
+The middle of makeCertFromCSR: builds the cert template inheriting
+Subject + Extensions from the CSR, but applies fallbacks: DNSNames
+= [CSR.CommonName], KeyUsage = KE+DS, ExtKeyUsage = ServerAuth, plus
+ClientAuth iff -client and EmailProtection iff CSR has email
+addresses. The "what does -csr actually keep from the CSR?" answer.
+"""
+predecessor = "2.2"
+content = { kind = "lines", spans = [
+  { path = "cert.go", start = 228, end = 253, render = { kind = "full" } },
+] }
+
+# ---------------------------------------------------------------
+# Tier 5 — Trust-store orchestration + remaining helpers. After this
+# the snapshot has full coverage of the install/uninstall flow and
+# the per-platform helpers that any "fix the macOS install" /
+# "extend Windows store" task lands on.
+# ---------------------------------------------------------------
+
+[[batches]]
+id = "5.1"
+descriptor = "install() body — orchestrate all backends"
+justification = """
+The full -install flow: for each of system / nss / java, check
+storeEnabled and the relevant `has*` global, then check + install +
+log per backend. This is the single canonical place to read the
+end-to-end install behavior, including the "certutil not available"
++ "java's trust store" warning strings.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 267, end = 305, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "uninstall() body"
+justification = """
+Mirror of install(), but with a twist: the system store uninstall
+gates a final "uninstalled from system trust store" log, with NSS
+fallback. Where to look when fixing -uninstall flows.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 307, end = 334, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.3"
+descriptor = "checkPlatform body + helpers (pathExists/binaryExists/commandWithSudo)"
+justification = """
+checkPlatform: returns ignoreCheckFailure || (caCert.Verify against
+system root pool succeeds). pathExists / binaryExists are
+one-statement helpers used everywhere. commandWithSudo is the sudo
+prompt logic ("Sudo password:"), with the "sudo not available, may
+fail" warning emitted once via sync.Once.
+"""
+predecessor = "2.1"
+content = { kind = "lines", spans = [
+  { path = "main.go", start = 336, end = 343, render = { kind = "full" } },
+  { path = "main.go", start = 358, end = 393, render = { kind = "full" } },
+] }

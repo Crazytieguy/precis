@@ -1,0 +1,677 @@
+fixture = "axios"
+revision_pin = "26a87296"
+summary = """
+axios is a promise-based HTTP client for the browser and node.js. The default
+instance is exported from `lib/axios.js` via `index.js`; browser builds use the
+XHR or Fetch adapter and Node uses the HTTP/HTTPS adapter, with platform
+selection in `lib/platform/`. The repo ships ESM source (`type: module`) with
+TypeScript declarations and Rollup-built bundles in `dist/` (not in the
+fixture).
+
+Likely query distribution this NS serves:
+- How do I make a request / use an instance / set defaults / register an
+  interceptor? (drives the public API + `lib/axios.js` + `lib/core/Axios.js`)
+- How does config merge work, what fields are recognized, and how is precedence
+  resolved? (drives `mergeConfig.js` + `AxiosRequestConfig` type)
+- How are errors structured / what are the error codes / how do I wrap a
+  third-party error? (drives `AxiosError.js` static-code table)
+- Why is my header lowercased / how do I add a custom case-insensitive
+  accessor? (drives `AxiosHeaders.js`)
+- How is the adapter selected, what does each adapter do, where are
+  cancellation hooks attached? (drives `adapters/`)
+- Security: prototype-pollution guards, redaction, no-proxy bypass, XSRF
+  same-origin check, `redact` in `toJSON`. (drives `mergeConfig.js`,
+  `resolveConfig.js`, `shouldBypassProxy.js`, `AxiosError.toJSON`)
+- Tests / lint / build commands? (drives `AGENTS.md`, `package.json`)
+
+Ranking strategy:
+1. AGENTS.md lede + top-level fs listing — agent-targeted contributor guide
+   paired with the inventory it refers to.
+2. Public API surface: `lib/axios.js` (static surface), `index.js` named
+   re-exports, `Axios` class + method-alias loop, `AxiosError` codes,
+   `InterceptorManager` (jsdocs elided).
+3. Lifecycle + config + headers: `dispatchRequest`, `mergeConfig` per-key
+   table, defaults shape, `AxiosHeaders` method list, transitional.
+4. Adapter resolution + cancellation: `adapters.js`, xhr/fetch/http entry
+   shape; CanceledError / isCancel / CancelToken public surface.
+5. Helpers signatures (high-surface helpers), payload-kind transformer,
+   platform, env, types, tests, threat model.
+
+Catastrophic-omission hedges authored explicitly:
+- Top-level + every lib/ subdirectory listed before any source bodies, so the
+  agent can't assume away an unlisted directory.
+- Every helper file's name lands in the helpers fs listing; signature batches
+  for the surface-bearing helpers follow in late tiers.
+- Full `AxiosError` error-code constant block as one batch (not partial).
+- All Axios HTTP-method aliases (`get`/`post`/`postForm`/`query`/…) shown
+  together via the registration loops, not just `.get`/`.post`.
+- All headers convenience-accessor names listed together.
+- `mergeConfig`'s per-key strategy map shown end-to-end.
+- Adapter `knownAdapters` map shown end-to-end (http/xhr/fetch).
+"""
+
+# ============================================================
+# TIER 1 — Lede + inventory (very small early batches)
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "AGENTS.md — opening lede"
+justification = """
+Three lines: axios is a promise-based HTTP client for the browser and node.js;
+default instance from `lib/axios.js` via `index.js`; browser uses XHR or
+Fetch, Node uses HTTP/HTTPS; platform selection in `lib/platform/`. Pure
+orientation — every later question lands somewhere this sentence already
+named.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 1, end = 3, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.2"
+descriptor = "Top-level fs listing — core code and contributor docs"
+justification = """
+Load-bearing half of the top-level: `lib/`, `index.js`, `index.d.ts`,
+`index.d.cts`, `package.json`, `tests/`, `docs/`, plus the contributor-prose
+files (`AGENTS.md`, `README.md`, `CHANGELOG.md`, `MIGRATION_GUIDE.md`,
+`THREATMODEL.md`, `SECURITY.md`, `ECOSYSTEM.md`, `CONTRIBUTING.md`,
+`LICENSE`). Tier 2.1 adds the build/tooling half.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = [
+    "lib",
+    "index.js",
+    "index.d.ts",
+    "index.d.cts",
+    "package.json",
+    "tests",
+    "docs",
+    "AGENTS.md",
+    "README.md",
+    "CHANGELOG.md",
+    "MIGRATION_GUIDE.md",
+    "THREATMODEL.md",
+    "SECURITY.md",
+    "ECOSYSTEM.md",
+    "CONTRIBUTING.md",
+    "LICENSE",
+  ] },
+] }
+
+[[batches]]
+id = "1.3"
+descriptor = "lib/ direct children"
+justification = """
+The structural map at one level: lib/{adapters,cancel,core,defaults,env,
+helpers,platform} plus the two top-level files (axios.js, utils.js).
+"""
+content = { kind = "fs", groups = [
+  { parent = "lib", entries = "all" },
+] }
+
+[[batches]]
+id = "1.4"
+descriptor = "package.json — name/version/main/module/type"
+justification = """
+First nine lines: name, version (1.16.1), `main: ./dist/node/axios.cjs`,
+`module: ./index.js`, `type: module`, `types: index.d.ts`, jsdelivr/unpkg
+CDN targets.
+"""
+content = { kind = "lines", spans = [
+  { path = "package.json", start = 1, end = 11, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.5"
+descriptor = "lib/core, lib/adapters, lib/cancel — children"
+justification = """
+The three most-touched lib/ subtrees in one batch: every file for the bulk
+of HTTP/dispatch/cancellation queries (Axios.js, AxiosError.js,
+AxiosHeaders.js, InterceptorManager.js, mergeConfig.js, dispatchRequest.js,
+settle.js, transformData.js, buildFullPath.js; adapters.js, http.js, xhr.js,
+fetch.js; CancelToken.js, CanceledError.js, isCancel.js).
+"""
+content = { kind = "fs", groups = [
+  { parent = "lib/core", entries = "all" },
+  { parent = "lib/adapters", entries = "all" },
+  { parent = "lib/cancel", entries = "all" },
+] }
+
+[[batches]]
+id = "1.6"
+descriptor = "lib/helpers — full child listing"
+justification = """
+Catastrophic-omission hedge for the 30+ helper modules: HttpStatusCode,
+buildURL, toFormData, resolveConfig, shouldBypassProxy, composeSignals,
+parseHeaders, sanitizeHeaderValue, validator, throttle, speedometer,
+AxiosTransformStream, AxiosURLSearchParams, cookies, formDataToJSON,
+formDataToStream, estimateDataURLDecodedBytes, fromDataURI, isAbsoluteURL,
+isAxiosError, isURLSameOrigin, parseProtocol, progressEventReducer,
+readBlob, spread, toURLEncodedForm, trackStream, ZlibHeaderTransformStream,
+bind, callbackify, combineURLs, deprecatedMethod, null.
+"""
+content = { kind = "fs", groups = [
+  { parent = "lib/helpers", entries = "all" },
+] }
+
+[[batches]]
+id = "1.7"
+descriptor = "lib/defaults, lib/env, lib/platform — tree"
+justification = """
+Defaults + version constant + platform split (browser vs node vs common
+utils). One batch — each subtree is small and they share a discovery
+boundary.
+"""
+content = { kind = "fs", groups = [
+  { parent = "lib/defaults", entries = "all" },
+  { parent = "lib/env", entries = "all" },
+  { parent = "lib/env/classes", entries = "all" },
+  { parent = "lib/platform", entries = "all" },
+  { parent = "lib/platform/browser", entries = "all" },
+  { parent = "lib/platform/browser/classes", entries = "all" },
+  { parent = "lib/platform/common", entries = "all" },
+  { parent = "lib/platform/node", entries = "all" },
+  { parent = "lib/platform/node/classes", entries = "all" },
+] }
+
+[[batches]]
+id = "1.8"
+descriptor = "AGENTS.md — Architecture Boundaries"
+justification = """
+Names what belongs in core/ vs adapters/ vs platform/ vs helpers/, the key
+classes by name (Axios, AxiosError, AxiosHeaders, InterceptorManager), the
+default adapter preference list `['xhr','http','fetch']`, capability-based
+selection, and the 'do not put axios-specific lifecycle in helpers/' rule.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 32, end = 38, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.9"
+descriptor = "AGENTS.md — Commands"
+justification = """
+Test/lint/build invocations. Serves the 'run tests / lint just this file /
+build for CI' query class.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 15, end = 22, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.10"
+descriptor = "AGENTS.md — Package Shape"
+justification = """
+Names dist/ as generated, the ESM `index.js` entry, browser/RN export
+remapping, and `lib/env/data.js` as version-generated.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 24, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "1.11"
+descriptor = "AGENTS.md — Naming Conventions + Common Pitfalls"
+justification = """
+Dense rules every code-change query benefits from: PascalCase classes,
+camelCase fns, UPPER_SNAKE_CASE error codes, Symbol-keyed internal slots;
+'don't mutate config in-place', 'don't assume browser/node globals',
+'use lib/helpers/bind.js not Function.bind'.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 40, end = 45, render = { kind = "full" } },
+  { path = "AGENTS.md", start = 79, end = 84, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 2 — Public API surface (factory, class, exports, errors)
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Top-level fs — build/tooling/extras"
+justification = """
+The other half of the top-level: build config (`gulpfile.js`,
+`rollup.config.js`, `webpack.config.js`, `eslint.config.js`, `tsconfig.json`,
+`tslint.json`, `vitest.config.js`), `package-lock.json`, examples/sandbox/
+scripts, `CODE_OF_CONDUCT.md`, `COLLABORATOR_GUIDE.md`, `CONTRIBUTORS.md`,
+`CLAUDE.md`. Completes the catastrophic-omission hedge from 1.2.
+"""
+content = { kind = "fs", groups = [
+  { parent = ".", entries = [
+    "gulpfile.js",
+    "rollup.config.js",
+    "webpack.config.js",
+    "eslint.config.js",
+    "tsconfig.json",
+    "tslint.json",
+    "vitest.config.js",
+    "package-lock.json",
+    "examples",
+    "sandbox",
+    "scripts",
+    "CODE_OF_CONDUCT.md",
+    "COLLABORATOR_GUIDE.md",
+    "CONTRIBUTORS.md",
+    "CLAUDE.md",
+  ] },
+] }
+
+[[batches]]
+id = "2.2"
+descriptor = "index.js — full file (named ESM re-exports)"
+justification = """
+The ESM public entry: every name the package surfaces (default `axios`,
+`create`, `Axios`, `AxiosError`, `CanceledError`, `isCancel`, `CancelToken`,
+`VERSION`, `all`, `Cancel`, `isAxiosError`, `spread`, `toFormData`,
+`AxiosHeaders`, `HttpStatusCode`, `formToJSON`, `getAdapter`, `mergeConfig`).
+Catastrophic-omission hedge for the import surface.
+"""
+content = { kind = "lines", spans = [
+  { path = "index.js", start = 1, end = 45, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.3"
+descriptor = "lib/axios.js — createInstance() factory header"
+justification = """
+The factory's docstring + signature + opening lines: where the `Axios` class
+is instantiated and request is bound. Sets up what 2.4 attaches statics to.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/axios.js", start = 21, end = 44, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.4"
+descriptor = "lib/axios.js — static-property attachment block"
+justification = """
+The contiguous block where every static is hung on the default instance:
+Axios, CanceledError, CancelToken, isCancel, VERSION, toFormData, AxiosError,
+Cancel (backward-compat alias for CanceledError), all, spread, isAxiosError,
+mergeConfig, AxiosHeaders, formToJSON, getAdapter, HttpStatusCode, default.
+Plus the `createInstance(defaults)` call and the `export default`.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/axios.js", start = 46, end = 89, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.5"
+descriptor = "lib/axios.js — module imports"
+justification = """
+For each public surface, which module owns it. Serves 'where is the X
+re-export sourced from'.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/axios.js", start = 1, end = 20, render = { kind = "full" } },
+] }
+predecessor = "2.3"
+
+[[batches]]
+id = "2.6"
+descriptor = "lib/core/Axios.js — class header + constructor"
+justification = """
+Class declaration and the `defaults` / `interceptors.{request, response}`
+fields. Establishes what an Axios instance *is* before its methods are shown.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/Axios.js", start = 1, end = 30, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.7"
+descriptor = "lib/core/Axios.js — request()/_request()/getUri() signatures"
+justification = """
+Locations-only for the three public methods. The agent learns the shape and
+exact line ranges; bodies (~150 lines of interceptor-chain logic) stay
+off-budget.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/Axios.js", start = 39, end = 39, render = { kind = "full" } },
+  { path = "lib/core/Axios.js", start = 82, end = 82, render = { kind = "full" } },
+  { path = "lib/core/Axios.js", start = 233, end = 233, render = { kind = "full" } },
+] }
+predecessor = "2.6"
+
+[[batches]]
+id = "2.8"
+descriptor = "lib/core/Axios.js — method-alias loops (get/post/…/postForm/query)"
+justification = """
+The two `utils.forEach` blocks that install every HTTP-method shortcut on
+`Axios.prototype`. Names `['delete','get','head','options']` and
+`['post','put','patch','query']` plus `+Form` variants (and the `query`
+exception — no `queryForm`).
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/Axios.js", start = 240, end = 280, render = { kind = "full" } },
+] }
+predecessor = "2.6"
+
+[[batches]]
+id = "2.9"
+descriptor = "lib/core/AxiosError.js — class header, constructor sig, static from sig"
+justification = """
+Signature lines for `class AxiosError extends Error`, `static from(...)`,
+`constructor(message, code, config, request, response)`, the `this.name`/
+`this.isAxiosError` brand assignments, and the `toJSON()` header. Locations
+batch — the agent gets exact line numbers without the bodies.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/AxiosError.js", start = 75, end = 76, render = { kind = "full" } },
+  { path = "lib/core/AxiosError.js", start = 101, end = 102, render = { kind = "full" } },
+  { path = "lib/core/AxiosError.js", start = 117, end = 119, render = { kind = "full" } },
+  { path = "lib/core/AxiosError.js", start = 128, end = 128, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.10"
+descriptor = "lib/core/AxiosError.js — full static error-code table"
+justification = """
+The authoritative error-code list: every `AxiosError.ERR_*` plus the
+historical `ECONNABORTED`/`ETIMEDOUT`/`ECONNREFUSED` aliases. AGENTS.md
+references this same list. Catastrophic-omission hedge — partial display
+would invite invented codes downstream.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/AxiosError.js", start = 159, end = 176, render = { kind = "full" } },
+] }
+predecessor = "2.9"
+
+[[batches]]
+id = "2.11"
+descriptor = "AGENTS.md — Error Handling rules"
+justification = """
+Policy: 'throw AxiosError, never raw Error', `AxiosError.from(...)` for
+wrapping. Re-enumerates the codes inline. Pairs with 2.10.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 47, end = 52, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.12"
+descriptor = "AGENTS.md — Interceptor Execution Order + Request Lifecycle"
+justification = """
+The single most useful 'how does axios work' narrative. Names LIFO request
+order, FIFO response order, the nine lifecycle steps, and the
+`synchronous`/`runWhen` options on InterceptorManager.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 54, end = 71, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "2.13"
+descriptor = "lib/core/InterceptorManager.js — class + method code (jsdocs elided)"
+justification = """
+Class header + every method body without the surrounding jsdoc blocks.
+Shows `handlers` is a sparse array, `use(fulfilled, rejected, options)`
+returns the index (used by `eject`), `eject(id)` nulls a slot, `clear()`
+resets, `forEach(fn)` skips nulls. Behavioral surface at a fraction of the
+full-file cost.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/InterceptorManager.js", start = 1, end = 8, render = { kind = "full" } },
+  { path = "lib/core/InterceptorManager.js", start = 19, end = 27, render = { kind = "full" } },
+  { path = "lib/core/InterceptorManager.js", start = 36, end = 40, render = { kind = "full" } },
+  { path = "lib/core/InterceptorManager.js", start = 47, end = 51, render = { kind = "full" } },
+  { path = "lib/core/InterceptorManager.js", start = 63, end = 72, render = { kind = "full" } },
+] }
+
+# ============================================================
+# TIER 3 — Lifecycle, config merge, headers, defaults
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "lib/core/dispatchRequest.js — code (jsdocs elided)"
+justification = """
+The canonical request-lifecycle file in code: `throwIfCancellationRequested`
+(checks cancelToken and signal.aborted), then `dispatchRequest`:
+`AxiosHeaders.from(config.headers)`, `transformData` request, default
+form-urlencoded Content-Type for POST/PUT/PATCH,
+`adapters.getAdapter(config.adapter || defaults.adapter, config)`, adapter
+→ transformResponse → response.headers normalize. Pairs with 2.12.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/dispatchRequest.js", start = 1, end = 9, render = { kind = "full" } },
+  { path = "lib/core/dispatchRequest.js", start = 17, end = 26, render = { kind = "full" } },
+  { path = "lib/core/dispatchRequest.js", start = 34, end = 89, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.2"
+descriptor = "lib/core/mergeConfig.js — per-key merge strategy map"
+justification = """
+The `mergeMap` table that assigns each config key one of `valueFromConfig2`,
+`defaultToConfig2`, `mergeDirectKeys`, or `mergeDeepProperties`. Includes
+the headers special case (case-insensitive deep merge) and the
+proto-pollution skip for `__proto__`/`constructor`/`prototype`.
+Catastrophic-omission hedge — partial display would imply unlisted keys
+lack a strategy.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/mergeConfig.js", start = 80, end = 123, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.3"
+descriptor = "lib/core/mergeConfig.js — signature + null-proto bootstrap"
+justification = """
+The `mergeConfig` jsdoc, signature, and the null-proto `config` object
+construction with `hasOwnProperty` redefined as a non-enumerable own slot.
+Establishes the prototype-pollution defense the per-key map (3.2) relies on.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/mergeConfig.js", start = 8, end = 35, render = { kind = "full" } },
+] }
+predecessor = "3.2"
+
+[[batches]]
+id = "3.4"
+descriptor = "lib/defaults/index.js — defaults shell (no transform bodies)"
+justification = """
+The `defaults` object shell — adapter preference `['xhr','http','fetch']`,
+timeout=0, xsrf cookie/header names, maxContentLength=-1, maxBodyLength=-1,
+env (FormData, Blob), `validateStatus: 200..<300`, default Accept header,
+per-method header buckets. Transform bodies at lines 43-107 and 109-142 are
+left for tier 5.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/defaults/index.js", start = 38, end = 42, render = { kind = "full" } },
+  { path = "lib/defaults/index.js", start = 144, end = 175, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.5"
+descriptor = "lib/defaults/transitional.js — full file"
+justification = """
+Five-key transitional-options block: silentJSONParsing=true,
+forcedJSONParsing=true, clarifyTimeoutError=false,
+legacyInterceptorReqResOrdering=true. The exact defaults referenced by the
+transitional validator block in `Axios._request`.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/defaults/transitional.js", start = 1, end = 8, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.6"
+descriptor = "lib/core/settle.js — full file"
+justification = """
+27-line resolver: rejects with `ERR_BAD_REQUEST` (4xx) or `ERR_BAD_RESPONSE`
+(5xx) per `validateStatus`, otherwise resolves. The exact 'why does my 404
+throw' wiring.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/settle.js", start = 1, end = 27, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.7"
+descriptor = "lib/core/transformData.js — full file"
+justification = """
+28-line driver: runs every request- or response-transform fn with the
+resolved AxiosHeaders context and `(data, headers, status?)` signature.
+Tiny but load-bearing — without it the `transformRequest`/`transformResponse`
+arrays look like dead config.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/transformData.js", start = 1, end = 28, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.8"
+descriptor = "lib/core/AxiosHeaders.js — instance + static method signatures"
+justification = """
+Locations-only batch covering every AxiosHeaders method: constructor, set,
+get, has, delete, clear, normalize, concat (instance), toJSON,
+Symbol.iterator, toString, getSetCookie, static from, static concat,
+static accessor. Pairs with 3.9.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/AxiosHeaders.js", start = 81, end = 81, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 85, end = 85, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 138, end = 138, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 168, end = 168, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 184, end = 184, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 211, end = 211, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 227, end = 227, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 254, end = 254, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 258, end = 258, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 270, end = 270, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 274, end = 274, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 280, end = 280, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 288, end = 288, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 292, end = 292, render = { kind = "full" } },
+  { path = "lib/core/AxiosHeaders.js", start = 300, end = 300, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "3.9"
+descriptor = "lib/core/AxiosHeaders.js — accessor registration list"
+justification = """
+The `AxiosHeaders.accessor([...])` block names every header that gets
+dedicated `setContentType`/`getContentType`/`hasContentType`-style accessors
+(Content-Type, Content-Length, Accept, Accept-Encoding, User-Agent,
+Authorization) plus the `reduceDescriptors`/`freezeMethods` finalizers.
+Catastrophic-omission hedge for the 'is there a getX' question class.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/AxiosHeaders.js", start = 326, end = 348, render = { kind = "full" } },
+] }
+predecessor = "3.8"
+
+# ============================================================
+# TIER 4 — Adapter resolution + cancellation + adapter entrypoints
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "lib/cancel/CanceledError.js + lib/cancel/isCancel.js — full files"
+justification = """
+Both tiny. CanceledError extends AxiosError with `name='CanceledError'`,
+`code=ERR_CANCELED`, and the `__CANCEL__ = true` brand. isCancel is one
+expression: `value && value.__CANCEL__`. Together they pin the cancellation-
+detection contract used throughout the codebase.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/cancel/CanceledError.js", start = 1, end = 22, render = { kind = "full" } },
+  { path = "lib/cancel/isCancel.js", start = 1, end = 5, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.2"
+descriptor = "lib/cancel/CancelToken.js — constructor + public method signatures"
+justification = """
+The CancelToken public surface: `constructor(executor)`, instance state
+`.promise`/`.reason`, methods `throwIfRequested()`, `subscribe(listener)`,
+`unsubscribe(listener)`, `toAbortSignal()` (modern bridge), and
+`static source()` (returns `{token, cancel}`) — the latter shown in full
+since it's the canonical usage example.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/cancel/CancelToken.js", start = 12, end = 13, render = { kind = "full" } },
+  { path = "lib/cancel/CancelToken.js", start = 68, end = 68, render = { kind = "full" } },
+  { path = "lib/cancel/CancelToken.js", start = 78, end = 78, render = { kind = "full" } },
+  { path = "lib/cancel/CancelToken.js", start = 95, end = 95, render = { kind = "full" } },
+  { path = "lib/cancel/CancelToken.js", start = 105, end = 105, render = { kind = "full" } },
+  { path = "lib/cancel/CancelToken.js", start = 123, end = 132, render = { kind = "full" } },
+] }
+predecessor = "4.1"
+
+[[batches]]
+id = "4.3"
+descriptor = "AGENTS.md — Cancellation rules"
+justification = """
+Constraint: support both CancelToken (legacy) and AbortSignal (modern)
+simultaneously; cancellation must work mid-flight; always remove signal
+listeners on settlement to prevent leaks.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 73, end = 77, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.4"
+descriptor = "lib/adapters/adapters.js — knownAdapters table"
+justification = """
+The `knownAdapters = { http, xhr, fetch }` map plus the `adapterName`
+tagging loop. Answers 'what string ids does config.adapter accept' and
+'why does fetch have a `.get` instead of being a function'.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/adapters/adapters.js", start = 1, end = 36, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "4.5"
+descriptor = "lib/adapters/adapters.js — getAdapter() body"
+justification = """
+The adapter-resolution algorithm: walk the configured adapter list in
+order, try `adapter.get(config)` for object-form adapters, break on the
+first match, otherwise throw `ERR_NOT_SUPPORT` with a reason listing every
+adapter that returned `false` ('not supported by the environment') or
+`null` ('not available in the build').
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/adapters/adapters.js", start = 60, end = 132, render = { kind = "full" } },
+] }
+predecessor = "4.4"
+
+# ============================================================
+# TIER 5 — Security + selected helper signatures (small budget left)
+# ============================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "AGENTS.md — Security-Sensitive Code"
+justification = """
+Names the load-bearing security policies the agent must respect when
+touching config/URL/proxy/XSRF code: own-property checks via
+`utils.hasOwnProp`/`own()`, filter `__proto__`/`constructor`/`prototype` in
+any merge, consult `THREATMODEL.md` for URL/redirect/proxy/decompression
+changes, `withXSRFToken` cross-origin behavior, never weaken `beforeRedirect`/
+proxy/socketPath safeguards. Pure constraints — every security-touching
+change reads this first.
+"""
+content = { kind = "lines", spans = [
+  { path = "AGENTS.md", start = 96, end = 97, render = { kind = "full" } },
+] }
+
+[[batches]]
+id = "5.2"
+descriptor = "URL-building helper signatures (buildFullPath, isAbsoluteURL, combineURLs)"
+justification = """
+Three single-line signatures for the URL-composition chain
+`buildFullPath(baseURL, requestedURL, allowAbsoluteUrls)` →
+`isAbsoluteURL(url)` and `combineURLs(baseURL, relativeURL)`. Anchors any
+'how does axios decide whether baseURL applies' query at one hop.
+"""
+content = { kind = "lines", spans = [
+  { path = "lib/core/buildFullPath.js", start = 16, end = 16, render = { kind = "full" } },
+  { path = "lib/helpers/isAbsoluteURL.js", start = 10, end = 10, render = { kind = "full" } },
+  { path = "lib/helpers/combineURLs.js", start = 11, end = 11, render = { kind = "full" } },
+] }

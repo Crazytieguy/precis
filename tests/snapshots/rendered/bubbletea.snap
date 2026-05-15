@@ -1,0 +1,298 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.gitattributes
+.github/
+.gitignore
+.golangci.yml
+.goreleaser.yml
+LICENSE
+README.md
+    1→# Bubble Tea
+    10→The fun, functional and stateful way to build terminal apps. A Go framework
+    11→based on [The Elm Architecture][elm]. Bubble Tea is well-suited for simple and
+    12→complex terminal applications, either inline, full-window, or a mix of both.
+Taskfile.yaml
+UPGRADE_GUIDE_V2.md
+clipboard.go
+    1→package tea
+color.go
+commands.go
+    1→package tea
+    3→import (
+    4→	"time"
+    5→)
+commands_test.go
+cursed_renderer.go
+cursed_renderer_test.go
+cursor.go
+    1→package tea
+    3→// Position represents a position in the terminal.
+    4→type Position struct{ X, Y int }
+    …
+    6→// CursorPositionMsg is a message that represents the terminal cursor position.
+    7→type CursorPositionMsg struct {
+    8→	X, Y int
+    9→}
+    11→// CursorShape represents a terminal cursor shape.
+    12→type CursorShape int
+    …
+    14→// Cursor shapes.
+    15→const (
+    16→	CursorBlock CursorShape = iota
+    17→	CursorUnderline
+    18→	CursorBar
+    19→)
+    21→// requestCursorPosMsg is a message that requests the cursor position.
+    22→type requestCursorPosMsg struct{}
+    …
+    24→// RequestCursorPosition is a command that requests the cursor position.
+    25→// The cursor position will be sent as a [CursorPositionMsg] message.
+    26→func RequestCursorPosition() Msg {
+    27→	return requestCursorPosMsg{}
+environ.go
+    1→package tea
+    3→import uv "github.com/charmbracelet/ultraviolet"
+    19→type EnvMsg uv.Environ
+    …
+    24→func (msg EnvMsg) Getenv(key string) (v string) {
+    25→	return uv.Environ(msg).Getenv(key)
+    32→func (msg EnvMsg) LookupEnv(key string) (s string, v bool) {
+    33→	return uv.Environ(msg).LookupEnv(key)
+examples/
+exec.go
+exec_test.go
+focus.go
+    1→package tea
+    3→// FocusMsg represents a terminal focus message.
+    4→// This occurs when the terminal gains focus.
+    5→type FocusMsg struct{}
+    …
+    7→// BlurMsg represents a terminal blur message.
+    8→// This occurs when the terminal loses focus.
+    9→type BlurMsg struct{}
+go.mod
+    1→module charm.land/bubbletea/v2
+    3→retract v2.0.0-beta1 // We add a "." after the "beta" in the version number.
+    5→go 1.25.0
+    7→require (
+    8→	github.com/charmbracelet/colorprofile v0.4.3
+    9→	github.com/charmbracelet/ultraviolet v0.0.0-20260416155717-489999b90468
+    10→	github.com/charmbracelet/x/ansi v0.11.7
+    11→	github.com/charmbracelet/x/exp/golden v0.0.0-20241212170349-ad4b7ae0f25f
+    12→	github.com/charmbracelet/x/term v0.2.2
+    13→	github.com/lucasb-eyer/go-colorful v1.4.0
+    14→	github.com/muesli/cancelreader v0.2.2
+    15→	golang.org/x/sys v0.43.0
+    16→)
+    18→require (
+    28→)
+go.sum
+input.go
+    1→package tea
+    3→import (
+    4→	uv "github.com/charmbracelet/ultraviolet"
+    5→)
+    7→// translateInputEvent translates an input event into a Bubble Tea Msg.
+    8→func (p *Program) translateInputEvent(e uv.Event) Msg {
+    …
+key.go
+keyboard.go
+    1→package tea
+    3→import (
+    4→	"github.com/charmbracelet/x/ansi"
+    5→)
+    9→type KeyboardEnhancementsMsg struct {
+    …
+    31→// SupportsKeyDisambiguation returns whether the terminal supports key
+    32→// disambiguation (e.g., distinguishing between different modifier keys).
+    33→func (k KeyboardEnhancementsMsg) SupportsKeyDisambiguation() bool {
+    34→	return k.Flags > 0
+    37→// SupportsEventTypes returns whether the terminal supports reporting
+    38→// different types of key events (press, release, and repeat).
+    39→func (k KeyboardEnhancementsMsg) SupportsEventTypes() bool {
+    40→	return k.Flags&ansi.KittyReportEventTypes != 0
+    43→// SupportsAlternateKeys returns whether the terminal supports reporting
+    44→// alternate key codes.
+    45→func (k KeyboardEnhancementsMsg) SupportsAlternateKeys() bool {
+    46→	return k.Flags&ansi.KittyReportAlternateKeys != 0
+    49→// SupportsAllKeysAsEscapeCodes returns whether the terminal supports reporting
+    50→// all keys as escape codes.
+    51→func (k KeyboardEnhancementsMsg) SupportsAllKeysAsEscapeCodes() bool {
+    52→	return k.Flags&ansi.KittyReportAllKeysAsEscapeCodes != 0
+    55→// SupportsAssociatedText returns whether the terminal supports reporting
+    56→// associated text with key events.
+    57→func (k KeyboardEnhancementsMsg) SupportsAssociatedText() bool {
+    58→	return k.Flags&ansi.KittyReportAssociatedKeys != 0
+logging.go
+    23→func LogToFile(path string, prefix string) (*os.File, error) {
+    24→	return LogToFileWith(path, prefix, log.Default())
+    27→// LogOptionsSetter is an interface implemented by stdlib's log and charm's log
+    28→// libraries.
+    29→type LogOptionsSetter interface {
+    30→	SetOutput(io.Writer)
+    31→	SetPrefix(string)
+    32→}
+    34→// LogToFileWith does allows to call LogToFile with a custom LogOptionsSetter.
+    35→func LogToFileWith(path string, prefix string, log LogOptionsSetter) (*os.File, error) {
+    …
+logging_test.go
+mod.go
+    1→package tea
+    3→import uv "github.com/charmbracelet/ultraviolet"
+mouse.go
+nil_renderer.go
+options.go
+options_test.go
+paste.go
+    1→package tea
+    3→// PasteMsg is an message that is emitted when a terminal receives pasted text
+    4→// using bracketed-paste.
+    5→type PasteMsg struct {
+    6→	Content string
+    7→}
+    9→// String returns the pasted content as a string.
+    10→func (p PasteMsg) String() string {
+    11→	return p.Content
+    14→// PasteStartMsg is an message that is emitted when the terminal starts the
+    15→// bracketed-paste text.
+    16→type PasteStartMsg struct{}
+    …
+    18→// PasteEndMsg is an message that is emitted when the terminal ends the
+    19→// bracketed-paste text.
+    20→type PasteEndMsg struct{}
+profile.go
+    1→package tea
+    3→import "github.com/charmbracelet/colorprofile"
+    13→type ColorProfileMsg struct {
+    14→	colorprofile.Profile
+    15→}
+raw.go
+    1→package tea
+    3→// RawMsg is a message that contains a string to be printed to the terminal
+    4→// without any intermediate processing.
+    5→type RawMsg struct {
+    6→	Msg any
+    7→}
+    33→func Raw(r any) Cmd {
+    34→	return func() Msg {
+    35→		return RawMsg{r}
+    36→	}
+renderer.go
+    13→	defaultFPS = 60
+    14→	maxFPS     = 120
+    …
+    18→type renderer interface {
+    …
+    59→type printLineMessage struct {
+    60→	messageBody string
+    61→}
+    70→func Println(args ...any) Cmd {
+    …
+    86→func Printf(template string, args ...any) Cmd {
+    …
+    96→func encodeCursorStyle(style CursorShape, blink bool) int {
+    …
+screen.go
+    1→package tea
+    3→import "github.com/charmbracelet/x/ansi"
+    9→type WindowSizeMsg struct {
+    10→	Width  int
+    11→	Height int
+    12→}
+    20→func ClearScreen() Msg {
+    21→	return clearScreenMsg{}
+    26→type clearScreenMsg struct{}
+    …
+    62→type ModeReportMsg struct {
+    63→	// Mode is the mode number.
+    64→	Mode ansi.Mode
+    66→	// Value is the mode value.
+    67→	Value ansi.ModeSetting
+    68→}
+screen_test.go
+signals_unix.go
+    15→func (p *Program) listenForResize(done chan struct{}) {
+    …
+signals_windows.go
+    4→package tea
+    8→func (p *Program) listenForResize(done chan struct{}) {
+    9→	close(done)
+tea.go
+tea_test.go
+termcap.go
+    1→package tea
+    5→type requestCapabilityMsg string
+    …
+    30→func RequestCapability(s string) Cmd {
+    31→	return func() Msg {
+    32→		return requestCapabilityMsg(s)
+    33→	}
+    41→type CapabilityMsg struct {
+    42→	Content string
+    43→}
+    45→// String returns the capability content as a string.
+    46→func (c CapabilityMsg) String() string {
+    47→	return c.Content
+termios_bsd.go
+    11→func (p *Program) checkOptimizedMovements(s *term.State) {
+    …
+termios_other.go
+    4→package tea
+    6→import "github.com/charmbracelet/x/term"
+    8→func (*Program) checkOptimizedMovements(*term.State) {}
+termios_unix.go
+    11→func (p *Program) checkOptimizedMovements(s *term.State) {
+    …
+termios_windows.go
+    4→package tea
+    6→import "github.com/charmbracelet/x/term"
+    8→func (p *Program) checkOptimizedMovements(*term.State) {
+    …
+testdata/
+    TestClearMsg/
+    TestViewModel/
+tty.go
+tty_unix.go
+    15→func (p *Program) initInput() (err error) {
+    …
+    37→const suspendSupported = true
+    …
+    39→// Send SIGTSTP to the entire process group.
+    40→func suspendProcess() {
+    …
+tty_windows.go
+    13→func (p *Program) initInput() (err error) {
+    …
+    62→const suspendSupported = false
+    …
+    64→func suspendProcess() {}
+tutorials/
+    basics/
+    commands/
+    go.mod
+        1→module tutorial
+        3→go 1.24.2
+        5→toolchain go1.24.10
+        7→require charm.land/bubbletea/v2 v2.0.0-00010101000000-000000000000
+        9→require (
+        27→)
+        29→replace charm.land/bubbletea/v2 => ../
+    go.sum
+xterm.go
+    1→package tea
+    3→// TerminalVersionMsg is a message that represents the terminal version.
+    4→type TerminalVersionMsg struct {
+    5→	Name string
+    6→}
+    8→// String returns the terminal name as a string.
+    9→func (t TerminalVersionMsg) String() string {
+    10→	return t.Name
+    15→type terminalVersion struct{}
+    …
+    17→// RequestTerminalVersion is a command that queries the terminal for its
+    18→// version using XTVERSION. Note that some terminals may not support this
+    19→// command.
+    20→func RequestTerminalVersion() Msg {
+    21→	return terminalVersion{}

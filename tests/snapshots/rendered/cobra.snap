@@ -1,0 +1,313 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+.golangci.yml
+.mailmap
+CONDUCT.md
+    1→## Cobra User Contract
+    …
+    3→### Versioning
+    …
+    6→### Backward Compatibility
+    …
+    9→### Deprecation
+    …
+    12→### CVE
+    …
+    15→### Communication
+    …
+    18→### Breaking Changes
+    …
+    32→### CI Testing
+    …
+    35→### Disclaimer
+    …
+CONTRIBUTING.md
+LICENSE.txt
+MAINTAINERS
+Makefile
+README.md
+    7→Cobra is a library for creating powerful modern CLI applications.
+    29→### [Warp, the AI terminal for devs](https://www.warp.dev/cobra)
+    30→[Try Cobra in Warp today](https://www.warp.dev/cobra)<br>
+    32→</div>
+    33→<hr>
+    35→# Overview
+    …
+    55→# Concepts
+    …
+    79→## Commands
+    …
+    89→## Flags
+    …
+    102→# Installing
+    …
+    116→# Usage
+    …
+    131→# License
+    …
+    133→Cobra is released under the Apache 2.0 license. See [LICENSE.txt](LICENSE.txt)
+SECURITY.md
+active_help.go
+    15→package cobra
+    17→import (
+    18→	"fmt"
+    19→	"os"
+    20→)
+    23→	activeHelpMarker = "_activeHelp_ "
+    …
+    26→	activeHelpEnvVarSuffix  = "ACTIVE_HELP"
+    27→	activeHelpGlobalEnvVar  = configEnvVarGlobalPrefix + "_" + activeHelpEnvVarSuffix
+    28→	activeHelpGlobalDisable = "0"
+    …
+    38→func AppendActiveHelp(compArray []Completion, activeHelpStr string) []Completion {
+    39→	return append(compArray, fmt.Sprintf("%s%s", activeHelpMarker, activeHelpStr))
+    47→func GetActiveHelpConfig(cmd *Command) string {
+    …
+    58→func activeHelpEnvVar(name string) string {
+    59→	return configEnvVar(name, activeHelpEnvVarSuffix)
+active_help_test.go
+args.go
+    15→package cobra
+    17→import (
+    18→	"fmt"
+    19→	"strings"
+    20→)
+    22→type PositionalArgs func(cmd *Command, args []string) error
+    …
+    28→func legacyArgs(cmd *Command, args []string) error {
+    …
+    41→// NoArgs returns an error if any args are included.
+    42→func NoArgs(cmd *Command, args []string) error {
+    43→	if len(args) > 0 {
+    44→		return fmt.Errorf("unknown command %q for %q", args[0], cmd.CommandPath())
+    45→	}
+    46→	return nil
+    49→// OnlyValidArgs returns an error if there are any positional args that are not in
+    50→// the `ValidArgs` field of `Command`
+    51→func OnlyValidArgs(cmd *Command, args []string) error {
+    …
+    68→// NoDuplicateArgs returns an error if there are any duplicate positional args.
+    69→func NoDuplicateArgs(cmd *Command, args []string) error {
+    …
+    81→// ArbitraryArgs never returns an error.
+    82→func ArbitraryArgs(cmd *Command, args []string) error {
+    83→	return nil
+    86→// MinimumNArgs returns an error if there is not at least N args.
+    87→func MinimumNArgs(n int) PositionalArgs {
+    …
+    96→// MaximumNArgs returns an error if there are more than N args.
+    97→func MaximumNArgs(n int) PositionalArgs {
+    …
+    106→// ExactArgs returns an error if there are not exactly n args.
+    107→func ExactArgs(n int) PositionalArgs {
+    …
+    116→// RangeArgs returns an error if the number of args is not within the expected range.
+    117→func RangeArgs(min int, max int) PositionalArgs {
+    …
+    126→// MatchAll allows combining several PositionalArgs to work in concert.
+    127→func MatchAll(pargs ...PositionalArgs) PositionalArgs {
+    …
+    138→// ExactValidArgs returns an error if there are not exactly N positional args OR
+    139→// there are any positional args that are not in the `ValidArgs` field of `Command`
+    140→//
+    141→// Deprecated: use MatchAll(ExactArgs(n), OnlyValidArgs) instead
+    142→func ExactValidArgs(n int) PositionalArgs {
+    143→	return MatchAll(ExactArgs(n), OnlyValidArgs)
+args_test.go
+assets/
+    CobraMain.png
+bash_completions.go
+bash_completionsV2.go
+    15→package cobra
+    17→import (
+    18→	"bytes"
+    19→	"fmt"
+    20→	"io"
+    21→	"os"
+    22→)
+    24→func (c *Command) genBashCompletion(w io.Writer, includeDesc bool) error {
+    …
+    31→func genBashComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+    469→// GenBashCompletionFileV2 generates Bash completion version 2.
+    470→func (c *Command) GenBashCompletionFileV2(filename string, includeDesc bool) error {
+    …
+    480→// GenBashCompletionV2 generates Bash completion file version 2
+    481→// and writes it to the passed writer.
+    482→func (c *Command) GenBashCompletionV2(w io.Writer, includeDesc bool) error {
+    483→	return c.genBashCompletion(w, includeDesc)
+bash_completionsV2_test.go
+bash_completions_test.go
+cobra.go
+cobra_test.go
+command.go
+command_notwin.go
+    18→package cobra
+    20→var preExecHookFn func(*Command)
+command_test.go
+command_win.go
+    18→package cobra
+    20→import (
+    21→	"fmt"
+    22→	"os"
+    23→	"time"
+    25→	"github.com/inconshreveable/mousetrap"
+    26→)
+    28→var preExecHookFn = preExecHook
+    …
+    30→func preExecHook(c *Command) {
+    …
+completions.go
+completions_test.go
+doc/
+    cmd_test.go
+    man_docs.go
+    man_docs_test.go
+    man_examples_test.go
+    md_docs.go
+    md_docs_test.go
+    rest_docs.go
+    rest_docs_test.go
+    util.go
+    yaml_docs.go
+    yaml_docs_test.go
+fish_completions.go
+    15→package cobra
+    17→import (
+    18→	"bytes"
+    19→	"fmt"
+    20→	"io"
+    21→	"os"
+    22→	"strings"
+    23→)
+    25→func genFishComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+    275→// GenFishCompletion generates fish completion file and writes to the passed writer.
+    276→func (c *Command) GenFishCompletion(w io.Writer, includeDesc bool) error {
+    277→	buf := new(bytes.Buffer)
+    278→	genFishComp(buf, c.Name(), includeDesc)
+    279→	_, err := buf.WriteTo(w)
+    280→	return err
+    283→// GenFishCompletionFile generates fish completion file.
+    284→func (c *Command) GenFishCompletionFile(filename string, includeDesc bool) error {
+    …
+fish_completions_test.go
+flag_groups.go
+    15→package cobra
+    17→import (
+    18→	"fmt"
+    19→	"sort"
+    20→	"strings"
+    22→	flag "github.com/spf13/pflag"
+    23→)
+flag_groups_test.go
+go.mod
+    1→module github.com/spf13/cobra
+    3→go 1.15
+    5→require (
+    6→	github.com/cpuguy83/go-md2man/v2 v2.0.6
+    7→	github.com/inconshreveable/mousetrap v1.1.0
+    8→	github.com/spf13/pflag v1.0.9
+    9→	go.yaml.in/yaml/v3 v3.0.4
+    10→)
+go.sum
+powershell_completions.go
+    18→package cobra
+    20→import (
+    21→	"bytes"
+    22→	"fmt"
+    23→	"io"
+    24→	"os"
+    25→	"strings"
+    26→)
+    28→func genPowerShellComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+    313→func (c *Command) genPowerShellCompletion(w io.Writer, includeDesc bool) error {
+    …
+    320→func (c *Command) genPowerShellCompletionFile(filename string, includeDesc bool) error {
+    …
+    330→// GenPowerShellCompletionFile generates powershell completion file without descriptions.
+    331→func (c *Command) GenPowerShellCompletionFile(filename string) error {
+    332→	return c.genPowerShellCompletionFile(filename, false)
+    335→// GenPowerShellCompletion generates powershell completion file without descriptions
+    336→// and writes it to the passed writer.
+    337→func (c *Command) GenPowerShellCompletion(w io.Writer) error {
+    338→	return c.genPowerShellCompletion(w, false)
+    341→// GenPowerShellCompletionFileWithDesc generates powershell completion file with descriptions.
+    342→func (c *Command) GenPowerShellCompletionFileWithDesc(filename string) error {
+    343→	return c.genPowerShellCompletionFile(filename, true)
+    346→// GenPowerShellCompletionWithDesc generates powershell completion file with descriptions
+    347→// and writes it to the passed writer.
+    348→func (c *Command) GenPowerShellCompletionWithDesc(w io.Writer) error {
+    349→	return c.genPowerShellCompletion(w, true)
+powershell_completions_test.go
+shell_completions.go
+    15→package cobra
+    17→import (
+    18→	"github.com/spf13/pflag"
+    19→)
+site/
+    content/
+        active_help.md
+        completions/
+            _index.md
+            bash.md
+                1→# Generating Bash Completions For Your cobra.Command
+                …
+                5→## Bash legacy dynamic completions
+                …
+            fish.md
+            powershell.md
+            zsh.md
+        docgen/
+            _index.md
+                1→# Documentation generation
+                …
+                8→## Options
+                9→### `DisableAutoGenTag`
+                …
+                15→### `InitDefaultCompletionCmd`
+                …
+            man.md
+            md.md
+            rest.md
+            yaml.md
+        projects_using_cobra.md
+        user_guide.md
+zsh_completions.go
+    15→package cobra
+    17→import (
+    18→	"bytes"
+    19→	"fmt"
+    20→	"io"
+    21→	"os"
+    22→)
+    24→// GenZshCompletionFile generates zsh completion file including descriptions.
+    25→func (c *Command) GenZshCompletionFile(filename string) error {
+    26→	return c.genZshCompletionFile(filename, true)
+    29→// GenZshCompletion generates zsh completion file including descriptions
+    30→// and writes it to the passed writer.
+    31→func (c *Command) GenZshCompletion(w io.Writer) error {
+    32→	return c.genZshCompletion(w, true)
+    35→// GenZshCompletionFileNoDesc generates zsh completion file without descriptions.
+    36→func (c *Command) GenZshCompletionFileNoDesc(filename string) error {
+    37→	return c.genZshCompletionFile(filename, false)
+    40→// GenZshCompletionNoDesc generates zsh completion file without descriptions
+    41→// and writes it to the passed writer.
+    42→func (c *Command) GenZshCompletionNoDesc(w io.Writer) error {
+    43→	return c.genZshCompletion(w, false)
+    55→func (c *Command) MarkZshCompPositionalArgumentFile(argPosition int, patterns ...string) error {
+    56→	return nil
+    66→func (c *Command) MarkZshCompPositionalArgumentWords(argPosition int, words ...string) error {
+    67→	return nil
+    70→func (c *Command) genZshCompletionFile(filename string, includeDesc bool) error {
+    …
+    80→func (c *Command) genZshCompletion(w io.Writer, includeDesc bool) error {
+    …
+    87→func genZshComp(buf io.StringWriter, name string, includeDesc bool) {
+    …
+zsh_completions_test.go

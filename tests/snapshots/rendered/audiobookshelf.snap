@@ -1,0 +1,419 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.devcontainer/
+    Dockerfile
+    dev.js
+    devcontainer.json
+    post-create.sh
+.dockerignore
+.editorconfig
+.gitattributes
+.github/
+.gitignore
+.prettierrc
+.vscode/
+    extensions.json
+    launch.json
+    settings.json
+    tasks.json
+Dockerfile
+LICENSE
+build/
+client/
+    assets/
+        absicons.css
+        app.css
+        defaultStyles.css
+        draggable.css
+        ebooks/
+            basic.js
+            htmlParser.js
+            mobi.js
+        fonts.css
+        tailwind.css
+        transitions.css
+        trix.css
+    components/
+        app/
+        cards/
+        content/
+        controls/
+            FilterSelect.vue
+            GlobalSearch.vue
+            LibraryFilterSelect.vue
+            LibrarySortSelect.vue
+            PlaybackSpeedControl.vue
+            SortSelect.vue
+            VolumeControl.vue
+        covers/
+            AuthorImage.vue
+            BookCover.vue
+            CollectionCover.vue
+            GroupCover.vue
+            PlaylistCover.vue
+            PreviewCover.vue
+        modals/
+        player/
+        prompt/
+        readers/
+            ComicReader.vue
+            EpubReader.vue
+            MobiReader.vue
+            PdfReader.vue
+            Reader.vue
+        stats/
+            DailyListeningChart.vue
+            Heatmap.vue
+            PreviewIcons.vue
+            YearInReview.vue
+            YearInReviewBanner.vue
+            YearInReviewServer.vue
+            YearInReviewShort.vue
+        tables/
+        ui/
+        widgets/
+    cypress/
+        fixtures/
+        support/
+            commands.js
+            component-index.html
+            component.js
+        tests/
+    cypress.config.js
+    layouts/
+        blank.vue
+        default.vue
+        error.vue
+    middleware/
+        authenticated.js
+    mixins/
+        bookshelfCardsHelpers.js
+        menuKeyboardNavigation.js
+        uploadHelpers.js
+    nuxt.config.js
+    package-lock.json
+    package.json
+        2→  "name": "audiobookshelf-client",
+        3→  "version": "2.34.0",
+        5→  "description": "Self-hosted audiobook and podcast client",
+        6→  "main": "index.js",
+        17→  "author": "advplyr",
+        18→  "license": "ISC",
+    pages/
+        account.vue
+        audiobook/
+            _id/
+        author/
+        batch/
+            index.vue
+        collection/
+        config/
+        config.vue
+        index.vue
+        item/
+            _id/
+        library/
+            _library/
+                bookshelf/
+                index.vue
+                narrators.vue
+                podcast/
+                search.vue
+                series/
+                stats.vue
+        login.vue
+        oops.vue
+        playlist/
+        share/
+        upload/
+            index.vue
+    players/
+        AudioTrack.js
+        CastPlayer.js
+        LocalAudioPlayer.js
+        PlayerHandler.js
+        castUtils.js
+    plugins/
+        axios.js
+        chromecast.js
+        constants.js
+        i18n.js
+        init.client.js
+        toast.js
+        utils.js
+        version.js
+    postcss.config.js
+    static/
+        Logo.png
+        book_placeholder.jpg
+        favicon.ico
+        fonts/
+            MaterialSymbolsRounded.woff2
+            Source_Sans_Pro/
+            Ubuntu_Mono/
+            absicons/
+                absicons.eot
+                absicons.svg
+                absicons.ttf
+                absicons.woff
+        icon.svg
+        icon192.png
+        icon48.png
+        icon64.png
+        ios_icon.png
+        libarchive/
+        libs/
+            marked/
+        robots.txt
+        textures/
+    store/
+        globals.js
+        index.js
+        libraries.js
+        scanners.js
+        tasks.js
+        user.js
+        users.js
+    strings/
+custom-metadata-provider-specification.yaml
+docker-compose.yml
+docker-template.xml
+docs/
+    README.md
+        1→# OpenAPI specification
+        3→This directory includes the OpenAPI spec for the ABS server. The spec is made up of a number of individual `yaml` files located here and in the subfolders, with `root.yaml` being the file that references all of the others. The files are organized to have the same hierarchy as the server source files. The full spec is bundled into one file in `openapi.json`.
+        5→The spec is linted and bundled using [`redocly-cli`](https://redocly.com/docs/cli/). This tool also generates HTML docs for the spec.
+        7→The tools created by [`pb33f`](https://pb33f.io/), specifically `vacuum` and `wiretap`, are also useful for linting and verification. These tools check for some other things, such as validating requests to and responses from the server.
+        9→### Bundling the spec
+        …
+        15→### Linting the spec
+        …
+        21→### Generating documentation
+        …
+        23→Redocly allows for creating a static HTML page to document the API. This is done by using `redocly build-docs [file]` and supports exploded specs.
+        25→### Putting it all together
+        …
+    controllers/
+        AuthorController.yaml
+        EmailController.yaml
+        LibraryController.yaml
+        NotificationController.yaml
+        PodcastController.yaml
+        SeriesController.yaml
+    objects/
+        Folder.yaml
+        Library.yaml
+        LibraryItem.yaml
+        Notification.yaml
+        entities/
+            Author.yaml
+            PodcastEpisode.yaml
+            Series.yaml
+        files/
+            AudioFile.yaml
+            AudioTrack.yaml
+            EBookFile.yaml
+        mediaTypes/
+            Book.yaml
+            Podcast.yaml
+            media.yaml
+        metadata/
+            AudioMetaTags.yaml
+            BookMetadata.yaml
+            FileMetadata.yaml
+            PodcastMetadata.yaml
+        settings/
+    openapi.json
+    root.yaml
+    schemas.yaml
+images/
+    DemoLibrary.png
+    LibraryStreamSquare.png
+    banner.svg
+index.js
+    13→const options = commandLineArgs(optionDefinitions)
+    21→const isDev = process.env.NODE_ENV !== 'production'
+    38→const inputConfig = options.config ? Path.resolve(options.config) : null
+    39→const inputMetadata = options.metadata ? Path.resolve(options.metadata) : null
+    41→const PORT = options.port || process.env.PORT || 3333
+    42→const HOST = options.host || process.env.HOST
+    43→const CONFIG_PATH = inputConfig || process.env.CONFIG_PATH || Path.resolve('config')
+    44→const METADATA_PATH = inputMetadata || process.env.METADATA_PATH || Path.resolve('metadata')
+    45→const SOURCE = options.source || process.env.SOURCE || 'debian'
+    47→const ROUTER_BASE_PATH = process.env.ROUTER_BASE_PATH ?? '/audiobookshelf'
+    52→const Server = new server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH, ROUTER_BASE_PATH)
+package-lock.json
+package.json
+    2→  "name": "audiobookshelf",
+    3→  "version": "2.34.0",
+    5→  "description": "Self-hosted audiobook and podcast server",
+    6→  "main": "index.js",
+    23→  "bin": "index.js",
+    38→  "author": "advplyr",
+    39→  "license": "GPL-3.0",
+prod.js
+readme.md
+    5→  <p align="center">
+    6→    <br />
+    7→    <a href="https://audiobookshelf.org/docs">Documentation</a>
+    8→    ·
+    9→    <a href="https://audiobookshelf.org/guides">User Guides</a>
+    10→    ·
+    11→    <a href="https://audiobookshelf.org/support">Support</a>
+    12→  </p>
+    13→</div>
+    15→# About
+    17→Audiobookshelf is a self-hosted audiobook and podcast server.
+    19→### Features
+    …
+    21→- Fully **open-source**, including the [android & iOS app](https://github.com/advplyr/audiobookshelf-app) _(in beta)_
+    22→- Stream all audio formats on the fly
+    23→- Search and add podcasts to download episodes w/ auto-download
+    24→- Multi-user support w/ custom permissions
+    25→- Keeps progress per user and syncs across devices
+    26→- Auto-detects library updates, no need to re-scan
+    27→- Upload books and podcasts w/ bulk upload drag and drop folders
+    28→- Backup your metadata + automated daily backups
+    29→- Progressive Web App (PWA)
+    30→- Chromecast support on the web app and android app
+    31→- Fetch metadata and cover art from several sources
+    32→- Chapter editor and chapter lookup (using [Audnexus API](https://audnex.us/))
+    33→- Merge your audio files into a single m4b
+    34→- Embed metadata and cover image into your audio files
+    38→- Open RSS feeds for podcasts and audiobooks
+    40→Is there a feature you are looking for? [Suggest it](https://github.com/advplyr/audiobookshelf/issues/new/choose)
+    42→Join us on [Discord](https://discord.gg/HQgCbd6E75)
+    44→### Demo
+    …
+    50→### Android App (beta)
+    …
+    54→### iOS App (beta)
+    …
+    60→### Build your own tools & clients
+    …
+    70→# Organizing your audiobooks
+    …
+    72→#### Directory structure and folder names are important to Audiobookshelf!
+    74→See [documentation](https://audiobookshelf.org/docs#book-directory-structure) for supported directory structure, folder naming conventions, and audio file metadata usage.
+    76→<br />
+    78→# Installation
+    …
+    80→See [install docs](https://www.audiobookshelf.org/docs)
+    82→<br />
+    84→# Reverse Proxy Set Up
+    …
+    86→#### Important! Audiobookshelf requires a websocket connection.
+    88→#### Note: Using a subfolder is supported with no additional changes but the path must be `/audiobookshelf` (this is not changeable). See [discussion](https://github.com/advplyr/audiobookshelf/discussions/3535)
+    90→### NGINX Proxy Manager
+    …
+    96→### NGINX Reverse Proxy
+    …
+    131→### Apache Reverse Proxy
+    …
+    196→### SWAG Reverse Proxy
+    …
+    200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
+    …
+    243→6. **Advanced Settings Tab**
+    244→   - Leave as is.
+    246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)
+    …
+    258→### Example Caddyfile - [Caddy Reverse Proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)
+    …
+    267→### HAProxy
+    …
+    269→Below is a generic HAProxy config, using `audiobookshelf.YOUR_DOMAIN.COM`.
+    310→### pfSense and HAProxy
+    …
+    312→For pfSense the inputs are graphical, and `Health checking` is enabled.
+    350→# Run from source
+    …
+    352→# Contributing
+    …
+    354→This application is built using [NodeJs](https://nodejs.org/).
+    356→### Localization
+    …
+    360→### Dev Container Setup
+    …
+    418→You are now ready to start development!
+    420→### Manual Environment Setup
+    …
+    436→### Development Commands
+    …
+    450→# How to Support
+    …
+    452→[See the incomplete "How to Support" page](https://www.audiobookshelf.org/support)
+server/
+    Auth.js
+    Database.js
+    Logger.js
+    Server.js
+    SocketAuthority.js
+    Watcher.js
+    auth/
+        LocalAuthStrategy.js
+        OidcAuthStrategy.js
+        TokenManager.js
+    controllers/
+    finders/
+        AuthorFinder.js
+        BookFinder.js
+        PodcastFinder.js
+    libs/
+    managers/
+    migrations/
+    models/
+    objects/
+        Backup.js
+        DailyLog.js
+        DeviceInfo.js
+        Notification.js
+        PlaybackSession.js
+        PodcastEpisodeDownload.js
+        Stream.js
+        Task.js
+        TrackProgressMonitor.js
+        files/
+            AudioFile.js
+            AudioTrack.js
+            EBookFile.js
+            LibraryFile.js
+        metadata/
+        settings/
+            EmailSettings.js
+            NotificationSettings.js
+            ServerSettings.js
+    providers/
+        Audible.js
+        AudiobookCovers.js
+        Audnexus.js
+        CustomProviderAdapter.js
+        FantLab.js
+        GoogleBooks.js
+        MusicBrainz.js
+        OpenLibrary.js
+        iTunes.js
+    routers/
+        ApiRouter.js
+        HlsRouter.js
+        PublicRouter.js
+    scanner/
+        AbsMetadataFileScanner.js
+        AudioFileScanner.js
+        BookScanner.js
+        LibraryItemScanData.js
+        LibraryItemScanner.js
+        LibraryScan.js
+        LibraryScanner.js
+        MediaProbeData.js
+        NfoFileScanner.js
+        OpfFileScanner.js
+        PodcastScanner.js
+        ScanLogger.js
+        Scanner.js
+    utils/
+tailwind.config.js
+test/
+    server/

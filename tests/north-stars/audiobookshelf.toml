@@ -1,0 +1,1324 @@
+fixture = "audiobookshelf"
+revision_pin = "eee377e0"
+summary = """
+Audiobookshelf is a self-hosted audiobook/podcast server: a Node.js
+Express + Sequelize/SQLite backend with a Nuxt 2 (Vue) web client.
+index.js bootstraps `server/Server.js`, which composes an Auth
+singleton, ~20 stateful manager modules, a tree of route handlers
+under `server/routers/` + `server/controllers/`, a Sequelize layer in
+`server/Database.js` with ~25 models, and a file-watcher / library-
+scanner pipeline rooted at `server/scanner/`. The Nuxt client lives
+under `client/` with pages / components / store. Configuration is
+driven by env vars + a `serverSettings` row in SQLite.
+
+The walker should bias toward the server (where most coding tasks
+land) but keep the client tree, build/docker plumbing, and tests
+discoverable. Predominant query shapes: 'how is X implemented',
+'where is feature Y', 'what shape is the data model for Z', 'how
+does the auth/scanner/playback flow work', plus narrower debugging
+that needs precise file:line pointers.
+"""
+
+# =========================================================================
+# Tier 1 — Project lede + top-level orientation
+# =========================================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README — single-sentence elevator pitch"
+justification = """
+Tightest 'what is this' anchor. Sub-100-token so it leaves the
+envelope wide open for the next batch.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 17
+end = 17
+render = { kind = "full" }
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo root: full top-level listing"
+justification = """
+Catastrophic-omission baseline. Orients the entire tree (server/,
+client/, test/, docs/, build/, Dockerfile, index.js, prod.js, etc.).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "."
+entries = "all"
+
+[[batches]]
+id = "1.3"
+descriptor = "package.json — name/version/desc"
+justification = """
+Tiny anchor: confirms 'self-hosted audiobook and podcast server',
+v2.34. Sub-100-token, fits the growth envelope cleanly here.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 2
+end = 5
+render = { kind = "full" }
+
+[[batches]]
+id = "1.4"
+descriptor = "server/ directory listing"
+justification = """
+Names every file/dir directly under server/: Auth.js, Database.js,
+Logger.js, Server.js, SocketAuthority.js, Watcher.js plus auth/,
+controllers/, finders/, libs/, managers/, migrations/, models/,
+objects/, providers/, routers/, scanner/, utils/.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server"
+entries = "all"
+
+[[batches]]
+id = "1.5"
+descriptor = "package.json — every npm script name"
+justification = """
+Names every script key: dev/start/start-dev/client/prod/build-win/
+build-linux/docker/deploy-linux/test/coverage. Anchors workflow
+questions.
+"""
+predecessor = "1.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 9
+end = 21
+render = { kind = "truncated", pattern = "^\\s*\"[^\"]+\"" }
+
+[[batches]]
+id = "1.6"
+descriptor = "package.json — core deps (express + sequelize + auth)"
+justification = """
+Core framework deps: axios, cookie-parser, express, express-rate-limit,
+express-session, graceful-fs, htmlparser2, lru-cache. Tells the agent
+which library answers most 'how is HTTP / auth / fs done' questions
+before the secondary helpers.
+"""
+predecessor = "1.3"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 36
+end = 44
+render = { kind = "full" }
+
+[[batches]]
+id = "1.6.1"
+descriptor = "package.json — secondary runtime deps"
+justification = """
+The rest of the runtime stack: node-unrar-js, nodemailer, openid-client,
+p-throttle, passport (+ passport-jwt), semver, sequelize, socket.io,
+sqlite3, ssrf-req-filter, xml2js. Critical for podcast / auth / socket
+/ DB questions. Splits the deps list to keep early-batch costs gentle.
+"""
+predecessor = "1.6"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "package.json"
+start = 45
+end = 53
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7"
+descriptor = "README — feature list (first half)"
+justification = """
+Anchors domain vocabulary part 1: open-source, stream all audio
+formats, podcast auto-download, multi-user + permissions, sync
+progress, auto-detect library updates, bulk upload, backups, PWA.
+"""
+predecessor = "1.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 19
+end = 30
+render = { kind = "full" }
+
+[[batches]]
+id = "1.7.1"
+descriptor = "README — feature list (second half)"
+justification = """
+Vocabulary part 2: chromecast, metadata + cover art from multiple
+sources, chapter editor + Audnexus lookup, merge to single m4b,
+embed metadata, ebook reader (epub/pdf/cbr/cbz) + send-to-Kindle,
+RSS feeds for podcasts + audiobooks.
+"""
+predecessor = "1.7"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "readme.md"
+start = 31
+end = 39
+render = { kind = "full" }
+
+[[batches]]
+id = "1.8"
+descriptor = "index.js — CLI options"
+justification = """
+Option-definitions array (config/metadata/port/host/source/dev/
+prod-with-dev-env). Anchors 'what flags can I pass'.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "index.js"
+start = 1
+end = 10
+render = { kind = "full" }
+
+[[batches]]
+id = "1.9"
+descriptor = "index.js — Server() instantiation + start()"
+justification = """
+The final `new Server(SOURCE, PORT, HOST, CONFIG_PATH, METADATA_PATH,
+ROUTER_BASE_PATH); Server.start()` and the env-var fallbacks for
+each arg (3333 / ConfigPath / MetadataPath / /audiobookshelf).
+"""
+predecessor = "1.8"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "index.js"
+start = 41
+end = 53
+render = { kind = "full" }
+
+# =========================================================================
+# Tier 2 — Server.js composition root
+# =========================================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "Server.js — class signature + ctor"
+justification = """
+Anchor: `class Server { constructor(SOURCE, PORT, HOST, CONFIG_PATH,
+METADATA_PATH, ROUTER_BASE_PATH) {`. Pivot for the rest of Tier 2.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 47
+end = 49
+render = { kind = "full" }
+
+[[batches]]
+id = "2.2"
+descriptor = "Server.js — class method index (names only)"
+justification = """
+Catastrophic-omission hedge: signature line of every Server method
+truncated at open-paren — authMiddleware, cancelLibraryScan, init,
+initProcessEventListeners, start, initializeServer, cleanUserData,
+stop.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 129
+end = 129
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 134
+end = 134
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 190
+end = 190
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 219
+end = 219
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 431
+end = 431
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 445
+end = 445
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 504
+end = 504
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "2.3"
+descriptor = "Server.js — globals from ctor args"
+justification = """
+Sets global.Source/isWin/ConfigPath/MetadataPath/RouterBasePath/
+XAccel/AllowCors. Many later modules read these globals.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 50
+end = 60
+render = { kind = "full" }
+
+[[batches]]
+id = "2.4"
+descriptor = "Server.js — manager + router instantiations"
+justification = """
+The instantiation order of every singleton (Auth, EmailManager,
+BackupManager, AbMergeManager, PlaybackSessionManager, PodcastManager,
+AudioMetadataManager, CronManager, ApiCacheManager, BinaryManager,
+plus the three Routers). Direct answer to 'where is X first
+constructed' — pair with 1.4 (server/ dir listing) and 6.1 (managers
+listing) to navigate.
+"""
+predecessor = "2.1"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 96
+end = 119
+render = { kind = "full" }
+
+[[batches]]
+id = "2.5"
+descriptor = "Server.js — init() lifecycle body"
+justification = """
+The DB/Backup/RssFeed/Cron/Watcher init sequence and binary check.
+Direct answer to 'what runs at startup and in what order'.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 143
+end = 176
+render = { kind = "full" }
+
+[[batches]]
+id = "2.6"
+descriptor = "Server.js — start() head: middleware + router mounts"
+justification = """
+The chunk of start() that mounts cookie-parser, express-session,
+passport, RouterBasePath rewriting, then the three routers (/api,
+/hls, /public). Anchors any 'where is middleware X registered'
+question.
+"""
+predecessor = "2.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 256
+end = 281
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Server.js"
+start = 286
+end = 290
+render = { kind = "full" }
+
+# =========================================================================
+# Tier 3 — REST API surface
+# =========================================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "controllers/ directory listing"
+justification = """
+Names every controller file (23 of them). 'Which controller owns X'
+hedge.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/controllers"
+entries = "all"
+
+[[batches]]
+id = "3.2"
+descriptor = "ApiRouter — Library + Item route paths"
+justification = """
+Truncated at the first comma — `<verb>('<path>'` for each route in
+the two biggest, most-trafficked route families. Library covers
+/libraries CRUD plus /items, /series, /collections, /authors,
+/narrators, /search, /stats, /scan, /opml, /personalized,
+/podcast-titles, /download. Items covers batch ops, single-item
+CRUD, /cover, /match, /play, /play/:episodeId, /tracks, /scan,
+/metadata-object, /chapters, /ffprobe, /file, /ebook.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 69
+end = 73
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 75
+end = 93
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 102
+end = 106
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 108
+end = 124
+render = { kind = "truncated", pattern = "^[^,]+" }
+
+[[batches]]
+id = "3.3"
+descriptor = "ApiRouter — User / Me / Backup / Filesystem / Session route paths"
+justification = """
+Mid-sized resource families, truncated. /users, /me/* (current user,
+bookmarks, progress, ereader, year-stats), /backups (CRUD + upload/
+apply/path), /filesystem, /sessions + /session/:id sync flow. The
+/authors/:id and /series/:id endpoints live at lines 212-224 — same
+pattern as /libraries/:id.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 133
+end = 141
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 146
+end = 154
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 159
+end = 168
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 173
+end = 190
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 195
+end = 201
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 206
+end = 207
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 229
+end = 234
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 236
+end = 238
+render = { kind = "truncated", pattern = "^[^,]+" }
+
+[[batches]]
+id = "3.4"
+descriptor = "ApiRouter — Podcast / Notification / Email / Search / Cache / Tools / RSS / CustomMeta / Share / Stats / ApiKey / Misc"
+justification = """
+The remaining /api routes. Podcast feed parse + episode download
+flows; notifications; email-settings + send-ebook-to-device;
+search/{covers,books,podcast,authors,chapters,providers}; cache
+purge; encode-m4b / embed-metadata; RSS feed open/close; custom
+metadata providers; share/mediaitem; stats/year+server; api-keys
+CRUD; misc (upload, tasks, settings, tags, genres, validate-cron,
+auth-settings, watcher/update, logger-data).
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 243
+end = 255
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 260
+end = 267
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 272
+end = 276
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 281
+end = 286
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 291
+end = 292
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 297
+end = 300
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 305
+end = 309
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 314
+end = 316
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 321
+end = 322
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 327
+end = 328
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 333
+end = 336
+render = { kind = "truncated", pattern = "^[^,]+" }
+[[batches.content.spans]]
+path = "server/routers/ApiRouter.js"
+start = 341
+end = 356
+render = { kind = "truncated", pattern = "^[^,]+" }
+
+# =========================================================================
+# Tier 4 — Auth pipeline
+# =========================================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "auth/ directory listing"
+justification = """
+LocalAuthStrategy.js, OidcAuthStrategy.js, TokenManager.js.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/auth"
+entries = "all"
+
+[[batches]]
+id = "4.2"
+descriptor = "Auth.js — class + method index"
+justification = """
+`class Auth` + the signature of every method (truncated at the
+open-paren): authNotNeeded, ifAuthNeeded, isAuthenticated,
+generateAccessToken, invalidateJwtSessionsForUser,
+getUserLoginResponsePayload, initPassportJs, unuse/useAuthStrategy,
+isAuthMethodAPIBased, paramsToCookies, handleLoginSuccessBasedOnCookie,
+handleLoginSuccess, initAuthRoutes.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 18
+end = 18
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 36
+end = 36
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 45
+end = 45
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 61
+end = 61
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 73
+end = 73
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 86
+end = 86
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 96
+end = 96
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 111
+end = 111
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 184
+end = 184
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 200
+end = 200
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 218
+end = 218
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 258
+end = 258
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 294
+end = 294
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 318
+end = 318
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+[[batches]]
+id = "4.3"
+descriptor = "Auth.js — middleware contract (gate every /api request)"
+justification = """
+authNotNeeded/ifAuthNeeded/isAuthenticated together — how every /api
+request is gated. Mounted in Server.js start() via
+`this.auth.ifAuthNeeded(this.authMiddleware.bind(this))`.
+"""
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 36
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 60
+end = 63
+render = { kind = "full" }
+
+[[batches]]
+id = "4.4"
+descriptor = "Auth.js — passport JWT strategy"
+justification = """
+The JWT strategy wiring inside initPassportJs: extracts JWT from
+bearer header or ?token= URL query, leaves expiration handling to
+TokenManager.jwtAuthCheck so disabled api keys can be rejected.
+Anchors 'how is the JWT verified'.
+"""
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Auth.js"
+start = 111
+end = 133
+render = { kind = "full" }
+
+[[batches]]
+id = "4.5"
+descriptor = "TokenManager.js — class head + secret + expiry constants"
+justification = """
+Class head, static TokenSecret slot, constructor with the
+RefreshTokenExpiry (30 days) and AccessTokenExpiry (1 hour) defaults
++ env overrides. The secret-loading order (env JWT_SECRET_KEY >
+serverSettings.tokenSecret > generated) lives in initTokenSecret
+at line 35 below.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/auth/TokenManager.js"
+start = 9
+end = 25
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/auth/TokenManager.js"
+start = 35
+end = 35
+render = { kind = "full" }
+
+# =========================================================================
+# Tier 5 — Database / models index
+# =========================================================================
+
+[[batches]]
+id = "5.1"
+descriptor = "models/ directory listing"
+justification = """
+Names every Sequelize model file (~25). Anchors any 'is there a model
+for X' question; join-models (BookAuthor, BookSeries, CollectionBook,
+PlaylistMediaItem) are easy to miss without this.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/models"
+entries = "all"
+
+[[batches]]
+id = "5.2"
+descriptor = "Database.js — constructor + singleton export"
+justification = """
+Singleton (`module.exports = new Database()`). Constructor enumerates
+state: sequelize handle, dbPath, isNew, hasRootUser, settings array,
+libraryFilterData cache, typed settings refs, unicode-support flags.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 13
+end = 34
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 999
+end = 999
+render = { kind = "full" }
+
+[[batches]]
+id = "5.3"
+descriptor = "Database.js — typed model accessor names"
+justification = """
+The `get xModel()` getter names: userModel, sessionModel, apiKeyModel,
+libraryModel, libraryFolderModel, authorModel, seriesModel, bookModel,
+bookSeriesModel, bookAuthorModel, podcastModel, podcastEpisodeModel,
+libraryItemModel, mediaProgressModel, collectionModel,
+collectionBookModel, playlistModel, playlistMediaItemModel, feedModel,
+feedEpisodeModel, playbackSessionModel, customMetadataProviderModel,
+mediaItemShareModel, deviceModel.
+"""
+predecessor = "5.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 46
+end = 46
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 51
+end = 51
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 56
+end = 56
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 61
+end = 61
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 66
+end = 66
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 71
+end = 71
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 76
+end = 76
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 81
+end = 81
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 86
+end = 86
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 91
+end = 91
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 96
+end = 96
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 101
+end = 101
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 111
+end = 111
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 116
+end = 116
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 121
+end = 121
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 126
+end = 126
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 131
+end = 131
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 136
+end = 136
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 141
+end = 141
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 146
+end = 146
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 151
+end = 151
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 156
+end = 156
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 161
+end = 161
+render = { kind = "full" }
+
+[[batches]]
+id = "5.5"
+descriptor = "Database.js — public method index (names only)"
+justification = """
+Locations of every public method beyond model getters + buildModels:
+checkHasDb, init, connect, loadData, createRootUser,
+updateServerSettings, getPlaybackSessions, cleanDatabase,
+deactivateExpiredApiKeys, cleanupExpiredSessions,
+createTextSearchQuery, addTriggers,
+addAuthorNamesTriggersIfNotExist.
+"""
+predecessor = "5.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 169
+end = 169
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 181
+end = 181
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 216
+end = 216
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 370
+end = 370
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 426
+end = 426
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 433
+end = 433
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 444
+end = 444
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 675
+end = 675
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 814
+end = 814
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 828
+end = 828
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 839
+end = 839
+render = { kind = "truncated", pattern = "^[^(]+" }
+[[batches.content.spans]]
+path = "server/Database.js"
+start = 849
+end = 849
+render = { kind = "truncated", pattern = "^[^(]+" }
+
+# =========================================================================
+# Tier 6 — Managers / Scanner / Watcher / SocketAuthority + dir listings
+# =========================================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "managers/ + scanner/ + finders/ + providers/ + objects/ directory listings"
+justification = """
+Quadruple-listing for breadth at low cost:
+- managers/: 18 long-running subsystems
+- scanner/: LibraryScanner orchestrates; per-item, per-mediatype,
+  per-format scanners.
+- finders/: AuthorFinder, BookFinder, PodcastFinder
+- providers/: Audible, AudiobookCovers, Audnexus, CustomProviderAdapter,
+  FantLab, GoogleBooks, iTunes, MusicBrainz, OpenLibrary
+- objects/ (top): Backup, DailyLog, DeviceInfo, Notification,
+  PlaybackSession (object, not the Sequelize model), Stream, Task,
+  TrackProgressMonitor, PodcastEpisodeDownload.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/managers"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/scanner"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/finders"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/providers"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/objects"
+entries = "all"
+
+[[batches]]
+id = "6.2"
+descriptor = "SocketAuthority.js — class + emitter helpers + singleton export"
+justification = """
+Socket.io singleton: `clients` map keyed by socket id (each
+{id, socket, connected_at, user?}). Helpers: emitter (all authed),
+clientEmitter (one user), adminEmitter (admins), libraryItemEmitter
+(only users with access to the item). Auth via 'auth' socket event
+calls TokenManager.validateAccessToken.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 16
+end = 24
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 57
+end = 65
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 428
+end = 428
+render = { kind = "full" }
+
+[[batches]]
+id = "6.3"
+descriptor = "SocketAuthority — socket event names (subscribe sites)"
+justification = """
+Anchors every socket event the server listens for, at the `.on(...)`
+line: 'auth' (login the socket), 'cancel_scan', 'search_covers',
+'cancel_cover_search', 'set_log_listener', 'remove_log_listener',
+'disconnect', 'message_all_users', 'ping'.
+"""
+predecessor = "6.2"
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 188
+end = 188
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 191
+end = 191
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 197
+end = 198
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 201
+end = 201
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 210
+end = 210
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 213
+end = 213
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 239
+end = 239
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/SocketAuthority.js"
+start = 249
+end = 249
+render = { kind = "full" }
+
+[[batches]]
+id = "6.4"
+descriptor = "Watcher.js — class head + singleton export"
+justification = """
+FolderWatcher extends EventEmitter; module exports `new
+FolderWatcher()`. Wraps the `watcher` library per-library. Emits
+'scanFilesChanged' that Server.init pipes into LibraryScanner.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/Watcher.js"
+start = 10
+end = 17
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/Watcher.js"
+start = 429
+end = 429
+render = { kind = "full" }
+
+[[batches]]
+id = "6.5"
+descriptor = "LibraryScanner.js — class signature + scan entry"
+justification = """
+Singleton; state holds cancelLibraryScan map, librariesScanning list,
+pendingFileUpdatesToScan queue. Public entry: scan(library,
+forceRescan). Triggered from POST /api/libraries/:id/scan.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/scanner/LibraryScanner.js"
+start = 18
+end = 27
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/scanner/LibraryScanner.js"
+start = 33
+end = 33
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/scanner/LibraryScanner.js"
+start = 41
+end = 41
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/scanner/LibraryScanner.js"
+start = 51
+end = 51
+render = { kind = "full" }
+
+[[batches]]
+id = "6.6"
+descriptor = "PlaybackSessionManager.js — class head + getSession / getStream"
+justification = """
+class head + state (StreamsPath, sessions array). Public entries:
+getSession, getUserSession, getStream. The full session lifecycle
+(startSessionRequest -> startSession -> syncSession -> close) starts
+around line 80 and is invoked from POST /api/items/:id/play.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/managers/PlaybackSessionManager.js"
+start = 19
+end = 44
+render = { kind = "full" }
+
+# =========================================================================
+# Tier 7 — utils / settings / migrations / client / tests
+# =========================================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "utils/ + utils/queries/ + utils/parsers/ listings"
+justification = """
+utils/ has constants, fileUtils, ffmpegHelpers, globals, htmlSanitizer,
+index, libraryHelpers, podcastUtils, prober, scandir, zipHelpers, +
+the queries/parsers/migrations/generators subdirs. queries/: filter
+helpers per resource. parsers/: every metadata parser (Epub, Opf,
+Nfo, ComicInfo, OPML, etc).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/utils"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/utils/queries"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/utils/parsers"
+entries = "all"
+
+[[batches]]
+id = "7.2"
+descriptor = "utils/constants.js — non-mime enums + AudioMimeType reference"
+justification = """
+ScanResult / BookCoverAspectRatio / BookshelfView / LogLevel /
+PlayMethod, each a small enum required widely. The much-larger
+AudioMimeType map (lines 36-58) follows the same shape — agents
+can read directly.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/utils/constants.js"
+start = 1
+end = 34
+render = { kind = "full" }
+
+[[batches]]
+id = "7.3"
+descriptor = "objects/settings/ + objects/files/ + objects/metadata/ listings"
+justification = """
+settings/: ServerSettings, NotificationSettings, EmailSettings — the
+three rows in the DB's `settings` table. files/: AudioFile, AudioTrack,
+EBookFile, LibraryFile. metadata/: AudioMetaTags, FileMetadata.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/objects/settings"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/objects/files"
+entries = "all"
+[[batches.content.groups]]
+parent = "server/objects/metadata"
+entries = "all"
+
+[[batches]]
+id = "7.4"
+descriptor = "ServerSettings.js — scanner / backup / sorting / auth field declarations"
+justification = """
+The most-read settings object (global.ServerSettings.X reads
+everywhere). Sample of fields: scanner* group, store{Cover,Metadata}
+WithItem, metadataFileFormat, rateLimitLogin{Requests,Window},
+allowIframe, backup* group. Plus sortingPrefixes (line 50) and the
+authActiveAuthMethods key (line 66). The 18 authOpenID* fields lie
+at lines 68-85 — agents can read directly when needed.
+"""
+[batches.content]
+kind = "lines"
+[[batches.content.spans]]
+path = "server/objects/settings/ServerSettings.js"
+start = 14
+end = 35
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/objects/settings/ServerSettings.js"
+start = 50
+end = 50
+render = { kind = "full" }
+[[batches.content.spans]]
+path = "server/objects/settings/ServerSettings.js"
+start = 66
+end = 66
+render = { kind = "full" }
+
+[[batches]]
+id = "7.5"
+descriptor = "migrations/ directory listing"
+justification = """
+Sequelize-managed migrations under server/migrations/. Names every
+v-prefixed migration file plus changelog.md + readme.md. Pattern:
+vMAJOR.MINOR.PATCH-description.js. Run from Database.init() via
+MigrationManager.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "server/migrations"
+entries = "all"
+
+[[batches]]
+id = "7.6"
+descriptor = "client/ directory listing"
+justification = """
+Top of the Nuxt app: assets, components, cypress, layouts, middleware,
+mixins, pages, players, plugins, postcss.config.js, nuxt.config.js,
+static, store, strings, package.json.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "client"
+entries = "all"
+
+[[batches]]
+id = "7.7"
+descriptor = "client/pages + client/components listings"
+justification = """
+Pages: account, audiobook/_id, author/_id, batch, collection/_id,
+config (with subpages: api-keys, authentication, backups, email,
+index, item-metadata-utils, libraries, log, notifications, rss-feeds,
+sessions, stats, users), item/_id, library/_library, playlist/_id,
+share/_slug, upload, login, oops, index. Component dirs: app, cards,
+content, controls, covers, modals, player, prompt, readers, stats,
+tables, ui, widgets.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "client/pages"
+entries = "all"
+[[batches.content.groups]]
+parent = "client/pages/config"
+entries = "all"
+[[batches.content.groups]]
+parent = "client/components"
+entries = "all"
+
+[[batches]]
+id = "7.8"
+descriptor = "client/store + plugins + players listings"
+justification = """
+Vuex modules (globals/index/libraries/scanners/tasks/user/users);
+Nuxt plugins (axios/chromecast/constants/i18n/init.client/toast/utils/
+version); the audio-playback dispatch tree (AudioTrack/CastPlayer/
+castUtils/LocalAudioPlayer/PlayerHandler).
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "client/store"
+entries = "all"
+[[batches.content.groups]]
+parent = "client/plugins"
+entries = "all"
+[[batches.content.groups]]
+parent = "client/players"
+entries = "all"
+
+[[batches]]
+id = "7.9"
+descriptor = "test/server tree + docs/ + .github/workflows + build/ listings"
+justification = """
+Mocha tests at test/server/*.test.js (subdirs controllers, finders,
+managers, migrations, objects, providers, utils). docs/ is the
+OpenAPI source. .github/workflows enumerates CI jobs (codeql,
+component-tests, docker-build, i18n-integration, integration-test,
+lint-openapi, notify-abs-windows, unit-tests). build/ contains
+linuxpackager + debian/.
+"""
+[batches.content]
+kind = "fs"
+[[batches.content.groups]]
+parent = "test"
+entries = "all"
+[[batches.content.groups]]
+parent = "test/server"
+entries = "all"
+[[batches.content.groups]]
+parent = "docs"
+entries = "all"
+[[batches.content.groups]]
+parent = ".github/workflows"
+entries = "all"
+[[batches.content.groups]]
+parent = "build"
+entries = "all"

@@ -1,0 +1,616 @@
+fixture = "jq"
+revision_pin = "f58787c4"
+summary = """
+jq is a portable C command-line JSON processor with a small embeddable
+library (libjq) at its core. A jq program is a pipeline of filters,
+parsed by Bison/Flex from `src/parser.y` + `src/lexer.l`, compiled to
+bytecode by `src/compile.c`, and interpreted by the stack VM in
+`src/execute.c`. Values are the immutable refcounted `jv` type defined
+in `src/jv.h` and implemented in `src/jv.c`. Builtins are split across
+C functions registered in a `function_list[]` table near the bottom of
+`src/builtin.c` and a jq-coded prelude `src/builtin.jq` (embedded at
+build time via `builtin.inc`). The CLI entry point is `src/main.c`.
+Tasks span the full distribution: extending the filter language,
+adding builtins, debugging compiler/VM behavior, fixing CLI flag
+handling, navigating the manual, and understanding the build (autotools
++ Bison/Flex codegen).
+"""
+
+# ============================================================
+# Tier 1: top-level orientation — what is jq, where does code live
+# ============================================================
+
+[[batches]]
+id = "1.1"
+descriptor = "README lede"
+justification = "Single-sentence pitch + zero-deps C posture. Anchors what jq is for any task; ~free in tokens."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "README.md", start = 1, end = 3, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.2"
+descriptor = "Repo root listing"
+justification = "Names every top-level entry: src/ (impl), docs/ (manual+website), tests/ (test harness + .test files), vendor/decNumber + vendor/oniguruma (regex/decimal deps), sig/ (release signatures), config/m4/ (autoconf macros). Mitigates catastrophic-omission about top-level structure."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = ".", entries = "all" },
+]
+
+[[batches]]
+id = "1.3"
+descriptor = "Manual lede paragraph 1 — what a filter is"
+justification = "The conceptual model: a filter takes an input, produces an output. High zero-follow-up value for any 'what does X do in jq' question. Cheap, fits early-budget envelope."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/content/manual/dev/manual.yml", start = 4, end = 13, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.4"
+descriptor = "Manual section titles — language reference half"
+justification = "What language-reference sections the user-facing manual covers — Invoking jq, Basic filters, Types and Values, Builtin operators and functions, Conditionals and Comparisons, Regular expressions. Each line is a `- title:` anchor so the agent can read a single section cheaply."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/content/manual/dev/manual.yml", start = 70, end = 70, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 330, end = 330, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 630, end = 630, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 775, end = 775, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 2362, end = 2362, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 2597, end = 2597, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.5"
+descriptor = "Manual section titles — advanced features half"
+justification = "Remaining manual sections — Advanced features, Math, I/O, Streaming, Assignment, Comments, Modules, Colors. Same locations-only pattern as 1.4; together the two batches enumerate every top-level section so an unlisted topic implies it isn't documented."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/content/manual/dev/manual.yml", start = 2804, end = 2804, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3271, end = 3271, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3306, end = 3306, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3399, end = 3399, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3456, end = 3456, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3634, end = 3634, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3696, end = 3696, render = { kind = "full" } },
+  { path = "docs/content/manual/dev/manual.yml", start = 3819, end = 3819, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.6"
+descriptor = "Manual lede paragraph 2 — multi-result filters and pipes"
+justification = "Multi-result fanout, where the same filter that produces N values can be piped to run a second filter N times. Continues 1.3 with material the agent can absorb once it has the basic model."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/content/manual/dev/manual.yml", start = 14, end = 20, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.7"
+descriptor = "Manual lede paragraph 3 — literals as filters"
+justification = "Every filter (even a literal like 42 or `\"hello\"`) takes an input and produces an output, and composition like `add / length` feeds the same input to both sides. This shapes how the agent reads any jq expression."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "docs/content/manual/dev/manual.yml", start = 21, end = 30, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "1.8"
+descriptor = "src/ listing — every translation unit + header + generator"
+justification = "Every C source, header, and codegen input (.y/.l/.jq) under src/. Most tasks hit this directory; the names tell the agent where compile.c/execute.c/builtin.c/jv.c/parser.y/lexer.l/main.c live without a search."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "src", entries = "all" },
+]
+
+# ============================================================
+# Tier 2: public API surface — libjq's two headers
+# ============================================================
+
+[[batches]]
+id = "2.1"
+descriptor = "jv kinds enum"
+justification = "The eight kinds (INVALID, NULL, FALSE, TRUE, NUMBER, STRING, ARRAY, OBJECT) drive every type-dispatch in builtin.c and execute.c. Knowing this set forecloses guesses (no 'symbol' kind, no separate int/float, etc.). Tiny and very high zero-follow-up."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 19, end = 28, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.2"
+descriptor = "jq_state lifecycle (jq.h init/compile/start/next/teardown)"
+justification = "The minimal embedding contract: jq_init, jq_compile(_args), jq_start, jq_next, jq_teardown. Anything calling libjq goes through these five. Pulls in the JQ_DEBUG_TRACE enum and the jq_msg_cb typedef that callers register against."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jq.h", start = 11, end = 31, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.3"
+descriptor = "jv refcount + invariant — the consume/produce rule"
+justification = "The single most load-bearing fact about the jv API: every jv_* function consumes its input refs and produces a new ref, except jv_copy. Plus jv_copy/jv_free/jv_equal/jv_invalid signatures. Without this comment, every body in jv.c/builtin.c reads wrong."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 30, end = 66, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.4"
+descriptor = "jv constructors — null/bool/number"
+justification = "Scalar constructors and numeric accessors, including jv_number_with_literal which surfaces the optional decNumber-backed literal mode. Mitigates catastrophic-omission: agent shouldn't guess at hidden int/float distinctions — the API is `double` plus an optional literal."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 68, end = 81, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.5"
+descriptor = "jv array API + jv_array_foreach signature + JV_ARRAY entrypoint"
+justification = "Array constructors, length/get/set/append/concat/slice/indexes, plus the jv_array_foreach macro header (line 92). The JV_ARRAY(...) varargs entrypoint is shown at one line; the arity-dispatched JV_ARRAY_N family and the foreach body are skipped — both are inferable from the macro name and the foreach header."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 83, end = 91, render = { kind = "full" } },
+  { path = "src/jv.h", start = 92, end = 92, render = { kind = "full" } },
+  { path = "src/jv.h", start = 110, end = 110, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.6"
+descriptor = "jv string API"
+justification = "Every string-related signature: byte/codepoint lengths, value/slice/concat/fmt/append/repeat/split/explode/implode. The byte-vs-codepoint distinction is a frequent source of bugs and is fully visible here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 124, end = 142, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.7"
+descriptor = "jv object API + iterator signatures"
+justification = "Object constructors, get/has/set/delete/length, merge variants, and the int-handle iterator (jv_object_iter / iter_next / iter_valid / iter_key / iter_value) that powers jv_object_foreach. The iterator-handle shape explains why so many builtins drop into manual loops. (The foreach macro bodies on lines 158-175 are inferable from this signature set; skipped.)"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 144, end = 157, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8"
+descriptor = "jv_print_flags + dump signatures"
+justification = "jv_print_flags (PRETTY/ASCII/COLOR/SORTED/INVALID/TAB/ISATTY/SPACE0..2), the JV_PRINT_INDENT_FLAGS macro, and jv_dumpf/jv_dump/jv_show/jv_dump_string/jv_dump_string_trunc. Enumerating the flag set forecloses guesses about hidden formatting toggles."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 218, end = 237, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.8b"
+descriptor = "jv parse API (one-shot + incremental)"
+justification = "JV_PARSE_* flags (SEQ/STREAMING/STREAM_ERRORS), the one-shot jv_parse / jv_parse_sized / jv_parse_custom_flags, the incremental jv_parser_new/set_buf/remaining/next/free, and jv_load_file. main.c routes between one-shot and incremental via these."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 239, end = 259, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.9"
+descriptor = "jv path / set / cmp / keys / sort API"
+justification = "Path-based getters/setters (jv_get/set/has/setpath/getpath/delpaths), enumeration helpers (keys/keys_unsorted) and ordering primitives (cmp/sort/group/unique). These are the bones of every filter that walks a value tree."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jv.h", start = 261, end = 273, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.10"
+descriptor = "jq error/halt + input/debug/stderr callbacks (jq.h)"
+justification = "Callbacks the embedder must wire up — error, debug, stderr, input — and the halt/exit-code surface. The CLI registers all four in main.c. Tasks like 'add a way to capture stderr from a filter' land directly here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jq.h", start = 33, end = 52, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "2.11"
+descriptor = "jq attrs + util input state + colors (jq.h)"
+justification = "Attribute K/V store on jq_state, the streaming util_input wrapper used by main.c for filename+stream cycling, and jq_set_colors. Closes out the libjq C API; nothing else is exposed."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/jq.h", start = 53, end = 74, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 3: filter language ground — syntax, keywords, operators
+# ============================================================
+
+[[batches]]
+id = "3.1"
+descriptor = "Lexer keywords + operators (lexer.l)"
+justification = "Every reserved word and operator the lexer emits: as/import/include/module/def/if/then/else/elif/and/or/end/reduce/foreach/try/catch/label/break/$__loc__ + the punctuation tokens and the //, |=, +=, -=, *=, /=, %=, //= assignment operators, plus ..  (recursive descent) and ?//  (destructuring alternation). Mitigates catastrophic-omission on which keywords exist."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/lexer.l", start = 48, end = 81, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.2"
+descriptor = "Lexer numeric/identifier/binding rules"
+justification = "How jq tokenizes formats (@base64-style), numeric literals, identifiers (with `::` namespaces and .field shorthand), and $binding. The IN_QQSTRING string-interpolation subgrammar (lines 99-126) is skipped — readable on demand from the file."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/lexer.l", start = 91, end = 97, render = { kind = "full" } },
+  { path = "src/lexer.l", start = 129, end = 131, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.3"
+descriptor = "Parser %token list (parser.y) — every terminal"
+justification = "The bison %token decls — IDENT/FIELD/BINDING/LITERAL/FORMAT plus every keyword and punctuation token paired with its source-text representation. Companion to 3.1 from the parser side; together they pin down the whole surface grammar vocabulary."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/parser.y", start = 50, end = 95, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.4"
+descriptor = "Parser %left/%right/%precedence — operator precedence table"
+justification = "The full operator-precedence ladder: FUNCDEF, '|', ',', '//', assignment (=, |=, +=, …), `or`, `and`, comparison, +/-, *///%, '?'/'.'/'['/FIELD, try/catch. Anyone debugging an ambiguous-parse bug or adding an operator lands directly here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/parser.y", start = 100, end = 126, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "3.5"
+descriptor = "Parser grammar non-terminal locations (production header lines)"
+justification = "Where every non-terminal is defined: TopLevel, Module, Imports, FuncDefs, Query, Expr, Import, ImportWhat, ImportFrom, FuncDef, Params, Param, StringStart, String, QQString, ElseBody, Term, Args, Arg, RepPatterns, Patterns, Pattern, ArrayPats, ObjPats, ObjPat, Keyword, DictPairs, DictPair, DictExpr. With the line numbers visible (rendered prefix), the agent can jump straight to any production."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/parser.y", start = 281, end = 281, render = { kind = "full" } },
+  { path = "src/parser.y", start = 289, end = 289, render = { kind = "full" } },
+  { path = "src/parser.y", start = 307, end = 307, render = { kind = "full" } },
+  { path = "src/parser.y", start = 315, end = 315, render = { kind = "full" } },
+  { path = "src/parser.y", start = 324, end = 324, render = { kind = "full" } },
+  { path = "src/parser.y", start = 348, end = 348, render = { kind = "full" } },
+  { path = "src/parser.y", start = 420, end = 420, render = { kind = "full" } },
+  { path = "src/parser.y", start = 440, end = 440, render = { kind = "full" } },
+  { path = "src/parser.y", start = 454, end = 454, render = { kind = "full" } },
+  { path = "src/parser.y", start = 465, end = 465, render = { kind = "full" } },
+  { path = "src/parser.y", start = 476, end = 476, render = { kind = "full" } },
+  { path = "src/parser.y", start = 484, end = 484, render = { kind = "full" } },
+  { path = "src/parser.y", start = 495, end = 495, render = { kind = "full" } },
+  { path = "src/parser.y", start = 504, end = 504, render = { kind = "full" } },
+  { path = "src/parser.y", start = 511, end = 511, render = { kind = "full" } },
+  { path = "src/parser.y", start = 523, end = 523, render = { kind = "full" } },
+  { path = "src/parser.y", start = 535, end = 535, render = { kind = "full" } },
+  { path = "src/parser.y", start = 735, end = 735, render = { kind = "full" } },
+  { path = "src/parser.y", start = 743, end = 743, render = { kind = "full" } },
+  { path = "src/parser.y", start = 748, end = 748, render = { kind = "full" } },
+  { path = "src/parser.y", start = 756, end = 756, render = { kind = "full" } },
+  { path = "src/parser.y", start = 764, end = 764, render = { kind = "full" } },
+  { path = "src/parser.y", start = 776, end = 776, render = { kind = "full" } },
+  { path = "src/parser.y", start = 784, end = 784, render = { kind = "full" } },
+  { path = "src/parser.y", start = 792, end = 792, render = { kind = "full" } },
+  { path = "src/parser.y", start = 821, end = 821, render = { kind = "full" } },
+  { path = "src/parser.y", start = 878, end = 878, render = { kind = "full" } },
+  { path = "src/parser.y", start = 889, end = 889, render = { kind = "full" } },
+  { path = "src/parser.y", start = 937, end = 937, render = { kind = "full" } },
+]
+
+
+
+
+# ============================================================
+# Tier 4: builtins — where every jq function comes from
+# ============================================================
+
+[[batches]]
+id = "4.1"
+descriptor = "BINOPS macro — arithmetic/comparison binop family"
+justification = "Every arithmetic/comparison binop (plus/minus/multiply/divide/mod/equal/notequal/less/lesseq/greater/greatereq) is generated from this single X-macro in builtin.h. Used by builtin.c (binop_* implementations), parser.y constant_fold and gen_binop. Tiny, very high signal."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.h", start = 10, end = 26, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.2"
+descriptor = "C builtin registration — CFUNC macro + function_list[] opener + builtins_bind closer"
+justification = "Anchors the C->jq dispatch table. CFUNC sets the fptr.aN union slot. function_list[] is the canonical registry; builtins_bind wires it up alongside bytecoded builtins and the embedded jq_builtins (compiled-in builtin.jq). Pinpoints where any C builtin landing site lives without showing every entry yet."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.c", start = 1916, end = 1918, render = { kind = "full" } },
+  { path = "src/builtin.c", start = 1933, end = 1938, render = { kind = "full" } },
+  { path = "src/builtin.c", start = 2097, end = 2110, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.3"
+descriptor = "function_list[] body — every C-coded builtin name (truncated arities)"
+justification = "Every CFUNC entry: tojson, fromjson, tonumber, toboolean, tostring, keys, keys_unsorted, startswith, endswith, split, explode, implode, _strindices, trim/ltrim/rtrim, setpath, getpath, delpaths, has, contains, length, utf8bytelength, type, isinfinite, isnan, isnormal, infinite, nan, sort, _sort_by_impl, _group_by_impl, unique, _unique_by_impl, bsearch, min, max, _min_by_impl, _max_by_impl, error, format, env, halt, halt_error, get_search_list, get_prog_origin, get_jq_origin, _match_impl, modulemeta, input, debug, stderr, strptime, strftime, strflocaltime, mktime, gmtime, localtime, now, input_filename, input_line_number, have_decnum, have_literal_numbers. Lines truncated before arity to mitigate the cost; arity is recoverable from the file."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.c", start = 1939, end = 2001, render = { kind = "truncated", pattern = '^  CFUNC\([^,]+, "[^"]+"' } },
+]
+
+[[batches]]
+id = "4.4"
+descriptor = "bind_bytecoded_builtins — names of bytecode-emitted builtins"
+justification = "The five builtins jq emits directly as bytecode rather than registering as C functions: empty (BACKTRACK), not (condbranch), path(arg) (PATH_BEGIN/END wrapper), last(g) (custom STOREV-fork pattern via gen_last_1), range(start;end) (uses the RANGE opcode). Shows just enough of bind_bytecoded_builtins to make the catastrophic-omission point — these names won't appear in function_list[]."
+predecessor = "4.2"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.c", start = 2040, end = 2052, render = { kind = "full" } },
+  { path = "src/builtin.c", start = 2054, end = 2058, render = { kind = "full" } },
+  { path = "src/builtin.c", start = 2067, end = 2067, render = { kind = "full" } },
+  { path = "src/builtin.c", start = 2079, end = 2083, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "4.5"
+descriptor = "builtin.jq prelude — def names (first half, truncated)"
+justification = "First half of the jq-coded prelude: truncated `def NAME` for every def from halt_error through scan-related defs. Names them all — map, select, sort_by/group_by/unique_by/max_by/min_by, add, del, abs, _assign/_modify, map_values, recurse (three arities), to_entries/from_entries/with_entries, reverse, indices/index/rindex, paths (two arities), isfinite, arrays/objects/iterables/booleans/numbers/normals/finites/strings/nulls/values/scalars, join, _flatten/flatten, range/1, date helpers, ltrimstr/rtrimstr/trimstr, match/test/capture. Truncation drops the body so the agent sees only that a name exists at that line."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.jq", start = 1, end = 1, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 2, end = 2, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 3, end = 3, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 4, end = 4, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 5, end = 5, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 6, end = 6, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 7, end = 7, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 8, end = 8, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 9, end = 9, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 10, end = 10, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 11, end = 11, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 12, end = 12, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 13, end = 13, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 15, end = 15, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 34, end = 34, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 37, end = 37, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 38, end = 38, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 39, end = 39, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 41, end = 41, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 42, end = 42, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 44, end = 44, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 45, end = 45, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 46, end = 46, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 50, end = 50, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 51, end = 51, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 52, end = 52, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 53, end = 53, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 54, end = 54, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 55, end = 55, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 56, end = 56, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 57, end = 57, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 58, end = 58, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 59, end = 59, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 60, end = 60, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 61, end = 61, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 62, end = 62, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 63, end = 63, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 64, end = 64, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 65, end = 65, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 66, end = 66, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 70, end = 70, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 71, end = 71, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 72, end = 72, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 73, end = 73, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 74, end = 74, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 75, end = 75, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 76, end = 76, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 77, end = 77, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 78, end = 78, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 79, end = 79, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 80, end = 80, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 81, end = 81, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 82, end = 82, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 86, end = 86, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 87, end = 87, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 91, end = 91, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 92, end = 92, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+]
+[[batches]]
+id = "4.5b"
+descriptor = "builtin.jq prelude — second-half def name samples (truncated)"
+justification = "Representative defs from the second half of builtin.jq: scan/sub/gsub (regex helpers), while/limit/skip (iteration), first/nth (selection), transpose, ascii_downcase, fromstream/tostream (streaming), walk (recursion), pick, INDEX, IN. Not exhaustive; the file is short enough to scan once the agent knows it exists."
+predecessor = "4.5"
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/builtin.jq", start = 96, end = 96, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 105, end = 105, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 111, end = 111, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 128, end = 128, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 130, end = 131, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 135, end = 135, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 143, end = 143, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 147, end = 147, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 156, end = 156, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 167, end = 169, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 182, end = 182, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 189, end = 189, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 191, end = 191, render = { kind = "full" } },
+  { path = "src/builtin.jq", start = 200, end = 200, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 208, end = 208, render = { kind = "full" } },
+  { path = "src/builtin.jq", start = 214, end = 214, render = { kind = "full" } },
+  { path = "src/builtin.jq", start = 225, end = 225, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 234, end = 234, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+  { path = "src/builtin.jq", start = 243, end = 244, render = { kind = "truncated", pattern = "^def [^(:]*" } },
+]
+
+[[batches]]
+id = "5.1"
+descriptor = "opcode_list.h — every VM opcode name (truncated)"
+justification = "Every opcode the VM executes — LOADK, DUP(N|2), PUSHK_UNDER, POP, LOADV(N)/STOREV(N), STORE_GLOBAL, INDEX(_OPT), EACH(_OPT), FORK, TRY_BEGIN/END, JUMP(_F), BACKTRACK, APPEND, INSERT, RANGE, SUBEXP_BEGIN/END, PATH_BEGIN/END, CALL_BUILTIN, CALL_JQ, RET, TAIL_CALL_JQ, CLOSURE_PARAM(_REGULAR), CLOSURE_REF, CLOSURE_CREATE(_C), TOP, DEPS, MODULEMETA, GENLABEL, DESTRUCTURE_ALT, ERRORK. Truncation drops the kind/stack-arity columns; the names alone close the catastrophic-omission gap."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/opcode_list.h", start = 1, end = 1, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 2, end = 2, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 3, end = 3, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 4, end = 4, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 5, end = 5, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 6, end = 6, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 7, end = 7, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 8, end = 8, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 9, end = 9, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 10, end = 10, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 11, end = 11, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 12, end = 12, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 13, end = 13, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 14, end = 14, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 15, end = 15, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 16, end = 16, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 17, end = 17, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 18, end = 18, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 19, end = 19, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 20, end = 20, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 21, end = 21, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 22, end = 22, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 23, end = 23, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 25, end = 25, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 26, end = 26, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 28, end = 28, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 29, end = 29, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 31, end = 31, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 33, end = 33, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 34, end = 34, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 35, end = 35, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 37, end = 37, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 38, end = 38, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 39, end = 39, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 40, end = 40, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 42, end = 42, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 43, end = 43, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 44, end = 44, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 45, end = 45, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 46, end = 46, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 48, end = 48, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 49, end = 49, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+  { path = "src/opcode_list.h", start = 51, end = 51, render = { kind = "truncated", pattern = "^OP\\([^,]+" } },
+]
+
+[[batches]]
+id = "5.2"
+descriptor = "struct bytecode + struct cfunction (bytecode.h)"
+justification = "The two on-disk forms the VM consumes: `struct bytecode` (code array + nlocals/nclosures + constants + symbol_table + subfunctions + parent + debuginfo) and `struct cfunction` (fptr union by arity, name, nargs). Anyone serialising/disassembling/extending the runtime reads these."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/bytecode.h", start = 47, end = 63, render = { kind = "full" } },
+  { path = "src/bytecode.h", start = 72, end = 88, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.3"
+descriptor = "block typedef + IR doc comment (compile.h + compile.c)"
+justification = "`block { inst* first; inst* last; }` is the parser's output unit. The doc comment at the top of compile.c specifies the IR: doubly-linked struct inst nodes with bound_by/symbol carrying free-variable resolution state."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/compile.h", start = 8, end = 15, render = { kind = "full" } },
+  { path = "src/compile.c", start = 11, end = 22, render = { kind = "full" } },
+]
+
+
+[[batches]]
+id = "5.5"
+descriptor = "jq_state struct (execute.c)"
+justification = "`struct jq_state` is the runtime: bytecode + stack + curr_frame + fork_top + active path/value_at_path + halt/exit_code/error_message + the input/debug/stderr/err callback slots. Every embedding interaction routes through this state."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/execute.c", start = 19, end = 51, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "5.6"
+descriptor = "jq_next + jq_init + jq_compile entry locations"
+justification = "Where three runtime entrypoints start in execute.c — jq_next (340, dispatch loop), jq_init (1054, allocator), jq_compile (1232, parse→bind→optimise→block_compile). Signatures are already in jq.h tier 2.2."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/execute.c", start = 340, end = 340, render = { kind = "full" } },
+  { path = "src/execute.c", start = 1054, end = 1054, render = { kind = "full" } },
+  { path = "src/execute.c", start = 1232, end = 1232, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 6: CLI + supporting modules
+# ============================================================
+
+[[batches]]
+id = "6.1"
+descriptor = "main.c CLI options enum (flag bits only)"
+justification = "The option flag bits (SLURP/RAW_INPUT/PROVIDE_NULL/RAW_OUTPUT/RAW_OUTPUT0/ASCII_OUTPUT/COLOR_OUTPUT/NO_COLOR_OUTPUT/SORTED_OUTPUT/FROM_FILE/RAW_NO_LF/UNBUFFERED_OUTPUT/EXIT_STATUS/SEQ/DUMP_DISASM) the CLI threads through main(). Anyone wiring a new --flag lands here. Exit-code enum (lines 164-171) skipped — recoverable on demand."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/main.c", start = 146, end = 160, render = { kind = "full" } },
+]
+
+[[batches]]
+id = "6.2"
+descriptor = "linker.c — lib_entry struct + load_library signature"
+justification = "Module loading types: `struct lib_entry { name, def, loading }` is the per-module cache slot; `load_library` is the recursive entry. Every `import`/`include` statement routes through here."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "src/linker.c", start = 23, end = 27, render = { kind = "full" } },
+  { path = "src/linker.c", start = 32, end = 32, render = { kind = "full" } },
+]
+
+# ============================================================
+# Tier 7: tests + build + release notes (orientation pointers)
+# ============================================================
+
+[[batches]]
+id = "7.1"
+descriptor = "tests/ listing (top-level only)"
+justification = "Names every test file under tests/ — jq.test, base64.test, man.test, manonig.test, onig.test, uri.test, optional.test — plus the wrapper scripts (jqtest, mantest, shtest, utf8test, base64test, uritest, optionaltest, onigtest, manonigtest, jq-f-test.sh, setup) and the fuzzers under jq_fuzz_*.c. Also names the modules/ and torture/ subdirectories used by the loader/large-input tests."
+[batches.content]
+kind = "fs"
+groups = [
+  { parent = "tests", entries = ["jq.test", "base64.test", "man.test", "manonig.test", "onig.test", "uri.test", "optional.test", "jqtest", "mantest", "shtest", "utf8test", "base64test", "uritest", "optionaltest", "onigtest", "manonigtest", "jq-f-test.sh", "setup", "modules", "torture"] },
+]
+
+[[batches]]
+id = "7.2"
+descriptor = "tests/jq.test format header"
+justification = "The first ~3 lines of jq.test specify the format every .test file uses: 3-line groups (program, input, expected output), blank lines and `#` comments ignored. Knowing this prevents misreading the .test files as random text."
+[batches.content]
+kind = "lines"
+spans = [
+  { path = "tests/jq.test", start = 1, end = 3, render = { kind = "full" } },
+]

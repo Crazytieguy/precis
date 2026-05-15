@@ -1,0 +1,338 @@
+---
+source: tests/fixture_baselines.rs
+expression: rendered
+---
+.github/
+.gitignore
+.golangci.yml
+.goreleaser.yaml
+BENCHMARKS.md
+CHANGELOG.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+LICENSE
+Makefile
+README.md
+    1→# Gin Web Framework
+    14→## 📰 Gin 1.12.0 is now available!
+    …
+    43→## Getting Started
+    …
+    45→### Prerequisites
+    …
+    50→### Installation
+    …
+    58→### Your First Gin Application
+    …
+    111→### Next Steps
+    …
+    125→## 📖 Documentation
+    …
+    127→### API Reference
+    …
+    131→### User Guides
+    …
+    140→### Official Tutorials
+    …
+    144→## ⚡ Performance Benchmarks
+    …
+    188→## 🔌 Middleware Ecosystem
+    …
+    199→## 🏢 Production Usage
+    …
+    210→## 🤝 Contributing
+    …
+    214→### How to Contribute
+    …
+    222→### Getting Started with Contributing
+    …
+auth.go
+auth_test.go
+benchmarks_test.go
+binding/
+codec/
+    json/
+        api.go
+            9→// API the json codec in use.
+            10→var API Core
+            …
+            13→type Core interface {
+            …
+            22→type Encoder interface {
+            …
+            41→type Decoder interface {
+            …
+        go_json.go
+        json.go
+        jsoniter.go
+        sonic.go
+codecov.yml
+context.go
+context_appengine.go
+    7→package gin
+    9→func init() {
+    10→	defaultPlatform = PlatformGoogleAppEngine
+context_file_test.go
+context_test.go
+debug.go
+debug_test.go
+deprecated.go
+    5→package gin
+    7→import (
+    8→	"log"
+    10→	"github.com/gin-gonic/gin/binding"
+    11→)
+    13→// BindWith binds the passed struct pointer using the specified binding engine.
+    14→// See the binding package.
+    15→//
+    16→// Deprecated: Use MustBindWith or ShouldBindWith.
+    17→func (c *Context) BindWith(obj any, b binding.Binding) error {
+    …
+deprecated_test.go
+doc.go
+    22→package gin // import "github.com/gin-gonic/gin"
+docs/
+    doc.md
+        1→# Gin Quick Start
+errors.go
+errors_test.go
+examples/
+fs.go
+    5→package gin
+    7→import (
+    8→	"net/http"
+    9→	"os"
+    10→)
+    12→// OnlyFilesFS implements an http.FileSystem without `Readdir` functionality.
+    13→type OnlyFilesFS struct {
+    14→	FileSystem http.FileSystem
+    15→}
+    17→// Open passes `Open` to the upstream implementation without `Readdir` functionality.
+    18→func (o OnlyFilesFS) Open(name string) (http.File, error) {
+    …
+    27→// neutralizedReaddirFile wraps http.File with a specific implementation of `Readdir`.
+    28→type neutralizedReaddirFile struct {
+    29→	http.File
+    30→}
+    32→// Readdir overrides the http.File default implementation and always returns nil.
+    33→func (n neutralizedReaddirFile) Readdir(_ int) ([]os.FileInfo, error) {
+    …
+    42→func Dir(root string, listDirectory bool) http.FileSystem {
+    …
+fs_test.go
+gin.go
+ginS/
+    README.md
+        1→# Gin Default Server
+        3→This is API experiment for Gin.
+        5→```go
+        6→package main
+        8→import (
+        9→	"github.com/gin-gonic/gin"
+        10→	"github.com/gin-gonic/gin/ginS"
+        11→)
+        13→func main() {
+        14→	ginS.GET("/", func(c *gin.Context) { c.String(200, "Hello World") })
+        15→	ginS.Run()
+        16→}
+        17→```
+    gins.go
+    gins_test.go
+gin_integration_test.go
+gin_test.go
+githubapi_test.go
+go.mod
+    1→module github.com/gin-gonic/gin
+    3→go 1.25.0
+    5→require (
+    6→	github.com/bytedance/sonic v1.15.0
+    7→	github.com/gin-contrib/sse v1.1.0
+    8→	github.com/go-playground/validator/v10 v10.30.1
+    9→	github.com/goccy/go-json v0.10.6
+    10→	github.com/goccy/go-yaml v1.19.2
+    11→	github.com/json-iterator/go v1.1.12
+    12→	github.com/mattn/go-isatty v0.0.20
+    13→	github.com/modern-go/reflect2 v1.0.2
+    14→	github.com/pelletier/go-toml/v2 v2.2.4
+    15→	github.com/quic-go/quic-go v0.59.0
+    16→	github.com/stretchr/testify v1.11.1
+    17→	github.com/ugorji/go/codec v1.3.1
+    18→	go.mongodb.org/mongo-driver/v2 v2.5.0
+    19→	golang.org/x/net v0.52.0
+    20→	google.golang.org/protobuf v1.36.11
+    21→)
+    23→require gopkg.in/yaml.v3 v3.0.1 // indirect
+    25→require (
+    45→)
+go.sum
+internal/
+    bytesconv/
+    fs/
+logger.go
+logger_test.go
+middleware_test.go
+mode.go
+mode_test.go
+path.go
+    6→package gin
+    8→const stackBufSize = 128
+    …
+    23→func cleanPath(p string) string {
+    …
+    128→func bufApp(buf *[]byte, s string, w int, c byte) {
+    …
+    155→func removeRepeatedChar(s string, char byte) string {
+    …
+path_test.go
+recovery.go
+recovery_test.go
+render/
+    bson.go
+        13→// BSON contains the given interface object.
+        14→type BSON struct {
+        15→	Data any
+        16→}
+        18→var bsonContentType = []string{"application/bson"}
+        …
+        20→// Render (BSON) marshals the given interface object and writes data with custom ContentType.
+        21→func (r BSON) Render(w http.ResponseWriter) error {
+        …
+        31→// WriteContentType (BSONBuf) writes BSONBuf ContentType.
+        32→func (r BSON) WriteContentType(w http.ResponseWriter) {
+        33→	writeContentType(w, bsonContentType)
+    data.go
+        12→// Data contains ContentType and bytes data.
+        13→type Data struct {
+        14→	ContentType string
+        15→	Data        []byte
+        16→}
+        18→// Render (Data) writes data with custom ContentType.
+        19→func (r Data) Render(w http.ResponseWriter) (err error) {
+        …
+        28→// WriteContentType (Data) writes custom ContentType.
+        29→func (r Data) WriteContentType(w http.ResponseWriter) {
+        30→	writeContentType(w, []string{r.ContentType})
+    html.go
+    json.go
+    msgpack.go
+    pdf.go
+        5→package render
+        7→import "net/http"
+        9→// PDF contains the given PDF binary data.
+        10→type PDF struct {
+        11→	Data []byte
+        12→}
+        14→var pdfContentType = []string{"application/pdf"}
+        …
+        16→// Render (PDF) writes PDF data with custom ContentType.
+        17→func (r PDF) Render(w http.ResponseWriter) error {
+        …
+        23→// WriteContentType (PDF) writes PDF ContentType for response.
+        24→func (r PDF) WriteContentType(w http.ResponseWriter) {
+        25→	writeContentType(w, pdfContentType)
+    protobuf.go
+        13→// ProtoBuf contains the given interface object.
+        14→type ProtoBuf struct {
+        15→	Data any
+        16→}
+        18→var protobufContentType = []string{"application/x-protobuf"}
+        …
+        20→// Render (ProtoBuf) marshals the given interface object and writes data with custom ContentType.
+        21→func (r ProtoBuf) Render(w http.ResponseWriter) error {
+        …
+        33→// WriteContentType (ProtoBuf) writes ProtoBuf ContentType.
+        34→func (r ProtoBuf) WriteContentType(w http.ResponseWriter) {
+        35→	writeContentType(w, protobufContentType)
+    reader.go
+        13→// Reader contains the IO reader and its length, and custom ContentType and other headers.
+        14→type Reader struct {
+        15→	ContentType   string
+        16→	ContentLength int64
+        17→	Reader        io.Reader
+        18→	Headers       map[string]string
+        19→}
+        21→// Render (Reader) writes data with custom ContentType and headers.
+        22→func (r Reader) Render(w http.ResponseWriter) (err error) {
+        …
+        35→// WriteContentType (Reader) writes custom ContentType.
+        36→func (r Reader) WriteContentType(w http.ResponseWriter) {
+        37→	writeContentType(w, []string{r.ContentType})
+        41→func (r Reader) writeHeaders(w http.ResponseWriter) {
+        …
+    reader_test.go
+    redirect.go
+        12→// Redirect contains the http request reference and redirects status code and location.
+        13→type Redirect struct {
+        14→	Code     int
+        15→	Request  *http.Request
+        16→	Location string
+        17→}
+        19→// Render (Redirect) redirects the http request to new location and writes redirect response.
+        20→func (r Redirect) Render(w http.ResponseWriter) error {
+        …
+        28→// WriteContentType (Redirect) don't write any ContentType.
+        29→func (r Redirect) WriteContentType(http.ResponseWriter) {}
+    render.go
+        5→package render
+        7→import "net/http"
+    render_msgpack_test.go
+    render_test.go
+    text.go
+    toml.go
+        13→// TOML contains the given interface object.
+        14→type TOML struct {
+        15→	Data any
+        16→}
+        18→var tomlContentType = []string{"application/toml; charset=utf-8"}
+        …
+        20→// Render (TOML) marshals the given interface object and writes data with custom ContentType.
+        21→func (r TOML) Render(w http.ResponseWriter) error {
+        …
+        33→// WriteContentType (TOML) writes TOML ContentType for response.
+        34→func (r TOML) WriteContentType(w http.ResponseWriter) {
+        35→	writeContentType(w, tomlContentType)
+    xml.go
+        12→// XML contains the given interface object.
+        13→type XML struct {
+        14→	Data any
+        15→}
+        17→var xmlContentType = []string{"application/xml; charset=utf-8"}
+        …
+        19→// Render (XML) encodes the given interface object and writes data with custom ContentType.
+        20→func (r XML) Render(w http.ResponseWriter) error {
+        …
+        25→// WriteContentType (XML) writes XML ContentType for response.
+        26→func (r XML) WriteContentType(w http.ResponseWriter) {
+        27→	writeContentType(w, xmlContentType)
+    yaml.go
+        13→// YAML contains the given interface object.
+        14→type YAML struct {
+        15→	Data any
+        16→}
+        18→var yamlContentType = []string{"application/yaml; charset=utf-8"}
+        …
+        20→// Render (YAML) marshals the given interface object and writes data with custom ContentType.
+        21→func (r YAML) Render(w http.ResponseWriter) error {
+        …
+        33→// WriteContentType (YAML) writes YAML ContentType for response.
+        34→func (r YAML) WriteContentType(w http.ResponseWriter) {
+        35→	writeContentType(w, yamlContentType)
+response_writer.go
+response_writer_test.go
+routergroup.go
+routergroup_test.go
+routes_test.go
+test_helpers.go
+testdata/
+    certificate/
+    protoexample/
+    template/
+    test_file.txt
+tree.go
+tree_test.go
+utils.go
+utils_test.go
+version.go
+    5→package gin
+    7→// Version is the current gin framework's version.
+    8→const Version = "v1.12.0"
