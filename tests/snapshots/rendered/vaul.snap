@@ -8,9 +8,6 @@ expression: rendered
 .prettierrc.js
 .vscode/
     settings.json
-        1→{
-        2→  "typescript.tsdk": "node_modules/typescript/lib"
-        3→}
 FUNDING.yml
 LICENSE.md
 README.md
@@ -18,7 +15,22 @@ package.json
     2→  "name": "vaul",
     3→  "version": "1.1.2",
     4→  "description": "Drawer component for React.",
+    31→  "keywords": [
+    32→    "react",
+    33→    "drawer",
+    34→    "dialog",
+    35→    "modal"
+    36→  ],
+    37→  "author": "Emil Kowalski <e@emilkowal.ski>",
     38→  "license": "MIT",
+    39→  "homepage": "https://vaul.emilkowal.ski/",
+    40→  "repository": {
+    41→    "type": "git",
+    42→    "url": "https://github.com/emilkowalski/vaul.git"
+    43→  },
+    44→  "bugs": {
+    45→    "url": "https://github.com/emilkowalski/vaul/issues"
+    46→  },
 playwright.config.ts
     12→export default defineConfig({
     …
@@ -245,15 +257,4 @@ src/
         …
 test/
 tsconfig.json
-    1→{
-    2→  "compilerOptions": {
-    3→    "jsx": "react",
-    4→    "target": "es2018",
-    5→    "moduleResolution": "node",
-    6→    "esModuleInterop": true,
-    7→    "lib": ["es2015", "dom"],
-    8→    "strict": true
-    9→  },
-    10→  "include": ["src"],
-    11→}
 turbo.json

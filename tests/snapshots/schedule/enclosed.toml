@@ -1,6 +1,6 @@
 fixture = "enclosed"
 budget = 10000
-cumulative_tokens = 9969
+cumulative_tokens = 9831
 batch_count = 250
 
 [[batches]]
@@ -2327,28 +2327,10 @@ kind = "full"
 
 [[batches]]
 position = 82
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/renovate.json" })'
-descriptor = "json config renovate.json"
-cost_tokens = 60
-cum_tokens = 3013
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/renovate.json"
-start = 1
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 83
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/api/api.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/api/api.models.ts"
 cost_tokens = 23
-cum_tokens = 3036
+cum_tokens = 2976
 
 [batches.content]
 kind = "lines"
@@ -2370,11 +2352,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/integrations" })'
 descriptor = "listing of 'packages/docs/src/integrations'"
 cost_tokens = 14
-cum_tokens = 3050
+cum_tokens = 2990
 
 [batches.content]
 kind = "fs"
@@ -2384,11 +2366,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/
 entries = ["cli.md", "npm-package.md", "versioning.md"]
 
 [[batches]]
-position = 85
+position = 84
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/integrations/npm-package.md" })'
 descriptor = "headings outline in packages/docs/src/integrations/npm-package.md"
 cost_tokens = 51
-cum_tokens = 3101
+cum_tokens = 3041
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2456,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/assets" })'
 descriptor = "listing of 'packages/app-client/src/assets'"
 cost_tokens = 4
-cum_tokens = 3105
+cum_tokens = 3045
 
 [batches.content]
 kind = "fs"
@@ -2488,11 +2470,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["favicon.ico"]
 
 [[batches]]
-position = 87
+position = 86
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/public" })'
 descriptor = "listing of 'packages/app-client/public'"
 cost_tokens = 64
-cum_tokens = 3169
+cum_tokens = 3109
 
 [batches.content]
 kind = "fs"
@@ -2502,11 +2484,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["android-chrome-192x192.png", "android-chrome-512x512.png", "apple-touch-icon.png", "favicon-16x16.png", "favicon-32x32.png", "favicon.ico", "humans.txt", "og-image.png", "robots.txt", "site.webmanifest"]
 
 [[batches]]
-position = 88
+position = 87
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization" })'
 descriptor = "listing of 'packages/lib/src/crypto/serialization'"
 cost_tokens = 26
-cum_tokens = 3195
+cum_tokens = 3135
 
 [batches.content]
 kind = "fs"
@@ -2514,6 +2496,24 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization"
 entries = ["cbor-array", "serialization.models.ts", "serialization.registry.ts", "serialization.test-utils.ts", "serialization.types.ts"]
+
+[[batches]]
+position = 88
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/renovate.json" })'
+descriptor = "json config renovate.json"
+cost_tokens = 60
+cum_tokens = 3195
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/renovate.json"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 89
@@ -4803,28 +4803,10 @@ entries = ["encryption-algorithms.models.ts", "encryption-algorithms.registry.ts
 
 [[batches]]
 position = 160
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/tsconfig.json" })'
-descriptor = "json config packages/lib/tsconfig.json"
-cost_tokens = 109
-cum_tokens = 6661
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/tsconfig.json"
-start = 1
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 161
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/ui/components" })'
 descriptor = "listing of 'packages/app-client/src/modules/ui/components'"
 cost_tokens = 48
-cum_tokens = 6709
+cum_tokens = 6600
 
 [batches.content]
 kind = "fs"
@@ -4834,11 +4816,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["alert.tsx", "button.tsx", "card.tsx", "dropdown-menu.tsx", "sonner.tsx", "switch.tsx", "tabs.tsx", "textarea.tsx", "textfield.tsx"]
 
 [[batches]]
-position = 162
+position = 161
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/src/api-definition.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/crypto/src/api-definition.ts"
 cost_tokens = 14
-cum_tokens = 6723
+cum_tokens = 6614
 
 [batches.content]
 kind = "lines"
@@ -4860,11 +4842,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 162
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/.vitepress/plausible.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/docs/.vitepress/plausible.ts"
 cost_tokens = 14
-cum_tokens = 6737
+cum_tokens = 6628
 
 [batches.content]
 kind = "lines"
@@ -4886,11 +4868,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 164
+position = 163
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/shared/utils" })'
 descriptor = "listing of 'packages/app-client/src/modules/shared/utils'"
 cost_tokens = 5
-cum_tokens = 6742
+cum_tokens = 6633
 
 [batches.content]
 kind = "fs"
@@ -4900,11 +4882,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["copy.tsx"]
 
 [[batches]]
-position = 165
+position = 164
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/app/users" })'
 descriptor = "listing of 'packages/app-server/src/modules/app/users'"
 cost_tokens = 5
-cum_tokens = 6747
+cum_tokens = 6638
 
 [batches.content]
 kind = "fs"
@@ -4914,11 +4896,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-serve
 entries = ["users.repository.ts"]
 
 [[batches]]
-position = 166
+position = 165
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/files" })'
 descriptor = "listing of 'packages/cli/src/files'"
 cost_tokens = 11
-cum_tokens = 6758
+cum_tokens = 6649
 
 [batches.content]
 kind = "fs"
@@ -4928,11 +4910,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/f
 entries = ["files.services.test.ts", "files.services.ts"]
 
 [[batches]]
-position = 167
+position = 166
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources" })'
 descriptor = "listing of 'packages/docs/src/resources'"
 cost_tokens = 11
-cum_tokens = 6769
+cum_tokens = 6660
 
 [batches.content]
 kind = "fs"
@@ -4942,11 +4924,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/
 entries = ["brand-kit.md", "i18n.md"]
 
 [[batches]]
-position = 168
+position = 167
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/i18n.md" })'
 descriptor = "headings outline in packages/docs/src/resources/i18n.md"
 cost_tokens = 35
-cum_tokens = 6804
+cum_tokens = 6695
 
 [batches.content]
 kind = "lines"
@@ -5000,11 +4982,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 169
+position = 168
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/i18n.md", section_index: 0 })'
 descriptor = "packages/docs/src/resources/i18n.md section #0"
 cost_tokens = 22
-cum_tokens = 6826
+cum_tokens = 6717
 
 [batches.content]
 kind = "lines"
@@ -5026,11 +5008,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 170
+position = 169
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/brand-kit.md" })'
 descriptor = "headings outline in packages/docs/src/resources/brand-kit.md"
 cost_tokens = 104
-cum_tokens = 6930
+cum_tokens = 6821
 
 [batches.content]
 kind = "lines"
@@ -5196,11 +5178,11 @@ end = 62
 kind = "ellipsis"
 
 [[batches]]
-position = 171
+position = 170
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/how-it-works.md", section_index: 13 })'
 descriptor = "packages/docs/src/how-it-works.md section #13"
 cost_tokens = 28
-cum_tokens = 6958
+cum_tokens = 6849
 
 [batches.content]
 kind = "lines"
@@ -5222,11 +5204,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 172
+position = 171
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/self-hosting/docker-compose.md", section_index: 0 })'
 descriptor = "packages/docs/src/self-hosting/docker-compose.md section #0"
 cost_tokens = 48
-cum_tokens = 7006
+cum_tokens = 6897
 
 [batches.content]
 kind = "lines"
@@ -5248,11 +5230,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 173
+position = 172
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/notes/e2e" })'
 descriptor = "listing of 'packages/app-server/src/modules/notes/e2e'"
 cost_tokens = 52
-cum_tokens = 7058
+cum_tokens = 6949
 
 [batches.content]
 kind = "fs"
@@ -5262,11 +5244,37 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-serve
 entries = ["create-and-view-note-authenticated.e2e.test.ts", "create-and-view-note-unauthenticated.e2e.test.ts", "no-expiration-delay.e2e.test.ts", "size-limited-note-cration.e2e.test.ts"]
 
 [[batches]]
-position = 174
+position = 173
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/routes.tsx"
 cost_tokens = 15
-cum_tokens = 7073
+cum_tokens = 6964
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx"
+start = 11
+end = 11
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx"
+start = 12
+end = 12
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 174
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx", start_line: 11 })'
+descriptor = "export at packages/app-client/src/routes.tsx:11"
+cost_tokens = 0
+cum_tokens = 6964
 
 [batches.content]
 kind = "lines"
@@ -5289,36 +5297,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 175
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx", start_line: 11 })'
-descriptor = "export at packages/app-client/src/routes.tsx:11"
-cost_tokens = 0
-cum_tokens = 7073
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx"
-start = 11
-end = 11
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/routes.tsx"
-start = 12
-end = 12
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 176
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/notes/notes.services.ts" })'
 descriptor = "imports in packages/lib/src/notes/notes.services.ts"
 cost_tokens = 15
-cum_tokens = 7088
+cum_tokens = 6979
 
 [batches.content]
 kind = "lines"
@@ -5332,11 +5314,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 177
+position = 176
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/view-note" })'
 descriptor = "listing of 'packages/cli/src/view-note'"
 cost_tokens = 12
-cum_tokens = 7100
+cum_tokens = 6991
 
 [batches.content]
 kind = "fs"
@@ -5346,11 +5328,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/v
 entries = ["view-note.command.ts", "view-note.models.ts"]
 
 [[batches]]
-position = 178
+position = 177
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/data" })'
 descriptor = "listing of 'packages/docs/src/data'"
 cost_tokens = 12
-cum_tokens = 7112
+cum_tokens = 7003
 
 [batches.content]
 kind = "fs"
@@ -5360,11 +5342,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/
 entries = ["configuration.data.ts", "i18n.data.ts"]
 
 [[batches]]
-position = 179
+position = 178
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/data/configuration.data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/docs/src/data/configuration.data.ts"
 cost_tokens = 9
-cum_tokens = 7121
+cum_tokens = 7012
 
 [batches.content]
 kind = "lines"
@@ -5386,11 +5368,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 180
+position = 179
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/data/i18n.data.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/docs/src/data/i18n.data.ts"
 cost_tokens = 9
-cum_tokens = 7130
+cum_tokens = 7021
 
 [batches.content]
 kind = "lines"
@@ -5412,11 +5394,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 180
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts", start_line: 5 })'
 descriptor = "export at packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:5"
 cost_tokens = 14
-cum_tokens = 7144
+cum_tokens = 7035
 
 [batches.content]
 kind = "lines"
@@ -5430,11 +5412,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 182
+position = 181
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/brand-kit.md", section_index: 0 })'
 descriptor = "packages/docs/src/resources/brand-kit.md section #0"
 cost_tokens = 51
-cum_tokens = 7195
+cum_tokens = 7086
 
 [batches.content]
 kind = "lines"
@@ -5456,29 +5438,29 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 183
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/tsconfig.json" })'
-descriptor = "json config packages/crypto/tsconfig.json"
-cost_tokens = 121
-cum_tokens = 7316
+position = 182
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/tsconfig.json" })'
+descriptor = "json config packages/lib/tsconfig.json"
+cost_tokens = 109
+cum_tokens = 7195
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/tsconfig.json"
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/tsconfig.json"
 start = 1
-end = 13
+end = 12
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 184
+position = 183
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/integrations/npm-package.md", section_index: 0 })'
 descriptor = "packages/docs/src/integrations/npm-package.md section #0"
 cost_tokens = 52
-cum_tokens = 7368
+cum_tokens = 7247
 
 [batches.content]
 kind = "lines"
@@ -5508,11 +5490,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 185
+position = 184
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/build.config.ts", start_line: 3 })'
 descriptor = "export at packages/cli/build.config.ts:3"
 cost_tokens = 62
-cum_tokens = 7430
+cum_tokens = 7309
 
 [batches.content]
 kind = "lines"
@@ -5526,11 +5508,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 186
+position = 185
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/api/api.models.ts" })'
 descriptor = "imports in packages/lib/src/api/api.models.ts"
 cost_tokens = 16
-cum_tokens = 7446
+cum_tokens = 7325
 
 [batches.content]
 kind = "lines"
@@ -5544,11 +5526,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 187
+position = 186
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/locales/locales.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/locales/locales.ts"
 cost_tokens = 11
-cum_tokens = 7457
+cum_tokens = 7336
 
 [batches.content]
 kind = "lines"
@@ -5570,11 +5552,11 @@ end = 3
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 187
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/api/api.client.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/api/api.client.ts"
 cost_tokens = 11
-cum_tokens = 7468
+cum_tokens = 7347
 
 [batches.content]
 kind = "lines"
@@ -5596,29 +5578,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 189
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/deploy-cloudflare/_routes.json" })'
-descriptor = "json config packages/deploy-cloudflare/_routes.json"
-cost_tokens = 54
-cum_tokens = 7522
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/deploy-cloudflare/_routes.json"
-start = 1
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 190
+position = 188
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/auth/auth.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/modules/auth/auth.models.ts"
 cost_tokens = 8
-cum_tokens = 7530
+cum_tokens = 7355
 
 [batches.content]
 kind = "lines"
@@ -5640,11 +5604,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 191
+position = 189
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/config/config.provider.tsx", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/modules/config/config.provider.tsx"
 cost_tokens = 8
-cum_tokens = 7538
+cum_tokens = 7363
 
 [batches.content]
 kind = "lines"
@@ -5666,11 +5630,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 192
+position = 190
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/auth/pages" })'
 descriptor = "listing of 'packages/app-client/src/modules/auth/pages'"
 cost_tokens = 6
-cum_tokens = 7544
+cum_tokens = 7369
 
 [batches.content]
 kind = "fs"
@@ -5680,11 +5644,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["login.page.tsx"]
 
 [[batches]]
-position = 193
+position = 191
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/ui/layouts" })'
 descriptor = "listing of 'packages/app-client/src/modules/ui/layouts'"
 cost_tokens = 6
-cum_tokens = 7550
+cum_tokens = 7375
 
 [batches.content]
 kind = "fs"
@@ -5694,11 +5658,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-clien
 entries = ["app.layout.tsx"]
 
 [[batches]]
-position = 194
+position = 192
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/index.md", section_index: 0 })'
 descriptor = "packages/docs/src/index.md section #0"
 cost_tokens = 86
-cum_tokens = 7636
+cum_tokens = 7461
 
 [batches.content]
 kind = "lines"
@@ -5728,11 +5692,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 195
+position = 193
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/.dockerignore" })'
 descriptor = "plaintext config .dockerignore"
 cost_tokens = 130
-cum_tokens = 7766
+cum_tokens = 7591
 
 [batches.content]
 kind = "lines"
@@ -5746,11 +5710,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 196
+position = 194
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/self-hosting/configuration.md", section_index: 0 })'
 descriptor = "packages/docs/src/self-hosting/configuration.md section #0"
 cost_tokens = 57
-cum_tokens = 7823
+cum_tokens = 7648
 
 [batches.content]
 kind = "lines"
@@ -5772,11 +5736,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 197
+position = 195
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/config/config.provider.tsx", start_line: 5 })'
 descriptor = "export at packages/app-client/src/modules/config/config.provider.tsx:5"
 cost_tokens = 11
-cum_tokens = 7834
+cum_tokens = 7659
 
 [batches.content]
 kind = "lines"
@@ -5790,11 +5754,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 198
+position = 196
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/README.md", section_index: 2 })'
 descriptor = "packages/lib/README.md section #2"
 cost_tokens = 102
-cum_tokens = 7936
+cum_tokens = 7761
 
 [batches.content]
 kind = "lines"
@@ -5832,11 +5796,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 199
+position = 197
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/README.md", section_index: 1 })'
 descriptor = "packages/cli/README.md section #1"
 cost_tokens = 148
-cum_tokens = 8084
+cum_tokens = 7909
 
 [batches.content]
 kind = "lines"
@@ -5906,11 +5870,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 200
+position = 198
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/how-it-works.md", section_index: 11 })'
 descriptor = "packages/docs/src/how-it-works.md section #11"
 cost_tokens = 33
-cum_tokens = 8117
+cum_tokens = 7942
 
 [batches.content]
 kind = "lines"
@@ -5932,11 +5896,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 201
+position = 199
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/config/config.constants.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/cli/src/config/config.constants.ts"
 cost_tokens = 12
-cum_tokens = 8129
+cum_tokens = 7954
 
 [batches.content]
 kind = "lines"
@@ -5958,11 +5922,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 202
+position = 200
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/view-note/view-note.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/cli/src/view-note/view-note.models.ts"
 cost_tokens = 12
-cum_tokens = 8141
+cum_tokens = 7966
 
 [batches.content]
 kind = "lines"
@@ -5984,11 +5948,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 203
+position = 201
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts"
 cost_tokens = 12
-cum_tokens = 8153
+cum_tokens = 7978
 
 [batches.content]
 kind = "lines"
@@ -6010,11 +5974,29 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 204
+position = 202
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/tsconfig.json" })'
+descriptor = "json config packages/crypto/tsconfig.json"
+cost_tokens = 121
+cum_tokens = 8099
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/tsconfig.json"
+start = 1
+end = 13
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 203
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/i18n.md", section_index: 1 })'
 descriptor = "packages/docs/src/resources/i18n.md section #1"
 cost_tokens = 24
-cum_tokens = 8177
+cum_tokens = 8123
 
 [batches.content]
 kind = "lines"
@@ -6044,11 +6026,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 205
+position = 204
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/resources/brand-kit.md", section_index: 2 })'
 descriptor = "packages/docs/src/resources/brand-kit.md section #2"
 cost_tokens = 25
-cum_tokens = 8202
+cum_tokens = 8148
 
 [batches.content]
 kind = "lines"
@@ -6070,11 +6052,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 206
+position = 205
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/create-note/create-note.usecases.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/cli/src/create-note/create-note.usecases.ts"
 cost_tokens = 13
-cum_tokens = 8215
+cum_tokens = 8161
 
 [batches.content]
 kind = "lines"
@@ -6089,6 +6071,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/create-note/create-note.usecases.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 206
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/cli/src/shared/cli.models.ts"
+cost_tokens = 13
+cum_tokens = 8174
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts"
 start = 4
 end = 4
 
@@ -6097,36 +6105,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 207
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/cli/src/shared/cli.models.ts"
-cost_tokens = 13
-cum_tokens = 8228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/cli/src/shared/cli.models.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 208
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts"
 cost_tokens = 13
-cum_tokens = 8241
+cum_tokens = 8187
 
 [batches.content]
 kind = "lines"
@@ -6146,6 +6128,24 @@ end = 5
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 208
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/deploy-cloudflare/_routes.json" })'
+descriptor = "json config packages/deploy-cloudflare/_routes.json"
+cost_tokens = 54
+cum_tokens = 8241
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/deploy-cloudflare/_routes.json"
+start = 1
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 209
@@ -7117,28 +7117,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 231
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/tsconfig.json" })'
-descriptor = "json config packages/app-server/tsconfig.json"
-cost_tokens = 172
-cum_tokens = 9420
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/tsconfig.json"
-start = 1
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 232
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/shared/errors" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared/errors'"
 cost_tokens = 9
-cum_tokens = 9429
+cum_tokens = 9257
 
 [batches.content]
 kind = "fs"
@@ -7148,11 +7130,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-serve
 entries = ["errors.test.ts", "errors.ts"]
 
 [[batches]]
-position = 233
+position = 232
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/shared/validation" })'
 descriptor = "listing of 'packages/app-server/src/modules/shared/validation'"
 cost_tokens = 9
-cum_tokens = 9438
+cum_tokens = 9266
 
 [batches.content]
 kind = "fs"
@@ -7162,11 +7144,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-serve
 entries = ["validation.test.ts", "validation.ts"]
 
 [[batches]]
-position = 234
+position = 233
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/docs/docs.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/modules/docs/docs.models.ts"
 cost_tokens = 12
-cum_tokens = 9450
+cum_tokens = 9278
 
 [batches.content]
 kind = "lines"
@@ -7188,11 +7170,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 235
+position = 234
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/notes/notes.repository.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-server/src/modules/notes/notes.repository.ts"
 cost_tokens = 12
-cum_tokens = 9462
+cum_tokens = 9290
 
 [batches.content]
 kind = "lines"
@@ -7214,11 +7196,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 236
+position = 235
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/notes/notes.routes.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-server/src/modules/notes/notes.routes.ts"
 cost_tokens = 12
-cum_tokens = 9474
+cum_tokens = 9302
 
 [batches.content]
 kind = "lines"
@@ -7240,11 +7222,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 237
+position = 236
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-server/src/modules/tasks/task-scheduler.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-server/src/modules/tasks/task-scheduler.ts"
 cost_tokens = 12
-cum_tokens = 9486
+cum_tokens = 9314
 
 [batches.content]
 kind = "lines"
@@ -7266,11 +7248,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 237
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts"
 cost_tokens = 12
-cum_tokens = 9498
+cum_tokens = 9326
 
 [batches.content]
 kind = "lines"
@@ -7292,11 +7274,11 @@ end = 2
 kind = "ellipsis"
 
 [[batches]]
-position = 239
+position = 238
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.models.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/crypto/serialization/serialization.models.ts"
 cost_tokens = 12
-cum_tokens = 9510
+cum_tokens = 9338
 
 [batches.content]
 kind = "lines"
@@ -7318,11 +7300,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 240
+position = 239
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/.gitignore" })'
 descriptor = "plaintext config .gitignore"
 cost_tokens = 199
-cum_tokens = 9709
+cum_tokens = 9537
 
 [batches.content]
 kind = "lines"
@@ -7376,11 +7358,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 241
+position = 240
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/how-it-works.md", section_index: 1 })'
 descriptor = "packages/docs/src/how-it-works.md section #1"
 cost_tokens = 45
-cum_tokens = 9754
+cum_tokens = 9582
 
 [batches.content]
 kind = "lines"
@@ -7402,11 +7384,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 242
+position = 241
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.registry.ts", chunk_index: 0, export_count: 4, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/crypto/serialization/serialization.registry.ts"
 cost_tokens = 79
-cum_tokens = 9833
+cum_tokens = 9661
 
 [batches.content]
 kind = "lines"
@@ -7460,11 +7442,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 243
+position = 242
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.registry.ts", start_line: 7 })'
 descriptor = "export at packages/lib/src/crypto/serialization/serialization.registry.ts:7"
 cost_tokens = 17
-cum_tokens = 9850
+cum_tokens = 9678
 
 [batches.content]
 kind = "lines"
@@ -7478,11 +7460,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 244
+position = 243
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/api/api.constants.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/lib/src/api/api.constants.ts"
 cost_tokens = 18
-cum_tokens = 9868
+cum_tokens = 9696
 
 [batches.content]
 kind = "lines"
@@ -7496,11 +7478,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 245
+position = 244
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/README.md", section_index: 28 })'
 descriptor = "README.md section #28"
 cost_tokens = 49
-cum_tokens = 9917
+cum_tokens = 9745
 
 [batches.content]
 kind = "lines"
@@ -7522,11 +7504,11 @@ end = 186
 kind = "full"
 
 [[batches]]
-position = 246
+position = 245
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/notes/notes.usecases.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/modules/notes/notes.usecases.ts"
 cost_tokens = 13
-cum_tokens = 9930
+cum_tokens = 9758
 
 [batches.content]
 kind = "lines"
@@ -7548,11 +7530,37 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 247
+position = 246
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/app-client/src/modules/theme/theme.store.ts"
 cost_tokens = 13
-cum_tokens = 9943
+cum_tokens = 9771
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 247
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts", start_line: 4 })'
+descriptor = "export at packages/app-client/src/modules/theme/theme.store.ts:4"
+cost_tokens = 0
+cum_tokens = 9771
 
 [batches.content]
 kind = "lines"
@@ -7575,16 +7583,16 @@ kind = "ellipsis"
 
 [[batches]]
 position = 248
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts", start_line: 4 })'
-descriptor = "export at packages/app-client/src/modules/theme/theme.store.ts:4"
-cost_tokens = 0
-cum_tokens = 9943
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
+cost_tokens = 13
+cum_tokens = 9784
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
 start = 4
 end = 4
 
@@ -7592,7 +7600,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/app-client/src/modules/theme/theme.store.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
 start = 5
 end = 5
 
@@ -7601,16 +7609,16 @@ kind = "ellipsis"
 
 [[batches]]
 position = 249
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
+key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
+descriptor = "export names surface in packages/lib/src/crypto/serialization/serialization.test-utils.ts"
 cost_tokens = 13
-cum_tokens = 9956
+cum_tokens = 9797
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts"
 start = 4
 end = 4
 
@@ -7618,7 +7626,7 @@ end = 4
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts"
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts"
 start = 5
 end = 5
 
@@ -7627,26 +7635,26 @@ kind = "ellipsis"
 
 [[batches]]
 position = 250
-key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
-descriptor = "export names surface in packages/lib/src/crypto/serialization/serialization.test-utils.ts"
-cost_tokens = 13
-cum_tokens = 9969
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/self-hosting/docker.md", section_index: 3 })'
+descriptor = "packages/docs/src/self-hosting/docker.md section #3"
+cost_tokens = 34
+cum_tokens = 9831
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts"
-start = 4
-end = 4
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/self-hosting/docker.md"
+start = 19
+end = 19
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/lib/src/crypto/serialization/serialization.test-utils.ts"
-start = 5
-end = 5
+path = "/Users/yoav/projects/precis/tests/fixtures/enclosed/packages/docs/src/self-hosting/docker.md"
+start = 21
+end = 21
 
 [batches.content.spans.render]
-kind = "ellipsis"
+kind = "full"

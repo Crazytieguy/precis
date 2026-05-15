@@ -329,21 +329,6 @@ package.json
     80→  },
 tests/
 tsconfig.js.json
-    1→{
-    2→  /* 
-    3→    Simple override including just JavaScript files.
-    4→    Used by npm run-script typecheck:js
-    5→  */
-    6→  /* Visit https://aka.ms/tsconfig to read more about tsconfig configuration. */
-    7→  "extends": "./tsconfig.json",
-    8→  "include": [
-    9→    /* All JavaScript targets from tsconfig.json include. */
-    10→    "*.js",
-    11→    ".prettierrc.js" /* missed by above pattern */,
-    12→    "*.mjs",
-    13→    "lib/**/*.js",
-    14→  ],
-    15→}
 tsconfig.json
 tsconfig.ts.json
 typings/

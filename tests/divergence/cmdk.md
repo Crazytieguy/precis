@@ -123,11 +123,11 @@ Score(3000)=0.618 I=0.747 C=0.512 ns_rows≤3K=19/42 (reached=12 partial=0 missi
 | walker |  | 4937 | 0 | export at website/pages/index.tsx:29 |  |  | 0.565 |
 | walker |  | 5080 | 143 | README.md section #36 |  |  | 0.565 |
 | walker |  | 5138 | 58 | README.md section #10 |  |  | 0.568 |
+| walker |  | 5148 | 10 | module item at website/pages/index.tsx:300 |  |  | 0.568 |
 | ns | 5181 |  | 691 | index.tsx — sort() body (DOM-as-truth, in code) | 6.2 | 3.1 | 0.525 |
-| ns | 5336 |  | 155 | command-score — exported scoring function signature | 7.1 |  | 0.520 |
-| walker |  | 5380 | 242 | json config tsconfig.json |  |  | 0.520 |
-| walker |  | 5390 | 10 | module item at website/pages/index.tsx:300 |  |  | 0.520 |
-| walker |  | 5456 | 66 | README.md section #26 |  |  | 0.523 |
+| walker |  | 5214 | 66 | README.md section #26 |  |  | 0.528 |
+| ns | 5336 |  | 155 | command-score — exported scoring function signature | 7.1 |  | 0.523 |
+| walker |  | 5456 | 242 | json config tsconfig.json |  |  | 0.523 |
 | walker |  | 5524 | 68 | README.md section #20 |  |  | 0.534 |
 | walker |  | 5584 | 60 | listing of 'test/pages' |  |  | 0.579 |
 | walker |  | 5592 | 8 | export names surface in test/pages/index.tsx |  |  | 0.579 |

@@ -891,28 +891,10 @@ kind = "full"
 
 [[batches]]
 position = 24
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 149
-cum_tokens = 2761
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json"
-start = 1
-end = 15
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 25
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 32
-cum_tokens = 2793
+cum_tokens = 2644
 
 [batches.content]
 kind = "lines"
@@ -926,11 +908,11 @@ end = 170
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 33
-cum_tokens = 2826
+cum_tokens = 2677
 
 [batches.content]
 kind = "lines"
@@ -939,6 +921,24 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/mitt/README.md"
 start = 159
 end = 160
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 149
+cum_tokens = 2826
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/mitt/tsconfig.json"
+start = 1
+end = 15
 
 [batches.content.spans.render]
 kind = "full"

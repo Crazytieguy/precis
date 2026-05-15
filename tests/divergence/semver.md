@@ -18,14 +18,14 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | ns | 330 |  | 27 | internal/ listing | 1.5 |  | 0.698 |
 | ns | 354 |  | 24 | README — title (lede) | 2.1 |  | 0.699 |
 | walker |  | 360 | 60 | package identity metadata in package.json |  |  | 0.732 |
-| walker |  | 384 | 24 | json config .release-please-manifest.json |  |  | 0.732 |
 | ns | 515 |  | 161 | functions/ + ranges/ listings | 2.2 |  | 0.567 |
-| walker |  | 566 | 182 | headings outline in README.md |  |  | 0.572 |
-| walker |  | 588 | 22 | README.md section #1 |  |  | 0.572 |
-| walker |  | 612 | 24 | README.md section #54 |  |  | 0.572 |
-| walker |  | 747 | 135 | package entrypoints in package.json |  |  | 0.646 |
+| walker |  | 542 | 182 | headings outline in README.md |  |  | 0.572 |
+| walker |  | 564 | 22 | README.md section #1 |  |  | 0.572 |
+| walker |  | 588 | 24 | README.md section #54 |  |  | 0.572 |
+| walker |  | 723 | 135 | package entrypoints in package.json |  |  | 0.646 |
 | ns | 750 |  | 235 | README — Usage example (calls into the public API) | 2.3 |  | 0.610 |
-| walker |  | 775 | 28 | package runtime metadata in package.json |  |  | 0.645 |
+| walker |  | 751 | 28 | package runtime metadata in package.json |  |  | 0.645 |
+| walker |  | 775 | 24 | json config .release-please-manifest.json |  |  | 0.645 |
 | walker |  | 919 | 144 | package scripts in package.json |  |  | 0.645 |
 | walker |  | 1003 | 84 | package dependencies in package.json |  |  | 0.645 |
 | ns | 1011 |  | 261 | range.bnf — canonical range grammar | 2.4 |  | 0.591 |
@@ -86,15 +86,15 @@ Score(3000)=0.662 I=0.736 C=0.595 ns_rows≤3K=14/40 (reached=8 partial=1 missin
 | walker |  | 3776 | 73 | README.md section #32 |  |  | 0.643 |
 | walker |  | 3933 | 157 | README.md section #43 |  |  | 0.643 |
 | ns | 4025 |  | 492 | README — Tilde Ranges desugaring | 3.6 | 2.6 | 0.622 |
-| walker |  | 4283 | 350 | json config release-please-config.json |  |  | 0.622 |
-| walker |  | 4656 | 373 | plaintext config .gitignore |  |  | 0.622 |
-| ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.578 |
-| ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.561 |
-| walker |  | 5216 | 560 | README.md section #4 |  |  | 0.614 |
-| walker |  | 5388 | 172 | README.md section #45 |  |  | 0.614 |
-| walker |  | 5575 | 187 | README.md section #6 |  |  | 0.639 |
-| walker |  | 5603 | 28 | listing of '.github' |  |  | 0.639 |
-| walker |  | 5644 | 41 | listing of '.github/workflows' |  |  | 0.639 |
+| walker |  | 4306 | 373 | plaintext config .gitignore |  |  | 0.622 |
+| walker |  | 4866 | 560 | README.md section #4 |  |  | 0.681 |
+| ns | 4873 |  | 848 | README — Caret Ranges desugaring (the most complex) | 3.7 | 2.6 | 0.633 |
+| walker |  | 5038 | 172 | README.md section #45 |  |  | 0.633 |
+| ns | 5124 |  | 251 | README — Functions section preface (options doc) | 3.8 | 2.6 | 0.614 |
+| walker |  | 5225 | 187 | README.md section #6 |  |  | 0.639 |
+| walker |  | 5253 | 28 | listing of '.github' |  |  | 0.639 |
+| walker |  | 5294 | 41 | listing of '.github/workflows' |  |  | 0.639 |
+| walker |  | 5644 | 350 | json config release-please-config.json |  |  | 0.639 |
 | ns | 5681 |  | 557 | README — Coercion semantics | 3.9 | 2.6 | 0.622 |
 | ns | 5749 |  | 68 | SemVer class — method signatures (locations) | 4.1 |  | 0.614 |
 | ns | 5809 |  | 60 | Range class — method signatures (locations) | 4.2 |  | 0.607 |

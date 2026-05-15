@@ -42,15 +42,15 @@ Score(3000)=0.823 I=0.771 C=0.878 ns_rows≤3K=14/33 (reached=10 partial=1 missi
 | ns | 2405 |  | 394 | DialogProps — JSDoc for the high-traffic props | 2.7 | 2.4 | 0.637 |
 | walker |  | 2787 | 1170 | export at src/index.tsx:50 |  |  | 0.824 |
 | ns | 2810 |  | 405 | DialogProps — JSDoc for the lower-traffic props | 2.8 | 2.4 | 0.823 |
-| walker |  | 2898 | 111 | json config tsconfig.json |  |  | 0.823 |
-| walker |  | 2925 | 27 | json config .vscode/settings.json |  |  | 0.823 |
-| walker |  | 3103 | 178 | package identity metadata in package.json |  |  | 0.823 |
-| ns | 3228 |  | 418 | NestedRoot + Portal — nested-drawer wiring + container override | 2.9 | 2.1 | 0.755 |
-| walker |  | 3277 | 174 | package entrypoints in package.json |  |  | 0.755 |
-| walker |  | 3296 | 19 | package runtime metadata in package.json |  |  | 0.756 |
-| walker |  | 3431 | 135 | package scripts in package.json |  |  | 0.756 |
-| walker |  | 3465 | 34 | export names surface in src/context.ts |  |  | 0.756 |
-| walker |  | 3465 | 0 | export at src/context.ts:69 |  |  | 0.756 |
+| walker |  | 2965 | 178 | package identity metadata in package.json |  |  | 0.823 |
+| walker |  | 3139 | 174 | package entrypoints in package.json |  |  | 0.823 |
+| walker |  | 3158 | 19 | package runtime metadata in package.json |  |  | 0.823 |
+| ns | 3228 |  | 418 | NestedRoot + Portal — nested-drawer wiring + container override | 2.9 | 2.1 | 0.756 |
+| walker |  | 3293 | 135 | package scripts in package.json |  |  | 0.756 |
+| walker |  | 3404 | 111 | json config tsconfig.json |  |  | 0.756 |
+| walker |  | 3438 | 34 | export names surface in src/context.ts |  |  | 0.756 |
+| walker |  | 3438 | 0 | export at src/context.ts:69 |  |  | 0.756 |
+| walker |  | 3465 | 27 | json config .vscode/settings.json |  |  | 0.756 |
 | walker |  | 3500 | 35 | export names surface in src/use-controllable-state.ts |  |  | 0.756 |
 | walker |  | 3500 | 0 | export at src/use-controllable-state.ts:39 |  |  | 0.756 |
 | walker |  | 3517 | 17 | imports in playwright.config.ts |  |  | 0.756 |
@@ -72,17 +72,17 @@ Score(3000)=0.823 I=0.771 C=0.878 ns_rows≤3K=14/33 (reached=10 partial=1 missi
 | walker |  | 5289 | 1039 | export body at src/index.tsx:996 body 1000 |  |  | 0.637 |
 | walker |  | 5305 | 16 | imports in src/helpers.ts |  |  | 0.637 |
 | walker |  | 5362 | 57 | export body at src/context.ts:69 body 70 |  |  | 0.637 |
-| walker |  | 5473 | 111 | json config turbo.json |  |  | 0.637 |
+| walker |  | 5486 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.637 |
 | ns | 5503 |  | 332 | useSnapPoints — full parameter shape | 3.6 |  | 0.613 |
-| walker |  | 5597 | 124 | export at src/use-position-fixed.ts:15 |  |  | 0.613 |
-| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.576 |
-| walker |  | 6109 | 512 | export at playwright.config.ts:12 |  |  | 0.577 |
-| walker |  | 6135 | 26 | export doc at playwright.config.ts:12 |  |  | 0.577 |
+| walker |  | 5998 | 512 | export at playwright.config.ts:12 |  |  | 0.613 |
+| walker |  | 6024 | 26 | export doc at playwright.config.ts:12 |  |  | 0.613 |
+| ns | 6032 |  | 529 | useSnapPoints — return shape + snapPointsOffset memo | 3.7 |  | 0.577 |
 | ns | 6394 |  | 362 | helpers.ts — dampenValue, getTranslate, isVertical bodies | 3.8 | 3.3 | 0.554 |
 | ns | 7179 |  | 785 | Root onRelease — close-threshold + velocity decision | 3.9 | 3.4 | 0.517 |
 | ns | 7585 |  | 406 | browser.ts — every UA-detection function (full file) | 3.10 |  | 0.499 |
-| walker |  | 7826 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.520 |
-| walker |  | 7892 | 66 | listing of 'test/tests' |  |  | 0.521 |
+| walker |  | 7715 | 1691 | export body at src/index.tsx:833 body 837 |  |  | 0.520 |
+| walker |  | 7781 | 66 | listing of 'test/tests' |  |  | 0.521 |
+| walker |  | 7892 | 111 | json config turbo.json |  |  | 0.521 |
 | walker |  | 7915 | 23 | imports in src/context.ts |  |  | 0.521 |
 | walker |  | 7938 | 23 | imports in src/use-position-fixed.ts |  |  | 0.521 |
 | walker |  | 8033 | 95 | export names surface in src/use-prevent-scroll.ts |  |  | 0.521 |

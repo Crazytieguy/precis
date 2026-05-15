@@ -95,12 +95,12 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 3296 | 29 | export doc at src/structs/refinements.ts:8 |  |  | 0.575 |
 | ns | 3305 |  | 451 | errors.md — StructError property table | 4.4 |  | 0.561 |
 | walker |  | 3325 | 29 | export doc at src/structs/refinements.ts:77 |  |  | 0.561 |
-| walker |  | 3352 | 27 | json config .vscode/settings.json |  |  | 0.561 |
-| walker |  | 3459 | 107 | export body at src/structs/refinements.ts:33 body 40 |  |  | 0.561 |
-| walker |  | 3566 | 107 | export body at src/structs/refinements.ts:55 body 62 |  |  | 0.561 |
-| walker |  | 3600 | 34 | docs/guides/02-validating-data.md section #0 |  |  | 0.561 |
-| walker |  | 3635 | 35 | docs/reference/errors.md section #0 |  |  | 0.561 |
-| walker |  | 3665 | 30 | imports in src/structs/refinements.ts |  |  | 0.561 |
+| walker |  | 3432 | 107 | export body at src/structs/refinements.ts:33 body 40 |  |  | 0.561 |
+| walker |  | 3539 | 107 | export body at src/structs/refinements.ts:55 body 62 |  |  | 0.561 |
+| walker |  | 3573 | 34 | docs/guides/02-validating-data.md section #0 |  |  | 0.561 |
+| walker |  | 3608 | 35 | docs/reference/errors.md section #0 |  |  | 0.561 |
+| walker |  | 3638 | 30 | imports in src/structs/refinements.ts |  |  | 0.561 |
+| walker |  | 3665 | 27 | json config .vscode/settings.json |  |  | 0.561 |
 | walker |  | 3700 | 35 | plaintext config .gitignore |  |  | 0.561 |
 | walker |  | 3798 | 98 | Readme.md section #7 |  |  | 0.561 |
 | walker |  | 3823 | 25 | listing of 'test/api' |  |  | 0.584 |
@@ -159,9 +159,9 @@ Score(3000)=0.575 I=0.667 C=0.496 ns_rows≤3K=21/39 (reached=9 partial=3 missin
 | walker |  | 7905 | 22 | module-doc lede in test/index.ts |  |  | 0.486 |
 | walker |  | 7953 | 48 | imports in src/structs/coercions.ts |  |  | 0.486 |
 | ns | 8099 |  | 357 | Sample validation fixture — three exemplar modules | 6.3 |  | 0.472 |
-| walker |  | 8138 | 185 | json config tsconfig.json |  |  | 0.472 |
-| walker |  | 8347 | 209 | export body at src/structs/coercions.ts:38 body 45 |  |  | 0.495 |
-| walker |  | 8407 | 60 | docs/reference/coercions.md section #0 |  |  | 0.495 |
+| walker |  | 8162 | 209 | export body at src/structs/coercions.ts:38 body 45 |  |  | 0.495 |
+| walker |  | 8222 | 60 | docs/reference/coercions.md section #0 |  |  | 0.495 |
+| walker |  | 8407 | 185 | json config tsconfig.json |  |  | 0.495 |
 | walker |  | 8678 | 271 | headings outline in docs/reference/types.md |  |  | 0.522 |
 | walker |  | 8717 | 39 | docs/reference/types.md section #0 |  |  | 0.522 |
 | walker |  | 8794 | 77 | export doc at src/structs/coercions.ts:79 |  |  | 0.522 |

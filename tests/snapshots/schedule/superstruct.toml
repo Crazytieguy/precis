@@ -2583,28 +2583,10 @@ kind = "full"
 
 [[batches]]
 position = 72
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json" })'
-descriptor = "json config .vscode/settings.json"
-cost_tokens = 27
-cum_tokens = 3352
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 73
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 33, body_start_line: 40 })'
 descriptor = "export body at src/structs/refinements.ts:33 body 40"
 cost_tokens = 107
-cum_tokens = 3459
+cum_tokens = 3432
 
 [batches.content]
 kind = "lines"
@@ -2618,11 +2600,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts", start_line: 55, body_start_line: 62 })'
 descriptor = "export body at src/structs/refinements.ts:55 body 62"
 cost_tokens = 107
-cum_tokens = 3566
+cum_tokens = 3539
 
 [batches.content]
 kind = "lines"
@@ -2636,11 +2618,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md", section_index: 0 })'
 descriptor = "docs/guides/02-validating-data.md section #0"
 cost_tokens = 34
-cum_tokens = 3600
+cum_tokens = 3573
 
 [batches.content]
 kind = "lines"
@@ -2655,6 +2637,32 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/guides/02-validating-data.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 75
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md", section_index: 0 })'
+descriptor = "docs/reference/errors.md section #0"
+cost_tokens = 35
+cum_tokens = 3608
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
 start = 3
 end = 3
 
@@ -2663,36 +2671,10 @@ kind = "full"
 
 [[batches]]
 position = 76
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md", section_index: 0 })'
-descriptor = "docs/reference/errors.md section #0"
-cost_tokens = 35
-cum_tokens = 3635
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/errors.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 77
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts" })'
 descriptor = "imports in src/structs/refinements.ts"
 cost_tokens = 30
-cum_tokens = 3665
+cum_tokens = 3638
 
 [batches.content]
 kind = "lines"
@@ -2701,6 +2683,24 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/refinements.ts"
 start = 1
 end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 77
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json" })'
+descriptor = "json config .vscode/settings.json"
+cost_tokens = 27
+cum_tokens = 3665
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/.vscode/settings.json"
+start = 1
+end = 3
 
 [batches.content.spans.render]
 kind = "full"
@@ -4153,28 +4153,10 @@ kind = "full"
 
 [[batches]]
 position = 123
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 185
-cum_tokens = 8138
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
-start = 1
-end = 17
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 124
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/src/structs/coercions.ts", start_line: 38, body_start_line: 45 })'
 descriptor = "export body at src/structs/coercions.ts:38 body 45"
 cost_tokens = 209
-cum_tokens = 8347
+cum_tokens = 8162
 
 [batches.content]
 kind = "lines"
@@ -4228,11 +4210,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md", section_index: 0 })'
 descriptor = "docs/reference/coercions.md section #0"
 cost_tokens = 60
-cum_tokens = 8407
+cum_tokens = 8222
 
 [batches.content]
 kind = "lines"
@@ -4249,6 +4231,24 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/docs/reference/coercions.md"
 start = 3
 end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 125
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 185
+cum_tokens = 8407
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/superstruct/tsconfig.json"
+start = 1
+end = 17
 
 [batches.content.spans.render]
 kind = "full"

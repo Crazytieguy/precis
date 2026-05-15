@@ -406,12 +406,14 @@ fn dependencies_value(file: &Path, ctx: &WalkCtx) -> f64 {
 
 fn whole_value(file: &Path, name: &str, ctx: &WalkCtx) -> f64 {
     // tsconfig.json sits at the top of the public-facing tooling — rate it
-    // just under package identity. Other configs are mid-rank.
+    // just under package identity. Other configs are mid-rank. Sub-flavor
+    // tsconfigs (tsconfig.ts.json, tsconfig.build.json) are build-specific
+    // and don't carry the project's TS dialect like the root tsconfig
+    // does, so they get the lower mid-rank weight.
     let lower = name.to_ascii_lowercase();
-    let is_tsconfig =
-        lower == "tsconfig.json" || (lower.starts_with("tsconfig.") && lower.ends_with(".json"));
-    let cat = if is_tsconfig { 0.6 } else { 0.35 };
-    let ztu = if is_tsconfig { 0.7 } else { 0.45 };
+    let is_root_tsconfig = lower == "tsconfig.json";
+    let cat = if is_root_tsconfig { 0.55 } else { 0.3 };
+    let ztu = if is_root_tsconfig { 0.7 } else { 0.45 };
     mix_signals(cat, 0.55, ztu, path_depth_factor(file, ctx))
 }
 

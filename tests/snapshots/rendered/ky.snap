@@ -29,6 +29,19 @@ package.json
     11→		"url": "https://sindresorhus.com"
     12→	},
     13→	"type": "module",
+    14→	"exports": {
+    15→		"types": "./distribution/index.d.ts",
+    16→		"default": "./distribution/index.js"
+    17→	},
+    18→	"main": "./distribution/index.js",
+    19→	"types": "./distribution/index.d.ts",
+    20→	"sideEffects": false,
+    21→	"engines": {
+    22→		"node": ">=18"
+    23→	},
+    31→	"files": [
+    32→		"distribution"
+    33→	],
     34→	"keywords": [
     35→		"fetch",
     36→		"request",
@@ -282,18 +295,6 @@ test/
     retry.ts
     stream.ts
 tsconfig.dist.json
-    1→{
-    2→	"extends": "./tsconfig",
-    3→	"compilerOptions": {
-    4→		"sourceMap": true,
-    5→		"inlineSources": true,
-    6→		"rootDir": "./source",
-    7→		"outDir": "./distribution"
-    8→	},
-    9→	"include": [
-    10→		"source"
-    11→	]
-    12→}
 tsconfig.json
     1→{
     2→	"extends": "@sindresorhus/tsconfig",

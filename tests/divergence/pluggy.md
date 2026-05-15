@@ -120,112 +120,112 @@ Score(3000)=0.604 I=0.802 C=0.455 ns_rows≤3K=15/40 (reached=7 partial=3 missin
 | walker |  | 3610 | 146 | python decl at docs/conf.py:41 |  |  | 0.560 |
 | ns | 3651 |  | 282 | HookCaller._add_hookimpl body — the actual ordering algorithm | 5.4 | 4.2 | 0.539 |
 | walker |  | 3768 | 158 | python decl at docs/conf.py:66 |  |  | 0.539 |
-| walker |  | 3865 | 97 | json config .claude/settings.json |  |  | 0.539 |
-| walker |  | 4046 | 181 | python decl names surface in src/pluggy/_hooks.py |  |  | 0.539 |
-| walker |  | 4046 | 0 | python decl at src/pluggy/_hooks.py:40 |  |  | 0.539 |
-| walker |  | 4046 | 0 | python decl at src/pluggy/_hooks.py:56 |  |  | 0.539 |
-| walker |  | 4046 | 0 | python decl at src/pluggy/_hooks.py:281 |  |  | 0.539 |
-| walker |  | 4053 | 7 | python decl at src/pluggy/_hooks.py:77 |  |  | 0.540 |
-| walker |  | 4060 | 7 | python decl at src/pluggy/_hooks.py:164 |  |  | 0.540 |
-| walker |  | 4070 | 10 | python decl doc at src/pluggy/_hooks.py:40 |  |  | 0.540 |
-| walker |  | 4080 | 10 | python decl doc at src/pluggy/_hooks.py:56 |  |  | 0.514 |
+| walker |  | 3949 | 181 | python decl names surface in src/pluggy/_hooks.py |  |  | 0.539 |
+| walker |  | 3949 | 0 | python decl at src/pluggy/_hooks.py:40 |  |  | 0.539 |
+| walker |  | 3949 | 0 | python decl at src/pluggy/_hooks.py:56 |  |  | 0.539 |
+| walker |  | 3949 | 0 | python decl at src/pluggy/_hooks.py:281 |  |  | 0.539 |
+| walker |  | 3956 | 7 | python decl at src/pluggy/_hooks.py:77 |  |  | 0.540 |
+| walker |  | 3963 | 7 | python decl at src/pluggy/_hooks.py:164 |  |  | 0.540 |
+| walker |  | 3973 | 10 | python decl doc at src/pluggy/_hooks.py:40 |  |  | 0.540 |
+| walker |  | 3983 | 10 | python decl doc at src/pluggy/_hooks.py:56 |  |  | 0.540 |
+| walker |  | 3997 | 14 | python class body at src/pluggy/_hooks.py:77 |  |  | 0.540 |
+| walker |  | 4011 | 14 | python class body at src/pluggy/_hooks.py:164 |  |  | 0.540 |
 | ns | 4080 |  | 429 | HookspecOpts + HookimplOpts — TypedDict bodies | 5.5 | 4.2 | 0.514 |
-| walker |  | 4094 | 14 | python class body at src/pluggy/_hooks.py:77 |  |  | 0.514 |
-| walker |  | 4108 | 14 | python class body at src/pluggy/_hooks.py:164 |  |  | 0.514 |
-| walker |  | 4185 | 77 | python decl doc at src/pluggy/_hooks.py:164 |  |  | 0.519 |
-| walker |  | 4263 | 78 | python decl doc at src/pluggy/_hooks.py:77 |  |  | 0.535 |
-| walker |  | 4397 | 134 | python method sigs in src/pluggy/_hooks.py |  |  | 0.539 |
-| walker |  | 4397 | 0 | python method at src/pluggy/_hooks.py:88 |  |  | 0.539 |
-| walker |  | 4397 | 0 | python method at src/pluggy/_hooks.py:175 |  |  | 0.539 |
-| walker |  | 4409 | 12 | python method body at src/pluggy/_hooks.py:88 body 89 |  |  | 0.539 |
-| walker |  | 4421 | 12 | python method body at src/pluggy/_hooks.py:175 body 176 |  |  | 0.539 |
-| walker |  | 4457 | 36 | python decl at src/pluggy/_hooks.py:33 |  |  | 0.539 |
+| walker |  | 4088 | 77 | python decl doc at src/pluggy/_hooks.py:164 |  |  | 0.519 |
+| walker |  | 4166 | 78 | python decl doc at src/pluggy/_hooks.py:77 |  |  | 0.535 |
+| walker |  | 4300 | 134 | python method sigs in src/pluggy/_hooks.py |  |  | 0.539 |
+| walker |  | 4300 | 0 | python method at src/pluggy/_hooks.py:88 |  |  | 0.539 |
+| walker |  | 4300 | 0 | python method at src/pluggy/_hooks.py:175 |  |  | 0.539 |
+| walker |  | 4312 | 12 | python method body at src/pluggy/_hooks.py:88 body 89 |  |  | 0.539 |
+| walker |  | 4324 | 12 | python method body at src/pluggy/_hooks.py:175 body 176 |  |  | 0.539 |
+| walker |  | 4360 | 36 | python decl at src/pluggy/_hooks.py:33 |  |  | 0.539 |
+| walker |  | 4442 | 82 | python method at src/pluggy/_hooks.py:91 |  |  | 0.540 |
+| walker |  | 4453 | 11 | python method body at src/pluggy/_hooks.py:91 body 99 |  |  | 0.540 |
 | ns | 4494 |  | 414 | Result API — force_result, force_exception, get_result bodies | 5.6 | 4.4 | 0.530 |
-| walker |  | 4539 | 82 | python method at src/pluggy/_hooks.py:91 |  |  | 0.530 |
-| walker |  | 4550 | 11 | python method body at src/pluggy/_hooks.py:91 body 99 |  |  | 0.530 |
-| walker |  | 4640 | 90 | python method at src/pluggy/_hooks.py:101 |  |  | 0.532 |
-| walker |  | 4656 | 16 | python method body at src/pluggy/_hooks.py:101 body 109 |  |  | 0.532 |
-| ns | 4801 |  | 307 | docs/index.rst H2 heading map — sections at exact line numbers | 5.7 | 3.2 | 0.504 |
-| walker |  | 4820 | 164 | python class body at src/pluggy/_hooks.py:40 |  |  | 0.515 |
+| walker |  | 4543 | 90 | python method at src/pluggy/_hooks.py:101 |  |  | 0.532 |
+| walker |  | 4559 | 16 | python method body at src/pluggy/_hooks.py:101 body 109 |  |  | 0.532 |
+| walker |  | 4723 | 164 | python class body at src/pluggy/_hooks.py:40 |  |  | 0.543 |
+| ns | 4801 |  | 307 | docs/index.rst H2 heading map — sections at exact line numbers | 5.7 | 3.2 | 0.515 |
+| walker |  | 4818 | 95 | python method at src/pluggy/_hooks.py:111 |  |  | 0.515 |
 | ns | 4855 |  | 54 | docs/examples/ FS listing | 6.1 |  | 0.519 |
-| walker |  | 4915 | 95 | python method at src/pluggy/_hooks.py:111 |  |  | 0.519 |
-| walker |  | 5012 | 97 | python method at src/pluggy/_hooks.py:178 |  |  | 0.520 |
-| walker |  | 5023 | 11 | python method body at src/pluggy/_hooks.py:178 body 188 |  |  | 0.520 |
-| ns | 5075 |  | 220 | Eggsample hookspecs.py — host-side hook specifications | 6.2 |  | 0.506 |
-| walker |  | 5128 | 105 | python method at src/pluggy/_hooks.py:190 |  |  | 0.508 |
-| walker |  | 5144 | 16 | python method body at src/pluggy/_hooks.py:190 body 200 |  |  | 0.508 |
-| walker |  | 5254 | 110 | python method at src/pluggy/_hooks.py:202 |  |  | 0.508 |
-| ns | 5479 |  | 404 | Eggsample lib.py + eggsample-spam (host impls + plugin impls) | 6.3 |  | 0.487 |
-| walker |  | 5480 | 226 | python class body at src/pluggy/_hooks.py:56 |  |  | 0.523 |
-| walker |  | 5555 | 75 | python decl body at src/pluggy/_hooks.py:281 body 282 |  |  | 0.523 |
-| walker |  | 5604 | 49 | python method body at src/pluggy/_tracing.py:17 body 18 |  |  | 0.523 |
-| walker |  | 5622 | 18 | python decl names surface in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.523 |
-| walker |  | 5633 | 11 | python method body at src/pluggy/_result.py:42 body 45 |  |  | 0.523 |
-| walker |  | 5734 | 101 | python imports in src/pluggy/_result.py |  |  | 0.523 |
-| walker |  | 5847 | 113 | python decl names surface #1 in src/pluggy/_hooks.py |  |  | 0.527 |
-| walker |  | 5847 | 0 | python decl at src/pluggy/_hooks.py:293 |  |  | 0.527 |
-| walker |  | 5847 | 0 | python decl at src/pluggy/_hooks.py:382 |  |  | 0.527 |
-| walker |  | 5847 | 0 | python decl at src/pluggy/_hooks.py:593 |  |  | 0.527 |
-| walker |  | 5853 | 6 | python decl at src/pluggy/_hooks.py:358 |  |  | 0.528 |
-| walker |  | 5859 | 6 | python decl at src/pluggy/_hooks.py:638 |  |  | 0.530 |
-| walker |  | 5865 | 6 | python decl at src/pluggy/_hooks.py:696 |  |  | 0.531 |
-| walker |  | 5880 | 15 | python decl doc at src/pluggy/_hooks.py:382 |  |  | 0.531 |
-| walker |  | 5898 | 18 | python decl doc at src/pluggy/_hooks.py:638 |  |  | 0.531 |
-| walker |  | 5929 | 31 | python decl doc at src/pluggy/_hooks.py:358 |  |  | 0.531 |
-| walker |  | 5974 | 45 | python class body at src/pluggy/_hooks.py:358 |  |  | 0.533 |
-| walker |  | 6000 | 26 | python decl at src/pluggy/_hooks.py:377 |  |  | 0.533 |
-| ns | 6020 |  | 541 | docs/index.rst — "Call time order" section (tryfirst / trylast) | 6.4 | 5.7 | 0.504 |
-| walker |  | 6088 | 88 | python class body at src/pluggy/_hooks.py:382 |  |  | 0.506 |
-| walker |  | 6176 | 88 | python class body at src/pluggy/_hooks.py:696 |  |  | 0.506 |
-| walker |  | 6206 | 30 | python decl doc at src/pluggy/_hooks.py:593 |  |  | 0.506 |
-| walker |  | 6318 | 112 | python class body at src/pluggy/_hooks.py:638 |  |  | 0.506 |
-| walker |  | 6390 | 72 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.506 |
+| walker |  | 4915 | 97 | python method at src/pluggy/_hooks.py:178 |  |  | 0.520 |
+| walker |  | 4926 | 11 | python method body at src/pluggy/_hooks.py:178 body 188 |  |  | 0.520 |
+| walker |  | 5031 | 105 | python method at src/pluggy/_hooks.py:190 |  |  | 0.522 |
+| walker |  | 5047 | 16 | python method body at src/pluggy/_hooks.py:190 body 200 |  |  | 0.522 |
+| ns | 5075 |  | 220 | Eggsample hookspecs.py — host-side hook specifications | 6.2 |  | 0.508 |
+| walker |  | 5157 | 110 | python method at src/pluggy/_hooks.py:202 |  |  | 0.508 |
+| walker |  | 5383 | 226 | python class body at src/pluggy/_hooks.py:56 |  |  | 0.545 |
+| walker |  | 5458 | 75 | python decl body at src/pluggy/_hooks.py:281 body 282 |  |  | 0.545 |
+| ns | 5479 |  | 404 | Eggsample lib.py + eggsample-spam (host impls + plugin impls) | 6.3 |  | 0.523 |
+| walker |  | 5507 | 49 | python method body at src/pluggy/_tracing.py:17 body 18 |  |  | 0.523 |
+| walker |  | 5525 | 18 | python decl names surface in docs/examples/eggsample/eggsample/__init__.py |  |  | 0.523 |
+| walker |  | 5536 | 11 | python method body at src/pluggy/_result.py:42 body 45 |  |  | 0.523 |
+| walker |  | 5637 | 101 | python imports in src/pluggy/_result.py |  |  | 0.523 |
+| walker |  | 5750 | 113 | python decl names surface #1 in src/pluggy/_hooks.py |  |  | 0.527 |
+| walker |  | 5750 | 0 | python decl at src/pluggy/_hooks.py:293 |  |  | 0.527 |
+| walker |  | 5750 | 0 | python decl at src/pluggy/_hooks.py:382 |  |  | 0.527 |
+| walker |  | 5750 | 0 | python decl at src/pluggy/_hooks.py:593 |  |  | 0.527 |
+| walker |  | 5756 | 6 | python decl at src/pluggy/_hooks.py:358 |  |  | 0.528 |
+| walker |  | 5762 | 6 | python decl at src/pluggy/_hooks.py:638 |  |  | 0.530 |
+| walker |  | 5768 | 6 | python decl at src/pluggy/_hooks.py:696 |  |  | 0.531 |
+| walker |  | 5783 | 15 | python decl doc at src/pluggy/_hooks.py:382 |  |  | 0.531 |
+| walker |  | 5801 | 18 | python decl doc at src/pluggy/_hooks.py:638 |  |  | 0.531 |
+| walker |  | 5832 | 31 | python decl doc at src/pluggy/_hooks.py:358 |  |  | 0.531 |
+| walker |  | 5877 | 45 | python class body at src/pluggy/_hooks.py:358 |  |  | 0.533 |
+| walker |  | 5903 | 26 | python decl at src/pluggy/_hooks.py:377 |  |  | 0.533 |
+| walker |  | 5991 | 88 | python class body at src/pluggy/_hooks.py:382 |  |  | 0.535 |
+| ns | 6020 |  | 541 | docs/index.rst — "Call time order" section (tryfirst / trylast) | 6.4 | 5.7 | 0.506 |
+| walker |  | 6079 | 88 | python class body at src/pluggy/_hooks.py:696 |  |  | 0.506 |
+| walker |  | 6109 | 30 | python decl doc at src/pluggy/_hooks.py:593 |  |  | 0.506 |
+| walker |  | 6221 | 112 | python class body at src/pluggy/_hooks.py:638 |  |  | 0.506 |
+| walker |  | 6293 | 72 | python decl doc at src/pluggy/_hooks.py:293 |  |  | 0.506 |
 | ns | 6517 |  | 497 | docs/index.rst — Wrappers (new-style) wrapper-protocol summary | 6.5 | 5.7 | 0.490 |
 | ns | 6579 |  | 62 | testing/ FS listing | 7.1 |  | 0.498 |
-| walker |  | 6774 | 384 | python method sigs #1 in src/pluggy/_hooks.py |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:365 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:420 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:438 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:442 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:449 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:453 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:477 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:499 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:577 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:612 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:634 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:692 |  |  | 0.537 |
-| walker |  | 6774 | 0 | python method at src/pluggy/_hooks.py:709 |  |  | 0.537 |
-| walker |  | 6795 | 21 | python method at src/pluggy/_hooks.py:626 |  |  | 0.539 |
-| walker |  | 6805 | 10 | python method doc at src/pluggy/_hooks.py:365 |  |  | 0.539 |
-| walker |  | 6818 | 13 | python method doc at src/pluggy/_hooks.py:449 |  |  | 0.539 |
+| walker |  | 6677 | 384 | python method sigs #1 in src/pluggy/_hooks.py |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:365 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:420 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:438 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:442 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:449 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:453 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:477 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:499 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:577 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:612 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:634 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:692 |  |  | 0.537 |
+| walker |  | 6677 | 0 | python method at src/pluggy/_hooks.py:709 |  |  | 0.537 |
+| walker |  | 6698 | 21 | python method at src/pluggy/_hooks.py:626 |  |  | 0.539 |
+| walker |  | 6708 | 10 | python method doc at src/pluggy/_hooks.py:365 |  |  | 0.539 |
+| walker |  | 6721 | 13 | python method doc at src/pluggy/_hooks.py:449 |  |  | 0.539 |
+| walker |  | 6750 | 29 | python method at src/pluggy/_hooks.py:543 |  |  | 0.539 |
+| walker |  | 6760 | 10 | python method body at src/pluggy/_hooks.py:420 body 421 |  |  | 0.539 |
+| walker |  | 6771 | 11 | python method body at src/pluggy/_hooks.py:626 body 628 |  |  | 0.539 |
+| walker |  | 6787 | 16 | python method doc at src/pluggy/_hooks.py:438 |  |  | 0.539 |
+| walker |  | 6802 | 15 | python method at src/pluggy/_hooks.py:480 |  |  | 0.539 |
+| walker |  | 6815 | 13 | python method body at src/pluggy/_hooks.py:449 body 451 |  |  | 0.539 |
 | ns | 6827 |  | 248 | testing/conftest.py — pm + he_pm fixtures | 7.2 |  | 0.527 |
-| walker |  | 6847 | 29 | python method at src/pluggy/_hooks.py:543 |  |  | 0.527 |
-| walker |  | 6857 | 10 | python method body at src/pluggy/_hooks.py:420 body 421 |  |  | 0.527 |
-| walker |  | 6868 | 11 | python method body at src/pluggy/_hooks.py:626 body 628 |  |  | 0.527 |
-| walker |  | 6884 | 16 | python method doc at src/pluggy/_hooks.py:438 |  |  | 0.527 |
-| walker |  | 6899 | 15 | python method at src/pluggy/_hooks.py:480 |  |  | 0.527 |
-| walker |  | 6912 | 13 | python method body at src/pluggy/_hooks.py:449 body 451 |  |  | 0.527 |
-| walker |  | 6951 | 39 | python method at src/pluggy/_hooks.py:424 |  |  | 0.527 |
-| walker |  | 6967 | 16 | python method at src/pluggy/_hooks.py:618 |  |  | 0.529 |
-| walker |  | 6981 | 14 | python method body at src/pluggy/_hooks.py:438 body 440 |  |  | 0.529 |
-| walker |  | 6996 | 15 | python method body at src/pluggy/_hooks.py:477 body 478 |  |  | 0.529 |
-| walker |  | 7008 | 12 | python method doc at src/pluggy/_hooks.py:453 |  |  | 0.529 |
-| walker |  | 7025 | 17 | python method body at src/pluggy/_hooks.py:634 body 635 |  |  | 0.529 |
-| walker |  | 7075 | 50 | python method at src/pluggy/_hooks.py:516 |  |  | 0.529 |
-| walker |  | 7099 | 24 | python method at src/pluggy/_hooks.py:630 |  |  | 0.532 |
-| walker |  | 7160 | 61 | python method at src/pluggy/_hooks.py:656 |  |  | 0.532 |
-| walker |  | 7172 | 12 | python method doc at src/pluggy/_hooks.py:656 |  |  | 0.532 |
-| ns | 7193 |  | 366 | test_pluginmanager.py — every test fn name | 7.3 |  | 0.517 |
-| walker |  | 7240 | 68 | python method at src/pluggy/_hooks.py:393 |  |  | 0.523 |
-| walker |  | 7252 | 12 | python method doc at src/pluggy/_hooks.py:393 |  |  | 0.524 |
-| walker |  | 7271 | 19 | python method doc at src/pluggy/_hooks.py:577 |  |  | 0.524 |
-| walker |  | 7316 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.524 |
-| walker |  | 7341 | 25 | python method body at src/pluggy/_hooks.py:692 body 693 |  |  | 0.524 |
-| walker |  | 7354 | 13 | python method body at src/pluggy/_hooks.py:630 body 632 |  |  | 0.524 |
-| walker |  | 7419 | 65 | python method doc at src/pluggy/_hooks.py:499 |  |  | 0.524 |
-| walker |  | 7512 | 93 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.524 |
-| walker |  | 7567 | 55 | python method body at src/pluggy/_tracing.py:51 body 52 |  |  | 0.524 |
+| walker |  | 6854 | 39 | python method at src/pluggy/_hooks.py:424 |  |  | 0.527 |
+| walker |  | 6870 | 16 | python method at src/pluggy/_hooks.py:618 |  |  | 0.529 |
+| walker |  | 6884 | 14 | python method body at src/pluggy/_hooks.py:438 body 440 |  |  | 0.529 |
+| walker |  | 6899 | 15 | python method body at src/pluggy/_hooks.py:477 body 478 |  |  | 0.529 |
+| walker |  | 6911 | 12 | python method doc at src/pluggy/_hooks.py:453 |  |  | 0.529 |
+| walker |  | 6928 | 17 | python method body at src/pluggy/_hooks.py:634 body 635 |  |  | 0.529 |
+| walker |  | 6978 | 50 | python method at src/pluggy/_hooks.py:516 |  |  | 0.529 |
+| walker |  | 7002 | 24 | python method at src/pluggy/_hooks.py:630 |  |  | 0.532 |
+| walker |  | 7063 | 61 | python method at src/pluggy/_hooks.py:656 |  |  | 0.532 |
+| walker |  | 7075 | 12 | python method doc at src/pluggy/_hooks.py:656 |  |  | 0.532 |
+| walker |  | 7143 | 68 | python method at src/pluggy/_hooks.py:393 |  |  | 0.538 |
+| walker |  | 7155 | 12 | python method doc at src/pluggy/_hooks.py:393 |  |  | 0.539 |
+| walker |  | 7174 | 19 | python method doc at src/pluggy/_hooks.py:577 |  |  | 0.539 |
+| ns | 7193 |  | 366 | test_pluginmanager.py — every test fn name | 7.3 |  | 0.524 |
+| walker |  | 7219 | 45 | python method doc at src/pluggy/_hooks.py:543 |  |  | 0.524 |
+| walker |  | 7244 | 25 | python method body at src/pluggy/_hooks.py:692 body 693 |  |  | 0.524 |
+| walker |  | 7257 | 13 | python method body at src/pluggy/_hooks.py:630 body 632 |  |  | 0.524 |
+| walker |  | 7322 | 65 | python method doc at src/pluggy/_hooks.py:499 |  |  | 0.524 |
+| walker |  | 7415 | 93 | python method doc at src/pluggy/_hooks.py:516 |  |  | 0.524 |
+| walker |  | 7470 | 55 | python method body at src/pluggy/_tracing.py:51 body 52 |  |  | 0.524 |
+| walker |  | 7567 | 97 | json config .claude/settings.json |  |  | 0.524 |
 | walker |  | 7580 | 13 | listing of '.github' |  |  | 0.524 |
 | walker |  | 7584 | 4 | listing of '.github/workflows' |  |  | 0.524 |
 | ns | 7623 |  | 430 | test_hookcaller.py + test_multicall.py — every test fn name | 7.4 |  | 0.509 |

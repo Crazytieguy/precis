@@ -2756,28 +2756,10 @@ kind = "full"
 
 [[batches]]
 position = 98
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json" })'
-descriptor = "json config tsconfig.json"
-cost_tokens = 242
-cum_tokens = 5380
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json"
-start = 1
-end = 19
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 99
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/website/pages/index.tsx", start_line: 300 })'
 descriptor = "module item at website/pages/index.tsx:300"
 cost_tokens = 10
-cum_tokens = 5390
+cum_tokens = 5148
 
 [batches.content]
 kind = "lines"
@@ -2799,11 +2781,11 @@ end = 301
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 99
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md", section_index: 26 })'
 descriptor = "README.md section #26"
 cost_tokens = 66
-cum_tokens = 5456
+cum_tokens = 5214
 
 [batches.content]
 kind = "lines"
@@ -2812,6 +2794,24 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/README.md"
 start = 276
 end = 276
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 100
+key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json" })'
+descriptor = "json config tsconfig.json"
+cost_tokens = 242
+cum_tokens = 5456
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/cmdk/tsconfig.json"
+start = 1
+end = 19
 
 [batches.content.spans.render]
 kind = "full"

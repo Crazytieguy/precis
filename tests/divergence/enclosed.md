@@ -1,4 +1,4 @@
-Score(3000)=0.640 I=0.823 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missing=10)
+Score(3000)=0.640 I=0.824 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missing=10)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -106,13 +106,13 @@ Score(3000)=0.640 I=0.823 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 2915 | 56 | headings outline in packages/docs/src/self-hosting/configuration.md |  |  | 0.644 |
 | ns | 2947 |  | 96 | Cloudflare Workers entrypoint (full) | 3.3 |  | 0.633 |
 | walker |  | 2953 | 38 | README.md section #1 |  |  | 0.640 |
-| walker |  | 3013 | 60 | json config renovate.json |  |  | 0.640 |
-| walker |  | 3036 | 23 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.640 |
-| walker |  | 3050 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.640 |
-| walker |  | 3101 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.640 |
-| walker |  | 3105 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.640 |
-| walker |  | 3169 | 64 | listing of 'packages/app-client/public' |  |  | 0.640 |
-| walker |  | 3195 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.640 |
+| walker |  | 2976 | 23 | export names surface in packages/lib/src/api/api.models.ts |  |  | 0.640 |
+| walker |  | 2990 | 14 | listing of 'packages/docs/src/integrations' |  |  | 0.640 |
+| walker |  | 3041 | 51 | headings outline in packages/docs/src/integrations/npm-package.md |  |  | 0.640 |
+| walker |  | 3045 | 4 | listing of 'packages/app-client/src/assets' |  |  | 0.640 |
+| walker |  | 3109 | 64 | listing of 'packages/app-client/public' |  |  | 0.640 |
+| walker |  | 3135 | 26 | listing of 'packages/lib/src/crypto/serialization' |  |  | 0.640 |
+| walker |  | 3195 | 60 | json config renovate.json |  |  | 0.640 |
 | walker |  | 3223 | 28 | export names surface in packages/lib/src/notes/notes.models.ts |  |  | 0.640 |
 | walker |  | 3252 | 29 | README.md section #31 |  |  | 0.640 |
 | walker |  | 3257 | 5 | listing of 'packages/lib/src/files' |  |  | 0.640 |
@@ -195,59 +195,59 @@ Score(3000)=0.640 I=0.823 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | walker |  | 6519 | 40 | packages/docs/src/self-hosting/docker.md section #0 |  |  | 0.549 |
 | walker |  | 6528 | 9 | export names surface in packages/cli/src/config/config.usecases.ts |  |  | 0.549 |
 | walker |  | 6552 | 24 | listing of 'packages/lib/src/crypto/encryption-algorithms' |  |  | 0.549 |
-| walker |  | 6661 | 109 | json config packages/lib/tsconfig.json |  |  | 0.549 |
-| walker |  | 6709 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.549 |
-| walker |  | 6723 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.549 |
-| walker |  | 6737 | 14 | export names surface in packages/docs/.vitepress/plausible.ts |  |  | 0.549 |
-| walker |  | 6742 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.549 |
-| walker |  | 6747 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.549 |
-| walker |  | 6758 | 11 | listing of 'packages/cli/src/files' |  |  | 0.549 |
-| walker |  | 6769 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.549 |
-| walker |  | 6804 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.549 |
-| walker |  | 6826 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.549 |
+| walker |  | 6600 | 48 | listing of 'packages/app-client/src/modules/ui/components' |  |  | 0.549 |
+| walker |  | 6614 | 14 | export names surface in packages/crypto/src/api-definition.ts |  |  | 0.549 |
+| walker |  | 6628 | 14 | export names surface in packages/docs/.vitepress/plausible.ts |  |  | 0.549 |
+| walker |  | 6633 | 5 | listing of 'packages/app-client/src/modules/shared/utils' |  |  | 0.549 |
+| walker |  | 6638 | 5 | listing of 'packages/app-server/src/modules/app/users' |  |  | 0.549 |
+| walker |  | 6649 | 11 | listing of 'packages/cli/src/files' |  |  | 0.549 |
+| walker |  | 6660 | 11 | listing of 'packages/docs/src/resources' |  |  | 0.549 |
+| walker |  | 6695 | 35 | headings outline in packages/docs/src/resources/i18n.md |  |  | 0.549 |
+| walker |  | 6717 | 22 | packages/docs/src/resources/i18n.md section #0 |  |  | 0.549 |
+| walker |  | 6821 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.549 |
+| walker |  | 6849 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.549 |
 | ns | 6892 |  | 435 | Storage driver — Cloudflare KV (with 413 translation) | 4.7 |  | 0.533 |
-| walker |  | 6930 | 104 | headings outline in packages/docs/src/resources/brand-kit.md |  |  | 0.533 |
-| walker |  | 6958 | 28 | packages/docs/src/how-it-works.md section #13 |  |  | 0.533 |
-| walker |  | 7006 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.533 |
-| walker |  | 7058 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.533 |
-| walker |  | 7073 | 15 | export names surface in packages/app-client/src/routes.tsx |  |  | 0.533 |
-| walker |  | 7073 | 0 | export at packages/app-client/src/routes.tsx:11 |  |  | 0.533 |
-| walker |  | 7088 | 15 | imports in packages/lib/src/notes/notes.services.ts |  |  | 0.533 |
-| walker |  | 7100 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.533 |
-| walker |  | 7112 | 12 | listing of 'packages/docs/src/data' |  |  | 0.533 |
-| walker |  | 7121 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.533 |
-| walker |  | 7130 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.533 |
-| walker |  | 7144 | 14 | export at packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:5 |  |  | 0.533 |
-| walker |  | 7195 | 51 | packages/docs/src/resources/brand-kit.md section #0 |  |  | 0.533 |
-| walker |  | 7316 | 121 | json config packages/crypto/tsconfig.json |  |  | 0.533 |
-| walker |  | 7368 | 52 | packages/docs/src/integrations/npm-package.md section #0 |  |  | 0.533 |
+| walker |  | 6897 | 48 | packages/docs/src/self-hosting/docker-compose.md section #0 |  |  | 0.533 |
+| walker |  | 6949 | 52 | listing of 'packages/app-server/src/modules/notes/e2e' |  |  | 0.533 |
+| walker |  | 6964 | 15 | export names surface in packages/app-client/src/routes.tsx |  |  | 0.533 |
+| walker |  | 6964 | 0 | export at packages/app-client/src/routes.tsx:11 |  |  | 0.533 |
+| walker |  | 6979 | 15 | imports in packages/lib/src/notes/notes.services.ts |  |  | 0.533 |
+| walker |  | 6991 | 12 | listing of 'packages/cli/src/view-note' |  |  | 0.533 |
+| walker |  | 7003 | 12 | listing of 'packages/docs/src/data' |  |  | 0.533 |
+| walker |  | 7012 | 9 | export names surface in packages/docs/src/data/configuration.data.ts |  |  | 0.533 |
+| walker |  | 7021 | 9 | export names surface in packages/docs/src/data/i18n.data.ts |  |  | 0.533 |
+| walker |  | 7035 | 14 | export at packages/crypto/src/encryption-algorithms/encryption-algorithms.test-utils.ts:5 |  |  | 0.533 |
+| walker |  | 7086 | 51 | packages/docs/src/resources/brand-kit.md section #0 |  |  | 0.533 |
+| walker |  | 7195 | 109 | json config packages/lib/tsconfig.json |  |  | 0.533 |
+| walker |  | 7247 | 52 | packages/docs/src/integrations/npm-package.md section #0 |  |  | 0.533 |
+| walker |  | 7309 | 62 | export at packages/cli/build.config.ts:3 |  |  | 0.533 |
+| walker |  | 7325 | 16 | imports in packages/lib/src/api/api.models.ts |  |  | 0.533 |
+| walker |  | 7336 | 11 | export names surface in packages/app-client/src/locales/locales.ts |  |  | 0.533 |
+| walker |  | 7347 | 11 | export names surface in packages/lib/src/api/api.client.ts |  |  | 0.533 |
+| walker |  | 7355 | 8 | export names surface in packages/app-client/src/modules/auth/auth.models.ts |  |  | 0.533 |
+| walker |  | 7363 | 8 | export names surface in packages/app-client/src/modules/config/config.provider.tsx |  |  | 0.533 |
+| walker |  | 7369 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.533 |
+| walker |  | 7375 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.533 |
 | ns | 7406 |  | 514 | Notes — models + types + constants | 5.1 |  | 0.513 |
-| walker |  | 7430 | 62 | export at packages/cli/build.config.ts:3 |  |  | 0.513 |
-| walker |  | 7446 | 16 | imports in packages/lib/src/api/api.models.ts |  |  | 0.513 |
-| walker |  | 7457 | 11 | export names surface in packages/app-client/src/locales/locales.ts |  |  | 0.513 |
-| walker |  | 7468 | 11 | export names surface in packages/lib/src/api/api.client.ts |  |  | 0.513 |
-| walker |  | 7522 | 54 | json config packages/deploy-cloudflare/_routes.json |  |  | 0.513 |
-| walker |  | 7530 | 8 | export names surface in packages/app-client/src/modules/auth/auth.models.ts |  |  | 0.513 |
-| walker |  | 7538 | 8 | export names surface in packages/app-client/src/modules/config/config.provider.tsx |  |  | 0.513 |
-| walker |  | 7544 | 6 | listing of 'packages/app-client/src/modules/auth/pages' |  |  | 0.513 |
-| walker |  | 7550 | 6 | listing of 'packages/app-client/src/modules/ui/layouts' |  |  | 0.513 |
-| walker |  | 7636 | 86 | packages/docs/src/index.md section #0 |  |  | 0.513 |
-| walker |  | 7766 | 130 | plaintext config .dockerignore |  |  | 0.513 |
-| walker |  | 7823 | 57 | packages/docs/src/self-hosting/configuration.md section #0 |  |  | 0.513 |
-| walker |  | 7834 | 11 | export at packages/app-client/src/modules/config/config.provider.tsx:5 |  |  | 0.513 |
-| ns | 7835 |  | 429 | Notes repository — exports + factory + getRefreshedNote usecase | 5.2 |  | 0.493 |
-| walker |  | 7936 | 102 | packages/lib/README.md section #2 |  |  | 0.514 |
-| walker |  | 8084 | 148 | packages/cli/README.md section #1 |  |  | 0.514 |
+| walker |  | 7461 | 86 | packages/docs/src/index.md section #0 |  |  | 0.513 |
+| walker |  | 7591 | 130 | plaintext config .dockerignore |  |  | 0.513 |
+| walker |  | 7648 | 57 | packages/docs/src/self-hosting/configuration.md section #0 |  |  | 0.513 |
+| walker |  | 7659 | 11 | export at packages/app-client/src/modules/config/config.provider.tsx:5 |  |  | 0.513 |
+| walker |  | 7761 | 102 | packages/lib/README.md section #2 |  |  | 0.534 |
+| ns | 7835 |  | 429 | Notes repository — exports + factory + getRefreshedNote usecase | 5.2 |  | 0.514 |
+| walker |  | 7909 | 148 | packages/cli/README.md section #1 |  |  | 0.514 |
+| walker |  | 7942 | 33 | packages/docs/src/how-it-works.md section #11 |  |  | 0.514 |
+| walker |  | 7954 | 12 | export names surface in packages/cli/src/config/config.constants.ts |  |  | 0.514 |
+| walker |  | 7966 | 12 | export names surface in packages/cli/src/view-note/view-note.models.ts |  |  | 0.514 |
+| walker |  | 7978 | 12 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.514 |
+| walker |  | 8099 | 121 | json config packages/crypto/tsconfig.json |  |  | 0.514 |
 | ns | 8111 |  | 276 | Auth catalog — errors + models + services signatures | 5.3 |  | 0.504 |
-| walker |  | 8117 | 33 | packages/docs/src/how-it-works.md section #11 |  |  | 0.504 |
-| walker |  | 8129 | 12 | export names surface in packages/cli/src/config/config.constants.ts |  |  | 0.504 |
-| walker |  | 8141 | 12 | export names surface in packages/cli/src/view-note/view-note.models.ts |  |  | 0.504 |
-| walker |  | 8153 | 12 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.504 |
-| walker |  | 8177 | 24 | packages/docs/src/resources/i18n.md section #1 |  |  | 0.504 |
-| walker |  | 8202 | 25 | packages/docs/src/resources/brand-kit.md section #2 |  |  | 0.504 |
-| walker |  | 8215 | 13 | export names surface in packages/cli/src/create-note/create-note.usecases.ts |  |  | 0.504 |
-| walker |  | 8228 | 13 | export names surface in packages/cli/src/shared/cli.models.ts |  |  | 0.504 |
-| walker |  | 8241 | 13 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.504 |
+| walker |  | 8123 | 24 | packages/docs/src/resources/i18n.md section #1 |  |  | 0.504 |
+| walker |  | 8148 | 25 | packages/docs/src/resources/brand-kit.md section #2 |  |  | 0.504 |
+| walker |  | 8161 | 13 | export names surface in packages/cli/src/create-note/create-note.usecases.ts |  |  | 0.504 |
+| walker |  | 8174 | 13 | export names surface in packages/cli/src/shared/cli.models.ts |  |  | 0.504 |
+| walker |  | 8187 | 13 | export names surface in packages/crypto/src/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.504 |
+| walker |  | 8241 | 54 | json config packages/deploy-cloudflare/_routes.json |  |  | 0.504 |
 | walker |  | 8288 | 47 | README.md section #22 |  |  | 0.504 |
 | walker |  | 8301 | 13 | export at packages/app-client/src/modules/auth/auth.models.ts:1 |  |  | 0.504 |
 | walker |  | 8382 | 81 | export at packages/lib/build.config.ts:3 |  |  | 0.504 |
@@ -274,26 +274,26 @@ Score(3000)=0.640 I=0.823 C=0.498 ns_rows≤3K=23/45 (reached=12 partial=1 missi
 | ns | 9232 |  | 98 | Lib — note URL hash-fragment markers (`pw` / `dar`) | 6.2 |  | 0.469 |
 | walker |  | 9237 | 11 | export names surface in packages/app-server/src/modules/app/server.ts |  |  | 0.469 |
 | walker |  | 9248 | 11 | export names surface in packages/app-server/src/modules/tasks/tasks.models.ts |  |  | 0.469 |
-| walker |  | 9420 | 172 | json config packages/app-server/tsconfig.json |  |  | 0.469 |
-| walker |  | 9429 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.469 |
-| walker |  | 9438 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.469 |
-| walker |  | 9450 | 12 | export names surface in packages/app-client/src/modules/docs/docs.models.ts |  |  | 0.469 |
-| walker |  | 9462 | 12 | export names surface in packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.469 |
-| walker |  | 9474 | 12 | export names surface in packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.469 |
-| walker |  | 9486 | 12 | export names surface in packages/app-server/src/modules/tasks/task-scheduler.ts |  |  | 0.469 |
-| walker |  | 9498 | 12 | export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.469 |
-| walker |  | 9510 | 12 | export names surface in packages/lib/src/crypto/serialization/serialization.models.ts |  |  | 0.469 |
+| walker |  | 9257 | 9 | listing of 'packages/app-server/src/modules/shared/errors' |  |  | 0.469 |
+| walker |  | 9266 | 9 | listing of 'packages/app-server/src/modules/shared/validation' |  |  | 0.469 |
+| walker |  | 9278 | 12 | export names surface in packages/app-client/src/modules/docs/docs.models.ts |  |  | 0.469 |
+| walker |  | 9290 | 12 | export names surface in packages/app-server/src/modules/notes/notes.repository.ts |  |  | 0.469 |
+| walker |  | 9302 | 12 | export names surface in packages/app-server/src/modules/notes/notes.routes.ts |  |  | 0.469 |
+| walker |  | 9314 | 12 | export names surface in packages/app-server/src/modules/tasks/task-scheduler.ts |  |  | 0.469 |
+| walker |  | 9326 | 12 | export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.models.ts |  |  | 0.469 |
+| walker |  | 9338 | 12 | export names surface in packages/lib/src/crypto/serialization/serialization.models.ts |  |  | 0.469 |
+| walker |  | 9537 | 199 | plaintext config .gitignore |  |  | 0.469 |
 | ns | 9539 |  | 307 | CLI dispatcher + create-note args | 6.3 |  | 0.460 |
-| walker |  | 9709 | 199 | plaintext config .gitignore |  |  | 0.460 |
-| walker |  | 9754 | 45 | packages/docs/src/how-it-works.md section #1 |  |  | 0.460 |
-| walker |  | 9833 | 79 | export names surface in packages/lib/src/crypto/serialization/serialization.registry.ts |  |  | 0.460 |
-| walker |  | 9850 | 17 | export at packages/lib/src/crypto/serialization/serialization.registry.ts:7 |  |  | 0.460 |
-| walker |  | 9868 | 18 | export names surface in packages/lib/src/api/api.constants.ts |  |  | 0.460 |
+| walker |  | 9582 | 45 | packages/docs/src/how-it-works.md section #1 |  |  | 0.460 |
+| walker |  | 9661 | 79 | export names surface in packages/lib/src/crypto/serialization/serialization.registry.ts |  |  | 0.460 |
+| walker |  | 9678 | 17 | export at packages/lib/src/crypto/serialization/serialization.registry.ts:7 |  |  | 0.460 |
+| walker |  | 9696 | 18 | export names surface in packages/lib/src/api/api.constants.ts |  |  | 0.460 |
+| walker |  | 9745 | 49 | README.md section #28 |  |  | 0.460 |
+| walker |  | 9758 | 13 | export names surface in packages/app-client/src/modules/notes/notes.usecases.ts |  |  | 0.460 |
+| walker |  | 9771 | 13 | export names surface in packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.460 |
+| walker |  | 9771 | 0 | export at packages/app-client/src/modules/theme/theme.store.ts:4 |  |  | 0.460 |
+| walker |  | 9784 | 13 | export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.460 |
+| walker |  | 9797 | 13 | export names surface in packages/lib/src/crypto/serialization/serialization.test-utils.ts |  |  | 0.460 |
+| walker |  | 9831 | 34 | packages/docs/src/self-hosting/docker.md section #3 |  |  | 0.460 |
 | ns | 9903 |  | 364 | App-client — Solid Router routes | 6.4 |  | 0.451 |
-| walker |  | 9917 | 49 | README.md section #28 |  |  | 0.451 |
-| walker |  | 9930 | 13 | export names surface in packages/app-client/src/modules/notes/notes.usecases.ts |  |  | 0.451 |
-| walker |  | 9943 | 13 | export names surface in packages/app-client/src/modules/theme/theme.store.ts |  |  | 0.451 |
-| walker |  | 9943 | 0 | export at packages/app-client/src/modules/theme/theme.store.ts:4 |  |  | 0.451 |
-| walker |  | 9956 | 13 | export names surface in packages/lib/src/crypto/encryption-algorithms/encryption-algorithms.registry.ts |  |  | 0.451 |
-| walker |  | 9969 | 13 | export names surface in packages/lib/src/crypto/serialization/serialization.test-utils.ts |  |  | 0.451 |
 | ns | 9990 |  | 87 | Docs site — page map (VitePress src layout) | 6.5 |  | 0.464 |

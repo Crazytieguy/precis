@@ -45,9 +45,9 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | walker |  | 2509 | 14 | README.md section #7 |  |  | 0.695 |
 | walker |  | 2612 | 103 | README.md section #4 |  |  | 0.696 |
 | ns | 2626 |  | 332 | test/index_test.ts test labels — all describe + it titles | 3.7 |  | 0.652 |
-| walker |  | 2761 | 149 | json config tsconfig.json |  |  | 0.655 |
-| walker |  | 2793 | 32 | README.md section #12 |  |  | 0.668 |
-| walker |  | 2826 | 33 | README.md section #10 |  |  | 0.685 |
+| walker |  | 2644 | 32 | README.md section #12 |  |  | 0.665 |
+| walker |  | 2677 | 33 | README.md section #10 |  |  | 0.681 |
+| walker |  | 2826 | 149 | json config tsconfig.json |  |  | 0.685 |
 | ns | 2829 |  | 203 | on() / off() JSDoc | 3.8 | 2.2 | 0.696 |
 | ns | 2949 |  | 120 | compressed-size CI workflow | 4.1 |  | 0.677 |
 | ns | 3089 |  | 140 | package.json mocha + prettier blocks | 4.2 |  | 0.654 |

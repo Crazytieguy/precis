@@ -296,6 +296,9 @@ packages/
                 33→## Get Started
                 …
             integrations/
+                cli.md
+                npm-package.md
+                versioning.md
             public/
             resources/
             self-hosting/
@@ -342,6 +345,8 @@ packages/
                 api.constants.ts
                 api.models.test.ts
                 api.models.ts
+                    3→export { isApiClientErrorWithCode, isApiClientErrorWithStatusCode };
+                    …
             crypto/
                 crypto.constants.ts
                 crypto.types.ts

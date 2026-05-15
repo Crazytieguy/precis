@@ -99,13 +99,13 @@ Score(3000)=0.520 I=0.507 C=0.534 ns_rows≤3K=19/45 (reached=7 partial=5 missin
 | walker |  | 3901 | 235 | export body at src/patterns.ts:187 body 193 |  |  | 0.478 |
 | walker |  | 3963 | 62 | imports in src/is-matching.ts |  |  | 0.479 |
 | ns | 3971 |  | 191 | P.not — JSDoc + signature | 3.7 | 3.1 | 0.467 |
-| walker |  | 4117 | 154 | json config tsconfig.json |  |  | 0.467 |
-| ns | 4233 |  | 262 | P.when — JSDoc + both overload signatures | 3.8 | 3.1 | 0.453 |
-| walker |  | 4273 | 156 | export names surface in src/internals/symbols.ts |  |  | 0.454 |
-| walker |  | 4273 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.454 |
-| walker |  | 4585 | 312 | export body at src/patterns.ts:246 body 249 |  |  | 0.454 |
-| ns | 4659 |  | 426 | P.select — JSDoc + all three overload signatures | 3.9 | 3.1 | 0.432 |
-| walker |  | 4660 | 75 | imports in src/match.ts |  |  | 0.437 |
+| walker |  | 4119 | 156 | export names surface in src/internals/symbols.ts |  |  | 0.468 |
+| walker |  | 4119 | 0 | export at src/internals/symbols.ts:16 |  |  | 0.468 |
+| ns | 4233 |  | 262 | P.when — JSDoc + both overload signatures | 3.8 | 3.1 | 0.454 |
+| walker |  | 4431 | 312 | export body at src/patterns.ts:246 body 249 |  |  | 0.454 |
+| walker |  | 4506 | 75 | imports in src/match.ts |  |  | 0.459 |
+| ns | 4659 |  | 426 | P.select — JSDoc + all three overload signatures | 3.9 | 3.1 | 0.437 |
+| walker |  | 4660 | 154 | json config tsconfig.json |  |  | 0.437 |
 | walker |  | 4777 | 117 | README.md section #11 |  |  | 0.437 |
 | ns | 4865 |  | 206 | P.array — JSDoc + overload signatures | 3.10 | 3.1 | 0.431 |
 | walker |  | 4905 | 128 | README.md section #10 |  |  | 0.431 |
@@ -133,20 +133,20 @@ Score(3000)=0.520 I=0.507 C=0.534 ns_rows≤3K=19/45 (reached=7 partial=5 missin
 | ns | 6498 |  | 183 | P.shape + matcher protocol re-exports | 3.15 | 3.1 | 0.410 |
 | walker |  | 6676 | 418 | export body at src/patterns.ts:362 body 369 |  |  | 0.410 |
 | walker |  | 6807 | 131 | export doc at src/patterns.ts:294 |  |  | 0.421 |
-| walker |  | 6900 | 93 | json config jsr.json |  |  | 0.421 |
-| walker |  | 6962 | 62 | README.md section #6 |  |  | 0.423 |
-| ns | 6988 |  | 490 | chainable() factory + variadic / arrayChainable | 3.16 | 3.1 | 0.407 |
-| walker |  | 7025 | 63 | README.md section #1 |  |  | 0.410 |
-| walker |  | 7180 | 155 | export doc at src/patterns.ts:81 |  |  | 0.410 |
-| walker |  | 7322 | 142 | export doc at src/patterns.ts:241 |  |  | 0.424 |
-| walker |  | 7466 | 144 | export doc at src/patterns.ts:611 |  |  | 0.440 |
+| walker |  | 6869 | 62 | README.md section #6 |  |  | 0.423 |
+| walker |  | 6932 | 63 | README.md section #1 |  |  | 0.426 |
+| ns | 6988 |  | 490 | chainable() factory + variadic / arrayChainable | 3.16 | 3.1 | 0.410 |
+| walker |  | 7087 | 155 | export doc at src/patterns.ts:81 |  |  | 0.410 |
+| walker |  | 7229 | 142 | export doc at src/patterns.ts:241 |  |  | 0.424 |
+| walker |  | 7373 | 144 | export doc at src/patterns.ts:611 |  |  | 0.440 |
 | ns | 7489 |  | 501 | P.union / P.not / P.when — full bodies | 3.17 | 3.6 | 0.421 |
-| walker |  | 7612 | 146 | export doc at src/patterns.ts:187 |  |  | 0.436 |
-| walker |  | 7686 | 74 | plaintext config .gitignore |  |  | 0.436 |
-| ns | 7838 |  | 349 | tests/ + docs/ + examples/ listings | 4.1 |  | 0.415 |
-| walker |  | 7839 | 153 | export doc at src/is-matching.ts:48 |  |  | 0.436 |
-| ns | 7921 |  | 83 | Match<i, o> — public builder type signature | 4.2 |  | 0.432 |
-| walker |  | 7993 | 154 | export doc at src/patterns.ts:637 |  |  | 0.447 |
+| walker |  | 7519 | 146 | export doc at src/patterns.ts:187 |  |  | 0.436 |
+| walker |  | 7593 | 74 | plaintext config .gitignore |  |  | 0.436 |
+| walker |  | 7746 | 153 | export doc at src/is-matching.ts:48 |  |  | 0.457 |
+| ns | 7838 |  | 349 | tests/ + docs/ + examples/ listings | 4.1 |  | 0.436 |
+| walker |  | 7900 | 154 | export doc at src/patterns.ts:637 |  |  | 0.451 |
+| ns | 7921 |  | 83 | Match<i, o> — public builder type signature | 4.2 |  | 0.447 |
+| walker |  | 7993 | 93 | json config jsr.json |  |  | 0.447 |
 | walker |  | 8164 | 171 | export doc at src/patterns.ts:433 |  |  | 0.463 |
 | walker |  | 8338 | 174 | export doc at src/patterns.ts:356 |  |  | 0.480 |
 | ns | 8414 |  | 493 | Pattern<T> — public pattern type alias + typed wildcards | 4.3 |  | 0.468 |
