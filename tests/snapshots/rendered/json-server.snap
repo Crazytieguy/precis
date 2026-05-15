@@ -5,20 +5,9 @@ expression: rendered
 .gitattributes
 .github/
 .gitignore
-    1→**/*.log
-    2→.DS_Store
-    3→.idea
-    4→lib
-    5→node_modules
-    6→public/output.css
-    7→tmp
 .husky/
     pre-commit
 .oxfmtrc.json
-    1→{
-    2→  "semi": false,
-    3→  "singleQuote": true,
-    4→}
 LICENSE
 README.md
     1→# JSON-Server
@@ -241,7 +230,14 @@ src/
     parse-where.test.ts
     parse-where.ts
         58→export function parseWhere(query: string): JsonObject {
-        …
+        59→  const out: JsonObject = {}
+        60→  const params = new URLSearchParams(query)
+        62→  for (const [rawKey, rawValue] of params.entries()) {
+        63→    const { path, op } = splitKey(rawKey)
+        64→    if (op === null) continue
+        65→    setPathOp(out, path, op, rawValue)
+        66→  }
+        68→  return out
     random-id.ts
         1→import { randomBytes } from 'node:crypto'
         3→export function randomId(): string {

@@ -1,7 +1,7 @@
 fixture = "vaul"
 budget = 10000
-cumulative_tokens = 9892
-batch_count = 97
+cumulative_tokens = 9865
+batch_count = 96
 
 [[batches]]
 position = 1
@@ -19,24 +19,10 @@ entries = [".eslintrc.js", ".github", ".gitignore", ".prettierrc.js", ".vscode",
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 4
-cum_tokens = 66
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode"
-entries = ["settings.json"]
-
-[[batches]]
-position = 3
 key = 'Json(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package identity in package.json"
 cost_tokens = 52
-cum_tokens = 118
+cum_tokens = 114
 
 [batches.content]
 kind = "lines"
@@ -58,11 +44,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 4
+position = 3
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in playwright.config.ts"
 cost_tokens = 11
-cum_tokens = 129
+cum_tokens = 125
 
 [batches.content]
 kind = "lines"
@@ -84,11 +70,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/src" })'
 descriptor = "listing of 'src'"
 cost_tokens = 71
-cum_tokens = 200
+cum_tokens = 196
 
 [batches.content]
 kind = "fs"
@@ -98,11 +84,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/src"
 entries = ["browser.ts", "constants.ts", "context.ts", "helpers.ts", "index.tsx", "style.css", "types.ts", "use-composed-refs.ts", "use-controllable-state.ts", "use-position-fixed.ts", "use-prevent-scroll.ts", "use-scale-background.ts", "use-snap-points.ts"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 993 })'
 descriptor = "module item at src/index.tsx:993"
 cost_tokens = 13
-cum_tokens = 213
+cum_tokens = 209
 
 [batches.content]
 kind = "lines"
@@ -116,11 +102,11 @@ end = 993
 kind = "full"
 
 [[batches]]
-position = 7
+position = 6
 key = 'Typescript(ModuleItem { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 994 })'
 descriptor = "module item at src/index.tsx:994"
 cost_tokens = 13
-cum_tokens = 226
+cum_tokens = 222
 
 [batches.content]
 kind = "lines"
@@ -134,11 +120,11 @@ end = 994
 kind = "full"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/pnpm-workspace.yaml" })'
 descriptor = "plaintext config pnpm-workspace.yaml"
 cost_tokens = 23
-cum_tokens = 249
+cum_tokens = 245
 
 [batches.content]
 kind = "lines"
@@ -152,11 +138,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 9
+position = 8
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", chunk_index: 0, export_count: 12, type_only_export_count: 5 })'
 descriptor = "export names surface in src/index.tsx"
 cost_tokens = 223
-cum_tokens = 472
+cum_tokens = 468
 
 [batches.content]
 kind = "lines"
@@ -354,11 +340,11 @@ end = 1138
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1098 })'
 descriptor = "export at src/index.tsx:1098"
 cost_tokens = 0
-cum_tokens = 472
+cum_tokens = 468
 
 [batches.content]
 kind = "lines"
@@ -380,11 +366,11 @@ end = 1099
 kind = "ellipsis"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1130 })'
 descriptor = "export at src/index.tsx:1130"
 cost_tokens = 0
-cum_tokens = 472
+cum_tokens = 468
 
 [batches.content]
 kind = "lines"
@@ -406,11 +392,11 @@ end = 1131
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 11
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 989 })'
 descriptor = "export at src/index.tsx:989"
 cost_tokens = 13
-cum_tokens = 485
+cum_tokens = 481
 
 [batches.content]
 kind = "lines"
@@ -424,11 +410,11 @@ end = 991
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 803 })'
 descriptor = "export at src/index.tsx:803"
 cost_tokens = 13
-cum_tokens = 498
+cum_tokens = 494
 
 [batches.content]
 kind = "lines"
@@ -450,11 +436,11 @@ end = 805
 kind = "ellipsis"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 996 })'
 descriptor = "export at src/index.tsx:996"
 cost_tokens = 29
-cum_tokens = 527
+cum_tokens = 523
 
 [batches.content]
 kind = "lines"
@@ -476,11 +462,11 @@ end = 1000
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 833 })'
 descriptor = "export at src/index.tsx:833"
 cost_tokens = 34
-cum_tokens = 561
+cum_tokens = 557
 
 [batches.content]
 kind = "lines"
@@ -502,11 +488,11 @@ end = 837
 kind = "ellipsis"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 40 })'
 descriptor = "export at src/index.tsx:40"
 cost_tokens = 120
-cum_tokens = 681
+cum_tokens = 677
 
 [batches.content]
 kind = "lines"
@@ -520,11 +506,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 17
+position = 16
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 27 })'
 descriptor = "export at src/index.tsx:27"
 cost_tokens = 161
-cum_tokens = 842
+cum_tokens = 838
 
 [batches.content]
 kind = "lines"
@@ -538,11 +524,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 1137 })'
 descriptor = "export at src/index.tsx:1137"
 cost_tokens = 101
-cum_tokens = 943
+cum_tokens = 939
 
 [batches.content]
 kind = "lines"
@@ -556,11 +542,11 @@ end = 1148
 kind = "full"
 
 [[batches]]
-position = 19
+position = 18
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 139 })'
 descriptor = "export at src/index.tsx:139"
 cost_tokens = 318
-cum_tokens = 1261
+cum_tokens = 1257
 
 [batches.content]
 kind = "lines"
@@ -582,11 +568,11 @@ end = 170
 kind = "ellipsis"
 
 [[batches]]
-position = 20
+position = 19
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-position-fixed.ts"
 cost_tokens = 12
-cum_tokens = 1273
+cum_tokens = 1269
 
 [batches.content]
 kind = "lines"
@@ -608,11 +594,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 21
+position = 20
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-snap-points.ts"
 cost_tokens = 12
-cum_tokens = 1285
+cum_tokens = 1281
 
 [batches.content]
 kind = "lines"
@@ -634,11 +620,37 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 22
+position = 21
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-scale-background.ts"
 cost_tokens = 13
-cum_tokens = 1298
+cum_tokens = 1294
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 22
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts", start_line: 8 })'
+descriptor = "export at src/use-scale-background.ts:8"
+cost_tokens = 0
+cum_tokens = 1294
 
 [batches.content]
 kind = "lines"
@@ -661,36 +673,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 23
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts", start_line: 8 })'
-descriptor = "export at src/use-scale-background.ts:8"
-cost_tokens = 0
-cum_tokens = 1298
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-scale-background.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 24
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-composed-refs.ts"
 cost_tokens = 14
-cum_tokens = 1312
+cum_tokens = 1308
 
 [batches.content]
 kind = "lines"
@@ -704,11 +690,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 803, body_start_line: 805 })'
 descriptor = "export body at src/index.tsx:803 body 805"
 cost_tokens = 305
-cum_tokens = 1617
+cum_tokens = 1613
 
 [batches.content]
 kind = "lines"
@@ -738,11 +724,11 @@ end = 825
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 50 })'
 descriptor = "export at src/index.tsx:50"
 cost_tokens = 1170
-cum_tokens = 2787
+cum_tokens = 2783
 
 [batches.content]
 kind = "lines"
@@ -756,11 +742,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 27
+position = 26
 key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 178
-cum_tokens = 2965
+cum_tokens = 2961
 
 [batches.content]
 kind = "lines"
@@ -782,11 +768,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 28
+position = 27
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 174
-cum_tokens = 3139
+cum_tokens = 3135
 
 [batches.content]
 kind = "lines"
@@ -800,11 +786,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 19
-cum_tokens = 3158
+cum_tokens = 3154
 
 [batches.content]
 kind = "lines"
@@ -818,11 +804,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 135
-cum_tokens = 3293
+cum_tokens = 3289
 
 [batches.content]
 kind = "lines"
@@ -836,11 +822,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/tsconfig.json" })'
 descriptor = "json config tsconfig.json"
 cost_tokens = 111
-cum_tokens = 3404
+cum_tokens = 3400
 
 [batches.content]
 kind = "lines"
@@ -854,11 +840,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts", chunk_index: 0, export_count: 2, type_only_export_count: 0 })'
 descriptor = "export names surface in src/context.ts"
 cost_tokens = 34
-cum_tokens = 3438
+cum_tokens = 3434
 
 [batches.content]
 kind = "lines"
@@ -896,11 +882,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts", start_line: 69 })'
 descriptor = "export at src/context.ts:69"
 cost_tokens = 0
-cum_tokens = 3438
+cum_tokens = 3434
 
 [batches.content]
 kind = "lines"
@@ -922,29 +908,11 @@ end = 70
 kind = "ellipsis"
 
 [[batches]]
-position = 34
-key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json" })'
-descriptor = "json config .vscode/settings.json"
-cost_tokens = 27
-cum_tokens = 3465
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode/settings.json"
-start = 1
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
+position = 33
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-controllable-state.ts"
 cost_tokens = 35
-cum_tokens = 3500
+cum_tokens = 3469
 
 [batches.content]
 kind = "lines"
@@ -966,11 +934,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 34
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts", start_line: 39 })'
 descriptor = "export at src/use-controllable-state.ts:39"
 cost_tokens = 0
-cum_tokens = 3500
+cum_tokens = 3469
 
 [batches.content]
 kind = "lines"
@@ -992,11 +960,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 35
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts" })'
 descriptor = "imports in playwright.config.ts"
 cost_tokens = 17
-cum_tokens = 3517
+cum_tokens = 3486
 
 [batches.content]
 kind = "lines"
@@ -1010,11 +978,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 38
+position = 36
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test" })'
 descriptor = "listing of 'test'"
 cost_tokens = 52
-cum_tokens = 3569
+cum_tokens = 3538
 
 [batches.content]
 kind = "fs"
@@ -1024,11 +992,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test"
 entries = [".eslintrc.json", ".gitignore", "README.md", "next.config.js", "package.json", "postcss.config.js", "public", "src", "tailwind.config.ts", "tests", "tsconfig.json"]
 
 [[batches]]
-position = 39
+position = 37
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src" })'
 descriptor = "listing of 'test/src'"
 cost_tokens = 3
-cum_tokens = 3572
+cum_tokens = 3541
 
 [batches.content]
 kind = "fs"
@@ -1038,11 +1006,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src"
 entries = ["app"]
 
 [[batches]]
-position = 40
+position = 38
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-controllable-state.ts" })'
 descriptor = "imports in src/use-controllable-state.ts"
 cost_tokens = 10
-cum_tokens = 3582
+cum_tokens = 3551
 
 [batches.content]
 kind = "lines"
@@ -1056,11 +1024,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 338
-cum_tokens = 3920
+cum_tokens = 3889
 
 [batches.content]
 kind = "lines"
@@ -1082,11 +1050,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 3
-cum_tokens = 3923
+cum_tokens = 3892
 
 [batches.content]
 kind = "fs"
@@ -1096,11 +1064,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.github"
 entries = ["workflows"]
 
 [[batches]]
-position = 43
+position = 41
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 3927
+cum_tokens = 3896
 
 [batches.content]
 kind = "fs"
@@ -1110,11 +1078,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.github/workflows"
 entries = ["playwright.yml"]
 
 [[batches]]
-position = 44
+position = 42
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-composed-refs.ts" })'
 descriptor = "imports in src/use-composed-refs.ts"
 cost_tokens = 12
-cum_tokens = 3939
+cum_tokens = 3908
 
 [batches.content]
 kind = "lines"
@@ -1128,11 +1096,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx" })'
 descriptor = "imports in src/index.tsx"
 cost_tokens = 311
-cum_tokens = 4250
+cum_tokens = 4219
 
 [batches.content]
 kind = "lines"
@@ -1154,11 +1122,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 46
+position = 44
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 996, body_start_line: 1000 })'
 descriptor = "export body at src/index.tsx:996 body 1000"
 cost_tokens = 1039
-cum_tokens = 5289
+cum_tokens = 5258
 
 [batches.content]
 kind = "lines"
@@ -1252,11 +1220,25 @@ end = 1093
 kind = "full"
 
 [[batches]]
-position = 47
+position = 45
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode" })'
+descriptor = "listing of '.vscode'"
+cost_tokens = 4
+cum_tokens = 5262
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/.vscode"
+entries = ["settings.json"]
+
+[[batches]]
+position = 46
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts" })'
 descriptor = "imports in src/helpers.ts"
 cost_tokens = 16
-cum_tokens = 5305
+cum_tokens = 5278
 
 [batches.content]
 kind = "lines"
@@ -1270,11 +1252,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts", start_line: 69, body_start_line: 70 })'
 descriptor = "export body at src/context.ts:69 body 70"
 cost_tokens = 57
-cum_tokens = 5362
+cum_tokens = 5335
 
 [batches.content]
 kind = "lines"
@@ -1288,11 +1270,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts", start_line: 15 })'
 descriptor = "export at src/use-position-fixed.ts:15"
 cost_tokens = 124
-cum_tokens = 5486
+cum_tokens = 5459
 
 [batches.content]
 kind = "lines"
@@ -1314,11 +1296,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts", start_line: 12 })'
 descriptor = "export at playwright.config.ts:12"
 cost_tokens = 512
-cum_tokens = 5998
+cum_tokens = 5971
 
 [batches.content]
 kind = "lines"
@@ -1332,11 +1314,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/playwright.config.ts", start_line: 12 })'
 descriptor = "export doc at playwright.config.ts:12"
 cost_tokens = 26
-cum_tokens = 6024
+cum_tokens = 5997
 
 [batches.content]
 kind = "lines"
@@ -1350,11 +1332,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 52
+position = 51
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/index.tsx", start_line: 833, body_start_line: 837 })'
 descriptor = "export body at src/index.tsx:833 body 837"
 cost_tokens = 1691
-cum_tokens = 7715
+cum_tokens = 7688
 
 [batches.content]
 kind = "lines"
@@ -1464,11 +1446,11 @@ end = 984
 kind = "full"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests" })'
 descriptor = "listing of 'test/tests'"
 cost_tokens = 66
-cum_tokens = 7781
+cum_tokens = 7754
 
 [batches.content]
 kind = "fs"
@@ -1478,11 +1460,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/tests"
 entries = ["base.spec.ts", "constants.ts", "controlled.spec.ts", "helpers.ts", "initial-snap.spec.ts", "nested.spec.ts", "non-dismissible.spec.ts", "with-handle.spec.ts", "with-redirect.spec.ts", "with-scaled-background.spec.ts", "without-scaled-background.spec.ts"]
 
 [[batches]]
-position = 54
+position = 53
 key = 'Json(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/turbo.json" })'
 descriptor = "json config turbo.json"
 cost_tokens = 111
-cum_tokens = 7892
+cum_tokens = 7865
 
 [batches.content]
 kind = "lines"
@@ -1496,11 +1478,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/context.ts" })'
 descriptor = "imports in src/context.ts"
 cost_tokens = 23
-cum_tokens = 7915
+cum_tokens = 7888
 
 [batches.content]
 kind = "lines"
@@ -1514,11 +1496,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-position-fixed.ts" })'
 descriptor = "imports in src/use-position-fixed.ts"
 cost_tokens = 23
-cum_tokens = 7938
+cum_tokens = 7911
 
 [batches.content]
 kind = "lines"
@@ -1532,11 +1514,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 57
+position = 56
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", chunk_index: 0, export_count: 5, type_only_export_count: 0 })'
 descriptor = "export names surface in src/use-prevent-scroll.ts"
 cost_tokens = 95
-cum_tokens = 8033
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -1622,11 +1604,11 @@ end = 295
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 57
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 29 })'
 descriptor = "export at src/use-prevent-scroll.ts:29"
 cost_tokens = 0
-cum_tokens = 8033
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -1648,11 +1630,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 59
+position = 58
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 34 })'
 descriptor = "export at src/use-prevent-scroll.ts:34"
 cost_tokens = 0
-cum_tokens = 8033
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -1674,11 +1656,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 68 })'
 descriptor = "export at src/use-prevent-scroll.ts:68"
 cost_tokens = 0
-cum_tokens = 8033
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -1700,11 +1682,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 294 })'
 descriptor = "export at src/use-prevent-scroll.ts:294"
 cost_tokens = 0
-cum_tokens = 8033
+cum_tokens = 8006
 
 [batches.content]
 kind = "lines"
@@ -1726,11 +1708,11 @@ end = 295
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 29, body_start_line: 30 })'
 descriptor = "export body at src/use-prevent-scroll.ts:29 body 30"
 cost_tokens = 39
-cum_tokens = 8072
+cum_tokens = 8045
 
 [batches.content]
 kind = "lines"
@@ -1744,11 +1726,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 63
+position = 62
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 294, body_start_line: 295 })'
 descriptor = "export body at src/use-prevent-scroll.ts:294 body 295"
 cost_tokens = 60
-cum_tokens = 8132
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -1762,11 +1744,11 @@ end = 299
 kind = "full"
 
 [[batches]]
-position = 64
+position = 63
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 34, body_start_line: 35 })'
 descriptor = "export body at src/use-prevent-scroll.ts:34 body 35"
 cost_tokens = 80
-cum_tokens = 8212
+cum_tokens = 8185
 
 [batches.content]
 kind = "lines"
@@ -1796,11 +1778,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", chunk_index: 0, export_count: 7, type_only_export_count: 0 })'
 descriptor = "export names surface in src/browser.ts"
 cost_tokens = 112
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -1913,42 +1895,42 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
 start = 35
 end = 35
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 65
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 1 })'
+descriptor = "export at src/browser.ts:1"
+cost_tokens = 0
+cum_tokens = 8297
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
+start = 2
+end = 2
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 66
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 1 })'
-descriptor = "export at src/browser.ts:1"
-cost_tokens = 0
-cum_tokens = 8324
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts"
-start = 2
-end = 2
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 67
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 10 })'
 descriptor = "export at src/browser.ts:10"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -1970,11 +1952,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 14 })'
 descriptor = "export at src/browser.ts:14"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -1996,11 +1978,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 69
+position = 68
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 18 })'
 descriptor = "export at src/browser.ts:18"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -2022,11 +2004,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 22 })'
 descriptor = "export at src/browser.ts:22"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -2048,11 +2030,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 30 })'
 descriptor = "export at src/browser.ts:30"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -2074,11 +2056,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 34 })'
 descriptor = "export at src/browser.ts:34"
 cost_tokens = 0
-cum_tokens = 8324
+cum_tokens = 8297
 
 [batches.content]
 kind = "lines"
@@ -2100,11 +2082,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 10, body_start_line: 11 })'
 descriptor = "export body at src/browser.ts:10 body 11"
 cost_tokens = 10
-cum_tokens = 8334
+cum_tokens = 8307
 
 [batches.content]
 kind = "lines"
@@ -2118,11 +2100,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 14, body_start_line: 15 })'
 descriptor = "export body at src/browser.ts:14 body 15"
 cost_tokens = 11
-cum_tokens = 8345
+cum_tokens = 8318
 
 [batches.content]
 kind = "lines"
@@ -2136,11 +2118,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 18, body_start_line: 19 })'
 descriptor = "export body at src/browser.ts:18 body 19"
 cost_tokens = 21
-cum_tokens = 8366
+cum_tokens = 8339
 
 [batches.content]
 kind = "lines"
@@ -2154,11 +2136,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 76
+position = 75
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/browser.ts", start_line: 1, body_start_line: 2 })'
 descriptor = "export body at src/browser.ts:1 body 2"
 cost_tokens = 81
-cum_tokens = 8447
+cum_tokens = 8420
 
 [batches.content]
 kind = "lines"
@@ -2172,11 +2154,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts" })'
 descriptor = "imports in src/use-prevent-scroll.ts"
 cost_tokens = 30
-cum_tokens = 8477
+cum_tokens = 8450
 
 [batches.content]
 kind = "lines"
@@ -2190,11 +2172,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", chunk_index: 0, export_count: 8, type_only_export_count: 0 })'
 descriptor = "export names surface in src/constants.ts"
 cost_tokens = 126
-cum_tokens = 8603
+cum_tokens = 8576
 
 [batches.content]
 kind = "lines"
@@ -2320,11 +2302,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/constants.ts", start_line: 1 })'
 descriptor = "export at src/constants.ts:1"
 cost_tokens = 40
-cum_tokens = 8643
+cum_tokens = 8616
 
 [batches.content]
 kind = "lines"
@@ -2338,11 +2320,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src/app" })'
 descriptor = "listing of 'test/src/app'"
 cost_tokens = 99
-cum_tokens = 8742
+cum_tokens = 8715
 
 [batches.content]
 kind = "fs"
@@ -2352,11 +2334,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/vaul/test/src/app"
 entries = ["controlled", "default-open", "different-directions", "globals.css", "initial-snap", "layout.tsx", "nested-drawers", "non-dismissible", "open-another-drawer", "page.tsx", "parent-container", "scrollable-page", "scrollable-with-inputs", "with-handle", "with-modal-false", "with-redirect", "with-scaled-background", "with-snap-points", "without-scaled-background"]
 
 [[batches]]
-position = 81
+position = 80
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-snap-points.ts", start_line: 7 })'
 descriptor = "export at src/use-snap-points.ts:7"
 cost_tokens = 249
-cum_tokens = 8991
+cum_tokens = 8964
 
 [batches.content]
 kind = "lines"
@@ -2378,11 +2360,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 68, body_start_line: 69 })'
 descriptor = "export body at src/use-prevent-scroll.ts:68 body 69"
 cost_tokens = 170
-cum_tokens = 9161
+cum_tokens = 9134
 
 [batches.content]
 kind = "lines"
@@ -2420,11 +2402,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", chunk_index: 0, export_count: 8, type_only_export_count: 0 })'
 descriptor = "export names surface in src/helpers.ts"
 cost_tokens = 171
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2553,42 +2535,42 @@ kind = "ellipsis"
 path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
 start = 109
 end = 109
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 83
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 9 })'
+descriptor = "export at src/helpers.ts:9"
+cost_tokens = 0
+cum_tokens = 9305
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
+start = 10
+end = 10
 
 [batches.content.spans.render]
 kind = "ellipsis"
 
 [[batches]]
 position = 84
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 9 })'
-descriptor = "export at src/helpers.ts:9"
-cost_tokens = 0
-cum_tokens = 9332
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 85
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 23 })'
 descriptor = "export at src/helpers.ts:23"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2610,11 +2592,11 @@ end = 24
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 42 })'
 descriptor = "export at src/helpers.ts:42"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2636,11 +2618,11 @@ end = 43
 kind = "ellipsis"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 59 })'
 descriptor = "export at src/helpers.ts:59"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2662,11 +2644,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 72 })'
 descriptor = "export at src/helpers.ts:72"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2688,11 +2670,11 @@ end = 73
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 90 })'
 descriptor = "export at src/helpers.ts:90"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +2696,11 @@ end = 91
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 94 })'
 descriptor = "export at src/helpers.ts:94"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2740,11 +2722,11 @@ end = 95
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 108 })'
 descriptor = "export at src/helpers.ts:108"
 cost_tokens = 0
-cum_tokens = 9332
+cum_tokens = 9305
 
 [batches.content]
 kind = "lines"
@@ -2766,11 +2748,11 @@ end = 109
 kind = "ellipsis"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 108 })'
 descriptor = "export doc at src/helpers.ts:108"
 cost_tokens = 29
-cum_tokens = 9361
+cum_tokens = 9334
 
 [batches.content]
 kind = "lines"
@@ -2784,11 +2766,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 9, body_start_line: 10 })'
 descriptor = "export body at src/helpers.ts:9 body 10"
 cost_tokens = 104
-cum_tokens = 9465
+cum_tokens = 9438
 
 [batches.content]
 kind = "lines"
@@ -2818,11 +2800,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 59, body_start_line: 60 })'
 descriptor = "export body at src/helpers.ts:59 body 60"
 cost_tokens = 83
-cum_tokens = 9548
+cum_tokens = 9521
 
 [batches.content]
 kind = "lines"
@@ -2836,11 +2818,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 42, body_start_line: 43 })'
 descriptor = "export body at src/helpers.ts:42 body 43"
 cost_tokens = 134
-cum_tokens = 9682
+cum_tokens = 9655
 
 [batches.content]
 kind = "lines"
@@ -2870,11 +2852,11 @@ end = 56
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/helpers.ts", start_line: 23, body_start_line: 24 })'
 descriptor = "export body at src/helpers.ts:23 body 24"
 cost_tokens = 152
-cum_tokens = 9834
+cum_tokens = 9807
 
 [batches.content]
 kind = "lines"
@@ -2920,11 +2902,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/vaul/src/use-prevent-scroll.ts", start_line: 68 })'
 descriptor = "export doc at src/use-prevent-scroll.ts:68"
 cost_tokens = 58
-cum_tokens = 9892
+cum_tokens = 9865
 
 [batches.content]
 kind = "lines"

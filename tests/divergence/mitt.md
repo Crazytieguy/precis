@@ -54,36 +54,36 @@ Score(3000)=0.677 I=0.828 C=0.554 ns_rows≤3K=22/43 (reached=13 partial=4 missi
 | walker |  | 3192 | 366 | package dependencies in package.json |  |  | 0.656 |
 | ns | 3238 |  | 149 | tsconfig.json — full | 4.3 |  | 0.669 |
 | walker |  | 3324 | 132 | README.md section #5 |  |  | 0.669 |
-| walker |  | 3398 | 74 | plaintext config .gitignore |  |  | 0.669 |
-| walker |  | 3425 | 27 | README.md section #6 |  |  | 0.681 |
+| walker |  | 3351 | 27 | README.md section #6 |  |  | 0.681 |
 | ns | 3455 |  | 217 | CI workflow (main.yml) | 4.4 |  | 0.649 |
-| walker |  | 3575 | 150 | plaintext config .editorconfig |  |  | 0.651 |
+| walker |  | 3593 | 242 | README.md section #2 |  |  | 0.651 |
+| walker |  | 3603 | 10 | listing of '.github' |  |  | 0.651 |
+| walker |  | 3612 | 9 | listing of '.github/workflows' |  |  | 0.651 |
 | ns | 3690 |  | 235 | package.json scripts | 4.5 |  | 0.660 |
-| walker |  | 3817 | 242 | README.md section #2 |  |  | 0.662 |
-| walker |  | 3827 | 10 | listing of '.github' |  |  | 0.662 |
-| walker |  | 3836 | 9 | listing of '.github/workflows' |  |  | 0.662 |
-| ns | 3890 |  | 200 | test-types-compilation.ts preamble — Events type + handler decls | 4.6 |  | 0.640 |
-| walker |  | 3932 | 96 | README.md section #14 |  |  | 0.640 |
-| walker |  | 3944 | 12 | listing of 'test' |  |  | 0.654 |
-| walker |  | 3996 | 52 | README.md section #16 |  |  | 0.655 |
-| walker |  | 4109 | 113 | README.md section #11 |  |  | 0.655 |
-| walker |  | 4226 | 117 | README.md section #9 |  |  | 0.655 |
-| ns | 4287 |  | 397 | test-types-compilation.ts on()/off() blocks | 4.7 | 4.6 | 0.618 |
-| ns | 4485 |  | 198 | test-types-compilation.ts emit() block | 4.8 | 4.6 | 0.601 |
-| walker |  | 4673 | 447 | README.md section #3 |  |  | 0.682 |
+| walker |  | 3708 | 96 | README.md section #14 |  |  | 0.661 |
+| walker |  | 3720 | 12 | listing of 'test' |  |  | 0.675 |
+| walker |  | 3772 | 52 | README.md section #16 |  |  | 0.675 |
+| walker |  | 3885 | 113 | README.md section #11 |  |  | 0.676 |
+| ns | 3890 |  | 200 | test-types-compilation.ts preamble — Events type + handler decls | 4.6 |  | 0.653 |
+| walker |  | 4002 | 117 | README.md section #9 |  |  | 0.653 |
+| ns | 4287 |  | 397 | test-types-compilation.ts on()/off() blocks | 4.7 | 4.6 | 0.616 |
+| walker |  | 4449 | 447 | README.md section #3 |  |  | 0.699 |
+| ns | 4485 |  | 198 | test-types-compilation.ts emit() block | 4.8 | 4.6 | 0.680 |
+| walker |  | 4633 | 184 | README.md section #17 |  |  | 0.682 |
+| walker |  | 4648 | 15 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.682 |
+| walker |  | 4664 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.682 |
+| walker |  | 4673 | 9 | imports in test/test-types-compilation.ts |  |  | 0.682 |
+| walker |  | 4703 | 30 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.682 |
 | ns | 4724 |  | 239 | test/index_test.ts imports + outer-block tests | 4.9 | 3.7 | 0.661 |
-| ns | 4955 |  | 231 | test/index_test.ts mitt# Events type + beforeEach | 4.10 | 3.7 | 0.639 |
-| walker |  | 5173 | 500 | plaintext config .eslintrc |  |  | 0.644 |
-| ns | 5244 |  | 289 | README install section | 5.1 |  | 0.649 |
-| walker |  | 5357 | 184 | README.md section #17 |  |  | 0.651 |
-| walker |  | 5372 | 15 | .github/PULL_REQUEST_TEMPLATE.md section #2 |  |  | 0.651 |
-| walker |  | 5388 | 16 | .github/PULL_REQUEST_TEMPLATE.md section #1 |  |  | 0.651 |
-| walker |  | 5397 | 9 | imports in test/test-types-compilation.ts |  |  | 0.651 |
-| ns | 5401 |  | 157 | Test body: wildcard '*' invocation | 5.2 | 3.7 | 0.640 |
-| walker |  | 5427 | 30 | .github/PULL_REQUEST_TEMPLATE.md section #3 |  |  | 0.641 |
-| walker |  | 5532 | 105 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.641 |
-| walker |  | 5821 | 289 | plaintext config LICENSE |  |  | 0.641 |
-| walker |  | 5881 | 60 | imports in test/index_test.ts |  |  | 0.643 |
+| walker |  | 4808 | 105 | .github/PULL_REQUEST_TEMPLATE.md section #0 |  |  | 0.661 |
+| walker |  | 4882 | 74 | plaintext config .gitignore |  |  | 0.661 |
+| ns | 4955 |  | 231 | test/index_test.ts mitt# Events type + beforeEach | 4.10 | 3.7 | 0.640 |
+| walker |  | 5032 | 150 | plaintext config .editorconfig |  |  | 0.642 |
+| ns | 5244 |  | 289 | README install section | 5.1 |  | 0.647 |
+| walker |  | 5321 | 289 | plaintext config LICENSE |  |  | 0.648 |
+| walker |  | 5381 | 60 | imports in test/index_test.ts |  |  | 0.649 |
+| ns | 5401 |  | 157 | Test body: wildcard '*' invocation | 5.2 | 3.7 | 0.638 |
+| walker |  | 5881 | 500 | plaintext config .eslintrc |  |  | 0.643 |
 | ns | 5926 |  | 525 | Test bodies: on() registration semantics | 5.3 | 3.7 | 0.607 |
 | ns | 6411 |  | 485 | Test bodies: off() removal semantics | 5.4 | 3.7 | 0.580 |
 | ns | 6664 |  | 253 | Test bodies: emit() typed dispatch + case sensitivity | 5.5 | 3.7 | 0.568 |

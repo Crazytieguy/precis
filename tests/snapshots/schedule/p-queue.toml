@@ -1,7 +1,7 @@
 fixture = "p-queue"
 budget = 10000
-cumulative_tokens = 5830
-batch_count = 50
+cumulative_tokens = 5706
+batch_count = 48
 
 [[batches]]
 position = 1
@@ -1769,28 +1769,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.gitignore" })'
-descriptor = "plaintext config .gitignore"
-cost_tokens = 30
-cum_tokens = 2725
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.gitignore"
-start = 1
-end = 4
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 3 })'
 descriptor = "readme.md section #3"
 cost_tokens = 34
-cum_tokens = 2759
+cum_tokens = 2729
 
 [batches.content]
 kind = "lines"
@@ -1804,11 +1786,37 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in source/lower-bound.ts"
 cost_tokens = 38
-cum_tokens = 2797
+cum_tokens = 2767
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
+start = 4
+end = 4
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 29
+key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", start_line: 3 })'
+descriptor = "export at source/lower-bound.ts:3"
+cost_tokens = 0
+cum_tokens = 2767
 
 [batches.content]
 kind = "lines"
@@ -1831,36 +1839,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 30
-key = 'Typescript(Export { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", start_line: 3 })'
-descriptor = "export at source/lower-bound.ts:3"
-cost_tokens = 0
-cum_tokens = 2797
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts"
-start = 4
-end = 4
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 31
 key = 'Json(IdentityMeta { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
 descriptor = "package identity metadata in package.json"
 cost_tokens = 243
-cum_tokens = 3040
+cum_tokens = 3010
 
 [batches.content]
 kind = "lines"
@@ -1882,11 +1864,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Json(Entry { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
 descriptor = "package entrypoints in package.json"
 cost_tokens = 92
-cum_tokens = 3132
+cum_tokens = 3102
 
 [batches.content]
 kind = "lines"
@@ -1908,11 +1890,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Json(Runtime { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
 descriptor = "package runtime metadata in package.json"
 cost_tokens = 29
-cum_tokens = 3161
+cum_tokens = 3131
 
 [batches.content]
 kind = "lines"
@@ -1926,11 +1908,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Json(Scripts { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
 descriptor = "package scripts in package.json"
 cost_tokens = 106
-cum_tokens = 3267
+cum_tokens = 3237
 
 [batches.content]
 kind = "lines"
@@ -1944,11 +1926,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Json(Dependencies { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/package.json" })'
 descriptor = "package dependencies in package.json"
 cost_tokens = 310
-cum_tokens = 3577
+cum_tokens = 3547
 
 [batches.content]
 kind = "lines"
@@ -1962,11 +1944,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 8 })'
 descriptor = "readme.md section #8"
 cost_tokens = 44
-cum_tokens = 3621
+cum_tokens = 3591
 
 [batches.content]
 kind = "lines"
@@ -1988,45 +1970,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 37
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.editorconfig" })'
-descriptor = "plaintext config .editorconfig"
-cost_tokens = 94
-cum_tokens = 3715
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.editorconfig"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.editorconfig"
-start = 3
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.editorconfig"
-start = 10
-end = 12
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 38
+position = 36
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 2 })'
 descriptor = "readme.md section #2"
 cost_tokens = 180
-cum_tokens = 3895
+cum_tokens = 3771
 
 [batches.content]
 kind = "lines"
@@ -2080,11 +2028,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 39
+position = 37
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 26 })'
 descriptor = "readme.md section #26"
 cost_tokens = 59
-cum_tokens = 3954
+cum_tokens = 3830
 
 [batches.content]
 kind = "lines"
@@ -2106,11 +2054,11 @@ end = 448
 kind = "full"
 
 [[batches]]
-position = 40
+position = 38
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 10 })'
 descriptor = "readme.md section #10"
 cost_tokens = 63
-cum_tokens = 4017
+cum_tokens = 3893
 
 [batches.content]
 kind = "lines"
@@ -2140,11 +2088,11 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 41
+position = 39
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/queue.ts", chunk_index: 0, export_count: 2, type_only_export_count: 2 })'
 descriptor = "export names surface in source/queue.ts"
 cost_tokens = 32
-cum_tokens = 4049
+cum_tokens = 3925
 
 [batches.content]
 kind = "lines"
@@ -2182,11 +2130,11 @@ end = 4
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 40
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/lower-bound.ts", start_line: 3, body_start_line: 4 })'
 descriptor = "export body at source/lower-bound.ts:3 body 4"
 cost_tokens = 138
-cum_tokens = 4187
+cum_tokens = 4063
 
 [batches.content]
 kind = "lines"
@@ -2224,11 +2172,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 43
+position = 41
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/priority-queue.ts", start_line: 11, body_start_line: 18 })'
 descriptor = "export body at source/priority-queue.ts:11 body 18"
 cost_tokens = 1025
-cum_tokens = 5212
+cum_tokens = 5088
 
 [batches.content]
 kind = "lines"
@@ -2402,11 +2350,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 44
+position = 42
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 35 })'
 descriptor = "readme.md section #35"
 cost_tokens = 163
-cum_tokens = 5375
+cum_tokens = 5251
 
 [batches.content]
 kind = "lines"
@@ -2428,11 +2376,11 @@ end = 1077
 kind = "full"
 
 [[batches]]
-position = 45
+position = 43
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github" })'
 descriptor = "listing of '.github'"
 cost_tokens = 7
-cum_tokens = 5382
+cum_tokens = 5258
 
 [batches.content]
 kind = "fs"
@@ -2442,11 +2390,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github"
 entries = ["security.md", "workflows"]
 
 [[batches]]
-position = 46
+position = 44
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github/workflows" })'
 descriptor = "listing of '.github/workflows'"
 cost_tokens = 4
-cum_tokens = 5386
+cum_tokens = 5262
 
 [batches.content]
 kind = "fs"
@@ -2456,11 +2404,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/p-queue/.github/workflows"
 entries = ["main.yml"]
 
 [[batches]]
-position = 47
+position = 45
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/bench.ts" })'
 descriptor = "imports in bench.ts"
 cost_tokens = 59
-cum_tokens = 5445
+cum_tokens = 5321
 
 [batches.content]
 kind = "lines"
@@ -2474,11 +2422,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 48
+position = 46
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 32 })'
 descriptor = "readme.md section #32"
 cost_tokens = 224
-cum_tokens = 5669
+cum_tokens = 5545
 
 [batches.content]
 kind = "lines"
@@ -2564,11 +2512,11 @@ end = 845
 kind = "full"
 
 [[batches]]
-position = 49
+position = 47
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/readme.md", section_index: 18 })'
 descriptor = "readme.md section #18"
 cost_tokens = 106
-cum_tokens = 5775
+cum_tokens = 5651
 
 [batches.content]
 kind = "lines"
@@ -2598,11 +2546,11 @@ end = 353
 kind = "full"
 
 [[batches]]
-position = 50
+position = 48
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/p-queue/source/options.ts", chunk_index: 0, export_count: 3, type_only_export_count: 3 })'
 descriptor = "export names surface in source/options.ts"
 cost_tokens = 55
-cum_tokens = 5830
+cum_tokens = 5706
 
 [batches.content]
 kind = "lines"

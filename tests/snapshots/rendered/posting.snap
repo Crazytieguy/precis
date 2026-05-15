@@ -3,13 +3,10 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .codex/
-    environments/
-        environment.toml
 .coverage
 .github/
 .gitignore
 .python-version
-    1→3.11.7
 CONTRIBUTING.md
 LICENSE
 Makefile
@@ -273,7 +270,7 @@ src/
             218→    async def search(self, query: str) -> Hits:
             …
             237→    @property
-            …
+            238→    def posting(self) -> "Posting":
         config.py
         exit_codes.py
             1→GENERAL_ERROR = 1

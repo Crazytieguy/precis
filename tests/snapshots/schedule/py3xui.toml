@@ -1,7 +1,7 @@
 fixture = "py3xui"
 budget = 10000
-cumulative_tokens = 9972
-batch_count = 256
+cumulative_tokens = 9960
+batch_count = 255
 
 [[batches]]
 position = 1
@@ -19,24 +19,10 @@ entries = [".flake8", ".github", ".gitignore", ".pylintrc", ".vscode", "CODE_OF_
 
 [[batches]]
 position = 2
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/.vscode" })'
-descriptor = "listing of '.vscode'"
-cost_tokens = 12
-cum_tokens = 68
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/.vscode"
-entries = ["launch.json", "settings.json", "tasks.json"]
-
-[[batches]]
-position = 3
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui" })'
 descriptor = "listing of 'py3xui'"
 cost_tokens = 25
-cum_tokens = 93
+cum_tokens = 81
 
 [batches.content]
 kind = "fs"
@@ -46,11 +32,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui"
 entries = ["__init__.py", "api", "async_api", "client", "inbound", "server", "utils"]
 
 [[batches]]
-position = 4
+position = 3
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client" })'
 descriptor = "listing of 'py3xui/client'"
 cost_tokens = 14
-cum_tokens = 107
+cum_tokens = 95
 
 [batches.content]
 kind = "fs"
@@ -60,11 +46,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client"
 entries = ["README.md", "__init__.py", "client.py"]
 
 [[batches]]
-position = 5
+position = 4
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/__init__.py" })'
 descriptor = "python imports in py3xui/client/__init__.py"
 cost_tokens = 14
-cum_tokens = 121
+cum_tokens = 109
 
 [batches.content]
 kind = "lines"
@@ -78,11 +64,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 6
+position = 5
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server" })'
 descriptor = "listing of 'py3xui/server'"
 cost_tokens = 14
-cum_tokens = 135
+cum_tokens = 123
 
 [batches.content]
 kind = "fs"
@@ -92,11 +78,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server"
 entries = ["README.md", "__init__.py", "server.py"]
 
 [[batches]]
-position = 7
+position = 6
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/__init__.py" })'
 descriptor = "python imports in py3xui/server/__init__.py"
 cost_tokens = 18
-cum_tokens = 153
+cum_tokens = 141
 
 [batches.content]
 kind = "lines"
@@ -110,11 +96,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 8
+position = 7
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils" })'
 descriptor = "listing of 'py3xui/utils'"
 cost_tokens = 14
-cum_tokens = 167
+cum_tokens = 155
 
 [batches.content]
 kind = "fs"
@@ -124,11 +110,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils"
 entries = ["README.md", "__init__.py", "env.py"]
 
 [[batches]]
-position = 9
+position = 8
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/__init__.py" })'
 descriptor = "python imports in py3xui/utils/__init__.py"
 cost_tokens = 13
-cum_tokens = 180
+cum_tokens = 168
 
 [batches.content]
 kind = "lines"
@@ -142,11 +128,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 10
+position = 9
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/utils/__init__.py"
 cost_tokens = 15
-cum_tokens = 195
+cum_tokens = 183
 
 [batches.content]
 kind = "lines"
@@ -160,11 +146,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 11
+position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound" })'
 descriptor = "listing of 'py3xui/inbound'"
 cost_tokens = 32
-cum_tokens = 227
+cum_tokens = 215
 
 [batches.content]
 kind = "fs"
@@ -174,11 +160,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound"
 entries = ["README.md", "__init__.py", "bases.py", "inbound.py", "settings.py", "sniffing.py", "stream_settings.py"]
 
 [[batches]]
-position = 12
+position = 11
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/__init__.py" })'
 descriptor = "python imports in py3xui/inbound/__init__.py"
 cost_tokens = 68
-cum_tokens = 295
+cum_tokens = 283
 
 [batches.content]
 kind = "lines"
@@ -192,11 +178,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 13
+position = 12
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/__init__.py" })'
 descriptor = "python imports in py3xui/__init__.py"
 cost_tokens = 80
-cum_tokens = 375
+cum_tokens = 363
 
 [batches.content]
 kind = "lines"
@@ -210,11 +196,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 14
+position = 13
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/README.md" })'
 descriptor = "README headline in py3xui/utils/README.md"
 cost_tokens = 35
-cum_tokens = 410
+cum_tokens = 398
 
 [batches.content]
 kind = "lines"
@@ -244,11 +230,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 15
+position = 14
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/README.md", section_index: 0 })'
 descriptor = "py3xui/utils/README.md section #0"
 cost_tokens = 15
-cum_tokens = 425
+cum_tokens = 413
 
 [batches.content]
 kind = "lines"
@@ -262,11 +248,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 16
+position = 15
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api" })'
 descriptor = "listing of 'py3xui/api'"
 cost_tokens = 40
-cum_tokens = 465
+cum_tokens = 453
 
 [batches.content]
 kind = "fs"
@@ -276,11 +262,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api"
 entries = ["README.md", "__init__.py", "api.py", "api_base.py", "api_client.py", "api_database.py", "api_inbound.py", "api_server.py"]
 
 [[batches]]
-position = 17
+position = 16
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/__init__.py" })'
 descriptor = "python imports in py3xui/api/__init__.py"
 cost_tokens = 66
-cum_tokens = 531
+cum_tokens = 519
 
 [batches.content]
 kind = "lines"
@@ -294,11 +280,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 18
+position = 17
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/dev" })'
 descriptor = "listing of 'dev'"
 cost_tokens = 27
-cum_tokens = 558
+cum_tokens = 546
 
 [batches.content]
 kind = "fs"
@@ -308,11 +294,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/dev"
 entries = ["clean_trash.sh", "create_venv.sh", "push.sh", "pydoc.sh", "requirements.txt"]
 
 [[batches]]
-position = 19
+position = 18
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md" })'
 descriptor = "README headline in py3xui/server/README.md"
 cost_tokens = 40
-cum_tokens = 598
+cum_tokens = 586
 
 [batches.content]
 kind = "lines"
@@ -335,6 +321,40 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md"
+start = 5
+end = 5
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 19
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md" })'
+descriptor = "README headline in py3xui/client/README.md"
+cost_tokens = 41
+cum_tokens = 627
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
 start = 5
 end = 5
 
@@ -343,44 +363,10 @@ kind = "full"
 
 [[batches]]
 position = 20
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md" })'
-descriptor = "README headline in py3xui/client/README.md"
-cost_tokens = 41
-cum_tokens = 639
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md"
-start = 5
-end = 5
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 21
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api" })'
 descriptor = "listing of 'py3xui/async_api'"
 cost_tokens = 46
-cum_tokens = 685
+cum_tokens = 673
 
 [batches.content]
 kind = "fs"
@@ -390,11 +376,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api"
 entries = ["README.md", "__init__.py", "async_api.py", "async_api_base.py", "async_api_client.py", "async_api_database.py", "async_api_inbound.py", "async_api_server.py"]
 
 [[batches]]
-position = 22
+position = 21
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/__init__.py" })'
 descriptor = "python imports in py3xui/async_api/__init__.py"
 cost_tokens = 77
-cum_tokens = 762
+cum_tokens = 750
 
 [batches.content]
 kind = "lines"
@@ -408,11 +394,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 23
+position = 22
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md" })'
 descriptor = "headings outline in py3xui/client/README.md"
 cost_tokens = 21
-cum_tokens = 783
+cum_tokens = 771
 
 [batches.content]
 kind = "lines"
@@ -450,11 +436,11 @@ end = 20
 kind = "ellipsis"
 
 [[batches]]
-position = 24
+position = 23
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md", section_index: 0 })'
 descriptor = "py3xui/client/README.md section #0"
 cost_tokens = 15
-cum_tokens = 798
+cum_tokens = 786
 
 [batches.content]
 kind = "lines"
@@ -468,11 +454,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 25
+position = 24
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 182
-cum_tokens = 980
+cum_tokens = 968
 
 [batches.content]
 kind = "lines"
@@ -494,11 +480,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 26
+position = 25
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/README.md" })'
 descriptor = "README headline in py3xui/inbound/README.md"
 cost_tokens = 52
-cum_tokens = 1032
+cum_tokens = 1020
 
 [batches.content]
 kind = "lines"
@@ -521,6 +507,40 @@ kind = "full"
 
 [[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/README.md"
+start = 5
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 26
+key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md" })'
+descriptor = "README headline in py3xui/api/README.md"
+cost_tokens = 54
+cum_tokens = 1074
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
+start = 3
+end = 3
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
 start = 5
 end = 6
 
@@ -529,44 +549,10 @@ kind = "full"
 
 [[batches]]
 position = 27
-key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md" })'
-descriptor = "README headline in py3xui/api/README.md"
-cost_tokens = 54
-cum_tokens = 1086
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
-start = 3
-end = 3
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md"
-start = 5
-end = 6
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 28
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api.py"
 cost_tokens = 9
-cum_tokens = 1095
+cum_tokens = 1083
 
 [batches.content]
 kind = "lines"
@@ -588,11 +574,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 29
+position = 28
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 13 })'
 descriptor = "python decl at py3xui/api/api.py:13"
 cost_tokens = 0
-cum_tokens = 1095
+cum_tokens = 1083
 
 [batches.content]
 kind = "lines"
@@ -606,11 +592,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 30
+position = 29
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/README.md" })'
 descriptor = "README headline in py3xui/async_api/README.md"
 cost_tokens = 67
-cum_tokens = 1162
+cum_tokens = 1150
 
 [batches.content]
 kind = "lines"
@@ -640,11 +626,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 31
+position = 30
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api.py"
 cost_tokens = 10
-cum_tokens = 1172
+cum_tokens = 1160
 
 [batches.content]
 kind = "lines"
@@ -666,11 +652,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 32
+position = 31
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 18 })'
 descriptor = "python decl at py3xui/async_api/async_api.py:18"
 cost_tokens = 0
-cum_tokens = 1172
+cum_tokens = 1160
 
 [batches.content]
 kind = "lines"
@@ -684,11 +670,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 33
+position = 32
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_base.py"
 cost_tokens = 11
-cum_tokens = 1183
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -710,11 +696,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 33
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_base.py", start_line: 16 })'
 descriptor = "python decl at py3xui/async_api/async_api_base.py:16"
 cost_tokens = 0
-cum_tokens = 1183
+cum_tokens = 1171
 
 [batches.content]
 kind = "lines"
@@ -728,11 +714,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 35
+position = 34
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api_client.py"
 cost_tokens = 12
-cum_tokens = 1195
+cum_tokens = 1183
 
 [batches.content]
 kind = "lines"
@@ -754,11 +740,11 @@ end = 14
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 35
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 13 })'
 descriptor = "python decl at py3xui/api/api_client.py:13"
 cost_tokens = 0
-cum_tokens = 1195
+cum_tokens = 1183
 
 [batches.content]
 kind = "lines"
@@ -772,11 +758,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 37
+position = 36
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_database.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api_database.py"
 cost_tokens = 12
-cum_tokens = 1207
+cum_tokens = 1195
 
 [batches.content]
 kind = "lines"
@@ -798,11 +784,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 38
+position = 37
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_database.py", start_line: 7 })'
 descriptor = "python decl at py3xui/api/api_database.py:7"
 cost_tokens = 0
-cum_tokens = 1207
+cum_tokens = 1195
 
 [batches.content]
 kind = "lines"
@@ -816,11 +802,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 39
+position = 38
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_database.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/api/api_database.py"
 cost_tokens = 14
-cum_tokens = 1221
+cum_tokens = 1209
 
 [batches.content]
 kind = "lines"
@@ -842,11 +828,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 39
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_database.py", start_line: 32 })'
 descriptor = "python method at py3xui/api/api_database.py:32"
 cost_tokens = 0
-cum_tokens = 1221
+cum_tokens = 1209
 
 [batches.content]
 kind = "lines"
@@ -860,11 +846,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 41
+position = 40
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api_server.py"
 cost_tokens = 12
-cum_tokens = 1233
+cum_tokens = 1221
 
 [batches.content]
 kind = "lines"
@@ -886,11 +872,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 41
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", start_line: 7 })'
 descriptor = "python decl at py3xui/api/api_server.py:7"
 cost_tokens = 0
-cum_tokens = 1233
+cum_tokens = 1221
 
 [batches.content]
 kind = "lines"
@@ -904,11 +890,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 43
+position = 42
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api_inbound.py"
 cost_tokens = 13
-cum_tokens = 1246
+cum_tokens = 1234
 
 [batches.content]
 kind = "lines"
@@ -930,11 +916,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 44
+position = 43
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 9 })'
 descriptor = "python decl at py3xui/api/api_inbound.py:9"
 cost_tokens = 0
-cum_tokens = 1246
+cum_tokens = 1234
 
 [batches.content]
 kind = "lines"
@@ -948,11 +934,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 45
+position = 44
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/inbound/bases.py"
 cost_tokens = 13
-cum_tokens = 1259
+cum_tokens = 1247
 
 [batches.content]
 kind = "lines"
@@ -974,11 +960,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 46
+position = 45
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/bases.py:9"
 cost_tokens = 0
-cum_tokens = 1259
+cum_tokens = 1247
 
 [batches.content]
 kind = "lines"
@@ -992,11 +978,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 47
+position = 46
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/inbound/bases.py"
 cost_tokens = 14
-cum_tokens = 1273
+cum_tokens = 1261
 
 [batches.content]
 kind = "lines"
@@ -1018,11 +1004,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 47
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 167
-cum_tokens = 1440
+cum_tokens = 1428
 
 [batches.content]
 kind = "lines"
@@ -1252,11 +1238,11 @@ end = 337
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 48
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 154
-cum_tokens = 1594
+cum_tokens = 1582
 
 [batches.content]
 kind = "lines"
@@ -1286,11 +1272,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 50
+position = 49
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/bases.py:9"
 cost_tokens = 17
-cum_tokens = 1611
+cum_tokens = 1599
 
 [batches.content]
 kind = "lines"
@@ -1304,11 +1290,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 51
+position = 50
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_client.py"
 cost_tokens = 15
-cum_tokens = 1626
+cum_tokens = 1614
 
 [batches.content]
 kind = "lines"
@@ -1330,11 +1316,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 51
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 12 })'
 descriptor = "python decl at py3xui/async_api/async_api_client.py:12"
 cost_tokens = 0
-cum_tokens = 1626
+cum_tokens = 1614
 
 [batches.content]
 kind = "lines"
@@ -1348,11 +1334,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 53
+position = 52
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_database.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_database.py"
 cost_tokens = 15
-cum_tokens = 1641
+cum_tokens = 1629
 
 [batches.content]
 kind = "lines"
@@ -1374,11 +1360,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 54
+position = 53
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_database.py", start_line: 7 })'
 descriptor = "python decl at py3xui/async_api/async_api_database.py:7"
 cost_tokens = 0
-cum_tokens = 1641
+cum_tokens = 1629
 
 [batches.content]
 kind = "lines"
@@ -1392,11 +1378,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 55
+position = 54
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_database.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api_database.py"
 cost_tokens = 15
-cum_tokens = 1656
+cum_tokens = 1644
 
 [batches.content]
 kind = "lines"
@@ -1418,11 +1404,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 55
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_database.py", start_line: 32 })'
 descriptor = "python method at py3xui/async_api/async_api_database.py:32"
 cost_tokens = 0
-cum_tokens = 1656
+cum_tokens = 1644
 
 [batches.content]
 kind = "lines"
@@ -1436,11 +1422,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 57
+position = 56
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_inbound.py"
 cost_tokens = 15
-cum_tokens = 1671
+cum_tokens = 1659
 
 [batches.content]
 kind = "lines"
@@ -1462,11 +1448,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 57
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 11 })'
 descriptor = "python decl at py3xui/async_api/async_api_inbound.py:11"
 cost_tokens = 0
-cum_tokens = 1671
+cum_tokens = 1659
 
 [batches.content]
 kind = "lines"
@@ -1480,11 +1466,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 59
+position = 58
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/async_api/async_api_server.py"
 cost_tokens = 15
-cum_tokens = 1686
+cum_tokens = 1674
 
 [batches.content]
 kind = "lines"
@@ -1506,11 +1492,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 59
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 8 })'
 descriptor = "python decl at py3xui/async_api/async_api_server.py:8"
 cost_tokens = 0
-cum_tokens = 1686
+cum_tokens = 1674
 
 [batches.content]
 kind = "lines"
@@ -1524,11 +1510,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 61
+position = 60
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 8 })'
 descriptor = "python class body at py3xui/async_api/async_api_server.py:8"
 cost_tokens = 14
-cum_tokens = 1700
+cum_tokens = 1688
 
 [batches.content]
 kind = "lines"
@@ -1542,11 +1528,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 62
+position = 61
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 22 })'
 descriptor = "README.md section #22"
 cost_tokens = 43
-cum_tokens = 1743
+cum_tokens = 1731
 
 [batches.content]
 kind = "lines"
@@ -1560,11 +1546,11 @@ end = 338
 kind = "full"
 
 [[batches]]
-position = 63
+position = 62
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/api/api_base.py"
 cost_tokens = 20
-cum_tokens = 1763
+cum_tokens = 1751
 
 [batches.content]
 kind = "lines"
@@ -1602,11 +1588,11 @@ end = 29
 kind = "ellipsis"
 
 [[batches]]
-position = 64
+position = 63
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python decl at py3xui/api/api_base.py:15"
 cost_tokens = 0
-cum_tokens = 1763
+cum_tokens = 1751
 
 [batches.content]
 kind = "lines"
@@ -1620,11 +1606,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 65
+position = 64
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py", start_line: 28 })'
 descriptor = "python decl at py3xui/api/api_base.py:28"
 cost_tokens = 0
-cum_tokens = 1763
+cum_tokens = 1751
 
 [batches.content]
 kind = "lines"
@@ -1638,11 +1624,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 66
+position = 65
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python decl doc at py3xui/api/api_base.py:15"
 cost_tokens = 16
-cum_tokens = 1779
+cum_tokens = 1767
 
 [batches.content]
 kind = "lines"
@@ -1656,11 +1642,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 67
+position = 66
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/client/client.py"
 cost_tokens = 21
-cum_tokens = 1800
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -1698,11 +1684,11 @@ end = 37
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 67
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py", start_line: 7 })'
 descriptor = "python decl at py3xui/client/client.py:7"
 cost_tokens = 0
-cum_tokens = 1800
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -1716,11 +1702,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 69
+position = 68
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py", start_line: 36 })'
 descriptor = "python decl at py3xui/client/client.py:36"
 cost_tokens = 0
-cum_tokens = 1800
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -1734,11 +1720,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 70
+position = 69
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/client/client.py:7"
 cost_tokens = 16
-cum_tokens = 1816
+cum_tokens = 1804
 
 [batches.content]
 kind = "lines"
@@ -1752,11 +1738,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 71
+position = 70
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/inbound/settings.py"
 cost_tokens = 22
-cum_tokens = 1838
+cum_tokens = 1826
 
 [batches.content]
 kind = "lines"
@@ -1794,11 +1780,11 @@ end = 18
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 71
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/settings.py:9"
 cost_tokens = 0
-cum_tokens = 1838
+cum_tokens = 1826
 
 [batches.content]
 kind = "lines"
@@ -1812,11 +1798,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 73
+position = 72
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 17 })'
 descriptor = "python decl at py3xui/inbound/settings.py:17"
 cost_tokens = 0
-cum_tokens = 1838
+cum_tokens = 1826
 
 [batches.content]
 kind = "lines"
@@ -1830,11 +1816,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 74
+position = 73
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/settings.py:9"
 cost_tokens = 16
-cum_tokens = 1854
+cum_tokens = 1842
 
 [batches.content]
 kind = "lines"
@@ -1848,11 +1834,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 75
+position = 74
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/py3xui/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 25
-cum_tokens = 1879
+cum_tokens = 1867
 
 [batches.content]
 kind = "fs"
@@ -1862,11 +1848,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/py3xui/tests"
 entries = ["__init__.py", "responses", "test_api.py", "test_async_api.py", "test_env.py"]
 
 [[batches]]
-position = 76
+position = 75
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 17 })'
 descriptor = "python class body at py3xui/inbound/settings.py:17"
 cost_tokens = 35
-cum_tokens = 1914
+cum_tokens = 1902
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +1866,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 77
+position = 76
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/demo.py" })'
 descriptor = "python imports in demo.py"
 cost_tokens = 40
-cum_tokens = 1954
+cum_tokens = 1942
 
 [batches.content]
 kind = "lines"
@@ -1922,11 +1908,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 78
+position = 77
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/inbound/inbound.py"
 cost_tokens = 23
-cum_tokens = 1977
+cum_tokens = 1965
 
 [batches.content]
 kind = "lines"
@@ -1964,11 +1950,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 79
+position = 78
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python decl at py3xui/inbound/inbound.py:15"
 cost_tokens = 0
-cum_tokens = 1977
+cum_tokens = 1965
 
 [batches.content]
 kind = "lines"
@@ -1982,11 +1968,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 80
+position = 79
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 38 })'
 descriptor = "python decl at py3xui/inbound/inbound.py:38"
 cost_tokens = 0
-cum_tokens = 1977
+cum_tokens = 1965
 
 [batches.content]
 kind = "lines"
@@ -2000,11 +1986,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 81
+position = 80
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python decl doc at py3xui/inbound/inbound.py:15"
 cost_tokens = 16
-cum_tokens = 1993
+cum_tokens = 1981
 
 [batches.content]
 kind = "lines"
@@ -2018,11 +2004,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 82
+position = 81
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/inbound/inbound.py"
 cost_tokens = 32
-cum_tokens = 2025
+cum_tokens = 2013
 
 [batches.content]
 kind = "lines"
@@ -2060,11 +2046,11 @@ end = 115
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 82
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 114 })'
 descriptor = "python method at py3xui/inbound/inbound.py:114"
 cost_tokens = 0
-cum_tokens = 2025
+cum_tokens = 2013
 
 [batches.content]
 kind = "lines"
@@ -2078,11 +2064,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 84
+position = 83
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/settings.py:9"
 cost_tokens = 37
-cum_tokens = 2062
+cum_tokens = 2050
 
 [batches.content]
 kind = "lines"
@@ -2096,11 +2082,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 85
+position = 84
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/inbound/stream_settings.py"
 cost_tokens = 24
-cum_tokens = 2086
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -2138,11 +2124,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 85
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 0
-cum_tokens = 2086
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -2156,11 +2142,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 87
+position = 86
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py", start_line: 25 })'
 descriptor = "python decl at py3xui/inbound/stream_settings.py:25"
 cost_tokens = 0
-cum_tokens = 2086
+cum_tokens = 2074
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2160,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 88
+position = 87
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 16
-cum_tokens = 2102
+cum_tokens = 2090
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2178,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 89
+position = 88
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/inbound/sniffing.py"
 cost_tokens = 26
-cum_tokens = 2128
+cum_tokens = 2116
 
 [batches.content]
 kind = "lines"
@@ -2234,11 +2220,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 90
+position = 89
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python decl at py3xui/inbound/sniffing.py:9"
 cost_tokens = 0
-cum_tokens = 2128
+cum_tokens = 2116
 
 [batches.content]
 kind = "lines"
@@ -2252,11 +2238,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 91
+position = 90
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 20 })'
 descriptor = "python decl at py3xui/inbound/sniffing.py:20"
 cost_tokens = 0
-cum_tokens = 2128
+cum_tokens = 2116
 
 [batches.content]
 kind = "lines"
@@ -2270,11 +2256,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 92
+position = 91
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python decl doc at py3xui/inbound/sniffing.py:9"
 cost_tokens = 16
-cum_tokens = 2144
+cum_tokens = 2132
 
 [batches.content]
 kind = "lines"
@@ -2288,11 +2274,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 93
+position = 92
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/api/api_server.py"
 cost_tokens = 54
-cum_tokens = 2198
+cum_tokens = 2186
 
 [batches.content]
 kind = "lines"
@@ -2346,11 +2332,11 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 94
+position = 93
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", start_line: 35 })'
 descriptor = "python method at py3xui/api/api_server.py:35"
 cost_tokens = 0
-cum_tokens = 2198
+cum_tokens = 2186
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2350,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 95
+position = 94
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", start_line: 67 })'
 descriptor = "python method at py3xui/api/api_server.py:67"
 cost_tokens = 0
-cum_tokens = 2198
+cum_tokens = 2186
 
 [batches.content]
 kind = "lines"
@@ -2382,11 +2368,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 96
+position = 95
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", start_line: 97 })'
 descriptor = "python method at py3xui/api/api_server.py:97"
 cost_tokens = 0
-cum_tokens = 2198
+cum_tokens = 2186
 
 [batches.content]
 kind = "lines"
@@ -2400,11 +2386,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 97
+position = 96
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md" })'
 descriptor = "headings outline in py3xui/server/README.md"
 cost_tokens = 100
-cum_tokens = 2298
+cum_tokens = 2286
 
 [batches.content]
 kind = "lines"
@@ -2554,11 +2540,11 @@ end = 133
 kind = "ellipsis"
 
 [[batches]]
-position = 98
+position = 97
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md", section_index: 0 })'
 descriptor = "py3xui/server/README.md section #0"
 cost_tokens = 15
-cum_tokens = 2313
+cum_tokens = 2301
 
 [batches.content]
 kind = "lines"
@@ -2572,11 +2558,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 99
+position = 98
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api_server.py"
 cost_tokens = 57
-cum_tokens = 2370
+cum_tokens = 2358
 
 [batches.content]
 kind = "lines"
@@ -2630,11 +2616,11 @@ end = 106
 kind = "ellipsis"
 
 [[batches]]
-position = 100
+position = 99
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 44 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:44"
 cost_tokens = 0
-cum_tokens = 2370
+cum_tokens = 2358
 
 [batches.content]
 kind = "lines"
@@ -2648,11 +2634,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 101
+position = 100
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 76 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:76"
 cost_tokens = 0
-cum_tokens = 2370
+cum_tokens = 2358
 
 [batches.content]
 kind = "lines"
@@ -2666,11 +2652,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 102
+position = 101
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 105 })'
 descriptor = "python method at py3xui/async_api/async_api_server.py:105"
 cost_tokens = 0
-cum_tokens = 2370
+cum_tokens = 2358
 
 [batches.content]
 kind = "lines"
@@ -2684,11 +2670,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 103
+position = 102
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/sniffing.py:9"
 cost_tokens = 49
-cum_tokens = 2419
+cum_tokens = 2407
 
 [batches.content]
 kind = "lines"
@@ -2718,11 +2704,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 104
+position = 103
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", start_line: 12 })'
 descriptor = "python method at py3xui/inbound/bases.py:12"
 cost_tokens = 41
-cum_tokens = 2460
+cum_tokens = 2448
 
 [batches.content]
 kind = "lines"
@@ -2736,11 +2722,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 105
+position = 104
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md", section_index: 1 })'
 descriptor = "py3xui/server/README.md section #1"
 cost_tokens = 50
-cum_tokens = 2510
+cum_tokens = 2498
 
 [batches.content]
 kind = "lines"
@@ -2778,11 +2764,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 106
+position = 105
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 88 })'
 descriptor = "python method at py3xui/inbound/inbound.py:88"
 cost_tokens = 44
-cum_tokens = 2554
+cum_tokens = 2542
 
 [batches.content]
 kind = "lines"
@@ -2796,11 +2782,11 @@ end = 91
 kind = "full"
 
 [[batches]]
-position = 107
+position = 106
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/README.md", section_index: 1 })'
 descriptor = "py3xui/client/README.md section #1"
 cost_tokens = 51
-cum_tokens = 2605
+cum_tokens = 2593
 
 [batches.content]
 kind = "lines"
@@ -2838,11 +2824,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 108
+position = 107
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md" })'
 descriptor = "headings outline in py3xui/api/README.md"
 cost_tokens = 143
-cum_tokens = 2748
+cum_tokens = 2736
 
 [batches.content]
 kind = "lines"
@@ -3040,11 +3026,11 @@ end = 1059
 kind = "ellipsis"
 
 [[batches]]
-position = 109
+position = 108
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/README.md" })'
 descriptor = "headings outline in py3xui/inbound/README.md"
 cost_tokens = 151
-cum_tokens = 2899
+cum_tokens = 2887
 
 [batches.content]
 kind = "lines"
@@ -3258,11 +3244,11 @@ end = 220
 kind = "ellipsis"
 
 [[batches]]
-position = 110
+position = 109
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/README.md" })'
 descriptor = "headings outline in py3xui/async_api/README.md"
 cost_tokens = 163
-cum_tokens = 3062
+cum_tokens = 3050
 
 [batches.content]
 kind = "lines"
@@ -3444,11 +3430,11 @@ end = 930
 kind = "ellipsis"
 
 [[batches]]
-position = 111
+position = 110
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/demo.py", chunk_index: 0 })'
 descriptor = "python decl names surface in demo.py"
 cost_tokens = 178
-cum_tokens = 3240
+cum_tokens = 3228
 
 [batches.content]
 kind = "lines"
@@ -3526,11 +3512,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 112
+position = 111
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py", start_line: 15 })'
 descriptor = "python class body at py3xui/api/api_base.py:15"
 cost_tokens = 76
-cum_tokens = 3316
+cum_tokens = 3304
 
 [batches.content]
 kind = "lines"
@@ -3544,11 +3530,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 113
+position = 112
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 22
-cum_tokens = 3338
+cum_tokens = 3326
 
 [batches.content]
 kind = "lines"
@@ -3562,11 +3548,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 114
+position = 113
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/api/api.py"
 cost_tokens = 90
-cum_tokens = 3428
+cum_tokens = 3416
 
 [batches.content]
 kind = "lines"
@@ -3684,11 +3670,11 @@ end = 190
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 114
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 189 })'
 descriptor = "python method at py3xui/api/api.py:189"
 cost_tokens = 0
-cum_tokens = 3428
+cum_tokens = 3416
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3688,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 116
+position = 115
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 93 })'
 descriptor = "python method at py3xui/api/api.py:93"
 cost_tokens = 12
-cum_tokens = 3440
+cum_tokens = 3428
 
 [batches.content]
 kind = "lines"
@@ -3720,11 +3706,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 117
+position = 116
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 115 })'
 descriptor = "python method at py3xui/api/api.py:115"
 cost_tokens = 13
-cum_tokens = 3453
+cum_tokens = 3441
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3724,11 @@ end = 116
 kind = "full"
 
 [[batches]]
-position = 118
+position = 117
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 102 })'
 descriptor = "python method at py3xui/api/api.py:102"
 cost_tokens = 14
-cum_tokens = 3467
+cum_tokens = 3455
 
 [batches.content]
 kind = "lines"
@@ -3756,11 +3742,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 119
+position = 118
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 124 })'
 descriptor = "python method at py3xui/api/api.py:124"
 cost_tokens = 17
-cum_tokens = 3484
+cum_tokens = 3472
 
 [batches.content]
 kind = "lines"
@@ -3774,11 +3760,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 120
+position = 119
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 93, body_start_line: 100 })'
 descriptor = "python method body at py3xui/api/api.py:93 body 100"
 cost_tokens = 10
-cum_tokens = 3494
+cum_tokens = 3482
 
 [batches.content]
 kind = "lines"
@@ -3792,11 +3778,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 121
+position = 120
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 115, body_start_line: 122 })'
 descriptor = "python method body at py3xui/api/api.py:115 body 122"
 cost_tokens = 11
-cum_tokens = 3505
+cum_tokens = 3493
 
 [batches.content]
 kind = "lines"
@@ -3810,11 +3796,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 122
+position = 121
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api.py"
 cost_tokens = 91
-cum_tokens = 3596
+cum_tokens = 3584
 
 [batches.content]
 kind = "lines"
@@ -3932,11 +3918,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 123
+position = 122
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 194 })'
 descriptor = "python method at py3xui/async_api/async_api.py:194"
 cost_tokens = 0
-cum_tokens = 3596
+cum_tokens = 3584
 
 [batches.content]
 kind = "lines"
@@ -3950,11 +3936,11 @@ end = 194
 kind = "full"
 
 [[batches]]
-position = 124
+position = 123
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 98 })'
 descriptor = "python method at py3xui/async_api/async_api.py:98"
 cost_tokens = 12
-cum_tokens = 3608
+cum_tokens = 3596
 
 [batches.content]
 kind = "lines"
@@ -3968,11 +3954,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 125
+position = 124
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 120 })'
 descriptor = "python method at py3xui/async_api/async_api.py:120"
 cost_tokens = 13
-cum_tokens = 3621
+cum_tokens = 3609
 
 [batches.content]
 kind = "lines"
@@ -3986,11 +3972,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 126
+position = 125
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 107 })'
 descriptor = "python method at py3xui/async_api/async_api.py:107"
 cost_tokens = 14
-cum_tokens = 3635
+cum_tokens = 3623
 
 [batches.content]
 kind = "lines"
@@ -4004,11 +3990,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 127
+position = 126
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 129 })'
 descriptor = "python method at py3xui/async_api/async_api.py:129"
 cost_tokens = 17
-cum_tokens = 3652
+cum_tokens = 3640
 
 [batches.content]
 kind = "lines"
@@ -4022,11 +4008,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 128
+position = 127
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 98, body_start_line: 105 })'
 descriptor = "python method body at py3xui/async_api/async_api.py:98 body 105"
 cost_tokens = 10
-cum_tokens = 3662
+cum_tokens = 3650
 
 [batches.content]
 kind = "lines"
@@ -4040,11 +4026,11 @@ end = 105
 kind = "full"
 
 [[batches]]
-position = 129
+position = 128
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 120, body_start_line: 127 })'
 descriptor = "python method body at py3xui/async_api/async_api.py:120 body 127"
 cost_tokens = 11
-cum_tokens = 3673
+cum_tokens = 3661
 
 [batches.content]
 kind = "lines"
@@ -4058,11 +4044,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 130
+position = 129
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 43
-cum_tokens = 3716
+cum_tokens = 3704
 
 [batches.content]
 kind = "lines"
@@ -4076,11 +4062,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 131
+position = 130
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/README.md", section_index: 0 })'
 descriptor = "py3xui/inbound/README.md section #0"
 cost_tokens = 197
-cum_tokens = 3913
+cum_tokens = 3901
 
 [batches.content]
 kind = "lines"
@@ -4174,11 +4160,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 132
+position = 131
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 154
-cum_tokens = 4067
+cum_tokens = 4055
 
 [batches.content]
 kind = "lines"
@@ -4192,11 +4178,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 133
+position = 132
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/demo.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in demo.py"
 cost_tokens = 126
-cum_tokens = 4193
+cum_tokens = 4181
 
 [batches.content]
 kind = "lines"
@@ -4266,11 +4252,11 @@ end = 71
 kind = "ellipsis"
 
 [[batches]]
-position = 134
+position = 133
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/demo.py", start_line: 70 })'
 descriptor = "python decl at demo.py:70"
 cost_tokens = 0
-cum_tokens = 4193
+cum_tokens = 4181
 
 [batches.content]
 kind = "lines"
@@ -4284,11 +4270,11 @@ end = 70
 kind = "full"
 
 [[batches]]
-position = 135
+position = 134
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/demo.py", start_line: 70 })'
 descriptor = "python decl doc at demo.py:70"
 cost_tokens = 95
-cum_tokens = 4288
+cum_tokens = 4276
 
 [batches.content]
 kind = "lines"
@@ -4318,11 +4304,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 136
+position = 135
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 20 })'
 descriptor = "python class body at py3xui/inbound/sniffing.py:20"
 cost_tokens = 101
-cum_tokens = 4389
+cum_tokens = 4377
 
 [batches.content]
 kind = "lines"
@@ -4352,11 +4338,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 137
+position = 136
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 139 })'
 descriptor = "python method at py3xui/api/api.py:139"
 cost_tokens = 66
-cum_tokens = 4455
+cum_tokens = 4443
 
 [batches.content]
 kind = "lines"
@@ -4370,11 +4356,11 @@ end = 145
 kind = "full"
 
 [[batches]]
-position = 138
+position = 137
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 144 })'
 descriptor = "python method at py3xui/async_api/async_api.py:144"
 cost_tokens = 67
-cum_tokens = 4522
+cum_tokens = 4510
 
 [batches.content]
 kind = "lines"
@@ -4388,11 +4374,11 @@ end = 150
 kind = "full"
 
 [[batches]]
-position = 139
+position = 138
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py" })'
 descriptor = "python imports in py3xui/utils/env.py"
 cost_tokens = 33
-cum_tokens = 4555
+cum_tokens = 4543
 
 [batches.content]
 kind = "lines"
@@ -4414,11 +4400,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 140
+position = 139
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 12 })'
 descriptor = "README.md section #12"
 cost_tokens = 152
-cum_tokens = 4707
+cum_tokens = 4695
 
 [batches.content]
 kind = "lines"
@@ -4440,11 +4426,11 @@ end = 147
 kind = "full"
 
 [[batches]]
-position = 141
+position = 140
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py", start_line: 9 })'
 descriptor = "python class body at py3xui/inbound/stream_settings.py:9"
 cost_tokens = 113
-cum_tokens = 4820
+cum_tokens = 4808
 
 [batches.content]
 kind = "lines"
@@ -4474,11 +4460,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 142
+position = 141
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py", start_line: 17 })'
 descriptor = "python decl doc at py3xui/inbound/settings.py:17"
 cost_tokens = 87
-cum_tokens = 4907
+cum_tokens = 4895
 
 [batches.content]
 kind = "lines"
@@ -4500,11 +4486,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 143
+position = 142
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/api/api_inbound.py"
 cost_tokens = 137
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4622,11 +4608,11 @@ end = 248
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 143
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 40 })'
 descriptor = "python method at py3xui/api/api_inbound.py:40"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4640,11 +4626,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 145
+position = 144
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 71 })'
 descriptor = "python method at py3xui/api/api_inbound.py:71"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4658,11 +4644,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 146
+position = 145
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 111 })'
 descriptor = "python method at py3xui/api/api_inbound.py:111"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4676,11 +4662,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 147
+position = 146
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 159 })'
 descriptor = "python method at py3xui/api/api_inbound.py:159"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4680,11 @@ end = 159
 kind = "full"
 
 [[batches]]
-position = 148
+position = 147
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 190 })'
 descriptor = "python method at py3xui/api/api_inbound.py:190"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4698,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 149
+position = 148
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 223 })'
 descriptor = "python method at py3xui/api/api_inbound.py:223"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4716,11 @@ end = 223
 kind = "full"
 
 [[batches]]
-position = 150
+position = 149
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_inbound.py", start_line: 247 })'
 descriptor = "python method at py3xui/api/api_inbound.py:247"
 cost_tokens = 0
-cum_tokens = 5044
+cum_tokens = 5032
 
 [batches.content]
 kind = "lines"
@@ -4748,11 +4734,11 @@ end = 247
 kind = "full"
 
 [[batches]]
-position = 151
+position = 150
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 16 })'
 descriptor = "README.md section #16"
 cost_tokens = 51
-cum_tokens = 5095
+cum_tokens = 5083
 
 [batches.content]
 kind = "lines"
@@ -4774,11 +4760,11 @@ end = 252
 kind = "full"
 
 [[batches]]
-position = 152
+position = 151
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 93 })'
 descriptor = "python method doc at py3xui/api/api.py:93"
 cost_tokens = 44
-cum_tokens = 5139
+cum_tokens = 5127
 
 [batches.content]
 kind = "lines"
@@ -4800,11 +4786,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 153
+position = 152
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 102 })'
 descriptor = "python method doc at py3xui/api/api.py:102"
 cost_tokens = 44
-cum_tokens = 5183
+cum_tokens = 5171
 
 [batches.content]
 kind = "lines"
@@ -4826,11 +4812,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 154
+position = 153
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 98 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:98"
 cost_tokens = 44
-cum_tokens = 5227
+cum_tokens = 5215
 
 [batches.content]
 kind = "lines"
@@ -4852,11 +4838,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 155
+position = 154
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 107 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:107"
 cost_tokens = 44
-cum_tokens = 5271
+cum_tokens = 5259
 
 [batches.content]
 kind = "lines"
@@ -4878,11 +4864,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 156
+position = 155
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api_inbound.py"
 cost_tokens = 144
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5000,11 +4986,11 @@ end = 247
 kind = "ellipsis"
 
 [[batches]]
-position = 157
+position = 156
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 42 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:42"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5018,11 +5004,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 158
+position = 157
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 72 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:72"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5036,11 +5022,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 159
+position = 158
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 112 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:112"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5054,11 +5040,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 160
+position = 159
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 158 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:158"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5072,11 +5058,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 161
+position = 160
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 189 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:189"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5090,11 +5076,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 162
+position = 161
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 222 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:222"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5108,11 +5094,11 @@ end = 222
 kind = "full"
 
 [[batches]]
-position = 163
+position = 162
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_inbound.py", start_line: 246 })'
 descriptor = "python method at py3xui/async_api/async_api_inbound.py:246"
 cost_tokens = 0
-cum_tokens = 5415
+cum_tokens = 5403
 
 [batches.content]
 kind = "lines"
@@ -5126,11 +5112,11 @@ end = 246
 kind = "full"
 
 [[batches]]
-position = 164
+position = 163
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py" })'
 descriptor = "python imports in py3xui/server/server.py"
 cost_tokens = 37
-cum_tokens = 5452
+cum_tokens = 5440
 
 [batches.content]
 kind = "lines"
@@ -5152,11 +5138,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 165
+position = 164
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py", start_line: 20 })'
 descriptor = "python decl doc at py3xui/inbound/sniffing.py:20"
 cost_tokens = 97
-cum_tokens = 5549
+cum_tokens = 5537
 
 [batches.content]
 kind = "lines"
@@ -5186,11 +5172,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 166
+position = 165
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py" })'
 descriptor = "python imports in py3xui/client/client.py"
 cost_tokens = 38
-cum_tokens = 5587
+cum_tokens = 5575
 
 [batches.content]
 kind = "lines"
@@ -5212,11 +5198,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 167
+position = 166
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py" })'
 descriptor = "python imports in py3xui/inbound/bases.py"
 cost_tokens = 38
-cum_tokens = 5625
+cum_tokens = 5613
 
 [batches.content]
 kind = "lines"
@@ -5246,11 +5232,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 168
+position = 167
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 114 })'
 descriptor = "python method doc at py3xui/inbound/inbound.py:114"
 cost_tokens = 49
-cum_tokens = 5674
+cum_tokens = 5662
 
 [batches.content]
 kind = "lines"
@@ -5272,11 +5258,11 @@ end = 119
 kind = "full"
 
 [[batches]]
-position = 169
+position = 168
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/LICENSE.md", section_index: 0 })'
 descriptor = "LICENSE.md section #0"
 cost_tokens = 291
-cum_tokens = 5965
+cum_tokens = 5953
 
 [batches.content]
 kind = "lines"
@@ -5322,11 +5308,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 170
+position = 169
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py", start_line: 97 })'
 descriptor = "python method doc at py3xui/api/api_server.py:97"
 cost_tokens = 51
-cum_tokens = 6016
+cum_tokens = 6004
 
 [batches.content]
 kind = "lines"
@@ -5348,11 +5334,11 @@ end = 102
 kind = "full"
 
 [[batches]]
-position = 171
+position = 170
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 120 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:120"
 cost_tokens = 51
-cum_tokens = 6067
+cum_tokens = 6055
 
 [batches.content]
 kind = "lines"
@@ -5374,11 +5360,11 @@ end = 126
 kind = "full"
 
 [[batches]]
-position = 172
+position = 171
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_server.py", start_line: 105 })'
 descriptor = "python method doc at py3xui/async_api/async_api_server.py:105"
 cost_tokens = 51
-cum_tokens = 6118
+cum_tokens = 6106
 
 [batches.content]
 kind = "lines"
@@ -5400,11 +5386,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 173
+position = 172
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/utils/env.py"
 cost_tokens = 83
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5506,11 +5492,11 @@ end = 96
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 173
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 33 })'
 descriptor = "python decl at py3xui/utils/env.py:33"
 cost_tokens = 0
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5524,11 +5510,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 175
+position = 174
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 49 })'
 descriptor = "python decl at py3xui/utils/env.py:49"
 cost_tokens = 0
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5542,11 +5528,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 176
+position = 175
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 65 })'
 descriptor = "python decl at py3xui/utils/env.py:65"
 cost_tokens = 0
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5560,11 +5546,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 177
+position = 176
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 81 })'
 descriptor = "python decl at py3xui/utils/env.py:81"
 cost_tokens = 0
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5578,11 +5564,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 178
+position = 177
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 95 })'
 descriptor = "python decl at py3xui/utils/env.py:95"
 cost_tokens = 0
-cum_tokens = 6201
+cum_tokens = 6189
 
 [batches.content]
 kind = "lines"
@@ -5596,11 +5582,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 179
+position = 178
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 7 })'
 descriptor = "python decl at py3xui/utils/env.py:7"
 cost_tokens = 35
-cum_tokens = 6236
+cum_tokens = 6224
 
 [batches.content]
 kind = "lines"
@@ -5614,11 +5600,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 180
+position = 179
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 33, body_start_line: 43 })'
 descriptor = "python decl body at py3xui/utils/env.py:33 body 43"
 cost_tokens = 39
-cum_tokens = 6275
+cum_tokens = 6263
 
 [batches.content]
 kind = "lines"
@@ -5632,11 +5618,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 181
+position = 180
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 49, body_start_line: 59 })'
 descriptor = "python decl body at py3xui/utils/env.py:49 body 59"
 cost_tokens = 39
-cum_tokens = 6314
+cum_tokens = 6302
 
 [batches.content]
 kind = "lines"
@@ -5650,11 +5636,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 182
+position = 181
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 65, body_start_line: 75 })'
 descriptor = "python decl body at py3xui/utils/env.py:65 body 75"
 cost_tokens = 39
-cum_tokens = 6353
+cum_tokens = 6341
 
 [batches.content]
 kind = "lines"
@@ -5668,11 +5654,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 183
+position = 182
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 81 })'
 descriptor = "python decl doc at py3xui/utils/env.py:81"
 cost_tokens = 63
-cum_tokens = 6416
+cum_tokens = 6404
 
 [batches.content]
 kind = "lines"
@@ -5694,11 +5680,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 184
+position = 183
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 95 })'
 descriptor = "python decl doc at py3xui/utils/env.py:95"
 cost_tokens = 65
-cum_tokens = 6481
+cum_tokens = 6469
 
 [batches.content]
 kind = "lines"
@@ -5720,11 +5706,11 @@ end = 101
 kind = "full"
 
 [[batches]]
-position = 185
+position = 184
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 33 })'
 descriptor = "python decl doc at py3xui/utils/env.py:33"
 cost_tokens = 82
-cum_tokens = 6563
+cum_tokens = 6551
 
 [batches.content]
 kind = "lines"
@@ -5754,11 +5740,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 186
+position = 185
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 49 })'
 descriptor = "python decl doc at py3xui/utils/env.py:49"
 cost_tokens = 82
-cum_tokens = 6645
+cum_tokens = 6633
 
 [batches.content]
 kind = "lines"
@@ -5788,11 +5774,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 187
+position = 186
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 65 })'
 descriptor = "python decl doc at py3xui/utils/env.py:65"
 cost_tokens = 82
-cum_tokens = 6727
+cum_tokens = 6715
 
 [batches.content]
 kind = "lines"
@@ -5822,11 +5808,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 188
+position = 187
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 95, body_start_line: 102 })'
 descriptor = "python decl body at py3xui/utils/env.py:95 body 102"
 cost_tokens = 50
-cum_tokens = 6777
+cum_tokens = 6765
 
 [batches.content]
 kind = "lines"
@@ -5840,11 +5826,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 189
+position = 188
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 115 })'
 descriptor = "python method doc at py3xui/api/api.py:115"
 cost_tokens = 55
-cum_tokens = 6832
+cum_tokens = 6820
 
 [batches.content]
 kind = "lines"
@@ -5866,11 +5852,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 190
+position = 189
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_database.py" })'
 descriptor = "python imports in py3xui/api/api_database.py"
 cost_tokens = 46
-cum_tokens = 6878
+cum_tokens = 6866
 
 [batches.content]
 kind = "lines"
@@ -5892,11 +5878,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 191
+position = 190
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/inbound.py", start_line: 15 })'
 descriptor = "python class body at py3xui/inbound/inbound.py:15"
 cost_tokens = 166
-cum_tokens = 7044
+cum_tokens = 7032
 
 [batches.content]
 kind = "lines"
@@ -5934,11 +5920,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 192
+position = 191
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/sniffing.py" })'
 descriptor = "python imports in py3xui/inbound/sniffing.py"
 cost_tokens = 50
-cum_tokens = 7094
+cum_tokens = 7082
 
 [batches.content]
 kind = "lines"
@@ -5968,11 +5954,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 193
+position = 192
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 67 })'
 descriptor = "python method at py3xui/api/api.py:67"
 cost_tokens = 93
-cum_tokens = 7187
+cum_tokens = 7175
 
 [batches.content]
 kind = "lines"
@@ -5986,11 +5972,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 194
+position = 193
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 72 })'
 descriptor = "python method at py3xui/async_api/async_api.py:72"
 cost_tokens = 93
-cum_tokens = 7280
+cum_tokens = 7268
 
 [batches.content]
 kind = "lines"
@@ -6004,11 +5990,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 195
+position = 194
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api.py", start_line: 124 })'
 descriptor = "python method doc at py3xui/api/api.py:124"
 cost_tokens = 63
-cum_tokens = 7343
+cum_tokens = 7331
 
 [batches.content]
 kind = "lines"
@@ -6038,11 +6024,11 @@ end = 132
 kind = "full"
 
 [[batches]]
-position = 196
+position = 195
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api.py", start_line: 129 })'
 descriptor = "python method doc at py3xui/async_api/async_api.py:129"
 cost_tokens = 63
-cum_tokens = 7406
+cum_tokens = 7394
 
 [batches.content]
 kind = "lines"
@@ -6072,11 +6058,11 @@ end = 137
 kind = "full"
 
 [[batches]]
-position = 197
+position = 196
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_database.py" })'
 descriptor = "python imports in py3xui/async_api/async_api_database.py"
 cost_tokens = 51
-cum_tokens = 7457
+cum_tokens = 7445
 
 [batches.content]
 kind = "lines"
@@ -6098,11 +6084,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 198
+position = 197
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/stream_settings.py" })'
 descriptor = "python imports in py3xui/inbound/stream_settings.py"
 cost_tokens = 52
-cum_tokens = 7509
+cum_tokens = 7497
 
 [batches.content]
 kind = "lines"
@@ -6132,11 +6118,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 199
+position = 198
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", start_line: 12 })'
 descriptor = "python method doc at py3xui/inbound/bases.py:12"
 cost_tokens = 65
-cum_tokens = 7574
+cum_tokens = 7562
 
 [batches.content]
 kind = "lines"
@@ -6166,11 +6152,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 200
+position = 199
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", chunk_index: 0 })'
 descriptor = "python decl names surface in py3xui/server/server.py"
 cost_tokens = 107
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6320,11 +6306,11 @@ end = 126
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 200
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 7 })'
 descriptor = "python decl at py3xui/server/server.py:7"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6338,11 +6324,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 202
+position = 201
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 43 })'
 descriptor = "python decl at py3xui/server/server.py:43"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6356,11 +6342,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 203
+position = 202
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 54 })'
 descriptor = "python decl at py3xui/server/server.py:54"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6374,11 +6360,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 204
+position = 203
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 67 })'
 descriptor = "python decl at py3xui/server/server.py:67"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6392,11 +6378,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 205
+position = 204
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 78 })'
 descriptor = "python decl at py3xui/server/server.py:78"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6410,11 +6396,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 206
+position = 205
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 89 })'
 descriptor = "python decl at py3xui/server/server.py:89"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6428,11 +6414,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 207
+position = 206
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 100 })'
 descriptor = "python decl at py3xui/server/server.py:100"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6432,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 208
+position = 207
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 113 })'
 descriptor = "python decl at py3xui/server/server.py:113"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6464,11 +6450,11 @@ end = 113
 kind = "full"
 
 [[batches]]
-position = 209
+position = 208
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 125 })'
 descriptor = "python decl at py3xui/server/server.py:125"
 cost_tokens = 0
-cum_tokens = 7681
+cum_tokens = 7669
 
 [batches.content]
 kind = "lines"
@@ -6482,11 +6468,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 210
+position = 209
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 43 })'
 descriptor = "python class body at py3xui/server/server.py:43"
 cost_tokens = 18
-cum_tokens = 7699
+cum_tokens = 7687
 
 [batches.content]
 kind = "lines"
@@ -6500,11 +6486,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 211
+position = 210
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 67 })'
 descriptor = "python class body at py3xui/server/server.py:67"
 cost_tokens = 18
-cum_tokens = 7717
+cum_tokens = 7705
 
 [batches.content]
 kind = "lines"
@@ -6518,11 +6504,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 212
+position = 211
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 78 })'
 descriptor = "python class body at py3xui/server/server.py:78"
 cost_tokens = 18
-cum_tokens = 7735
+cum_tokens = 7723
 
 [batches.content]
 kind = "lines"
@@ -6536,11 +6522,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 213
+position = 212
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 7 })'
 descriptor = "python decl doc at py3xui/server/server.py:7"
 cost_tokens = 14
-cum_tokens = 7749
+cum_tokens = 7737
 
 [batches.content]
 kind = "lines"
@@ -6554,11 +6540,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 214
+position = 213
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 89 })'
 descriptor = "python class body at py3xui/server/server.py:89"
 cost_tokens = 20
-cum_tokens = 7769
+cum_tokens = 7757
 
 [batches.content]
 kind = "lines"
@@ -6572,11 +6558,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 215
+position = 214
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 113 })'
 descriptor = "python decl doc at py3xui/server/server.py:113"
 cost_tokens = 20
-cum_tokens = 7789
+cum_tokens = 7777
 
 [batches.content]
 kind = "lines"
@@ -6590,11 +6576,11 @@ end = 114
 kind = "full"
 
 [[batches]]
-position = 216
+position = 215
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 100 })'
 descriptor = "python class body at py3xui/server/server.py:100"
 cost_tokens = 27
-cum_tokens = 7816
+cum_tokens = 7804
 
 [batches.content]
 kind = "lines"
@@ -6608,11 +6594,11 @@ end = 110
 kind = "full"
 
 [[batches]]
-position = 217
+position = 216
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 54 })'
 descriptor = "python class body at py3xui/server/server.py:54"
 cost_tokens = 43
-cum_tokens = 7859
+cum_tokens = 7847
 
 [batches.content]
 kind = "lines"
@@ -6626,11 +6612,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 218
+position = 217
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 78 })'
 descriptor = "python decl doc at py3xui/server/server.py:78"
 cost_tokens = 47
-cum_tokens = 7906
+cum_tokens = 7894
 
 [batches.content]
 kind = "lines"
@@ -6652,11 +6638,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 219
+position = 218
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 67 })'
 descriptor = "python decl doc at py3xui/server/server.py:67"
 cost_tokens = 49
-cum_tokens = 7955
+cum_tokens = 7943
 
 [batches.content]
 kind = "lines"
@@ -6678,11 +6664,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 220
+position = 219
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 43 })'
 descriptor = "python decl doc at py3xui/server/server.py:43"
 cost_tokens = 52
-cum_tokens = 8007
+cum_tokens = 7995
 
 [batches.content]
 kind = "lines"
@@ -6704,11 +6690,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 221
+position = 220
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 89 })'
 descriptor = "python decl doc at py3xui/server/server.py:89"
 cost_tokens = 54
-cum_tokens = 8061
+cum_tokens = 8049
 
 [batches.content]
 kind = "lines"
@@ -6730,11 +6716,11 @@ end = 95
 kind = "full"
 
 [[batches]]
-position = 222
+position = 221
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 100 })'
 descriptor = "python decl doc at py3xui/server/server.py:100"
 cost_tokens = 61
-cum_tokens = 8122
+cum_tokens = 8110
 
 [batches.content]
 kind = "lines"
@@ -6756,11 +6742,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 223
+position = 222
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 113 })'
 descriptor = "python class body at py3xui/server/server.py:113"
 cost_tokens = 80
-cum_tokens = 8202
+cum_tokens = 8190
 
 [batches.content]
 kind = "lines"
@@ -6782,11 +6768,11 @@ end = 122
 kind = "full"
 
 [[batches]]
-position = 224
+position = 223
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/server.py", start_line: 54 })'
 descriptor = "python decl doc at py3xui/server/server.py:54"
 cost_tokens = 71
-cum_tokens = 8273
+cum_tokens = 8261
 
 [batches.content]
 kind = "lines"
@@ -6808,11 +6794,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 225
+position = 224
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/api/api_client.py"
 cost_tokens = 215
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -6978,11 +6964,11 @@ end = 343
 kind = "ellipsis"
 
 [[batches]]
-position = 226
+position = 225
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 52 })'
 descriptor = "python method at py3xui/api/api_client.py:52"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -6996,11 +6982,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 227
+position = 226
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 89 })'
 descriptor = "python method at py3xui/api/api_client.py:89"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7014,11 +7000,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 228
+position = 227
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 121 })'
 descriptor = "python method at py3xui/api/api_client.py:121"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7032,11 +7018,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 229
+position = 228
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 157 })'
 descriptor = "python method at py3xui/api/api_client.py:157"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7050,11 +7036,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 230
+position = 229
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 189 })'
 descriptor = "python method at py3xui/api/api_client.py:189"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7068,11 +7054,11 @@ end = 189
 kind = "full"
 
 [[batches]]
-position = 231
+position = 230
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 217 })'
 descriptor = "python method at py3xui/api/api_client.py:217"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7086,11 +7072,11 @@ end = 217
 kind = "full"
 
 [[batches]]
-position = 232
+position = 231
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 248 })'
 descriptor = "python method at py3xui/api/api_client.py:248"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7104,11 +7090,11 @@ end = 248
 kind = "full"
 
 [[batches]]
-position = 233
+position = 232
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 280 })'
 descriptor = "python method at py3xui/api/api_client.py:280"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7122,11 +7108,11 @@ end = 280
 kind = "full"
 
 [[batches]]
-position = 234
+position = 233
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 312 })'
 descriptor = "python method at py3xui/api/api_client.py:312"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7140,11 +7126,11 @@ end = 312
 kind = "full"
 
 [[batches]]
-position = 235
+position = 234
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_client.py", start_line: 342 })'
 descriptor = "python method at py3xui/api/api_client.py:342"
 cost_tokens = 0
-cum_tokens = 8488
+cum_tokens = 8476
 
 [batches.content]
 kind = "lines"
@@ -7158,11 +7144,11 @@ end = 342
 kind = "full"
 
 [[batches]]
-position = 236
+position = 235
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/server/README.md", section_index: 2 })'
 descriptor = "py3xui/server/README.md section #2"
 cost_tokens = 92
-cum_tokens = 8580
+cum_tokens = 8568
 
 [batches.content]
 kind = "lines"
@@ -7216,11 +7202,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 237
+position = 236
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", chunk_index: 0 })'
 descriptor = "python method sigs in py3xui/async_api/async_api_client.py"
 cost_tokens = 225
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7386,11 +7372,11 @@ end = 346
 kind = "ellipsis"
 
 [[batches]]
-position = 238
+position = 237
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 52 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:52"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7404,11 +7390,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 239
+position = 238
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 89 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:89"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7422,11 +7408,11 @@ end = 89
 kind = "full"
 
 [[batches]]
-position = 240
+position = 239
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 121 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:121"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7440,11 +7426,11 @@ end = 121
 kind = "full"
 
 [[batches]]
-position = 241
+position = 240
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 158 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:158"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7458,11 +7444,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 242
+position = 241
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 190 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:190"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7476,11 +7462,11 @@ end = 190
 kind = "full"
 
 [[batches]]
-position = 243
+position = 242
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 219 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:219"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7494,11 +7480,11 @@ end = 219
 kind = "full"
 
 [[batches]]
-position = 244
+position = 243
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 250 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:250"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7512,11 +7498,11 @@ end = 250
 kind = "full"
 
 [[batches]]
-position = 245
+position = 244
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 282 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:282"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7530,11 +7516,11 @@ end = 282
 kind = "full"
 
 [[batches]]
-position = 246
+position = 245
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 315 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:315"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7548,11 +7534,11 @@ end = 315
 kind = "full"
 
 [[batches]]
-position = 247
+position = 246
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/async_api/async_api_client.py", start_line: 345 })'
 descriptor = "python method at py3xui/async_api/async_api_client.py:345"
 cost_tokens = 0
-cum_tokens = 8805
+cum_tokens = 8793
 
 [batches.content]
 kind = "lines"
@@ -7566,11 +7552,11 @@ end = 345
 kind = "full"
 
 [[batches]]
-position = 248
+position = 247
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/utils/env.py", start_line: 81, body_start_line: 88 })'
 descriptor = "python decl body at py3xui/utils/env.py:81 body 88"
 cost_tokens = 66
-cum_tokens = 8871
+cum_tokens = 8859
 
 [batches.content]
 kind = "lines"
@@ -7584,11 +7570,11 @@ end = 92
 kind = "full"
 
 [[batches]]
-position = 249
+position = 248
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_server.py" })'
 descriptor = "python imports in py3xui/api/api_server.py"
 cost_tokens = 58
-cum_tokens = 8929
+cum_tokens = 8917
 
 [batches.content]
 kind = "lines"
@@ -7610,11 +7596,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 250
+position = 249
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/client/client.py", start_line: 7 })'
 descriptor = "python class body at py3xui/client/client.py:7"
 cost_tokens = 197
-cum_tokens = 9126
+cum_tokens = 9114
 
 [batches.content]
 kind = "lines"
@@ -7676,11 +7662,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 251
+position = 250
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/bases.py", start_line: 12, body_start_line: 30 })'
 descriptor = "python method body at py3xui/inbound/bases.py:12 body 30"
 cost_tokens = 8
-cum_tokens = 9134
+cum_tokens = 9122
 
 [batches.content]
 kind = "lines"
@@ -7694,11 +7680,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 252
+position = 251
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/inbound/settings.py" })'
 descriptor = "python imports in py3xui/inbound/settings.py"
 cost_tokens = 63
-cum_tokens = 9197
+cum_tokens = 9185
 
 [batches.content]
 kind = "lines"
@@ -7720,11 +7706,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 253
+position = 252
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 94
-cum_tokens = 9291
+cum_tokens = 9279
 
 [batches.content]
 kind = "lines"
@@ -7746,11 +7732,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 254
+position = 253
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/README.md", section_index: 4 })'
 descriptor = "README.md section #4"
 cost_tokens = 94
-cum_tokens = 9385
+cum_tokens = 9373
 
 [batches.content]
 kind = "lines"
@@ -7780,11 +7766,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 255
+position = 254
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/README.md", section_index: 0 })'
 descriptor = "py3xui/api/README.md section #0"
 cost_tokens = 522
-cum_tokens = 9907
+cum_tokens = 9895
 
 [batches.content]
 kind = "lines"
@@ -7934,11 +7920,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 256
+position = 255
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/py3xui/py3xui/api/api_base.py" })'
 descriptor = "python imports in py3xui/api/api_base.py"
 cost_tokens = 65
-cum_tokens = 9972
+cum_tokens = 9960
 
 [batches.content]
 kind = "lines"

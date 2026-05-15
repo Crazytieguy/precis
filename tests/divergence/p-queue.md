@@ -48,42 +48,40 @@ Score(3000)=0.475 I=0.724 C=0.312 ns_rows≤3K=20/43 (reached=7 partial=2 missin
 | walker |  | 2648 | 121 | readme.md section #1 |  |  | 0.512 |
 | walker |  | 2695 | 47 | imports in source/priority-queue.ts |  |  | 0.513 |
 | ns | 2701 |  | 429 | Readme — onEmpty / onIdle / onPendingZero descriptions | 3.5 | 3.2 | 0.475 |
-| walker |  | 2725 | 30 | plaintext config .gitignore |  |  | 0.475 |
-| walker |  | 2759 | 34 | readme.md section #3 |  |  | 0.475 |
-| walker |  | 2797 | 38 | export names surface in source/lower-bound.ts |  |  | 0.475 |
-| walker |  | 2797 | 0 | export at source/lower-bound.ts:3 |  |  | 0.475 |
-| walker |  | 3040 | 243 | package identity metadata in package.json |  |  | 0.475 |
+| walker |  | 2729 | 34 | readme.md section #3 |  |  | 0.475 |
+| walker |  | 2767 | 38 | export names surface in source/lower-bound.ts |  |  | 0.475 |
+| walker |  | 2767 | 0 | export at source/lower-bound.ts:3 |  |  | 0.475 |
+| walker |  | 3010 | 243 | package identity metadata in package.json |  |  | 0.475 |
 | ns | 3076 |  | 375 | Readme — .add(fn, options?) docs (notes + priority/id options) | 3.6 | 3.2 | 0.442 |
-| walker |  | 3132 | 92 | package entrypoints in package.json |  |  | 0.461 |
-| walker |  | 3161 | 29 | package runtime metadata in package.json |  |  | 0.478 |
-| walker |  | 3267 | 106 | package scripts in package.json |  |  | 0.478 |
+| walker |  | 3102 | 92 | package entrypoints in package.json |  |  | 0.461 |
+| walker |  | 3131 | 29 | package runtime metadata in package.json |  |  | 0.478 |
+| walker |  | 3237 | 106 | package scripts in package.json |  |  | 0.478 |
 | ns | 3450 |  | 374 | Readme — .signal AbortSignal cancellation example | 3.7 | 3.2 | 0.447 |
-| walker |  | 3577 | 310 | package dependencies in package.json |  |  | 0.447 |
-| walker |  | 3621 | 44 | readme.md section #8 |  |  | 0.448 |
-| walker |  | 3715 | 94 | plaintext config .editorconfig |  |  | 0.448 |
-| ns | 3891 |  | 441 | Readme — onError fail-fast pattern + .clear() warning | 3.8 | 3.2 | 0.421 |
-| walker |  | 3895 | 180 | readme.md section #2 |  |  | 0.455 |
-| walker |  | 3954 | 59 | readme.md section #26 |  |  | 0.457 |
-| walker |  | 4017 | 63 | readme.md section #10 |  |  | 0.458 |
-| ns | 4029 |  | 138 | Readme — FAQ headings | 3.9 | 3.1 | 0.452 |
-| walker |  | 4049 | 32 | export names surface in source/queue.ts |  |  | 0.454 |
-| walker |  | 4187 | 138 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.455 |
+| walker |  | 3547 | 310 | package dependencies in package.json |  |  | 0.447 |
+| walker |  | 3591 | 44 | readme.md section #8 |  |  | 0.448 |
+| walker |  | 3771 | 180 | readme.md section #2 |  |  | 0.485 |
+| walker |  | 3830 | 59 | readme.md section #26 |  |  | 0.486 |
+| ns | 3891 |  | 441 | Readme — onError fail-fast pattern + .clear() warning | 3.8 | 3.2 | 0.457 |
+| walker |  | 3893 | 63 | readme.md section #10 |  |  | 0.458 |
+| walker |  | 3925 | 32 | export names surface in source/queue.ts |  |  | 0.460 |
+| ns | 4029 |  | 138 | Readme — FAQ headings | 3.9 | 3.1 | 0.454 |
+| walker |  | 4063 | 138 | export body at source/lower-bound.ts:3 body 4 |  |  | 0.455 |
 | ns | 4199 |  | 170 | Readme — concurrency / autoStart / queueClass option bodies | 3.10 | 3.2 | 0.442 |
 | ns | 4321 |  | 122 | Readme — onRateLimit / onRateLimitCleared docs | 3.11 | 3.2 | 0.435 |
 | ns | 4545 |  | 224 | Readme — FAQ: concurrency-vs-intervalCap + strict-mode usage | 3.12 | 3.9 | 0.426 |
 | ns | 4766 |  | 221 | Readme — timeout option body + Handling timeouts section intro | 3.13 | 3.2 | 0.414 |
 | ns | 4825 |  | 59 | Readme — .runningTasks debugging example | 3.14 | 3.2 | 0.411 |
 | ns | 5082 |  | 257 | Readme — Events: active / completed / error / empty / idle descriptions | 3.15 | 3.1 | 0.400 |
-| walker |  | 5212 | 1025 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.402 |
+| walker |  | 5088 | 1025 | export body at source/priority-queue.ts:11 body 18 |  |  | 0.402 |
+| walker |  | 5251 | 163 | readme.md section #35 |  |  | 0.402 |
+| walker |  | 5258 | 7 | listing of '.github' |  |  | 0.402 |
+| walker |  | 5262 | 4 | listing of '.github/workflows' |  |  | 0.402 |
+| walker |  | 5321 | 59 | imports in bench.ts |  |  | 0.402 |
 | ns | 5359 |  | 277 | Readme — FAQ: backpressure + cancellation/abort patterns | 3.16 | 3.9 | 0.393 |
-| walker |  | 5375 | 163 | readme.md section #35 |  |  | 0.393 |
-| walker |  | 5382 | 7 | listing of '.github' |  |  | 0.393 |
-| walker |  | 5386 | 4 | listing of '.github/workflows' |  |  | 0.393 |
-| walker |  | 5445 | 59 | imports in bench.ts |  |  | 0.393 |
-| walker |  | 5669 | 224 | readme.md section #32 |  |  | 0.393 |
-| ns | 5706 |  | 347 | priority-queue.ts — class declaration + every method signature | 4.1 |  | 0.407 |
-| walker |  | 5775 | 106 | readme.md section #18 |  |  | 0.410 |
-| walker |  | 5830 | 55 | export names surface in source/options.ts |  |  | 0.412 |
+| walker |  | 5545 | 224 | readme.md section #32 |  |  | 0.393 |
+| walker |  | 5651 | 106 | readme.md section #18 |  |  | 0.396 |
+| walker |  | 5706 | 55 | export names surface in source/options.ts |  |  | 0.412 |
+| ns | 5706 |  | 347 | priority-queue.ts — class declaration + every method signature | 4.1 |  | 0.412 |
 | ns | 5944 |  | 238 | lower-bound.ts — full content | 4.2 |  | 0.419 |
 | ns | 6305 |  | 361 | priority-queue.ts — enqueue() body (binary insertion + cursor) | 4.3 | 4.1 | 0.447 |
 | ns | 6580 |  | 275 | PQueue constructor — option defaults + validation | 4.4 |  | 0.437 |

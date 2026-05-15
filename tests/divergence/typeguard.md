@@ -139,116 +139,115 @@ Score(3000)=0.656 I=0.877 C=0.490 ns_rows≤3K=14/39 (reached=7 partial=3 missin
 | ns | 4402 |  | 222 | TypeCheckMemo — class skeleton + __init__ | 2.8 |  | 0.578 |
 | walker |  | 4430 | 147 | python decl doc at src/typeguard/_importhook.py:183 |  |  | 0.604 |
 | walker |  | 4506 | 76 | python decl body at src/typeguard/_utils.py:162 body 163 |  |  | 0.604 |
-| ns | 4573 |  | 171 | Checker plug-in API — TypeCheckerCallable / TypeCheckLookupCallback / checker_lookup_functions | 2.9 |  | 0.591 |
-| walker |  | 4628 | 122 | plaintext config .gitignore |  |  | 0.591 |
-| walker |  | 4671 | 43 | python method body at src/typeguard/_memo.py:37 body 45 |  |  | 0.603 |
-| walker |  | 4817 | 146 | python decl names surface in src/typeguard/_functions.py |  |  | 0.604 |
-| walker |  | 4817 | 0 | python decl at src/typeguard/_functions.py:291 |  |  | 0.604 |
-| walker |  | 4861 | 44 | python decl at src/typeguard/_functions.py:118 |  |  | 0.604 |
-| walker |  | 4906 | 45 | python decl at src/typeguard/_functions.py:149 |  |  | 0.604 |
-| walker |  | 4925 | 19 | python decl body at src/typeguard/_functions.py:291 body 299 |  |  | 0.604 |
-| ns | 4926 |  | 353 | TypeguardFinder + ImportHookManager — class + key methods | 2.10 |  | 0.621 |
-| walker |  | 4971 | 46 | python decl at src/typeguard/_functions.py:185 |  |  | 0.621 |
-| walker |  | 5017 | 46 | python decl at src/typeguard/_functions.py:216 |  |  | 0.622 |
-| walker |  | 5064 | 47 | python decl at src/typeguard/_functions.py:245 |  |  | 0.623 |
-| walker |  | 5144 | 80 | python decl at src/typeguard/_functions.py:39 |  |  | 0.623 |
-| walker |  | 5153 | 9 | python decl body at src/typeguard/_functions.py:39 body 47 |  |  | 0.623 |
-| ns | 5177 |  | 251 | warn_on_error + load_plugins — signatures | 2.11 |  | 0.608 |
-| walker |  | 5234 | 81 | python decl at src/typeguard/_functions.py:28 |  |  | 0.608 |
-| walker |  | 5243 | 9 | python decl body at src/typeguard/_functions.py:28 body 36 |  |  | 0.608 |
-| walker |  | 5299 | 56 | python decl doc at src/typeguard/_functions.py:291 |  |  | 0.613 |
-| ns | 5358 |  | 181 | check_type_internal — signature + docstring | 2.12 |  | 0.601 |
-| walker |  | 5422 | 123 | python decl at src/typeguard/_functions.py:50 |  |  | 0.605 |
-| walker |  | 5498 | 76 | python imports in src/typeguard/_suppression.py |  |  | 0.605 |
-| walker |  | 5580 | 82 | python imports in src/typeguard/_config.py |  |  | 0.605 |
+| walker |  | 4549 | 43 | python method body at src/typeguard/_memo.py:37 body 45 |  |  | 0.618 |
+| ns | 4573 |  | 171 | Checker plug-in API — TypeCheckerCallable / TypeCheckLookupCallback / checker_lookup_functions | 2.9 |  | 0.603 |
+| walker |  | 4695 | 146 | python decl names surface in src/typeguard/_functions.py |  |  | 0.604 |
+| walker |  | 4695 | 0 | python decl at src/typeguard/_functions.py:291 |  |  | 0.604 |
+| walker |  | 4739 | 44 | python decl at src/typeguard/_functions.py:118 |  |  | 0.604 |
+| walker |  | 4784 | 45 | python decl at src/typeguard/_functions.py:149 |  |  | 0.604 |
+| walker |  | 4803 | 19 | python decl body at src/typeguard/_functions.py:291 body 299 |  |  | 0.604 |
+| walker |  | 4849 | 46 | python decl at src/typeguard/_functions.py:185 |  |  | 0.605 |
+| walker |  | 4895 | 46 | python decl at src/typeguard/_functions.py:216 |  |  | 0.606 |
+| ns | 4926 |  | 353 | TypeguardFinder + ImportHookManager — class + key methods | 2.10 |  | 0.622 |
+| walker |  | 4942 | 47 | python decl at src/typeguard/_functions.py:245 |  |  | 0.623 |
+| walker |  | 5022 | 80 | python decl at src/typeguard/_functions.py:39 |  |  | 0.623 |
+| walker |  | 5031 | 9 | python decl body at src/typeguard/_functions.py:39 body 47 |  |  | 0.623 |
+| walker |  | 5112 | 81 | python decl at src/typeguard/_functions.py:28 |  |  | 0.623 |
+| walker |  | 5121 | 9 | python decl body at src/typeguard/_functions.py:28 body 36 |  |  | 0.623 |
+| walker |  | 5177 | 56 | python decl doc at src/typeguard/_functions.py:291 |  |  | 0.613 |
+| ns | 5177 |  | 251 | warn_on_error + load_plugins — signatures | 2.11 |  | 0.613 |
+| walker |  | 5300 | 123 | python decl at src/typeguard/_functions.py:50 |  |  | 0.617 |
+| ns | 5358 |  | 181 | check_type_internal — signature + docstring | 2.12 |  | 0.605 |
+| walker |  | 5376 | 76 | python imports in src/typeguard/_suppression.py |  |  | 0.605 |
+| walker |  | 5458 | 82 | python imports in src/typeguard/_config.py |  |  | 0.605 |
 | ns | 5642 |  | 284 | Internal check_argument_types / check_return_type / check_yield_type / check_send_type / check_variable_assignment — signatures | 2.13 | 2.2 | 0.624 |
-| walker |  | 5799 | 219 | python decl doc at src/typeguard/_memo.py:8 |  |  | 0.625 |
-| walker |  | 5807 | 8 | python decl body at src/typeguard/_functions.py:118 body 146 |  |  | 0.625 |
-| ns | 5813 |  | 171 | Unset sentinel + small _utils helpers | 2.14 |  | 0.630 |
-| walker |  | 5857 | 50 | python method body at src/typeguard/_importhook.py:99 body 102 |  |  | 0.630 |
-| walker |  | 5908 | 51 | python method body at src/typeguard/_exceptions.py:38 body 39 |  |  | 0.642 |
-| ns | 6041 |  | 228 | _checkers.py — every check_* function name (locations) | 3.1 | 2.9 | 0.625 |
-| walker |  | 6108 | 200 | python decl doc at src/typeguard/_suppression.py:30 |  |  | 0.651 |
-| walker |  | 6207 | 99 | python decl body at src/typeguard/_utils.py:142 body 143 |  |  | 0.651 |
-| walker |  | 6347 | 140 | python decl names surface in src/typeguard/_transformer.py |  |  | 0.652 |
-| walker |  | 6347 | 0 | python decl at src/typeguard/_transformer.py:285 |  |  | 0.652 |
-| walker |  | 6347 | 0 | python decl at src/typeguard/_transformer.py:313 |  |  | 0.652 |
-| walker |  | 6347 | 0 | python decl at src/typeguard/_transformer.py:338 |  |  | 0.652 |
-| walker |  | 6353 | 6 | python decl at src/typeguard/_transformer.py:117 |  |  | 0.652 |
-| walker |  | 6368 | 15 | python decl doc at src/typeguard/_transformer.py:313 |  |  | 0.652 |
-| walker |  | 6392 | 24 | python decl at src/typeguard/_transformer.py:84 |  |  | 0.652 |
-| walker |  | 6418 | 26 | python class body at src/typeguard/_transformer.py:313 |  |  | 0.652 |
-| walker |  | 6444 | 26 | python decl at src/typeguard/_transformer.py:88 |  |  | 0.652 |
-| walker |  | 6472 | 28 | python decl at src/typeguard/_transformer.py:92 |  |  | 0.652 |
-| walker |  | 6500 | 28 | python decl at src/typeguard/_transformer.py:96 |  |  | 0.653 |
-| walker |  | 6612 | 112 | python class body at src/typeguard/_transformer.py:338 |  |  | 0.653 |
-| ns | 6639 |  | 598 | _checkers.py — origin_type_checkers dispatch table | 3.2 | 3.1 | 0.623 |
-| walker |  | 6747 | 135 | python decl at src/typeguard/_transformer.py:70 |  |  | 0.625 |
-| walker |  | 6905 | 158 | python decl at src/typeguard/_transformer.py:100 |  |  | 0.625 |
-| walker |  | 7046 | 141 | python decl names surface in src/typeguard/_checkers.py |  |  | 0.630 |
-| walker |  | 7072 | 26 | python decl at src/typeguard/_checkers.py:81 |  |  | 0.632 |
-| ns | 7082 |  | 443 | _checkers.py — builtin_checker_lookup dispatch fallbacks | 3.3 | 3.2 | 0.611 |
-| walker |  | 7101 | 29 | python decl at src/typeguard/_checkers.py:84 |  |  | 0.615 |
-| walker |  | 7132 | 31 | python decl at src/typeguard/_checkers.py:89 |  |  | 0.621 |
+| walker |  | 5677 | 219 | python decl doc at src/typeguard/_memo.py:8 |  |  | 0.625 |
+| walker |  | 5685 | 8 | python decl body at src/typeguard/_functions.py:118 body 146 |  |  | 0.625 |
+| walker |  | 5735 | 50 | python method body at src/typeguard/_importhook.py:99 body 102 |  |  | 0.625 |
+| walker |  | 5786 | 51 | python method body at src/typeguard/_exceptions.py:38 body 39 |  |  | 0.638 |
+| ns | 5813 |  | 171 | Unset sentinel + small _utils helpers | 2.14 |  | 0.642 |
+| walker |  | 5986 | 200 | python decl doc at src/typeguard/_suppression.py:30 |  |  | 0.669 |
+| ns | 6041 |  | 228 | _checkers.py — every check_* function name (locations) | 3.1 | 2.9 | 0.651 |
+| walker |  | 6085 | 99 | python decl body at src/typeguard/_utils.py:142 body 143 |  |  | 0.651 |
+| walker |  | 6225 | 140 | python decl names surface in src/typeguard/_transformer.py |  |  | 0.652 |
+| walker |  | 6225 | 0 | python decl at src/typeguard/_transformer.py:285 |  |  | 0.652 |
+| walker |  | 6225 | 0 | python decl at src/typeguard/_transformer.py:313 |  |  | 0.652 |
+| walker |  | 6225 | 0 | python decl at src/typeguard/_transformer.py:338 |  |  | 0.652 |
+| walker |  | 6231 | 6 | python decl at src/typeguard/_transformer.py:117 |  |  | 0.652 |
+| walker |  | 6246 | 15 | python decl doc at src/typeguard/_transformer.py:313 |  |  | 0.652 |
+| walker |  | 6270 | 24 | python decl at src/typeguard/_transformer.py:84 |  |  | 0.652 |
+| walker |  | 6296 | 26 | python class body at src/typeguard/_transformer.py:313 |  |  | 0.652 |
+| walker |  | 6322 | 26 | python decl at src/typeguard/_transformer.py:88 |  |  | 0.652 |
+| walker |  | 6350 | 28 | python decl at src/typeguard/_transformer.py:92 |  |  | 0.652 |
+| walker |  | 6378 | 28 | python decl at src/typeguard/_transformer.py:96 |  |  | 0.653 |
+| walker |  | 6490 | 112 | python class body at src/typeguard/_transformer.py:338 |  |  | 0.653 |
+| walker |  | 6625 | 135 | python decl at src/typeguard/_transformer.py:70 |  |  | 0.655 |
+| ns | 6639 |  | 598 | _checkers.py — origin_type_checkers dispatch table | 3.2 | 3.1 | 0.625 |
+| walker |  | 6783 | 158 | python decl at src/typeguard/_transformer.py:100 |  |  | 0.625 |
+| walker |  | 6924 | 141 | python decl names surface in src/typeguard/_checkers.py |  |  | 0.630 |
+| walker |  | 6950 | 26 | python decl at src/typeguard/_checkers.py:81 |  |  | 0.632 |
+| walker |  | 6979 | 29 | python decl at src/typeguard/_checkers.py:84 |  |  | 0.636 |
+| walker |  | 7010 | 31 | python decl at src/typeguard/_checkers.py:89 |  |  | 0.643 |
+| walker |  | 7058 | 48 | python decl at src/typeguard/_checkers.py:153 |  |  | 0.643 |
+| ns | 7082 |  | 443 | _checkers.py — builtin_checker_lookup dispatch fallbacks | 3.3 | 3.2 | 0.621 |
+| walker |  | 7106 | 48 | python decl at src/typeguard/_checkers.py:212 |  |  | 0.621 |
 | ns | 7148 |  | 66 | _transformer.py — class locations | 3.4 |  | 0.624 |
-| walker |  | 7180 | 48 | python decl at src/typeguard/_checkers.py:153 |  |  | 0.624 |
-| walker |  | 7228 | 48 | python decl at src/typeguard/_checkers.py:212 |  |  | 0.624 |
-| walker |  | 7276 | 48 | python decl at src/typeguard/_checkers.py:247 |  |  | 0.624 |
-| walker |  | 7324 | 48 | python decl at src/typeguard/_checkers.py:305 |  |  | 0.624 |
+| walker |  | 7154 | 48 | python decl at src/typeguard/_checkers.py:247 |  |  | 0.624 |
+| walker |  | 7202 | 48 | python decl at src/typeguard/_checkers.py:305 |  |  | 0.624 |
+| walker |  | 7250 | 48 | python decl at src/typeguard/_checkers.py:324 |  |  | 0.624 |
+| walker |  | 7298 | 48 | python decl at src/typeguard/_checkers.py:343 |  |  | 0.624 |
 | ns | 7354 |  | 206 | _transformer.py — TypeguardTransformer visit_* methods (locations) | 3.5 | 3.4 | 0.613 |
-| walker |  | 7372 | 48 | python decl at src/typeguard/_checkers.py:324 |  |  | 0.613 |
-| walker |  | 7420 | 48 | python decl at src/typeguard/_checkers.py:343 |  |  | 0.613 |
 | ns | 7639 |  | 285 | _transformer.py — generator_names + annotated_names + ignore_decorators tables | 3.6 |  | 0.627 |
 | ns | 7673 |  | 34 | _decorators.py — function locations | 3.7 |  | 0.627 |
-| walker |  | 7811 | 391 | python method sigs #1 in src/typeguard/_transformer.py |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:498 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:570 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:574 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:577 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:580 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:596 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:600 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:608 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:615 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:624 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:918 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:945 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:994 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:1036 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:1138 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:1181 |  |  | 0.637 |
-| walker |  | 7811 | 0 | python method at src/typeguard/_transformer.py:1224 |  |  | 0.637 |
-| walker |  | 7838 | 27 | python method at src/typeguard/_transformer.py:913 |  |  | 0.637 |
-| walker |  | 7868 | 30 | python method at src/typeguard/_transformer.py:650 |  |  | 0.637 |
-| walker |  | 7883 | 15 | python method doc at src/typeguard/_transformer.py:918 |  |  | 0.637 |
-| walker |  | 7917 | 34 | python method at src/typeguard/_transformer.py:489 |  |  | 0.637 |
-| walker |  | 7929 | 12 | python method body at src/typeguard/_transformer.py:913 body 916 |  |  | 0.637 |
-| walker |  | 7950 | 21 | python method doc at src/typeguard/_transformer.py:1138 |  |  | 0.637 |
-| walker |  | 7970 | 20 | python method body at src/typeguard/_transformer.py:596 body 597 |  |  | 0.637 |
-| walker |  | 8005 | 35 | python method doc at src/typeguard/_transformer.py:1181 |  |  | 0.637 |
+| walker |  | 7689 | 391 | python method sigs #1 in src/typeguard/_transformer.py |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:498 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:570 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:574 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:577 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:580 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:596 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:600 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:608 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:615 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:624 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:918 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:945 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:994 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:1036 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:1138 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:1181 |  |  | 0.637 |
+| walker |  | 7689 | 0 | python method at src/typeguard/_transformer.py:1224 |  |  | 0.637 |
+| walker |  | 7716 | 27 | python method at src/typeguard/_transformer.py:913 |  |  | 0.637 |
+| walker |  | 7746 | 30 | python method at src/typeguard/_transformer.py:650 |  |  | 0.637 |
+| walker |  | 7761 | 15 | python method doc at src/typeguard/_transformer.py:918 |  |  | 0.637 |
+| walker |  | 7795 | 34 | python method at src/typeguard/_transformer.py:489 |  |  | 0.637 |
+| walker |  | 7807 | 12 | python method body at src/typeguard/_transformer.py:913 body 916 |  |  | 0.637 |
+| walker |  | 7828 | 21 | python method doc at src/typeguard/_transformer.py:1138 |  |  | 0.637 |
+| walker |  | 7848 | 20 | python method body at src/typeguard/_transformer.py:596 body 597 |  |  | 0.637 |
+| walker |  | 7883 | 35 | python method doc at src/typeguard/_transformer.py:1181 |  |  | 0.637 |
+| walker |  | 7922 | 39 | python method doc at src/typeguard/_transformer.py:994 |  |  | 0.637 |
+| walker |  | 7971 | 49 | python method doc at src/typeguard/_transformer.py:945 |  |  | 0.637 |
+| walker |  | 8023 | 52 | python method doc at src/typeguard/_transformer.py:1224 |  |  | 0.637 |
 | ns | 8036 |  | 363 | docs/api.rst — public API by topic group (head) | 3.8 |  | 0.615 |
-| walker |  | 8044 | 39 | python method doc at src/typeguard/_transformer.py:994 |  |  | 0.615 |
-| walker |  | 8093 | 49 | python method doc at src/typeguard/_transformer.py:945 |  |  | 0.615 |
-| walker |  | 8145 | 52 | python method doc at src/typeguard/_transformer.py:1224 |  |  | 0.615 |
-| walker |  | 8198 | 53 | python method doc at src/typeguard/_transformer.py:1036 |  |  | 0.615 |
+| walker |  | 8076 | 53 | python method doc at src/typeguard/_transformer.py:1036 |  |  | 0.615 |
+| walker |  | 8143 | 67 | python method doc at src/typeguard/_transformer.py:650 |  |  | 0.615 |
+| walker |  | 8186 | 43 | python method at src/typeguard/_transformer.py:516 |  |  | 0.615 |
+| walker |  | 8203 | 17 | python method body at src/typeguard/_transformer.py:574 body 575 |  |  | 0.615 |
 | ns | 8213 |  | 177 | docs/userguide.rst — H2 section locations | 3.9 |  | 0.605 |
-| walker |  | 8265 | 67 | python method doc at src/typeguard/_transformer.py:650 |  |  | 0.605 |
-| walker |  | 8308 | 43 | python method at src/typeguard/_transformer.py:516 |  |  | 0.605 |
-| walker |  | 8325 | 17 | python method body at src/typeguard/_transformer.py:574 body 575 |  |  | 0.605 |
-| walker |  | 8342 | 17 | python method body at src/typeguard/_transformer.py:577 body 578 |  |  | 0.605 |
+| walker |  | 8220 | 17 | python method body at src/typeguard/_transformer.py:577 body 578 |  |  | 0.605 |
 | ns | 8392 |  | 179 | docs/features.rst — H2 section locations | 3.10 |  | 0.595 |
+| walker |  | 8577 | 357 | python class body at src/typeguard/_transformer.py:117 |  |  | 0.595 |
+| walker |  | 8634 | 57 | python method body at src/typeguard/_transformer.py:608 body 609 |  |  | 0.595 |
+| walker |  | 8658 | 24 | python decl body at src/typeguard/_checkers.py:153 body 159 |  |  | 0.595 |
 | ns | 8692 |  | 300 | docs/api.rst — Custom checkers / Suppression / Exceptions sections | 4.1 | 3.8 | 0.582 |
-| walker |  | 8699 | 357 | python class body at src/typeguard/_transformer.py:117 |  |  | 0.582 |
-| walker |  | 8756 | 57 | python method body at src/typeguard/_transformer.py:608 body 609 |  |  | 0.582 |
-| walker |  | 8780 | 24 | python decl body at src/typeguard/_checkers.py:153 body 159 |  |  | 0.582 |
-| walker |  | 9073 | 293 | python decl doc at src/typeguard/_config.py:62 |  |  | 0.610 |
-| walker |  | 9135 | 62 | python method body at src/typeguard/_config.py:52 body 53 |  |  | 0.621 |
-| walker |  | 9198 | 63 | python method body at src/typeguard/_transformer.py:600 body 601 |  |  | 0.621 |
+| walker |  | 8951 | 293 | python decl doc at src/typeguard/_config.py:62 |  |  | 0.610 |
+| walker |  | 9013 | 62 | python method body at src/typeguard/_config.py:52 body 53 |  |  | 0.621 |
+| walker |  | 9076 | 63 | python method body at src/typeguard/_transformer.py:600 body 601 |  |  | 0.621 |
+| walker |  | 9203 | 127 | python imports in src/typeguard/_pytest_plugin.py |  |  | 0.621 |
 | ns | 9266 |  | 574 | docs/extending.rst — writing a lookup + checker function (head) | 4.2 | 2.9 | 0.603 |
-| walker |  | 9325 | 127 | python imports in src/typeguard/_pytest_plugin.py |  |  | 0.603 |
-| walker |  | 9453 | 128 | python decl body at src/typeguard/_checkers.py:305 body 311 |  |  | 0.603 |
+| walker |  | 9331 | 128 | python decl body at src/typeguard/_checkers.py:305 body 311 |  |  | 0.603 |
+| walker |  | 9462 | 131 | python decl body at src/typeguard/_checkers.py:324 body 330 |  |  | 0.603 |
+| walker |  | 9495 | 33 | python method body at src/typeguard/_transformer.py:570 body 571 |  |  | 0.603 |
 | ns | 9578 |  | 312 | docs/extending.rst — MySpecialType worked example | 4.3 | 4.2 | 0.592 |
-| walker |  | 9584 | 131 | python decl body at src/typeguard/_checkers.py:324 body 330 |  |  | 0.592 |
-| walker |  | 9617 | 33 | python method body at src/typeguard/_transformer.py:570 body 571 |  |  | 0.592 |
 | ns | 9827 |  | 249 | tests/test_checkers.py — TestX class locations | 4.4 |  | 0.582 |
 | ns | 9976 |  | 149 | tests/test_typechecked.py — Test class + module test locations | 4.5 |  | 0.577 |

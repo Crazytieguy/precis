@@ -111,6 +111,18 @@ fn non_essential_factor_inner(
     skip_dir_classifier: bool,
 ) -> f64 {
     let target = path.strip_prefix(root).unwrap_or(path);
+    // Auto-injected agent docs: AGENTS.md / CLAUDE.md at the root, plus
+    // text-content files under .claude/skills/, .agent/skills/,
+    // .cursor/rules/. The harness already loads these into the model's
+    // context, so spending precis budget on their headings/lede is
+    // pure waste. (Section + SummaryWhole batches are dropped entirely
+    // in `walker::markdown`; this discount is defense-in-depth for the
+    // residual HeadingsOutline / ReadmeHeadline.) Checked before the
+    // dot-dir rule below so SKILL.md / rules.mdc get the stronger 0.1
+    // tier rather than the generic 0.2.
+    if is_auto_injected_doc_file(path, root) {
+        return 0.1;
+    }
     let mut comps = target.components();
     if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
         if first.eq_ignore_ascii_case(".github") {
@@ -120,22 +132,18 @@ fn non_essential_factor_inner(
             if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
                 return 0.2;
             }
-        }
-        // Changesets release-tooling subtree: every file is release
-        // metadata, uniformly low-priority next to source.
-        if first.eq_ignore_ascii_case(".changeset") {
+        } else if first.starts_with('.') {
+            // Other dot-dirs at the repo root (`.vscode`, `.devcontainer`,
+            // `.husky`, `.faq`, `.idea`, `.circleci`, `.cargo`,
+            // `.changeset`, `.codex`, `.yarn`, ...) are IDE / tooling / CI
+            // / admin config. Demote uniformly so their listings stay
+            // discoverable but the contents don't crowd source. Skill
+            // subtrees (`.claude/skills` / `.agent/skills` / `.cursor/rules`)
+            // also match — their auto-injected doc files were already caught
+            // above with the stronger 0.1 discount; the remaining helpers
+            // and directory listings inherit the dot-dir 0.2.
             return 0.2;
         }
-    }
-    // Auto-injected agent docs: AGENTS.md / CLAUDE.md at the root, plus
-    // text-content files under .claude/skills/, .agent/skills/,
-    // .cursor/rules/. The harness already loads these into the model's
-    // context, so spending precis budget on their headings/lede is
-    // pure waste. (Section + SummaryWhole batches are dropped entirely
-    // in `walker::markdown`; this discount is defense-in-depth for the
-    // residual HeadingsOutline / ReadmeHeadline.)
-    if is_auto_injected_doc_file(path, root) {
-        return 0.1;
     }
     // Peripheral admin / release / translation markdown (anywhere in
     // the tree). NS authors universally treat these as "appendix"
@@ -670,30 +678,40 @@ mod tests {
         }
     }
 
-    /// Directories under the skill subtrees keep full weight so file
-    /// paths remain discoverable via fs listings. Non-text files (real
-    /// code / data) under the same subtrees are walked normally.
+    /// Root-level dot-directories — IDE / tooling / CI / admin /
+    /// auto-injected-skill subtrees — uniformly demote to 0.2. The
+    /// `is_auto_injected_doc_file` check then upgrades doc-extension
+    /// files inside the skill subtrees to the stronger 0.1 discount.
+    /// Non-text helpers under those subtrees inherit the dot-dir
+    /// demotion — they're skill-private implementation, not project
+    /// source the model should orient on through precis.
     #[test]
-    fn value_auto_injected_dirs_and_non_text_keep_full_weight() {
+    fn value_root_dot_directories_are_discounted() {
         let root = Path::new("/repo");
-        // Directories — no extension.
-        assert_eq!(
-            non_essential_factor(&root.join(".claude/skills"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".claude/skills/foo"), root),
-            1.0,
-        );
-        // Non-text content under a skill dir is treated normally.
-        assert_eq!(
-            non_essential_factor(&root.join(".claude/skills/foo/script.py"), root),
-            1.0,
-        );
-        assert_eq!(
-            non_essential_factor(&root.join(".claude/skills/foo/data.json"), root),
-            1.0,
-        );
+        for path in [
+            // Skill subtrees: listing + non-text helpers.
+            ".claude/skills",
+            ".claude/skills/foo",
+            ".claude/skills/foo/script.py",
+            ".claude/skills/foo/data.json",
+            // IDE / dev-env config.
+            ".vscode/settings.json",
+            ".devcontainer/devcontainer.json",
+            ".idea/foo.xml",
+            // Hook / CI / package-manager tooling.
+            ".husky/pre-commit",
+            ".circleci/config.yml",
+            ".cargo/config.toml",
+            ".yarn/plugins/foo.cjs",
+            // FAQ subtree (rich's .faq/).
+            ".faq/FAQ.md",
+        ] {
+            assert_eq!(
+                non_essential_factor(&root.join(path), root),
+                0.2,
+                "root dot-dir {path}",
+            );
+        }
     }
 
     #[test]

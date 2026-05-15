@@ -36,80 +36,80 @@ Score(3000)=0.555 I=0.799 C=0.385 ns_rows≤3K=18/46 (reached=7 partial=1 missin
 | walker |  | 911 | 9 | listing of 'source/vendor' |  |  | 0.561 |
 | walker |  | 929 | 18 | listing of 'source/vendor/supports-color' |  |  | 0.607 |
 | walker |  | 952 | 23 | readme.md section #21 |  |  | 0.608 |
-| walker |  | 982 | 30 | plaintext config .gitignore |  |  | 0.608 |
-| walker |  | 1006 | 24 | readme.md section #22 |  |  | 0.609 |
-| walker |  | 1027 | 21 | readme.md section #37 |  |  | 0.609 |
-| walker |  | 1038 | 11 | imports in benchmark.js |  |  | 0.609 |
+| walker |  | 976 | 24 | readme.md section #22 |  |  | 0.609 |
+| walker |  | 997 | 21 | readme.md section #37 |  |  | 0.609 |
+| walker |  | 1008 | 11 | imports in benchmark.js |  |  | 0.609 |
 | ns | 1120 |  | 211 | Readme: Modifiers list | 2.4 | 2.1 | 0.609 |
-| walker |  | 1269 | 231 | package identity metadata in package.json |  |  | 0.645 |
+| walker |  | 1239 | 231 | package identity metadata in package.json |  |  | 0.645 |
 | ns | 1272 |  | 152 | Readme: Colors list | 2.5 | 2.1 | 0.593 |
-| ns | 1444 |  | 172 | Readme: Background colors list | 2.6 | 2.1 | 0.551 |
-| walker |  | 1446 | 177 | package entrypoints in package.json |  |  | 0.570 |
-| walker |  | 1490 | 44 | package runtime metadata in package.json |  |  | 0.570 |
-| walker |  | 1539 | 49 | package scripts in package.json |  |  | 0.570 |
+| walker |  | 1416 | 177 | package entrypoints in package.json |  |  | 0.613 |
+| ns | 1444 |  | 172 | Readme: Background colors list | 2.6 | 2.1 | 0.570 |
+| walker |  | 1460 | 44 | package runtime metadata in package.json |  |  | 0.570 |
+| walker |  | 1509 | 49 | package scripts in package.json |  |  | 0.570 |
+| walker |  | 1696 | 187 | package dependencies in package.json |  |  | 0.570 |
 | ns | 1698 |  | 254 | Readme: supportsColor / FORCE_COLOR / flags / chalkStderr | 2.7 | 2.1 | 0.548 |
-| walker |  | 1726 | 187 | package dependencies in package.json |  |  | 0.548 |
-| walker |  | 1756 | 30 | readme.md section #25 |  |  | 0.559 |
-| walker |  | 1893 | 137 | readme.md section #1 |  |  | 0.559 |
-| walker |  | 1927 | 34 | readme.md section #11 |  |  | 0.563 |
-| walker |  | 1961 | 34 | readme.md section #13 |  |  | 0.568 |
-| walker |  | 1993 | 32 | readme.md section #26 |  |  | 0.582 |
-| walker |  | 2030 | 37 | readme.md section #15 |  |  | 0.582 |
-| walker |  | 2039 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.604 |
-| ns | 2123 |  | 425 | Readme: 256/Truecolor section | 2.8 | 2.1 | 0.563 |
-| walker |  | 2133 | 94 | plaintext config .editorconfig |  |  | 0.563 |
-| walker |  | 2175 | 42 | readme.md section #8 |  |  | 0.569 |
+| walker |  | 1726 | 30 | readme.md section #25 |  |  | 0.559 |
+| walker |  | 1863 | 137 | readme.md section #1 |  |  | 0.559 |
+| walker |  | 1897 | 34 | readme.md section #11 |  |  | 0.563 |
+| walker |  | 1931 | 34 | readme.md section #13 |  |  | 0.568 |
+| walker |  | 1963 | 32 | readme.md section #26 |  |  | 0.582 |
+| walker |  | 2000 | 37 | readme.md section #15 |  |  | 0.582 |
+| walker |  | 2009 | 9 | listing of 'source/vendor/ansi-styles' |  |  | 0.604 |
+| walker |  | 2051 | 42 | readme.md section #8 |  |  | 0.611 |
+| ns | 2123 |  | 425 | Readme: 256/Truecolor section | 2.8 | 2.1 | 0.569 |
+| walker |  | 2135 | 84 | code-of-conduct.md section #6 |  |  | 0.569 |
+| walker |  | 2191 | 56 | readme.md section #5 |  |  | 0.569 |
 | ns | 2236 |  | 113 | index.js helper signatures (locations) | 3.1 | 2.2 | 0.557 |
-| walker |  | 2259 | 84 | code-of-conduct.md section #6 |  |  | 0.557 |
-| walker |  | 2315 | 56 | readme.md section #5 |  |  | 0.557 |
+| walker |  | 2289 | 98 | code-of-conduct.md section #1 |  |  | 0.557 |
+| walker |  | 2335 | 46 | readme.md section #36 |  |  | 0.557 |
 | ns | 2376 |  | 140 | index.js imports + private symbols | 3.2 |  | 0.538 |
-| walker |  | 2413 | 98 | code-of-conduct.md section #1 |  |  | 0.538 |
+| walker |  | 2443 | 108 | code-of-conduct.md section #4 |  |  | 0.538 |
 | ns | 2445 |  | 69 | levelMapping (color level → ansi style name) | 3.3 |  | 0.527 |
-| walker |  | 2459 | 46 | readme.md section #36 |  |  | 0.527 |
-| walker |  | 2567 | 108 | code-of-conduct.md section #4 |  |  | 0.527 |
-| walker |  | 2630 | 63 | readme.md section #9 |  |  | 0.545 |
+| walker |  | 2506 | 63 | readme.md section #9 |  |  | 0.545 |
+| walker |  | 2562 | 56 | readme.md section #32 |  |  | 0.545 |
+| walker |  | 2570 | 8 | listing of 'examples' |  |  | 0.545 |
 | ns | 2639 |  | 194 | Style-attach loop (chalk.red etc as getters) | 3.4 |  | 0.521 |
-| walker |  | 2686 | 56 | readme.md section #32 |  |  | 0.521 |
-| walker |  | 2694 | 8 | listing of 'examples' |  |  | 0.521 |
-| walker |  | 2829 | 135 | code-of-conduct.md section #3 |  |  | 0.521 |
-| walker |  | 2894 | 65 | readme.md section #34 |  |  | 0.521 |
-| walker |  | 2977 | 83 | readme.md section #10 |  |  | 0.555 |
-| walker |  | 3044 | 67 | readme.md section #35 |  |  | 0.555 |
+| walker |  | 2705 | 135 | code-of-conduct.md section #3 |  |  | 0.521 |
+| walker |  | 2770 | 65 | readme.md section #34 |  |  | 0.521 |
+| walker |  | 2853 | 83 | readme.md section #10 |  |  | 0.555 |
+| walker |  | 2920 | 67 | readme.md section #35 |  |  | 0.555 |
+| walker |  | 2990 | 70 | readme.md section #33 |  |  | 0.555 |
 | ns | 3051 |  | 412 | applyStyle body (nested styles + newline fix) | 3.5 | 3.1 | 0.513 |
-| walker |  | 3114 | 70 | readme.md section #33 |  |  | 0.513 |
+| walker |  | 3145 | 155 | code-of-conduct.md section #5 |  |  | 0.513 |
 | ns | 3199 |  | 148 | createStyler body (parent linkage) | 3.6 | 3.1 | 0.492 |
-| walker |  | 3269 | 155 | code-of-conduct.md section #5 |  |  | 0.492 |
-| walker |  | 3361 | 92 | readme.md section #16 |  |  | 0.492 |
-| walker |  | 3372 | 11 | listing of '.github' |  |  | 0.492 |
-| walker |  | 3376 | 4 | listing of '.github/workflows' |  |  | 0.492 |
-| ns | 3392 |  | 193 | createBuilder body (function with proto) | 3.7 | 3.1 | 0.478 |
-| walker |  | 3427 | 51 | readme.md section #14 |  |  | 0.484 |
-| walker |  | 3537 | 110 | readme.md section #12 |  |  | 0.495 |
-| walker |  | 3743 | 206 | code-of-conduct.md section #2 |  |  | 0.495 |
+| walker |  | 3237 | 92 | readme.md section #16 |  |  | 0.492 |
+| walker |  | 3248 | 11 | listing of '.github' |  |  | 0.492 |
+| walker |  | 3252 | 4 | listing of '.github/workflows' |  |  | 0.492 |
+| walker |  | 3303 | 51 | readme.md section #14 |  |  | 0.499 |
+| ns | 3392 |  | 193 | createBuilder body (function with proto) | 3.7 | 3.1 | 0.484 |
+| walker |  | 3413 | 110 | readme.md section #12 |  |  | 0.495 |
+| walker |  | 3619 | 206 | code-of-conduct.md section #2 |  |  | 0.495 |
 | ns | 3904 |  | 512 | rgb/hex/ansi256 attach loop + getModelAnsi | 3.8 | 3.1 | 0.458 |
-| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.442 |
-| walker |  | 4128 | 385 | readme.md section #29 |  |  | 0.478 |
-| walker |  | 4192 | 64 | readme.md section #38 |  |  | 0.478 |
+| walker |  | 4004 | 385 | readme.md section #29 |  |  | 0.495 |
+| ns | 4059 |  | 155 | Chalk class + chalkFactory + createChalk | 3.9 | 3.1 | 0.478 |
+| walker |  | 4068 | 64 | readme.md section #38 |  |  | 0.478 |
 | ns | 4304 |  | 245 | applyOptions + proto definition | 3.10 | 3.1 | 0.461 |
 | ns | 4334 |  | 30 | index.js finalization (defineProperties + chalk = createChalk()) | 3.11 | 2.2 | 0.458 |
 | ns | 4504 |  | 170 | ansi-styles: modifier table | 4.1 |  | 0.449 |
-| walker |  | 4786 | 594 | readme.md section #3 |  |  | 0.471 |
+| walker |  | 4662 | 594 | readme.md section #3 |  |  | 0.471 |
 | ns | 4808 |  | 304 | ansi-styles: color table | 4.2 |  | 0.457 |
 | ns | 5122 |  | 314 | ansi-styles: bgColor table | 4.3 |  | 0.443 |
+| walker |  | 5134 | 472 | readme.md section #39 |  |  | 0.443 |
+| walker |  | 5182 | 48 | contributing.md section #0 |  |  | 0.443 |
 | ns | 5212 |  | 90 | ansi-styles: name arrays + default export | 4.4 |  | 0.439 |
-| walker |  | 5258 | 472 | readme.md section #39 |  |  | 0.439 |
-| walker |  | 5306 | 48 | contributing.md section #0 |  |  | 0.439 |
-| ns | 5355 |  | 143 | ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET | 4.5 |  | 0.435 |
-| walker |  | 5453 | 147 | readme.md section #27 |  |  | 0.475 |
-| ns | 5565 |  | 210 | ansi-styles: assembleStyles + ansi/ansi256/ansi16m installation | 4.6 |  | 0.467 |
-| walker |  | 5620 | 167 | readme.md section #28 |  |  | 0.503 |
-| walker |  | 5665 | 45 | .github/security.md section #0 |  |  | 0.503 |
-| walker |  | 5691 | 26 | export names surface in source/vendor/supports-color/index.js |  |  | 0.503 |
-| walker |  | 5691 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.503 |
-| walker |  | 5702 | 11 | module item at source/vendor/ansi-styles/index.js:73 |  |  | 0.503 |
-| walker |  | 5711 | 9 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.503 |
-| walker |  | 5723 | 12 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.503 |
-| walker |  | 5735 | 12 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.503 |
+| walker |  | 5329 | 147 | readme.md section #27 |  |  | 0.479 |
+| ns | 5355 |  | 143 | ansi-styles: wrapAnsi16 / 256 / 16m + ANSI_BACKGROUND_OFFSET | 4.5 |  | 0.475 |
+| walker |  | 5496 | 167 | readme.md section #28 |  |  | 0.512 |
+| walker |  | 5541 | 45 | .github/security.md section #0 |  |  | 0.512 |
+| ns | 5565 |  | 210 | ansi-styles: assembleStyles + ansi/ansi256/ansi16m installation | 4.6 |  | 0.503 |
+| walker |  | 5571 | 30 | plaintext config .gitignore |  |  | 0.503 |
+| walker |  | 5597 | 26 | export names surface in source/vendor/supports-color/index.js |  |  | 0.503 |
+| walker |  | 5597 | 0 | export at source/vendor/supports-color/index.js:176 |  |  | 0.503 |
+| walker |  | 5608 | 11 | module item at source/vendor/ansi-styles/index.js:73 |  |  | 0.503 |
+| walker |  | 5617 | 9 | module item at source/vendor/supports-color/index.js:16 |  |  | 0.503 |
+| walker |  | 5629 | 12 | module item at source/vendor/supports-color/index.js:33 |  |  | 0.503 |
+| walker |  | 5641 | 12 | module item at source/vendor/supports-color/index.js:47 |  |  | 0.503 |
+| walker |  | 5735 | 94 | plaintext config .editorconfig |  |  | 0.503 |
 | walker |  | 5748 | 13 | module item at source/index.js:50 |  |  | 0.504 |
 | walker |  | 5755 | 7 | module item body at source/index.js:50 body 51 |  |  | 0.504 |
 | walker |  | 5766 | 11 | module item at source/index.js:22 |  |  | 0.504 |

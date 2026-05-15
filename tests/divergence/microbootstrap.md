@@ -265,35 +265,35 @@ Score(3000)=0.586 I=0.743 C=0.462 ns_rows≤3K=23/50 (reached=11 partial=1 missi
 | walker |  | 8163 | 310 | README.md section #2 |  |  | 0.511 |
 | ns | 8408 |  | 275 | LoggingConfig (fields) | 4.12 |  | 0.503 |
 | walker |  | 8465 | 302 | README.md section #5 |  |  | 0.503 |
-| walker |  | 8624 | 159 | plaintext config .gitignore |  |  | 0.503 |
+| walker |  | 8631 | 166 | python imports in microbootstrap/settings.py |  |  | 0.503 |
 | ns | 8696 |  | 288 | examples/litestar_app.py — full file | 5.1 |  | 0.491 |
-| walker |  | 8790 | 166 | python imports in microbootstrap/settings.py |  |  | 0.491 |
-| walker |  | 8962 | 172 | python imports in microbootstrap/instruments_setupper.py |  |  | 0.491 |
+| walker |  | 8803 | 172 | python imports in microbootstrap/instruments_setupper.py |  |  | 0.491 |
+| walker |  | 8857 | 54 | python method body at microbootstrap/instruments/base.py:35 body 36 |  |  | 0.491 |
+| walker |  | 8945 | 88 | README.md section #34 |  |  | 0.491 |
 | ns | 8975 |  | 279 | examples/fastapi_app.py — full file | 5.2 |  | 0.480 |
-| walker |  | 9016 | 54 | python method body at microbootstrap/instruments/base.py:35 body 36 |  |  | 0.480 |
-| walker |  | 9104 | 88 | README.md section #34 |  |  | 0.480 |
-| walker |  | 9197 | 93 | README.md section #30 |  |  | 0.480 |
-| ns | 9203 |  | 228 | examples/faststream_app.py — broker setup | 5.3 |  | 0.473 |
-| walker |  | 9300 | 103 | python imports in microbootstrap/middlewares/litestar.py |  |  | 0.473 |
-| walker |  | 9351 | 51 | python decl names surface in microbootstrap/instruments/health_checks_instrument.py |  |  | 0.474 |
-| walker |  | 9351 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.474 |
-| walker |  | 9351 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:14 |  |  | 0.474 |
-| walker |  | 9351 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.474 |
-| walker |  | 9377 | 26 | python class body at microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.475 |
-| walker |  | 9409 | 32 | python class body at microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.477 |
-| ns | 9443 |  | 240 | InstrumentsSetupper — class + setup/teardown + use_instrument registrations | 5.4 |  | 0.479 |
-| walker |  | 9454 | 45 | python method sigs in microbootstrap/instruments/health_checks_instrument.py |  |  | 0.481 |
-| walker |  | 9454 | 0 | python method at microbootstrap/instruments/health_checks_instrument.py:30 |  |  | 0.481 |
-| walker |  | 9454 | 0 | python method at microbootstrap/instruments/health_checks_instrument.py:37 |  |  | 0.481 |
-| walker |  | 9465 | 11 | python method body at microbootstrap/instruments/health_checks_instrument.py:37 body 38 |  |  | 0.483 |
-| walker |  | 9481 | 16 | python method at microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.484 |
-| walker |  | 9491 | 10 | python method body at microbootstrap/instruments/health_checks_instrument.py:40 body 42 |  |  | 0.485 |
-| ns | 9505 |  | 62 | create_granian_server signature | 5.5 |  | 0.488 |
-| walker |  | 9543 | 52 | python method body at microbootstrap/instruments/health_checks_instrument.py:30 body 31 |  |  | 0.494 |
-| walker |  | 9654 | 111 | python imports in microbootstrap/instruments/sentry_instrument.py |  |  | 0.494 |
-| walker |  | 9715 | 61 | python method body at microbootstrap/instruments/instrument_box.py:14 body 15 |  |  | 0.499 |
+| walker |  | 9038 | 93 | README.md section #30 |  |  | 0.480 |
+| walker |  | 9141 | 103 | python imports in microbootstrap/middlewares/litestar.py |  |  | 0.480 |
+| walker |  | 9192 | 51 | python decl names surface in microbootstrap/instruments/health_checks_instrument.py |  |  | 0.482 |
+| walker |  | 9192 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.482 |
+| walker |  | 9192 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:14 |  |  | 0.482 |
+| walker |  | 9192 | 0 | python decl at microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.482 |
+| ns | 9203 |  | 228 | examples/faststream_app.py — broker setup | 5.3 |  | 0.474 |
+| walker |  | 9218 | 26 | python class body at microbootstrap/instruments/health_checks_instrument.py:26 |  |  | 0.475 |
+| walker |  | 9250 | 32 | python class body at microbootstrap/instruments/health_checks_instrument.py:8 |  |  | 0.477 |
+| walker |  | 9295 | 45 | python method sigs in microbootstrap/instruments/health_checks_instrument.py |  |  | 0.479 |
+| walker |  | 9295 | 0 | python method at microbootstrap/instruments/health_checks_instrument.py:30 |  |  | 0.479 |
+| walker |  | 9295 | 0 | python method at microbootstrap/instruments/health_checks_instrument.py:37 |  |  | 0.479 |
+| walker |  | 9306 | 11 | python method body at microbootstrap/instruments/health_checks_instrument.py:37 body 38 |  |  | 0.481 |
+| walker |  | 9322 | 16 | python method at microbootstrap/instruments/health_checks_instrument.py:40 |  |  | 0.482 |
+| walker |  | 9332 | 10 | python method body at microbootstrap/instruments/health_checks_instrument.py:40 body 42 |  |  | 0.483 |
+| walker |  | 9384 | 52 | python method body at microbootstrap/instruments/health_checks_instrument.py:30 body 31 |  |  | 0.489 |
+| ns | 9443 |  | 240 | InstrumentsSetupper — class + setup/teardown + use_instrument registrations | 5.4 |  | 0.491 |
+| walker |  | 9495 | 111 | python imports in microbootstrap/instruments/sentry_instrument.py |  |  | 0.491 |
+| ns | 9505 |  | 62 | create_granian_server signature | 5.5 |  | 0.494 |
+| walker |  | 9556 | 61 | python method body at microbootstrap/instruments/instrument_box.py:14 body 15 |  |  | 0.499 |
+| walker |  | 9619 | 63 | python method body at microbootstrap/bootstrappers/base.py:31 body 32 |  |  | 0.499 |
 | ns | 9734 |  | 229 | helpers — public function signatures | 5.6 |  | 0.507 |
-| walker |  | 9778 | 63 | python method body at microbootstrap/bootstrappers/base.py:31 body 32 |  |  | 0.507 |
+| walker |  | 9807 | 188 | python decl body at microbootstrap/helpers.py:19 body 20 |  |  | 0.507 |
 | ns | 9841 |  | 107 | Exceptions — full file | 5.7 |  | 0.508 |
-| walker |  | 9966 | 188 | python decl body at microbootstrap/helpers.py:19 body 20 |  |  | 0.508 |
+| walker |  | 9914 | 107 | README.md section #20 |  |  | 0.508 |
 | ns | 9984 |  | 143 | tests/ directory — fs map | 5.8 |  | 0.519 |

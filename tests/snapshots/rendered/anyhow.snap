@@ -4,8 +4,6 @@ expression: rendered
 ---
 .github/
 .gitignore
-    1→/target/
-    2→/Cargo.lock
 Cargo.toml
     1→[package]
     2→name = "anyhow"
@@ -244,6 +242,14 @@ src/
         …
     nightly.rs
     ptr.rs
+        6→pub struct Own<T>
+        …
+        64→pub struct Ref<'a, T>
+        …
+        125→pub struct Mut<'a, T>
+        …
+        181→pub trait CastTo {
+        …
     wrapper.rs
 tests/
     common/

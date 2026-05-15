@@ -3,8 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
-    devcontainer.json
-    on-create-command.sh
 .editorconfig
 .github/
     ISSUE_TEMPLATE/
@@ -297,7 +295,7 @@ src/
             tag.py
         logging.py
             15→@LocalProxy
-            …
+            16→def wsgi_errors_stream() -> t.TextIO:
             31→def has_level_handler(logger: logging.Logger) -> bool:
             …
             52→default_handler = logging.StreamHandler(wsgi_errors_stream)  # type: ignore

@@ -3,7 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
-    devcontainer.json
 .dockerignore
 .env.sample
 .eslintrc.json
@@ -21,12 +20,7 @@ expression: rendered
 .gitignore
 .prettierignore
 .prettierrc.json
-    1→{
-    2→  "trailingComma": "es5",
-    3→  "tabWidth": 2
-    4→}
 .vscode/
-    settings.json
 .yarnrc.yml
 Dockerfile
 LICENSE.md
@@ -191,7 +185,9 @@ apps/
             auth.ts
                 157→export default useAuthStore;
             data.ts
+                38→export default useDataStore;
             tmp.ts
+                26→export default useTmpStore;
         styles/
             global.css
         tailwind.config.js

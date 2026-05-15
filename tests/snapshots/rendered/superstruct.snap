@@ -9,13 +9,7 @@ expression: rendered
 .gitignore
 .prettierignore
 .prettierrc
-    1→{
-    2→  "singleQuote": true,
-    3→  "semi": false,
-    4→  "trailingComma": "es5"
-    5→}
 .vscode/
-    settings.json
 Changelog.md
 License.md
 Readme.md
@@ -329,7 +323,12 @@ src/
             78→  T extends string | any[] | Map<any, any> | Set<any>,
             79→  S extends any,
             80→>(struct: Struct<T, S>): Struct<T, S> {
-            …
+            81→  return refine(struct, 'nonempty', (value) => {
+            82→    const size = getSize(value)
+            83→    return (
+            84→      size > 0 || `Expected a nonempty ${struct.type} but received an empty one`
+            85→    )
+            86→  })
             93→export function pattern<T extends string, S extends any>(
             94→  struct: Struct<T, S>,
             95→  regexp: RegExp

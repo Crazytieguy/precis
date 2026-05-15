@@ -3,20 +3,11 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
-    devcontainer.json
 .github/
 .gitignore
-    1→.dccache
-    2→node_modules/
-    3→*.log
-    4→.idea/
-    5→containerId.txt
-    6→.qodo
 .npmrc
 .nvmrc
-    1→v24
 .vscode/
-    launch.json
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 Dockerfile
@@ -354,6 +345,12 @@ src/
             127→  getLabel () {
             …
             131→  getListItems (cb) {
+            …
+            135→  getItemLogs (cb) {
+            …
+            139→  updateItemLogs (str) {
+            …
+            143→  clearItemLogs (str) {
             …
             147→  filterList (data) {
             …

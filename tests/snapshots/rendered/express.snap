@@ -3,15 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .editorconfig
-    1→# https://editorconfig.org
-    2→root = true
-    4→[*]
-    5→charset = utf-8
-    6→insert_final_newline = true
-    7→trim_trailing_whitespace = true
-    9→[{*.js,*.json,*.yml}]
-    10→indent_size = 2
-    11→indent_style = space
 .eslintignore
 .eslintrc.yml
 .github/
@@ -55,6 +46,19 @@ Readme.md
     46→```
     48→## Installation
     …
+    50→This is a [Node.js](https://nodejs.org/en/) module available through the
+    51→[npm registry](https://www.npmjs.com/).
+    53→Before installing, [download and install Node.js](https://nodejs.org/en/download/).
+    54→Node.js 18 or higher is required.
+    56→If this is a brand new project, make sure to create a `package.json` first with
+    57→the [`npm init` command](https://docs.npmjs.com/creating-a-package-json-file).
+    59→Installation is done using the
+    60→[`npm install` command](https://docs.npmjs.com/downloading-and-installing-packages-locally):
+    62→```bash
+    63→npm install express
+    64→```
+    66→Follow [our installing guide](https://expressjs.com/en/starter/installing.html)
+    67→for more information.
     69→## Features
     …
     71→  * Robust routing

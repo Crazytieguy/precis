@@ -3,23 +3,9 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .editorconfig
-    1→root = true
-    3→[*]
-    4→indent_style = tab
-    5→end_of_line = lf
-    6→charset = utf-8
-    7→trim_trailing_whitespace = true
-    8→insert_final_newline = true
-    10→[*.yml]
-    11→indent_style = space
-    12→indent_size = 2
 .gitattributes
 .github/
 .gitignore
-    1→node_modules
-    2→yarn.lock
-    3→coverage
-    4→.nyc_output
 .npmrc
 benchmark.js
     2→import chalk from './index.js';
@@ -222,7 +208,9 @@ readme.md
     256→### Why not switch to a smaller coloring package?
     …
     258→Chalk may be larger, but there is a reason for that. It offers a more user-friendly API, well-documented types, supports millions of colors, and covers edge cases that smaller alternatives miss. Chalk is mature, reliable, and built to last.
+    260→But beyond the technical aspects, there's something more critical: trust and long-term maintenance. I have been active in open source for over a decade, and I'm committed to keeping Chalk maintained. Smaller packages might seem appealing now, but there's no guarantee they will be around for the long term, or that they won't become malicious over time.
     262→Chalk is also likely already in your dependency tree (since 100K+ packages depend on it), so switching won’t save space—in fact, it might increase it. npm deduplicates dependencies, so multiple Chalk instances turn into one, but adding another package alongside it will increase your overall size.
+    264→If the goal is to clean up the ecosystem, switching away from Chalk won’t even make a dent. The real problem lies with packages that have very deep dependency trees (for example, those including a lot of polyfills). Chalk has no dependencies. It's better to focus on impactful changes rather than minor optimizations.
     266→If absolute package size is important to you, I also maintain [yoctocolors](https://github.com/sindresorhus/yoctocolors), one of the smallest color packages out there.
     268→*\- [Sindre](https://github.com/sindresorhus)*
     270→### But the smaller coloring package has benchmarks showing it is faster

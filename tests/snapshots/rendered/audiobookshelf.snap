@@ -3,10 +3,6 @@ source: tests/fixture_baselines.rs
 expression: rendered
 ---
 .devcontainer/
-    Dockerfile
-    dev.js
-    devcontainer.json
-    post-create.sh
 .dockerignore
 .editorconfig
 .gitattributes
@@ -14,10 +10,6 @@ expression: rendered
 .gitignore
 .prettierrc
 .vscode/
-    extensions.json
-    launch.json
-    settings.json
-    tasks.json
 Dockerfile
 LICENSE
 build/
@@ -152,6 +144,10 @@ client/
         fonts/
             MaterialSymbolsRounded.woff2
             Source_Sans_Pro/
+                OFL.txt
+                SourceSansPro-Light.ttf
+                SourceSansPro-Regular.ttf
+                SourceSansPro-SemiBold.ttf
             Ubuntu_Mono/
             absicons/
                 absicons.eot
@@ -316,6 +312,8 @@ readme.md
     …
     200→### Synology NAS Reverse Proxy Setup (DSM 7+/Quickconnect)
     …
+    202→1. **Open Control Panel**
+    204→   - Navigate to `Login Portal > Advanced`.
     243→6. **Advanced Settings Tab**
     244→   - Leave as is.
     246→### [Traefik Reverse Proxy](https://doc.traefik.io/traefik/)

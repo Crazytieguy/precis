@@ -1,7 +1,7 @@
 fixture = "posting"
 budget = 10000
-cumulative_tokens = 9991
-batch_count = 396
+cumulative_tokens = 9988
+batch_count = 395
 
 [[batches]]
 position = 1
@@ -33,24 +33,10 @@ entries = ["posting"]
 
 [[batches]]
 position = 3
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/.codex" })'
-descriptor = "listing of '.codex'"
-cost_tokens = 3
-cum_tokens = 54
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/posting/.codex"
-entries = ["environments"]
-
-[[batches]]
-position = 4
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md" })'
 descriptor = "README headline in README.md"
 cost_tokens = 23
-cum_tokens = 77
+cum_tokens = 74
 
 [batches.content]
 kind = "lines"
@@ -72,11 +58,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 5
+position = 4
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md" })'
 descriptor = "headings outline in README.md"
 cost_tokens = 42
-cum_tokens = 119
+cum_tokens = 116
 
 [batches.content]
 kind = "lines"
@@ -146,29 +132,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 6
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/posting/.python-version" })'
-descriptor = "plaintext config .python-version"
-cost_tokens = 10
-cum_tokens = 129
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/posting/.python-version"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
+position = 5
 key = 'Toml(Identity { file: "/Users/yoav/projects/precis/tests/fixtures/posting/pyproject.toml" })'
 descriptor = "[package] in pyproject.toml"
 cost_tokens = 33
-cum_tokens = 162
+cum_tokens = 149
 
 [batches.content]
 kind = "lines"
@@ -190,11 +158,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 8
+position = 6
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/docs" })'
 descriptor = "listing of 'docs'"
 cost_tokens = 40
-cum_tokens = 202
+cum_tokens = 189
 
 [batches.content]
 kind = "fs"
@@ -204,11 +172,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/docs"
 entries = ["CHANGELOG.md", "CNAME", "assets", "faq.md", "guide", "home-image.afdesign", "index.md", "overrides", "roadmap.md", "stylesheets"]
 
 [[batches]]
-position = 9
+position = 7
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/roadmap.md" })'
 descriptor = "headings outline in docs/roadmap.md"
 cost_tokens = 55
-cum_tokens = 257
+cum_tokens = 244
 
 [batches.content]
 kind = "lines"
@@ -294,11 +262,11 @@ end = 118
 kind = "ellipsis"
 
 [[batches]]
-position = 10
+position = 8
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md", section_index: 2 })'
 descriptor = "README.md section #2"
 cost_tokens = 38
-cum_tokens = 295
+cum_tokens = 282
 
 [batches.content]
 kind = "lines"
@@ -320,11 +288,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 11
+position = 9
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md", section_index: 3 })'
 descriptor = "README.md section #3"
 cost_tokens = 42
-cum_tokens = 337
+cum_tokens = 324
 
 [batches.content]
 kind = "lines"
@@ -354,11 +322,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 12
+position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/overrides" })'
 descriptor = "listing of 'docs/overrides'"
 cost_tokens = 4
-cum_tokens = 341
+cum_tokens = 328
 
 [batches.content]
 kind = "fs"
@@ -368,11 +336,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/docs/overrides"
 entries = ["home.html"]
 
 [[batches]]
-position = 13
+position = 11
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/stylesheets" })'
 descriptor = "listing of 'docs/stylesheets'"
 cost_tokens = 4
-cum_tokens = 345
+cum_tokens = 332
 
 [batches.content]
 kind = "fs"
@@ -382,11 +350,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/docs/stylesheets"
 entries = ["extra.css"]
 
 [[batches]]
-position = 14
+position = 12
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting" })'
 descriptor = "listing of 'src/posting'"
 cost_tokens = 156
-cum_tokens = 501
+cum_tokens = 488
 
 [batches.content]
 kind = "fs"
@@ -396,11 +364,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting"
 entries = ["__init__.py", "__main__.py", "_start_time.py", "app.py", "auth.py", "collection.py", "commands.py", "config.py", "exit_codes.py", "files.py", "help_data.py", "help_screen.py", "highlight_url.py", "highlighters.py", "importing", "jump_overlay.py", "jumper.py", "locations.py", "messages.py", "posting.scss", "request_headers.py", "save_request.py", "scripts.py", "suggesters.py", "themes.py", "tuple_to_multidict.py", "types.py", "urls.py", "user_host.py", "variables.py", "version.py", "widgets", "xresources.py", "yaml.py"]
 
 [[batches]]
-position = 15
+position = 13
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/exit_codes.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/exit_codes.py"
 cost_tokens = 10
-cum_tokens = 511
+cum_tokens = 498
 
 [batches.content]
 kind = "lines"
@@ -414,11 +382,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 16
+position = 14
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_data.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/help_data.py"
 cost_tokens = 10
-cum_tokens = 521
+cum_tokens = 508
 
 [batches.content]
 kind = "lines"
@@ -440,11 +408,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 17
+position = 15
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_data.py", start_line: 4 })'
 descriptor = "python decl at src/posting/help_data.py:4"
 cost_tokens = 6
-cum_tokens = 527
+cum_tokens = 514
 
 [batches.content]
 kind = "lines"
@@ -458,11 +426,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 18
+position = 16
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/messages.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/messages.py"
 cost_tokens = 10
-cum_tokens = 537
+cum_tokens = 524
 
 [batches.content]
 kind = "lines"
@@ -484,11 +452,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 19
+position = 17
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/messages.py", start_line: 6 })'
 descriptor = "python decl at src/posting/messages.py:6"
 cost_tokens = 8
-cum_tokens = 545
+cum_tokens = 532
 
 [batches.content]
 kind = "lines"
@@ -502,11 +470,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 20
+position = 18
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/messages.py", start_line: 6 })'
 descriptor = "python class body at src/posting/messages.py:6"
 cost_tokens = 9
-cum_tokens = 554
+cum_tokens = 541
 
 [batches.content]
 kind = "lines"
@@ -520,11 +488,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 21
+position = 19
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/version.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/version.py"
 cost_tokens = 10
-cum_tokens = 564
+cum_tokens = 551
 
 [batches.content]
 kind = "lines"
@@ -538,11 +506,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 22
+position = 20
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets" })'
 descriptor = "listing of 'src/posting/widgets'"
 cost_tokens = 87
-cum_tokens = 651
+cum_tokens = 638
 
 [batches.content]
 kind = "fs"
@@ -552,11 +520,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets
 entries = ["__init__.py", "center_middle.py", "collection", "confirmation.py", "datatable.py", "input.py", "key_value.py", "key_value_copy_modal.py", "load_env_file_dialog.py", "request", "response", "rich_log.py", "select.py", "tabbed_content.py", "text_area.py", "tree.py", "variable_autocomplete.py", "variable_input.py"]
 
 [[batches]]
-position = 23
+position = 21
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request" })'
 descriptor = "listing of 'src/posting/widgets/request'"
 cost_tokens = 66
-cum_tokens = 717
+cum_tokens = 704
 
 [batches.content]
 kind = "fs"
@@ -566,11 +534,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets
 entries = ["__init__.py", "form_editor.py", "header_editor.py", "method_selection.py", "path_editor.py", "query_editor.py", "request_auth.py", "request_body.py", "request_editor.py", "request_metadata.py", "request_options.py", "request_scripts.py", "url_bar.py"]
 
 [[batches]]
-position = 24
+position = 22
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__init__.py" })'
 descriptor = "python imports in src/posting/__init__.py"
 cost_tokens = 219
-cum_tokens = 936
+cum_tokens = 923
 
 [batches.content]
 kind = "lines"
@@ -608,11 +576,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 25
+position = 23
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/_start_time.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/_start_time.py"
 cost_tokens = 13
-cum_tokens = 949
+cum_tokens = 936
 
 [batches.content]
 kind = "lines"
@@ -626,11 +594,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 26
+position = 24
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/suggesters.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/suggesters.py"
 cost_tokens = 13
-cum_tokens = 962
+cum_tokens = 949
 
 [batches.content]
 kind = "lines"
@@ -644,11 +612,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 27
+position = 25
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/user_host.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/user_host.py"
 cost_tokens = 15
-cum_tokens = 977
+cum_tokens = 964
 
 [batches.content]
 kind = "lines"
@@ -670,11 +638,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 28
+position = 26
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/user_host.py", start_line: 9 })'
 descriptor = "python decl at src/posting/user_host.py:9"
 cost_tokens = 0
-cum_tokens = 977
+cum_tokens = 964
 
 [batches.content]
 kind = "lines"
@@ -688,11 +656,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 29
+position = 27
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/_start_time.py" })'
 descriptor = "python imports in src/posting/_start_time.py"
 cost_tokens = 7
-cum_tokens = 984
+cum_tokens = 971
 
 [batches.content]
 kind = "lines"
@@ -706,11 +674,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 30
+position = 28
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/auth.py"
 cost_tokens = 16
-cum_tokens = 1000
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -732,11 +700,11 @@ end = 7
 kind = "ellipsis"
 
 [[batches]]
-position = 31
+position = 29
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", start_line: 6 })'
 descriptor = "python decl at src/posting/auth.py:6"
 cost_tokens = 0
-cum_tokens = 1000
+cum_tokens = 987
 
 [batches.content]
 kind = "lines"
@@ -750,11 +718,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 32
+position = 30
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_data.py", start_line: 4 })'
 descriptor = "python decl doc at src/posting/help_data.py:4"
 cost_tokens = 19
-cum_tokens = 1019
+cum_tokens = 1006
 
 [batches.content]
 kind = "lines"
@@ -768,11 +736,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 33
+position = 31
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/input.py"
 cost_tokens = 11
-cum_tokens = 1030
+cum_tokens = 1017
 
 [batches.content]
 kind = "lines"
@@ -794,11 +762,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 32
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", start_line: 9 })'
 descriptor = "python decl at src/posting/widgets/input.py:9"
 cost_tokens = 0
-cum_tokens = 1030
+cum_tokens = 1017
 
 [batches.content]
 kind = "lines"
@@ -812,11 +780,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 35
+position = 33
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/jump_overlay.py"
 cost_tokens = 18
-cum_tokens = 1048
+cum_tokens = 1035
 
 [batches.content]
 kind = "lines"
@@ -838,11 +806,11 @@ end = 17
 kind = "ellipsis"
 
 [[batches]]
-position = 36
+position = 34
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 16 })'
 descriptor = "python decl at src/posting/jump_overlay.py:16"
 cost_tokens = 0
-cum_tokens = 1048
+cum_tokens = 1035
 
 [batches.content]
 kind = "lines"
@@ -856,25 +824,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 37
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/.codex/environments" })'
-descriptor = "listing of '.codex/environments'"
-cost_tokens = 5
-cum_tokens = 1053
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/posting/.codex/environments"
-entries = ["environment.toml"]
-
-[[batches]]
-position = 38
+position = 35
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/variable_input.py"
 cost_tokens = 13
-cum_tokens = 1066
+cum_tokens = 1048
 
 [batches.content]
 kind = "lines"
@@ -896,11 +850,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 36
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", start_line: 12 })'
 descriptor = "python decl at src/posting/widgets/variable_input.py:12"
 cost_tokens = 0
-cum_tokens = 1066
+cum_tokens = 1048
 
 [batches.content]
 kind = "lines"
@@ -914,11 +868,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 40
+position = 37
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 300
-cum_tokens = 1366
+cum_tokens = 1348
 
 [batches.content]
 kind = "lines"
@@ -964,11 +918,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 41
+position = 38
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/request_headers.py" })'
 descriptor = "python imports in src/posting/request_headers.py"
 cost_tokens = 10
-cum_tokens = 1376
+cum_tokens = 1358
 
 [batches.content]
 kind = "lines"
@@ -982,11 +936,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 42
+position = 39
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/tabbed_content.py"
 cost_tokens = 14
-cum_tokens = 1390
+cum_tokens = 1372
 
 [batches.content]
 kind = "lines"
@@ -1008,11 +962,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 43
+position = 40
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", start_line: 5 })'
 descriptor = "python decl at src/posting/widgets/tabbed_content.py:5"
 cost_tokens = 0
-cum_tokens = 1390
+cum_tokens = 1372
 
 [batches.content]
 kind = "lines"
@@ -1026,11 +980,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 44
+position = 41
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/variable_autocomplete.py"
 cost_tokens = 14
-cum_tokens = 1404
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -1052,11 +1006,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 45
+position = 42
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 18 })'
 descriptor = "python decl at src/posting/widgets/variable_autocomplete.py:18"
 cost_tokens = 0
-cum_tokens = 1404
+cum_tokens = 1386
 
 [batches.content]
 kind = "lines"
@@ -1070,11 +1024,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 46
+position = 43
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/types.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/types.py"
 cost_tokens = 23
-cum_tokens = 1427
+cum_tokens = 1409
 
 [batches.content]
 kind = "lines"
@@ -1096,11 +1050,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 47
+position = 44
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide" })'
 descriptor = "listing of 'docs/guide'"
 cost_tokens = 56
-cum_tokens = 1483
+cum_tokens = 1465
 
 [batches.content]
 kind = "fs"
@@ -1110,11 +1064,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide"
 entries = ["collections.md", "command_palette.md", "configuration.md", "environments.md", "external_tools.md", "help_system.md", "importing.md", "index.md", "keymap.md", "navigation.md", "requests.md", "scripting.md", "themes.md"]
 
 [[batches]]
-position = 48
+position = 45
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/command_palette.md" })'
 descriptor = "headings outline in docs/guide/command_palette.md"
 cost_tokens = 21
-cum_tokens = 1504
+cum_tokens = 1486
 
 [batches.content]
 kind = "lines"
@@ -1152,11 +1106,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 49
+position = 46
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/help_system.md" })'
 descriptor = "headings outline in docs/guide/help_system.md"
 cost_tokens = 23
-cum_tokens = 1527
+cum_tokens = 1509
 
 [batches.content]
 kind = "lines"
@@ -1194,11 +1148,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 50
+position = 47
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/themes.md" })'
 descriptor = "headings outline in docs/guide/themes.md"
 cost_tokens = 31
-cum_tokens = 1558
+cum_tokens = 1540
 
 [batches.content]
 kind = "lines"
@@ -1252,11 +1206,11 @@ end = 90
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 48
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/keymap.md" })'
 descriptor = "headings outline in docs/guide/keymap.md"
 cost_tokens = 41
-cum_tokens = 1599
+cum_tokens = 1581
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +1280,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 52
+position = 49
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/importing.md" })'
 descriptor = "headings outline in docs/guide/importing.md"
 cost_tokens = 47
-cum_tokens = 1646
+cum_tokens = 1628
 
 [batches.content]
 kind = "lines"
@@ -1400,11 +1354,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 53
+position = 50
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/importing.md", section_index: 0 })'
 descriptor = "docs/guide/importing.md section #0"
 cost_tokens = 11
-cum_tokens = 1657
+cum_tokens = 1639
 
 [batches.content]
 kind = "lines"
@@ -1426,11 +1380,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 54
+position = 51
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/external_tools.md" })'
 descriptor = "headings outline in docs/guide/external_tools.md"
 cost_tokens = 52
-cum_tokens = 1709
+cum_tokens = 1691
 
 [batches.content]
 kind = "lines"
@@ -1516,11 +1470,11 @@ end = 72
 kind = "ellipsis"
 
 [[batches]]
-position = 55
+position = 52
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/collections.md" })'
 descriptor = "headings outline in docs/guide/collections.md"
 cost_tokens = 62
-cum_tokens = 1771
+cum_tokens = 1753
 
 [batches.content]
 kind = "lines"
@@ -1622,11 +1576,11 @@ end = 65
 kind = "ellipsis"
 
 [[batches]]
-position = 56
+position = 53
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/environments.md" })'
 descriptor = "headings outline in docs/guide/environments.md"
 cost_tokens = 66
-cum_tokens = 1837
+cum_tokens = 1819
 
 [batches.content]
 kind = "lines"
@@ -1728,11 +1682,11 @@ end = 82
 kind = "ellipsis"
 
 [[batches]]
-position = 57
+position = 54
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/navigation.md" })'
 descriptor = "headings outline in docs/guide/navigation.md"
 cost_tokens = 75
-cum_tokens = 1912
+cum_tokens = 1894
 
 [batches.content]
 kind = "lines"
@@ -1850,11 +1804,11 @@ end = 60
 kind = "ellipsis"
 
 [[batches]]
-position = 58
+position = 55
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/version.py" })'
 descriptor = "python imports in src/posting/version.py"
 cost_tokens = 11
-cum_tokens = 1923
+cum_tokens = 1905
 
 [batches.content]
 kind = "lines"
@@ -1868,11 +1822,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 59
+position = 56
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/confirmation.py"
 cost_tokens = 15
-cum_tokens = 1938
+cum_tokens = 1920
 
 [batches.content]
 kind = "lines"
@@ -1894,11 +1848,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 60
+position = 57
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 12 })'
 descriptor = "python decl at src/posting/widgets/confirmation.py:12"
 cost_tokens = 0
-cum_tokens = 1938
+cum_tokens = 1920
 
 [batches.content]
 kind = "lines"
@@ -1912,11 +1866,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 61
+position = 58
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/auth.py"
 cost_tokens = 46
-cum_tokens = 1984
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -1954,11 +1908,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 62
+position = 59
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", start_line: 7 })'
 descriptor = "python method at src/posting/auth.py:7"
 cost_tokens = 0
-cum_tokens = 1984
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -1972,11 +1926,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 63
+position = 60
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", start_line: 10 })'
 descriptor = "python method at src/posting/auth.py:10"
 cost_tokens = 0
-cum_tokens = 1984
+cum_tokens = 1966
 
 [batches.content]
 kind = "lines"
@@ -1990,11 +1944,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 64
+position = 61
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python method body at src/posting/auth.py:7 body 8"
 cost_tokens = 8
-cum_tokens = 1992
+cum_tokens = 1974
 
 [batches.content]
 kind = "lines"
@@ -2008,11 +1962,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 65
+position = 62
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/datatable.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/datatable.py"
 cost_tokens = 16
-cum_tokens = 2008
+cum_tokens = 1990
 
 [batches.content]
 kind = "lines"
@@ -2034,11 +1988,11 @@ end = 28
 kind = "ellipsis"
 
 [[batches]]
-position = 66
+position = 63
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/datatable.py", start_line: 27 })'
 descriptor = "python decl at src/posting/widgets/datatable.py:27"
 cost_tokens = 0
-cum_tokens = 2008
+cum_tokens = 1990
 
 [batches.content]
 kind = "lines"
@@ -2052,11 +2006,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 67
+position = 64
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/yaml.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/yaml.py"
 cost_tokens = 26
-cum_tokens = 2034
+cum_tokens = 2016
 
 [batches.content]
 kind = "lines"
@@ -2078,11 +2032,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 68
+position = 65
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/yaml.py", start_line: 10 })'
 descriptor = "python decl at src/posting/yaml.py:10"
 cost_tokens = 0
-cum_tokens = 2034
+cum_tokens = 2016
 
 [batches.content]
 kind = "lines"
@@ -2096,11 +2050,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 69
+position = 66
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/request_headers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/request_headers.py"
 cost_tokens = 27
-cum_tokens = 2061
+cum_tokens = 2043
 
 [batches.content]
 kind = "lines"
@@ -2130,11 +2084,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 67
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/request_headers.py", start_line: 4 })'
 descriptor = "python decl at src/posting/request_headers.py:4"
 cost_tokens = 0
-cum_tokens = 2061
+cum_tokens = 2043
 
 [batches.content]
 kind = "lines"
@@ -2148,11 +2102,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 71
+position = 68
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/center_middle.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/center_middle.py"
 cost_tokens = 17
-cum_tokens = 2078
+cum_tokens = 2060
 
 [batches.content]
 kind = "lines"
@@ -2174,11 +2128,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 72
+position = 69
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/center_middle.py", start_line: 4 })'
 descriptor = "python decl at src/posting/widgets/center_middle.py:4"
 cost_tokens = 0
-cum_tokens = 2078
+cum_tokens = 2060
 
 [batches.content]
 kind = "lines"
@@ -2192,11 +2146,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 73
+position = 70
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/center_middle.py", start_line: 4 })'
 descriptor = "python decl doc at src/posting/widgets/center_middle.py:4"
 cost_tokens = 13
-cum_tokens = 2091
+cum_tokens = 2073
 
 [batches.content]
 kind = "lines"
@@ -2210,11 +2164,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 74
+position = 71
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/request_headers.py", start_line: 4 })'
 descriptor = "python class body at src/posting/request_headers.py:4"
 cost_tokens = 43
-cum_tokens = 2134
+cum_tokens = 2116
 
 [batches.content]
 kind = "lines"
@@ -2228,11 +2182,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 75
+position = 72
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_data.py" })'
 descriptor = "python imports in src/posting/help_data.py"
 cost_tokens = 13
-cum_tokens = 2147
+cum_tokens = 2129
 
 [batches.content]
 kind = "lines"
@@ -2246,11 +2200,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 76
+position = 73
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/tabbed_content.py"
 cost_tokens = 32
-cum_tokens = 2179
+cum_tokens = 2161
 
 [batches.content]
 kind = "lines"
@@ -2288,11 +2242,11 @@ end = 19
 kind = "ellipsis"
 
 [[batches]]
-position = 77
+position = 74
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", start_line: 13 })'
 descriptor = "python method at src/posting/widgets/tabbed_content.py:13"
 cost_tokens = 0
-cum_tokens = 2179
+cum_tokens = 2161
 
 [batches.content]
 kind = "lines"
@@ -2306,11 +2260,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 78
+position = 75
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", start_line: 18 })'
 descriptor = "python method at src/posting/widgets/tabbed_content.py:18"
 cost_tokens = 0
-cum_tokens = 2179
+cum_tokens = 2161
 
 [batches.content]
 kind = "lines"
@@ -2324,11 +2278,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 79
+position = 76
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing" })'
 descriptor = "listing of 'src/posting/importing'"
 cost_tokens = 14
-cum_tokens = 2193
+cum_tokens = 2175
 
 [batches.content]
 kind = "fs"
@@ -2338,11 +2292,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importi
 entries = ["curl.py", "open_api.py", "postman.py"]
 
 [[batches]]
-position = 80
+position = 77
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/curl.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/importing/curl.py"
 cost_tokens = 10
-cum_tokens = 2203
+cum_tokens = 2185
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2318,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 81
+position = 78
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/curl.py", start_line: 22 })'
 descriptor = "python decl at src/posting/importing/curl.py:22"
 cost_tokens = 0
-cum_tokens = 2203
+cum_tokens = 2185
 
 [batches.content]
 kind = "lines"
@@ -2382,11 +2336,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 82
+position = 79
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/xresources.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/xresources.py"
 cost_tokens = 30
-cum_tokens = 2233
+cum_tokens = 2215
 
 [batches.content]
 kind = "lines"
@@ -2416,11 +2370,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 83
+position = 80
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/xresources.py", start_line: 20 })'
 descriptor = "python decl at src/posting/xresources.py:20"
 cost_tokens = 0
-cum_tokens = 2233
+cum_tokens = 2215
 
 [batches.content]
 kind = "lines"
@@ -2434,11 +2388,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 84
+position = 81
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/xresources.py", start_line: 20 })'
 descriptor = "python decl doc at src/posting/xresources.py:20"
 cost_tokens = 21
-cum_tokens = 2254
+cum_tokens = 2236
 
 [batches.content]
 kind = "lines"
@@ -2452,11 +2406,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 85
+position = 82
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_metadata.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/request_metadata.py"
 cost_tokens = 13
-cum_tokens = 2267
+cum_tokens = 2249
 
 [batches.content]
 kind = "lines"
@@ -2478,11 +2432,11 @@ end = 12
 kind = "ellipsis"
 
 [[batches]]
-position = 86
+position = 83
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_metadata.py", start_line: 11 })'
 descriptor = "python decl at src/posting/widgets/request/request_metadata.py:11"
 cost_tokens = 0
-cum_tokens = 2267
+cum_tokens = 2249
 
 [batches.content]
 kind = "lines"
@@ -2496,11 +2450,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 87
+position = 84
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_metadata.py", start_line: 11 })'
 descriptor = "python class body at src/posting/widgets/request/request_metadata.py:11"
 cost_tokens = 19
-cum_tokens = 2286
+cum_tokens = 2268
 
 [batches.content]
 kind = "lines"
@@ -2514,11 +2468,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 88
+position = 85
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_options.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/request_options.py"
 cost_tokens = 13
-cum_tokens = 2299
+cum_tokens = 2281
 
 [batches.content]
 kind = "lines"
@@ -2540,11 +2494,11 @@ end = 13
 kind = "ellipsis"
 
 [[batches]]
-position = 89
+position = 86
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_options.py", start_line: 12 })'
 descriptor = "python decl at src/posting/widgets/request/request_options.py:12"
 cost_tokens = 0
-cum_tokens = 2299
+cum_tokens = 2281
 
 [batches.content]
 kind = "lines"
@@ -2558,11 +2512,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 90
+position = 87
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/__main__.py"
 cost_tokens = 110
-cum_tokens = 2409
+cum_tokens = 2391
 
 [batches.content]
 kind = "lines"
@@ -2696,11 +2650,11 @@ end = 195
 kind = "ellipsis"
 
 [[batches]]
-position = 91
+position = 88
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 21 })'
 descriptor = "python decl at src/posting/__main__.py:21"
 cost_tokens = 0
-cum_tokens = 2409
+cum_tokens = 2391
 
 [batches.content]
 kind = "lines"
@@ -2714,11 +2668,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 92
+position = 89
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 32 })'
 descriptor = "python decl at src/posting/__main__.py:32"
 cost_tokens = 0
-cum_tokens = 2409
+cum_tokens = 2391
 
 [batches.content]
 kind = "lines"
@@ -2732,11 +2686,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 93
+position = 90
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl at src/posting/__main__.py:45"
 cost_tokens = 8
-cum_tokens = 2417
+cum_tokens = 2399
 
 [batches.content]
 kind = "lines"
@@ -2750,11 +2704,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 94
+position = 91
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl at src/posting/__main__.py:177"
 cost_tokens = 8
-cum_tokens = 2425
+cum_tokens = 2407
 
 [batches.content]
 kind = "lines"
@@ -2768,11 +2722,11 @@ end = 178
 kind = "full"
 
 [[batches]]
-position = 95
+position = 92
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 177 })'
 descriptor = "python decl doc at src/posting/__main__.py:177"
 cost_tokens = 12
-cum_tokens = 2437
+cum_tokens = 2419
 
 [batches.content]
 kind = "lines"
@@ -2786,11 +2740,11 @@ end = 179
 kind = "full"
 
 [[batches]]
-position = 96
+position = 93
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 45 })'
 descriptor = "python decl doc at src/posting/__main__.py:45"
 cost_tokens = 14
-cum_tokens = 2451
+cum_tokens = 2433
 
 [batches.content]
 kind = "lines"
@@ -2804,11 +2758,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 97
+position = 94
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 76 })'
 descriptor = "python decl at src/posting/__main__.py:76"
 cost_tokens = 39
-cum_tokens = 2490
+cum_tokens = 2472
 
 [batches.content]
 kind = "lines"
@@ -2822,11 +2776,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 98
+position = 95
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl at src/posting/__main__.py:194"
 cost_tokens = 42
-cum_tokens = 2532
+cum_tokens = 2514
 
 [batches.content]
 kind = "lines"
@@ -2840,11 +2794,11 @@ end = 198
 kind = "full"
 
 [[batches]]
-position = 99
+position = 96
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 194 })'
 descriptor = "python decl doc at src/posting/__main__.py:194"
 cost_tokens = 17
-cum_tokens = 2549
+cum_tokens = 2531
 
 [batches.content]
 kind = "lines"
@@ -2858,11 +2812,11 @@ end = 199
 kind = "full"
 
 [[batches]]
-position = 100
+position = 97
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 21, body_start_line: 22 })'
 descriptor = "python decl body at src/posting/__main__.py:21 body 22"
 cost_tokens = 55
-cum_tokens = 2604
+cum_tokens = 2586
 
 [batches.content]
 kind = "lines"
@@ -2884,11 +2838,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 101
+position = 98
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl at src/posting/__main__.py:96"
 cost_tokens = 144
-cum_tokens = 2748
+cum_tokens = 2730
 
 [batches.content]
 kind = "lines"
@@ -2902,11 +2856,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 102
+position = 99
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 96 })'
 descriptor = "python decl doc at src/posting/__main__.py:96"
 cost_tokens = 16
-cum_tokens = 2764
+cum_tokens = 2746
 
 [batches.content]
 kind = "lines"
@@ -2920,11 +2874,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 103
+position = 100
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 50 })'
 descriptor = "python decl at src/posting/__main__.py:50"
 cost_tokens = 145
-cum_tokens = 2909
+cum_tokens = 2891
 
 [batches.content]
 kind = "lines"
@@ -2938,11 +2892,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 104
+position = 101
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/commands.py"
 cost_tokens = 31
-cum_tokens = 2940
+cum_tokens = 2922
 
 [batches.content]
 kind = "lines"
@@ -2972,11 +2926,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 105
+position = 102
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 14 })'
 descriptor = "python decl at src/posting/commands.py:14"
 cost_tokens = 0
-cum_tokens = 2940
+cum_tokens = 2922
 
 [batches.content]
 kind = "lines"
@@ -2990,11 +2944,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 106
+position = 103
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/commands.py"
 cost_tokens = 52
-cum_tokens = 2992
+cum_tokens = 2974
 
 [batches.content]
 kind = "lines"
@@ -3064,11 +3018,11 @@ end = 238
 kind = "ellipsis"
 
 [[batches]]
-position = 107
+position = 104
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 204 })'
 descriptor = "python method at src/posting/commands.py:204"
 cost_tokens = 0
-cum_tokens = 2992
+cum_tokens = 2974
 
 [batches.content]
 kind = "lines"
@@ -3082,11 +3036,11 @@ end = 204
 kind = "full"
 
 [[batches]]
-position = 108
+position = 105
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 218 })'
 descriptor = "python method at src/posting/commands.py:218"
 cost_tokens = 0
-cum_tokens = 2992
+cum_tokens = 2974
 
 [batches.content]
 kind = "lines"
@@ -3100,11 +3054,11 @@ end = 218
 kind = "full"
 
 [[batches]]
-position = 109
+position = 106
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 237 })'
 descriptor = "python method at src/posting/commands.py:237"
 cost_tokens = 11
-cum_tokens = 3003
+cum_tokens = 2985
 
 [batches.content]
 kind = "lines"
@@ -3118,11 +3072,11 @@ end = 238
 kind = "full"
 
 [[batches]]
-position = 110
+position = 107
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 15 })'
 descriptor = "python method at src/posting/commands.py:15"
 cost_tokens = 36
-cum_tokens = 3039
+cum_tokens = 3021
 
 [batches.content]
 kind = "lines"
@@ -3136,11 +3090,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 111
+position = 108
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/types.py" })'
 descriptor = "python imports in src/posting/types.py"
 cost_tokens = 15
-cum_tokens = 3054
+cum_tokens = 3036
 
 [batches.content]
 kind = "lines"
@@ -3154,11 +3108,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 112
+position = 109
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_data.py", start_line: 4 })'
 descriptor = "python class body at src/posting/help_data.py:4"
 cost_tokens = 51
-cum_tokens = 3105
+cum_tokens = 3087
 
 [batches.content]
 kind = "lines"
@@ -3172,11 +3126,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 113
+position = 110
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/configuration.md" })'
 descriptor = "headings outline in docs/guide/configuration.md"
 cost_tokens = 110
-cum_tokens = 3215
+cum_tokens = 3197
 
 [batches.content]
 kind = "lines"
@@ -3342,11 +3296,11 @@ end = 102
 kind = "ellipsis"
 
 [[batches]]
-position = 114
+position = 111
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/scripting.md" })'
 descriptor = "headings outline in docs/guide/scripting.md"
 cost_tokens = 110
-cum_tokens = 3325
+cum_tokens = 3307
 
 [batches.content]
 kind = "lines"
@@ -3512,11 +3466,11 @@ end = 139
 kind = "ellipsis"
 
 [[batches]]
-position = 115
+position = 112
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 32, body_start_line: 33 })'
 descriptor = "python decl body at src/posting/__main__.py:32 body 33"
 cost_tokens = 68
-cum_tokens = 3393
+cum_tokens = 3375
 
 [batches.content]
 kind = "lines"
@@ -3546,11 +3500,11 @@ end = 42
 kind = "full"
 
 [[batches]]
-position = 116
+position = 113
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/method_selection.py"
 cost_tokens = 14
-cum_tokens = 3407
+cum_tokens = 3389
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3526,11 @@ end = 15
 kind = "ellipsis"
 
 [[batches]]
-position = 117
+position = 114
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", start_line: 14 })'
 descriptor = "python decl at src/posting/widgets/request/method_selection.py:14"
 cost_tokens = 0
-cum_tokens = 3407
+cum_tokens = 3389
 
 [batches.content]
 kind = "lines"
@@ -3590,11 +3544,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 118
+position = 115
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/jumper.py"
 cost_tokens = 34
-cum_tokens = 3441
+cum_tokens = 3423
 
 [batches.content]
 kind = "lines"
@@ -3648,11 +3602,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 119
+position = 116
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 16 })'
 descriptor = "python decl at src/posting/jumper.py:16"
 cost_tokens = 0
-cum_tokens = 3441
+cum_tokens = 3423
 
 [batches.content]
 kind = "lines"
@@ -3666,11 +3620,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 120
+position = 117
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 26 })'
 descriptor = "python decl at src/posting/jumper.py:26"
 cost_tokens = 0
-cum_tokens = 3441
+cum_tokens = 3423
 
 [batches.content]
 kind = "lines"
@@ -3684,11 +3638,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 121
+position = 118
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 9 })'
 descriptor = "python decl at src/posting/jumper.py:9"
 cost_tokens = 8
-cum_tokens = 3449
+cum_tokens = 3431
 
 [batches.content]
 kind = "lines"
@@ -3702,11 +3656,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 122
+position = 119
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 9 })'
 descriptor = "python class body at src/posting/jumper.py:9"
 cost_tokens = 10
-cum_tokens = 3459
+cum_tokens = 3441
 
 [batches.content]
 kind = "lines"
@@ -3720,11 +3674,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 123
+position = 120
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 16 })'
 descriptor = "python decl doc at src/posting/jumper.py:16"
 cost_tokens = 14
-cum_tokens = 3473
+cum_tokens = 3455
 
 [batches.content]
 kind = "lines"
@@ -3738,11 +3692,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 124
+position = 121
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 26 })'
 descriptor = "python decl doc at src/posting/jumper.py:26"
 cost_tokens = 14
-cum_tokens = 3487
+cum_tokens = 3469
 
 [batches.content]
 kind = "lines"
@@ -3756,11 +3710,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 125
+position = 122
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 9 })'
 descriptor = "python decl doc at src/posting/jumper.py:9"
 cost_tokens = 15
-cum_tokens = 3502
+cum_tokens = 3484
 
 [batches.content]
 kind = "lines"
@@ -3774,11 +3728,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 126
+position = 123
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/jumper.py"
 cost_tokens = 51
-cum_tokens = 3553
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -3816,11 +3770,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 127
+position = 124
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 29 })'
 descriptor = "python method at src/posting/jumper.py:29"
 cost_tokens = 0
-cum_tokens = 3553
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -3834,11 +3788,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 128
+position = 125
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 34 })'
 descriptor = "python method at src/posting/jumper.py:34"
 cost_tokens = 0
-cum_tokens = 3553
+cum_tokens = 3535
 
 [batches.content]
 kind = "lines"
@@ -3852,11 +3806,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 129
+position = 126
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 34 })'
 descriptor = "python method doc at src/posting/jumper.py:34"
 cost_tokens = 13
-cum_tokens = 3566
+cum_tokens = 3548
 
 [batches.content]
 kind = "lines"
@@ -3870,11 +3824,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 130
+position = 127
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jumper.py", start_line: 16 })'
 descriptor = "python class body at src/posting/jumper.py:16"
 cost_tokens = 51
-cum_tokens = 3617
+cum_tokens = 3599
 
 [batches.content]
 kind = "lines"
@@ -3896,11 +3850,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 131
+position = 128
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/center_middle.py" })'
 descriptor = "python imports in src/posting/widgets/center_middle.py"
 cost_tokens = 10
-cum_tokens = 3627
+cum_tokens = 3609
 
 [batches.content]
 kind = "lines"
@@ -3914,11 +3868,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 132
+position = 129
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/assets" })'
 descriptor = "listing of 'docs/assets'"
 cost_tokens = 86
-cum_tokens = 3713
+cum_tokens = 3695
 
 [batches.content]
 kind = "fs"
@@ -3928,11 +3882,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/docs/assets"
 entries = ["collection-tree.png", "compact-mode-and-themes.mp4", "contextual-help.png", "curl-export.png", "default-collection.png", "environments.mp4", "home-efficiency-video.mp4", "home-image-ad-15aug24.svg", "jump-mode.png", "request-method-dropdown.png", "scripts-tab.png", "search-requests.png", "url-autocomplete.gif", "url-bar.png"]
 
 [[batches]]
-position = 133
+position = 130
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/curl.py", start_line: 22 })'
 descriptor = "python decl doc at src/posting/importing/curl.py:22"
 cost_tokens = 26
-cum_tokens = 3739
+cum_tokens = 3721
 
 [batches.content]
 kind = "lines"
@@ -3946,11 +3900,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 134
+position = 131
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response" })'
 descriptor = "listing of 'src/posting/widgets/response'"
 cost_tokens = 30
-cum_tokens = 3769
+cum_tokens = 3751
 
 [batches.content]
 kind = "fs"
@@ -3960,11 +3914,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets
 entries = ["cookies_table.py", "response_area.py", "response_body.py", "response_headers.py", "response_trace.py", "script_output.py"]
 
 [[batches]]
-position = 135
+position = 132
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/response/cookies_table.py"
 cost_tokens = 12
-cum_tokens = 3781
+cum_tokens = 3763
 
 [batches.content]
 kind = "lines"
@@ -3986,11 +3940,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 136
+position = 133
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 9 })'
 descriptor = "python decl at src/posting/widgets/response/cookies_table.py:9"
 cost_tokens = 0
-cum_tokens = 3781
+cum_tokens = 3763
 
 [batches.content]
 kind = "lines"
@@ -4004,11 +3958,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 137
+position = 134
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_body.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/response/response_body.py"
 cost_tokens = 15
-cum_tokens = 3796
+cum_tokens = 3778
 
 [batches.content]
 kind = "lines"
@@ -4030,11 +3984,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 135
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_body.py", start_line: 8 })'
 descriptor = "python decl at src/posting/widgets/response/response_body.py:8"
 cost_tokens = 0
-cum_tokens = 3796
+cum_tokens = 3778
 
 [batches.content]
 kind = "lines"
@@ -4048,11 +4002,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 139
+position = 136
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_body.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/response/response_body.py"
 cost_tokens = 14
-cum_tokens = 3810
+cum_tokens = 3792
 
 [batches.content]
 kind = "lines"
@@ -4074,11 +4028,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 140
+position = 137
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_body.py", start_line: 29 })'
 descriptor = "python method at src/posting/widgets/response/response_body.py:29"
 cost_tokens = 18
-cum_tokens = 3828
+cum_tokens = 3810
 
 [batches.content]
 kind = "lines"
@@ -4092,11 +4046,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 141
+position = 138
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_headers.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/response/response_headers.py"
 cost_tokens = 15
-cum_tokens = 3843
+cum_tokens = 3825
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +4072,11 @@ end = 5
 kind = "ellipsis"
 
 [[batches]]
-position = 142
+position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_headers.py", start_line: 4 })'
 descriptor = "python decl at src/posting/widgets/response/response_headers.py:4"
 cost_tokens = 0
-cum_tokens = 3843
+cum_tokens = 3825
 
 [batches.content]
 kind = "lines"
@@ -4136,11 +4090,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 143
+position = 140
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_headers.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/response/response_headers.py"
 cost_tokens = 13
-cum_tokens = 3856
+cum_tokens = 3838
 
 [batches.content]
 kind = "lines"
@@ -4162,11 +4116,11 @@ end = 6
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 141
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_headers.py", start_line: 5 })'
 descriptor = "python method at src/posting/widgets/response/response_headers.py:5"
 cost_tokens = 0
-cum_tokens = 3856
+cum_tokens = 3838
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4134,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 145
+position = 142
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py" })'
 descriptor = "python imports in src/posting/auth.py"
 cost_tokens = 17
-cum_tokens = 3873
+cum_tokens = 3855
 
 [batches.content]
 kind = "lines"
@@ -4206,11 +4160,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 146
+position = 143
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/tree.py"
 cost_tokens = 23
-cum_tokens = 3896
+cum_tokens = 3878
 
 [batches.content]
 kind = "lines"
@@ -4240,11 +4194,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 147
+position = 144
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 9 })'
 descriptor = "python decl at src/posting/widgets/tree.py:9"
 cost_tokens = 0
-cum_tokens = 3896
+cum_tokens = 3878
 
 [batches.content]
 kind = "lines"
@@ -4258,11 +4212,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 148
+position = 145
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 237, body_start_line: 239 })'
 descriptor = "python method body at src/posting/commands.py:237 body 239"
 cost_tokens = 14
-cum_tokens = 3910
+cum_tokens = 3892
 
 [batches.content]
 kind = "lines"
@@ -4276,11 +4230,11 @@ end = 239
 kind = "full"
 
 [[batches]]
-position = 149
+position = 146
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/requests.md" })'
 descriptor = "headings outline in docs/guide/requests.md"
 cost_tokens = 129
-cum_tokens = 4039
+cum_tokens = 4021
 
 [batches.content]
 kind = "lines"
@@ -4478,11 +4432,11 @@ end = 107
 kind = "ellipsis"
 
 [[batches]]
-position = 150
+position = 147
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/input.py"
 cost_tokens = 43
-cum_tokens = 4082
+cum_tokens = 4064
 
 [batches.content]
 kind = "lines"
@@ -4536,11 +4490,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 148
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", start_line: 10 })'
 descriptor = "python method at src/posting/widgets/input.py:10"
 cost_tokens = 0
-cum_tokens = 4082
+cum_tokens = 4064
 
 [batches.content]
 kind = "lines"
@@ -4554,11 +4508,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 152
+position = 149
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", start_line: 26 })'
 descriptor = "python method at src/posting/widgets/input.py:26"
 cost_tokens = 0
-cum_tokens = 4082
+cum_tokens = 4064
 
 [batches.content]
 kind = "lines"
@@ -4572,11 +4526,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 153
+position = 150
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/input.py", start_line: 18 })'
 descriptor = "python method at src/posting/widgets/input.py:18"
 cost_tokens = 11
-cum_tokens = 4093
+cum_tokens = 4075
 
 [batches.content]
 kind = "lines"
@@ -4590,11 +4544,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 154
+position = 151
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py" })'
 descriptor = "python imports in src/posting/save_request.py"
 cost_tokens = 18
-cum_tokens = 4111
+cum_tokens = 4093
 
 [batches.content]
 kind = "lines"
@@ -4608,11 +4562,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 155
+position = 152
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_body.py", start_line: 8 })'
 descriptor = "python decl doc at src/posting/widgets/response/response_body.py:8"
 cost_tokens = 19
-cum_tokens = 4130
+cum_tokens = 4112
 
 [batches.content]
 kind = "lines"
@@ -4626,11 +4580,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 156
+position = 153
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/requests.md", section_index: 0 })'
 descriptor = "docs/guide/requests.md section #0"
 cost_tokens = 35
-cum_tokens = 4165
+cum_tokens = 4147
 
 [batches.content]
 kind = "lines"
@@ -4652,11 +4606,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 157
+position = 154
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/key_value.py"
 cost_tokens = 26
-cum_tokens = 4191
+cum_tokens = 4173
 
 [batches.content]
 kind = "lines"
@@ -4694,11 +4648,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 158
+position = 155
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value.py", start_line: 19 })'
 descriptor = "python decl at src/posting/widgets/key_value.py:19"
 cost_tokens = 0
-cum_tokens = 4191
+cum_tokens = 4173
 
 [batches.content]
 kind = "lines"
@@ -4712,11 +4666,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 159
+position = 156
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value.py", start_line: 127 })'
 descriptor = "python decl at src/posting/widgets/key_value.py:127"
 cost_tokens = 0
-cum_tokens = 4191
+cum_tokens = 4173
 
 [batches.content]
 kind = "lines"
@@ -4730,11 +4684,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 160
+position = 157
 key = 'Markdown(HeadingsOutline { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/index.md" })'
 descriptor = "headings outline in docs/guide/index.md"
 cost_tokens = 146
-cum_tokens = 4337
+cum_tokens = 4319
 
 [batches.content]
 kind = "lines"
@@ -4948,11 +4902,11 @@ end = 196
 kind = "ellipsis"
 
 [[batches]]
-position = 161
+position = 158
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/index.md", section_index: 5 })'
 descriptor = "docs/guide/index.md section #5"
 cost_tokens = 5
-cum_tokens = 4342
+cum_tokens = 4324
 
 [batches.content]
 kind = "lines"
@@ -4966,11 +4920,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 162
+position = 159
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/rich_log.py"
 cost_tokens = 27
-cum_tokens = 4369
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -5008,11 +4962,11 @@ end = 38
 kind = "ellipsis"
 
 [[batches]]
-position = 163
+position = 160
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 7 })'
 descriptor = "python decl at src/posting/widgets/rich_log.py:7"
 cost_tokens = 0
-cum_tokens = 4369
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -5026,11 +4980,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 164
+position = 161
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 37 })'
 descriptor = "python decl at src/posting/widgets/rich_log.py:37"
 cost_tokens = 0
-cum_tokens = 4369
+cum_tokens = 4351
 
 [batches.content]
 kind = "lines"
@@ -5044,11 +4998,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 165
+position = 162
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/save_request.py"
 cost_tokens = 45
-cum_tokens = 4414
+cum_tokens = 4396
 
 [batches.content]
 kind = "lines"
@@ -5094,11 +5048,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 163
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", start_line: 8 })'
 descriptor = "python decl at src/posting/save_request.py:8"
 cost_tokens = 0
-cum_tokens = 4414
+cum_tokens = 4396
 
 [batches.content]
 kind = "lines"
@@ -5112,11 +5066,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 167
+position = 164
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", start_line: 15 })'
 descriptor = "python decl at src/posting/save_request.py:15"
 cost_tokens = 0
-cum_tokens = 4414
+cum_tokens = 4396
 
 [batches.content]
 kind = "lines"
@@ -5130,11 +5084,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 168
+position = 165
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", start_line: 8 })'
 descriptor = "python decl doc at src/posting/save_request.py:8"
 cost_tokens = 9
-cum_tokens = 4423
+cum_tokens = 4405
 
 [batches.content]
 kind = "lines"
@@ -5148,11 +5102,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 169
+position = 166
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", start_line: 15, body_start_line: 17 })'
 descriptor = "python decl body at src/posting/save_request.py:15 body 17"
 cost_tokens = 11
-cum_tokens = 4434
+cum_tokens = 4416
 
 [batches.content]
 kind = "lines"
@@ -5166,11 +5120,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 170
+position = 167
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/save_request.py", start_line: 15 })'
 descriptor = "python decl doc at src/posting/save_request.py:15"
 cost_tokens = 17
-cum_tokens = 4451
+cum_tokens = 4433
 
 [batches.content]
 kind = "lines"
@@ -5184,11 +5138,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 171
+position = 168
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py" })'
 descriptor = "python imports in src/posting/urls.py"
 cost_tokens = 22
-cum_tokens = 4473
+cum_tokens = 4455
 
 [batches.content]
 kind = "lines"
@@ -5202,11 +5156,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 172
+position = 169
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 16 })'
 descriptor = "python class body at src/posting/jump_overlay.py:16"
 cost_tokens = 77
-cum_tokens = 4550
+cum_tokens = 4532
 
 [batches.content]
 kind = "lines"
@@ -5228,11 +5182,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 173
+position = 170
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/tree.py"
 cost_tokens = 57
-cum_tokens = 4607
+cum_tokens = 4589
 
 [batches.content]
 kind = "lines"
@@ -5286,11 +5240,11 @@ end = 53
 kind = "ellipsis"
 
 [[batches]]
-position = 174
+position = 171
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 33 })'
 descriptor = "python method at src/posting/widgets/tree.py:33"
 cost_tokens = 0
-cum_tokens = 4607
+cum_tokens = 4589
 
 [batches.content]
 kind = "lines"
@@ -5299,70 +5253,70 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
 start = 33
 end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 172
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 42 })'
+descriptor = "python method at src/posting/widgets/tree.py:42"
+cost_tokens = 0
+cum_tokens = 4589
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
+start = 42
+end = 42
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 173
+key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 52 })'
+descriptor = "python method at src/posting/widgets/tree.py:52"
+cost_tokens = 0
+cum_tokens = 4589
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
+start = 52
+end = 52
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 174
+key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 52 })'
+descriptor = "python method doc at src/posting/widgets/tree.py:52"
+cost_tokens = 11
+cum_tokens = 4600
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
+start = 53
+end = 53
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 175
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 42 })'
-descriptor = "python method at src/posting/widgets/tree.py:42"
-cost_tokens = 0
-cum_tokens = 4607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
-start = 42
-end = 42
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 176
-key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 52 })'
-descriptor = "python method at src/posting/widgets/tree.py:52"
-cost_tokens = 0
-cum_tokens = 4607
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
-start = 52
-end = 52
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 177
-key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 52 })'
-descriptor = "python method doc at src/posting/widgets/tree.py:52"
-cost_tokens = 11
-cum_tokens = 4618
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py"
-start = 53
-end = 53
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 178
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 33 })'
 descriptor = "python method doc at src/posting/widgets/tree.py:33"
 cost_tokens = 14
-cum_tokens = 4632
+cum_tokens = 4614
 
 [batches.content]
 kind = "lines"
@@ -5376,11 +5330,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 179
+position = 176
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tree.py", start_line: 42 })'
 descriptor = "python method doc at src/posting/widgets/tree.py:42"
 cost_tokens = 14
-cum_tokens = 4646
+cum_tokens = 4628
 
 [batches.content]
 kind = "lines"
@@ -5394,11 +5348,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 180
+position = 177
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/tuple_to_multidict.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/tuple_to_multidict.py"
 cost_tokens = 49
-cum_tokens = 4695
+cum_tokens = 4677
 
 [batches.content]
 kind = "lines"
@@ -5428,11 +5382,11 @@ end = 10
 kind = "ellipsis"
 
 [[batches]]
-position = 181
+position = 178
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/tuple_to_multidict.py", start_line: 9 })'
 descriptor = "python decl at src/posting/tuple_to_multidict.py:9"
 cost_tokens = 0
-cum_tokens = 4695
+cum_tokens = 4677
 
 [batches.content]
 kind = "lines"
@@ -5446,11 +5400,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 182
+position = 179
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py", start_line: 50, body_start_line: 65 })'
 descriptor = "python decl body at src/posting/__main__.py:50 body 65"
 cost_tokens = 95
-cum_tokens = 4790
+cum_tokens = 4772
 
 [batches.content]
 kind = "lines"
@@ -5464,11 +5418,11 @@ end = 73
 kind = "full"
 
 [[batches]]
-position = 183
+position = 180
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/response/response_trace.py"
 cost_tokens = 21
-cum_tokens = 4811
+cum_tokens = 4793
 
 [batches.content]
 kind = "lines"
@@ -5498,11 +5452,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 184
+position = 181
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 33 })'
 descriptor = "python decl at src/posting/widgets/response/response_trace.py:33"
 cost_tokens = 0
-cum_tokens = 4811
+cum_tokens = 4793
 
 [batches.content]
 kind = "lines"
@@ -5516,11 +5470,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 185
+position = 182
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/text_area.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in src/posting/widgets/text_area.py"
 cost_tokens = 13
-cum_tokens = 4824
+cum_tokens = 4806
 
 [batches.content]
 kind = "lines"
@@ -5534,11 +5488,11 @@ end = 697
 kind = "full"
 
 [[batches]]
-position = 186
+position = 183
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 16 })'
 descriptor = "python decl doc at src/posting/jump_overlay.py:16"
 cost_tokens = 65
-cum_tokens = 4889
+cum_tokens = 4871
 
 [batches.content]
 kind = "lines"
@@ -5552,11 +5506,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 187
+position = 184
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/app.py"
 cost_tokens = 55
-cum_tokens = 4944
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -5626,11 +5580,11 @@ end = 1206
 kind = "ellipsis"
 
 [[batches]]
-position = 188
+position = 185
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 93 })'
 descriptor = "python decl at src/posting/app.py:93"
 cost_tokens = 0
-cum_tokens = 4944
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -5644,11 +5598,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 189
+position = 186
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 108 })'
 descriptor = "python decl at src/posting/app.py:108"
 cost_tokens = 0
-cum_tokens = 4944
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -5662,11 +5616,11 @@ end = 108
 kind = "full"
 
 [[batches]]
-position = 190
+position = 187
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 112 })'
 descriptor = "python decl at src/posting/app.py:112"
 cost_tokens = 0
-cum_tokens = 4944
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -5680,11 +5634,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 191
+position = 188
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 1205 })'
 descriptor = "python decl at src/posting/app.py:1205"
 cost_tokens = 0
-cum_tokens = 4944
+cum_tokens = 4926
 
 [batches.content]
 kind = "lines"
@@ -5698,11 +5652,11 @@ end = 1205
 kind = "full"
 
 [[batches]]
-position = 192
+position = 189
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 93 })'
 descriptor = "python decl doc at src/posting/app.py:93"
 cost_tokens = 10
-cum_tokens = 4954
+cum_tokens = 4936
 
 [batches.content]
 kind = "lines"
@@ -5716,11 +5670,11 @@ end = 94
 kind = "full"
 
 [[batches]]
-position = 193
+position = 190
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/app.py", start_line: 108 })'
 descriptor = "python decl doc at src/posting/app.py:108"
 cost_tokens = 10
-cum_tokens = 4964
+cum_tokens = 4946
 
 [batches.content]
 kind = "lines"
@@ -5734,11 +5688,25 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 194
+position = 191
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/.codex" })'
+descriptor = "listing of '.codex'"
+cost_tokens = 3
+cum_tokens = 4949
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/posting/.codex"
+entries = ["environments"]
+
+[[batches]]
+position = 192
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/variables.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in src/posting/variables.py"
 cost_tokens = 23
-cum_tokens = 4987
+cum_tokens = 4972
 
 [batches.content]
 kind = "lines"
@@ -5776,11 +5744,11 @@ end = 158
 kind = "ellipsis"
 
 [[batches]]
-position = 195
+position = 193
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/variables.py", start_line: 157 })'
 descriptor = "python decl at src/posting/variables.py:157"
 cost_tokens = 0
-cum_tokens = 4987
+cum_tokens = 4972
 
 [batches.content]
 kind = "lines"
@@ -5794,11 +5762,11 @@ end = 157
 kind = "full"
 
 [[batches]]
-position = 196
+position = 194
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/variables.py", start_line: 133 })'
 descriptor = "python decl at src/posting/variables.py:133"
 cost_tokens = 14
-cum_tokens = 5001
+cum_tokens = 4986
 
 [batches.content]
 kind = "lines"
@@ -5812,11 +5780,11 @@ end = 134
 kind = "full"
 
 [[batches]]
-position = 197
+position = 195
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/variables.py", start_line: 157 })'
 descriptor = "python decl doc at src/posting/variables.py:157"
 cost_tokens = 16
-cum_tokens = 5017
+cum_tokens = 5002
 
 [batches.content]
 kind = "lines"
@@ -5830,11 +5798,11 @@ end = 158
 kind = "full"
 
 [[batches]]
-position = 198
+position = 196
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/README.md", section_index: 1 })'
 descriptor = "README.md section #1"
 cost_tokens = 191
-cum_tokens = 5208
+cum_tokens = 5193
 
 [batches.content]
 kind = "lines"
@@ -5912,11 +5880,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 199
+position = 197
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/themes.md", section_index: 0 })'
 descriptor = "docs/guide/themes.md section #0"
 cost_tokens = 53
-cum_tokens = 5261
+cum_tokens = 5246
 
 [batches.content]
 kind = "lines"
@@ -5946,11 +5914,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 200
+position = 198
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/request/method_selection.py"
 cost_tokens = 45
-cum_tokens = 5306
+cum_tokens = 5291
 
 [batches.content]
 kind = "lines"
@@ -6004,11 +5972,11 @@ end = 87
 kind = "ellipsis"
 
 [[batches]]
-position = 201
+position = 199
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", start_line: 86 })'
 descriptor = "python method at src/posting/widgets/request/method_selection.py:86"
 cost_tokens = 0
-cum_tokens = 5306
+cum_tokens = 5291
 
 [batches.content]
 kind = "lines"
@@ -6022,11 +5990,11 @@ end = 86
 kind = "full"
 
 [[batches]]
-position = 202
+position = 200
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", start_line: 78 })'
 descriptor = "python method at src/posting/widgets/request/method_selection.py:78"
 cost_tokens = 17
-cum_tokens = 5323
+cum_tokens = 5308
 
 [batches.content]
 kind = "lines"
@@ -6040,11 +6008,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 203
+position = 201
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/method_selection.py", start_line: 86, body_start_line: 87 })'
 descriptor = "python method body at src/posting/widgets/request/method_selection.py:86 body 87"
 cost_tokens = 10
-cum_tokens = 5333
+cum_tokens = 5318
 
 [batches.content]
 kind = "lines"
@@ -6058,11 +6026,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 204
+position = 202
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_scripts.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/request_scripts.py"
 cost_tokens = 25
-cum_tokens = 5358
+cum_tokens = 5343
 
 [batches.content]
 kind = "lines"
@@ -6100,11 +6068,11 @@ end = 130
 kind = "ellipsis"
 
 [[batches]]
-position = 205
+position = 203
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_scripts.py", start_line: 17 })'
 descriptor = "python decl at src/posting/widgets/request/request_scripts.py:17"
 cost_tokens = 0
-cum_tokens = 5358
+cum_tokens = 5343
 
 [batches.content]
 kind = "lines"
@@ -6118,11 +6086,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 206
+position = 204
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_scripts.py", start_line: 129 })'
 descriptor = "python decl at src/posting/widgets/request/request_scripts.py:129"
 cost_tokens = 0
-cum_tokens = 5358
+cum_tokens = 5343
 
 [batches.content]
 kind = "lines"
@@ -6136,11 +6104,11 @@ end = 129
 kind = "full"
 
 [[batches]]
-position = 207
+position = 205
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py" })'
 descriptor = "python imports in src/posting/locations.py"
 cost_tokens = 29
-cum_tokens = 5387
+cum_tokens = 5372
 
 [batches.content]
 kind = "lines"
@@ -6162,11 +6130,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 208
+position = 206
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/key_value_copy_modal.py"
 cost_tokens = 38
-cum_tokens = 5425
+cum_tokens = 5410
 
 [batches.content]
 kind = "lines"
@@ -6196,11 +6164,11 @@ end = 16
 kind = "ellipsis"
 
 [[batches]]
-position = 209
+position = 207
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 15 })'
 descriptor = "python decl at src/posting/widgets/key_value_copy_modal.py:15"
 cost_tokens = 0
-cum_tokens = 5425
+cum_tokens = 5410
 
 [batches.content]
 kind = "lines"
@@ -6214,11 +6182,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 210
+position = 208
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 15 })'
 descriptor = "python decl doc at src/posting/widgets/key_value_copy_modal.py:15"
 cost_tokens = 16
-cum_tokens = 5441
+cum_tokens = 5426
 
 [batches.content]
 kind = "lines"
@@ -6232,11 +6200,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 211
+position = 209
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/configuration.md", section_index: 3 })'
 descriptor = "docs/guide/configuration.md section #3"
 cost_tokens = 23
-cum_tokens = 5464
+cum_tokens = 5449
 
 [batches.content]
 kind = "lines"
@@ -6258,11 +6226,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 212
+position = 210
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/variable_input.py"
 cost_tokens = 72
-cum_tokens = 5536
+cum_tokens = 5521
 
 [batches.content]
 kind = "lines"
@@ -6332,11 +6300,11 @@ end = 62
 kind = "ellipsis"
 
 [[batches]]
-position = 213
+position = 211
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", start_line: 38 })'
 descriptor = "python method at src/posting/widgets/variable_input.py:38"
 cost_tokens = 0
-cum_tokens = 5536
+cum_tokens = 5521
 
 [batches.content]
 kind = "lines"
@@ -6350,11 +6318,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 214
+position = 212
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", start_line: 47 })'
 descriptor = "python method at src/posting/widgets/variable_input.py:47"
 cost_tokens = 0
-cum_tokens = 5536
+cum_tokens = 5521
 
 [batches.content]
 kind = "lines"
@@ -6368,11 +6336,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 215
+position = 213
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_input.py", start_line: 61 })'
 descriptor = "python method at src/posting/widgets/variable_input.py:61"
 cost_tokens = 0
-cum_tokens = 5536
+cum_tokens = 5521
 
 [batches.content]
 kind = "lines"
@@ -6386,11 +6354,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 216
+position = 214
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/tuple_to_multidict.py" })'
 descriptor = "python imports in src/posting/tuple_to_multidict.py"
 cost_tokens = 30
-cum_tokens = 5566
+cum_tokens = 5551
 
 [batches.content]
 kind = "lines"
@@ -6404,11 +6372,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 217
+position = 215
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/form_editor.py"
 cost_tokens = 26
-cum_tokens = 5592
+cum_tokens = 5577
 
 [batches.content]
 kind = "lines"
@@ -6446,11 +6414,11 @@ end = 41
 kind = "ellipsis"
 
 [[batches]]
-position = 218
+position = 216
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 12 })'
 descriptor = "python decl at src/posting/widgets/request/form_editor.py:12"
 cost_tokens = 0
-cum_tokens = 5592
+cum_tokens = 5577
 
 [batches.content]
 kind = "lines"
@@ -6464,11 +6432,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 219
+position = 217
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 40 })'
 descriptor = "python decl at src/posting/widgets/request/form_editor.py:40"
 cost_tokens = 0
-cum_tokens = 5592
+cum_tokens = 5577
 
 [batches.content]
 kind = "lines"
@@ -6482,11 +6450,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 220
+position = 218
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 40 })'
 descriptor = "python decl doc at src/posting/widgets/request/form_editor.py:40"
 cost_tokens = 11
-cum_tokens = 5603
+cum_tokens = 5588
 
 [batches.content]
 kind = "lines"
@@ -6500,11 +6468,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 221
+position = 219
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/center_middle.py", start_line: 4 })'
 descriptor = "python class body at src/posting/widgets/center_middle.py:4"
 cost_tokens = 62
-cum_tokens = 5665
+cum_tokens = 5650
 
 [batches.content]
 kind = "lines"
@@ -6518,11 +6486,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 222
+position = 220
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/help_screen.py"
 cost_tokens = 63
-cum_tokens = 5728
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -6608,11 +6576,11 @@ end = 49
 kind = "ellipsis"
 
 [[batches]]
-position = 223
+position = 221
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 22 })'
 descriptor = "python decl at src/posting/help_screen.py:22"
 cost_tokens = 0
-cum_tokens = 5728
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -6626,11 +6594,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 224
+position = 222
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 33 })'
 descriptor = "python decl at src/posting/help_screen.py:33"
 cost_tokens = 0
-cum_tokens = 5728
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -6644,11 +6612,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 225
+position = 223
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 44 })'
 descriptor = "python decl at src/posting/help_screen.py:44"
 cost_tokens = 0
-cum_tokens = 5728
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -6662,11 +6630,11 @@ end = 44
 kind = "full"
 
 [[batches]]
-position = 226
+position = 224
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 48 })'
 descriptor = "python decl at src/posting/help_screen.py:48"
 cost_tokens = 0
-cum_tokens = 5728
+cum_tokens = 5713
 
 [batches.content]
 kind = "lines"
@@ -6680,11 +6648,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 227
+position = 225
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 14 })'
 descriptor = "python decl at src/posting/help_screen.py:14"
 cost_tokens = 8
-cum_tokens = 5736
+cum_tokens = 5721
 
 [batches.content]
 kind = "lines"
@@ -6698,11 +6666,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 228
+position = 226
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 14 })'
 descriptor = "python class body at src/posting/help_screen.py:14"
 cost_tokens = 10
-cum_tokens = 5746
+cum_tokens = 5731
 
 [batches.content]
 kind = "lines"
@@ -6716,11 +6684,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 229
+position = 227
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 22 })'
 descriptor = "python decl doc at src/posting/help_screen.py:22"
 cost_tokens = 9
-cum_tokens = 5755
+cum_tokens = 5740
 
 [batches.content]
 kind = "lines"
@@ -6734,11 +6702,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 230
+position = 228
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 33 })'
 descriptor = "python decl doc at src/posting/help_screen.py:33"
 cost_tokens = 9
-cum_tokens = 5764
+cum_tokens = 5749
 
 [batches.content]
 kind = "lines"
@@ -6752,11 +6720,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 231
+position = 229
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 44 })'
 descriptor = "python decl doc at src/posting/help_screen.py:44"
 cost_tokens = 11
-cum_tokens = 5775
+cum_tokens = 5760
 
 [batches.content]
 kind = "lines"
@@ -6770,11 +6738,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 232
+position = 230
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/help_screen.py"
 cost_tokens = 26
-cum_tokens = 5801
+cum_tokens = 5786
 
 [batches.content]
 kind = "lines"
@@ -6812,11 +6780,11 @@ end = 128
 kind = "ellipsis"
 
 [[batches]]
-position = 233
+position = 231
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 127 })'
 descriptor = "python method at src/posting/help_screen.py:127"
 cost_tokens = 0
-cum_tokens = 5801
+cum_tokens = 5786
 
 [batches.content]
 kind = "lines"
@@ -6830,11 +6798,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 234
+position = 232
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 14 })'
 descriptor = "python decl doc at src/posting/help_screen.py:14"
 cost_tokens = 28
-cum_tokens = 5829
+cum_tokens = 5814
 
 [batches.content]
 kind = "lines"
@@ -6848,11 +6816,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 235
+position = 233
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 22 })'
 descriptor = "python class body at src/posting/help_screen.py:22"
 cost_tokens = 56
-cum_tokens = 5885
+cum_tokens = 5870
 
 [batches.content]
 kind = "lines"
@@ -6866,11 +6834,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 236
+position = 234
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 33 })'
 descriptor = "python class body at src/posting/help_screen.py:33"
 cost_tokens = 56
-cum_tokens = 5941
+cum_tokens = 5926
 
 [batches.content]
 kind = "lines"
@@ -6884,11 +6852,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 237
+position = 235
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 117 })'
 descriptor = "python method at src/posting/help_screen.py:117"
 cost_tokens = 62
-cum_tokens = 6003
+cum_tokens = 5988
 
 [batches.content]
 kind = "lines"
@@ -6902,11 +6870,11 @@ end = 123
 kind = "full"
 
 [[batches]]
-position = 238
+position = 236
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/messages.py" })'
 descriptor = "python imports in src/posting/messages.py"
 cost_tokens = 31
-cum_tokens = 6034
+cum_tokens = 6019
 
 [batches.content]
 kind = "lines"
@@ -6920,11 +6888,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 239
+position = 237
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 33 })'
 descriptor = "python class body at src/posting/widgets/response/response_trace.py:33"
 cost_tokens = 42
-cum_tokens = 6076
+cum_tokens = 6061
 
 [batches.content]
 kind = "lines"
@@ -6938,11 +6906,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 240
+position = 238
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/query_editor.py"
 cost_tokens = 27
-cum_tokens = 6103
+cum_tokens = 6088
 
 [batches.content]
 kind = "lines"
@@ -6980,11 +6948,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 241
+position = 239
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 13 })'
 descriptor = "python decl at src/posting/widgets/request/query_editor.py:13"
 cost_tokens = 0
-cum_tokens = 6103
+cum_tokens = 6088
 
 [batches.content]
 kind = "lines"
@@ -6998,11 +6966,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 242
+position = 240
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 49 })'
 descriptor = "python decl at src/posting/widgets/request/query_editor.py:49"
 cost_tokens = 0
-cum_tokens = 6103
+cum_tokens = 6088
 
 [batches.content]
 kind = "lines"
@@ -7016,11 +6984,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 243
+position = 241
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 13 })'
 descriptor = "python decl doc at src/posting/widgets/request/query_editor.py:13"
 cost_tokens = 19
-cum_tokens = 6122
+cum_tokens = 6107
 
 [batches.content]
 kind = "lines"
@@ -7034,11 +7002,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 244
+position = 242
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 49 })'
 descriptor = "python decl doc at src/posting/widgets/request/query_editor.py:49"
 cost_tokens = 20
-cum_tokens = 6142
+cum_tokens = 6127
 
 [batches.content]
 kind = "lines"
@@ -7052,11 +7020,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 245
+position = 243
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/types.py", start_line: 6 })'
 descriptor = "python decl at src/posting/types.py:6"
 cost_tokens = 74
-cum_tokens = 6216
+cum_tokens = 6201
 
 [batches.content]
 kind = "lines"
@@ -7070,11 +7038,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 246
+position = 244
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/commands.py", start_line: 204 })'
 descriptor = "python method doc at src/posting/commands.py:204"
 cost_tokens = 40
-cum_tokens = 6256
+cum_tokens = 6241
 
 [batches.content]
 kind = "lines"
@@ -7096,11 +7064,11 @@ end = 209
 kind = "full"
 
 [[batches]]
-position = 247
+position = 245
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_editor.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/request_editor.py"
 cost_tokens = 28
-cum_tokens = 6284
+cum_tokens = 6269
 
 [batches.content]
 kind = "lines"
@@ -7138,11 +7106,11 @@ end = 34
 kind = "ellipsis"
 
 [[batches]]
-position = 248
+position = 246
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_editor.py", start_line: 29 })'
 descriptor = "python decl at src/posting/widgets/request/request_editor.py:29"
 cost_tokens = 0
-cum_tokens = 6284
+cum_tokens = 6269
 
 [batches.content]
 kind = "lines"
@@ -7156,11 +7124,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 249
+position = 247
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_editor.py", start_line: 33 })'
 descriptor = "python decl at src/posting/widgets/request/request_editor.py:33"
 cost_tokens = 0
-cum_tokens = 6284
+cum_tokens = 6269
 
 [batches.content]
 kind = "lines"
@@ -7174,11 +7142,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 250
+position = 248
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_editor.py", start_line: 29 })'
 descriptor = "python class body at src/posting/widgets/request/request_editor.py:29"
 cost_tokens = 5
-cum_tokens = 6289
+cum_tokens = 6274
 
 [batches.content]
 kind = "lines"
@@ -7192,11 +7160,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 251
+position = 249
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_editor.py", start_line: 33 })'
 descriptor = "python decl doc at src/posting/widgets/request/request_editor.py:33"
 cost_tokens = 19
-cum_tokens = 6308
+cum_tokens = 6293
 
 [batches.content]
 kind = "lines"
@@ -7210,11 +7178,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 252
+position = 250
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/rich_log.py"
 cost_tokens = 80
-cum_tokens = 6388
+cum_tokens = 6373
 
 [batches.content]
 kind = "lines"
@@ -7284,11 +7252,11 @@ end = 31
 kind = "ellipsis"
 
 [[batches]]
-position = 253
+position = 251
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 8 })'
 descriptor = "python method at src/posting/widgets/rich_log.py:8"
 cost_tokens = 0
-cum_tokens = 6388
+cum_tokens = 6373
 
 [batches.content]
 kind = "lines"
@@ -7302,11 +7270,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 254
+position = 252
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 14 })'
 descriptor = "python method at src/posting/widgets/rich_log.py:14"
 cost_tokens = 0
-cum_tokens = 6388
+cum_tokens = 6373
 
 [batches.content]
 kind = "lines"
@@ -7320,11 +7288,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 255
+position = 253
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 24 })'
 descriptor = "python method at src/posting/widgets/rich_log.py:24"
 cost_tokens = 0
-cum_tokens = 6388
+cum_tokens = 6373
 
 [batches.content]
 kind = "lines"
@@ -7338,11 +7306,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 256
+position = 254
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 30 })'
 descriptor = "python method at src/posting/widgets/rich_log.py:30"
 cost_tokens = 0
-cum_tokens = 6388
+cum_tokens = 6373
 
 [batches.content]
 kind = "lines"
@@ -7356,11 +7324,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 257
+position = 255
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/jump_overlay.py"
 cost_tokens = 131
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7494,11 +7462,11 @@ end = 108
 kind = "ellipsis"
 
 [[batches]]
-position = 258
+position = 256
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 64 })'
 descriptor = "python method at src/posting/jump_overlay.py:64"
 cost_tokens = 0
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7512,11 +7480,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 259
+position = 257
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 67 })'
 descriptor = "python method at src/posting/jump_overlay.py:67"
 cost_tokens = 0
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7530,11 +7498,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 260
+position = 258
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 84 })'
 descriptor = "python method at src/posting/jump_overlay.py:84"
 cost_tokens = 0
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7548,11 +7516,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 261
+position = 259
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 103 })'
 descriptor = "python method at src/posting/jump_overlay.py:103"
 cost_tokens = 0
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7566,11 +7534,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 262
+position = 260
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 107 })'
 descriptor = "python method at src/posting/jump_overlay.py:107"
 cost_tokens = 0
-cum_tokens = 6519
+cum_tokens = 6504
 
 [batches.content]
 kind = "lines"
@@ -7584,11 +7552,11 @@ end = 107
 kind = "full"
 
 [[batches]]
-position = 263
+position = 261
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 80 })'
 descriptor = "python method at src/posting/jump_overlay.py:80"
 cost_tokens = 14
-cum_tokens = 6533
+cum_tokens = 6518
 
 [batches.content]
 kind = "lines"
@@ -7602,11 +7570,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 264
+position = 262
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 64, body_start_line: 65 })'
 descriptor = "python method body at src/posting/jump_overlay.py:64 body 65"
 cost_tokens = 7
-cum_tokens = 6540
+cum_tokens = 6525
 
 [batches.content]
 kind = "lines"
@@ -7620,11 +7588,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 265
+position = 263
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 80, body_start_line: 82 })'
 descriptor = "python method body at src/posting/jump_overlay.py:80 body 82"
 cost_tokens = 13
-cum_tokens = 6553
+cum_tokens = 6538
 
 [batches.content]
 kind = "lines"
@@ -7638,11 +7606,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 266
+position = 264
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 32 })'
 descriptor = "python method at src/posting/jump_overlay.py:32"
 cost_tokens = 64
-cum_tokens = 6617
+cum_tokens = 6602
 
 [batches.content]
 kind = "lines"
@@ -7656,11 +7624,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 267
+position = 265
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/request/request_body.py"
 cost_tokens = 29
-cum_tokens = 6646
+cum_tokens = 6631
 
 [batches.content]
 kind = "lines"
@@ -7698,11 +7666,11 @@ end = 51
 kind = "ellipsis"
 
 [[batches]]
-position = 268
+position = 266
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 12 })'
 descriptor = "python decl at src/posting/widgets/request/request_body.py:12"
 cost_tokens = 0
-cum_tokens = 6646
+cum_tokens = 6631
 
 [batches.content]
 kind = "lines"
@@ -7716,11 +7684,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 269
+position = 267
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 50 })'
 descriptor = "python decl at src/posting/widgets/request/request_body.py:50"
 cost_tokens = 0
-cum_tokens = 6646
+cum_tokens = 6631
 
 [batches.content]
 kind = "lines"
@@ -7734,11 +7702,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 270
+position = 268
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/request/request_body.py"
 cost_tokens = 27
-cum_tokens = 6673
+cum_tokens = 6658
 
 [batches.content]
 kind = "lines"
@@ -7776,11 +7744,11 @@ end = 68
 kind = "ellipsis"
 
 [[batches]]
-position = 271
+position = 269
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 17 })'
 descriptor = "python method at src/posting/widgets/request/request_body.py:17"
 cost_tokens = 0
-cum_tokens = 6673
+cum_tokens = 6658
 
 [batches.content]
 kind = "lines"
@@ -7794,11 +7762,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 272
+position = 270
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 67 })'
 descriptor = "python method at src/posting/widgets/request/request_body.py:67"
 cost_tokens = 0
-cum_tokens = 6673
+cum_tokens = 6658
 
 [batches.content]
 kind = "lines"
@@ -7812,11 +7780,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 273
+position = 271
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 50 })'
 descriptor = "python decl doc at src/posting/widgets/request/request_body.py:50"
 cost_tokens = 20
-cum_tokens = 6693
+cum_tokens = 6678
 
 [batches.content]
 kind = "lines"
@@ -7830,11 +7798,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 274
+position = 272
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/request_body.py", start_line: 12 })'
 descriptor = "python decl doc at src/posting/widgets/request/request_body.py:12"
 cost_tokens = 30
-cum_tokens = 6723
+cum_tokens = 6708
 
 [batches.content]
 kind = "lines"
@@ -7848,11 +7816,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 275
+position = 273
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/external_tools.md", section_index: 0 })'
 descriptor = "docs/guide/external_tools.md section #0"
 cost_tokens = 64
-cum_tokens = 6787
+cum_tokens = 6772
 
 [batches.content]
 kind = "lines"
@@ -7890,11 +7858,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 276
+position = 274
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_headers.py" })'
 descriptor = "python imports in src/posting/widgets/response/response_headers.py"
 cost_tokens = 14
-cum_tokens = 6801
+cum_tokens = 6786
 
 [batches.content]
 kind = "lines"
@@ -7908,11 +7876,11 @@ end = 1
 kind = "full"
 
 [[batches]]
-position = 277
+position = 275
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/requests.md", section_index: 10 })'
 descriptor = "docs/guide/requests.md section #10"
 cost_tokens = 26
-cum_tokens = 6827
+cum_tokens = 6812
 
 [batches.content]
 kind = "lines"
@@ -7934,11 +7902,11 @@ end = 104
 kind = "full"
 
 [[batches]]
-position = 278
+position = 276
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py" })'
 descriptor = "python imports in src/posting/files.py"
 cost_tokens = 35
-cum_tokens = 6862
+cum_tokens = 6847
 
 [batches.content]
 kind = "lines"
@@ -7968,11 +7936,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 279
+position = 277
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/user_host.py" })'
 descriptor = "python imports in src/posting/user_host.py"
 cost_tokens = 35
-cum_tokens = 6897
+cum_tokens = 6882
 
 [batches.content]
 kind = "lines"
@@ -8002,11 +7970,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 280
+position = 278
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/auth.py", start_line: 10, body_start_line: 11 })'
 descriptor = "python method body at src/posting/auth.py:10 body 11"
 cost_tokens = 24
-cum_tokens = 6921
+cum_tokens = 6906
 
 [batches.content]
 kind = "lines"
@@ -8020,11 +7988,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 281
+position = 279
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/script_output.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/response/script_output.py"
 cost_tokens = 31
-cum_tokens = 6952
+cum_tokens = 6937
 
 [batches.content]
 kind = "lines"
@@ -8054,11 +8022,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 282
+position = 280
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/script_output.py", start_line: 20 })'
 descriptor = "python decl at src/posting/widgets/response/script_output.py:20"
 cost_tokens = 0
-cum_tokens = 6952
+cum_tokens = 6937
 
 [batches.content]
 kind = "lines"
@@ -8072,11 +8040,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 283
+position = 281
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/__main__.py" })'
 descriptor = "python imports in src/posting/__main__.py"
 cost_tokens = 139
-cum_tokens = 7091
+cum_tokens = 7076
 
 [batches.content]
 kind = "lines"
@@ -8114,11 +8082,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 284
+position = 282
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/help_screen.py", start_line: 117, body_start_line: 124 })'
 descriptor = "python method body at src/posting/help_screen.py:117 body 124"
 cost_tokens = 25
-cum_tokens = 7116
+cum_tokens = 7101
 
 [batches.content]
 kind = "lines"
@@ -8132,11 +8100,11 @@ end = 125
 kind = "full"
 
 [[batches]]
-position = 285
+position = 283
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/tuple_to_multidict.py", start_line: 9, body_start_line: 10 })'
 descriptor = "python decl body at src/posting/tuple_to_multidict.py:9 body 10"
 cost_tokens = 47
-cum_tokens = 7163
+cum_tokens = 7148
 
 [batches.content]
 kind = "lines"
@@ -8150,11 +8118,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 286
+position = 284
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/configuration.md", section_index: 0 })'
 descriptor = "docs/guide/configuration.md section #0"
 cost_tokens = 71
-cum_tokens = 7234
+cum_tokens = 7219
 
 [batches.content]
 kind = "lines"
@@ -8192,11 +8160,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 287
+position = 285
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/confirmation.py"
 cost_tokens = 91
-cum_tokens = 7325
+cum_tokens = 7310
 
 [batches.content]
 kind = "lines"
@@ -8298,11 +8266,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 288
+position = 286
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 59 })'
 descriptor = "python method at src/posting/widgets/confirmation.py:59"
 cost_tokens = 0
-cum_tokens = 7325
+cum_tokens = 7310
 
 [batches.content]
 kind = "lines"
@@ -8316,11 +8284,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 289
+position = 287
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 66 })'
 descriptor = "python method at src/posting/widgets/confirmation.py:66"
 cost_tokens = 0
-cum_tokens = 7325
+cum_tokens = 7310
 
 [batches.content]
 kind = "lines"
@@ -8334,11 +8302,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 290
+position = 288
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 74 })'
 descriptor = "python method at src/posting/widgets/confirmation.py:74"
 cost_tokens = 10
-cum_tokens = 7335
+cum_tokens = 7320
 
 [batches.content]
 kind = "lines"
@@ -8352,11 +8320,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 291
+position = 289
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 78 })'
 descriptor = "python method at src/posting/widgets/confirmation.py:78"
 cost_tokens = 10
-cum_tokens = 7345
+cum_tokens = 7330
 
 [batches.content]
 kind = "lines"
@@ -8370,11 +8338,11 @@ end = 79
 kind = "full"
 
 [[batches]]
-position = 292
+position = 290
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 82 })'
 descriptor = "python method at src/posting/widgets/confirmation.py:82"
 cost_tokens = 19
-cum_tokens = 7364
+cum_tokens = 7349
 
 [batches.content]
 kind = "lines"
@@ -8388,11 +8356,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 293
+position = 291
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 74, body_start_line: 76 })'
 descriptor = "python method body at src/posting/widgets/confirmation.py:74 body 76"
 cost_tokens = 9
-cum_tokens = 7373
+cum_tokens = 7358
 
 [batches.content]
 kind = "lines"
@@ -8406,11 +8374,11 @@ end = 76
 kind = "full"
 
 [[batches]]
-position = 294
+position = 292
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 78, body_start_line: 80 })'
 descriptor = "python method body at src/posting/widgets/confirmation.py:78 body 80"
 cost_tokens = 9
-cum_tokens = 7382
+cum_tokens = 7367
 
 [batches.content]
 kind = "lines"
@@ -8424,11 +8392,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 295
+position = 293
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/confirmation.py", start_line: 82, body_start_line: 84 })'
 descriptor = "python method body at src/posting/widgets/confirmation.py:82 body 84"
 cost_tokens = 10
-cum_tokens = 7392
+cum_tokens = 7377
 
 [batches.content]
 kind = "lines"
@@ -8442,11 +8410,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 296
+position = 294
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/widgets/select.py"
 cost_tokens = 48
-cum_tokens = 7440
+cum_tokens = 7425
 
 [batches.content]
 kind = "lines"
@@ -8492,11 +8460,11 @@ end = 39
 kind = "ellipsis"
 
 [[batches]]
-position = 297
+position = 295
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 8 })'
 descriptor = "python decl at src/posting/widgets/select.py:8"
 cost_tokens = 0
-cum_tokens = 7440
+cum_tokens = 7425
 
 [batches.content]
 kind = "lines"
@@ -8510,11 +8478,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 298
+position = 296
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 38 })'
 descriptor = "python decl at src/posting/widgets/select.py:38"
 cost_tokens = 0
-cum_tokens = 7440
+cum_tokens = 7425
 
 [batches.content]
 kind = "lines"
@@ -8528,11 +8496,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 299
+position = 297
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/jump_overlay.py", start_line: 46 })'
 descriptor = "python method at src/posting/jump_overlay.py:46"
 cost_tokens = 75
-cum_tokens = 7515
+cum_tokens = 7500
 
 [batches.content]
 kind = "lines"
@@ -8546,11 +8514,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 300
+position = 298
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 38 })'
 descriptor = "python class body at src/posting/widgets/select.py:38"
 cost_tokens = 79
-cum_tokens = 7594
+cum_tokens = 7579
 
 [batches.content]
 kind = "lines"
@@ -8564,11 +8532,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 301
+position = 299
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/yaml.py" })'
 descriptor = "python imports in src/posting/yaml.py"
 cost_tokens = 39
-cum_tokens = 7633
+cum_tokens = 7618
 
 [batches.content]
 kind = "lines"
@@ -8590,11 +8558,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 302
+position = 300
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 12 })'
 descriptor = "python class body at src/posting/widgets/request/form_editor.py:12"
 cost_tokens = 53
-cum_tokens = 7686
+cum_tokens = 7671
 
 [batches.content]
 kind = "lines"
@@ -8608,11 +8576,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 303
+position = 301
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py" })'
 descriptor = "python imports in src/posting/widgets/tabbed_content.py"
 cost_tokens = 24
-cum_tokens = 7710
+cum_tokens = 7695
 
 [batches.content]
 kind = "lines"
@@ -8626,11 +8594,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 304
+position = 302
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/rich_log.py", start_line: 37 })'
 descriptor = "python class body at src/posting/widgets/rich_log.py:37"
 cost_tokens = 82
-cum_tokens = 7792
+cum_tokens = 7777
 
 [batches.content]
 kind = "lines"
@@ -8644,11 +8612,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 305
+position = 303
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/command_palette.md", section_index: 0 })'
 descriptor = "docs/guide/command_palette.md section #0"
 cost_tokens = 76
-cum_tokens = 7868
+cum_tokens = 7853
 
 [batches.content]
 kind = "lines"
@@ -8702,11 +8670,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 306
+position = 304
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/posting/tests" })'
 descriptor = "listing of 'tests'"
 cost_tokens = 99
-cum_tokens = 7967
+cum_tokens = 7952
 
 [batches.content]
 kind = "fs"
@@ -8716,11 +8684,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/posting/tests"
 entries = ["__snapshots__", "posting_snapshot_app.py", "resources", "sample-collections", "sample-configs", "sample-envs", "sample-importable-collections", "sample-themes", "test_curl_export.py", "test_curl_import.py", "test_files.py", "test_load_env_file_dialog.py", "test_open_api_import.py", "test_postman_import.py", "test_snapshots.py", "test_urls.py", "test_variables.py"]
 
 [[batches]]
-position = 307
+position = 305
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 13 })'
 descriptor = "python class body at src/posting/widgets/request/query_editor.py:13"
 cost_tokens = 55
-cum_tokens = 8022
+cum_tokens = 8007
 
 [batches.content]
 kind = "lines"
@@ -8734,11 +8702,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 308
+position = 306
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/select.py"
 cost_tokens = 98
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8856,11 +8824,11 @@ end = 69
 kind = "ellipsis"
 
 [[batches]]
-position = 309
+position = 307
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 17 })'
 descriptor = "python method at src/posting/widgets/select.py:17"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8874,11 +8842,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 310
+position = 308
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 34 })'
 descriptor = "python method at src/posting/widgets/select.py:34"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8892,11 +8860,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 311
+position = 309
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 45 })'
 descriptor = "python method at src/posting/widgets/select.py:45"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8910,11 +8878,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 312
+position = 310
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 48 })'
 descriptor = "python method at src/posting/widgets/select.py:48"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8928,11 +8896,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 313
+position = 311
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 59 })'
 descriptor = "python method at src/posting/widgets/select.py:59"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8946,11 +8914,11 @@ end = 59
 kind = "full"
 
 [[batches]]
-position = 314
+position = 312
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 62 })'
 descriptor = "python method at src/posting/widgets/select.py:62"
 cost_tokens = 0
-cum_tokens = 8120
+cum_tokens = 8105
 
 [batches.content]
 kind = "lines"
@@ -8964,11 +8932,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 315
+position = 313
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 68 })'
 descriptor = "python method at src/posting/widgets/select.py:68"
 cost_tokens = 13
-cum_tokens = 8133
+cum_tokens = 8118
 
 [batches.content]
 kind = "lines"
@@ -8982,11 +8950,11 @@ end = 69
 kind = "full"
 
 [[batches]]
-position = 316
+position = 314
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 45, body_start_line: 46 })'
 descriptor = "python method body at src/posting/widgets/select.py:45 body 46"
 cost_tokens = 8
-cum_tokens = 8141
+cum_tokens = 8126
 
 [batches.content]
 kind = "lines"
@@ -9000,11 +8968,11 @@ end = 46
 kind = "full"
 
 [[batches]]
-position = 317
+position = 315
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 59, body_start_line: 60 })'
 descriptor = "python method body at src/posting/widgets/select.py:59 body 60"
 cost_tokens = 8
-cum_tokens = 8149
+cum_tokens = 8134
 
 [batches.content]
 kind = "lines"
@@ -9018,11 +8986,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 318
+position = 316
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 34, body_start_line: 35 })'
 descriptor = "python method body at src/posting/widgets/select.py:34 body 35"
 cost_tokens = 15
-cum_tokens = 8164
+cum_tokens = 8149
 
 [batches.content]
 kind = "lines"
@@ -9036,11 +9004,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 319
+position = 317
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/locations.py"
 cost_tokens = 83
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9142,11 +9110,11 @@ end = 35
 kind = "ellipsis"
 
 [[batches]]
-position = 320
+position = 318
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 6 })'
 descriptor = "python decl at src/posting/locations.py:6"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9160,11 +9128,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 321
+position = 319
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 12 })'
 descriptor = "python decl at src/posting/locations.py:12"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9178,11 +9146,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 322
+position = 320
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 17 })'
 descriptor = "python decl at src/posting/locations.py:17"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9196,11 +9164,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 323
+position = 321
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 24 })'
 descriptor = "python decl at src/posting/locations.py:24"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9214,11 +9182,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 324
+position = 322
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 29 })'
 descriptor = "python decl at src/posting/locations.py:29"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9232,11 +9200,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 325
+position = 323
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 34 })'
 descriptor = "python decl at src/posting/locations.py:34"
 cost_tokens = 0
-cum_tokens = 8247
+cum_tokens = 8232
 
 [batches.content]
 kind = "lines"
@@ -9250,11 +9218,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 326
+position = 324
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 17 })'
 descriptor = "python decl doc at src/posting/locations.py:17"
 cost_tokens = 13
-cum_tokens = 8260
+cum_tokens = 8245
 
 [batches.content]
 kind = "lines"
@@ -9268,11 +9236,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 327
+position = 325
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 34, body_start_line: 35 })'
 descriptor = "python decl body at src/posting/locations.py:34 body 35"
 cost_tokens = 12
-cum_tokens = 8272
+cum_tokens = 8257
 
 [batches.content]
 kind = "lines"
@@ -9286,11 +9254,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 328
+position = 326
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 12 })'
 descriptor = "python decl doc at src/posting/locations.py:12"
 cost_tokens = 14
-cum_tokens = 8286
+cum_tokens = 8271
 
 [batches.content]
 kind = "lines"
@@ -9304,11 +9272,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 329
+position = 327
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 24 })'
 descriptor = "python decl doc at src/posting/locations.py:24"
 cost_tokens = 14
-cum_tokens = 8300
+cum_tokens = 8285
 
 [batches.content]
 kind = "lines"
@@ -9322,11 +9290,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 330
+position = 328
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 29 })'
 descriptor = "python decl doc at src/posting/locations.py:29"
 cost_tokens = 14
-cum_tokens = 8314
+cum_tokens = 8299
 
 [batches.content]
 kind = "lines"
@@ -9340,11 +9308,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 331
+position = 329
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 24, body_start_line: 26 })'
 descriptor = "python decl body at src/posting/locations.py:24 body 26"
 cost_tokens = 13
-cum_tokens = 8327
+cum_tokens = 8312
 
 [batches.content]
 kind = "lines"
@@ -9358,11 +9326,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 332
+position = 330
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 12, body_start_line: 14 })'
 descriptor = "python decl body at src/posting/locations.py:12 body 14"
 cost_tokens = 14
-cum_tokens = 8341
+cum_tokens = 8326
 
 [batches.content]
 kind = "lines"
@@ -9376,11 +9344,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 333
+position = 331
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/locations.py", start_line: 29, body_start_line: 31 })'
 descriptor = "python decl body at src/posting/locations.py:29 body 31"
 cost_tokens = 14
-cum_tokens = 8355
+cum_tokens = 8340
 
 [batches.content]
 kind = "lines"
@@ -9394,11 +9362,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 334
+position = 332
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/select.py", start_line: 8 })'
 descriptor = "python class body at src/posting/widgets/select.py:8"
 cost_tokens = 87
-cum_tokens = 8442
+cum_tokens = 8427
 
 [batches.content]
 kind = "lines"
@@ -9412,11 +9380,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 335
+position = 333
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/postman.py", chunk_index: 1 })'
 descriptor = "python decl names surface #1 in src/posting/importing/postman.py"
 cost_tokens = 22
-cum_tokens = 8464
+cum_tokens = 8449
 
 [batches.content]
 kind = "lines"
@@ -9454,11 +9422,11 @@ end = 204
 kind = "ellipsis"
 
 [[batches]]
-position = 336
+position = 334
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/postman.py", start_line: 178 })'
 descriptor = "python decl at src/posting/importing/postman.py:178"
 cost_tokens = 26
-cum_tokens = 8490
+cum_tokens = 8475
 
 [batches.content]
 kind = "lines"
@@ -9472,11 +9440,11 @@ end = 180
 kind = "full"
 
 [[batches]]
-position = 337
+position = 335
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/postman.py", start_line: 203 })'
 descriptor = "python decl at src/posting/importing/postman.py:203"
 cost_tokens = 33
-cum_tokens = 8523
+cum_tokens = 8508
 
 [batches.content]
 kind = "lines"
@@ -9490,11 +9458,11 @@ end = 205
 kind = "full"
 
 [[batches]]
-position = 338
+position = 336
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/importing/postman.py", start_line: 203 })'
 descriptor = "python decl doc at src/posting/importing/postman.py:203"
 cost_tokens = 20
-cum_tokens = 8543
+cum_tokens = 8528
 
 [batches.content]
 kind = "lines"
@@ -9508,11 +9476,11 @@ end = 206
 kind = "full"
 
 [[batches]]
-position = 339
+position = 337
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/variable_autocomplete.py"
 cost_tokens = 104
-cum_tokens = 8647
+cum_tokens = 8632
 
 [batches.content]
 kind = "lines"
@@ -9598,11 +9566,11 @@ end = 94
 kind = "ellipsis"
 
 [[batches]]
-position = 340
+position = 338
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 51 })'
 descriptor = "python method at src/posting/widgets/variable_autocomplete.py:51"
 cost_tokens = 0
-cum_tokens = 8647
+cum_tokens = 8632
 
 [batches.content]
 kind = "lines"
@@ -9616,11 +9584,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 341
+position = 339
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 60 })'
 descriptor = "python method at src/posting/widgets/variable_autocomplete.py:60"
 cost_tokens = 0
-cum_tokens = 8647
+cum_tokens = 8632
 
 [batches.content]
 kind = "lines"
@@ -9634,11 +9602,11 @@ end = 60
 kind = "full"
 
 [[batches]]
-position = 342
+position = 340
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 84 })'
 descriptor = "python method at src/posting/widgets/variable_autocomplete.py:84"
 cost_tokens = 0
-cum_tokens = 8647
+cum_tokens = 8632
 
 [batches.content]
 kind = "lines"
@@ -9652,11 +9620,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 343
+position = 341
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 93 })'
 descriptor = "python method at src/posting/widgets/variable_autocomplete.py:93"
 cost_tokens = 0
-cum_tokens = 8647
+cum_tokens = 8632
 
 [batches.content]
 kind = "lines"
@@ -9670,11 +9638,11 @@ end = 93
 kind = "full"
 
 [[batches]]
-position = 344
+position = 342
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/variable_autocomplete.py", start_line: 60 })'
 descriptor = "python method doc at src/posting/widgets/variable_autocomplete.py:60"
 cost_tokens = 31
-cum_tokens = 8678
+cum_tokens = 8663
 
 [batches.content]
 kind = "lines"
@@ -9696,11 +9664,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 345
+position = 343
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/response/response_trace.py"
 cost_tokens = 69
-cum_tokens = 8747
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -9770,11 +9738,11 @@ end = 83
 kind = "ellipsis"
 
 [[batches]]
-position = 346
+position = 344
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 50 })'
 descriptor = "python method at src/posting/widgets/response/response_trace.py:50"
 cost_tokens = 0
-cum_tokens = 8747
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -9788,11 +9756,11 @@ end = 50
 kind = "full"
 
 [[batches]]
-position = 347
+position = 345
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 67 })'
 descriptor = "python method at src/posting/widgets/response/response_trace.py:67"
 cost_tokens = 0
-cum_tokens = 8747
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -9806,11 +9774,11 @@ end = 67
 kind = "full"
 
 [[batches]]
-position = 348
+position = 346
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 82 })'
 descriptor = "python method at src/posting/widgets/response/response_trace.py:82"
 cost_tokens = 0
-cum_tokens = 8747
+cum_tokens = 8732
 
 [batches.content]
 kind = "lines"
@@ -9824,11 +9792,11 @@ end = 82
 kind = "full"
 
 [[batches]]
-position = 349
+position = 347
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/response_trace.py", start_line: 82, body_start_line: 83 })'
 descriptor = "python method body at src/posting/widgets/response/response_trace.py:82 body 83"
 cost_tokens = 7
-cum_tokens = 8754
+cum_tokens = 8739
 
 [batches.content]
 kind = "lines"
@@ -9842,11 +9810,11 @@ end = 83
 kind = "full"
 
 [[batches]]
-position = 350
+position = 348
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/response/cookies_table.py"
 cost_tokens = 70
-cum_tokens = 8824
+cum_tokens = 8809
 
 [batches.content]
 kind = "lines"
@@ -9932,11 +9900,11 @@ end = 32
 kind = "ellipsis"
 
 [[batches]]
-position = 351
+position = 349
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 10 })'
 descriptor = "python method at src/posting/widgets/response/cookies_table.py:10"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8809
 
 [batches.content]
 kind = "lines"
@@ -9950,11 +9918,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 352
+position = 350
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 14 })'
 descriptor = "python method at src/posting/widgets/response/cookies_table.py:14"
 cost_tokens = 0
-cum_tokens = 8824
+cum_tokens = 8809
 
 [batches.content]
 kind = "lines"
@@ -9968,11 +9936,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 353
+position = 351
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 31 })'
 descriptor = "python method at src/posting/widgets/response/cookies_table.py:31"
 cost_tokens = 12
-cum_tokens = 8836
+cum_tokens = 8821
 
 [batches.content]
 kind = "lines"
@@ -9986,11 +9954,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 354
+position = 352
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 21 })'
 descriptor = "python method at src/posting/widgets/response/cookies_table.py:21"
 cost_tokens = 19
-cum_tokens = 8855
+cum_tokens = 8840
 
 [batches.content]
 kind = "lines"
@@ -10004,11 +9972,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 355
+position = 353
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/response/cookies_table.py", start_line: 26 })'
 descriptor = "python method at src/posting/widgets/response/cookies_table.py:26"
 cost_tokens = 19
-cum_tokens = 8874
+cum_tokens = 8859
 
 [batches.content]
 kind = "lines"
@@ -10022,11 +9990,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 356
+position = 354
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/text_area.py", start_line: 697 })'
 descriptor = "python decl at src/posting/widgets/text_area.py:697"
 cost_tokens = 66
-cum_tokens = 8940
+cum_tokens = 8925
 
 [batches.content]
 kind = "lines"
@@ -10040,11 +10008,11 @@ end = 703
 kind = "full"
 
 [[batches]]
-position = 357
+position = 355
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/files.py"
 cost_tokens = 89
-cum_tokens = 9029
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -10114,11 +10082,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 358
+position = 356
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 62 })'
 descriptor = "python decl at src/posting/files.py:62"
 cost_tokens = 0
-cum_tokens = 9029
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -10132,11 +10100,11 @@ end = 62
 kind = "full"
 
 [[batches]]
-position = 359
+position = 357
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 72 })'
 descriptor = "python decl at src/posting/files.py:72"
 cost_tokens = 0
-cum_tokens = 9029
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -10150,11 +10118,11 @@ end = 72
 kind = "full"
 
 [[batches]]
-position = 360
+position = 358
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 99 })'
 descriptor = "python decl at src/posting/files.py:99"
 cost_tokens = 0
-cum_tokens = 9029
+cum_tokens = 9014
 
 [batches.content]
 kind = "lines"
@@ -10168,11 +10136,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 361
+position = 359
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 10 })'
 descriptor = "python decl at src/posting/files.py:10"
 cost_tokens = 13
-cum_tokens = 9042
+cum_tokens = 9027
 
 [batches.content]
 kind = "lines"
@@ -10186,11 +10154,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 362
+position = 360
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 72, body_start_line: 96 })'
 descriptor = "python decl body at src/posting/files.py:72 body 96"
 cost_tokens = 8
-cum_tokens = 9050
+cum_tokens = 9035
 
 [batches.content]
 kind = "lines"
@@ -10204,11 +10172,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 363
+position = 361
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/files.py", start_line: 99 })'
 descriptor = "python decl doc at src/posting/files.py:99"
 cost_tokens = 94
-cum_tokens = 9144
+cum_tokens = 9129
 
 [batches.content]
 kind = "lines"
@@ -10238,11 +10206,11 @@ end = 109
 kind = "full"
 
 [[batches]]
-position = 364
+position = 362
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/posting/urls.py"
 cost_tokens = 91
-cum_tokens = 9235
+cum_tokens = 9220
 
 [batches.content]
 kind = "lines"
@@ -10304,11 +10272,11 @@ end = 50
 kind = "ellipsis"
 
 [[batches]]
-position = 365
+position = 363
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 9 })'
 descriptor = "python decl at src/posting/urls.py:9"
 cost_tokens = 0
-cum_tokens = 9235
+cum_tokens = 9220
 
 [batches.content]
 kind = "lines"
@@ -10322,11 +10290,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 366
+position = 364
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 24 })'
 descriptor = "python decl at src/posting/urls.py:24"
 cost_tokens = 0
-cum_tokens = 9235
+cum_tokens = 9220
 
 [batches.content]
 kind = "lines"
@@ -10340,11 +10308,11 @@ end = 24
 kind = "full"
 
 [[batches]]
-position = 367
+position = 365
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 49 })'
 descriptor = "python decl at src/posting/urls.py:49"
 cost_tokens = 0
-cum_tokens = 9235
+cum_tokens = 9220
 
 [batches.content]
 kind = "lines"
@@ -10358,11 +10326,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 368
+position = 366
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 24 })'
 descriptor = "python decl doc at src/posting/urls.py:24"
 cost_tokens = 77
-cum_tokens = 9312
+cum_tokens = 9297
 
 [batches.content]
 kind = "lines"
@@ -10392,11 +10360,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 369
+position = 367
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 9 })'
 descriptor = "python decl doc at src/posting/urls.py:9"
 cost_tokens = 80
-cum_tokens = 9392
+cum_tokens = 9377
 
 [batches.content]
 kind = "lines"
@@ -10426,11 +10394,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 370
+position = 368
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/urls.py", start_line: 9, body_start_line: 21 })'
 descriptor = "python decl body at src/posting/urls.py:9 body 21"
 cost_tokens = 12
-cum_tokens = 9404
+cum_tokens = 9389
 
 [batches.content]
 kind = "lines"
@@ -10444,11 +10412,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 371
+position = 369
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value.py", start_line: 19 })'
 descriptor = "python class body at src/posting/widgets/key_value.py:19"
 cost_tokens = 96
-cum_tokens = 9500
+cum_tokens = 9485
 
 [batches.content]
 kind = "lines"
@@ -10478,11 +10446,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 372
+position = 370
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/request/form_editor.py"
 cost_tokens = 75
-cum_tokens = 9575
+cum_tokens = 9560
 
 [batches.content]
 kind = "lines"
@@ -10568,11 +10536,11 @@ end = 57
 kind = "ellipsis"
 
 [[batches]]
-position = 373
+position = 371
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 18 })'
 descriptor = "python method at src/posting/widgets/request/form_editor.py:18"
 cost_tokens = 0
-cum_tokens = 9575
+cum_tokens = 9560
 
 [batches.content]
 kind = "lines"
@@ -10586,11 +10554,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 374
+position = 372
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 26 })'
 descriptor = "python method at src/posting/widgets/request/form_editor.py:26"
 cost_tokens = 0
-cum_tokens = 9575
+cum_tokens = 9560
 
 [batches.content]
 kind = "lines"
@@ -10604,11 +10572,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 375
+position = 373
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 43 })'
 descriptor = "python method at src/posting/widgets/request/form_editor.py:43"
 cost_tokens = 0
-cum_tokens = 9575
+cum_tokens = 9560
 
 [batches.content]
 kind = "lines"
@@ -10622,11 +10590,11 @@ end = 43
 kind = "full"
 
 [[batches]]
-position = 376
+position = 374
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 53 })'
 descriptor = "python method at src/posting/widgets/request/form_editor.py:53"
 cost_tokens = 0
-cum_tokens = 9575
+cum_tokens = 9560
 
 [batches.content]
 kind = "lines"
@@ -10640,11 +10608,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 377
+position = 375
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 56 })'
 descriptor = "python method at src/posting/widgets/request/form_editor.py:56"
 cost_tokens = 33
-cum_tokens = 9608
+cum_tokens = 9593
 
 [batches.content]
 kind = "lines"
@@ -10658,11 +10626,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 378
+position = 376
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/form_editor.py", start_line: 53, body_start_line: 54 })'
 descriptor = "python method body at src/posting/widgets/request/form_editor.py:53 body 54"
 cost_tokens = 13
-cum_tokens = 9621
+cum_tokens = 9606
 
 [batches.content]
 kind = "lines"
@@ -10676,11 +10644,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 379
+position = 377
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/request/query_editor.py"
 cost_tokens = 75
-cum_tokens = 9696
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -10766,11 +10734,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 380
+position = 378
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 23 })'
 descriptor = "python method at src/posting/widgets/request/query_editor.py:23"
 cost_tokens = 0
-cum_tokens = 9696
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -10784,11 +10752,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 381
+position = 379
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 31 })'
 descriptor = "python method at src/posting/widgets/request/query_editor.py:31"
 cost_tokens = 0
-cum_tokens = 9696
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -10802,11 +10770,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 382
+position = 380
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 35 })'
 descriptor = "python method at src/posting/widgets/request/query_editor.py:35"
 cost_tokens = 0
-cum_tokens = 9696
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -10820,11 +10788,11 @@ end = 35
 kind = "full"
 
 [[batches]]
-position = 383
+position = 381
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 54 })'
 descriptor = "python method at src/posting/widgets/request/query_editor.py:54"
 cost_tokens = 0
-cum_tokens = 9696
+cum_tokens = 9681
 
 [batches.content]
 kind = "lines"
@@ -10838,11 +10806,11 @@ end = 54
 kind = "full"
 
 [[batches]]
-position = 384
+position = 382
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/request/query_editor.py", start_line: 65 })'
 descriptor = "python method at src/posting/widgets/request/query_editor.py:65"
 cost_tokens = 12
-cum_tokens = 9708
+cum_tokens = 9693
 
 [batches.content]
 kind = "lines"
@@ -10856,11 +10824,11 @@ end = 66
 kind = "full"
 
 [[batches]]
-position = 385
+position = 383
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/posting/docs/guide/environments.md", section_index: 2 })'
 descriptor = "docs/guide/environments.md section #2"
 cost_tokens = 33
-cum_tokens = 9741
+cum_tokens = 9726
 
 [batches.content]
 kind = "lines"
@@ -10882,11 +10850,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 386
+position = 384
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/tabbed_content.py", start_line: 5 })'
 descriptor = "python class body at src/posting/widgets/tabbed_content.py:5"
 cost_tokens = 98
-cum_tokens = 9839
+cum_tokens = 9824
 
 [batches.content]
 kind = "lines"
@@ -10900,11 +10868,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 387
+position = 385
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/posting/widgets/key_value_copy_modal.py"
 cost_tokens = 115
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11022,11 +10990,11 @@ end = 81
 kind = "ellipsis"
 
 [[batches]]
-position = 388
+position = 386
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 55 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:55"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11040,11 +11008,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 389
+position = 387
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 64 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:64"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11058,11 +11026,11 @@ end = 64
 kind = "full"
 
 [[batches]]
-position = 390
+position = 388
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 71 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:71"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11076,11 +11044,11 @@ end = 71
 kind = "full"
 
 [[batches]]
-position = 391
+position = 389
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 74 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:74"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11094,11 +11062,11 @@ end = 74
 kind = "full"
 
 [[batches]]
-position = 392
+position = 390
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 77 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:77"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11112,11 +11080,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 393
+position = 391
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 80 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:80"
 cost_tokens = 0
-cum_tokens = 9954
+cum_tokens = 9939
 
 [batches.content]
 kind = "lines"
@@ -11130,11 +11098,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 394
+position = 392
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 67 })'
 descriptor = "python method at src/posting/widgets/key_value_copy_modal.py:67"
 cost_tokens = 19
-cum_tokens = 9973
+cum_tokens = 9958
 
 [batches.content]
 kind = "lines"
@@ -11148,11 +11116,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 395
+position = 393
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 80, body_start_line: 81 })'
 descriptor = "python method body at src/posting/widgets/key_value_copy_modal.py:80 body 81"
 cost_tokens = 7
-cum_tokens = 9980
+cum_tokens = 9965
 
 [batches.content]
 kind = "lines"
@@ -11166,11 +11134,11 @@ end = 81
 kind = "full"
 
 [[batches]]
-position = 396
+position = 394
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 67, body_start_line: 69 })'
 descriptor = "python method body at src/posting/widgets/key_value_copy_modal.py:67 body 69"
 cost_tokens = 11
-cum_tokens = 9991
+cum_tokens = 9976
 
 [batches.content]
 kind = "lines"
@@ -11179,6 +11147,24 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py"
 start = 69
 end = 69
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 395
+key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py", start_line: 64, body_start_line: 65 })'
+descriptor = "python method body at src/posting/widgets/key_value_copy_modal.py:64 body 65"
+cost_tokens = 12
+cum_tokens = 9988
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/posting/src/posting/widgets/key_value_copy_modal.py"
+start = 65
+end = 65
 
 [batches.content.spans.render]
 kind = "full"
