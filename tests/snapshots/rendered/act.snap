@@ -198,10 +198,15 @@ pkg/
             10→func createGracefulJobCancellationContext() (context.Context, func(), chan os.Signal) {
             …
             42→func CreateGracefulJobCancellationContext() (context.Context, func()) {
-            …
+            43→	ctx, cancel, _ := createGracefulJobCancellationContext()
+            44→	return ctx, cancel
         context_test.go
         draw.go
         dryrun.go
+            1→package common
+            3→import (
+            4→	"context"
+            5→)
             7→type dryrunContextKey string
             …
             9→const dryrunContextKeyVal = dryrunContextKey("dryrun")
@@ -223,7 +228,27 @@ pkg/
             …
         git/
         job_error.go
+            1→package common
+            3→import (
+            4→	"context"
+            5→)
         line_writer.go
+            8→// LineHandler is a callback function for handling a line
+            9→type LineHandler func(line string) bool
+            …
+            11→type lineWriter struct {
+            12→	buffer   bytes.Buffer
+            13→	handlers []LineHandler
+            14→}
+            16→// NewLineWriter creates a new instance of a line writer
+            17→func NewLineWriter(handlers ...LineHandler) io.Writer {
+            18→	w := new(lineWriter)
+            19→	w.handlers = handlers
+            20→	return w
+            23→func (lw *lineWriter) Write(p []byte) (n int, err error) {
+            …
+            43→func (lw *lineWriter) handleLine(line string) {
+            …
         line_writer_test.go
         logger.go
             9→type loggerContextKey string
@@ -271,27 +296,8 @@ pkg/
             8→func (e *Error) Error() string {
             9→	return e.Err.Error()
         lp_js.go
-            13→// ErrNotFound is the error resulting if a path search failed to find an executable file.
-            14→var ErrNotFound = errors.New("executable file not found in $PATH")
-            …
-            20→func LookPath2(file string, lenv Env) (string, error) {
-            …
         lp_plan9.go
-            15→// ErrNotFound is the error resulting if a path search failed to find an executable file.
-            16→var ErrNotFound = errors.New("executable file not found in $path")
-            …
-            18→func findExecutable(file string) error {
-            …
-            34→func LookPath2(file string, lenv Env) (string, error) {
-            …
         lp_unix.go
-            17→// ErrNotFound is the error resulting if a path search failed to find an executable file.
-            18→var ErrNotFound = errors.New("executable file not found in $PATH")
-            …
-            20→func findExecutable(file string) error {
-            …
-            35→func LookPath2(file string, lenv Env) (string, error) {
-            …
         lp_windows.go
     model/
         action.go

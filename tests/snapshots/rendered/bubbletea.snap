@@ -23,6 +23,29 @@ commands.go
     3→import (
     4→	"time"
     5→)
+    15→func Batch(cmds ...Cmd) Cmd {
+    16→	return compactCmds[BatchMsg](cmds)
+    19→// BatchMsg is a message used to perform a bunch of commands concurrently with
+    20→// no ordering guarantees. You can send a BatchMsg with Batch.
+    21→type BatchMsg []Cmd
+    …
+    23→// Sequence runs the given commands one at a time, in order. Contrast this with
+    24→// Batch, which runs commands concurrently.
+    25→func Sequence(cmds ...Cmd) Cmd {
+    26→	return compactCmds[sequenceMsg](cmds)
+    29→// sequenceMsg is used internally to run the given commands in order.
+    30→type sequenceMsg []Cmd
+    …
+    36→func compactCmds[T ~[]Cmd](cmds []Cmd) Cmd {
+    …
+    102→func Every(duration time.Duration, fn func(time.Time) Msg) Cmd {
+    …
+    154→func Tick(d time.Duration, fn func(time.Time) Msg) Cmd {
+    …
+    166→type windowSizeMsg struct{}
+    …
+    173→func RequestWindowSize() Msg {
+    174→	return windowSizeMsg{}
 commands_test.go
 cursed_renderer.go
 cursed_renderer_test.go
@@ -216,9 +239,8 @@ signals_unix.go
     15→func (p *Program) listenForResize(done chan struct{}) {
     …
 signals_windows.go
-    4→package tea
     8→func (p *Program) listenForResize(done chan struct{}) {
-    9→	close(done)
+    …
 tea.go
 tea_test.go
 termcap.go
@@ -236,38 +258,16 @@ termcap.go
     46→func (c CapabilityMsg) String() string {
     47→	return c.Content
 termios_bsd.go
-    11→func (p *Program) checkOptimizedMovements(s *term.State) {
-    …
 termios_other.go
-    4→package tea
-    6→import "github.com/charmbracelet/x/term"
     8→func (*Program) checkOptimizedMovements(*term.State) {}
 termios_unix.go
-    11→func (p *Program) checkOptimizedMovements(s *term.State) {
-    …
 termios_windows.go
-    4→package tea
-    6→import "github.com/charmbracelet/x/term"
-    8→func (p *Program) checkOptimizedMovements(*term.State) {
-    …
 testdata/
     TestClearMsg/
     TestViewModel/
 tty.go
 tty_unix.go
-    15→func (p *Program) initInput() (err error) {
-    …
-    37→const suspendSupported = true
-    …
-    39→// Send SIGTSTP to the entire process group.
-    40→func suspendProcess() {
-    …
 tty_windows.go
-    13→func (p *Program) initInput() (err error) {
-    …
-    62→const suspendSupported = false
-    …
-    64→func suspendProcess() {}
 tutorials/
     basics/
     commands/

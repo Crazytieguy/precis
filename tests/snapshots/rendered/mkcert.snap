@@ -33,8 +33,25 @@ README.md
     …
     51→### Linux
     …
+    65→Then you can install using [Homebrew on Linux](https://docs.brew.sh/Homebrew-on-Linux)
+    67→```
+    68→brew install mkcert
+    69→```
+    71→or build from source (requires Go 1.13+)
+    73→```
+    74→git clone https://github.com/FiloSottile/mkcert && cd mkcert
+    75→go build -ldflags "-X main.Version=$(git describe --tags)"
+    76→```
+    86→For Arch Linux users, [`mkcert`](https://archlinux.org/packages/extra/x86_64/mkcert/) is available on the official Arch Linux repository.
+    88→```
+    89→sudo pacman -Syu mkcert
+    90→```
     92→### Windows
     …
+    94→On Windows, use [Chocolatey](https://chocolatey.org)
+    96→```
+    97→choco install mkcert
+    98→```
     100→or use Scoop
     102→```
     103→scoop bucket add extras
@@ -49,16 +66,25 @@ README.md
     129→### Advanced options
     …
     150→> **Note:** You _must_ place these options before the domain names list.
+    152→#### Example
+    154→```
+    155→mkcert -key-file key.pem -cert-file cert.pem example.com *.example.com
+    156→```
     158→### S/MIME
     …
     166→### Mobile devices
     …
+    168→For the certificates to be trusted on mobile devices, you will have to install the root CA. It's the `rootCA.pem` file in the folder printed by `mkcert -CAROOT`.
+    172→For Android, you will have to install the CA and then enable user roots in the development build of your app. See [this StackOverflow answer](https://stackoverflow.com/a/22040887/749014).
     174→### Using the root with Node.js
     …
     182→### Changing the location of the CA files
     …
+    184→The CA certificate and its key are stored in an application data folder in the user home. You usually don't have to worry about it, as installation is automated, but the location is printed by `mkcert -CAROOT`.
+    186→If you want to manage separate CAs, you can use the environment variable `$CAROOT` to set the folder where mkcert will place and look for the local CA files.
     188→### Installing the CA on other systems
     …
+    197→Remember that mkcert is meant for development purposes, not production, so it should not be used on end users' machines, and that you should *not* export or share `rootCA-key.pem`.
 cert.go
     35→var userAndHostname string
     …
@@ -95,6 +121,27 @@ go.mod
     14→)
 go.sum
 main.go
+    6→package main
+    8→import (
+    9→	"crypto"
+    10→	"crypto/x509"
+    11→	"flag"
+    12→	"fmt"
+    13→	"log"
+    14→	"net"
+    15→	"net/mail"
+    16→	"net/url"
+    17→	"os"
+    18→	"os/exec"
+    19→	"os/user"
+    20→	"path/filepath"
+    21→	"regexp"
+    22→	"runtime"
+    23→	"runtime/debug"
+    24→	"strings"
+    25→	"sync"
+    27→	"golang.org/x/net/idna"
+    28→)
     30→const shortUsage = `Usage of mkcert:
     …
     49→const advancedUsage = `Advanced options:
@@ -120,13 +167,21 @@ main.go
     307→func (m *mkcert) uninstall() {
     …
     336→func (m *mkcert) checkPlatform() bool {
-    …
+    337→	if m.ignoreCheckFailure {
+    338→		return true
+    339→	}
+    341→	_, err := m.caCert.Verify(x509.VerifyOptions{})
+    342→	return err == nil
     345→func storeEnabled(name string) bool {
     …
     358→func fatalIfErr(err error, msg string) {
-    …
+    359→	if err != nil {
+    360→		log.Fatalf("ERROR: %s: %s", msg, err)
+    361→	}
     364→func fatalIfCmdErr(err error, cmd string, out []byte) {
-    …
+    365→	if err != nil {
+    366→		log.Fatalf("ERROR: failed to execute \"%s\": %s\n\n%s\n", cmd, err, out)
+    367→	}
     370→func pathExists(path string) bool {
     371→	_, err := os.Stat(path)
     372→	return err == nil
@@ -138,31 +193,21 @@ main.go
     382→func commandWithSudo(cmd ...string) *exec.Cmd {
     …
 truststore_darwin.go
+truststore_java.go
     5→package main
     7→import (
     8→	"bytes"
-    9→	"encoding/asn1"
-    10→	"io/ioutil"
-    11→	"log"
-    12→	"os"
-    13→	"path/filepath"
-    15→	"howett.net/plist"
-    16→)
-    18→var (
-    19→	FirefoxProfiles     = []string{os.Getenv("HOME") + "/Library/Application Support/Firefox/Profiles/*"}
-    20→	CertutilInstallHelp = "brew install nss"
-    21→	NSSBrowsers         = "Firefox"
-    22→)
-    24→// https://github.com/golang/go/issues/24652#issuecomment-399826583
-    25→var trustSettings []interface{}
-    26→var _, _ = plist.Unmarshal(trustSettingsData, &trustSettings)
-    27→var trustSettingsData = []byte(`
-    …
-    52→func (m *mkcert) installPlatform() bool {
-    …
-    105→func (m *mkcert) uninstallPlatform() bool {
-    …
-truststore_java.go
+    9→	"crypto/sha1"
+    10→	"crypto/sha256"
+    11→	"crypto/x509"
+    12→	"encoding/hex"
+    13→	"hash"
+    14→	"os"
+    15→	"os/exec"
+    16→	"path/filepath"
+    17→	"runtime"
+    18→	"strings"
+    19→)
     21→var (
     22→	hasJava    bool
     23→	hasKeytool bool
@@ -185,33 +230,6 @@ truststore_java.go
     110→func execKeytool(cmd *exec.Cmd) ([]byte, error) {
     …
 truststore_linux.go
-    5→package main
-    7→import (
-    8→	"bytes"
-    9→	"fmt"
-    10→	"io/ioutil"
-    11→	"log"
-    12→	"os"
-    13→	"path/filepath"
-    14→	"strings"
-    15→)
-    17→var (
-    18→	FirefoxProfiles = []string{os.Getenv("HOME") + "/.mozilla/firefox/*",
-    19→		os.Getenv("HOME") + "/snap/firefox/common/.mozilla/firefox/*"}
-    20→	NSSBrowsers = "Firefox and/or Chrome/Chromium"
-    …
-    22→	SystemTrustFilename string
-    23→	SystemTrustCommand  []string
-    24→	CertutilInstallHelp string
-    25→)
-    27→func init() {
-    …
-    51→func (m *mkcert) systemTrustFilename() string {
-    52→	return fmt.Sprintf(SystemTrustFilename, strings.Replace(m.caUniqueName(), " ", "_", -1))
-    55→func (m *mkcert) installPlatform() bool {
-    …
-    77→func (m *mkcert) uninstallPlatform() bool {
-    …
 truststore_nss.go
     5→package main
     7→import (
@@ -245,43 +263,3 @@ truststore_nss.go
     131→func (m *mkcert) forEachNSSProfile(f func(profile string)) (found int) {
     …
 truststore_windows.go
-    5→package main
-    7→import (
-    8→	"crypto/x509"
-    9→	"encoding/pem"
-    10→	"fmt"
-    11→	"io/ioutil"
-    12→	"math/big"
-    13→	"os"
-    14→	"path/filepath"
-    15→	"syscall"
-    16→	"unsafe"
-    17→)
-    19→var (
-    20→	FirefoxProfiles     = []string{os.Getenv("USERPROFILE") + "\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles"}
-    21→	CertutilInstallHelp = "" // certutil unsupported on Windows
-    22→	NSSBrowsers         = "Firefox"
-    23→)
-    25→var (
-    26→	modcrypt32                           = syscall.NewLazyDLL("crypt32.dll")
-    27→	procCertAddEncodedCertificateToStore = modcrypt32.NewProc("CertAddEncodedCertificateToStore")
-    28→	procCertCloseStore                   = modcrypt32.NewProc("CertCloseStore")
-    29→	procCertDeleteCertificateFromStore   = modcrypt32.NewProc("CertDeleteCertificateFromStore")
-    30→	procCertDuplicateCertificateContext  = modcrypt32.NewProc("CertDuplicateCertificateContext")
-    31→	procCertEnumCertificatesInStore      = modcrypt32.NewProc("CertEnumCertificatesInStore")
-    32→	procCertOpenSystemStoreW             = modcrypt32.NewProc("CertOpenSystemStoreW")
-    33→)
-    35→func (m *mkcert) installPlatform() bool {
-    …
-    54→func (m *mkcert) uninstallPlatform() bool {
-    …
-    69→type windowsRootStore uintptr
-    …
-    71→func openWindowsRootStore() (windowsRootStore, error) {
-    …
-    83→func (w windowsRootStore) close() error {
-    …
-    91→func (w windowsRootStore) addCert(cert []byte) error {
-    …
-    107→func (w windowsRootStore) deleteCertsWithSerial(serial *big.Int) (bool, error) {
-    …

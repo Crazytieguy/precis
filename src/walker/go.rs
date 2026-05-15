@@ -526,35 +526,132 @@ fn go_depth_factor(file: &Path, ctx: &WalkCtx) -> f64 {
 }
 
 fn package_imports_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx))
+    mix_signals(0.30, 0.55, 0.3, go_depth_factor(file, ctx)) * go_aux_factor(file)
 }
 
 /// Sits below per-decl `Type`-kind value so the scheduler favours
 /// structural anchors in load-bearing files over a blanket name
 /// surface in every `.go` file.
 fn decl_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
-    mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx))
+    mix_signals(0.65, 0.55, 0.35, go_depth_factor(file, ctx)) * go_aux_factor(file)
 }
 
 fn decl_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.70 * kv).min(1.0);
     let fu = (0.85 * kv).min(1.0);
-    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.65, go_depth_factor(file, ctx)) * go_aux_factor(file)
 }
 
 fn decl_doc_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.20 * kv).min(1.0);
     let fu = (0.6 * kv).min(1.0);
-    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.8, go_depth_factor(file, ctx)) * go_aux_factor(file)
 }
 
 fn decl_body_value(file: &Path, info: &DeclInfo, ctx: &WalkCtx) -> f64 {
     let kv = info.kind.kind_weight() * info.visibility_factor();
     let cat = (0.30 * kv).min(1.0);
     let fu = (0.80 * kv).min(1.0);
-    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx))
+    mix_signals(cat, fu, 0.7, go_depth_factor(file, ctx)) * go_aux_factor(file)
+}
+
+/// Damp Go files whose name carries a build-tag suffix (`_linux.go`,
+/// `_windows.go`, `_unix.go`, `_amd64.go`, ...) or matches the shell-
+/// completion-generator convention (`*completions.go` / `*completion.go`,
+/// `active_help.go`). Both classes are aux implementation behind a
+/// portable interface — NS authors anchor on the abstract API declared
+/// in the un-suffixed sibling. The factor is 0.5: keeps the file path
+/// discoverable but pushes its content surfaces past coarser anchors.
+fn go_aux_factor(file: &Path) -> f64 {
+    let Some(name) = file.file_name().and_then(|n| n.to_str()) else {
+        return 1.0;
+    };
+    let lower = name.to_ascii_lowercase();
+    if is_go_completion_filename(&lower) || is_go_build_variant_filename(&lower) {
+        return 0.5;
+    }
+    1.0
+}
+
+/// `*completions.go` / `*completion.go` / `active_help.go`: the cobra
+/// convention for shell-completion code generators. Across the corpus
+/// these are uniformly aux: dense bodies that NS authors universally
+/// ignore (queries about "the Command struct" rarely lead to a
+/// shell-completion generator).
+fn is_go_completion_filename(lower: &str) -> bool {
+    let stem = lower.strip_suffix(".go").unwrap_or(lower);
+    if stem == "active_help" {
+        return true;
+    }
+    // Match `<prefix>completion(s).go` and `<prefix>completions_v<N>.go`.
+    // The bare `completions.go` and the V2 variant both qualify.
+    if stem.ends_with("completions") || stem.ends_with("completion") {
+        return true;
+    }
+    // Versioned form: `bash_completionsV2.go`. tree-sitter parses are
+    // identical to the V1 file; the rename is just for the build-tag-style
+    // V2 fork.
+    if stem.contains("completionsv") || stem.contains("completionv") {
+        return true;
+    }
+    false
+}
+
+/// Go build-tag suffix on a filename. The Go toolchain auto-applies a
+/// build constraint matching the trailing `_<os>` / `_<arch>` /
+/// `_<os>_<arch>` segment, and projects also follow the `_unix` /
+/// `_bsd` / `_other` / `_notwin` informal convention for selecting
+/// non-OS-specific shared variants. Files matching any of these
+/// shapes are conditional-compilation siblings of an un-suffixed
+/// (or sibling-suffixed) abstract interface.
+fn is_go_build_variant_filename(lower: &str) -> bool {
+    let stem = lower.strip_suffix(".go").unwrap_or(lower);
+    let Some((_, suffix)) = stem.rsplit_once('_') else {
+        return false;
+    };
+    matches!(
+        suffix,
+        // Official GOOS values (current and historical).
+        "aix"
+            | "android"
+            | "darwin"
+            | "dragonfly"
+            | "freebsd"
+            | "hurd"
+            | "illumos"
+            | "ios"
+            | "js"
+            | "linux"
+            | "nacl"
+            | "netbsd"
+            | "openbsd"
+            | "plan9"
+            | "solaris"
+            | "wasip1"
+            | "windows"
+            | "zos"
+            // Common informal conventions.
+            | "unix"
+            | "bsd"
+            | "other"
+            | "notwin"
+            | "nonwin"
+            | "win"
+            // GOARCH values frequent enough to surface in cross-platform libraries.
+            | "amd64"
+            | "arm"
+            | "arm64"
+            | "386"
+            | "loong64"
+            | "mips"
+            | "mips64"
+            | "ppc64"
+            | "riscv64"
+            | "s390x"
+            | "wasm"
+    )
 }
 
 fn test_names_value(file: &Path, ctx: &WalkCtx) -> f64 {
