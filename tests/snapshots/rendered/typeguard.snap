@@ -36,35 +36,6 @@ README.rst
 docs/
     api.rst
     conf.py
-        2→from importlib.metadata import version as get_version
-        4→from packaging.version import parse
-        6→extensions = [
-        7→    "sphinx.ext.autodoc",
-        8→    "sphinx.ext.intersphinx",
-        9→    "sphinx_autodoc_typehints",
-        10→]
-        12→templates_path = ["_templates"]
-        13→source_suffix = ".rst"
-        14→master_doc = "index"
-        15→project = "Typeguard"
-        16→author = "Alex Grönholm"
-        17→copyright = "2015, " + author
-        19→v = parse(get_version("typeguard"))
-        20→version = v.base_version
-        21→release = v.public
-        23→language = "en"
-        25→exclude_patterns = ["_build"]
-        26→pygments_style = "sphinx"
-        27→autodoc_default_options = {"members": True}
-        28→autodoc_type_aliases = {
-        29→    "TypeCheckerCallable": "typeguard.TypeCheckerCallable",
-        30→    "TypeCheckFailCallback": "typeguard.TypeCheckFailCallback",
-        31→    "TypeCheckLookupCallback": "typeguard.TypeCheckLookupCallback",
-        32→}
-        33→todo_include_todos = False
-        35→html_theme = "sphinx_rtd_theme"
-        36→htmlhelp_basename = "typeguarddoc"
-        38→intersphinx_mapping = {"python": ("https://docs.python.org/3/", None)}
     contributing.rst
     extending.rst
     features.rst
@@ -191,6 +162,45 @@ src/
             …
         _functions.py
         _importhook.py
+            40→P = ParamSpec("P")
+            41→T = TypeVar("T")
+            45→def _call_with_frames_removed(
+            46→    f: Callable[P, T], *args: P.args, **kwargs: P.kwargs
+            47→) -> T:
+            48→    return f(*args, **kwargs)
+            51→def optimized_cache_from_source(path: str, debug_override: bool | None = None) -> str:
+            52→    return cache_from_source(path, debug_override, optimization=OPTIMIZATION)
+            55→class TypeguardLoader(SourceFileLoader):
+            56→    @staticmethod
+            …
+            99→    def exec_module(self, module: ModuleType) -> None:
+            100→        # Use a custom optimization marker – the import lock should make this monkey
+            101→        # patch safe
+            109→class TypeguardFinder(MetaPathFinder):
+            …
+            120→    def __init__(self, packages: list[str] | None, original_pathfinder: MetaPathFinder):
+            …
+            124→    def find_spec(
+            …
+            138→    def should_instrument(self, module_name: str) -> bool:
+            …
+            156→class ImportHookManager:
+            157→    """
+            158→    A handle that can be used to uninstall the Typeguard import hook.
+            159→    """
+            161→    def __init__(self, hook: MetaPathFinder):
+            162→        self.hook = hook
+            164→    def __enter__(self) -> None:
+            165→        pass
+            167→    def __exit__(
+            …
+            175→    def uninstall(self) -> None:
+            176→        """Uninstall the import hook."""
+            183→def install_import_hook(
+            184→    packages: Iterable[str] | None = None,
+            185→    *,
+            186→    cls: type[TypeguardFinder] = TypeguardFinder,
+            187→) -> ImportHookManager:
         _memo.py
             1→from __future__ import annotations
             3→from typing import Any

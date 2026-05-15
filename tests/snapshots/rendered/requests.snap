@@ -10,6 +10,9 @@ expression: rendered
     CONTRIBUTING.md
     FUNDING.yml
     ISSUE_TEMPLATE/
+        Bug_report.md
+        Custom.md
+        Feature_request.md
     ISSUE_TEMPLATE.md
     SECURITY.md
     dependabot.yml
@@ -87,8 +90,6 @@ docs/
         .gitignore
         LICENSE
         flask_theme_support.py
-            7→class FlaskyStyle(Style):
-            …
     api.rst
     community/
         faq.rst
@@ -99,26 +100,6 @@ docs/
         updates.rst
         vulnerabilities.rst
     conf.py
-        15→import sys
-        16→import os
-        27→import requests
-        38→extensions = [
-        39→    "sphinx.ext.autodoc",
-        40→    "sphinx.ext.intersphinx",
-        41→    "sphinx.ext.todo",
-        42→    "sphinx.ext.viewcode",
-        43→]
-        46→templates_path = ["_templates"]
-        51→source_suffix = ".rst"
-        57→root_doc = "index"
-        60→project = u"Requests"
-        61→copyright = u"Kenneth Reitz and contributors"
-        62→author = u"Kenneth Reitz"
-        69→version = requests.__version__
-        71→release = requests.__version__
-        78→language = None
-        88→exclude_patterns = ["_build"]
-        95→add_function_parentheses = False
     dev/
         authors.rst
         contributing.rst
@@ -248,11 +229,32 @@ src/
         _internal_utils.py
         _types.py
         adapters.py
+            79→DEFAULT_POOLBLOCK = False
+            80→DEFAULT_POOLSIZE = 10
+            81→DEFAULT_RETRIES = 0
+            82→DEFAULT_POOL_TIMEOUT = None
+            85→def _urllib3_request_context(
+            …
+            122→class BaseAdapter:
+            123→    """The Base Transport Adapter"""
+            158→class HTTPAdapter(BaseAdapter):
+            …
         api.py
         auth.py
         certs.py
         compat.py
         cookies.py
+            571→@overload
+            572→def cookiejar_from_dict(
+            573→    cookie_dict: dict[str, str] | None,
+            574→    cookiejar: _CookieJarT,
+            575→    overwrite: bool = True,
+            576→) -> _CookieJarT: ...
+            579→def cookiejar_from_dict(
+            …
+            604→def merge_cookies(
+            605→    cookiejar: CookieJar, cookies: dict[str, str] | CookieJar | None
+            606→) -> CookieJar:
         exceptions.py
             161→class RequestsDependencyWarning(RequestsWarning):
             162→    """An imported dependency doesn't match the expected version range."""

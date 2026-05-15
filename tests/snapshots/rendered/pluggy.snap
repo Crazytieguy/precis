@@ -36,33 +36,12 @@ docs/
     api_reference.rst
     changelog.rst
     conf.py
-        1→from importlib import metadata
-        2→from typing import TYPE_CHECKING
-        5→if TYPE_CHECKING:
-        6→    import sphinx.application
-        9→extensions = [
-        10→    "sphinx.ext.autodoc",
-        11→    "sphinx.ext.doctest",
-        12→    "sphinx.ext.intersphinx",
-        13→    "sphinx.ext.coverage",
-        14→    "sphinx.ext.viewcode",
-        15→]
-        18→templates_path = ["_templates"]
-        20→source_suffix = ".rst"
-        23→master_doc = "index"
-        27→project = "pluggy"
-        28→copyright = "2016, Holger Krekel"
-        29→author = "Holger Krekel"
-        31→release = metadata.version(project)
-        33→version = ".".join(release.split(".")[:2])
-        36→language = "en"
-        38→pygments_style = "sphinx"
-        40→html_theme = "alabaster"
     examples/
         eggsample/
             eggsample/
                 __init__.py
                     1→import pluggy
+                    4→hookimpl = pluggy.HookimplMarker("eggsample")
                 hookspecs.py
                 host.py
                 lib.py
@@ -175,6 +154,17 @@ src/
             525→def _formatdef(func: Callable[..., object]) -> str:
             526→    return f"{func.__name__}{inspect.signature(func)}"
         _result.py
+            1→"""
+            2→Hook wrapper "result" utilities.
+            3→"""
+            5→from __future__ import annotations
+            7→from collections.abc import Callable
+            8→from types import TracebackType
+            9→from typing import cast
+            10→from typing import final
+            11→from typing import Generic
+            12→from typing import TypeAlias
+            13→from typing import TypeVar
             16→_ExcInfo: TypeAlias = tuple[type[BaseException], BaseException, TracebackType | None]
             17→ResultType = TypeVar("ResultType")
             20→class HookCallError(Exception):
@@ -193,6 +183,7 @@ src/
             42→    @property
             43→    def excinfo(self) -> _ExcInfo | None:
             44→        """:meta private:"""
+            45→        exc = self._exception
             51→    @property
             52→    def exception(self) -> BaseException | None:
             53→        """:meta private:"""
@@ -230,7 +221,9 @@ src/
             13→_Processor = Callable[[tuple[str, ...], tuple[Any, ...]], object]
             16→class TagTracer:
             17→    def __init__(self) -> None:
-            …
+            18→        self._tags2proc: dict[tuple[str, ...], _Processor] = {}
+            19→        self._writer: _Writer | None = None
+            20→        self.indent = 0
             22→    def get(self, name: str) -> TagTracerSub:
             23→        return TagTracerSub(self, (name,))
             25→    def _format_message(self, tags: Sequence[str], args: Sequence[object]) -> str:
@@ -240,7 +233,11 @@ src/
             48→    def setwriter(self, writer: _Writer | None) -> None:
             49→        self._writer = writer
             51→    def setprocessor(self, tags: str | tuple[str, ...], processor: _Processor) -> None:
-            …
+            52→        if isinstance(tags, str):
+            53→            tags = tuple(tags.split(":"))
+            54→        else:
+            55→            assert isinstance(tags, tuple)
+            56→        self._tags2proc[tags] = processor
             59→class TagTracerSub:
             60→    def __init__(self, root: TagTracer, tags: tuple[str, ...]) -> None:
             61→        self.root = root

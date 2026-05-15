@@ -228,6 +228,22 @@ fn non_essential_factor_inner(
         if name == "inner.rs" || (ext == Some("rs") && name.starts_with("__")) {
             return 0.5;
         }
+        // Python scripts under a `docs/` subtree are Sphinx config
+        // (`conf.py`), site builders (jq's `build_*.py`), or schema
+        // validators — uniformly aux to the project's API surface.
+        // Demote so they don't crowd source-code anchors. Pluggy's
+        // `docs/examples/*.py` survives because the `examples` dir
+        // classifier already returns 0.2 in the loop above (the
+        // existing `non_essential_factor` flow checks dir components
+        // before this file-level rule fires, so once the loop returns
+        // we know the file's directory chain didn't contain `examples`).
+        if ext == Some("py")
+            && target
+                .components()
+                .any(|c| c.as_os_str().to_str().is_some_and(|s| s == "docs"))
+        {
+            return 0.3;
+        }
         // Co-located test files: `foo.test.ts`, `foo.spec.ts`,
         // `foo_test.go`, `foo.test.tsx`, `foo.test.js`, `_test.py`
         // (Django / pytest convention), `test_*.py` (Python pytest

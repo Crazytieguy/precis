@@ -55,24 +55,7 @@ docs/
         5→directory. The manual is a YAML file in `content/manual`.
     build_manpage.py
     build_mantests.py
-        2→import yaml
-        3→import re
-        5→regex_program_pattern = re.compile(
-        6→    r'\b(?:test|match|capture|scan|split|splits|sub|gsub)\s*\(')
     build_website.py
-        13→env = Environment(
-        14→    loader=FileSystemLoader('templates'),
-        15→    autoescape=select_autoescape(['html.j2']),
-        16→)
-        19→def load_yml_file(fn):
-        20→    with open(fn) as f:
-        21→        return yaml.safe_load(f)
-        43→def raise_handler(message):
-        44→    raise Exception(message)
-        50→def generate_file(env, fname):
-        …
-        73→def copy_public_files(root=''):
-        …
     content/
         download/
         index.yml
@@ -94,9 +77,6 @@ docs/
         manual.html.j2
         shared/
     validate_manual_schema.py
-        2→import jsonschema
-        3→import sys
-        4→import yaml
 jq.1.prebuilt
 jq.spec
 libjq.pc.in
@@ -284,6 +264,12 @@ src/
         259→#include <string.h>
         260→#include <errno.h>
         261→#include <stdlib.h>
+        518→void yyset_lval ( YYSTYPE * yylval_param , yyscan_t yyscanner );
+        …
+        520→       YYLTYPE *yyget_lloc ( yyscan_t yyscanner );
+        …
+        522→        void yyset_lloc ( YYLTYPE * yylloc_param , yyscan_t yyscanner );
+        …
     lexer.l
     libm.h
     linker.c

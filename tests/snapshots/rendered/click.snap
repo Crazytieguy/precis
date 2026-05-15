@@ -115,8 +115,6 @@ docs/
     commands.md
     complex.md
     conf.py
-        1→from pallets_sphinx_themes import get_version
-        2→from pallets_sphinx_themes import ProjectLink
     contrib.md
         3→# click-contrib
         …
@@ -147,6 +145,15 @@ docs/
     extending-click.md
         1→# Extending Click
         …
+        3→```{currentmodule} click
+        4→```
+        6→In addition to common functionality that is implemented in the library itself, there are countless patterns that can be
+        7→implemented by extending Click. This page should give some insight into what can be accomplished.
+        9→```{contents}
+        10→:depth: 2
+        11→:local: true
+        12→```
+        14→(custom-groups)=
         16→## Custom Groups
         …
         73→## Command Aliases
