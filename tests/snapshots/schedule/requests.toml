@@ -117,120 +117,10 @@ kind = "ellipsis"
 
 [[batches]]
 position = 5
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/ext" })'
-descriptor = "listing of 'ext'"
-cost_tokens = 34
-cum_tokens = 175
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/ext"
-entries = ["LICENSE", "kr.png", "psf.png", "requests-logo-compressed.png", "requests-logo.ai", "requests-logo.png", "requests-logo.svg"]
-
-[[batches]]
-position = 6
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py" })'
-descriptor = "python imports in setup.py"
-cost_tokens = 16
-cum_tokens = 191
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py"
-start = 7
-end = 7
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/docs" })'
-descriptor = "listing of 'docs'"
-cost_tokens = 54
-cum_tokens = 245
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/docs"
-entries = [".nojekyll", "Makefile", "_static", "_templates", "_themes", "api.rst", "community", "conf.py", "dev", "index.rst", "make.bat", "requirements.txt", "user"]
-
-[[batches]]
-position = 8
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/docs/user" })'
-descriptor = "listing of 'docs/user'"
-cost_tokens = 21
-cum_tokens = 266
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/docs/user"
-entries = ["advanced.rst", "authentication.rst", "install.rst", "quickstart.rst"]
-
-[[batches]]
-position = 9
-key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/requests/README.md", section_index: 1 })'
-descriptor = "README.md section #1"
-cost_tokens = 50
-cum_tokens = 316
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
-start = 30
-end = 30
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
-start = 32
-end = 32
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
-start = 34
-end = 36
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
-start = 38
-end = 38
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 10
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests" })'
 descriptor = "listing of 'src/requests'"
 cost_tokens = 90
-cum_tokens = 406
+cum_tokens = 231
 
 [batches.content]
 kind = "fs"
@@ -240,11 +130,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests"
 entries = ["__init__.py", "__version__.py", "_internal_utils.py", "_types.py", "adapters.py", "api.py", "auth.py", "certs.py", "compat.py", "cookies.py", "exceptions.py", "help.py", "hooks.py", "models.py", "packages.py", "py.typed", "sessions.py", "status_codes.py", "structures.py", "utils.py"]
 
 [[batches]]
-position = 11
+position = 6
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/requests/__init__.py"
 cost_tokens = 34
-cum_tokens = 440
+cum_tokens = 265
 
 [batches.content]
 kind = "lines"
@@ -282,11 +172,11 @@ end = 100
 kind = "ellipsis"
 
 [[batches]]
-position = 12
+position = 7
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/__init__.py", start_line: 99 })'
 descriptor = "python decl at src/requests/__init__.py:99"
 cost_tokens = 14
-cum_tokens = 454
+cum_tokens = 279
 
 [batches.content]
 kind = "lines"
@@ -300,11 +190,11 @@ end = 100
 kind = "full"
 
 [[batches]]
-position = 13
+position = 8
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/__init__.py", start_line: 60 })'
 descriptor = "python decl at src/requests/__init__.py:60"
 cost_tokens = 45
-cum_tokens = 499
+cum_tokens = 324
 
 [batches.content]
 kind = "lines"
@@ -313,6 +203,116 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/__init__.py"
 start = 60
 end = 64
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 9
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/ext" })'
+descriptor = "listing of 'ext'"
+cost_tokens = 34
+cum_tokens = 358
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/ext"
+entries = ["LICENSE", "kr.png", "psf.png", "requests-logo-compressed.png", "requests-logo.ai", "requests-logo.png", "requests-logo.svg"]
+
+[[batches]]
+position = 10
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py" })'
+descriptor = "python imports in setup.py"
+cost_tokens = 16
+cum_tokens = 374
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py"
+start = 1
+end = 1
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/setup.py"
+start = 7
+end = 7
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/docs" })'
+descriptor = "listing of 'docs'"
+cost_tokens = 54
+cum_tokens = 428
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/docs"
+entries = [".nojekyll", "Makefile", "_static", "_templates", "_themes", "api.rst", "community", "conf.py", "dev", "index.rst", "make.bat", "requirements.txt", "user"]
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/docs/user" })'
+descriptor = "listing of 'docs/user'"
+cost_tokens = 21
+cum_tokens = 449
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/docs/user"
+entries = ["advanced.rst", "authentication.rst", "install.rst", "quickstart.rst"]
+
+[[batches]]
+position = 13
+key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/requests/README.md", section_index: 1 })'
+descriptor = "README.md section #1"
+cost_tokens = 50
+cum_tokens = 499
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
+start = 30
+end = 30
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
+start = 32
+end = 32
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
+start = 34
+end = 36
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/requests/README.md"
+start = 38
+end = 38
 
 [batches.content.spans.render]
 kind = "full"
@@ -663,10 +663,52 @@ entries = ["close-issues.yml", "codeql-analysis.yml", "lint.yml", "lock-issues.y
 
 [[batches]]
 position = 30
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 77
+cum_tokens = 1122
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests"
+entries = ["__init__.py", "certs", "compat.py", "conftest.py", "test_adapters.py", "test_help.py", "test_hooks.py", "test_lowlevel.py", "test_packages.py", "test_requests.py", "test_structures.py", "test_testserver.py", "test_utils.py", "testserver", "utils.py"]
+
+[[batches]]
+position = 31
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests/testserver" })'
+descriptor = "listing of 'tests/testserver'"
+cost_tokens = 10
+cum_tokens = 1132
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests/testserver"
+entries = ["__init__.py", "server.py"]
+
+[[batches]]
+position = 32
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests/certs" })'
+descriptor = "listing of 'tests/certs'"
+cost_tokens = 14
+cum_tokens = 1146
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests/certs"
+entries = ["README.md", "expired", "mtls", "valid"]
+
+[[batches]]
+position = 33
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/docs/dev" })'
 descriptor = "listing of 'docs/dev'"
 cost_tokens = 10
-cum_tokens = 1055
+cum_tokens = 1156
 
 [batches.content]
 kind = "fs"
@@ -676,11 +718,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/requests/docs/dev"
 entries = ["authors.rst", "contributing.rst"]
 
 [[batches]]
-position = 31
+position = 34
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/packages.py" })'
 descriptor = "python imports in src/requests/packages.py"
 cost_tokens = 19
-cum_tokens = 1074
+cum_tokens = 1175
 
 [batches.content]
 kind = "lines"
@@ -702,11 +744,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 32
+position = 35
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/__init__.py" })'
 descriptor = "python imports in src/requests/__init__.py"
 cost_tokens = 878
-cum_tokens = 1952
+cum_tokens = 2053
 
 [batches.content]
 kind = "lines"
@@ -832,11 +874,11 @@ end = 214
 kind = "full"
 
 [[batches]]
-position = 33
+position = 36
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/hooks.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/requests/hooks.py"
 cost_tokens = 45
-cum_tokens = 1997
+cum_tokens = 2098
 
 [batches.content]
 kind = "lines"
@@ -882,11 +924,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 34
+position = 37
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/hooks.py", start_line: 25 })'
 descriptor = "python decl at src/requests/hooks.py:25"
 cost_tokens = 0
-cum_tokens = 1997
+cum_tokens = 2098
 
 [batches.content]
 kind = "lines"
@@ -900,11 +942,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 35
+position = 38
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/hooks.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python decl body at src/requests/hooks.py:25 body 26"
 cost_tokens = 15
-cum_tokens = 2012
+cum_tokens = 2113
 
 [batches.content]
 kind = "lines"
@@ -918,11 +960,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 36
+position = 39
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/hooks.py", start_line: 32 })'
 descriptor = "python decl at src/requests/hooks.py:32"
 cost_tokens = 51
-cum_tokens = 2063
+cum_tokens = 2164
 
 [batches.content]
 kind = "lines"
@@ -936,11 +978,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 37
+position = 40
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/hooks.py", start_line: 32 })'
 descriptor = "python decl doc at src/requests/hooks.py:32"
 cost_tokens = 18
-cum_tokens = 2081
+cum_tokens = 2182
 
 [batches.content]
 kind = "lines"
@@ -954,11 +996,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 38
+position = 41
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/requests/sessions.py"
 cost_tokens = 55
-cum_tokens = 2136
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1044,11 +1086,11 @@ end = 909
 kind = "ellipsis"
 
 [[batches]]
-position = 39
+position = 42
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 127 })'
 descriptor = "python decl at src/requests/sessions.py:127"
 cost_tokens = 0
-cum_tokens = 2136
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1062,11 +1104,11 @@ end = 127
 kind = "full"
 
 [[batches]]
-position = 40
+position = 43
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 395 })'
 descriptor = "python decl at src/requests/sessions.py:395"
 cost_tokens = 0
-cum_tokens = 2136
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1080,11 +1122,11 @@ end = 395
 kind = "full"
 
 [[batches]]
-position = 41
+position = 44
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 908 })'
 descriptor = "python decl at src/requests/sessions.py:908"
 cost_tokens = 0
-cum_tokens = 2136
+cum_tokens = 2237
 
 [batches.content]
 kind = "lines"
@@ -1098,11 +1140,11 @@ end = 908
 kind = "full"
 
 [[batches]]
-position = 42
+position = 45
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 908, body_start_line: 920 })'
 descriptor = "python decl body at src/requests/sessions.py:908 body 920"
 cost_tokens = 8
-cum_tokens = 2144
+cum_tokens = 2245
 
 [batches.content]
 kind = "lines"
@@ -1116,11 +1158,11 @@ end = 920
 kind = "full"
 
 [[batches]]
-position = 43
+position = 46
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 76 })'
 descriptor = "python decl at src/requests/sessions.py:76"
 cost_tokens = 29
-cum_tokens = 2173
+cum_tokens = 2274
 
 [batches.content]
 kind = "lines"
@@ -1134,11 +1176,11 @@ end = 78
 kind = "full"
 
 [[batches]]
-position = 44
+position = 47
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 127 })'
 descriptor = "python class body at src/requests/sessions.py:127"
 cost_tokens = 30
-cum_tokens = 2203
+cum_tokens = 2304
 
 [batches.content]
 kind = "lines"
@@ -1152,11 +1194,11 @@ end = 130
 kind = "full"
 
 [[batches]]
-position = 45
+position = 48
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 108 })'
 descriptor = "python decl at src/requests/sessions.py:108"
 cost_tokens = 51
-cum_tokens = 2254
+cum_tokens = 2355
 
 [batches.content]
 kind = "lines"
@@ -1170,11 +1212,11 @@ end = 112
 kind = "full"
 
 [[batches]]
-position = 46
+position = 49
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 108 })'
 descriptor = "python decl doc at src/requests/sessions.py:108"
 cost_tokens = 52
-cum_tokens = 2306
+cum_tokens = 2407
 
 [batches.content]
 kind = "lines"
@@ -1196,11 +1238,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 47
+position = 50
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/exceptions.py", chunk_index: 2 })'
 descriptor = "python decl names surface #2 in src/requests/exceptions.py"
 cost_tokens = 14
-cum_tokens = 2320
+cum_tokens = 2421
 
 [batches.content]
 kind = "lines"
@@ -1222,11 +1264,11 @@ end = 162
 kind = "ellipsis"
 
 [[batches]]
-position = 48
+position = 51
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/exceptions.py", start_line: 161 })'
 descriptor = "python decl at src/requests/exceptions.py:161"
 cost_tokens = 0
-cum_tokens = 2320
+cum_tokens = 2421
 
 [batches.content]
 kind = "lines"
@@ -1240,11 +1282,11 @@ end = 161
 kind = "full"
 
 [[batches]]
-position = 49
+position = 52
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/exceptions.py", start_line: 161 })'
 descriptor = "python decl doc at src/requests/exceptions.py:161"
 cost_tokens = 14
-cum_tokens = 2334
+cum_tokens = 2435
 
 [batches.content]
 kind = "lines"
@@ -1258,11 +1300,11 @@ end = 162
 kind = "full"
 
 [[batches]]
-position = 50
+position = 53
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/requests/structures.py"
 cost_tokens = 61
-cum_tokens = 2395
+cum_tokens = 2496
 
 [batches.content]
 kind = "lines"
@@ -1308,11 +1350,11 @@ end = 97
 kind = "ellipsis"
 
 [[batches]]
-position = 51
+position = 54
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", start_line: 20 })'
 descriptor = "python decl at src/requests/structures.py:20"
 cost_tokens = 0
-cum_tokens = 2395
+cum_tokens = 2496
 
 [batches.content]
 kind = "lines"
@@ -1326,11 +1368,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 52
+position = 55
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", start_line: 96 })'
 descriptor = "python decl at src/requests/structures.py:96"
 cost_tokens = 0
-cum_tokens = 2395
+cum_tokens = 2496
 
 [batches.content]
 kind = "lines"
@@ -1344,11 +1386,11 @@ end = 96
 kind = "full"
 
 [[batches]]
-position = 53
+position = 56
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", start_line: 96 })'
 descriptor = "python class body at src/requests/structures.py:96"
 cost_tokens = 9
-cum_tokens = 2404
+cum_tokens = 2505
 
 [batches.content]
 kind = "lines"
@@ -1362,11 +1404,11 @@ end = 99
 kind = "full"
 
 [[batches]]
-position = 54
+position = 57
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", start_line: 96 })'
 descriptor = "python decl doc at src/requests/structures.py:96"
 cost_tokens = 8
-cum_tokens = 2412
+cum_tokens = 2513
 
 [batches.content]
 kind = "lines"
@@ -1380,11 +1422,11 @@ end = 97
 kind = "full"
 
 [[batches]]
-position = 55
+position = 58
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/structures.py", start_line: 20 })'
 descriptor = "python class body at src/requests/structures.py:20"
 cost_tokens = 28
-cum_tokens = 2440
+cum_tokens = 2541
 
 [batches.content]
 kind = "lines"
@@ -1406,11 +1448,11 @@ end = 88
 kind = "full"
 
 [[batches]]
-position = 56
+position = 59
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/requests/src/requests/sessions.py", start_line: 76 })'
 descriptor = "python decl doc at src/requests/sessions.py:76"
 cost_tokens = 67
-cum_tokens = 2507
+cum_tokens = 2608
 
 [batches.content]
 kind = "lines"
@@ -1422,48 +1464,6 @@ end = 82
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 57
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 77
-cum_tokens = 2584
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests"
-entries = ["__init__.py", "certs", "compat.py", "conftest.py", "test_adapters.py", "test_help.py", "test_hooks.py", "test_lowlevel.py", "test_packages.py", "test_requests.py", "test_structures.py", "test_testserver.py", "test_utils.py", "testserver", "utils.py"]
-
-[[batches]]
-position = 58
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests/testserver" })'
-descriptor = "listing of 'tests/testserver'"
-cost_tokens = 10
-cum_tokens = 2594
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests/testserver"
-entries = ["__init__.py", "server.py"]
-
-[[batches]]
-position = 59
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/requests/tests/certs" })'
-descriptor = "listing of 'tests/certs'"
-cost_tokens = 14
-cum_tokens = 2608
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/requests/tests/certs"
-entries = ["README.md", "expired", "mtls", "valid"]
 
 [[batches]]
 position = 60

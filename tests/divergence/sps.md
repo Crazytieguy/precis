@@ -44,9 +44,9 @@ Score(3000)=0.666 I=0.827 C=0.535 ns_rows≤3K=19/49 (reached=9 partial=3 missin
 | walker |  | 1115 | 14 | listing of 'sps-core/src/utils' |  |  | 0.700 |
 | walker |  | 1132 | 17 | listing of 'sps-core/src/uninstall' |  |  | 0.701 |
 | walker |  | 1149 | 17 | listing of 'sps-core/src/upgrade' |  |  | 0.703 |
-| walker |  | 1165 | 16 | mod/use plumbing in sps-core/src/pipeline/mod.rs |  |  | 0.703 |
-| walker |  | 1185 | 20 | listing of 'sps-core/src/install' |  |  | 0.703 |
-| walker |  | 1212 | 27 | pub item at sps-core/src/install/mod.rs:17 |  |  | 0.703 |
+| walker |  | 1169 | 20 | listing of 'sps-core/src/install' |  |  | 0.703 |
+| walker |  | 1196 | 27 | pub item at sps-core/src/install/mod.rs:17 |  |  | 0.703 |
+| walker |  | 1212 | 16 | mod/use plumbing in sps-core/src/pipeline/mod.rs |  |  | 0.703 |
 | walker |  | 1235 | 23 | pub item body at sps-core/src/install/mod.rs:17 body 18 |  |  | 0.703 |
 | walker |  | 1253 | 18 | mod/use plumbing in sps-core/src/utils/mod.rs |  |  | 0.703 |
 | walker |  | 1295 | 42 | mod/use plumbing in sps-core/src/check/mod.rs |  |  | 0.703 |

@@ -147,9 +147,16 @@ fn dir_listing_value(dir: &Path, children: &BTreeMap<String, EntryKind>, ctx: &W
     let readme_cited = ctx.is_readme_cited(dir);
     let (cat, fu, ztu) = if dir == ctx.root() {
         (0.95, 0.6, 0.5)
-    } else if src_of_sibling_modules || sibling_module_dir {
+    } else if src_of_sibling_modules || sibling_module_dir || module_source_dir {
+        // `module_source_dir` joins the sibling-module tier: a directory
+        // with its own module entrypoint (`__init__.py` / `index.ts` /
+        // `mod.rs`) is the package's API surface root, and its listing
+        // is itself a high-value NS anchor (rich/ NS row 1.10 is "rich/
+        // package listing — all ~80 modules"). At the lower 0.6 cat,
+        // an 80-name listing's ratio loses to small sibling listings of
+        // peripheral dirs.
         (0.75, 0.55, 0.35)
-    } else if source_dir || module_source_dir || source_inventory_dir || readme_cited {
+    } else if source_dir || source_inventory_dir || readme_cited {
         // README-cited dirs (an `examples/` directory the README links
         // canonical scripts from) are part of the documented public
         // surface; treat them on par with source-inventory dirs so the

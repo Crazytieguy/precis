@@ -46,12 +46,12 @@ Score(3000)=0.573 I=0.760 C=0.433 ns_rows≤3K=21/41 (reached=9 partial=3 missin
 | ns | 1537 |  | 155 | D2 class + RootStreamBuilder method names | 2.9 |  | 0.401 |
 | walker |  | 1738 | 249 | export at packages/d2ts/src/electric/index.ts:40 |  |  | 0.402 |
 | ns | 1760 |  | 223 | Operator interfaces: IOperator, IDifferenceStreamReader/Writer | 2.10 |  | 0.375 |
-| walker |  | 1773 | 35 | imports in packages/d2ts/src/sqlite/index.ts |  |  | 0.375 |
-| walker |  | 1818 | 45 | export doc at packages/d2ts/src/electric/index.ts:328 |  |  | 0.375 |
-| walker |  | 2006 | 188 | export body at packages/d2ts/src/electric/index.ts:328 body 333 |  |  | 0.375 |
-| walker |  | 2021 | 15 | export names surface in packages/d2ts/src/sqlite/version-index.ts |  |  | 0.375 |
-| ns | 2056 |  | 296 | ID2 + IStreamBuilder shape | 2.11 |  | 0.351 |
-| walker |  | 2119 | 98 | listing of 'packages/d2ts/src/operators' |  |  | 0.458 |
+| walker |  | 1836 | 98 | listing of 'packages/d2ts/src/operators' |  |  | 0.489 |
+| walker |  | 1871 | 35 | imports in packages/d2ts/src/sqlite/index.ts |  |  | 0.489 |
+| walker |  | 1916 | 45 | export doc at packages/d2ts/src/electric/index.ts:328 |  |  | 0.489 |
+| ns | 2056 |  | 296 | ID2 + IStreamBuilder shape | 2.11 |  | 0.457 |
+| walker |  | 2104 | 188 | export body at packages/d2ts/src/electric/index.ts:328 body 333 |  |  | 0.458 |
+| walker |  | 2119 | 15 | export names surface in packages/d2ts/src/sqlite/version-index.ts |  |  | 0.458 |
 | walker |  | 2190 | 71 | export doc at packages/d2ts/src/electric/index.ts:222 |  |  | 0.458 |
 | walker |  | 2260 | 70 | imports in packages/d2ts/src/index.ts |  |  | 0.486 |
 | ns | 2436 |  | 380 | Top-level README — operator catalog with descriptions | 2.12 |  | 0.461 |

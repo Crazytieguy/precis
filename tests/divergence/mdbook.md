@@ -92,10 +92,10 @@ Score(3000)=0.552 I=0.762 C=0.400 ns_rows≤3K=22/49 (reached=6 partial=5 missin
 | walker |  | 2382 | 18 | listing of 'crates/mdbook-core/src' |  |  | 0.547 |
 | walker |  | 2386 | 4 | listing of 'crates/mdbook-core/src/book' |  |  | 0.547 |
 | walker |  | 2407 | 21 | pub item at crates/mdbook-core/src/lib.rs:7 |  |  | 0.547 |
-| walker |  | 2426 | 19 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.549 |
-| walker |  | 2444 | 18 | listing of 'crates/mdbook-core/src/utils' |  |  | 0.569 |
-| walker |  | 2461 | 17 | pub item at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.569 |
-| walker |  | 2471 | 10 | crate-doc lede in crates/mdbook-core/src/utils/mod.rs |  |  | 0.569 |
+| walker |  | 2425 | 18 | listing of 'crates/mdbook-core/src/utils' |  |  | 0.567 |
+| walker |  | 2442 | 17 | pub item at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.567 |
+| walker |  | 2452 | 10 | crate-doc lede in crates/mdbook-core/src/utils/mod.rs |  |  | 0.567 |
+| walker |  | 2471 | 19 | crate-doc lede in crates/mdbook-core/src/lib.rs |  |  | 0.569 |
 | walker |  | 2505 | 34 | mod/use plumbing in crates/mdbook-core/src/lib.rs |  |  | 0.576 |
 | walker |  | 2521 | 16 | pub-item doc lede at crates/mdbook-core/src/utils/mod.rs:29 |  |  | 0.576 |
 | walker |  | 2533 | 12 | macro_export names across crates/mdbook-core/src/utils |  |  | 0.576 |

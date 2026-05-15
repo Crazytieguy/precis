@@ -863,10 +863,24 @@ kind = "full"
 
 [[batches]]
 position = 28
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators" })'
+descriptor = "listing of 'packages/d2ts/src/operators'"
+cost_tokens = 98
+cum_tokens = 1836
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators"
+entries = ["base.ts", "buffer.ts", "concat.ts", "consolidate.ts", "count.ts", "debug.ts", "distinct.ts", "filter.ts", "filterBy.ts", "groupBy.ts", "index.ts", "iterate.ts", "join.ts", "keying.ts", "map.ts", "negate.ts", "orderBy.ts", "output.ts", "pipe.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts"]
+
+[[batches]]
+position = 29
 key = 'Typescript(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/index.ts" })'
 descriptor = "imports in packages/d2ts/src/sqlite/index.ts"
 cost_tokens = 35
-cum_tokens = 1773
+cum_tokens = 1871
 
 [batches.content]
 kind = "lines"
@@ -880,11 +894,11 @@ end = 3
 kind = "full"
 
 [[batches]]
-position = 29
+position = 30
 key = 'Typescript(ExportDoc { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/electric/index.ts", start_line: 328 })'
 descriptor = "export doc at packages/d2ts/src/electric/index.ts:328"
 cost_tokens = 45
-cum_tokens = 1818
+cum_tokens = 1916
 
 [batches.content]
 kind = "lines"
@@ -898,11 +912,11 @@ end = 327
 kind = "full"
 
 [[batches]]
-position = 30
+position = 31
 key = 'Typescript(ExportBody { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/electric/index.ts", start_line: 328, body_start_line: 333 })'
 descriptor = "export body at packages/d2ts/src/electric/index.ts:328 body 333"
 cost_tokens = 188
-cum_tokens = 2006
+cum_tokens = 2104
 
 [batches.content]
 kind = "lines"
@@ -916,11 +930,11 @@ end = 348
 kind = "full"
 
 [[batches]]
-position = 31
+position = 32
 key = 'Typescript(ExportNames { file: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/sqlite/version-index.ts", chunk_index: 0, export_count: 1, type_only_export_count: 0 })'
 descriptor = "export names surface in packages/d2ts/src/sqlite/version-index.ts"
 cost_tokens = 15
-cum_tokens = 2021
+cum_tokens = 2119
 
 [batches.content]
 kind = "lines"
@@ -940,20 +954,6 @@ end = 61
 
 [batches.content.spans.render]
 kind = "ellipsis"
-
-[[batches]]
-position = 32
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators" })'
-descriptor = "listing of 'packages/d2ts/src/operators'"
-cost_tokens = 98
-cum_tokens = 2119
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/d2ts/packages/d2ts/src/operators"
-entries = ["base.ts", "buffer.ts", "concat.ts", "consolidate.ts", "count.ts", "debug.ts", "distinct.ts", "filter.ts", "filterBy.ts", "groupBy.ts", "index.ts", "iterate.ts", "join.ts", "keying.ts", "map.ts", "negate.ts", "orderBy.ts", "output.ts", "pipe.ts", "reduce.ts", "topK.ts", "topKWithFractionalIndex.ts"]
 
 [[batches]]
 position = 33

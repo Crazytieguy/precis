@@ -16,42 +16,42 @@ Score(3000)=0.512 I=0.795 C=0.329 ns_rows≤3K=20/50 (reached=7 partial=3 missin
 | walker |  | 277 | 38 | listing of 'src' |  |  | 0.772 |
 | walker |  | 288 | 11 | macro_export names across src |  |  | 0.772 |
 | walker |  | 298 | 10 | entry item at src/main.rs:111 |  |  | 0.772 |
-| ns | 329 |  | 144 | Cargo package metadata | 1.6 |  | 0.788 |
-| walker |  | 341 | 43 | entry item body at src/main.rs:111 body 112 |  |  | 0.788 |
-| walker |  | 357 | 16 | listing of 'src/config' |  |  | 0.789 |
+| walker |  | 314 | 16 | listing of 'src/config' |  |  | 0.773 |
+| ns | 329 |  | 144 | Cargo package metadata | 1.6 |  | 0.789 |
+| walker |  | 357 | 43 | entry item body at src/main.rs:111 body 112 |  |  | 0.789 |
 | walker |  | 377 | 20 | pub item at src/clipboard.rs:28 |  |  | 0.789 |
 | ns | 391 |  | 62 | ContentType variants — locations only | 2.1 |  | 0.721 |
-| walker |  | 417 | 40 | pub item at src/edit.rs:10 |  |  | 0.721 |
-| walker |  | 508 | 91 | pub-item names surface in src/config/mod.rs |  |  | 0.721 |
-| ns | 534 |  | 143 | ContentType enum context | 2.2 | 2.1 | 0.655 |
-| walker |  | 535 | 27 | pub item at src/config/mod.rs:100 |  |  | 0.655 |
-| walker |  | 576 | 41 | pub item at src/config/mod.rs:83 |  |  | 0.655 |
-| walker |  | 628 | 52 | pub item at src/config/mod.rs:91 |  |  | 0.655 |
-| ns | 653 |  | 119 | Parser trait method signatures | 2.3 |  | 0.618 |
-| walker |  | 683 | 55 | pub item at src/config/mod.rs:53 |  |  | 0.618 |
-| walker |  | 740 | 57 | pub item at src/config/mod.rs:74 |  |  | 0.618 |
-| walker |  | 819 | 79 | pub item at src/config/mod.rs:62 |  |  | 0.619 |
-| ns | 836 |  | 183 | ContentType::new_parser dispatch | 2.4 |  | 0.563 |
-| walker |  | 901 | 82 | pub item at src/config/mod.rs:106 |  |  | 0.563 |
-| ns | 931 |  | 95 | Tree struct fields | 2.5 |  | 0.528 |
-| walker |  | 983 | 82 | pub item at src/config/mod.rs:118 |  |  | 0.529 |
-| walker |  | 1018 | 35 | listing of 'src/ui' |  |  | 0.532 |
-| walker |  | 1036 | 18 | pub item at src/ui/mod.rs:35 |  |  | 0.532 |
-| walker |  | 1070 | 34 | pub-item names surface in src/debug.rs |  |  | 0.532 |
-| walker |  | 1070 | 0 | pub item at src/debug.rs:19 |  |  | 0.532 |
-| walker |  | 1070 | 0 | pub item at src/debug.rs:23 |  |  | 0.532 |
-| walker |  | 1079 | 9 | pub item body at src/debug.rs:19 body 20 |  |  | 0.532 |
-| walker |  | 1100 | 21 | pub-item names surface in src/ui/header.rs |  |  | 0.532 |
-| walker |  | 1123 | 23 | pub item at src/ui/header.rs:41 |  |  | 0.532 |
-| walker |  | 1144 | 21 | pub-item names surface in src/ui/popup.rs |  |  | 0.465 |
-| ns | 1144 |  | 213 | ItemValue + FieldType | 2.6 |  | 0.465 |
-| walker |  | 1209 | 65 | headings outline in README.md |  |  | 0.497 |
-| ns | 1215 |  | 71 | Tree public fn signatures | 2.7 |  | 0.481 |
-| walker |  | 1252 | 43 | listing of 'src/parse' |  |  | 0.482 |
-| walker |  | 1273 | 21 | pub-item names surface in src/parse/mod.rs |  |  | 0.485 |
-| walker |  | 1301 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.487 |
-| ns | 1432 |  | 217 | main.rs run() — config + flag dispatch | 2.8 |  | 0.442 |
-| walker |  | 1462 | 161 | pub item at src/parse/mod.rs:18 |  |  | 0.522 |
+| walker |  | 412 | 35 | listing of 'src/ui' |  |  | 0.724 |
+| walker |  | 430 | 18 | pub item at src/ui/mod.rs:35 |  |  | 0.724 |
+| walker |  | 473 | 43 | listing of 'src/parse' |  |  | 0.726 |
+| walker |  | 494 | 21 | pub-item names surface in src/parse/mod.rs |  |  | 0.730 |
+| walker |  | 522 | 28 | impl method sigs in src/parse/mod.rs |  |  | 0.730 |
+| ns | 534 |  | 143 | ContentType enum context | 2.2 | 2.1 | 0.663 |
+| walker |  | 562 | 40 | pub item at src/edit.rs:10 |  |  | 0.663 |
+| walker |  | 653 | 91 | pub-item names surface in src/config/mod.rs |  |  | 0.626 |
+| ns | 653 |  | 119 | Parser trait method signatures | 2.3 |  | 0.626 |
+| walker |  | 680 | 27 | pub item at src/config/mod.rs:100 |  |  | 0.626 |
+| walker |  | 721 | 41 | pub item at src/config/mod.rs:83 |  |  | 0.626 |
+| walker |  | 773 | 52 | pub item at src/config/mod.rs:91 |  |  | 0.626 |
+| walker |  | 828 | 55 | pub item at src/config/mod.rs:53 |  |  | 0.626 |
+| ns | 836 |  | 183 | ContentType::new_parser dispatch | 2.4 |  | 0.571 |
+| walker |  | 885 | 57 | pub item at src/config/mod.rs:74 |  |  | 0.572 |
+| ns | 931 |  | 95 | Tree struct fields | 2.5 |  | 0.536 |
+| walker |  | 964 | 79 | pub item at src/config/mod.rs:62 |  |  | 0.537 |
+| walker |  | 1046 | 82 | pub item at src/config/mod.rs:106 |  |  | 0.538 |
+| walker |  | 1128 | 82 | pub item at src/config/mod.rs:118 |  |  | 0.539 |
+| ns | 1144 |  | 213 | ItemValue + FieldType | 2.6 |  | 0.470 |
+| walker |  | 1162 | 34 | pub-item names surface in src/debug.rs |  |  | 0.470 |
+| walker |  | 1162 | 0 | pub item at src/debug.rs:19 |  |  | 0.470 |
+| walker |  | 1162 | 0 | pub item at src/debug.rs:23 |  |  | 0.470 |
+| walker |  | 1171 | 9 | pub item body at src/debug.rs:19 body 20 |  |  | 0.470 |
+| walker |  | 1192 | 21 | pub-item names surface in src/ui/header.rs |  |  | 0.471 |
+| walker |  | 1215 | 23 | pub item at src/ui/header.rs:41 |  |  | 0.455 |
+| ns | 1215 |  | 71 | Tree public fn signatures | 2.7 |  | 0.455 |
+| walker |  | 1236 | 21 | pub-item names surface in src/ui/popup.rs |  |  | 0.456 |
+| walker |  | 1397 | 161 | pub item at src/parse/mod.rs:18 |  |  | 0.545 |
+| ns | 1432 |  | 217 | main.rs run() — config + flag dispatch | 2.8 |  | 0.495 |
+| walker |  | 1462 | 65 | headings outline in README.md |  |  | 0.522 |
 | walker |  | 1491 | 29 | pub item at src/ui/popup.rs:13 |  |  | 0.522 |
 | walker |  | 1515 | 24 | pub-item names surface in src/ui/footer.rs |  |  | 0.522 |
 | walker |  | 1529 | 14 | pub item at src/ui/footer.rs:16 |  |  | 0.522 |

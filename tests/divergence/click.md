@@ -11,14 +11,14 @@ Score(3000)=0.492 I=0.772 C=0.314 ns_rows≤3K=20/52 (reached=6 partial=2 missin
 | ns | 169 |  | 77 | README headline + tagline | 1.3 |  | 0.861 |
 | walker |  | 184 | 29 | [package] in pyproject.toml |  |  | 0.931 |
 | ns | 209 |  | 40 | Python version floor + runtime dep | 1.4 | 1.2 | 0.848 |
-| walker |  | 275 | 91 | README.md section #0 |  |  | 0.872 |
-| ns | 310 |  | 101 | README differentiators (three-bullet pitch) | 1.5 | 1.3 | 0.844 |
-| walker |  | 361 | 86 | listing of 'src/click' |  |  | 0.844 |
-| walker |  | 372 | 11 | python imports #1 in src/click/__init__.py |  |  | 0.844 |
-| walker |  | 390 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.844 |
-| walker |  | 390 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.844 |
-| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.750 |
-| walker |  | 463 | 73 | python imports in src/click/__init__.py |  |  | 0.750 |
+| walker |  | 270 | 86 | listing of 'src/click' |  |  | 0.848 |
+| walker |  | 281 | 11 | python imports #1 in src/click/__init__.py |  |  | 0.848 |
+| walker |  | 299 | 18 | python decl names surface in src/click/__init__.py |  |  | 0.849 |
+| walker |  | 299 | 0 | python decl at src/click/__init__.py:77 |  |  | 0.849 |
+| ns | 310 |  | 101 | README differentiators (three-bullet pitch) | 1.5 | 1.3 | 0.718 |
+| walker |  | 372 | 73 | python imports in src/click/__init__.py |  |  | 0.718 |
+| ns | 410 |  | 100 | __init__.py: core-class re-exports | 1.6 |  | 0.638 |
+| walker |  | 463 | 91 | README.md section #0 |  |  | 0.750 |
 | walker |  | 479 | 16 | python imports #6 in src/click/__init__.py |  |  | 0.751 |
 | walker |  | 492 | 13 | listing of '.github' |  |  | 0.751 |
 | walker |  | 515 | 23 | listing of '.github/workflows' |  |  | 0.751 |

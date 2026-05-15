@@ -8,11 +8,11 @@ Score(3000)=0.610 I=0.865 C=0.431 ns_rows≤3K=21/53 (reached=12 partial=1 missi
 | ns | 67 |  | 17 | README lede — title | 1.2 |  | 0.959 |
 | walker |  | 71 | 17 | README headline in README.md |  |  | 1.000 |
 | ns | 95 |  | 28 | Version + package name | 1.3 |  | 0.927 |
-| walker |  | 98 | 27 | listing of 'notebooks' |  |  | 0.927 |
-| ns | 142 |  | 47 | src/chronos directory listing | 1.4 |  | 0.718 |
-| walker |  | 145 | 47 | listing of 'src/chronos' |  |  | 0.948 |
-| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.821 |
-| walker |  | 175 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.957 |
+| walker |  | 118 | 47 | listing of 'src/chronos' |  |  | 0.943 |
+| ns | 142 |  | 47 | src/chronos directory listing | 1.4 |  | 0.948 |
+| walker |  | 148 | 30 | listing of 'src/chronos/chronos2' |  |  | 0.962 |
+| ns | 172 |  | 30 | src/chronos/chronos2 directory listing | 1.5 |  | 0.957 |
+| walker |  | 175 | 27 | listing of 'notebooks' |  |  | 0.957 |
 | ns | 262 |  | 90 | Package public API — first half of __init__ re-exports | 1.6 |  | 0.828 |
 | walker |  | 276 | 101 | python imports in src/chronos/chronos2/__init__.py |  |  | 0.828 |
 | ns | 310 |  | 48 | Package public API — second half of __init__ re-exports | 1.7 |  | 0.805 |
@@ -52,22 +52,22 @@ Score(3000)=0.610 I=0.865 C=0.431 ns_rows≤3K=21/53 (reached=12 partial=1 missi
 | ns | 1316 |  | 192 | BaseChronosPipeline.predict_df — signature | 2.4 |  | 0.808 |
 | walker |  | 1694 | 465 | README.md section #0 |  |  | 0.808 |
 | ns | 1705 |  | 389 | BaseChronosPipeline.from_pretrained — signature + dispatch | 2.5 |  | 0.694 |
-| walker |  | 1721 | 27 | python decl names surface in src/chronos/chronos2/config.py |  |  | 0.694 |
-| walker |  | 1721 | 0 | python decl at src/chronos/chronos2/config.py:12 |  |  | 0.694 |
-| walker |  | 1731 | 10 | python decl at src/chronos/chronos2/config.py:102 |  |  | 0.694 |
-| walker |  | 1752 | 21 | python method sigs in src/chronos/chronos2/config.py |  |  | 0.695 |
-| walker |  | 1764 | 12 | python method at src/chronos/chronos2/config.py:114 |  |  | 0.695 |
-| walker |  | 1792 | 28 | python decl names surface in src/chronos/chronos2/pipeline.py |  |  | 0.695 |
-| walker |  | 1792 | 0 | python decl at src/chronos/chronos2/pipeline.py:39 |  |  | 0.695 |
-| walker |  | 1823 | 31 | python class body at src/chronos/chronos2/pipeline.py:39 |  |  | 0.695 |
-| walker |  | 1941 | 118 | python method at src/chronos/base.py:100 |  |  | 0.739 |
-| walker |  | 1951 | 10 | python method body at src/chronos/base.py:100 body 133 |  |  | 0.739 |
-| walker |  | 1984 | 33 | README.md section #9 |  |  | 0.739 |
-| walker |  | 2010 | 26 | python imports in src/chronos/utils.py |  |  | 0.739 |
-| walker |  | 2013 | 3 | listing of 'ci' |  |  | 0.739 |
-| walker |  | 2021 | 8 | README headline in scripts/README.md |  |  | 0.739 |
-| ns | 2091 |  | 386 | README — predict_df example call | 2.6 |  | 0.660 |
-| walker |  | 2099 | 78 | listing of 'test' |  |  | 0.661 |
+| walker |  | 1772 | 78 | listing of 'test' |  |  | 0.696 |
+| walker |  | 1799 | 27 | python decl names surface in src/chronos/chronos2/config.py |  |  | 0.696 |
+| walker |  | 1799 | 0 | python decl at src/chronos/chronos2/config.py:12 |  |  | 0.696 |
+| walker |  | 1809 | 10 | python decl at src/chronos/chronos2/config.py:102 |  |  | 0.696 |
+| walker |  | 1830 | 21 | python method sigs in src/chronos/chronos2/config.py |  |  | 0.696 |
+| walker |  | 1842 | 12 | python method at src/chronos/chronos2/config.py:114 |  |  | 0.696 |
+| walker |  | 1870 | 28 | python decl names surface in src/chronos/chronos2/pipeline.py |  |  | 0.696 |
+| walker |  | 1870 | 0 | python decl at src/chronos/chronos2/pipeline.py:39 |  |  | 0.696 |
+| walker |  | 1901 | 31 | python class body at src/chronos/chronos2/pipeline.py:39 |  |  | 0.696 |
+| walker |  | 2019 | 118 | python method at src/chronos/base.py:100 |  |  | 0.740 |
+| walker |  | 2029 | 10 | python method body at src/chronos/base.py:100 body 133 |  |  | 0.740 |
+| walker |  | 2062 | 33 | README.md section #9 |  |  | 0.740 |
+| walker |  | 2088 | 26 | python imports in src/chronos/utils.py |  |  | 0.740 |
+| walker |  | 2091 | 3 | listing of 'ci' |  |  | 0.661 |
+| ns | 2091 |  | 386 | README — predict_df example call | 2.6 |  | 0.661 |
+| walker |  | 2099 | 8 | README headline in scripts/README.md |  |  | 0.661 |
 | walker |  | 2115 | 16 | python method body at src/chronos/chronos2/config.py:114 body 119 |  |  | 0.661 |
 | ns | 2148 |  | 57 | BaseChronosPipeline.predict_fev — signature | 2.7 |  | 0.663 |
 | walker |  | 2154 | 39 | README.md section #5 |  |  | 0.663 |

@@ -135,10 +135,112 @@ entries = ["__init__.py", "backends.py", "block.py", "cell.py", "layer.py"]
 
 [[batches]]
 position = 10
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large" })'
+descriptor = "listing of 'xlstm/xlstm_large'"
+cost_tokens = 28
+cum_tokens = 251
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large"
+entries = ["__init__.py", "components.py", "from_pretrained.py", "generate.py", "model.py", "utils.py"]
+
+[[batches]]
+position = 11
+key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/__init__.py" })'
+descriptor = "python imports in xlstm/xlstm_large/__init__.py"
+cost_tokens = 42
+cum_tokens = 293
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/__init__.py"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 12
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components" })'
+descriptor = "listing of 'xlstm/components'"
+cost_tokens = 33
+cum_tokens = 326
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components"
+entries = ["__init__.py", "conv.py", "feedforward.py", "init.py", "linear_headwise.py", "ln.py", "util.py"]
+
+[[batches]]
+position = 13
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments" })'
+descriptor = "listing of 'experiments'"
+cost_tokens = 46
+cum_tokens = 372
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments"
+entries = ["__init__.py", "data", "lr_scheduler.py", "main.py", "metrics.py", "parity_xlstm01.yaml", "parity_xlstm10.yaml", "parity_xlstm11.yaml"]
+
+[[batches]]
+position = 14
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data" })'
+descriptor = "listing of 'experiments/data'"
+cost_tokens = 14
+cum_tokens = 386
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data"
+entries = ["__init__.py", "formal_language", "utils.py"]
+
+[[batches]]
+position = 15
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language" })'
+descriptor = "listing of 'experiments/data/formal_language'"
+cost_tokens = 24
+cum_tokens = 410
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language"
+entries = ["__init__.py", "formal_language_dataset.py", "generate.py", "online_generate.py", "tasks"]
+
+[[batches]]
+position = 16
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language/tasks" })'
+descriptor = "listing of 'experiments/data/formal_language/tasks'"
+cost_tokens = 26
+cum_tokens = 436
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language/tasks"
+entries = ["__init__.py", "cycle_navigation.py", "even_pairs.py", "modular_arithmetic.py", "parity.py"]
+
+[[batches]]
+position = 17
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/__init__.py" })'
 descriptor = "python imports in xlstm/blocks/slstm/src/vanilla/__init__.py"
 cost_tokens = 62
-cum_tokens = 285
+cum_tokens = 498
 
 [batches.content]
 kind = "lines"
@@ -160,57 +262,55 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 11
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large" })'
-descriptor = "listing of 'xlstm/xlstm_large'"
-cost_tokens = 28
-cum_tokens = 313
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large"
-entries = ["__init__.py", "components.py", "from_pretrained.py", "generate.py", "model.py", "utils.py"]
-
-[[batches]]
-position = 12
-key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/__init__.py" })'
-descriptor = "python imports in xlstm/xlstm_large/__init__.py"
-cost_tokens = 42
-cum_tokens = 355
+position = 18
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", chunk_index: 0 })'
+descriptor = "python decl names surface in experiments/metrics.py"
+cost_tokens = 12
+cum_tokens = 510
 
 [batches.content]
 kind = "lines"
 
 [[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/__init__.py"
-start = 1
-end = 2
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
+start = 9
+end = 9
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
+start = 10
+end = 10
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 19
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", start_line: 9 })'
+descriptor = "python decl at experiments/metrics.py:9"
+cost_tokens = 0
+cum_tokens = 510
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
+start = 9
+end = 9
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
-position = 13
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components" })'
-descriptor = "listing of 'xlstm/components'"
-cost_tokens = 33
-cum_tokens = 388
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components"
-entries = ["__init__.py", "conv.py", "feedforward.py", "init.py", "linear_headwise.py", "ln.py", "util.py"]
-
-[[batches]]
-position = 14
+position = 20
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/__init__.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/src/vanilla/__init__.py"
 cost_tokens = 41
-cum_tokens = 429
+cum_tokens = 551
 
 [batches.content]
 kind = "lines"
@@ -256,11 +356,11 @@ end = 78
 kind = "ellipsis"
 
 [[batches]]
-position = 15
+position = 21
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/res" })'
 descriptor = "listing of 'res'"
 cost_tokens = 28
-cum_tokens = 457
+cum_tokens = 579
 
 [batches.content]
 kind = "fs"
@@ -268,106 +368,6 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/res"
 entries = ["desc_xlstm_overview.pdf", "desc_xlstm_overview.svg", "xlstm_7b_poster.svg"]
-
-[[batches]]
-position = 16
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments" })'
-descriptor = "listing of 'experiments'"
-cost_tokens = 46
-cum_tokens = 503
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments"
-entries = ["__init__.py", "data", "lr_scheduler.py", "main.py", "metrics.py", "parity_xlstm01.yaml", "parity_xlstm10.yaml", "parity_xlstm11.yaml"]
-
-[[batches]]
-position = 17
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data" })'
-descriptor = "listing of 'experiments/data'"
-cost_tokens = 14
-cum_tokens = 517
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data"
-entries = ["__init__.py", "formal_language", "utils.py"]
-
-[[batches]]
-position = 18
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language" })'
-descriptor = "listing of 'experiments/data/formal_language'"
-cost_tokens = 24
-cum_tokens = 541
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language"
-entries = ["__init__.py", "formal_language_dataset.py", "generate.py", "online_generate.py", "tasks"]
-
-[[batches]]
-position = 19
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language/tasks" })'
-descriptor = "listing of 'experiments/data/formal_language/tasks'"
-cost_tokens = 26
-cum_tokens = 567
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/data/formal_language/tasks"
-entries = ["__init__.py", "cycle_navigation.py", "even_pairs.py", "modular_arithmetic.py", "parity.py"]
-
-[[batches]]
-position = 20
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", chunk_index: 0 })'
-descriptor = "python decl names surface in experiments/metrics.py"
-cost_tokens = 12
-cum_tokens = 579
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
-start = 10
-end = 10
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 21
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", start_line: 9 })'
-descriptor = "python decl at experiments/metrics.py:9"
-cost_tokens = 0
-cum_tokens = 579
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py"
-start = 9
-end = 9
-
-[batches.content.spans.render]
-kind = "full"
 
 [[batches]]
 position = 22
@@ -1599,10 +1599,24 @@ kind = "full"
 
 [[batches]]
 position = 64
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/tests" })'
+descriptor = "listing of 'tests'"
+cost_tokens = 53
+cum_tokens = 1657
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/tests"
+entries = ["__init__.py", "conftest.py", "template_chunkwise_vs_recurrent.py", "test_chunkwise_vs_recurrent.py", "test_generation.py", "test_slstm_cell_vanilla_vs_cuda.py", "test_weight_conversion.py"]
+
+[[batches]]
+position = 65
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/ln.py"
 cost_tokens = 27
-cum_tokens = 1631
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -1640,11 +1654,11 @@ end = 52
 kind = "ellipsis"
 
 [[batches]]
-position = 65
+position = 66
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 8 })'
 descriptor = "python decl at xlstm/components/ln.py:8"
 cost_tokens = 0
-cum_tokens = 1631
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -1658,11 +1672,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 66
+position = 67
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 51 })'
 descriptor = "python decl at xlstm/components/ln.py:51"
 cost_tokens = 0
-cum_tokens = 1631
+cum_tokens = 1684
 
 [batches.content]
 kind = "lines"
@@ -1676,11 +1690,11 @@ end = 51
 kind = "full"
 
 [[batches]]
-position = 67
+position = 68
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 8 })'
 descriptor = "python decl doc at xlstm/components/ln.py:8"
 cost_tokens = 20
-cum_tokens = 1651
+cum_tokens = 1704
 
 [batches.content]
 kind = "lines"
@@ -1694,11 +1708,11 @@ end = 9
 kind = "full"
 
 [[batches]]
-position = 68
+position = 69
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 11 })'
 descriptor = "python class body at xlstm/utils.py:11"
 cost_tokens = 84
-cum_tokens = 1735
+cum_tokens = 1788
 
 [batches.content]
 kind = "lines"
@@ -1720,11 +1734,11 @@ end = 18
 kind = "full"
 
 [[batches]]
-position = 69
+position = 70
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", chunk_index: 0 })'
 descriptor = "python method sigs in experiments/lr_scheduler.py"
 cost_tokens = 99
-cum_tokens = 1834
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -1826,11 +1840,11 @@ end = 48
 kind = "ellipsis"
 
 [[batches]]
-position = 70
+position = 71
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 10 })'
 descriptor = "python method at experiments/lr_scheduler.py:10"
 cost_tokens = 0
-cum_tokens = 1834
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -1844,11 +1858,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 71
+position = 72
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 25 })'
 descriptor = "python method at experiments/lr_scheduler.py:25"
 cost_tokens = 0
-cum_tokens = 1834
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -1862,11 +1876,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 72
+position = 73
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 47 })'
 descriptor = "python method at experiments/lr_scheduler.py:47"
 cost_tokens = 0
-cum_tokens = 1834
+cum_tokens = 1887
 
 [batches.content]
 kind = "lines"
@@ -1880,11 +1894,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 73
+position = 74
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 13 })'
 descriptor = "python method at experiments/lr_scheduler.py:13"
 cost_tokens = 13
-cum_tokens = 1847
+cum_tokens = 1900
 
 [batches.content]
 kind = "lines"
@@ -1898,11 +1912,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 74
+position = 75
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 18 })'
 descriptor = "python method at experiments/lr_scheduler.py:18"
 cost_tokens = 14
-cum_tokens = 1861
+cum_tokens = 1914
 
 [batches.content]
 kind = "lines"
@@ -1916,11 +1930,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 75
+position = 76
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 33 })'
 descriptor = "python method at experiments/lr_scheduler.py:33"
 cost_tokens = 22
-cum_tokens = 1883
+cum_tokens = 1936
 
 [batches.content]
 kind = "lines"
@@ -1934,11 +1948,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 76
+position = 77
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 18 })'
 descriptor = "python method doc at experiments/lr_scheduler.py:18"
 cost_tokens = 14
-cum_tokens = 1897
+cum_tokens = 1950
 
 [batches.content]
 kind = "lines"
@@ -1952,11 +1966,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 77
+position = 78
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 47 })'
 descriptor = "python method doc at experiments/lr_scheduler.py:47"
 cost_tokens = 14
-cum_tokens = 1911
+cum_tokens = 1964
 
 [batches.content]
 kind = "lines"
@@ -1970,11 +1984,11 @@ end = 48
 kind = "full"
 
 [[batches]]
-position = 78
+position = 79
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 13, body_start_line: 16 })'
 descriptor = "python method body at experiments/lr_scheduler.py:13 body 16"
 cost_tokens = 10
-cum_tokens = 1921
+cum_tokens = 1974
 
 [batches.content]
 kind = "lines"
@@ -1988,11 +2002,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 79
+position = 80
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 18, body_start_line: 21 })'
 descriptor = "python method body at experiments/lr_scheduler.py:18 body 21"
 cost_tokens = 10
-cum_tokens = 1931
+cum_tokens = 1984
 
 [batches.content]
 kind = "lines"
@@ -2006,11 +2020,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 80
+position = 81
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 13 })'
 descriptor = "python method doc at experiments/lr_scheduler.py:13"
 cost_tokens = 16
-cum_tokens = 1947
+cum_tokens = 2000
 
 [batches.content]
 kind = "lines"
@@ -2024,11 +2038,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 81
+position = 82
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py", start_line: 10, body_start_line: 11 })'
 descriptor = "python method body at experiments/lr_scheduler.py:10 body 11"
 cost_tokens = 12
-cum_tokens = 1959
+cum_tokens = 2012
 
 [batches.content]
 kind = "lines"
@@ -2042,11 +2056,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 82
+position = 83
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/init.py" })'
 descriptor = "python imports in xlstm/components/init.py"
 cost_tokens = 14
-cum_tokens = 1973
+cum_tokens = 2026
 
 [batches.content]
 kind = "lines"
@@ -2068,11 +2082,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 83
+position = 84
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py" })'
 descriptor = "python imports in xlstm/xlstm_large/utils.py"
 cost_tokens = 14
-cum_tokens = 1987
+cum_tokens = 2040
 
 [batches.content]
 kind = "lines"
@@ -2086,11 +2100,11 @@ end = 2
 kind = "full"
 
 [[batches]]
-position = 84
+position = 85
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/xlstm_lm_model.py"
 cost_tokens = 101
-cum_tokens = 2088
+cum_tokens = 2141
 
 [batches.content]
 kind = "lines"
@@ -2176,11 +2190,11 @@ end = 66
 kind = "ellipsis"
 
 [[batches]]
-position = 85
+position = 86
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", start_line: 25 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:25"
 cost_tokens = 0
-cum_tokens = 2088
+cum_tokens = 2141
 
 [batches.content]
 kind = "lines"
@@ -2194,11 +2208,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 86
+position = 87
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", start_line: 41 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:41"
 cost_tokens = 0
-cum_tokens = 2088
+cum_tokens = 2141
 
 [batches.content]
 kind = "lines"
@@ -2212,11 +2226,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 87
+position = 88
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", start_line: 49 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:49"
 cost_tokens = 0
-cum_tokens = 2088
+cum_tokens = 2141
 
 [batches.content]
 kind = "lines"
@@ -2230,11 +2244,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 88
+position = 89
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", start_line: 65 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:65"
 cost_tokens = 0
-cum_tokens = 2088
+cum_tokens = 2141
 
 [batches.content]
 kind = "lines"
@@ -2248,11 +2262,11 @@ end = 65
 kind = "full"
 
 [[batches]]
-position = 89
+position = 90
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_lm_model.py", start_line: 56 })'
 descriptor = "python method at xlstm/xlstm_lm_model.py:56"
 cost_tokens = 57
-cum_tokens = 2145
+cum_tokens = 2198
 
 [batches.content]
 kind = "lines"
@@ -2266,11 +2280,11 @@ end = 58
 kind = "full"
 
 [[batches]]
-position = 90
+position = 91
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/lr_scheduler.py" })'
 descriptor = "python imports in experiments/lr_scheduler.py"
 cost_tokens = 28
-cum_tokens = 2173
+cum_tokens = 2226
 
 [batches.content]
 kind = "lines"
@@ -2292,11 +2306,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 91
+position = 92
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py" })'
 descriptor = "python imports in xlstm/components/util.py"
 cost_tokens = 16
-cum_tokens = 2189
+cum_tokens = 2242
 
 [batches.content]
 kind = "lines"
@@ -2310,11 +2324,11 @@ end = 4
 kind = "full"
 
 [[batches]]
-position = 92
+position = 93
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/__init__.py", start_line: 77 })'
 descriptor = "python decl at xlstm/blocks/slstm/src/vanilla/__init__.py:77"
 cost_tokens = 172
-cum_tokens = 2361
+cum_tokens = 2414
 
 [batches.content]
 kind = "lines"
@@ -2328,11 +2342,11 @@ end = 87
 kind = "full"
 
 [[batches]]
-position = 93
+position = 94
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/__init__.py", start_line: 17 })'
 descriptor = "python decl at xlstm/blocks/slstm/src/vanilla/__init__.py:17"
 cost_tokens = 174
-cum_tokens = 2535
+cum_tokens = 2588
 
 [batches.content]
 kind = "lines"
@@ -2346,11 +2360,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 94
+position = 95
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", start_line: 25, body_start_line: 26 })'
 descriptor = "python method body at experiments/metrics.py:25 body 26"
 cost_tokens = 22
-cum_tokens = 2557
+cum_tokens = 2610
 
 [batches.content]
 kind = "lines"
@@ -2364,11 +2378,11 @@ end = 27
 kind = "full"
 
 [[batches]]
-position = 95
+position = 96
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/notebooks/xlstm" })'
 descriptor = "listing of 'notebooks/xlstm'"
 cost_tokens = 33
-cum_tokens = 2590
+cum_tokens = 2643
 
 [batches.content]
 kind = "fs"
@@ -2378,11 +2392,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/notebooks/xlstm"
 entries = ["mLSTM_test_notebook.ipynb", "xLSTM_readme_example.ipynb", "xLSTM_test_notebook.ipynb"]
 
 [[batches]]
-position = 96
+position = 97
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/conv.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/conv.py"
 cost_tokens = 37
-cum_tokens = 2627
+cum_tokens = 2680
 
 [batches.content]
 kind = "lines"
@@ -2436,11 +2450,11 @@ end = 56
 kind = "ellipsis"
 
 [[batches]]
-position = 97
+position = 98
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/conv.py", start_line: 55 })'
 descriptor = "python decl at xlstm/components/conv.py:55"
 cost_tokens = 0
-cum_tokens = 2627
+cum_tokens = 2680
 
 [batches.content]
 kind = "lines"
@@ -2454,11 +2468,11 @@ end = 55
 kind = "full"
 
 [[batches]]
-position = 98
+position = 99
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/conv.py", start_line: 12 })'
 descriptor = "python decl at xlstm/components/conv.py:12"
 cost_tokens = 10
-cum_tokens = 2637
+cum_tokens = 2690
 
 [batches.content]
 kind = "lines"
@@ -2472,11 +2486,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 99
+position = 100
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/conv.py", start_line: 24 })'
 descriptor = "python decl at xlstm/components/conv.py:24"
 cost_tokens = 61
-cum_tokens = 2698
+cum_tokens = 2751
 
 [batches.content]
 kind = "lines"
@@ -2490,11 +2504,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 100
+position = 101
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/cell.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/cell.py"
 cost_tokens = 24
-cum_tokens = 2722
+cum_tokens = 2775
 
 [batches.content]
 kind = "lines"
@@ -2532,11 +2546,11 @@ end = 21
 kind = "ellipsis"
 
 [[batches]]
-position = 101
+position = 102
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/cell.py", start_line: 20 })'
 descriptor = "python decl at xlstm/blocks/mlstm/cell.py:20"
 cost_tokens = 0
-cum_tokens = 2722
+cum_tokens = 2775
 
 [batches.content]
 kind = "lines"
@@ -2550,11 +2564,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 102
+position = 103
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/cell.py", start_line: 13 })'
 descriptor = "python decl at xlstm/blocks/mlstm/cell.py:13"
 cost_tokens = 9
-cum_tokens = 2731
+cum_tokens = 2784
 
 [batches.content]
 kind = "lines"
@@ -2568,11 +2582,11 @@ end = 14
 kind = "full"
 
 [[batches]]
-position = 103
+position = 104
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/cell.py", start_line: 20 })'
 descriptor = "python class body at xlstm/blocks/mlstm/cell.py:20"
 cost_tokens = 12
-cum_tokens = 2743
+cum_tokens = 2796
 
 [batches.content]
 kind = "lines"
@@ -2586,11 +2600,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 104
+position = 105
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py", start_line: 13, body_start_line: 14 })'
 descriptor = "python method body at experiments/metrics.py:13 body 14"
 cost_tokens = 23
-cum_tokens = 2766
+cum_tokens = 2819
 
 [batches.content]
 kind = "lines"
@@ -2604,11 +2618,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 105
+position = 106
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/ln.py"
 cost_tokens = 73
-cum_tokens = 2839
+cum_tokens = 2892
 
 [batches.content]
 kind = "lines"
@@ -2694,11 +2708,11 @@ end = 54
 kind = "ellipsis"
 
 [[batches]]
-position = 106
+position = 107
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 36 })'
 descriptor = "python method at xlstm/components/ln.py:36"
 cost_tokens = 0
-cum_tokens = 2839
+cum_tokens = 2892
 
 [batches.content]
 kind = "lines"
@@ -2712,11 +2726,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 107
+position = 108
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 41 })'
 descriptor = "python method at xlstm/components/ln.py:41"
 cost_tokens = 0
-cum_tokens = 2839
+cum_tokens = 2892
 
 [batches.content]
 kind = "lines"
@@ -2730,11 +2744,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 108
+position = 109
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 53 })'
 descriptor = "python method at xlstm/components/ln.py:53"
 cost_tokens = 0
-cum_tokens = 2839
+cum_tokens = 2892
 
 [batches.content]
 kind = "lines"
@@ -2748,11 +2762,11 @@ end = 53
 kind = "full"
 
 [[batches]]
-position = 109
+position = 110
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/ln.py", start_line: 27 })'
 descriptor = "python method at xlstm/components/ln.py:27"
 cost_tokens = 12
-cum_tokens = 2851
+cum_tokens = 2904
 
 [batches.content]
 kind = "lines"
@@ -2766,11 +2780,11 @@ end = 28
 kind = "full"
 
 [[batches]]
-position = 110
+position = 111
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/xlstm_block.py", start_line: 43 })'
 descriptor = "python decl doc at xlstm/blocks/xlstm_block.py:43"
 cost_tokens = 48
-cum_tokens = 2899
+cum_tokens = 2952
 
 [batches.content]
 kind = "lines"
@@ -2792,11 +2806,11 @@ end = 47
 kind = "full"
 
 [[batches]]
-position = 111
+position = 112
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/xlstm_block_stack.py"
 cost_tokens = 133
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -2930,11 +2944,11 @@ end = 127
 kind = "ellipsis"
 
 [[batches]]
-position = 112
+position = 113
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 40 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:40"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -2948,11 +2962,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 113
+position = 114
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 52 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:52"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -2966,11 +2980,11 @@ end = 52
 kind = "full"
 
 [[batches]]
-position = 114
+position = 115
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 80 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:80"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -2984,11 +2998,11 @@ end = 80
 kind = "full"
 
 [[batches]]
-position = 115
+position = 116
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 90 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:90"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -3002,11 +3016,11 @@ end = 90
 kind = "full"
 
 [[batches]]
-position = 116
+position = 117
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 111 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:111"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -3020,11 +3034,11 @@ end = 111
 kind = "full"
 
 [[batches]]
-position = 117
+position = 118
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 117 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:117"
 cost_tokens = 0
-cum_tokens = 3032
+cum_tokens = 3085
 
 [batches.content]
 kind = "lines"
@@ -3038,11 +3052,11 @@ end = 117
 kind = "full"
 
 [[batches]]
-position = 118
+position = 119
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 36 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:36"
 cost_tokens = 12
-cum_tokens = 3044
+cum_tokens = 3097
 
 [batches.content]
 kind = "lines"
@@ -3056,11 +3070,11 @@ end = 37
 kind = "full"
 
 [[batches]]
-position = 119
+position = 120
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 36, body_start_line: 38 })'
 descriptor = "python method body at xlstm/xlstm_block_stack.py:36 body 38"
 cost_tokens = 17
-cum_tokens = 3061
+cum_tokens = 3114
 
 [batches.content]
 kind = "lines"
@@ -3074,11 +3088,11 @@ end = 38
 kind = "full"
 
 [[batches]]
-position = 120
+position = 121
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 126 })'
 descriptor = "python method at xlstm/xlstm_block_stack.py:126"
 cost_tokens = 54
-cum_tokens = 3115
+cum_tokens = 3168
 
 [batches.content]
 kind = "lines"
@@ -3092,11 +3106,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 121
+position = 122
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/experiments/metrics.py" })'
 descriptor = "python imports in experiments/metrics.py"
 cost_tokens = 34
-cum_tokens = 3149
+cum_tokens = 3202
 
 [batches.content]
 kind = "lines"
@@ -3118,11 +3132,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 122
+position = 123
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/cell.py", start_line: 13 })'
 descriptor = "python class body at xlstm/blocks/mlstm/cell.py:13"
 cost_tokens = 39
-cum_tokens = 3188
+cum_tokens = 3241
 
 [batches.content]
 kind = "lines"
@@ -3136,11 +3150,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 123
+position = 124
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/layer.py"
 cost_tokens = 25
-cum_tokens = 3213
+cum_tokens = 3266
 
 [batches.content]
 kind = "lines"
@@ -3178,11 +3192,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 124
+position = 125
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", start_line: 39 })'
 descriptor = "python decl at xlstm/blocks/mlstm/layer.py:39"
 cost_tokens = 0
-cum_tokens = 3213
+cum_tokens = 3266
 
 [batches.content]
 kind = "lines"
@@ -3191,110 +3205,14 @@ kind = "lines"
 path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py"
 start = 39
 end = 39
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 125
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", start_line: 18 })'
-descriptor = "python decl at xlstm/blocks/mlstm/layer.py:18"
-cost_tokens = 15
-cum_tokens = 3228
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py"
-start = 18
-end = 19
 
 [batches.content.spans.render]
 kind = "full"
 
 [[batches]]
 position = 126
-key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", start_line: 39 })'
-descriptor = "python class body at xlstm/blocks/mlstm/layer.py:39"
-cost_tokens = 13
-cum_tokens = 3241
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py"
-start = 40
-end = 40
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 127
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", chunk_index: 0 })'
-descriptor = "python decl names surface in xlstm/blocks/slstm/layer.py"
-cost_tokens = 25
-cum_tokens = 3266
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
-start = 18
-end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
-start = 19
-end = 19
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
-start = 34
-end = 34
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 128
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", start_line: 33 })'
-descriptor = "python decl at xlstm/blocks/slstm/layer.py:33"
-cost_tokens = 0
-cum_tokens = 3266
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
-start = 33
-end = 33
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 129
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", start_line: 18 })'
-descriptor = "python decl at xlstm/blocks/slstm/layer.py:18"
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", start_line: 18 })'
+descriptor = "python decl at xlstm/blocks/mlstm/layer.py:18"
 cost_tokens = 15
 cum_tokens = 3281
 
@@ -3302,6 +3220,102 @@ cum_tokens = 3281
 kind = "lines"
 
 [[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py"
+start = 18
+end = 19
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 127
+key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py", start_line: 39 })'
+descriptor = "python class body at xlstm/blocks/mlstm/layer.py:39"
+cost_tokens = 13
+cum_tokens = 3294
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/layer.py"
+start = 40
+end = 40
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 128
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", chunk_index: 0 })'
+descriptor = "python decl names surface in xlstm/blocks/slstm/layer.py"
+cost_tokens = 25
+cum_tokens = 3319
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
+start = 18
+end = 18
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
+start = 19
+end = 19
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
+start = 34
+end = 34
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 129
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", start_line: 33 })'
+descriptor = "python decl at xlstm/blocks/slstm/layer.py:33"
+cost_tokens = 0
+cum_tokens = 3319
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
+start = 33
+end = 33
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 130
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", start_line: 18 })'
+descriptor = "python decl at xlstm/blocks/slstm/layer.py:18"
+cost_tokens = 15
+cum_tokens = 3334
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
 path = "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py"
 start = 18
 end = 19
@@ -3310,11 +3324,11 @@ end = 19
 kind = "full"
 
 [[batches]]
-position = 130
+position = 131
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/layer.py", start_line: 33 })'
 descriptor = "python class body at xlstm/blocks/slstm/layer.py:33"
 cost_tokens = 13
-cum_tokens = 3294
+cum_tokens = 3347
 
 [batches.content]
 kind = "lines"
@@ -3328,11 +3342,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 131
+position = 132
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/components/util.py"
 cost_tokens = 40
-cum_tokens = 3334
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -3386,11 +3400,11 @@ end = 27
 kind = "ellipsis"
 
 [[batches]]
-position = 132
+position = 133
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", start_line: 7 })'
 descriptor = "python decl at xlstm/components/util.py:7"
 cost_tokens = 0
-cum_tokens = 3334
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -3404,11 +3418,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 133
+position = 134
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", start_line: 11 })'
 descriptor = "python decl at xlstm/components/util.py:11"
 cost_tokens = 0
-cum_tokens = 3334
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -3422,11 +3436,11 @@ end = 11
 kind = "full"
 
 [[batches]]
-position = 134
+position = 135
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", start_line: 26 })'
 descriptor = "python decl at xlstm/components/util.py:26"
 cost_tokens = 0
-cum_tokens = 3334
+cum_tokens = 3387
 
 [batches.content]
 kind = "lines"
@@ -3440,11 +3454,11 @@ end = 26
 kind = "full"
 
 [[batches]]
-position = 135
+position = 136
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", start_line: 11 })'
 descriptor = "python decl doc at xlstm/components/util.py:11"
 cost_tokens = 22
-cum_tokens = 3356
+cum_tokens = 3409
 
 [batches.content]
 kind = "lines"
@@ -3458,11 +3472,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 136
+position = 137
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/util.py", start_line: 7, body_start_line: 8 })'
 descriptor = "python decl body at xlstm/components/util.py:7 body 8"
 cost_tokens = 18
-cum_tokens = 3374
+cum_tokens = 3427
 
 [batches.content]
 kind = "lines"
@@ -3476,11 +3490,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 137
+position = 138
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/xlstm_large/utils.py"
 cost_tokens = 40
-cum_tokens = 3414
+cum_tokens = 3467
 
 [batches.content]
 kind = "lines"
@@ -3518,11 +3532,11 @@ end = 11
 kind = "ellipsis"
 
 [[batches]]
-position = 138
+position = 139
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py", start_line: 5 })'
 descriptor = "python decl at xlstm/xlstm_large/utils.py:5"
 cost_tokens = 0
-cum_tokens = 3414
+cum_tokens = 3467
 
 [batches.content]
 kind = "lines"
@@ -3536,11 +3550,11 @@ end = 5
 kind = "full"
 
 [[batches]]
-position = 139
+position = 140
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py", start_line: 10 })'
 descriptor = "python decl at xlstm/xlstm_large/utils.py:10"
 cost_tokens = 26
-cum_tokens = 3440
+cum_tokens = 3493
 
 [batches.content]
 kind = "lines"
@@ -3554,11 +3568,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 140
+position = 141
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py", start_line: 5 })'
 descriptor = "python decl doc at xlstm/xlstm_large/utils.py:5"
 cost_tokens = 15
-cum_tokens = 3455
+cum_tokens = 3508
 
 [batches.content]
 kind = "lines"
@@ -3572,11 +3586,11 @@ end = 6
 kind = "full"
 
 [[batches]]
-position = 141
+position = 142
 key = 'Python(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_large/utils.py", start_line: 5, body_start_line: 7 })'
 descriptor = "python decl body at xlstm/xlstm_large/utils.py:5 body 7"
 cost_tokens = 24
-cum_tokens = 3479
+cum_tokens = 3532
 
 [batches.content]
 kind = "lines"
@@ -3590,11 +3604,11 @@ end = 7
 kind = "full"
 
 [[batches]]
-position = 142
+position = 143
 key = 'Python(MethodDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/xlstm_block_stack.py", start_line: 40 })'
 descriptor = "python method doc at xlstm/xlstm_block_stack.py:40"
 cost_tokens = 19
-cum_tokens = 3498
+cum_tokens = 3551
 
 [batches.content]
 kind = "lines"
@@ -3608,11 +3622,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 143
+position = 144
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/mlstm/block.py"
 cost_tokens = 26
-cum_tokens = 3524
+cum_tokens = 3577
 
 [batches.content]
 kind = "lines"
@@ -3650,11 +3664,11 @@ end = 23
 kind = "ellipsis"
 
 [[batches]]
-position = 144
+position = 145
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", start_line: 22 })'
 descriptor = "python decl at xlstm/blocks/mlstm/block.py:22"
 cost_tokens = 0
-cum_tokens = 3524
+cum_tokens = 3577
 
 [batches.content]
 kind = "lines"
@@ -3668,11 +3682,11 @@ end = 22
 kind = "full"
 
 [[batches]]
-position = 145
+position = 146
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", start_line: 9 })'
 descriptor = "python decl at xlstm/blocks/mlstm/block.py:9"
 cost_tokens = 9
-cum_tokens = 3533
+cum_tokens = 3586
 
 [batches.content]
 kind = "lines"
@@ -3686,11 +3700,11 @@ end = 10
 kind = "full"
 
 [[batches]]
-position = 146
+position = 147
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", start_line: 22 })'
 descriptor = "python class body at xlstm/blocks/mlstm/block.py:22"
 cost_tokens = 12
-cum_tokens = 3545
+cum_tokens = 3598
 
 [batches.content]
 kind = "lines"
@@ -3704,11 +3718,11 @@ end = 23
 kind = "full"
 
 [[batches]]
-position = 147
+position = 148
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/mlstm/block.py"
 cost_tokens = 38
-cum_tokens = 3583
+cum_tokens = 3636
 
 [batches.content]
 kind = "lines"
@@ -3746,11 +3760,11 @@ end = 26
 kind = "ellipsis"
 
 [[batches]]
-position = 148
+position = 149
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", start_line: 17 })'
 descriptor = "python method at xlstm/blocks/mlstm/block.py:17"
 cost_tokens = 0
-cum_tokens = 3583
+cum_tokens = 3636
 
 [batches.content]
 kind = "lines"
@@ -3764,11 +3778,11 @@ end = 17
 kind = "full"
 
 [[batches]]
-position = 149
+position = 150
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/mlstm/block.py", start_line: 25 })'
 descriptor = "python method at xlstm/blocks/mlstm/block.py:25"
 cost_tokens = 0
-cum_tokens = 3583
+cum_tokens = 3636
 
 [batches.content]
 kind = "lines"
@@ -3782,11 +3796,11 @@ end = 25
 kind = "full"
 
 [[batches]]
-position = 150
+position = 151
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/block.py"
 cost_tokens = 26
-cum_tokens = 3609
+cum_tokens = 3662
 
 [batches.content]
 kind = "lines"
@@ -3824,11 +3838,11 @@ end = 30
 kind = "ellipsis"
 
 [[batches]]
-position = 151
+position = 152
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", start_line: 29 })'
 descriptor = "python decl at xlstm/blocks/slstm/block.py:29"
 cost_tokens = 0
-cum_tokens = 3609
+cum_tokens = 3662
 
 [batches.content]
 kind = "lines"
@@ -3842,11 +3856,11 @@ end = 29
 kind = "full"
 
 [[batches]]
-position = 152
+position = 153
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", start_line: 12 })'
 descriptor = "python decl at xlstm/blocks/slstm/block.py:12"
 cost_tokens = 9
-cum_tokens = 3618
+cum_tokens = 3671
 
 [batches.content]
 kind = "lines"
@@ -3860,11 +3874,11 @@ end = 13
 kind = "full"
 
 [[batches]]
-position = 153
+position = 154
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", start_line: 29 })'
 descriptor = "python class body at xlstm/blocks/slstm/block.py:29"
 cost_tokens = 12
-cum_tokens = 3630
+cum_tokens = 3683
 
 [batches.content]
 kind = "lines"
@@ -3878,11 +3892,11 @@ end = 30
 kind = "full"
 
 [[batches]]
-position = 154
+position = 155
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/blocks/slstm/block.py"
 cost_tokens = 35
-cum_tokens = 3665
+cum_tokens = 3718
 
 [batches.content]
 kind = "lines"
@@ -3920,11 +3934,11 @@ end = 33
 kind = "ellipsis"
 
 [[batches]]
-position = 155
+position = 156
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", start_line: 21 })'
 descriptor = "python method at xlstm/blocks/slstm/block.py:21"
 cost_tokens = 0
-cum_tokens = 3665
+cum_tokens = 3718
 
 [batches.content]
 kind = "lines"
@@ -3938,11 +3952,11 @@ end = 21
 kind = "full"
 
 [[batches]]
-position = 156
+position = 157
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/block.py", start_line: 32 })'
 descriptor = "python method at xlstm/blocks/slstm/block.py:32"
 cost_tokens = 0
-cum_tokens = 3665
+cum_tokens = 3718
 
 [batches.content]
 kind = "lines"
@@ -3956,11 +3970,11 @@ end = 32
 kind = "full"
 
 [[batches]]
-position = 157
+position = 158
 key = 'Python(DeclDoc { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 42 })'
 descriptor = "python decl doc at xlstm/components/linear_headwise.py:42"
 cost_tokens = 53
-cum_tokens = 3718
+cum_tokens = 3771
 
 [batches.content]
 kind = "lines"
@@ -3974,11 +3988,11 @@ end = 45
 kind = "full"
 
 [[batches]]
-position = 158
+position = 159
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/components/linear_headwise.py"
 cost_tokens = 82
-cum_tokens = 3800
+cum_tokens = 3853
 
 [batches.content]
 kind = "lines"
@@ -4064,11 +4078,11 @@ end = 85
 kind = "ellipsis"
 
 [[batches]]
-position = 159
+position = 160
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 31 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:31"
 cost_tokens = 0
-cum_tokens = 3800
+cum_tokens = 3853
 
 [batches.content]
 kind = "lines"
@@ -4082,11 +4096,11 @@ end = 31
 kind = "full"
 
 [[batches]]
-position = 160
+position = 161
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 49 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:49"
 cost_tokens = 0
-cum_tokens = 3800
+cum_tokens = 3853
 
 [batches.content]
 kind = "lines"
@@ -4100,11 +4114,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 161
+position = 162
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 75 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:75"
 cost_tokens = 0
-cum_tokens = 3800
+cum_tokens = 3853
 
 [batches.content]
 kind = "lines"
@@ -4118,11 +4132,11 @@ end = 75
 kind = "full"
 
 [[batches]]
-position = 162
+position = 163
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 84 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:84"
 cost_tokens = 0
-cum_tokens = 3800
+cum_tokens = 3853
 
 [batches.content]
 kind = "lines"
@@ -4136,11 +4150,11 @@ end = 84
 kind = "full"
 
 [[batches]]
-position = 163
+position = 164
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/linear_headwise.py", start_line: 67 })'
 descriptor = "python method at xlstm/components/linear_headwise.py:67"
 cost_tokens = 7
-cum_tokens = 3807
+cum_tokens = 3860
 
 [batches.content]
 kind = "lines"
@@ -4154,11 +4168,11 @@ end = 68
 kind = "full"
 
 [[batches]]
-position = 164
+position = 165
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/lstm.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/src/vanilla/lstm.py"
 cost_tokens = 13
-cum_tokens = 3820
+cum_tokens = 3873
 
 [batches.content]
 kind = "lines"
@@ -4180,11 +4194,11 @@ end = 8
 kind = "ellipsis"
 
 [[batches]]
-position = 165
+position = 166
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/blocks/slstm/src/vanilla/slstm.py", chunk_index: 0 })'
 descriptor = "python decl names surface in xlstm/blocks/slstm/src/vanilla/slstm.py"
 cost_tokens = 13
-cum_tokens = 3833
+cum_tokens = 3886
 
 [batches.content]
 kind = "lines"
@@ -4206,11 +4220,11 @@ end = 9
 kind = "ellipsis"
 
 [[batches]]
-position = 166
+position = 167
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", chunk_index: 0 })'
 descriptor = "python method sigs in xlstm/utils.py"
 cost_tokens = 150
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4312,11 +4326,11 @@ end = 98
 kind = "ellipsis"
 
 [[batches]]
-position = 167
+position = 168
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 20 })'
 descriptor = "python method at xlstm/utils.py:20"
 cost_tokens = 0
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4330,11 +4344,11 @@ end = 20
 kind = "full"
 
 [[batches]]
-position = 168
+position = 169
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 33 })'
 descriptor = "python method at xlstm/utils.py:33"
 cost_tokens = 0
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4348,11 +4362,11 @@ end = 33
 kind = "full"
 
 [[batches]]
-position = 169
+position = 170
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 36 })'
 descriptor = "python method at xlstm/utils.py:36"
 cost_tokens = 0
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4366,11 +4380,11 @@ end = 36
 kind = "full"
 
 [[batches]]
-position = 170
+position = 171
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 61 })'
 descriptor = "python method at xlstm/utils.py:61"
 cost_tokens = 0
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4384,11 +4398,11 @@ end = 61
 kind = "full"
 
 [[batches]]
-position = 171
+position = 172
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 77 })'
 descriptor = "python method at xlstm/utils.py:77"
 cost_tokens = 0
-cum_tokens = 3983
+cum_tokens = 4036
 
 [batches.content]
 kind = "lines"
@@ -4402,11 +4416,11 @@ end = 77
 kind = "full"
 
 [[batches]]
-position = 172
+position = 173
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/utils.py", start_line: 33, body_start_line: 34 })'
 descriptor = "python method body at xlstm/utils.py:33 body 34"
 cost_tokens = 10
-cum_tokens = 3993
+cum_tokens = 4046
 
 [batches.content]
 kind = "lines"
@@ -4420,11 +4434,11 @@ end = 34
 kind = "full"
 
 [[batches]]
-position = 173
+position = 174
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/xlstm/xlstm/components/conv.py", start_line: 12 })'
 descriptor = "python class body at xlstm/components/conv.py:12"
 cost_tokens = 71
-cum_tokens = 4064
+cum_tokens = 4117
 
 [batches.content]
 kind = "lines"
@@ -4436,20 +4450,6 @@ end = 18
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 174
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/xlstm/tests" })'
-descriptor = "listing of 'tests'"
-cost_tokens = 53
-cum_tokens = 4117
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/xlstm/tests"
-entries = ["__init__.py", "conftest.py", "template_chunkwise_vs_recurrent.py", "test_chunkwise_vs_recurrent.py", "test_generation.py", "test_slstm_cell_vanilla_vs_cuda.py", "test_weight_conversion.py"]
 
 [[batches]]
 position = 175

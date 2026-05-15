@@ -51,24 +51,10 @@ kind = "full"
 
 [[batches]]
 position = 4
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks" })'
-descriptor = "listing of 'notebooks'"
-cost_tokens = 27
-cum_tokens = 98
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks"
-entries = ["chronos-2-quickstart.ipynb", "deploy-chronos-to-amazon-sagemaker.ipynb"]
-
-[[batches]]
-position = 5
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos" })'
 descriptor = "listing of 'src/chronos'"
 cost_tokens = 47
-cum_tokens = 145
+cum_tokens = 118
 
 [batches.content]
 kind = "fs"
@@ -78,11 +64,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chr
 entries = ["__about__.py", "__init__.py", "base.py", "boto_utils.py", "chronos.py", "chronos2", "chronos_bolt.py", "df_utils.py", "utils.py"]
 
 [[batches]]
-position = 6
+position = 5
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2" })'
 descriptor = "listing of 'src/chronos/chronos2'"
 cost_tokens = 30
-cum_tokens = 175
+cum_tokens = 148
 
 [batches.content]
 kind = "fs"
@@ -90,6 +76,20 @@ kind = "fs"
 [[batches.content.groups]]
 parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2"
 entries = ["__init__.py", "config.py", "dataset.py", "layers.py", "model.py", "pipeline.py", "trainer.py"]
+
+[[batches]]
+position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks" })'
+descriptor = "listing of 'notebooks'"
+cost_tokens = 27
+cum_tokens = 175
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/notebooks"
+entries = ["chronos-2-quickstart.ipynb", "deploy-chronos-to-amazon-sagemaker.ipynb"]
 
 [[batches]]
 position = 7
@@ -987,10 +987,24 @@ kind = "full"
 
 [[batches]]
 position = 36
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test" })'
+descriptor = "listing of 'test'"
+cost_tokens = 78
+cum_tokens = 1772
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test"
+entries = ["__init__.py", "dummy-chronos-bolt-model", "dummy-chronos-model", "dummy-chronos2-lora", "dummy-chronos2-model", "test_chronos.py", "test_chronos2.py", "test_chronos_bolt.py", "test_df_utils.py", "test_utils.py", "util.py"]
+
+[[batches]]
+position = 37
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/config.py"
 cost_tokens = 27
-cum_tokens = 1721
+cum_tokens = 1799
 
 [batches.content]
 kind = "lines"
@@ -1028,11 +1042,11 @@ end = 103
 kind = "ellipsis"
 
 [[batches]]
-position = 37
+position = 38
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 12 })'
 descriptor = "python decl at src/chronos/chronos2/config.py:12"
 cost_tokens = 0
-cum_tokens = 1721
+cum_tokens = 1799
 
 [batches.content]
 kind = "lines"
@@ -1046,11 +1060,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 38
+position = 39
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 102 })'
 descriptor = "python decl at src/chronos/chronos2/config.py:102"
 cost_tokens = 10
-cum_tokens = 1731
+cum_tokens = 1809
 
 [batches.content]
 kind = "lines"
@@ -1064,11 +1078,11 @@ end = 103
 kind = "full"
 
 [[batches]]
-position = 39
+position = 40
 key = 'Python(MethodSigs { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", chunk_index: 0 })'
 descriptor = "python method sigs in src/chronos/chronos2/config.py"
 cost_tokens = 21
-cum_tokens = 1752
+cum_tokens = 1830
 
 [batches.content]
 kind = "lines"
@@ -1106,11 +1120,11 @@ end = 115
 kind = "ellipsis"
 
 [[batches]]
-position = 40
+position = 41
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/config.py", start_line: 114 })'
 descriptor = "python method at src/chronos/chronos2/config.py:114"
 cost_tokens = 12
-cum_tokens = 1764
+cum_tokens = 1842
 
 [batches.content]
 kind = "lines"
@@ -1124,11 +1138,11 @@ end = 115
 kind = "full"
 
 [[batches]]
-position = 41
+position = 42
 key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", chunk_index: 0 })'
 descriptor = "python decl names surface in src/chronos/chronos2/pipeline.py"
 cost_tokens = 28
-cum_tokens = 1792
+cum_tokens = 1870
 
 [batches.content]
 kind = "lines"
@@ -1158,11 +1172,11 @@ end = 40
 kind = "ellipsis"
 
 [[batches]]
-position = 42
+position = 43
 key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 39 })'
 descriptor = "python decl at src/chronos/chronos2/pipeline.py:39"
 cost_tokens = 0
-cum_tokens = 1792
+cum_tokens = 1870
 
 [batches.content]
 kind = "lines"
@@ -1176,11 +1190,11 @@ end = 39
 kind = "full"
 
 [[batches]]
-position = 43
+position = 44
 key = 'Python(ClassBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/chronos2/pipeline.py", start_line: 39 })'
 descriptor = "python class body at src/chronos/chronos2/pipeline.py:39"
 cost_tokens = 31
-cum_tokens = 1823
+cum_tokens = 1901
 
 [batches.content]
 kind = "lines"
@@ -1194,11 +1208,11 @@ end = 41
 kind = "full"
 
 [[batches]]
-position = 44
+position = 45
 key = 'Python(Method { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 100 })'
 descriptor = "python method at src/chronos/base.py:100"
 cost_tokens = 118
-cum_tokens = 1941
+cum_tokens = 2019
 
 [batches.content]
 kind = "lines"
@@ -1212,11 +1226,11 @@ end = 106
 kind = "full"
 
 [[batches]]
-position = 45
+position = 46
 key = 'Python(MethodBody { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/base.py", start_line: 100, body_start_line: 133 })'
 descriptor = "python method body at src/chronos/base.py:100 body 133"
 cost_tokens = 10
-cum_tokens = 1951
+cum_tokens = 2029
 
 [batches.content]
 kind = "lines"
@@ -1230,11 +1244,11 @@ end = 133
 kind = "full"
 
 [[batches]]
-position = 46
+position = 47
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/README.md", section_index: 9 })'
 descriptor = "README.md section #9"
 cost_tokens = 33
-cum_tokens = 1984
+cum_tokens = 2062
 
 [batches.content]
 kind = "lines"
@@ -1248,11 +1262,11 @@ end = 128
 kind = "full"
 
 [[batches]]
-position = 47
+position = 48
 key = 'Python(Imports { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/src/chronos/utils.py" })'
 descriptor = "python imports in src/chronos/utils.py"
 cost_tokens = 26
-cum_tokens = 2010
+cum_tokens = 2088
 
 [batches.content]
 kind = "lines"
@@ -1274,11 +1288,11 @@ end = 8
 kind = "full"
 
 [[batches]]
-position = 48
+position = 49
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/ci" })'
 descriptor = "listing of 'ci'"
 cost_tokens = 3
-cum_tokens = 2013
+cum_tokens = 2091
 
 [batches.content]
 kind = "fs"
@@ -1288,11 +1302,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/ci"
 entries = ["evaluate"]
 
 [[batches]]
-position = 49
+position = 50
 key = 'Markdown(ReadmeHeadline { file: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/scripts/README.md" })'
 descriptor = "README headline in scripts/README.md"
 cost_tokens = 8
-cum_tokens = 2021
+cum_tokens = 2099
 
 [batches.content]
 kind = "lines"
@@ -1304,20 +1318,6 @@ end = 1
 
 [batches.content.spans.render]
 kind = "full"
-
-[[batches]]
-position = 50
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test" })'
-descriptor = "listing of 'test'"
-cost_tokens = 78
-cum_tokens = 2099
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/chronos-forecasting/test"
-entries = ["__init__.py", "dummy-chronos-bolt-model", "dummy-chronos-model", "dummy-chronos2-lora", "dummy-chronos2-model", "test_chronos.py", "test_chronos2.py", "test_chronos_bolt.py", "test_df_utils.py", "test_utils.py", "util.py"]
 
 [[batches]]
 position = 51

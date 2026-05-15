@@ -9,20 +9,20 @@ Score(3000)=0.539 I=0.842 C=0.346 ns_rows≤3K=17/45 (reached=7 partial=1 missin
 | walker |  | 146 | 93 | README headline in README.md |  |  | 1.000 |
 | walker |  | 176 | 30 | headings outline in README.md |  |  | 1.000 |
 | walker |  | 209 | 33 | [package] in pyproject.toml |  |  | 1.000 |
-| walker |  | 218 | 9 | listing of 'examples' |  |  | 1.000 |
 | ns | 258 |  | 122 | src/flask module listing | 1.3 |  | 0.580 |
-| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.540 |
-| walker |  | 337 | 119 | README.md section #0 |  |  | 0.540 |
-| ns | 382 |  | 50 | Public re-exports — globals proxies (current_app, g, request, session) | 1.5 |  | 0.517 |
-| walker |  | 428 | 91 | listing of 'src/flask' |  |  | 0.740 |
-| walker |  | 439 | 11 | python imports in src/flask/__init__.py |  |  | 0.741 |
-| walker |  | 451 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.746 |
-| ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.710 |
-| walker |  | 465 | 14 | listing of 'src/flask/json' |  |  | 0.768 |
-| walker |  | 478 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.777 |
-| walker |  | 490 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.790 |
-| walker |  | 571 | 81 | python imports in src/flask/json/__init__.py |  |  | 0.790 |
-| walker |  | 581 | 10 | python imports in src/flask/__main__.py |  |  | 0.790 |
+| walker |  | 300 | 91 | listing of 'src/flask' |  |  | 0.830 |
+| walker |  | 311 | 11 | python imports in src/flask/__init__.py |  |  | 0.830 |
+| walker |  | 325 | 14 | listing of 'src/flask/json' |  |  | 0.899 |
+| ns | 332 |  | 74 | Public re-exports — Flask, Blueprint, Config, Request, Response | 1.4 |  | 0.838 |
+| walker |  | 337 | 12 | python imports #1 in src/flask/__init__.py |  |  | 0.843 |
+| walker |  | 350 | 13 | python imports #2 in src/flask/__init__.py |  |  | 0.854 |
+| walker |  | 362 | 12 | python imports #3 in src/flask/__init__.py |  |  | 0.867 |
+| ns | 382 |  | 50 | Public re-exports — globals proxies (current_app, g, request, session) | 1.5 |  | 0.830 |
+| walker |  | 443 | 81 | python imports in src/flask/json/__init__.py |  |  | 0.830 |
+| walker |  | 453 | 10 | python imports in src/flask/__main__.py |  |  | 0.830 |
+| ns | 460 |  | 78 | Public re-exports — ctx helpers and jsonify | 1.6 |  | 0.790 |
+| walker |  | 462 | 9 | listing of 'examples' |  |  | 0.790 |
+| walker |  | 581 | 119 | README.md section #0 |  |  | 0.790 |
 | walker |  | 593 | 12 | python imports #7 in src/flask/__init__.py |  |  | 0.791 |
 | walker |  | 606 | 13 | listing of '.github' |  |  | 0.724 |
 | ns | 606 |  | 146 | Public re-exports — helpers (url_for, redirect, abort, flash, send_file, …) | 1.7 |  | 0.724 |
@@ -245,12 +245,12 @@ Score(3000)=0.539 I=0.842 C=0.346 ns_rows≤3K=17/45 (reached=7 partial=1 missin
 | walker |  | 8135 | 12 | listing of 'tests/test_apps/blueprintapp/apps' |  |  | 0.396 |
 | walker |  | 8144 | 9 | listing of 'tests/test_apps/blueprintapp/apps/frontend' |  |  | 0.396 |
 | walker |  | 8156 | 12 | listing of 'tests/test_apps/blueprintapp/apps/admin' |  |  | 0.396 |
-| walker |  | 8165 | 9 | python imports in tests/test_apps/subdomaintestmodule/__init__.py |  |  | 0.396 |
-| walker |  | 8198 | 33 | listing of 'tests/test_apps/cliapp' |  |  | 0.396 |
+| walker |  | 8189 | 33 | listing of 'tests/test_apps/cliapp' |  |  | 0.396 |
+| walker |  | 8199 | 10 | listing of 'tests/test_apps/cliapp/inner1' |  |  | 0.396 |
 | ns | 8203 |  | 176 | docs/ top-level listing | 4.1 |  | 0.430 |
-| walker |  | 8208 | 10 | listing of 'tests/test_apps/cliapp/inner1' |  |  | 0.430 |
-| walker |  | 8218 | 10 | listing of 'tests/test_apps/cliapp/inner1/inner2' |  |  | 0.430 |
-| walker |  | 8227 | 9 | python imports in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.430 |
+| walker |  | 8209 | 10 | listing of 'tests/test_apps/cliapp/inner1/inner2' |  |  | 0.430 |
+| walker |  | 8218 | 9 | python imports in tests/test_apps/cliapp/inner1/__init__.py |  |  | 0.430 |
+| walker |  | 8227 | 9 | python imports in tests/test_apps/subdomaintestmodule/__init__.py |  |  | 0.430 |
 | walker |  | 8246 | 19 | listing of 'tests/type_check' |  |  | 0.430 |
 | walker |  | 8265 | 19 | python imports in tests/test_apps/blueprintapp/apps/admin/__init__.py |  |  | 0.430 |
 | walker |  | 8284 | 19 | python imports in tests/test_apps/blueprintapp/apps/frontend/__init__.py |  |  | 0.430 |

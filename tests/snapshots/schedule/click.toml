@@ -143,10 +143,104 @@ kind = "full"
 
 [[batches]]
 position = 6
+key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/click/src/click" })'
+descriptor = "listing of 'src/click'"
+cost_tokens = 86
+cum_tokens = 270
+
+[batches.content]
+kind = "fs"
+
+[[batches.content.groups]]
+parent = "/Users/yoav/projects/precis/tests/fixtures/click/src/click"
+entries = ["__init__.py", "_compat.py", "_termui_impl.py", "_textwrap.py", "_utils.py", "_winconsole.py", "core.py", "decorators.py", "exceptions.py", "formatting.py", "globals.py", "parser.py", "py.typed", "shell_completion.py", "termui.py", "testing.py", "types.py", "utils.py"]
+
+[[batches]]
+position = 7
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 1 })'
+descriptor = "python imports #1 in src/click/__init__.py"
+cost_tokens = 11
+cum_tokens = 281
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
+start = 8
+end = 8
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 8
+key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 0 })'
+descriptor = "python decl names surface in src/click/__init__.py"
+cost_tokens = 18
+cum_tokens = 299
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
+start = 78
+end = 78
+
+[batches.content.spans.render]
+kind = "ellipsis"
+
+[[batches]]
+position = 9
+key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", start_line: 77 })'
+descriptor = "python decl at src/click/__init__.py:77"
+cost_tokens = 0
+cum_tokens = 299
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
+start = 77
+end = 77
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 10
+key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 0 })'
+descriptor = "python imports in src/click/__init__.py"
+cost_tokens = 73
+cum_tokens = 372
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
+start = 1
+end = 6
+
+[batches.content.spans.render]
+kind = "full"
+
+[[batches]]
+position = 11
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/click/README.md", section_index: 0 })'
 descriptor = "README.md section #0"
 cost_tokens = 91
-cum_tokens = 275
+cum_tokens = 463
 
 [batches.content]
 kind = "lines"
@@ -171,100 +265,6 @@ kind = "full"
 path = "/Users/yoav/projects/precis/tests/fixtures/click/README.md"
 start = 16
 end = 18
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 7
-key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/click/src/click" })'
-descriptor = "listing of 'src/click'"
-cost_tokens = 86
-cum_tokens = 361
-
-[batches.content]
-kind = "fs"
-
-[[batches.content.groups]]
-parent = "/Users/yoav/projects/precis/tests/fixtures/click/src/click"
-entries = ["__init__.py", "_compat.py", "_termui_impl.py", "_textwrap.py", "_utils.py", "_winconsole.py", "core.py", "decorators.py", "exceptions.py", "formatting.py", "globals.py", "parser.py", "py.typed", "shell_completion.py", "termui.py", "testing.py", "types.py", "utils.py"]
-
-[[batches]]
-position = 8
-key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 1 })'
-descriptor = "python imports #1 in src/click/__init__.py"
-cost_tokens = 11
-cum_tokens = 372
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
-start = 8
-end = 8
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 9
-key = 'Python(DeclNames { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 0 })'
-descriptor = "python decl names surface in src/click/__init__.py"
-cost_tokens = 18
-cum_tokens = 390
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
-start = 78
-end = 78
-
-[batches.content.spans.render]
-kind = "ellipsis"
-
-[[batches]]
-position = 10
-key = 'Python(Decl { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", start_line: 77 })'
-descriptor = "python decl at src/click/__init__.py:77"
-cost_tokens = 0
-cum_tokens = 390
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
-start = 77
-end = 77
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 11
-key = 'Python(ImportChunk { file: "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py", chunk_index: 0 })'
-descriptor = "python imports in src/click/__init__.py"
-cost_tokens = 73
-cum_tokens = 463
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/click/src/click/__init__.py"
-start = 1
-end = 6
 
 [batches.content.spans.render]
 kind = "full"

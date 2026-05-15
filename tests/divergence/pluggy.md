@@ -5,13 +5,13 @@ Score(3000)=0.605 I=0.804 C=0.455 ns_rows≤3K=15/40 (reached=7 partial=3 missin
 | walker |  | 96 | 96 | listing of '.' |  |  | 1.000 |
 | ns | 96 |  | 96 | Top-level repo listing | 1.1 |  | 1.000 |
 | walker |  | 100 | 4 | listing of 'src' |  |  | 1.000 |
-| walker |  | 202 | 102 | README headline in README.rst |  |  | 1.000 |
-| ns | 213 |  | 117 | README lede + tagline | 1.2 |  | 0.943 |
-| walker |  | 221 | 19 | listing of 'changelog' |  |  | 0.943 |
-| ns | 256 |  | 43 | Source package layout (src/pluggy/) | 1.3 |  | 0.827 |
-| walker |  | 264 | 43 | listing of 'src/pluggy' |  |  | 0.952 |
-| walker |  | 282 | 18 | python decl names surface in src/pluggy/__init__.py |  |  | 0.952 |
-| walker |  | 282 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 0.952 |
+| walker |  | 143 | 43 | listing of 'src/pluggy' |  |  | 1.000 |
+| walker |  | 161 | 18 | python decl names surface in src/pluggy/__init__.py |  |  | 1.000 |
+| walker |  | 161 | 0 | python decl at src/pluggy/__init__.py:32 |  |  | 1.000 |
+| ns | 213 |  | 117 | README lede + tagline | 1.2 |  | 0.848 |
+| ns | 256 |  | 43 | Source package layout (src/pluggy/) | 1.3 |  | 0.855 |
+| walker |  | 263 | 102 | README headline in README.rst |  |  | 0.952 |
+| walker |  | 282 | 19 | listing of 'changelog' |  |  | 0.952 |
 | walker |  | 314 | 32 | listing of 'docs' |  |  | 0.953 |
 | walker |  | 357 | 43 | listing of 'downstream' |  |  | 0.954 |
 | walker |  | 360 | 3 | listing of 'docs/_static' |  |  | 0.954 |

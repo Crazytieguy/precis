@@ -13,34 +13,34 @@ Score(3000)=0.455 I=0.674 C=0.308 ns_rows≤3K=16/54 (reached=5 partial=1 missin
 | ns | 219 |  | 82 | pyproject identity | 1.3 |  | 0.525 |
 | walker |  | 244 | 55 | headings outline in docs/roadmap.md |  |  | 0.525 |
 | walker |  | 282 | 38 | README.md section #2 |  |  | 0.525 |
-| walker |  | 324 | 42 | README.md section #3 |  |  | 0.525 |
-| walker |  | 328 | 4 | listing of 'docs/overrides' |  |  | 0.525 |
-| walker |  | 332 | 4 | listing of 'docs/stylesheets' |  |  | 0.525 |
 | ns | 375 |  | 156 | Package tree (src/posting/) | 1.4 |  | 0.322 |
-| ns | 447 |  | 72 | README feature list (first half) | 1.5 |  | 0.299 |
-| walker |  | 488 | 156 | listing of 'src/posting' |  |  | 0.617 |
-| walker |  | 498 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.617 |
-| walker |  | 508 | 10 | python decl names surface in src/posting/help_data.py |  |  | 0.617 |
-| walker |  | 514 | 6 | python decl at src/posting/help_data.py:4 |  |  | 0.617 |
-| walker |  | 524 | 10 | python decl names surface in src/posting/messages.py |  |  | 0.617 |
-| walker |  | 532 | 8 | python decl at src/posting/messages.py:6 |  |  | 0.617 |
-| walker |  | 541 | 9 | python class body at src/posting/messages.py:6 |  |  | 0.617 |
-| ns | 546 |  | 99 | README feature list (second half) | 1.6 |  | 0.578 |
-| walker |  | 551 | 10 | python decl names surface in src/posting/version.py |  |  | 0.578 |
-| walker |  | 638 | 87 | listing of 'src/posting/widgets' |  |  | 0.581 |
-| ns | 669 |  | 123 | CLI command names | 1.7 |  | 0.544 |
-| walker |  | 704 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.545 |
+| walker |  | 438 | 156 | listing of 'src/posting' |  |  | 0.664 |
+| ns | 447 |  | 72 | README feature list (first half) | 1.5 |  | 0.617 |
+| walker |  | 525 | 87 | listing of 'src/posting/widgets' |  |  | 0.620 |
+| ns | 546 |  | 99 | README feature list (second half) | 1.6 |  | 0.581 |
+| walker |  | 591 | 66 | listing of 'src/posting/widgets/request' |  |  | 0.582 |
+| walker |  | 601 | 10 | python decl names surface in src/posting/exit_codes.py |  |  | 0.582 |
+| walker |  | 611 | 10 | python decl names surface in src/posting/help_data.py |  |  | 0.582 |
+| walker |  | 617 | 6 | python decl at src/posting/help_data.py:4 |  |  | 0.582 |
+| walker |  | 627 | 10 | python decl names surface in src/posting/messages.py |  |  | 0.582 |
+| walker |  | 635 | 8 | python decl at src/posting/messages.py:6 |  |  | 0.582 |
+| walker |  | 644 | 9 | python class body at src/posting/messages.py:6 |  |  | 0.582 |
+| walker |  | 654 | 10 | python decl names surface in src/posting/version.py |  |  | 0.582 |
+| ns | 669 |  | 123 | CLI command names | 1.7 |  | 0.545 |
 | ns | 818 |  | 149 | Runtime dependencies (CLI, HTTP, OpenAPI, clipboard) | 1.8 |  | 0.517 |
-| walker |  | 923 | 219 | python imports in src/posting/__init__.py |  |  | 0.517 |
-| walker |  | 936 | 13 | python decl names surface in src/posting/_start_time.py |  |  | 0.517 |
-| walker |  | 949 | 13 | python decl names surface in src/posting/suggesters.py |  |  | 0.517 |
-| walker |  | 964 | 15 | python decl names surface in src/posting/user_host.py |  |  | 0.517 |
-| walker |  | 964 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.517 |
+| walker |  | 873 | 219 | python imports in src/posting/__init__.py |  |  | 0.517 |
+| walker |  | 886 | 13 | python decl names surface in src/posting/_start_time.py |  |  | 0.517 |
+| walker |  | 899 | 13 | python decl names surface in src/posting/suggesters.py |  |  | 0.517 |
+| walker |  | 941 | 42 | README.md section #3 |  |  | 0.517 |
+| walker |  | 956 | 15 | python decl names surface in src/posting/user_host.py |  |  | 0.517 |
+| walker |  | 956 | 0 | python decl at src/posting/user_host.py:9 |  |  | 0.517 |
+| walker |  | 963 | 7 | python imports in src/posting/_start_time.py |  |  | 0.517 |
 | ns | 969 |  | 151 | Runtime dependencies (pydantic, YAML, watchers, Textual) | 1.9 |  | 0.490 |
-| walker |  | 971 | 7 | python imports in src/posting/_start_time.py |  |  | 0.490 |
-| walker |  | 987 | 16 | python decl names surface in src/posting/auth.py |  |  | 0.490 |
-| walker |  | 987 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.490 |
-| walker |  | 1006 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.490 |
+| walker |  | 979 | 16 | python decl names surface in src/posting/auth.py |  |  | 0.490 |
+| walker |  | 979 | 0 | python decl at src/posting/auth.py:6 |  |  | 0.490 |
+| walker |  | 998 | 19 | python decl doc at src/posting/help_data.py:4 |  |  | 0.490 |
+| walker |  | 1002 | 4 | listing of 'docs/overrides' |  |  | 0.490 |
+| walker |  | 1006 | 4 | listing of 'docs/stylesheets' |  |  | 0.490 |
 | walker |  | 1017 | 11 | python decl names surface in src/posting/widgets/input.py |  |  | 0.490 |
 | walker |  | 1017 | 0 | python decl at src/posting/widgets/input.py:9 |  |  | 0.490 |
 | walker |  | 1035 | 18 | python decl names surface in src/posting/jump_overlay.py |  |  | 0.490 |

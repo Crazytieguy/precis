@@ -579,28 +579,10 @@ entries = ["bottle.rs", "cask.rs", "mod.rs", "source.rs"]
 
 [[batches]]
 position = 34
-key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/mod.rs" })'
-descriptor = "mod/use plumbing in sps-core/src/pipeline/mod.rs"
-cost_tokens = 16
-cum_tokens = 1165
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/mod.rs"
-start = 1
-end = 2
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 35
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install" })'
 descriptor = "listing of 'sps-core/src/install'"
 cost_tokens = 20
-cum_tokens = 1185
+cum_tokens = 1169
 
 [batches.content]
 kind = "fs"
@@ -610,11 +592,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install"
 entries = ["bottle", "cask", "devtools.rs", "extract.rs", "mod.rs"]
 
 [[batches]]
-position = 36
+position = 35
 key = 'Rust(PubItem { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/install/mod.rs", start_line: 17 })'
 descriptor = "pub item at sps-core/src/install/mod.rs:17"
 cost_tokens = 27
-cum_tokens = 1212
+cum_tokens = 1196
 
 [batches.content]
 kind = "lines"
@@ -634,6 +616,24 @@ end = 18
 
 [batches.content.spans.render]
 kind = "ellipsis"
+
+[[batches]]
+position = 36
+key = 'Rust(ModUse { file: "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/mod.rs" })'
+descriptor = "mod/use plumbing in sps-core/src/pipeline/mod.rs"
+cost_tokens = 16
+cum_tokens = 1212
+
+[batches.content]
+kind = "lines"
+
+[[batches.content.spans]]
+path = "/Users/yoav/projects/precis/tests/fixtures/sps/sps-core/src/pipeline/mod.rs"
+start = 1
+end = 2
+
+[batches.content.spans.render]
+kind = "full"
 
 [[batches]]
 position = 37

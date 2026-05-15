@@ -9,47 +9,47 @@ Score(3000)=0.510 I=0.402 C=0.648 ns_rows≤3K=17/50 (reached=7 partial=2 missin
 | walker |  | 178 | 9 | listing of 'beets/ui' |  |  | 0.000 |
 | ns | 181 |  | 83 | Top-level repo listing | 1.2 |  | 0.505 |
 | walker |  | 196 | 18 | listing of 'beets/autotag' |  |  | 0.506 |
-| walker |  | 211 | 15 | python decl names surface in beets/autotag/__init__.py |  |  | 0.475 |
-| walker |  | 211 | 0 | python decl at beets/autotag/__init__.py:28 |  |  | 0.475 |
 | ns | 211 |  | 30 | Entry-point scripts (`beet = beets.ui:main`) | 1.3 |  | 0.475 |
-| walker |  | 233 | 22 | listing of 'beets/importer' |  |  | 0.479 |
+| walker |  | 218 | 22 | listing of 'beets/importer' |  |  | 0.479 |
+| walker |  | 233 | 15 | python decl names surface in beets/autotag/__init__.py |  |  | 0.479 |
+| walker |  | 233 | 0 | python decl at beets/autotag/__init__.py:28 |  |  | 0.479 |
 | walker |  | 261 | 28 | listing of 'beets/dbcore' |  |  | 0.490 |
-| ns | 303 |  | 92 | `python -m beets` shim | 1.4 |  | 0.412 |
-| walker |  | 329 | 68 | python imports in beets/__init__.py |  |  | 0.414 |
-| walker |  | 359 | 30 | listing of 'beets/library' |  |  | 0.430 |
-| walker |  | 387 | 28 | python decl names surface in beets/library/__init__.py |  |  | 0.430 |
-| walker |  | 387 | 0 | python decl at beets/library/__init__.py:15 |  |  | 0.430 |
+| walker |  | 291 | 30 | listing of 'beets/library' |  |  | 0.508 |
+| ns | 303 |  | 92 | `python -m beets` shim | 1.4 |  | 0.428 |
+| walker |  | 319 | 28 | python decl names surface in beets/library/__init__.py |  |  | 0.428 |
+| walker |  | 319 | 0 | python decl at beets/library/__init__.py:15 |  |  | 0.428 |
+| walker |  | 387 | 68 | python imports in beets/__init__.py |  |  | 0.430 |
 | ns | 390 |  | 87 | Package version + global config singleton | 1.5 |  | 0.407 |
-| walker |  | 434 | 47 | python decl names surface in beets/__init__.py |  |  | 0.434 |
-| walker |  | 434 | 0 | python decl at beets/__init__.py:26 |  |  | 0.434 |
-| walker |  | 434 | 0 | python decl at beets/__init__.py:35 |  |  | 0.434 |
-| walker |  | 442 | 8 | python decl doc at beets/__init__.py:26 |  |  | 0.434 |
-| walker |  | 468 | 26 | python method sigs in beets/__init__.py |  |  | 0.434 |
-| walker |  | 468 | 0 | python method at beets/__init__.py:40 |  |  | 0.434 |
-| walker |  | 487 | 19 | python decl body at beets/library/__init__.py:15 body 16 |  |  | 0.434 |
-| walker |  | 554 | 67 | listing of 'beets/ui/commands' |  |  | 0.443 |
-| walker |  | 568 | 14 | listing of 'beets/ui/commands/import_' |  |  | 0.446 |
-| ns | 571 |  | 181 | Project metadata + Python version constraint | 1.6 |  | 0.380 |
-| walker |  | 591 | 23 | python decl names surface in beets/ui/commands/__init__.py |  |  | 0.380 |
-| walker |  | 591 | 0 | python decl at beets/ui/commands/__init__.py:36 |  |  | 0.380 |
-| walker |  | 599 | 8 | python decl doc at beets/ui/commands/__init__.py:36 |  |  | 0.380 |
-| walker |  | 671 | 72 | python imports in beets/ui/commands/import_/__init__.py |  |  | 0.380 |
-| walker |  | 711 | 40 | python decl doc at beets/__init__.py:35 |  |  | 0.403 |
-| ns | 802 |  | 231 | Core (non-optional) runtime deps | 1.7 |  | 0.350 |
-| ns | 869 |  | 67 | `beets/` core package listing | 2.1 |  | 0.399 |
-| walker |  | 882 | 171 | python imports in beets/library/__init__.py |  |  | 0.407 |
-| walker |  | 957 | 75 | listing of 'beets/util' |  |  | 0.426 |
-| walker |  | 967 | 10 | python imports in beets/util/__init__.py |  |  | 0.465 |
-| ns | 967 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 2.2 |  | 0.465 |
-| walker |  | 978 | 11 | python imports #1 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 986 | 8 | python imports #2 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 993 | 7 | python imports #3 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1001 | 8 | python imports #4 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1008 | 7 | python imports #5 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1015 | 7 | python imports #6 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1022 | 7 | python imports #7 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1030 | 8 | python imports #8 in beets/util/__init__.py |  |  | 0.465 |
-| walker |  | 1037 | 7 | python imports #9 in beets/util/__init__.py |  |  | 0.465 |
+| walker |  | 454 | 67 | listing of 'beets/ui/commands' |  |  | 0.415 |
+| walker |  | 468 | 14 | listing of 'beets/ui/commands/import_' |  |  | 0.418 |
+| walker |  | 491 | 23 | python decl names surface in beets/ui/commands/__init__.py |  |  | 0.418 |
+| walker |  | 491 | 0 | python decl at beets/ui/commands/__init__.py:36 |  |  | 0.418 |
+| walker |  | 499 | 8 | python decl doc at beets/ui/commands/__init__.py:36 |  |  | 0.418 |
+| walker |  | 571 | 72 | python imports in beets/ui/commands/import_/__init__.py |  |  | 0.356 |
+| ns | 571 |  | 181 | Project metadata + Python version constraint | 1.6 |  | 0.356 |
+| walker |  | 646 | 75 | listing of 'beets/util' |  |  | 0.374 |
+| walker |  | 656 | 10 | python imports in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 667 | 11 | python imports #1 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 675 | 8 | python imports #2 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 682 | 7 | python imports #3 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 690 | 8 | python imports #4 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 697 | 7 | python imports #5 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 704 | 7 | python imports #6 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 711 | 7 | python imports #7 in beets/util/__init__.py |  |  | 0.374 |
+| walker |  | 758 | 47 | python decl names surface in beets/__init__.py |  |  | 0.399 |
+| walker |  | 758 | 0 | python decl at beets/__init__.py:26 |  |  | 0.399 |
+| walker |  | 758 | 0 | python decl at beets/__init__.py:35 |  |  | 0.399 |
+| walker |  | 766 | 8 | python decl doc at beets/__init__.py:26 |  |  | 0.399 |
+| walker |  | 792 | 26 | python method sigs in beets/__init__.py |  |  | 0.399 |
+| walker |  | 792 | 0 | python method at beets/__init__.py:40 |  |  | 0.399 |
+| ns | 802 |  | 231 | Core (non-optional) runtime deps | 1.7 |  | 0.346 |
+| walker |  | 811 | 19 | python decl body at beets/library/__init__.py:15 body 16 |  |  | 0.346 |
+| walker |  | 819 | 8 | python imports #8 in beets/util/__init__.py |  |  | 0.346 |
+| walker |  | 826 | 7 | python imports #9 in beets/util/__init__.py |  |  | 0.346 |
+| walker |  | 866 | 40 | python decl doc at beets/__init__.py:35 |  |  | 0.367 |
+| ns | 869 |  | 67 | `beets/` core package listing | 2.1 |  | 0.419 |
+| ns | 967 |  | 98 | Core subpackage listings: dbcore, library, autotag, importer | 2.2 |  | 0.457 |
+| walker |  | 1037 | 171 | python imports in beets/library/__init__.py |  |  | 0.465 |
 | walker |  | 1044 | 7 | python imports #10 in beets/util/__init__.py |  |  | 0.465 |
 | ns | 1132 |  | 165 | UI + util + commands listings | 2.3 |  | 0.496 |
 | walker |  | 1227 | 183 | python imports in beets/autotag/__init__.py |  |  | 0.501 |
@@ -90,96 +90,96 @@ Score(3000)=0.510 I=0.402 C=0.648 ns_rows≤3K=17/50 (reached=7 partial=2 missin
 | ns | 2509 |  | 203 | Docs tree + reference + dev-doc table-of-contents | 2.8 |  | 0.526 |
 | ns | 2681 |  | 172 | `UserError` + `Subcommand` class header | 3.1 |  | 0.513 |
 | walker |  | 2776 | 307 | python imports in beets/ui/__init__.py |  |  | 0.513 |
-| walker |  | 2794 | 18 | python decl names surface in beets/util/hidden.py |  |  | 0.513 |
-| walker |  | 2794 | 0 | python decl at beets/util/hidden.py:25 |  |  | 0.513 |
-| walker |  | 2818 | 24 | listing of 'docs/dev/plugins' |  |  | 0.527 |
+| walker |  | 2791 | 15 | listing of 'beets/test' |  |  | 0.513 |
+| walker |  | 2809 | 18 | python decl names surface in beets/util/hidden.py |  |  | 0.513 |
+| walker |  | 2809 | 0 | python decl at beets/util/hidden.py:25 |  |  | 0.513 |
+| walker |  | 2833 | 24 | listing of 'docs/dev/plugins' |  |  | 0.527 |
 | ns | 2928 |  | 247 | Top-level fns in `beets/ui/__init__.py` (signature heads only) | 3.2 |  | 0.510 |
-| walker |  | 3368 | 550 | README headline in README.rst |  |  | 0.701 |
-| ns | 3376 |  | 448 | `main()` top-level exception handlers | 3.3 | 3.2 | 0.666 |
-| walker |  | 3381 | 13 | python decl names surface in beets/ui/commands/help.py |  |  | 0.666 |
-| walker |  | 3381 | 0 | python decl at beets/ui/commands/help.py:6 |  |  | 0.666 |
-| walker |  | 3391 | 10 | python imports in beets/library/exceptions.py |  |  | 0.666 |
-| walker |  | 3414 | 23 | python decl names surface in beets/importer/state.py |  |  | 0.666 |
-| walker |  | 3420 | 6 | python decl at beets/importer/state.py:34 |  |  | 0.666 |
-| walker |  | 3444 | 24 | python decl names surface in beets/util/m3u.py |  |  | 0.666 |
-| walker |  | 3444 | 0 | python decl at beets/util/m3u.py:22 |  |  | 0.666 |
-| walker |  | 3444 | 0 | python decl at beets/util/m3u.py:28 |  |  | 0.666 |
-| walker |  | 3451 | 7 | python class body at beets/util/m3u.py:22 |  |  | 0.666 |
-| walker |  | 3468 | 17 | python decl doc at beets/util/m3u.py:22 |  |  | 0.666 |
+| ns | 3376 |  | 448 | `main()` top-level exception handlers | 3.3 | 3.2 | 0.484 |
+| walker |  | 3383 | 550 | README headline in README.rst |  |  | 0.666 |
+| walker |  | 3396 | 13 | python decl names surface in beets/ui/commands/help.py |  |  | 0.666 |
+| walker |  | 3396 | 0 | python decl at beets/ui/commands/help.py:6 |  |  | 0.666 |
+| walker |  | 3406 | 10 | python imports in beets/library/exceptions.py |  |  | 0.666 |
+| walker |  | 3429 | 23 | python decl names surface in beets/importer/state.py |  |  | 0.666 |
+| walker |  | 3435 | 6 | python decl at beets/importer/state.py:34 |  |  | 0.666 |
+| walker |  | 3459 | 24 | python decl names surface in beets/util/m3u.py |  |  | 0.666 |
+| walker |  | 3459 | 0 | python decl at beets/util/m3u.py:22 |  |  | 0.666 |
+| walker |  | 3459 | 0 | python decl at beets/util/m3u.py:28 |  |  | 0.666 |
+| walker |  | 3466 | 7 | python class body at beets/util/m3u.py:22 |  |  | 0.666 |
 | ns | 3470 |  | 94 | `_raw_main()` global-option setup | 3.4 | 3.2 | 0.660 |
-| walker |  | 3486 | 18 | python decl doc at beets/util/m3u.py:28 |  |  | 0.660 |
-| walker |  | 3495 | 9 | python imports #14 in beets/util/__init__.py |  |  | 0.660 |
-| walker |  | 3523 | 28 | python method sigs in beets/ui/commands/help.py |  |  | 0.660 |
-| walker |  | 3523 | 0 | python method at beets/ui/commands/help.py:7 |  |  | 0.660 |
-| walker |  | 3523 | 0 | python method at beets/ui/commands/help.py:14 |  |  | 0.660 |
-| walker |  | 3675 | 152 | python decl names surface in beets/util/__init__.py |  |  | 0.660 |
-| walker |  | 3675 | 0 | python decl at beets/util/__init__.py:74 |  |  | 0.660 |
-| walker |  | 3675 | 0 | python decl at beets/util/__init__.py:130 |  |  | 0.660 |
-| walker |  | 3675 | 0 | python decl at beets/util/__init__.py:158 |  |  | 0.660 |
-| walker |  | 3675 | 0 | python decl at beets/util/__init__.py:169 |  |  | 0.660 |
-| walker |  | 3675 | 0 | python decl at beets/util/__init__.py:175 |  |  | 0.660 |
-| walker |  | 3695 | 20 | python class body at beets/util/__init__.py:74 |  |  | 0.660 |
-| walker |  | 3713 | 18 | python decl doc at beets/util/__init__.py:158 |  |  | 0.660 |
+| walker |  | 3483 | 17 | python decl doc at beets/util/m3u.py:22 |  |  | 0.660 |
+| walker |  | 3501 | 18 | python decl doc at beets/util/m3u.py:28 |  |  | 0.660 |
+| walker |  | 3510 | 9 | python imports #14 in beets/util/__init__.py |  |  | 0.660 |
+| walker |  | 3538 | 28 | python method sigs in beets/ui/commands/help.py |  |  | 0.660 |
+| walker |  | 3538 | 0 | python method at beets/ui/commands/help.py:7 |  |  | 0.660 |
+| walker |  | 3538 | 0 | python method at beets/ui/commands/help.py:14 |  |  | 0.660 |
+| walker |  | 3690 | 152 | python decl names surface in beets/util/__init__.py |  |  | 0.660 |
+| walker |  | 3690 | 0 | python decl at beets/util/__init__.py:74 |  |  | 0.660 |
+| walker |  | 3690 | 0 | python decl at beets/util/__init__.py:130 |  |  | 0.660 |
+| walker |  | 3690 | 0 | python decl at beets/util/__init__.py:158 |  |  | 0.660 |
+| walker |  | 3690 | 0 | python decl at beets/util/__init__.py:169 |  |  | 0.660 |
+| walker |  | 3690 | 0 | python decl at beets/util/__init__.py:175 |  |  | 0.660 |
+| walker |  | 3710 | 20 | python class body at beets/util/__init__.py:74 |  |  | 0.660 |
+| walker |  | 3728 | 18 | python decl doc at beets/util/__init__.py:158 |  |  | 0.639 |
 | ns | 3728 |  | 258 | `_raw_main()` parse + dispatch tail | 3.5 | 3.4 | 0.639 |
-| walker |  | 3738 | 25 | python class body at beets/util/__init__.py:169 |  |  | 0.639 |
-| walker |  | 3768 | 30 | python decl doc at beets/util/__init__.py:175 |  |  | 0.639 |
-| walker |  | 3834 | 66 | python class body at beets/util/__init__.py:158 |  |  | 0.639 |
-| walker |  | 3888 | 54 | python decl doc at beets/util/__init__.py:130 |  |  | 0.639 |
+| walker |  | 3753 | 25 | python class body at beets/util/__init__.py:169 |  |  | 0.639 |
+| walker |  | 3783 | 30 | python decl doc at beets/util/__init__.py:175 |  |  | 0.639 |
+| walker |  | 3849 | 66 | python class body at beets/util/__init__.py:158 |  |  | 0.639 |
+| walker |  | 3903 | 54 | python decl doc at beets/util/__init__.py:130 |  |  | 0.639 |
 | ns | 3939 |  | 211 | `_setup()` body: load plugins, build commands, open library | 3.6 | 3.2 | 0.621 |
-| walker |  | 3993 | 105 | python method sigs in beets/util/__init__.py |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:90 |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:96 |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:104 |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:115 |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:121 |  |  | 0.621 |
-| walker |  | 3993 | 0 | python method at beets/util/__init__.py:136 |  |  | 0.621 |
-| walker |  | 4008 | 15 | python method at beets/util/__init__.py:140 |  |  | 0.621 |
-| walker |  | 4018 | 10 | python method body at beets/util/__init__.py:115 body 119 |  |  | 0.621 |
-| walker |  | 4029 | 11 | python method doc at beets/util/__init__.py:104 |  |  | 0.621 |
-| walker |  | 4057 | 28 | python method doc at beets/util/__init__.py:115 |  |  | 0.621 |
-| walker |  | 4074 | 17 | python method doc at beets/util/__init__.py:96 |  |  | 0.621 |
-| walker |  | 4113 | 39 | python method doc at beets/util/__init__.py:121 |  |  | 0.621 |
-| walker |  | 4136 | 23 | python method body at beets/util/__init__.py:136 body 137 |  |  | 0.621 |
-| walker |  | 4148 | 12 | python imports in beets/library/fields.py |  |  | 0.621 |
-| walker |  | 4170 | 22 | python imports in beets/context.py |  |  | 0.621 |
-| walker |  | 4236 | 66 | python decl names surface in beets/context.py |  |  | 0.621 |
-| walker |  | 4236 | 0 | python decl at beets/context.py:8 |  |  | 0.621 |
-| walker |  | 4236 | 0 | python decl at beets/context.py:13 |  |  | 0.621 |
-| walker |  | 4245 | 9 | python decl at beets/context.py:18 |  |  | 0.621 |
-| walker |  | 4256 | 11 | python decl doc at beets/context.py:8 |  |  | 0.621 |
-| walker |  | 4267 | 11 | python decl doc at beets/context.py:13 |  |  | 0.621 |
-| walker |  | 4279 | 12 | python decl body at beets/context.py:8 body 10 |  |  | 0.621 |
-| walker |  | 4291 | 12 | python decl body at beets/context.py:13 body 15 |  |  | 0.621 |
-| walker |  | 4309 | 18 | python decl doc at beets/context.py:18 |  |  | 0.621 |
+| walker |  | 4008 | 105 | python method sigs in beets/util/__init__.py |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:90 |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:96 |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:104 |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:115 |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:121 |  |  | 0.621 |
+| walker |  | 4008 | 0 | python method at beets/util/__init__.py:136 |  |  | 0.621 |
+| walker |  | 4023 | 15 | python method at beets/util/__init__.py:140 |  |  | 0.621 |
+| walker |  | 4033 | 10 | python method body at beets/util/__init__.py:115 body 119 |  |  | 0.621 |
+| walker |  | 4044 | 11 | python method doc at beets/util/__init__.py:104 |  |  | 0.621 |
+| walker |  | 4072 | 28 | python method doc at beets/util/__init__.py:115 |  |  | 0.621 |
+| walker |  | 4089 | 17 | python method doc at beets/util/__init__.py:96 |  |  | 0.621 |
+| walker |  | 4128 | 39 | python method doc at beets/util/__init__.py:121 |  |  | 0.621 |
+| walker |  | 4151 | 23 | python method body at beets/util/__init__.py:136 body 137 |  |  | 0.621 |
+| walker |  | 4163 | 12 | python imports in beets/library/fields.py |  |  | 0.621 |
+| walker |  | 4185 | 22 | python imports in beets/context.py |  |  | 0.621 |
+| walker |  | 4251 | 66 | python decl names surface in beets/context.py |  |  | 0.621 |
+| walker |  | 4251 | 0 | python decl at beets/context.py:8 |  |  | 0.621 |
+| walker |  | 4251 | 0 | python decl at beets/context.py:13 |  |  | 0.621 |
+| walker |  | 4260 | 9 | python decl at beets/context.py:18 |  |  | 0.621 |
+| walker |  | 4271 | 11 | python decl doc at beets/context.py:8 |  |  | 0.621 |
+| walker |  | 4282 | 11 | python decl doc at beets/context.py:13 |  |  | 0.621 |
+| walker |  | 4294 | 12 | python decl body at beets/context.py:8 body 10 |  |  | 0.621 |
+| walker |  | 4306 | 12 | python decl body at beets/context.py:13 body 15 |  |  | 0.621 |
+| walker |  | 4324 | 18 | python decl doc at beets/context.py:18 |  |  | 0.621 |
 | ns | 4347 |  | 408 | `default_commands` list (built-in subcommands) | 3.7 |  | 0.599 |
-| walker |  | 4473 | 164 | python decl names surface in beets/ui/__init__.py |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:71 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:80 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:85 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:90 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:111 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:122 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:150 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:160 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:167 |  |  | 0.600 |
-| walker |  | 4473 | 0 | python decl at beets/ui/__init__.py:187 |  |  | 0.600 |
-| walker |  | 4502 | 29 | python decl at beets/ui/__init__.py:65 |  |  | 0.600 |
+| walker |  | 4488 | 164 | python decl names surface in beets/ui/__init__.py |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:71 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:80 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:85 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:90 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:111 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:122 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:150 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:160 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:167 |  |  | 0.600 |
+| walker |  | 4488 | 0 | python decl at beets/ui/__init__.py:187 |  |  | 0.600 |
+| walker |  | 4517 | 29 | python decl at beets/ui/__init__.py:65 |  |  | 0.600 |
 | ns | 4535 |  | 188 | Built-in command registrations (one `Subcommand` line per cmd) | 3.8 |  | 0.592 |
-| walker |  | 4537 | 35 | python decl doc at beets/ui/__init__.py:71 |  |  | 0.593 |
-| walker |  | 4559 | 22 | python decl body at beets/ui/__init__.py:160 body 164 |  |  | 0.593 |
-| walker |  | 4596 | 37 | python decl doc at beets/ui/__init__.py:160 |  |  | 0.593 |
-| walker |  | 4608 | 12 | python decl body at beets/ui/__init__.py:80 body 82 |  |  | 0.593 |
-| walker |  | 4620 | 12 | python decl body at beets/ui/__init__.py:85 body 87 |  |  | 0.593 |
-| walker |  | 4638 | 18 | python decl doc at beets/ui/__init__.py:150 |  |  | 0.593 |
-| walker |  | 4657 | 19 | python decl doc at beets/ui/__init__.py:80 |  |  | 0.593 |
-| walker |  | 4676 | 19 | python decl doc at beets/ui/__init__.py:85 |  |  | 0.593 |
-| walker |  | 4685 | 9 | python decl body at beets/ui/__init__.py:111 body 119 |  |  | 0.593 |
-| walker |  | 4756 | 71 | python decl doc at beets/ui/__init__.py:187 |  |  | 0.593 |
+| walker |  | 4552 | 35 | python decl doc at beets/ui/__init__.py:71 |  |  | 0.593 |
+| walker |  | 4574 | 22 | python decl body at beets/ui/__init__.py:160 body 164 |  |  | 0.593 |
+| walker |  | 4611 | 37 | python decl doc at beets/ui/__init__.py:160 |  |  | 0.593 |
+| walker |  | 4623 | 12 | python decl body at beets/ui/__init__.py:80 body 82 |  |  | 0.593 |
+| walker |  | 4635 | 12 | python decl body at beets/ui/__init__.py:85 body 87 |  |  | 0.593 |
+| walker |  | 4653 | 18 | python decl doc at beets/ui/__init__.py:150 |  |  | 0.593 |
+| walker |  | 4672 | 19 | python decl doc at beets/ui/__init__.py:80 |  |  | 0.593 |
+| walker |  | 4691 | 19 | python decl doc at beets/ui/__init__.py:85 |  |  | 0.593 |
+| walker |  | 4700 | 9 | python decl body at beets/ui/__init__.py:111 body 119 |  |  | 0.593 |
+| walker |  | 4771 | 71 | python decl doc at beets/ui/__init__.py:187 |  |  | 0.593 |
 | ns | 4796 |  | 261 | Smallest command as concrete template (`list`) | 3.9 | 3.8 | 0.576 |
-| walker |  | 4830 | 74 | python decl doc at beets/ui/__init__.py:111 |  |  | 0.576 |
-| walker |  | 4912 | 82 | python decl doc at beets/ui/__init__.py:122 |  |  | 0.576 |
-| walker |  | 4966 | 54 | python decl body at beets/ui/__init__.py:167 body 177 |  |  | 0.576 |
-| walker |  | 4981 | 15 | listing of 'beets/test' |  |  | 0.576 |
+| walker |  | 4845 | 74 | python decl doc at beets/ui/__init__.py:111 |  |  | 0.576 |
+| walker |  | 4927 | 82 | python decl doc at beets/ui/__init__.py:122 |  |  | 0.576 |
+| walker |  | 4981 | 54 | python decl body at beets/ui/__init__.py:167 body 177 |  |  | 0.576 |
 | ns | 4982 |  | 186 | `Library` class header + `_models` + `_migrations` | 4.1 |  | 0.568 |
 | walker |  | 5040 | 59 | python decl body at beets/__init__.py:26 body 28 |  |  | 0.568 |
 | ns | 5125 |  | 143 | `Library` query/fetch method headers | 4.2 | 4.1 | 0.562 |
