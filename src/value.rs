@@ -199,6 +199,7 @@ fn non_essential_factor_inner(
                     | "e2e"
                     | "cypress"
                     | "playwright"
+                    | "migrations"
             ) || s.starts_with("test_")
                 || s.starts_with("tests_")
                 || s.starts_with("guide-helper")
