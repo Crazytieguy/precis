@@ -19,20 +19,6 @@ README.md
     …
     110→## Namespace Colors
     …
-    112→Every debug instance has a color generated for it based on its namespace name.
-    113→This helps when visually parsing the debug output to identify which debug instance
-    114→a debug line belongs to.
-    116→#### Node.js
-    118→In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
-    119→the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
-    120→otherwise debug will only use a small handful of basic colors.
-    122→<img width="521" src="https://user-images.githubusercontent.com/71256/29092181-47f6a9e6-7c3a-11e7-9a14-1928d8a711cd.png">
-    124→#### Web Browser
-    126→Colors are also enabled on "Web Inspectors" that understand the `%c` formatting
-    127→option. These are WebKit web inspectors, Firefox ([since version
-    128→31](https://hacks.mozilla.org/2014/05/editable-box-model-multiple-selection-sublime-text-keys-much-more-firefox-developer-tools-episode-31/))
-    129→and the Firebug plugin for Firefox (any version).
-    131→<img width="524" src="https://user-images.githubusercontent.com/71256/29092033-b65f9f2e-7c39-11e7-8e32-f6f0d8e865c1.png">
     134→## Millisecond diff
     …
     136→When actively developing an application it can be useful to see when the time spent between one `debug()` call and the next. Suppose for example you invoke `debug()` before requesting a resource, and after as well, the "+NNNms" will show you how much time was spent between calls.
@@ -54,20 +40,6 @@ README.md
     159→starting with "connect:".
     161→## Environment Variables
     …
-    163→When running through Node.js, you can set a few environment variables that will
-    164→change the behavior of the debug logging:
-    166→| Name      | Purpose                                         |
-    167→|-----------|-------------------------------------------------|
-    168→| `DEBUG`   | Enables/disables specific debugging namespaces. |
-    169→| `DEBUG_HIDE_DATE` | Hide date from debug output (non-TTY).  |
-    170→| `DEBUG_COLORS`| Whether or not to use colors in the debug output. |
-    171→| `DEBUG_DEPTH` | Object inspection depth.                    |
-    172→| `DEBUG_SHOW_HIDDEN` | Shows hidden properties on inspected objects. |
-    175→__Note:__ The environment variables beginning with `DEBUG_` end up being
-    176→converted into an Options object that gets used with `%o`/`%O` formatters.
-    177→See the Node.js documentation for
-    178→[`util.inspect()`](https://nodejs.org/api/util.html#util_util_inspect_object_options)
-    179→for the complete list.
     181→## Formatters
     …
     196→### Custom formatters
@@ -77,48 +49,13 @@ README.md
     248→## Output streams
     …
     274→## Extend
-    275→You can simply extend debugger 
-    276→```js
-    277→const log = require('debug')('auth');
-    279→//creates new debug instance with extended namespace
-    280→const logSign = log.extend('sign');
-    281→const logLogin = log.extend('login');
-    283→log('hello'); // auth hello
-    284→logSign('hello'); //auth:sign hello
-    285→logLogin('hello'); //auth:login hello
-    286→```
+    …
     288→## Set dynamically
     …
     341→## Checking whether a debug target is enabled
     …
-    343→After you've created a debug instance, you can determine whether or not it is
-    344→enabled by checking the `enabled` property:
-    346→```javascript
-    347→const debug = require('debug')('http');
-    349→if (debug.enabled) {
-    350→  // do stuff...
-    351→}
-    352→```
-    354→You can also manually toggle this property to force the debug instance to be
-    355→enabled or disabled.
     357→## Usage in child processes
     …
-    359→Due to the way `debug` detects if the output is a TTY or not, colors are not shown in child processes when `stderr` is piped. A solution is to pass the `DEBUG_COLORS=1` environment variable to the child process.  
-    360→For example:
-    362→```javascript
-    363→worker = fork(WORKER_WRAP_PATH, [workerPath], {
-    364→  stdio: [
-    365→    /* stdin: */ 0,
-    366→    /* stdout: */ 'pipe',
-    367→    /* stderr: */ 'pipe',
-    368→    'ipc',
-    369→  ],
-    370→  env: Object.assign({}, process.env, {
-    371→    DEBUG_COLORS: 1 // without this settings, colors won't be shown
-    372→  }),
-    373→});
-    375→worker.stderr.pipe(process.stderr, { end: false });
-    376→```
     379→## Authors
     …
     381→ - TJ Holowaychuk
@@ -194,9 +131,73 @@ package.json
     58→  },
 src/
     browser.js
+        3→/**
+        4→ * This is the web browser implementation of `debug()`.
+        5→ */
+        7→exports.formatArgs = formatArgs;
+        8→exports.save = save;
+        9→exports.load = load;
+        10→exports.useColors = useColors;
+        11→exports.storage = localstorage();
+        12→exports.destroy = (() => {
+        13→	let warned = false;
+        15→	return () => {
+        16→		if (!warned) {
+        17→			warned = true;
+        18→			console.warn('Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.');
+        19→		}
+        20→	};
+        21→})();
+        27→exports.colors = [
+        …
+        115→function useColors() {
+        …
+        143→/**
+        144→ * Colorize log arguments if enabled.
+        145→ *
+        146→ * @api public
+        147→ */
+        149→function formatArgs(args) {
+        …
+        192→exports.log = console.debug || console.log || (() => {});
+        …
+        194→/**
+        195→ * Save `namespaces`.
+        196→ *
+        197→ * @param {String} namespaces
+        198→ * @api private
+        199→ */
+        200→function save(namespaces) {
+        201→	try {
+        202→		if (namespaces) {
+        203→			exports.storage.setItem('debug', namespaces);
+        204→		} else {
+        205→			exports.storage.removeItem('debug');
+        206→		}
+        207→	} catch (error) {
+        208→		// Swallow
+        209→		// XXX (@Qix-) should we be logging these?
+        210→	}
+        219→function load() {
+        220→	let r;
+        221→	try {
+        222→		r = exports.storage.getItem('debug') || exports.storage.getItem('DEBUG') ;
+        223→	} catch (error) {
+        224→		// Swallow
+        225→		// XXX (@Qix-) should we be logging these?
+        226→	}
+        228→	// If debug isn't set in LS, and we're in Electron, try to load $DEBUG
+        229→	if (!r && typeof process !== 'undefined' && 'env' in process) {
+        230→		r = process.env.DEBUG;
+        231→	}
+        233→	return r;
         258→module.exports = require('./common')(exports);
         …
     common.js
+        2→/**
+        3→ * This is the common logic for both the Node.js and web browser
+        4→ * implementations of `debug()`.
+        5→ */
         7→function setup(env) {
         …
         292→module.exports = setup;
@@ -208,6 +209,51 @@ src/
     node.js
         5→const tty = require('tty');
         6→const util = require('util');
+        8→/**
+        9→ * This is the Node.js implementation of `debug()`.
+        10→ */
+        12→exports.init = init;
+        13→exports.log = log;
+        14→exports.formatArgs = formatArgs;
+        15→exports.save = save;
+        16→exports.load = load;
+        17→exports.useColors = useColors;
+        18→exports.destroy = util.deprecate(
+        19→	() => {},
+        20→	'Instance method `debug.destroy()` is deprecated and no longer does anything. It will be removed in the next major version of `debug`.'
+        21→);
+        23→/**
+        24→ * Colors.
+        25→ */
+        27→exports.colors = [6, 2, 3, 4, 5, 1];
+        …
+        124→exports.inspectOpts = Object.keys(process.env).filter(key => {
+        …
+        151→/**
+        152→ * Is stdout a TTY? Colored output is enabled when `true`.
+        153→ */
+        155→function useColors() {
+        156→	return 'colors' in exports.inspectOpts ?
+        157→		Boolean(exports.inspectOpts.colors) :
+        158→		tty.isatty(process.stderr.fd);
+        161→/**
+        162→ * Adds ANSI color escape codes if enabled.
+        163→ *
+        164→ * @api public
+        165→ */
+        167→function formatArgs(args) {
+        …
+        189→/**
+        190→ * Invokes `util.formatWithOptions()` with the specified arguments and writes to stderr.
+        191→ */
+        193→function log(...args) {
+        194→	return process.stderr.write(util.formatWithOptions(exports.inspectOpts, ...args) + '\n');
+        197→/**
+        198→ * Save `namespaces`.
+        199→ *
+        200→ * @param {String} namespaces
+        201→ * @api private
+        202→ */
         203→function save(namespaces) {
         204→	if (namespaces) {
         205→		process.env.DEBUG = namespaces;

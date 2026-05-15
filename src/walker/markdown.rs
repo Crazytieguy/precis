@@ -229,6 +229,13 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
             continue;
         }
 
+        // Total H2 count is the cardinality of distinct `parent_index`
+        // values among H2-derived ranges; the synthetic H1-unwrap intro
+        // (parent_idx 0 when present) doesn't count. Used by README
+        // section index decay so projects with kitchen-sink READMEs
+        // (axios 31 H2s, debug 18 H2s, p-queue 20 H2s) get a steeper
+        // tail demotion without changing the shape for normal READMEs.
+        let total_h2_count = section_h2_count(&ranges);
         for (idx, range) in ranges.iter().enumerate() {
             if let Some(content) = build_section_content(&file, &source, &tree, idx, range) {
                 out.push(Batch {
@@ -239,7 +246,7 @@ pub fn expand_in_dir(dir: &Path, ctx: &WalkCtx) -> Vec<Batch<BatchKey>> {
                     .into(),
                     predecessor: section_predecessor.clone(),
                     content,
-                    value: section_value(&file, range, ctx),
+                    value: section_value(&file, range, ctx, total_h2_count),
                 });
             }
         }
@@ -286,30 +293,65 @@ fn headings_outline_value(file: &Path, ctx: &WalkCtx) -> f64 {
     )
 }
 
-fn readme_section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
+fn readme_section_value(
+    file: &Path,
+    range: &SectionRange,
+    ctx: &WalkCtx,
+    total_h2_count: usize,
+) -> f64 {
     // README sections share a flat base (catastrophic 0.55,
     // follow-up 0.8, ztu 0.7) — a single section is a piece of
-    // README body that just fits more often when split. The mild
-    // index decay tilts toward earlier sections (install / quick-
-    // start / "how it works") without pushing late ones (License,
-    // Contributing, FAQ appendix) out of the schedule. Floored at
-    // 0.7 — section 5 keeps ≈76% weight, section 10+ keeps 70%.
-    // Index counts real H2 sections only (the H1-unwrap synthetic
-    // intro at parent_index=0 doesn't count), so a `# Title` README's
-    // first real H2 gets factor 1.0.
-    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx)) * readme_index_decay(range)
+    // README body that just fits more often when split. Index decay
+    // tilts toward earlier sections (install / quick-start / "how
+    // it works") without pushing late ones (License, Contributing,
+    // FAQ appendix) out of the schedule entirely. Decay shape is
+    // adaptive in [`readme_index_decay`] — long-README projects get
+    // a steeper falloff so mid-to-late sections don't crowd source
+    // anchors.
+    mix_signals(0.55, 0.8, 0.7, path_depth_factor(file, ctx))
+        * readme_index_decay(range, total_h2_count)
 }
 
-/// Mild index decay for README sections. Counts real H2 sections only
-/// (skipping the synthetic H1-unwrap intro). Returns 1.0 for the first
-/// real H2; floors at 0.7.
-fn readme_index_decay(range: &SectionRange) -> f64 {
+/// Index decay for README sections. Counts real H2 sections only
+/// (skipping the synthetic H1-unwrap intro). Returns 1.0 for the
+/// first real H2 in every case. For short / medium READMEs (≤12
+/// sections) keeps the mild 0.15-exponent / 0.7-floor shape, which
+/// is metric-safe across the fixtures whose README *is* the canonical
+/// content (chalk, mitt, beszel, neco, json-server, semver — all
+/// regressed under a blanket steeper decay). For long READMEs the
+/// shape switches to a faster falloff so kitchen-sink documentation
+/// READMEs (axios 31 H2s, debug 18, p-queue 20) don't displace
+/// source content at small budgets — source-anchored NSes universally
+/// treat the tail sections as appendix.
+fn readme_index_decay(range: &SectionRange, total_h2_count: usize) -> f64 {
     let h2_idx = if range.synthetic_intro_present {
         range.parent_index.saturating_sub(1)
     } else {
         range.parent_index
     };
-    index_decay(h2_idx, 0.15, 0.7)
+    if total_h2_count >= 18 {
+        index_decay(h2_idx, 0.35, 0.4)
+    } else {
+        index_decay(h2_idx, 0.15, 0.7)
+    }
+}
+
+/// Count of real H2 sections in a logical-sections result. The
+/// synthetic H1-unwrap intro (always parent_idx 0 when present) is
+/// excluded so a `# Title` README's H2 count matches the heading-line
+/// count. Multiple ranges can share the same `parent_index` when a
+/// section is split (Intro + H3Children, or BulletItem rows); dedup
+/// by parent_index so the count stays one-per-H2.
+fn section_h2_count(ranges: &[SectionRange]) -> usize {
+    let synthetic_intro_present = ranges.first().is_some_and(|r| r.synthetic_intro_present);
+    let mut unique = std::collections::BTreeSet::new();
+    for r in ranges {
+        unique.insert(r.parent_index);
+    }
+    if synthetic_intro_present {
+        unique.remove(&0);
+    }
+    unique.len()
 }
 
 /// Index-based signal-channel scale factor: `(idx + 1)^-exp`, floored
@@ -360,9 +402,9 @@ fn heading_slab_value(file: &Path, parent_index: usize, ctx: &WalkCtx) -> f64 {
 /// weights would over-rank them on the value/cost ratio once the cost
 /// drops to per-sub-section size. `Intro` keeps full weight (it carries
 /// the H2 heading + topic prelude).
-fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx) -> f64 {
+fn section_value(file: &Path, range: &SectionRange, ctx: &WalkCtx, total_h2_count: usize) -> f64 {
     let parent = if is_readme(file) {
-        readme_section_value(file, range, ctx)
+        readme_section_value(file, range, ctx, total_h2_count)
     } else {
         heading_slab_value(file, range.parent_index, ctx)
     };
@@ -2421,15 +2463,18 @@ mod tests {
         assert_eq!(install.parent_index, 1);
         assert!(install.synthetic_intro_present);
         assert_eq!(
-            readme_index_decay(install),
+            readme_index_decay(install, 2),
             1.0,
             "first real H2 must be unscaled (readme h2_idx = 0)"
         );
 
         let use_ = &ranges[2];
         assert_eq!(use_.parent_index, 2);
-        let f = readme_index_decay(use_);
-        assert!(f < 1.0 && f > 0.7, "second real H2 should decay; got {f}");
+        let f = readme_index_decay(use_, 2);
+        assert!(
+            (0.7..1.0).contains(&f),
+            "second real H2 should decay; got {f}"
+        );
     }
 
     /// READMEs without an H1 wrap (no synthetic intro) — first H2 is
@@ -2440,7 +2485,7 @@ mod tests {
         let ranges = sections("README.md", src);
         assert_eq!(ranges.len(), 2);
         assert!(!ranges[0].synthetic_intro_present);
-        assert_eq!(readme_index_decay(&ranges[0]), 1.0);
+        assert_eq!(readme_index_decay(&ranges[0], 2), 1.0);
     }
 
     /// AGENTS.md / CLAUDE.md / skill bodies are already loaded into
