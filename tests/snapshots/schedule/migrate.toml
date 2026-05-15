@@ -1,7 +1,7 @@
 fixture = "migrate"
 budget = 10000
-cumulative_tokens = 9892
-batch_count = 279
+cumulative_tokens = 9850
+batch_count = 275
 
 [[batches]]
 position = 1
@@ -7073,46 +7073,10 @@ kind = "full"
 
 [[batches]]
 position = 267
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/source/github/.gitignore" })'
-descriptor = "plaintext config source/github/.gitignore"
-cost_tokens = 10
-cum_tokens = 8817
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/migrate/source/github/.gitignore"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 268
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/source/github_ee/.gitignore" })'
-descriptor = "plaintext config source/github_ee/.gitignore"
-cost_tokens = 10
-cum_tokens = 8827
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/migrate/source/github_ee/.gitignore"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 269
 key = 'Fs(DirListing { dir: "/Users/yoav/projects/precis/tests/fixtures/migrate/source/httpfs/testdata/no-migrations" })'
 descriptor = "listing of 'source/httpfs/testdata/no-migrations'"
 cost_tokens = 4
-cum_tokens = 8831
+cum_tokens = 8811
 
 [batches.content]
 kind = "fs"
@@ -7122,11 +7086,11 @@ parent = "/Users/yoav/projects/precis/tests/fixtures/migrate/source/httpfs/testd
 entries = ["some-file"]
 
 [[batches]]
-position = 270
+position = 268
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/database/firebird/README.md", section_index: 0 })'
 descriptor = "database/firebird/README.md section #0"
 cost_tokens = 182
-cum_tokens = 9013
+cum_tokens = 8993
 
 [batches.content]
 kind = "lines"
@@ -7140,11 +7104,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 271
+position = 269
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/database/sqlite/README.md", section_index: 0 })'
 descriptor = "database/sqlite/README.md section #0"
 cost_tokens = 194
-cum_tokens = 9207
+cum_tokens = 9187
 
 [batches.content]
 kind = "lines"
@@ -7174,47 +7138,11 @@ end = 12
 kind = "full"
 
 [[batches]]
-position = 272
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/source/bitbucket/.gitignore" })'
-descriptor = "plaintext config source/bitbucket/.gitignore"
-cost_tokens = 11
-cum_tokens = 9218
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/migrate/source/bitbucket/.gitignore"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 273
-key = 'Plaintext(Whole { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/source/gitlab/.gitignore" })'
-descriptor = "plaintext config source/gitlab/.gitignore"
-cost_tokens = 11
-cum_tokens = 9229
-
-[batches.content]
-kind = "lines"
-
-[[batches.content.spans]]
-path = "/Users/yoav/projects/precis/tests/fixtures/migrate/source/gitlab/.gitignore"
-start = 1
-end = 1
-
-[batches.content.spans.render]
-kind = "full"
-
-[[batches]]
-position = 274
+position = 270
 key = 'Go(DeclBody { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/util.go", start_line: 45 })'
 descriptor = "go decl body at util.go:45"
 cost_tokens = 44
-cum_tokens = 9273
+cum_tokens = 9231
 
 [batches.content]
 kind = "lines"
@@ -7228,11 +7156,11 @@ end = 49
 kind = "full"
 
 [[batches]]
-position = 275
+position = 271
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/README.md", section_index: 10 })'
 descriptor = "README.md section #10"
 cost_tokens = 81
-cum_tokens = 9354
+cum_tokens = 9312
 
 [batches.content]
 kind = "lines"
@@ -7278,11 +7206,11 @@ end = 196
 kind = "full"
 
 [[batches]]
-position = 276
+position = 272
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/database/clickhouse/README.md", section_index: 0 })'
 descriptor = "database/clickhouse/README.md section #0"
 cost_tokens = 200
-cum_tokens = 9554
+cum_tokens = 9512
 
 [batches.content]
 kind = "lines"
@@ -7296,11 +7224,11 @@ end = 15
 kind = "full"
 
 [[batches]]
-position = 277
+position = 273
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/database/neo4j/README.md", section_index: 0 })'
 descriptor = "database/neo4j/README.md section #0"
 cost_tokens = 201
-cum_tokens = 9755
+cum_tokens = 9713
 
 [batches.content]
 kind = "lines"
@@ -7322,11 +7250,11 @@ end = 16
 kind = "full"
 
 [[batches]]
-position = 278
+position = 274
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/database/spanner/README.md", section_index: 3 })'
 descriptor = "database/spanner/README.md section #3"
 cost_tokens = 43
-cum_tokens = 9798
+cum_tokens = 9756
 
 [batches.content]
 kind = "lines"
@@ -7348,11 +7276,11 @@ end = 40
 kind = "full"
 
 [[batches]]
-position = 279
+position = 275
 key = 'Markdown(Section { file: "/Users/yoav/projects/precis/tests/fixtures/migrate/README.md", section_index: 7 })'
 descriptor = "README.md section #7"
 cost_tokens = 94
-cum_tokens = 9892
+cum_tokens = 9850
 
 [batches.content]
 kind = "lines"

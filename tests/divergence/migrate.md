@@ -296,21 +296,17 @@ Score(3000)=0.431 I=0.510 C=0.363 ns_rows≤3K=14/33 (reached=3 partial=0 missin
 | walker |  | 8630 | 14 | go decl body at source/godoc_vfs/vfs.go:17 |  |  | 0.253 |
 | ns | 8715 |  | 236 | cmd/migrate + cli entry points + version vars | 6.1 |  | 0.266 |
 | walker |  | 8807 | 177 | source/github/README.md section #0 |  |  | 0.266 |
-| walker |  | 8817 | 10 | plaintext config source/github/.gitignore |  |  | 0.266 |
-| walker |  | 8827 | 10 | plaintext config source/github_ee/.gitignore |  |  | 0.266 |
-| walker |  | 8831 | 4 | listing of 'source/httpfs/testdata/no-migrations' |  |  | 0.266 |
+| walker |  | 8811 | 4 | listing of 'source/httpfs/testdata/no-migrations' |  |  | 0.266 |
 | ns | 8921 |  | 206 | Per-driver build-tag stubs listing | 6.2 |  | 0.260 |
 | ns | 8980 |  | 59 | build_postgres.go stub (concrete shape) | 6.3 | 6.2 | 0.259 |
-| walker |  | 9013 | 182 | database/firebird/README.md section #0 |  |  | 0.259 |
-| walker |  | 9207 | 194 | database/sqlite/README.md section #0 |  |  | 0.259 |
+| walker |  | 8993 | 182 | database/firebird/README.md section #0 |  |  | 0.259 |
+| walker |  | 9187 | 194 | database/sqlite/README.md section #0 |  |  | 0.259 |
 | ns | 9209 |  | 229 | internal/cli/commands.go: fn signature locations | 6.4 |  | 0.257 |
-| walker |  | 9218 | 11 | plaintext config source/bitbucket/.gitignore |  |  | 0.257 |
-| walker |  | 9229 | 11 | plaintext config source/gitlab/.gitignore |  |  | 0.257 |
-| walker |  | 9273 | 44 | go decl body at util.go:45 |  |  | 0.257 |
-| walker |  | 9354 | 81 | README.md section #10 |  |  | 0.257 |
-| walker |  | 9554 | 200 | database/clickhouse/README.md section #0 |  |  | 0.257 |
+| walker |  | 9231 | 44 | go decl body at util.go:45 |  |  | 0.257 |
+| walker |  | 9312 | 81 | README.md section #10 |  |  | 0.257 |
+| walker |  | 9512 | 200 | database/clickhouse/README.md section #0 |  |  | 0.257 |
 | ns | 9674 |  | 465 | CLI -help output (cmd/migrate/README.md) | 6.5 |  | 0.252 |
-| walker |  | 9755 | 201 | database/neo4j/README.md section #0 |  |  | 0.252 |
-| walker |  | 9798 | 43 | database/spanner/README.md section #3 |  |  | 0.252 |
-| walker |  | 9892 | 94 | README.md section #7 |  |  | 0.252 |
+| walker |  | 9713 | 201 | database/neo4j/README.md section #0 |  |  | 0.252 |
+| walker |  | 9756 | 43 | database/spanner/README.md section #3 |  |  | 0.252 |
+| walker |  | 9850 | 94 | README.md section #7 |  |  | 0.252 |
 | ns | 9954 |  | 280 | FAQ highlights: NilMigration, dirty, locking, two-files | 7.1 | 1.3 | 0.249 |

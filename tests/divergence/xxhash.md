@@ -1,4 +1,4 @@
-Score(3000)=0.658 I=0.849 C=0.511 ns_rows≤3K=20/40 (reached=9 partial=4 missing=7)
+Score(3000)=0.678 I=0.854 C=0.538 ns_rows≤3K=20/40 (reached=10 partial=4 missing=6)
 
 | source | ns_cum | walker_cum | marginal | descriptor | id | predecessor | Score(B=cum) |
 |:-------|-------:|-----------:|---------:|:-----------|:---|:------------|-------------:|
@@ -57,93 +57,93 @@ Score(3000)=0.658 I=0.849 C=0.511 ns_rows≤3K=20/40 (reached=9 partial=4 missin
 | ns | 1196 |  | 119 | Sum64 / writeBlocks signatures (asm build) | 2.5 |  | 0.438 |
 | walker |  | 1202 | 222 | README.md section #0 |  |  | 0.583 |
 | walker |  | 1247 | 45 | go package + imports in xxhash.go |  |  | 0.588 |
-| walker |  | 1255 | 8 | plaintext config dynamic/.gitignore |  |  | 0.588 |
-| walker |  | 1297 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.588 |
-| walker |  | 1306 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.588 |
+| walker |  | 1289 | 42 | go decl doc at xxhash_unsafe.go:55 |  |  | 0.588 |
 | ns | 1341 |  | 145 | Sum64String / WriteString signatures (unsafe build) | 2.6 |  | 0.596 |
-| walker |  | 1429 | 123 | README.md section #1 |  |  | 0.597 |
+| walker |  | 1412 | 123 | README.md section #1 |  |  | 0.597 |
 | ns | 1460 |  | 119 | MarshalBinary / UnmarshalBinary signatures + magic constants | 2.7 | 2.1 | 0.574 |
-| walker |  | 1484 | 55 | go package + imports in dynamic/plugin.go |  |  | 0.574 |
+| walker |  | 1467 | 55 | go package + imports in dynamic/plugin.go |  |  | 0.574 |
 | ns | 1507 |  | 47 | Sub-directory listings (.github, dynamic, xxhsum, xxhashbench) | 3.1 | 1.1 | 0.582 |
-| walker |  | 1539 | 55 | go package + imports in xxhsum/xxhsum.go |  |  | 0.582 |
-| walker |  | 1621 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.583 |
+| walker |  | 1522 | 55 | go package + imports in xxhsum/xxhsum.go |  |  | 0.582 |
+| walker |  | 1604 | 82 | go decl body at xxhash_unsafe.go:45 |  |  | 0.583 |
 | ns | 1648 |  | 141 | All test/benchmark function names across the repo | 3.2 |  | 0.547 |
-| walker |  | 1675 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.547 |
-| walker |  | 1678 | 3 | listing of '.github' |  |  | 0.556 |
-| walker |  | 1682 | 4 | listing of '.github/workflows' |  |  | 0.565 |
+| walker |  | 1658 | 54 | go decl body at dynamic/plugin.go:19 |  |  | 0.547 |
+| walker |  | 1661 | 3 | listing of '.github' |  |  | 0.556 |
+| walker |  | 1665 | 4 | listing of '.github/workflows' |  |  | 0.565 |
 | ns | 1765 |  | 117 | testall.sh — full body | 3.3 |  | 0.545 |
 | ns | 2081 |  | 316 | xxhsum CLI — main + usage | 3.4 |  | 0.495 |
-| walker |  | 2394 | 712 | go decl names surface in xxhash.go |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:23 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:40 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:45 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:53 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:59 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:69 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:72 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:75 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:113 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:129 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:176 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:190 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:208 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:214 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:222 |  |  | 0.525 |
-| walker |  | 2394 | 0 | go decl at xxhash.go:229 |  |  | 0.525 |
-| ns | 2400 |  | 319 | CI matrix — what configurations are tested | 3.5 |  | 0.483 |
-| walker |  | 2403 | 9 | go decl body at xxhash.go:40 |  |  | 0.485 |
-| walker |  | 2412 | 9 | go decl body at xxhash.go:53 |  |  | 0.486 |
-| walker |  | 2421 | 9 | go decl at xxhash.go:11 |  |  | 0.487 |
-| walker |  | 2430 | 9 | go decl at xxhash.go:170 |  |  | 0.489 |
-| walker |  | 2442 | 12 | go decl doc at xxhash.go:69 |  |  | 0.493 |
-| walker |  | 2454 | 12 | go decl doc at xxhash.go:129 |  |  | 0.497 |
-| walker |  | 2467 | 13 | go decl doc at xxhash.go:72 |  |  | 0.503 |
-| walker |  | 2482 | 15 | go decl doc at xxhash.go:40 |  |  | 0.507 |
-| walker |  | 2499 | 17 | go decl doc at xxhash.go:45 |  |  | 0.515 |
-| walker |  | 2515 | 16 | go decl doc at xxhash.go:176 |  |  | 0.523 |
-| walker |  | 2533 | 18 | go decl doc at xxhash.go:190 |  |  | 0.533 |
-| walker |  | 2552 | 19 | go decl doc at xxhash.go:113 |  |  | 0.541 |
-| walker |  | 2572 | 20 | go decl doc at xxhash.go:75 |  |  | 0.550 |
-| ns | 2592 |  | 192 | Prime constants + primes array | 4.1 |  | 0.547 |
-| walker |  | 2596 | 24 | go decl body at xxhash.go:45 |  |  | 0.562 |
-| walker |  | 2627 | 31 | go decl doc at xxhash.go:53 |  |  | 0.568 |
-| walker |  | 2704 | 77 | go decl at xxhash.go:29 |  |  | 0.583 |
+| walker |  | 2377 | 712 | go decl names surface in xxhash.go |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:23 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:40 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:45 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:53 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:59 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:69 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:72 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:75 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:113 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:129 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:176 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:190 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:208 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:214 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:222 |  |  | 0.525 |
+| walker |  | 2377 | 0 | go decl at xxhash.go:229 |  |  | 0.525 |
+| walker |  | 2386 | 9 | go decl body at xxhash.go:40 |  |  | 0.528 |
+| walker |  | 2395 | 9 | go decl body at xxhash.go:53 |  |  | 0.529 |
+| ns | 2400 |  | 319 | CI matrix — what configurations are tested | 3.5 |  | 0.486 |
+| walker |  | 2404 | 9 | go decl at xxhash.go:11 |  |  | 0.487 |
+| walker |  | 2413 | 9 | go decl at xxhash.go:170 |  |  | 0.489 |
+| walker |  | 2425 | 12 | go decl doc at xxhash.go:69 |  |  | 0.493 |
+| walker |  | 2437 | 12 | go decl doc at xxhash.go:129 |  |  | 0.497 |
+| walker |  | 2450 | 13 | go decl doc at xxhash.go:72 |  |  | 0.503 |
+| walker |  | 2465 | 15 | go decl doc at xxhash.go:40 |  |  | 0.507 |
+| walker |  | 2482 | 17 | go decl doc at xxhash.go:45 |  |  | 0.515 |
+| walker |  | 2498 | 16 | go decl doc at xxhash.go:176 |  |  | 0.523 |
+| walker |  | 2516 | 18 | go decl doc at xxhash.go:190 |  |  | 0.533 |
+| walker |  | 2535 | 19 | go decl doc at xxhash.go:113 |  |  | 0.541 |
+| walker |  | 2555 | 20 | go decl doc at xxhash.go:75 |  |  | 0.550 |
+| walker |  | 2579 | 24 | go decl body at xxhash.go:45 |  |  | 0.565 |
+| ns | 2592 |  | 192 | Prime constants + primes array | 4.1 |  | 0.562 |
+| walker |  | 2610 | 31 | go decl doc at xxhash.go:53 |  |  | 0.568 |
+| walker |  | 2687 | 77 | go decl at xxhash.go:29 |  |  | 0.583 |
 | ns | 2716 |  | 124 | round + mergeRound — the core mixer | 4.2 | 4.1 | 0.568 |
-| walker |  | 2739 | 35 | go decl doc at xxhash.go:59 |  |  | 0.578 |
-| walker |  | 2792 | 53 | go decl doc at xxhash.go:29 |  |  | 0.612 |
-| walker |  | 2811 | 19 | go decl body at xxhash.go:214 |  |  | 0.613 |
-| walker |  | 2881 | 70 | go decl body at xxhash.go:59 |  |  | 0.639 |
-| walker |  | 2916 | 35 | go decl body at xxhash.go:222 |  |  | 0.649 |
+| walker |  | 2722 | 35 | go decl doc at xxhash.go:59 |  |  | 0.578 |
+| walker |  | 2775 | 53 | go decl doc at xxhash.go:29 |  |  | 0.612 |
+| walker |  | 2794 | 19 | go decl body at xxhash.go:214 |  |  | 0.613 |
+| walker |  | 2864 | 70 | go decl body at xxhash.go:59 |  |  | 0.639 |
+| walker |  | 2899 | 35 | go decl body at xxhash.go:222 |  |  | 0.649 |
 | ns | 2918 |  | 202 | rol* one-line helpers (locations) | 4.3 |  | 0.657 |
-| walker |  | 2953 | 37 | go decl body at xxhash.go:208 |  |  | 0.658 |
-| walker |  | 3008 | 55 | go decl doc at xxhash.go:23 |  |  | 0.678 |
-| walker |  | 3047 | 39 | go decl body at xxhash.go:229 |  |  | 0.693 |
+| walker |  | 2936 | 37 | go decl body at xxhash.go:208 |  |  | 0.658 |
+| walker |  | 2991 | 55 | go decl doc at xxhash.go:23 |  |  | 0.678 |
+| walker |  | 3030 | 39 | go decl body at xxhash.go:229 |  |  | 0.693 |
 | ns | 3084 |  | 166 | Little-endian / append / consume byte helpers | 4.4 |  | 0.694 |
-| walker |  | 3153 | 106 | go decl body at xxhash.go:113 |  |  | 0.697 |
-| walker |  | 3297 | 144 | README.md section #3 |  |  | 0.697 |
-| walker |  | 3440 | 143 | go decl body at xxhash.go:176 |  |  | 0.699 |
+| walker |  | 3136 | 106 | go decl body at xxhash.go:113 |  |  | 0.697 |
+| walker |  | 3280 | 144 | README.md section #3 |  |  | 0.697 |
+| walker |  | 3423 | 143 | go decl body at xxhash.go:176 |  |  | 0.699 |
+| walker |  | 3472 | 49 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.699 |
 | ns | 3473 |  | 389 | Write — streaming entry body | 4.5 | 2.4 | 0.649 |
-| walker |  | 3489 | 49 | go decl body at xxhsum/xxhsum.go:34 |  |  | 0.649 |
-| walker |  | 3782 | 293 | README.md section #2 |  |  | 0.651 |
+| walker |  | 3765 | 293 | README.md section #2 |  |  | 0.651 |
 | ns | 3949 |  | 476 | Digest.Sum64 — finalize body | 4.6 | 2.4 | 0.606 |
-| walker |  | 3984 | 202 | go decl body at xxhash.go:190 |  |  | 0.608 |
-| walker |  | 4057 | 73 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.608 |
+| walker |  | 3967 | 202 | go decl body at xxhash.go:190 |  |  | 0.608 |
+| walker |  | 4040 | 73 | go decl body at xxhsum/xxhsum.go:43 |  |  | 0.608 |
 | ns | 4062 |  | 113 | Digest.Sum — append big-endian bytes | 4.7 | 2.4 | 0.620 |
 | ns | 4212 |  | 150 | MarshalBinary body — wire format | 4.8 | 2.7 | 0.629 |
-| walker |  | 4409 | 352 | go decl body at xxhash.go:75 |  |  | 0.685 |
+| walker |  | 4392 | 352 | go decl body at xxhash.go:75 |  |  | 0.685 |
 | ns | 4421 |  | 209 | UnmarshalBinary body — validation + parse | 4.9 | 2.7 | 0.693 |
-| walker |  | 4621 | 212 | go decl body at xxhash_other.go:64 |  |  | 0.695 |
-| walker |  | 5065 | 444 | go decl body at xxhash.go:129 |  |  | 0.753 |
+| walker |  | 4604 | 212 | go decl body at xxhash_other.go:64 |  |  | 0.695 |
+| walker |  | 5048 | 444 | go decl body at xxhash.go:129 |  |  | 0.753 |
 | ns | 5119 |  | 698 | Pure-Go Sum64 body (xxhash_other.go) | 4.10 | 2.5 | 0.698 |
-| walker |  | 5339 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.698 |
+| walker |  | 5322 | 274 | go decl body at dynamic/plugin.go:26 |  |  | 0.698 |
 | ns | 5355 |  | 236 | Pure-Go writeBlocks body | 4.11 | 2.5 | 0.702 |
 | ns | 5535 |  | 180 | xxhash_safe.go full body — the appengine fallback | 4.12 | 2.6 | 0.695 |
 | ns | 5940 |  | 405 | Unsafe string conversion — inlining commentary + sliceHeader | 4.13 | 2.6 | 0.674 |
-| walker |  | 5986 | 647 | go decl body at xxhash_other.go:7 |  |  | 0.738 |
+| walker |  | 5969 | 647 | go decl body at xxhash_other.go:7 |  |  | 0.738 |
 | ns | 6070 |  | 130 | Unsafe Sum64String / WriteString bodies | 4.14 | 2.6 | 0.737 |
-| walker |  | 6217 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.776 |
-| walker |  | 6232 | 15 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.776 |
-| walker |  | 6264 | 32 | go test names surface in xxhash_unsafe_test.go |  |  | 0.778 |
+| walker |  | 6200 | 231 | go decl body at xxhsum/xxhsum.go:11 |  |  | 0.776 |
+| walker |  | 6208 | 8 | plaintext config dynamic/.gitignore |  |  | 0.776 |
+| walker |  | 6223 | 15 | go test names surface in xxhashbench/xxhashbench_test.go |  |  | 0.776 |
+| walker |  | 6255 | 32 | go test names surface in xxhash_unsafe_test.go |  |  | 0.778 |
+| walker |  | 6264 | 9 | plaintext config xxhsum/.gitignore |  |  | 0.778 |
 | walker |  | 6294 | 30 | go test names surface in dynamic/dynamic_test.go |  |  | 0.780 |
 | walker |  | 6359 | 65 | go test names surface in bench_test.go |  |  | 0.787 |
 | ns | 6391 |  | 321 | README — Benchmarks section (perf table) | 5.1 |  | 0.788 |

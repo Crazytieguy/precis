@@ -123,25 +123,37 @@ fn non_essential_factor_inner(
     if is_auto_injected_doc_file(path, root) {
         return 0.1;
     }
+    // Dot-prefixed directories at any depth (`site/.vitepress/...`,
+    // `docs/.vitepress/...`, `packages/foo/.changeset`, root-level
+    // `.husky` / `.devcontainer` / `.idea` / `.vscode` / `.faq` /
+    // `.circleci` / `.cargo` / `.codex` / `.yarn`) are IDE / tooling /
+    // CI / admin / docs-site plumbing. Demote uniformly so their
+    // contents don't crowd source. The two exceptions:
+    //  - `.github/workflows/...` at the repo root: CI workflows are
+    //    load-bearing operational config (failures page someone).
+    //  - Auto-injected skill subtrees (`.claude/skills`, `.agent/skills`,
+    //    `.cursor/rules`): doc-extension files are caught above with the
+    //    stronger 0.1; remaining helpers / listings inherit the 0.2.
     let mut comps = target.components();
     if let Some(first) = comps.next().and_then(|c| c.as_os_str().to_str()) {
         if first.eq_ignore_ascii_case(".github") {
-            // CI workflows are load-bearing operational config; everything
-            // else under `.github/` is contributor templates and admin docs.
             let second = comps.next().and_then(|c| c.as_os_str().to_str());
-            if !second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
+            if second.is_some_and(|s| s.eq_ignore_ascii_case("workflows")) {
+                // No further dot-dir check — `.github/workflows/...` is
+                // load-bearing CI config.
+            } else {
                 return 0.2;
             }
-        } else if first.starts_with('.') {
-            // Other dot-dirs at the repo root (`.vscode`, `.devcontainer`,
-            // `.husky`, `.faq`, `.idea`, `.circleci`, `.cargo`,
-            // `.changeset`, `.codex`, `.yarn`, ...) are IDE / tooling / CI
-            // / admin config. Demote uniformly so their listings stay
-            // discoverable but the contents don't crowd source. Skill
-            // subtrees (`.claude/skills` / `.agent/skills` / `.cursor/rules`)
-            // also match — their auto-injected doc files were already caught
-            // above with the stronger 0.1 discount; the remaining helpers
-            // and directory listings inherit the dot-dir 0.2.
+        } else if first.starts_with('.') && first != "." {
+            return 0.2;
+        }
+    }
+    for component in target.components().skip(1) {
+        if component
+            .as_os_str()
+            .to_str()
+            .is_some_and(|s| s.starts_with('.') && s != ".")
+        {
             return 0.2;
         }
     }

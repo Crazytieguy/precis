@@ -73,12 +73,6 @@ docs/
     requirements.txt
 downstream/
     .gitignore
-        1→/conda/
-        2→/datasette/
-        3→/devpi/
-        4→/hatch/
-        5→/pytest/
-        6→/tox/
     README.md
     conda.sh
     datasette.sh
@@ -207,7 +201,12 @@ src/
             57→    def from_call(cls, func: Callable[[], ResultType]) -> Result[ResultType]:
             58→        """:meta private:"""
             67→    def force_result(self, result: ResultType) -> None:
-            …
+            68→        """Force the result(s) to ``result``.
+            70→        If the hook was marked as a ``firstresult`` a single value should
+            71→        be set, otherwise set a (modified) list of results. Any exceptions
+            72→        found during invocation will be deleted.
+            74→        This overrides any previous result or exception.
+            75→        """
             80→    def force_exception(self, exception: BaseException) -> None:
             81→        """Force the result to fail with ``exception``.
             83→        This overrides any previous result or exception.
