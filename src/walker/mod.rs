@@ -26,6 +26,7 @@ pub mod fs;
 pub mod go;
 pub(crate) mod import_chunks;
 pub mod json;
+pub mod lua;
 pub mod markdown;
 pub mod plaintext;
 pub mod python;
@@ -81,6 +82,7 @@ impl Walker for FsWalker {
         out.extend(c::expand_in_dir(dir, ctx));
         out.extend(go::expand_in_dir(dir, ctx));
         out.extend(python::expand_in_dir(dir, ctx));
+        out.extend(lua::expand_in_dir(dir, ctx));
         out
     }
 }

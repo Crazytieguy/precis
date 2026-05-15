@@ -45,6 +45,7 @@ pub enum BatchKey {
     C(CKey),
     Go(GoKey),
     Python(PythonKey),
+    Lua(LuaKey),
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -101,6 +102,11 @@ impl From<GoKey> for BatchKey {
 impl From<PythonKey> for BatchKey {
     fn from(k: PythonKey) -> Self {
         BatchKey::Python(k)
+    }
+}
+impl From<LuaKey> for BatchKey {
+    fn from(k: LuaKey) -> Self {
+        BatchKey::Lua(k)
     }
 }
 
@@ -518,6 +524,35 @@ pub enum PythonKey {
     TestNames { file: PathBuf },
 }
 
+/// Lua batches. The dominant Lua content in the corpus is LuaCATS spec
+/// files (`---@meta`, `---@class`, `---@alias`) — these get a whole-
+/// file rendering when small. Other Lua sources get the C/Python-style
+/// per-decl breakdown.
+#[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
+pub enum LuaKey {
+    /// Top-of-file comment block (license / brief). Priority 5.x.
+    Banner { file: PathBuf },
+    /// Whole-file rendering for LuaCATS spec files (those with
+    /// `---@meta` at the top, or majority-LuaCATS-tag comment density).
+    /// Carries the entire file as a single span. Gated to small files.
+    /// Priority 1.x — these are the canonical API contracts.
+    MetaFileWhole { file: PathBuf },
+    /// Surface listing of every top-level function name + table-method
+    /// assignment first line. Catastrophic-omission hedge. Priority 1.x.
+    DeclNames { file: PathBuf, chunk_index: usize },
+    /// One top-level function-like declaration's signature/header.
+    /// Covers `function foo()`, `local function foo()`, and
+    /// `M.foo = function(...)` (table-method assignment). Keyed by
+    /// start line. Priority 1.x–3.x.
+    Decl { file: PathBuf, start_line: usize },
+    /// LuaCATS `---@` comment block immediately above a decl.
+    /// Predecessor: matching `Decl`. Priority 3.x.
+    DeclDoc { file: PathBuf, start_line: usize },
+    /// Body interior of a function decl. Predecessor: matching `Decl`.
+    /// Priority 2.x–4.x.
+    DeclBody { file: PathBuf, start_line: usize },
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
 pub enum TomlKey {
     /// `[package]` or `[workspace.package]` identity block. Priority 1.x.
@@ -587,6 +622,7 @@ impl WalkerKey for BatchKey {
             BatchKey::C(k) => k.describe(fixture_root),
             BatchKey::Go(k) => k.describe(fixture_root),
             BatchKey::Python(k) => k.describe(fixture_root),
+            BatchKey::Lua(k) => k.describe(fixture_root),
         }
     }
 
@@ -599,6 +635,7 @@ impl WalkerKey for BatchKey {
             BatchKey::Python(k) => k.concavity_exponent(),
             BatchKey::Rust(k) => k.concavity_exponent(),
             BatchKey::Typescript(k) => k.concavity_exponent(),
+            BatchKey::Lua(k) => k.concavity_exponent(),
             BatchKey::Fs(_) | BatchKey::Toml(_) | BatchKey::Plaintext(_) => {
                 crate::value::DEFAULT_CONCAVITY_EXPONENT
             }
@@ -1183,6 +1220,55 @@ impl CKey {
             CKey::DeclDoc { file, start_line } => {
                 format!(
                     "c decl doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
+            }
+        }
+    }
+}
+
+impl LuaKey {
+    /// Match the C/Python per-decl steepening (0.45) so individual
+    /// short Lua function signatures don't dominate larger anchor
+    /// batches. `MetaFileWhole` keeps the default — these are the
+    /// load-bearing LuaCATS specs the soluna NS prioritizes; a steeper
+    /// exponent would push them later in the schedule.
+    pub fn concavity_exponent(&self) -> f64 {
+        match self {
+            LuaKey::Decl { .. } | LuaKey::DeclBody { .. } => 0.45,
+            _ => crate::value::DEFAULT_CONCAVITY_EXPONENT,
+        }
+    }
+
+    pub fn describe(&self, fixture_root: &Path) -> String {
+        match self {
+            LuaKey::Banner { file } => {
+                format!("lua banner in {}", display_path(file, fixture_root))
+            }
+            LuaKey::MetaFileWhole { file } => {
+                format!("lua meta-file at {}", display_path(file, fixture_root))
+            }
+            LuaKey::DeclNames { file, chunk_index } => {
+                describe_chunked_surface("lua decl names surface", file, *chunk_index, fixture_root)
+            }
+            LuaKey::Decl { file, start_line } => {
+                format!(
+                    "lua decl at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
+            }
+            LuaKey::DeclDoc { file, start_line } => {
+                format!(
+                    "lua decl doc at {}:{}",
+                    display_path(file, fixture_root),
+                    start_line
+                )
+            }
+            LuaKey::DeclBody { file, start_line } => {
+                format!(
+                    "lua decl body at {}:{}",
                     display_path(file, fixture_root),
                     start_line
                 )
